@@ -9,7 +9,12 @@ function Home() {
   }, []);
 
   return (
-    <div>Home {loggedInUser.first_name}</div>
+    <div className="card slide">
+      <div className="info-box">
+        <h4>{loggedInUser.first_name} {loggedInUser.last_name}, welcome to the Admin area</h4>
+        <span>You can use sidebar for navigation.</span>
+      </div>
+    </div>
   )
 }
 

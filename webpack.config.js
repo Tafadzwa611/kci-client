@@ -7,12 +7,9 @@ module.exports = {
         path: path.join(__dirname, '../goldenknot/dashboard/static/dashboard/js'),
         filename: 'bundle.js'
     },
-    plugins: [
-        new HTMLWebpackPlugin({
-            template: './src/index.html',
-            filename: '../goldenknot/dashboard/templates/dashboard/app.html'
-        })
-    ],
+    // plugins: [
+    //     new HTMLWebpackPlugin({filename: 'index_develop.html'})
+    // ],
     module: {
         rules: [
             {

@@ -35,7 +35,7 @@ function Login() {
       }else {
         Cookies.set('user', JSON.stringify(data.user));
         setLoggedInUser(data.user);
-        navigate('/main');
+        navigate('/app/home');
       }
     }
     setLoggingIn(false);
@@ -50,7 +50,7 @@ function Login() {
       const loggedInUser = data.user;
       Cookies.set('user', JSON.stringify(data.user));
       setLoggedInUser(loggedInUser);
-      navigate('/main');
+      navigate('/app/home');
     }
     setVerifyingOtp(false);
   }
