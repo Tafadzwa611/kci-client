@@ -16,7 +16,7 @@ export const ThemeContext = createContext(null);
 
 
 function App() {
-  const [loggedInUser, setLoggedInUser] = React.useState(null);
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   useEffect(() => {
     const user = Cookies.get('user');

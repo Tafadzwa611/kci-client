@@ -1,3 +1,3 @@
-import {makeRequest} from './utils';
+import {makeRequest, makeRequestWrapper} from './utils';
 
-export {makeRequest};
+export {makeRequest, makeRequestWrapper};
