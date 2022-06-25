@@ -1,6 +1,6 @@
-import React, { lazy, Suspense, useEffect } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { LoggedInUserProvider, LoggedInUserContext } from './Context';
+import { LoggedInUserProvider } from './Context';
 import PublicRoutes from './PublicRoutes';
 import ProtectedRoutes from './ProtectedRoutes';
 import Cookies from 'js-cookie';
@@ -11,7 +11,7 @@ const Dashboard = lazy(() => import('./Dashboard'));
 const Main = lazy(() => import('./Main'));
 
 function App() {
-  const [loggedInUser, setLoggedInUser] = React.useState(null);
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   useEffect(() => {
     const user = Cookies.get('user');

@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import { async } from 'regenerator-runtime';
 
 const makeRequest = {
   get: async function(resource, options = {}) {
@@ -9,7 +10,7 @@ const makeRequest = {
     clearTimeout(id);
     return response;
   },
-  post: async function(resource, body, options = {}) {
+  post: async function(resource, body, options={}) {
     const { timeout = 8000 } = options;
     options['method'] = 'POST';
     options['credentials'] = 'same-origin';
@@ -25,7 +26,7 @@ const makeRequest = {
     clearTimeout(id);
     return response;
   },
-  patch: async function(resource, body, options = {}) {
+  patch: async function(resource, body, options={}) {
     const { timeout = 8000 } = options;
     options['method'] = 'PATCH';
     options['credentials'] = 'same-origin';
@@ -41,7 +42,7 @@ const makeRequest = {
     clearTimeout(id);
     return response;
   },
-  put: async function(resource, body, options = {}) {
+  put: async function(resource, body, options={}) {
     const { timeout = 8000 } = options;
     options['method'] = 'PUT';
     options['credentials'] = 'same-origin';
@@ -57,7 +58,7 @@ const makeRequest = {
     clearTimeout(id);
     return response;
   },
-  delete: async function(resource, options = {}) {
+  delete: async function(resource, options={}) {
     const { timeout = 8000 } = options;
     options['method'] = 'DELETE';
     options['credentials'] = 'same-origin';
@@ -78,9 +79,28 @@ const useAuth = () => {
   const user = Cookies.get('user');
   if (user) {
     return true
-  } else {
-    return false
   }
+  return false
 }
 
-export { makeRequest, useAuth };
+const makeRequestWrapper = async (resource, method, setLoggedInUser, data={}) => {
+  const { options = {timeout: 8000} } = data;
+  const { body = {} } = data;
+  const requestHandler = makeRequest[method];
+
+  if (method in ['post', 'patch', 'put']) {
+    var response = await requestHandler(resource, body, options);
+  }else {
+    var response = await requestHandler(resource, options);
+  }
+
+  if (response.redirected) {
+    setLoggedInUser(null);
+    Cookies.remove('user');
+    return {ok: false}
+  }
+
+  return response
+}
+
+export { makeRequest, useAuth, makeRequestWrapper };
