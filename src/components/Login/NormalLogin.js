@@ -16,7 +16,7 @@ function NormalLogin(props) {
                 <div>
                   <div className='form-group-login'>
                     <label>Email address</label>
-                    <input type='text' placeholder='Enter your email' className='form-control' value={props.email} onChange={e => props.setEmail(e.target.value)}/>
+                    <input type='text' placeholder='Enter your email' className='form-control-login' value={props.email} onChange={e => props.setEmail(e.target.value)}/>
                     <div style={{fontSize: 12, color: 'red'}}>{props.errors.email}</div>
                   </div> 
                   <div className='form-group-login mb-3-login'>
@@ -26,7 +26,7 @@ function NormalLogin(props) {
                         type={props.viewPassword ? 'text' : 'password'}
                         placeholder='Enter your password'
                         autoComplete='off'
-                        className='form-control password'
+                        className='form-control-login password-login'
                         value={props.password}
                         onChange={e => props.setPassword(e.target.value)}
                       />
@@ -34,8 +34,8 @@ function NormalLogin(props) {
                     </div>
                     <div style={{fontSize: 12, color: 'red'}}>{props.errors.password}</div>
                   </div>
-                  <div className='form-group mb-0 text-center'>
-                    <button type='submit' className='btn btn-primary px-4'>
+                  <div className='form-group-login mb-0-login text-center-login'>
+                    <button type='submit' className='btn-login btn-primary-login px-4'>
                       {props.loggingIn ? <><i className='fa-solid fa-cog fa-spin fa-spin-reverse'></i> Please wait</> : 'Log In'}
                     </button>
                   </div>
