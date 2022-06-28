@@ -23,8 +23,8 @@ const Loan = (props) => {
 
     return (
         <tr className="table-row">
-            <td><NavLink className="link" to="/clientdetail">{props.full_name}</NavLink></td>
-            <td><NavLink className="link" to="/loandetail">{props.loan_number}</NavLink></td>
+            <td><NavLink className="link" to="/app/clients/clientdetail">{props.full_name}</NavLink></td>
+            <td><NavLink className="link" to="/app/loans/loandetail">{props.loan_number}</NavLink></td>
             <td>{props.principal}</td>
             <td>{props.interest_rate}</td>
             <td>{props.repayment_cycle}</td>
