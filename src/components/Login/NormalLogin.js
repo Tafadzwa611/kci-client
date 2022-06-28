@@ -16,7 +16,13 @@ function NormalLogin(props) {
                 <div>
                   <div className='form-group-login'>
                     <label>Email address</label>
-                    <input type='text' placeholder='Enter your email' className='form-control' value={props.email} onChange={e => props.setEmail(e.target.value)}/>
+                    <input
+                      type='text'
+                      placeholder='Enter your email'
+                      className='form-control'
+                      value={props.email}
+                      onChange={e => props.setEmail(e.target.value)}
+                    />
                     <div style={{fontSize: 12, color: 'red'}}>{props.errors.email}</div>
                   </div> 
                   <div className='form-group-login mb-3-login'>
@@ -40,6 +46,7 @@ function NormalLogin(props) {
                     </button>
                   </div>
                 </div>
+                <a>Forgot password?</a>
               </form>
             </div>
           </div>
