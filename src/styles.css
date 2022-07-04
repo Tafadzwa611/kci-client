@@ -2089,7 +2089,9 @@ small {
   justify-content:right;
 }
 
-.footer-container .uil-exclamation-triangle, .table-footer-container .uil-exclamation-triangle {
+.footer-container .uil-exclamation-triangle, 
+.table-footer-container .uil-exclamation-triangle,
+.all-data-loaded .uil-exclamation-triangle {
   font-size: 1rem;
   color: var(--warning) !important;
 }

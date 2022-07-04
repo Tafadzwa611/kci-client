@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ExpenseList from './ExpenseList';
 import Filter from './Filter';
+import ExpenseFooter from './ExpenseFooter';
 import { makeRequest } from '../../utils/utils';
 
 
@@ -55,34 +56,48 @@ const ViewExpenses = () => {
         return url
     }
 
-    // useEffect(() => {
-    //     getExpenses()
-    // }, [])
-
-    // useEffect(() => {
-    //     document.title = 'Expenses';
-    // }, []);
-
-    // const getExpenses = async () => {
-    //     const response = await makeRequest.get('/expensesapi/expenseslist/', {timeout:8000})
-    //     const data = await response.json()
-    //     setExpenses(data)
-    // }
+    const loadMore = async (evt) => {
+        evt.preventDefault();
+        pageNum.current += 1;
+        const data = await fetchExpenses();
+        setExpenses(curr => [...curr,...data.expenses]);
+    }
+    
+    const onSubmit = async (evt) => {
+        evt.preventDefault();
+        pageNum.current = 1;
+        const data = await fetchExpenses();
+        console.log(data)
+        setTotalCount(data.count);
+        setExpenses(data.expenses);
+    }
 
     return (
         <div className="font-12">
             <div className="card">
-                <Filter/>
+                <Filter
+                    expName={expName}
+                    setExpName={setExpName}
+                    minDateCreated={minDateCreated}
+                    setMinDateCreated={setMinDateCreated}
+                    maxDateCreated={maxDateCreated}
+                    setMaxDateCreated={setMaxDateCreated}
+                    onSubmit={onSubmit}
+                />
             </div>
             {expenses != "" &&
                 <div className="card">
-                    <ExpenseList expenses={expenses} setExpenses={setExpenses}/>
-                    <div className="load-more-container card-body view_expenses">
-                        <p className="load-more-container-left">
-                            Showing 10 of 1200
-                        </p>
-                        <button className="btn btn-info">Load More</button>
-                    </div>
+                    <ExpenseList 
+                        expenses={expenses} 
+                        setExpenses={setExpenses}
+                        totalCount={totalCount}
+                    />
+                    <ExpenseFooter 
+                        expenses={expenses} 
+                        totalCount={totalCount} 
+                        nextPageNumber={nextPageNumber}
+                        loadMoreClients={loadMore}
+                    />
                 </div>
             }
             {expenses == "" &&
