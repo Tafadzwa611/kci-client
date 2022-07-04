@@ -7,6 +7,7 @@ import AppRoutes from './AppRoutes';
 
 const Login = lazy(() => import('./Login'));
 const ForgotPassword = lazy(() => import('./ForgotPassword'));
+const ResetPassword = lazy(() => import('./ResetPassword'));
 
 import SubMenu from './Sidebar/SubMenu';
 import { SidebarData } from './Sidebar/SidebarData';
@@ -54,7 +55,7 @@ function App() {
 
     return (
       <>
-        <Router >
+        <Router>
           <Suspense fallback='loading'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
               <Routes>
@@ -63,6 +64,7 @@ function App() {
                 <Route path='login' element={<PublicRoutes />}>
                   <Route path='/login' element={<Login/>}/>
                   <Route path='forgot-password' element={<ForgotPassword/>}/>
+                  <Route path='reset-password' element={<ResetPassword/>}/>
                 </Route>
               </Routes>
             </LoggedInUserProvider>

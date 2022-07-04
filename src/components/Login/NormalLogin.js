@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+
 function NormalLogin(props) {
   return (
     <div className='login-section-login'>
