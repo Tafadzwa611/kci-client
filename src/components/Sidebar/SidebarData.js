@@ -107,10 +107,6 @@ export const SidebarData = [
                 title: 'View Expenses',
                 path: '/app/expenses/viewexpenses',                
             },
-            {
-                title: 'Add Expense',
-                path: '/app/expenses/addexpense',                
-            },
         ]
     },
     {

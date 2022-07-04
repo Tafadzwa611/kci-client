@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
+
 
 class Filter extends Component {
 
@@ -6,6 +8,9 @@ class Filter extends Component {
 
         return (
             <div className="card-body">
+                <div style={{marginBottom:"1.5rem"}}>
+                    <NavLink className="btn btn-success" to="/app/expenses/addexpense">Add Expense</NavLink>
+                </div>
                 <form>
                     <div className="view_search_container online__applications">
                         <div className="row-payments-container">

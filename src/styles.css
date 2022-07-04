@@ -1271,6 +1271,11 @@ th {
   text-align: inherit;
 }
 
+.delete {
+  color: var(--danger);
+  cursor: pointer;
+}
+
 tr .delete {
   color: var(--danger);
   cursor: pointer;
@@ -2746,6 +2751,10 @@ select option {
 
 .btn-skeleton.upload-payments-file {
   width: 140px;
+}
+
+.table-row.expense-row {
+  cursor: pointer;
 }
 
 .skeleton-table-row {

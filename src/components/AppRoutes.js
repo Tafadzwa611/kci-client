@@ -738,7 +738,7 @@ const AppRoutes = () => {
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
                     <Route exact path='/app/otherincome/otherincomedetails' element={<OtherIncomeDetails/>}/>
-                    <Route exact path='/app/expenses/expensedetails' element={<ExpenseDetails/>}/>
+                    <Route exact path="/app/expenses/expensedetails/:expenseId" element={<ExpenseDetails/>}/>
                     <Route exact path='/app/assets/assetdetails' element={<AssetDetails/>}/>
                     </Route>
                 </Route>
