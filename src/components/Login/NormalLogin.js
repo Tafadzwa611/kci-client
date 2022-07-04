@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 
 function NormalLogin(props) {
   return (
@@ -16,7 +18,13 @@ function NormalLogin(props) {
                 <div>
                   <div className='form-group-login'>
                     <label>Email address</label>
-                    <input type='text' placeholder='Enter your email' className='form-control-login' value={props.email} onChange={e => props.setEmail(e.target.value)}/>
+                    <input
+                      type='text'
+                      placeholder='Enter your email'
+                      className='form-control-login'
+                      value={props.email}
+                      onChange={e => props.setEmail(e.target.value)}
+                    />
                     <div style={{fontSize: 12, color: 'red'}}>{props.errors.email}</div>
                   </div> 
                   <div className='form-group-login mb-3-login'>
@@ -40,6 +48,7 @@ function NormalLogin(props) {
                     </button>
                   </div>
                 </div>
+                <Link to='forgot-password'>Forgot password?</Link>
               </form>
             </div>
           </div>

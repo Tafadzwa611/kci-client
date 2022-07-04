@@ -18,11 +18,13 @@ function Login() {
   const [otpRequired, setOtpRequired] = useState(false);
   const [loggingIn, setLoggingIn] = useState(false);
   const [verifyingOtp, setVerifyingOtp] = useState(false);
+  const [authType, setAuthType] = useState('');
 
   let navigate = useNavigate();
 
   useEffect(() => {
     document.title = 'Login';
+    window.location.href = window.location.origin + window.location.pathname + window.location.hash;
   }, []);
 
   const handleSubmit = async (e) => {
@@ -64,6 +66,7 @@ function Login() {
       if (data.two_fa_on) {
         setUserId(data.user_id);
         setOtpRequired(true);
+        setAuthType(data.auth_type);
       }else {
         Cookies.set('user', JSON.stringify(data.user));
         setLoggedInUser(data.user);
@@ -93,7 +96,7 @@ function Login() {
   return (
     <>
       {otpRequired ?
-        <OTPLogin login={otpLogin} token={token} setToken={setToken} verifyingOtp={verifyingOtp} /> :
+        <OTPLogin login={otpLogin} token={token} setToken={setToken} verifyingOtp={verifyingOtp} authType={authType} email={email} /> :
         <NormalLogin
           login={handleSubmit}
           email={email}
