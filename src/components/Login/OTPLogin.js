@@ -1,15 +1,10 @@
 import React, {useEffect} from 'react';
 
 
-function OTPLogin({login, token, setToken, verifyingOtp, authType, email}) {
+function OTPLogin({login, token, setToken, verifyingOtp}) {
   useEffect(() => {
     document.title = 'One Time Password';
   }, []);
-
-  const sendEmail = () => {
-    console.log(email);
-    console.log('sending email');
-  }
 
   return (
     <div className='login-section-login'>
@@ -38,7 +33,6 @@ function OTPLogin({login, token, setToken, verifyingOtp, authType, email}) {
                     <button type='submit' className='btn-login btn-primary-login px-4-login'>Verify Code</button>
                   </div>
                 </div>
-                {['SMS', 'AUTH APP'].includes(authType) && <a onClick={sendEmail}>Lost phone send email instead.</a>}
               </form>
             </div>
           </div>
