@@ -3,6 +3,7 @@ import ExpenseList from './ExpenseList';
 import Filter from './Filter';
 import ExpenseFooter from './ExpenseFooter';
 import { makeRequest } from '../../utils/utils';
+import { async } from 'regenerator-runtime';
 
 
 const ViewExpenses = () => {
@@ -17,13 +18,17 @@ const ViewExpenses = () => {
 
     const pageNum = useRef(1);
 
-    useEffect(async () => {
+    useEffect(() => {
+        getExpenses()
+    });
+
+    const getExpenses = async () => {
         window.scrollTo(0, 0);
         document.title = 'Expenses';
         const data = await fetchExpenses();
         setExpenses(data.expenses);
         setTotalCount(data.count);
-    }, []);
+    };
 
     async function fetchExpenses() {
         try {
