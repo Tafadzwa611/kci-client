@@ -15,12 +15,14 @@ const ViewExpenses = () => {
     const [minDateCreated, setMinDateCreated] = useState('');
     const [maxDateCreated, setMaxDateCreated] = useState('');
     const [loadingMore, setLoadingMore] = useState(false);
+    const [open, setOpen] = useState(false);
+
 
     const pageNum = useRef(1);
 
     useEffect(() => {
         getExpenses()
-    });
+    }, []);
 
     const getExpenses = async () => {
         window.scrollTo(0, 0);
@@ -88,6 +90,9 @@ const ViewExpenses = () => {
                     maxDateCreated={maxDateCreated}
                     setMaxDateCreated={setMaxDateCreated}
                     onSubmit={onSubmit}
+                    open ={open}
+                    setOpen={setOpen}
+                    setExpenses={setExpenses}
                 />
             </div>
             {expenses != "" &&

@@ -1,4 +1,5 @@
 import React from 'react';
+import CreateExpenseModal from './CreateExpenseModal';
 import { NavLink } from 'react-router-dom';
 
 
@@ -11,13 +12,18 @@ const Filter = (props) => {
         setMinDateCreated,
         maxDateCreated,
         setMaxDateCreated,
-        onSubmit
+        onSubmit,
+        open,
+        setOpen,
+        setExpenses
     } = props;
 
     return (
         <div className="card-body">
+            <CreateExpenseModal open={open} setOpen={setOpen} setExpenses={setExpenses} />
             <div style={{marginBottom:"1.5rem"}}>
-                <NavLink className="btn btn-success" to="/app/expenses/addexpense">Add Expense</NavLink>
+                {/* <NavLink className="btn btn-success" to="/app/expenses/addexpense">Add Expense</NavLink> */}
+                <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Expense</button>
             </div>
             <form onSubmit={onSubmit}>
                 <div className="view_search_container online__applications">
@@ -70,7 +76,7 @@ const Filter = (props) => {
                 <div className="filter-container">
                     <h5 className="table-heading">View Expenses</h5>
                     <div className="filter-container-float-right">
-                        <div className="show">
+                        {/* <div className="show">
                             <span>Showing</span>
                             <select className="custom-select">
                                 <option>10</option>
@@ -79,7 +85,7 @@ const Filter = (props) => {
                                 <option>50</option>
                                 <option>100</option>
                             </select>
-                        </div>
+                        </div> */}
                         <button className="btn btn-export"><i class="uil uil-download-alt"></i> <span>Download Excel</span></button>
                     </div>
                 </div>
