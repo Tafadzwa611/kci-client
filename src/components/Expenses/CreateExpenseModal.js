@@ -4,7 +4,6 @@ import { makeRequest } from '../../utils/utils';
 const initialState = {expense_type: '', expense_name: '', expense_amount: '', expense_date: '', reference: '', description: '', currency:''};
 
 function CreateExpenseModal({open, setOpen, setExpenses}) {
-  console.log(open)
   const [exp, setExp] = useState(initialState);
   const [serverErrors, setServerErrors] = useState({});
 
@@ -15,6 +14,7 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
   const handleExpenseChange = (e) => {
     const { name, value } = e.target;
     setExp({ ...exp, [name]: value });
+    validate(e)
   };
 
   const validate = (evt) => {
@@ -166,16 +166,14 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
             <div className='row custom-background' style={{marginTop: '15px'}}>
               <label className='form-label'>Reference<span style={{color: 'red'}}>*</span></label>
               <div className='col-9'>
-                <input name='reference' type='text' className='custom-select-form' autoComplete='new-password' onFocus={validate} onChange={handleExpenseChange} value={exp.reference}/>
-                <p style={{color: 'red'}}>{errors['reference']}</p>
+                <input name='reference' type='text' className='custom-select-form' autoComplete='new-password' onChange={handleExpenseChange} value={exp.reference}/>
               </div>
             </div>
 
             <div className='row custom-background' style={{marginTop: '15px'}}>
               <label className='form-label'>Description<span style={{color: 'red'}}>*</span></label>
               <div className='col-9'>
-                <input name='description' type='text' className='custom-select-form' autoComplete='new-password' onFocus={validate} onChange={handleExpenseChange} value={exp.description}/>
-                <p style={{color: 'red'}}>{errors['description']}</p>
+                <input name='description' type='text' className='custom-select-form' autoComplete='new-password' onChange={handleExpenseChange} value={exp.description}/>
               </div>
             </div>
 
