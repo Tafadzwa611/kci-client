@@ -9,7 +9,7 @@ const SubMenu = ( {item} ) => {
     return (
         <li>
             <div className="icon-links">
-                <a href>
+                <a>
                     {item.icon}
                     <span className="link_name">{item.title}</span>
                 </a>
@@ -21,7 +21,7 @@ const SubMenu = ( {item} ) => {
                 <li><a className="link_name" href="#">{item.title}</a></li>
                 { subnav && item.subNav.map((item, index) => {
                     return (
-                        <li><NavLink to={item.path} key={index}>{item.title}</NavLink></li>
+                        <li key={index}><NavLink to={item.path} key={index}>{item.title}</NavLink></li>
                     )
                 })}
             </ul>

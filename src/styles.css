@@ -1,7 +1,5 @@
 /* --------------------------------------------------------------------------------- */
 
-/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'); */
-
 :root {
   --info: hsl(240, 100%, 70%);
   --warning: hsl(45, 100%, 51%);
@@ -765,10 +763,15 @@ span {
   text-decoration: none;
 }
 
-.sidebar .nav-links li a .link_name {
+.sidebar .nav-links li a .link_name,
+.link_name.dashboard {
   font-size: .9375rem;
   font-weight: 400;
   color: var(--color);
+}
+
+.link_name.dashboard span {
+  font-size: .9375rem;
 }
 
 .sidebar.close .nav-links li a .link_name{
@@ -2839,4 +2842,55 @@ select option {
 
 .custom-select-textarea-skeleton {
   height: 5rem;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--danger);
+  transition: 0.4s;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #fff;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: var(--success);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.rounded {
+  border-radius: 34px;
+}
+
+.slider.rounded:before {
+  border-radius: 50%;
 }

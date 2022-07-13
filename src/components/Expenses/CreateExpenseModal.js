@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { makeRequest } from '../../utils/utils';
 
-const initialState = {expense_type: '', expense_name: '', expense_amount: '', expense_date: '', reference: '', description: '', currency:''};
+// const initialState = {expense_type: '', expense_name: '', expense_amount: '', expense_date: '', reference: '', description: '', currency:''};
+const initialState = {expense_type: '', expense_name: '', expense_amount: '', expense_date: '', reference: '', description: ''};
+
 
 function CreateExpenseModal({open, setOpen, setExpenses}) {
   const [exp, setExp] = useState(initialState);
@@ -9,7 +11,8 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
 
   const [errors, setErrors] = useState({});
   const [expenseTypes, setExpenseTypes] = useState(null);
-  const [currencies, setCurrencies] = useState(null);
+  // const [currencies, setCurrencies] = useState(null);
+  // const [fundAccount, setFundAccount] = useState(null);
 
   const handleExpenseChange = (e) => {
     const { name, value } = e.target;
@@ -44,24 +47,24 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
     }
   }
 
-  async function fetchCurrency() {
-    try {
-      const response = await makeRequest.get('/usersapi/currencieslist/', {timeout: 8000});
-      if (response.ok) {
-        const currency_types = await response.json();
-        return currency_types;
-      }else {
-        const error = await response.json();
-        console.log(error);
-      }
-    }catch(error) {
-      console.log(error);
-    }
-  }
+  // async function fetchCurrency() {
+  //   try {
+  //     const response = await makeRequest.get('/usersapi/currencieslist/', {timeout: 8000});
+  //     if (response.ok) {
+  //       const currency_types = await response.json();
+  //       return currency_types;
+  //     }else {
+  //       const error = await response.json();
+  //       console.log(error);
+  //     }
+  //   }catch(error) {
+  //     console.log(error);
+  //   }
+  // }
 
   useEffect(() => {
     getExpenseTypes()
-    getCurrency()
+    // getCurrency()
   }, []);
 
   const getExpenseTypes = async () => {
@@ -69,12 +72,16 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
     setExpenseTypes(data);
   };
 
-  const getCurrency = async () => {
-    const data = await fetchCurrency();
-    setCurrencies(data);
-  };
+  // const getCurrency = async () => {
+  //   const data = await fetchCurrency();
+  //   setCurrencies(data);
+  // };
 
-  if (expenseTypes===null || currencies===null) {
+  // if (expenseTypes===null || currencies===null) {
+  //   return <div>Loading</div>
+  // }
+
+  if (expenseTypes===null) {
     return <div>Loading</div>
   }
 
@@ -86,7 +93,7 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
       expense_date: exp.expense_date,
       reference: exp.reference,
       description: exp.description,
-      currency_id: exp.currency,
+      // currency_id: exp.currency,
     };
     const response = await makeRequest.post('/expensesapi/add_expense/', body, {timeout: 8000});
     if (response.ok) {
@@ -126,7 +133,7 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
               </div>
             </div>
 
-            <div className='row' style={{marginTop: '15px'}}>
+            {/* <div className='row' style={{marginTop: '15px'}}>
               <label className='form-label'>Currency<span style={{color: 'red'}}>*</span></label>
               <div className='col-9'>
                 <select name='currency' className='custom-select-form' onFocus={validate} onChange={handleExpenseChange} value={exp.currency} required>
@@ -137,7 +144,7 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
                 </select>
                 <p style={{color: 'red'}}>{errors['currency']}</p>
               </div>
-            </div>
+            </div> */}
               
             <div className='row custom-background' style={{marginTop: '15px'}}>
               <label className='form-label'>Expense name<span style={{color: 'red'}}>*</span></label>

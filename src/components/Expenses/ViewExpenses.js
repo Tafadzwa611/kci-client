@@ -115,7 +115,7 @@ const ViewExpenses = () => {
                     <div className="table-footer-container card-body clients_table">
 
                         <div className="all-data-loaded">
-                            <i class="uil uil-exclamation-triangle"></i> 
+                            <i className="uil uil-exclamation-triangle"></i> 
                             <span>No expenses at the moment</span>
                         </div>
                     </div>

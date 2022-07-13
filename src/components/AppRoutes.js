@@ -138,7 +138,7 @@ const JournalDetails = lazy(() => import('./Accounting/Journals/JournalDetails')
 const AddJournal = lazy(() => import('./Accounting/AddJournal/AddJournal'));
 const Main = lazy(() => import('./Main'));
 
-const AppRoutes = () => {
+const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPropagatePayments}) => {
 
     const [loggedInUser, setLoggedInUser] = React.useState(null);
 
@@ -262,7 +262,16 @@ const AppRoutes = () => {
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
-                    <Route exact path='/app/users/accountsettings' element={<AccountSettings/>}/>
+                    <Route 
+                        exact 
+                        path='/app/users/accountsettings' 
+                        element={
+                            <AccountSettings 
+                                isAccountinOn={isAccountinOn}
+                                showIsAccountinOn={showIsAccountinOn}
+                                propagatePayments={propagatePayments}
+                                showPropagatePayments={showPropagatePayments}
+                        />}/>
                     </Route>
                 </Route>
                 </Routes>
@@ -345,17 +354,17 @@ const AppRoutes = () => {
             </Suspense>
 
             <Suspense fallback={<HomeSkeleton />}>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
+                <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/home' element={<Home/>}/>
-                    </Route>
-                </Route>
-                </Routes>
+                    <Routes>
+                        <Route path='/' element={<ProtectedRoutes />}>
+                            <Route path='app' element={<Main />}>
+                                <Route exact path='/app/home' element={<Home/>} />
+                            </Route>
+                        </Route>
+                    </Routes>
 
-            </LoggedInUserProvider>
+                </LoggedInUserProvider>
             </Suspense>
 
             <Suspense fallback={<AddOtherIncomeSkeleton />}>

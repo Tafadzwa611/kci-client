@@ -28,7 +28,7 @@ const Currencies = () => {
                     </table>
                 </div>
                 <div className="btn-flex-space-btwn">
-                    <NavLink className="btn btn-default" to="/admin"><i class="uil uil-arrow-left"></i>Back</NavLink>
+                    <NavLink className="btn btn-default" to="/app/users/admin"><i class="uil uil-arrow-left"></i>Back</NavLink>
                 </div>
 
             </div>

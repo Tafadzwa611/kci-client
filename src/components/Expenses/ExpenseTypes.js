@@ -9,7 +9,7 @@ const ExpenseTypes = () => {
                 
                 <h5 className="table-heading">Expense Types</h5>
                 <div style={{margin:"20px 0"}}>
-                    <NavLink className="btn btn-success" to="/addexpensetype">Add Expense Type</NavLink><br/>
+                    <NavLink className="btn btn-success" to="/app/expenses/addexpensetype">Add Expense Type</NavLink><br/>
                 </div>
                 <div className="table-responsive font-12">
                     <table className="table table-hover">

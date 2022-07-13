@@ -5,7 +5,7 @@ const DeleteModal = ({closeModal, deleteExpense}) => {
         <div className="modalBackground">
             <div className="modalContainer">
                 <div>
-                    <i class="uil uil-info-circle modal_circle"></i>
+                    <i className="uil uil-info-circle modal_circle"></i>
                 </div>
                 <div className="title">
                     Are you sure ? 

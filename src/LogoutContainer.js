@@ -6,19 +6,19 @@ const LogoutContainer = (props) => {
         <ul className="logout-details">
             <li>
                 <NavLink to="/app/users/admin" className="first-atag" onClick={props.showLogout}>
-                    <i class="uil uil-home"></i>
+                    <i className="uil uil-home"></i>
                     <span>Admin</span>
                 </NavLink>
             </li>
             <li>
                 <NavLink to="/app/users/userprofile" className="first-atag" onClick={props.showLogout}>
-                    <i class="uil uil-user"></i>
+                    <i className="uil uil-user"></i>
                     <span>Profile</span>
                 </NavLink>
             </li>
             <li>                               
                 <a href="#" className="last-atag" onClick={props.showLogout}>
-                    <i class="uil uil-signout"></i>
+                    <i className="uil uil-signout"></i>
                     <span>Logout</span>
                 </a>
             </li>

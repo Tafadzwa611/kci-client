@@ -27,11 +27,16 @@ function App() {
     }
   }, []);
 
+
   // for sidebar 
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
   const [logout, setLogout] = useState(false);
   const showLogout = () => setLogout(!logout);
+  const [isAccountinOn, setIsAccountinOn] = useState(false)
+  const showIsAccountinOn = () => setIsAccountinOn(!isAccountinOn);
+  const [propagatePayments, setPropagatePayments] = useState(false)
+  const showPropagatePayments = () => setPropagatePayments(!propagatePayments);
   const [theme, setTheme] = useState("light");
   const toggleTheme = () => {
       setTheme((curr) => (
@@ -44,12 +49,18 @@ function App() {
       if ( sidebar_data !== null) setSidebar(JSON.parse(sidebar_data))
       const theme_data = window.localStorage.getItem('THEME');
       if ( theme_data !== null) setTheme(JSON.parse(theme_data))
+      const accounting_data = window.localStorage.getItem('ACCOUNTING');
+      if ( accounting_data !== null) setIsAccountinOn(JSON.parse(accounting_data))
+      const payments_data = window.localStorage.getItem('PAYMENTS');
+      if ( payments_data !== null) setPropagatePayments(JSON.parse(payments_data))
   }, [])
 
   useEffect(() => {
       window.localStorage.setItem('SIDEBAR', JSON.stringify(sidebar))
       window.localStorage.setItem('THEME', JSON.stringify(theme))
-  }, [sidebar, theme])
+      window.localStorage.setItem('ACCOUNTING', JSON.stringify(isAccountinOn))
+      window.localStorage.setItem('PAYMENTS', JSON.stringify(propagatePayments))
+  }, [sidebar, theme, isAccountinOn, propagatePayments])
 
   if (loggedInUser === null) {
 
@@ -95,10 +106,10 @@ function App() {
 
               <ul className="nav-links">
                 <li>
-                  <a href>
+                  <NavLink to="app/dashboard" className="link_name dashboard">
                     <i className="uil uil-estate"></i>
-                    <li><NavLink className="link_name" to="/app/dashboard">Dashboard</NavLink></li>
-                  </a>
+                    <span>Dashboard</span>
+                  </NavLink>
                   <ul className="sub-menu blank">
                     <li><NavLink className="link_name" to="/app/dashboard">Dashboard</NavLink></li>
                   </ul>
@@ -130,11 +141,11 @@ function App() {
 
                   <i className={theme === "light" ? 'uil uil-moon toggle-theme' : 'uil uil-sun toggle-theme'} onClick={toggleTheme}></i>
                   <NavLink to="/notifications" className="first-atag">
-                    <i class="uil uil-bell"></i>
+                    <i className="uil uil-bell"></i>
                   </NavLink>
 
                   <li className="home-content-header-right-list">
-                    <a className="home-content-header-right" href onClick={showLogout}>
+                    <a className="home-content-header-right" onClick={showLogout}>
                       <i className="uil uil-user-circle user_image"></i>
                       <div className="home-content-header-right-sub">
                         <span className="user_name">{loggedInUser.first_name} {loggedInUser.last_name}</span>
@@ -150,7 +161,12 @@ function App() {
 
               <div className="app">
 
-                <AppRoutes />
+                <AppRoutes 
+                  isAccountinOn={isAccountinOn}
+                  showIsAccountinOn={showIsAccountinOn}
+                  propagatePayments={propagatePayments}
+                  showPropagatePayments={showPropagatePayments}
+                />
 
               </div>
 

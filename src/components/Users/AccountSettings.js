@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import SwitchAccounting from '../SwitchAccounting';
+import SwitchPropagatePayments from '../SwitchPropagatePayments';
 
-const AccountSettings = () => {
+const AccountSettings = ({isAccountinOn,propagatePayments,showIsAccountinOn,showPropagatePayments}) => {
 
     const td_style = {
         padding: "1rem 0"
     }
+
+    useEffect(() => {
+        document.title = 'Account Settings';
+    }, [])
 
     return (
         <div className="card slide">
@@ -17,28 +23,20 @@ const AccountSettings = () => {
                             <tr>
                                 <td style={td_style}>Accounting Module</td>
                                 <td>
-                                    <div class="toggle-container">
-                                        <div class="toggle-btn ">
-                                            <div class="inner-circle"></div>
-                                        </div>
-                                    </div>
+                                    <SwitchAccounting isAccountinOn={isAccountinOn} onToggle={showIsAccountinOn} />
                                 </td>         
                             </tr>
                             <tr>
                                 <td style={td_style}>Propagate overpayments to client's other open loans</td>
                                 <td>
-                                    <div class="toggle-container">
-                                        <div class="toggle-btn on">
-                                            <div class="inner-circle"></div>
-                                        </div>
-                                    </div>
+                                    <SwitchPropagatePayments propagatePayments={propagatePayments} onToggle={showPropagatePayments} />
                                 </td>         
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div className="btn-flex-space-btwn">
-                    <NavLink className="btn btn-default" to="/admin"><i class="uil uil-arrow-left"></i>Back</NavLink>
+                    <NavLink className="btn btn-default" to="/app/users/admin"><i className="uil uil-arrow-left"></i>Back</NavLink>
                 </div>
 
             </div>

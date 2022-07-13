@@ -22,7 +22,6 @@ const Filter = (props) => {
         <div className="card-body">
             <CreateExpenseModal open={open} setOpen={setOpen} setExpenses={setExpenses} />
             <div style={{marginBottom:"1.5rem"}}>
-                {/* <NavLink className="btn btn-success" to="/app/expenses/addexpense">Add Expense</NavLink> */}
                 <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Expense</button>
             </div>
             <form onSubmit={onSubmit}>
@@ -30,7 +29,7 @@ const Filter = (props) => {
                     <div className="row-payments-container">
                         <label className="form-label row-label">Enter Expense Name</label>
                         <div className="input-group" style={{margin:"10px 0 0"}}>
-                            <i class="uil uil-search"></i>
+                            <i className="uil uil-search"></i>
                             <input 
                                 className="custom-select-form row-form input-background" 
                                 placeholder="Enter Expense Name..."
@@ -44,7 +43,7 @@ const Filter = (props) => {
                     <div className="row-payments-container">
                         <label className="form-label row-label">Min Date Created</label>
                         <div className="input-group" style={{margin:"10px 0 0"}}>
-                            <i class="uil uil-calendar-alt"></i>
+                            <i className="uil uil-calendar-alt"></i>
                             <input 
                                 className="custom-select-form row-form input-background" 
                                 type="date" 
@@ -57,7 +56,7 @@ const Filter = (props) => {
                     <div className="row-payments-container">
                         <label className="form-label row-label">Max Date Created</label>
                         <div className="input-group" style={{margin:"10px 0 0"}}>
-                            <i class="uil uil-calendar-alt"></i>
+                            <i className="uil uil-calendar-alt"></i>
                             <input 
                                 className="custom-select-form row-form input-background" 
                                 type="date" 
@@ -86,7 +85,7 @@ const Filter = (props) => {
                                 <option>100</option>
                             </select>
                         </div> */}
-                        <button className="btn btn-export"><i class="uil uil-download-alt"></i> <span>Download Excel</span></button>
+                        <button className="btn btn-export"><i className="uil uil-download-alt"></i> <span>Download Excel</span></button>
                     </div>
                 </div>
             </form>

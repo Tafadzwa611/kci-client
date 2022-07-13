@@ -41,39 +41,59 @@ const OnlineApplicationsSkeleton = () => {
                     <table className='table table-centered table-hover'>
                         <thead className="thead-light">
                             <tr className="skeleton-table-thead">
-                                <div className="skeleton skeleton-text"></div>
+                                <td><div className="skeleton skeleton-text"></div></td>
                             </tr>
                         </thead>
                         <tbody>
                             <tr className="skeleton-table-row">
-                                <div className="skeleton skeleton-text"></div>
+                                <td>
+                                    <div className="skeleton skeleton-text"></div>
+                                </td>
                             </tr>
                             <tr className="skeleton-table-row">
-                                <div className="skeleton skeleton-text"></div>
+                                <td>
+                                    <div className="skeleton skeleton-text"></div>
+                                </td>
                             </tr>
                             <tr className="skeleton-table-row">
-                                <div className="skeleton skeleton-text"></div>
+                                <td>
+                                    <div className="skeleton skeleton-text"></div>
+                                </td>
                             </tr>
                             <tr className="skeleton-table-row">
-                                <div className="skeleton skeleton-text"></div>
+                                <td>
+                                    <div className="skeleton skeleton-text"></div>
+                                </td>
                             </tr>
                             <tr className="skeleton-table-row">
-                                <div className="skeleton skeleton-text"></div>
+                                <td>
+                                    <div className="skeleton skeleton-text"></div>
+                                </td>
                             </tr>
                             <tr className="skeleton-table-row">
-                                <div className="skeleton skeleton-text"></div>
+                                <td>
+                                    <div className="skeleton skeleton-text"></div>
+                                </td>
                             </tr>
                             <tr className="skeleton-table-row">
-                                <div className="skeleton skeleton-text"></div>
+                                <td>
+                                    <div className="skeleton skeleton-text"></div>
+                                </td>
                             </tr>
                             <tr className="skeleton-table-row">
-                                <div className="skeleton skeleton-text"></div>
+                                <td>
+                                    <div className="skeleton skeleton-text"></div>
+                                </td>
                             </tr>
                             <tr className="skeleton-table-row">
-                                <div className="skeleton skeleton-text"></div>
+                                <td>
+                                    <div className="skeleton skeleton-text"></div>
+                                </td>
                             </tr>
                             <tr className="skeleton-table-row last-row">
-                                <div className="skeleton skeleton-text"></div>
+                                <td>
+                                    <div className="skeleton skeleton-text"></div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

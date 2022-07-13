@@ -4,8 +4,8 @@ export const SidebarData = [
     {
         title: 'Clients',
         icon:<i className="uil uil-user"></i>,
-        iconClosed:<i class="uil uil-angle-down arrow"></i>,
-        iconOpened:<i class="uil uil-angle-up arrow"></i>,
+        iconClosed:<i className="uil uil-angle-down arrow"></i>,
+        iconOpened:<i className="uil uil-angle-up arrow"></i>,
         subNav: [
             {
                 title: 'View Clients',
@@ -24,8 +24,8 @@ export const SidebarData = [
     {
         title: 'Loans',       
         icon:<i className="uil uil-sort"></i>,
-        iconClosed:<i class="uil uil-angle-down arrow"></i>,
-        iconOpened:<i class="uil uil-angle-up arrow"></i>,
+        iconClosed:<i className="uil uil-angle-down arrow"></i>,
+        iconOpened:<i className="uil uil-angle-up arrow"></i>,
         subNav: [
             {
                 title: 'View Loans',
@@ -60,8 +60,8 @@ export const SidebarData = [
     {
         title: 'Payments',
         icon:<i className="uil uil-scroll-h"></i>,
-        iconClosed:<i class="uil uil-angle-down arrow"></i>,
-        iconOpened:<i class="uil uil-angle-up arrow"></i>,
+        iconClosed:<i className="uil uil-angle-down arrow"></i>,
+        iconOpened:<i className="uil uil-angle-up arrow"></i>,
         subNav: [
             {
                 title: 'View Payments',
@@ -84,8 +84,8 @@ export const SidebarData = [
     {
         title: 'Other Income',
         icon:<i className="uil uil-folder-plus"></i>,
-        iconClosed:<i class="uil uil-angle-down arrow"></i>,
-        iconOpened:<i class="uil uil-angle-up arrow"></i>,
+        iconClosed:<i className="uil uil-angle-down arrow"></i>,
+        iconOpened:<i className="uil uil-angle-up arrow"></i>,
         subNav: [
             {
                 title: 'View Other Income',
@@ -100,8 +100,8 @@ export const SidebarData = [
     {
         title: 'Expenses',
         icon:<i className="uil uil-folder-minus"></i>,
-        iconClosed:<i class="uil uil-angle-down arrow"></i>,
-        iconOpened:<i class="uil uil-angle-up arrow"></i>,
+        iconClosed:<i className="uil uil-angle-down arrow"></i>,
+        iconOpened:<i className="uil uil-angle-up arrow"></i>,
         subNav: [
             {
                 title: 'View Expenses',
@@ -112,8 +112,8 @@ export const SidebarData = [
     {
         title: 'Asset Management',
         icon:<i className="uil uil-bag"></i>,
-        iconClosed:<i class="uil uil-angle-down arrow"></i>,
-        iconOpened:<i class="uil uil-angle-up arrow"></i>,
+        iconClosed:<i className="uil uil-angle-down arrow"></i>,
+        iconOpened:<i className="uil uil-angle-up arrow"></i>,
         subNav: [
             {
                 title: 'View Assets',
@@ -132,8 +132,8 @@ export const SidebarData = [
     {
         title: 'Reports',       
         icon:<i className="uil uil-books"></i>,
-        iconClosed:<i class="uil uil-angle-down arrow"></i>,
-        iconOpened:<i class="uil uil-angle-up arrow"></i>,
+        iconClosed:<i className="uil uil-angle-down arrow"></i>,
+        iconOpened:<i className="uil uil-angle-up arrow"></i>,
         subNav: [
             {
                 title: 'Clients Report',
@@ -184,8 +184,8 @@ export const SidebarData = [
     {
         title: 'Accounting',       
         icon:<i className="uil uil-receipt"></i>,
-        iconClosed:<i class="uil uil-angle-down arrow"></i>,
-        iconOpened:<i class="uil uil-angle-up arrow"></i>,
+        iconClosed:<i className="uil uil-angle-down arrow"></i>,
+        iconOpened:<i className="uil uil-angle-up arrow"></i>,
         subNav: [
             {
                 title: 'Cashflow',
