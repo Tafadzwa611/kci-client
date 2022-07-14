@@ -44,9 +44,6 @@ const ExpenseTypes = () => {
                 <div className="card-body">
                     
                     <h5 className="table-heading">Expense Types</h5>
-                    {/* <div style={{margin:"20px 0"}}>
-                        <NavLink className="btn btn-success" to="/app/expenses/addexpensetype">Add Expense Type</NavLink><br/>
-                    </div> */}
                     <CreateExpenseTypeModal open={open} setOpen={setOpen} setExpenseTypes={setExpenseTypes} />
                     <div style={{margin:"20px 0"}}>
                         <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Expense Type</button>

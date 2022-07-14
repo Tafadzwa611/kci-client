@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ExpenseFooter = ({expenses, totalCount, nextPageNumber, loadMoreClients}) => {
+const ExpenseFooter = ({expenses, totalCount, nextPageNumber, loadMoreClients, loadingMore}) => {
     return (
         <>
             {nextPageNumber === null ?
@@ -12,7 +12,10 @@ const ExpenseFooter = ({expenses, totalCount, nextPageNumber, loadMoreClients}) 
                     <p className="load-more-container-left">
                         Showing {expenses.length} of {totalCount} expenses.
                     </p>
-                    <button className="btn btn-info" onClick={loadMoreClients}>Load More</button>
+                    {loadingMore ? 
+                        <button className="btn btn-info">Please wait...</button>:
+                        <button className="btn btn-info" onClick={loadMoreClients}>Load More</button>
+                    }
                 </div>
             }
         </>

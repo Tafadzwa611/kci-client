@@ -177,7 +177,6 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                     <Route exact path='/app/loans/viewdefaultsandarrears' element={<ViewDefaultsAndArrears/>}/>
                     <Route exact path='/app/loans/viewrefunds' element={<ViewRefunds/>}/>
                     <Route exact path='/app/otherincome/viewotherincome' element={<ViewOtherIncome/>}/>
-                    <Route exact path='/app/expenses/viewexpenses' element={<ViewExpenses/>}/>
                     <Route exact path='/app/payments/viewpayments' element={<ViewPayments/>}/>
                     <Route exact path='/app/assets/viewassets' element={<ViewAssets/>}/>
                     </Route>
@@ -522,6 +521,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
                     <Route exact path='/app/reports/disbursementreport' element={<DisbursementReport/>}/>
+                    <Route exact path='/app/expenses/viewexpenses' element={<ViewExpenses/>}/>
                     </Route>
                 </Route>
                 </Routes>

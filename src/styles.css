@@ -2228,6 +2228,10 @@ small {
   appearance: none;
 }
 
+.report-custom-form-control.normal-input {
+  background: var(--white);
+}
+
 .report-custom-form-control:focus {
   border-color: #c1c9d0;
   outline: 0;
