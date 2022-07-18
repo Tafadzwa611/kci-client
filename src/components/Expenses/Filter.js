@@ -18,13 +18,11 @@ const Filter = (props) => {
         onSubmit,
         open,
         setOpen,
-        setExpenses
+        setExpenses,
+        changeCurrency,
+        searching,
+        setSearching
     } = props;
-
-    const changeCurrency = (evt) => {
-        console.log(evt.target.value)
-        setCurrencyId(evt.target.value);
-    }
 
     return (
         <div className="card-body">
@@ -42,7 +40,7 @@ const Filter = (props) => {
                             <div style={{width:"100%"}}>
                                 <label className="form-label">Min Date Created</label>
                                 <div className="reports-input-group" style={{margin:"10px 0 0"}}>
-                                    <i class="uil uil-calendar-alt"></i>
+                                    <i className="uil uil-calendar-alt"></i>
                                     <input 
                                         className="reports-form-control" 
                                         type="date" 
@@ -55,7 +53,7 @@ const Filter = (props) => {
                             <div style={{width:"100%"}}>
                                 <label className="form-label">Max Date Created</label>
                                 <div className="reports-input-group" style={{margin:"10px 0 0"}}>
-                                    <i class="uil uil-calendar-alt"></i>
+                                    <i className="uil uil-calendar-alt"></i>
                                     <input 
                                         className="reports-form-control" 
                                         type="date" 
@@ -82,7 +80,10 @@ const Filter = (props) => {
                                         return <option key={cur.id} value={cur.id}>{cur.shortname}</option>
                                     })}
                                 </select>
-                                <button type="submit" className="btn btn-info" >Search</button>
+                                {searching ?
+                                    <button type="submit" className="btn btn-info" style={{opacity:"0.7", cursor:"none"}}>Searching</button>:
+                                    <button type="submit" className="btn btn-info" >Search</button>
+                                }
                             </div>
                         </div>
 

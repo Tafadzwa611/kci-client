@@ -19,14 +19,20 @@ const ViewExpenses = () => {
     const [maxDateCreated, setMaxDateCreated] = useState('');
     const [loadingMore, setLoadingMore] = useState(false);
     const [open, setOpen] = useState(false);
+    const [searching, setSearching] = useState(false);
 
 
     const pageNum = useRef(1);
 
     useEffect(() => {
-        getExpenses();
-        getCurrency();
+        if (currencyId !== null){
+            getExpenses();
+        }
     }, [currencyId]);
+
+    useEffect(() => {
+        getCurrency();
+    }, [])
 
     const getExpenses = async () => {
         window.scrollTo(0, 0);
@@ -44,6 +50,7 @@ const ViewExpenses = () => {
                 const json_res = await response.json();
                 setNextPageNumber(json_res.next_page_num);
                 setLoadingMore(false);
+                setSearching(false);
                 return json_res;
             }else {
                 const error = await response.json();
@@ -77,8 +84,15 @@ const ViewExpenses = () => {
         await fetchCurrency();
     };
 
+    const changeCurrency = (evt) => {
+        setCurrencyId(evt.target.value);
+        pageNum.current = 1;
+    }
+
     function getUrl() {
+
         let url = `/expensesapi/expenseslist/?page_num=${pageNum.current}&currency_id=${currencyId}`;
+
         if (expName !== '') {
           url += `&exp_name=${expName}`;
         }
@@ -101,6 +115,7 @@ const ViewExpenses = () => {
     
     const onSubmit = async (evt) => {
         evt.preventDefault();
+        setSearching(true);
         pageNum.current = 1;
         const data = await fetchExpenses();
         console.log(data)
@@ -129,6 +144,9 @@ const ViewExpenses = () => {
                     open ={open}
                     setOpen={setOpen}
                     setExpenses={setExpenses}
+                    changeCurrency={changeCurrency}
+                    searching={searching}
+                    setSearching={setSearching}
                 />
             </div>
             {expenses != "" &&

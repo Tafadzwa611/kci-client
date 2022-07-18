@@ -53,7 +53,7 @@ const DisbursementReport = () => {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td className="skeleton bg-gray text-left" colspan="9">
+                                    <td className="skeleton bg-gray text-left" colSpan="9">
                                         <div className="skeleton" style={{height:"1.125rem"}}></div>
                                     </td>
                                 </tr>
