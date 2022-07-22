@@ -32,7 +32,7 @@ const Expense = (props) => {
                     <span className="delete" onClick={showOpenModal}>delete</span>
                 </div>
             </div>
-            {openModal && <DeleteModal closeModal={setOpenmodal} deleteExpense={deleteExpense}/>}
+            {openModal && <DeleteModal closeModal={setOpenmodal} expense={props.expense.expense_name} deleteExpense={deleteExpense}/>}
             {detailsDiv && 
             <div>
                 <div>

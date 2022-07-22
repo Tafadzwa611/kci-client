@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DeleteModal = ({closeModal, deleteExpense}) => {
+const DeleteModal = ({closeModal, deleteExpense, expense}) => {
     return (
         <div className="modalBackground">
             <div className="modalContainer">
@@ -11,7 +11,7 @@ const DeleteModal = ({closeModal, deleteExpense}) => {
                     Are you sure ? 
                 </div>
                 <div className="para">
-                    You want to delete Tafadzwa Kuno
+                    You want to delete {expense} expense.
                 </div>
                 <div className="modal-footer">
                     <button className="btn btn-info" onClick={deleteExpense}>Continue</button>
