@@ -91,10 +91,6 @@ export const SidebarData = [
                 title: 'View Other Income',
                 path: '/app/otherincome/viewotherincome',                
             },
-            {
-                title: 'Add Other Income',
-                path: '/app/otherincome/addotherincome',                
-            },
         ]
     },
     {
