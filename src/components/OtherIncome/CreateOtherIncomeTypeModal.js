@@ -6,7 +6,7 @@ const initialState = {name: '', date_of_account: '', currency: ''};
 function CreateOtherIncomeTypeModal({open, setOpen, setOtherIncomeTypes}) {
   const [othInType, setOthInType] = useState(initialState);
   const [currencies, setCurrencies] = useState(null);
-  const [serverErrors, setServerErrors] = useState({});
+  const [serverErrors, setServerErrors] = useState([]);
   const [errors, setErrors] = useState({});
 
   const handleExpenseTypeChange = (e) => {
@@ -70,7 +70,6 @@ function CreateOtherIncomeTypeModal({open, setOpen, setOtherIncomeTypes}) {
       return data
     }
     const errors = await response.json();
-    console.log(errors);
     setServerErrors(errors);
     window.scrollTo(0, 0);
   }
@@ -85,6 +84,15 @@ function CreateOtherIncomeTypeModal({open, setOpen, setOtherIncomeTypes}) {
             <button type='button' className='close' onClick={(e) => setOpen(curr => !curr)} style={{cursor:"pointer"}}><span aria-hidden='true'>&times;</span></button>
           </div>
           <div className='modal-body'>
+
+            {serverErrors.map((error, index) => (
+              <div className='row custom-background' style={{marginTop: '15px'}}>
+                <label className='form-label'></label>
+                <div className='col-9'>
+                  <div style={{fontSize: 12, color: 'red'}} key={index}>{error}</div>
+                </div>
+              </div>
+            ))}
 
             <div className='row custom-background' style={{marginTop: '15px'}}>
               <label className='form-label'>Name<span style={{color: 'red'}}>*</span></label>

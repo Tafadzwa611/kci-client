@@ -74,8 +74,6 @@ function CreateExpenseTypeModal({open, setOpen, setExpenseTypes}) {
     window.scrollTo(0, 0);
   }
 
-  console.log(serverErrors)
-
 
   return (
     <div className={open ? 'modal fade show' : 'modal fade'} style={{display: open ? 'block' : 'none'}}>
