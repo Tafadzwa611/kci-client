@@ -26,7 +26,7 @@ const Expense = (props) => {
                     <div style={{width:"16.66%", textAlign:"center"}}>{props.expense.expense_name}</div>
                     <div style={{width:"16.67%", textAlign:"center"}}>{props.expense.expense_date}</div>
                     <div style={{width:"16.67%", textAlign:"center"}}>{props.expense.date_created}</div>
-                    <div style={{width:"16.67%", textAlign:"center"}}>{props.expense.expense_amount}</div>
+                    <div style={{width:"16.67%", textAlign:"center"}}>{props.expense.currency.shortname} {props.expense.expense_amount}</div>
                 </div>
                 <div className="border__bottom" style={{display:"flex",justifyContent:"center", flexDirection:"row", padding:"1rem 1.5rem", width:"16.67%", textAlign:"center", marginRight:"1rem"}}>
                     <span className="delete" onClick={showOpenModal}>delete</span>
@@ -40,7 +40,7 @@ const Expense = (props) => {
                         <div>
                             <div>Expense Name: {props.expense.expense_name}</div>
                             <div>Expense Type: {props.expense.expense_type.name}</div>
-                            <div>Expense Amount: <span> ZWL </span><em className="currency"></em>{props.expense.expense_amount}</div>
+                            <div>Expense Amount: {props.expense.currency.shortname} {props.expense.expense_amount}</div>
                         </div>
                         <div>
                             <div>Reference: {props.expense.reference}</div> 

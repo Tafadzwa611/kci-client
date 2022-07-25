@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { makeRequest } from '../../utils/utils';
 
-// const initialState = {expense_type: '', expense_name: '', expense_amount: '', expense_date: '', reference: '', description: '', currency:''};
-const initialState = {expense_type: '', expense_name: '', expense_amount: '', expense_date: '', reference: '', description: ''};
+const initialState = {expense_type: '', expense_name: '', expense_amount: '', expense_date: '', reference: '', description: '', fund_account_id:''};
 
 
 function CreateExpenseModal({open, setOpen, setExpenses}) {
@@ -11,8 +10,7 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
 
   const [errors, setErrors] = useState({});
   const [expenseTypes, setExpenseTypes] = useState(null);
-  // const [currencies, setCurrencies] = useState(null);
-  // const [fundAccount, setFundAccount] = useState(null);
+  const [fundAccount, setFundAccount] = useState(null);
 
   const handleExpenseChange = (e) => {
     const { name, value } = e.target;
@@ -47,24 +45,24 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
     }
   }
 
-  // async function fetchCurrency() {
-  //   try {
-  //     const response = await makeRequest.get('/usersapi/currencieslist/', {timeout: 8000});
-  //     if (response.ok) {
-  //       const currency_types = await response.json();
-  //       return currency_types;
-  //     }else {
-  //       const error = await response.json();
-  //       console.log(error);
-  //     }
-  //   }catch(error) {
-  //     console.log(error);
-  //   }
-  // }
+  async function fetchFundAccount() {
+    try {
+      const response = await makeRequest.get('/acc-api/cash-and-cash-equivalents-sub-accs/', {timeout: 8000});
+      if (response.ok) {
+        const fund_accounts = await response.json();
+        return fund_accounts;
+      }else {
+        const error = await response.json();
+        console.log(error);
+      }
+    }catch(error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
     getExpenseTypes()
-    // getCurrency()
+    getFundAccounts()
   }, []);
 
   const getExpenseTypes = async () => {
@@ -72,16 +70,12 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
     setExpenseTypes(data);
   };
 
-  // const getCurrency = async () => {
-  //   const data = await fetchCurrency();
-  //   setCurrencies(data);
-  // };
+  const getFundAccounts = async () => {
+    const data = await fetchFundAccount();
+    setFundAccount(data);
+  };
 
-  // if (expenseTypes===null || currencies===null) {
-  //   return <div>Loading</div>
-  // }
-
-  if (expenseTypes===null) {
+  if (expenseTypes===null || fundAccount===null) {
     return <div>Loading</div>
   }
 
@@ -93,7 +87,7 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
       expense_date: exp.expense_date,
       reference: exp.reference,
       description: exp.description,
-      // currency_id: exp.currency,
+      fund_account_id: exp.fund_account_id,
     };
     const response = await makeRequest.post('/expensesapi/add_expense/', body, {timeout: 8000});
     if (response.ok) {
@@ -109,6 +103,13 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
     window.scrollTo(0, 0);
   }
 
+  const exp_type = expenseTypes.filter((value) => value.id == exp.expense_type);
+  let exp_type_currency_id
+  if (exp_type != ""){
+    exp_type_currency_id = exp_type[0].currency.id
+  }
+
+  const newFundAccountArray = fundAccount.filter((value) => value.currency ==  exp_type_currency_id);
 
   return (
     <div className={open ? 'modal fade show' : 'modal fade'} style={{display: open ? 'block' : 'none'}}>
@@ -116,7 +117,7 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
         <div className='modal-content'>
           <div className='modal-header'>
             <label className="form-title">[ Add Expense ]</label>
-            <button type='button' className='close' onClick={(e) => setOpen(curr => !curr)}><span aria-hidden='true'>&times;</span></button>
+            <button type='button' className='close' onClick={(e) => setOpen(curr => !curr)} style={{cursor:"pointer"}}><span aria-hidden='true'>&times;</span></button>
           </div>
           <div className='modal-body'>
 
@@ -133,18 +134,20 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
               </div>
             </div>
 
-            {/* <div className='row' style={{marginTop: '15px'}}>
-              <label className='form-label'>Currency<span style={{color: 'red'}}>*</span></label>
+            <div className='row' style={{marginTop: '15px'}}>
+              <label className='form-label'>Fund Account<span style={{color: 'red'}}>*</span></label>
               <div className='col-9'>
-                <select name='currency' className='custom-select-form' onFocus={validate} onChange={handleExpenseChange} value={exp.currency} required>
+                <select name='fund_account_id' className='custom-select-form' onFocus={validate} onChange={handleExpenseChange} value={exp.fund_account_id} required>
                   <option></option>
-                  {currencies.map((currency) => (
-                    <option key={currency.id} value={currency.id}>{currency.fullname}</option>
+                  {newFundAccountArray.map((account) => (
+
+                    <option key={account.id} value={account.id}>{account.general_ledger_name}</option>
+
                   ))}
                 </select>
-                <p style={{color: 'red'}}>{errors['currency']}</p>
+                <p style={{color: 'red'}}>{errors['fund_account_id']}</p>
               </div>
-            </div> */}
+            </div>
               
             <div className='row custom-background' style={{marginTop: '15px'}}>
               <label className='form-label'>Expense name<span style={{color: 'red'}}>*</span></label>
