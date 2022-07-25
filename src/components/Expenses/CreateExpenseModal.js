@@ -3,7 +3,6 @@ import { makeRequest } from '../../utils/utils';
 
 const initialState = {expense_type: '', expense_name: '', expense_amount: '', expense_date: '', reference: '', description: '', fund_account_id:''};
 
-
 function CreateExpenseModal({open, setOpen, setExpenses}) {
   const [exp, setExp] = useState(initialState);
   const [serverErrors, setServerErrors] = useState({});
@@ -140,9 +139,7 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
                 <select name='fund_account_id' className='custom-select-form' onFocus={validate} onChange={handleExpenseChange} value={exp.fund_account_id} required>
                   <option></option>
                   {newFundAccountArray.map((account) => (
-
                     <option key={account.id} value={account.id}>{account.general_ledger_name}</option>
-
                   ))}
                 </select>
                 <p style={{color: 'red'}}>{errors['fund_account_id']}</p>

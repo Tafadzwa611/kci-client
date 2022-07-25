@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { makeRequest } from '../../utils/utils';
 
-const initialState = {income_type: '', otherincome_name: '', income_amount: '', income_date: '', reference: '', description: ''};
+const initialState = {income_type: '', otherincome_name: '', income_amount: '', income_date: '', reference: '', description: '', fund_account_id:''};
 
 function CreateOtherincomeModal({open, setOpen, setOtherIncomes}) {
   const [oth, setOth] = useState(initialState);
@@ -9,6 +9,7 @@ function CreateOtherincomeModal({open, setOpen, setOtherIncomes}) {
 
   const [errors, setErrors] = useState({});
   const [otherIncomeTypes, setOtherIncomeTypes] = useState(null);
+  const [fundAccount, setFundAccount] = useState(null);
 
   const handleOtherIncomeChange = (e) => {
     const { name, value } = e.target;
@@ -43,8 +44,24 @@ function CreateOtherincomeModal({open, setOpen, setOtherIncomes}) {
     }
   }
 
+  async function fetchFundAccount() {
+    try {
+      const response = await makeRequest.get('/acc-api/cash-and-cash-equivalents-sub-accs/', {timeout: 8000});
+      if (response.ok) {
+        const fund_accounts = await response.json();
+        return fund_accounts;
+      }else {
+        const error = await response.json();
+        console.log(error);
+      }
+    }catch(error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     getOtherIncomeTypes()
+    getFundAccounts()
   }, []);
 
   const getOtherIncomeTypes = async () => {
@@ -52,7 +69,12 @@ function CreateOtherincomeModal({open, setOpen, setOtherIncomes}) {
     setOtherIncomeTypes(data);
   };
 
-  if (otherIncomeTypes===null) {
+  const getFundAccounts = async () => {
+    const data = await fetchFundAccount();
+    setFundAccount(data);
+  };
+
+  if (otherIncomeTypes===null || fundAccount===null) {
     return <div>Loading</div>
   }
 
@@ -64,6 +86,7 @@ function CreateOtherincomeModal({open, setOpen, setOtherIncomes}) {
       income_date: oth.income_date,
       reference: oth.reference,
       description: oth.description,
+      fund_account_id: oth.fund_account_id,
     };
     const response = await makeRequest.post('/otherincomeapi/add_otherincome/', body, {timeout: 8000});
     if (response.ok) {
@@ -79,6 +102,13 @@ function CreateOtherincomeModal({open, setOpen, setOtherIncomes}) {
     window.scrollTo(0, 0);
   }
 
+  const inc_type = otherIncomeTypes.filter((value) => value.id == oth.income_type);
+  let other_inc_type_currency_id
+  if (inc_type != ""){
+    other_inc_type_currency_id = inc_type[0].currency.id
+  }
+
+  const newFundAccountArray = fundAccount.filter((value) => value.currency ==  other_inc_type_currency_id);
 
   return (
     <div className={open ? 'modal fade show' : 'modal fade'} style={{display: open ? 'block' : 'none'}}>
@@ -103,18 +133,18 @@ function CreateOtherincomeModal({open, setOpen, setOtherIncomes}) {
               </div>
             </div>
 
-            {/* <div className='row' style={{marginTop: '15px'}}>
-              <label className='form-label'>Currency<span style={{color: 'red'}}>*</span></label>
+            <div className='row' style={{marginTop: '15px'}}>
+              <label className='form-label'>Fund Account<span style={{color: 'red'}}>*</span></label>
               <div className='col-9'>
-                <select name='currency' className='custom-select-form' onFocus={validate} onChange={handleOtherIncomeChange} value={oth.currency} required>
+                <select name='fund_account_id' className='custom-select-form' onFocus={validate} onChange={handleOtherIncomeChange} value={oth.fund_account_id} required>
                   <option></option>
-                  {currencies.map((currency) => (
-                    <option key={currency.id} value={currency.id}>{currency.fullname}</option>
+                  {newFundAccountArray.map((account) => (
+                    <option key={account.id} value={account.id}>{account.general_ledger_name}</option>
                   ))}
                 </select>
-                <p style={{color: 'red'}}>{errors['currency']}</p>
+                <p style={{color: 'red'}}>{errors['fund_account_id']}</p>
               </div>
-            </div> */}
+            </div>
               
             <div className='row custom-background' style={{marginTop: '15px'}}>
               <label className='form-label'>Other Income name<span style={{color: 'red'}}>*</span></label>
