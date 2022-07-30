@@ -6,7 +6,16 @@ const DateRange = (props) => {
     const [optionSelected, setOptionSelected] = useState([]);
     const [branches, setBranches] = useState([]);
     const {minDate, currencies, currencyId, setCurrencyId, maxDate, setMinDate, setMaxDate, onSubmit, disableFetch, updateSelectedBranchesId} = props;
-    const fetchStyles = disableFetch ? {pointerEvents: 'none', opacity: '0.7'} : {};
+    const fetchStyles = disableFetch ? {pointerEvents: 'none', opacity: '0.7', margin:'0'} : {margin:'0', cursor:'pointer'};
+
+    const style = {
+        control: base => ({
+          ...base,
+          border: '1px solid #dee2e6',
+          boxShadow: "none",
+          '&:hover':'1px solid #dee2e6',
+        })
+    };
 
     useEffect(() => {
         fetchBranches();
@@ -42,22 +51,33 @@ const DateRange = (props) => {
 
             <form onSubmit={onSubmit}>
                 <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0"}}>
-                    <div className="row-payments-container" style={{width:"20%"}}>
+                    <div className="row-payments-container" style={{width:"30%"}}>
                         <label className="form-label row-label">From</label>
                         <div className="input-group" style={{margin:"0"}}>
                             <i className="uil uil-calendar-alt"></i>
                             <input type='date' value={minDate} onKeyDown={(e) => e.preventDefault()} onChange={(e) => setMinDate(e.target.value)} className='custom-select-form row-form input-background' />
                         </div>
                     </div>
-                    <div className="row-payments-container" style={{width:"20%"}}>
+                    <div className="row-payments-container" style={{width:"30%"}}>
                         <label className="form-label row-label">To</label>
                         <div className="input-group" style={{margin:"0"}}>
                             <i className="uil uil-calendar-alt"></i>
                             <input type='date' value={maxDate} onKeyDown={(e) => e.preventDefault()} onChange={(e) => setMaxDate(e.target.value)} className='custom-select-form row-form input-background' />
                         </div>
                     </div>
-                    <div className="row-payments-container" style={{width:"20%"}}>
-                        <label className="form-label row-label">Branch</label>
+
+                    <div className="row-payments-container" style={{width:"30%"}}>
+                        <label className="form-label row-label">Currency</label>
+                        <select className='custom-select-form row-form' style={{margin:"0"}} value={currencyId} onChange={changeCurrency}>
+                            {currencies.map(currency => {
+                                return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
+                            })}
+                        </select>
+                    </div>
+                </div>
+
+                <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0", marginTop:"1rem"}}>
+                    <div className="row-payments-container" style={{width:"80%"}}>
                         <Select
                             isMulti
                             name='colors'
@@ -72,19 +92,11 @@ const DateRange = (props) => {
                                 }
                                 handleMultiSelect(selected);
                             }}
+                            styles={style}
                             />
                     </div>
-                    <div className="row-payments-container" style={{width:"20%"}}>
-                        <label className="form-label row-label">Currency</label>
-                        <select className='custom-select-form row-form' style={{margin:"0"}} value={currencyId} onChange={changeCurrency}>
-                            {currencies.map(currency => {
-                                return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
-                            })}
-                        </select>
-                    </div>
                     <div style={{display:"flex", flexDirection:"column"}}>
-                        <label className="form-label row-label">Generate</label>
-                        <button type="submit" className="btn btn-olive" style={{margin:"0"}}>Generate_Cashflow</button>
+                        <button type="submit" className="btn btn-olive" style={fetchStyles} disabled={disableFetch}>Generate_Cashflow</button>
                     </div>
                 </div>
             </form>

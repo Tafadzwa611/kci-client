@@ -255,6 +255,11 @@ body {
   color: var(--white);
 }
 
+#dark .css-11vje1g-control,
+#dark .css-1ceek9r-control {
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+}
 /* -----------------------login section--------------------  */
 
 .login-section-login {

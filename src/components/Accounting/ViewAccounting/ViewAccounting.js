@@ -1,8 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Cashflow from '../Cashflow/Cashflow';
 
 const ViewAccounting = () => {
     const [tab, setTab] = useState('cshflw');
+
+    useEffect(() => {
+        document.title = 'View Accounting';
+    }, []);
+    
     return (
         <div className="card">
             <div className="card-body">
