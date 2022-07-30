@@ -2213,6 +2213,15 @@ small {
   width: 100%;
 }
 
+.reports-input-group-cashflow {
+  position: relative;
+  display: flex;
+  border: 1px solid var(--border-color);
+  align-items: center;
+  border-radius: .25rem;
+  width: 50%;
+}
+
 .report-custom-form-control {
   display: inline-block;
   width: 40%;

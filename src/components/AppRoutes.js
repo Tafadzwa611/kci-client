@@ -126,6 +126,7 @@ const DailyReport = lazy(() => import('./Reports/DailyReport/DailyReport'));
 const AgingReport = lazy(() => import('./Reports/AgingReport/AgingReport'));
 const PortfolioAtRiskReport = lazy(() => import('./Reports/PortfolioAtRiskReport/PortfolioAtRiskReport'));
 // Accounting 
+const ViewAccounting = lazy(() => import('./Accounting/ViewAccounting/ViewAccounting'));
 const Cashflow = lazy(() => import('./Accounting/Cashflow/Cashflow'));
 const ProfitAndLoss = lazy(() => import('./Accounting/ProfitAndLoss/ProfitAndLoss'));
 const TrialBalance = lazy(() => import('./Accounting/TrialBalance/TrialBalance'));
@@ -619,6 +620,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
+                    <Route exact path='/app/accounting/viewaccounting' element={<ViewAccounting/>}/>
                     <Route exact path='/app/accounting/cashflow' element={<Cashflow/>}/>
                     <Route exact path='/app/accounting/profitandloss' element={<ProfitAndLoss/>}/>
                     </Route>

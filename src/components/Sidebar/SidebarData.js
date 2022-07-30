@@ -184,6 +184,10 @@ export const SidebarData = [
         iconOpened:<i className="uil uil-angle-up arrow"></i>,
         subNav: [
             {
+                title: 'View Accounting',
+                path: '/app/accounting/viewaccounting',                
+            },
+            {
                 title: 'Cashflow',
                 path: '/app/accounting/cashflow',                
             },
