@@ -1,0 +1,66 @@
+import React from 'react';
+import LoansAndAdvances from './income/LoansAndAdvances';
+import Investments from './income/Investments';
+import TotalInterestIncome from './income/TotalInterestIncome';
+import NonInterestIncome from './income/NonInterestIncome';
+import TotalOperatingIncome from './income/TotalOperatingIncome';
+import NetInterestIncome from './income/NetInterestIncome';
+import InterestExpenses from './expenses/InterestExpenses';
+import Provision from './expenses/Provision';
+import OperatingExpenses from './expenses/OperatingExpenses';
+import NetIncome from './income/NetIncome';
+import Donations from './income/Donations';
+import IncomeBeforeTax from './income/IncomeBeforeTax';
+import Taxation from './expenses/Taxation';
+import IncomeAfterTax from './income/IncomeAfterTax';
+import Dividend from './expenses/Dividend';
+import RetainedEarnings from './income/RetainedEarnings';
+
+function IncomeStatementTable({ report, currencyIso }) {
+  const loansAndAdvances = report.entries.filter(entry => entry.type === 'Interest Income from Loans and Advances');
+  const investments = report.entries.filter(entry => entry.type === 'Interest Income and discounts received from investments');
+  const nonInterestIncome = report.entries.filter(entry => entry.type === 'Non-Interest Income');
+  const interestExpenses = report.entries.filter(entry => entry.type === 'Interest Expenses');
+  const loanLosses = report.entries.filter(entry => entry.type === 'Provision for Loan losses');
+  const operatingExpenses = report.entries.filter(entry => entry.type === 'Operating Expenses');
+
+  return (
+    <div style={{paddingTop: "17px"}}>
+      <div className='cardone card-success card-outline' style={{paddingTop: "17px"}}>
+        <div className='table-responsive no-padding'>
+          <div className='col-sm-12'>
+            <table id='reports_table' className='table table-bordered table-condensed table-hover' style={{background: '#FFF'}}>
+              <thead>
+                <tr style={{background: '#CCC'}}>
+                  <td style={{fontWeight: 'bold'}}>Income Statement</td>
+                  <th className='text-right text-bold'></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <LoansAndAdvances currencyIso={currencyIso} loansAndAdvances={loansAndAdvances} totalAmount={report.total_income_from_loans_and_advances}/>
+                <Investments currencyIso={currencyIso} investments={investments} totalInvestments={report.total_income_from_investments}/>
+                <TotalInterestIncome currencyIso={currencyIso} totalInterestIncome={report.total_interest_income}/>
+                <NonInterestIncome currencyIso={currencyIso} nonInterestIncome={nonInterestIncome} totalNonInterestIncome={report.total_non_interest_income}/>
+                <TotalOperatingIncome currencyIso={currencyIso} totalOperatingIncome={report.total_operating_income}/>
+                <InterestExpenses currencyIso={currencyIso} interestExpenses={interestExpenses} totalInterestExpenses={report.total_interest_expenses}/>
+                <NetInterestIncome currencyIso={currencyIso} netInterestIncome={report.net_interest_income}/>
+                <Provision currencyIso={currencyIso} loanLosses={loanLosses} totalLoanlosses={report.total_provision_for_loan_losses}/>
+                <OperatingExpenses currencyIso={currencyIso} operatingExpenses={operatingExpenses} totalOperatingExpenses={report.total_operating_expenses}/>
+                <NetIncome currencyIso={currencyIso} netIncomeFromOps={report.net_income_from_operations}/>
+                <Donations currencyIso={currencyIso} totalDonations={report.total_donations}/>
+                <IncomeBeforeTax currencyIso={currencyIso} totalIncomeBeforeTax={report.total_income_before_tax}/>
+                <Taxation currencyIso={currencyIso} totalTaxation={report.total_taxation}/>
+                <IncomeAfterTax currencyIso={currencyIso} netIncomeAfterTax={report.net_income_after_tax}/>
+                <Dividend currencyIso={currencyIso} totalDividend={report.total_dividend}/>
+                <RetainedEarnings currencyIso={currencyIso} retainedEarnings={report.retained_earnings_from_operations}/>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default IncomeStatementTable;

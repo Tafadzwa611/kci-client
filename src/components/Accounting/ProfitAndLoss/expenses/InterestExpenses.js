@@ -1,0 +1,39 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+function InterestExpenses({totalInterestExpenses, interestExpenses, currencyIso}) {
+
+  const handleClick = (evt) => {
+    console.log('handleClick');
+  }
+
+  return (
+    <>
+      <tr>
+        <td className='text-bold bg-red'>Interest Expenses</td>
+        <td className='text-bold bg-red'></td>
+        <td align='right' style={{fontWeight: 'bold'}}>
+          <input name='InterestExpenses' type='text' className='form-control well' value={`${currencyIso} ${totalInterestExpenses}`} readOnly/>
+        </td>
+      </tr>
+      {(interestExpenses.length > 0) ? interestExpenses.map((ie, idx) => {
+        return (
+          <tr key={idx}>
+            <td><Link to='#' style={{cursor: 'pointer'}} onClick={handleClick} name={ie.name} data-type={ie.name}>{ie.name}</Link></td>
+            <td align='right'>
+              <input type='text' name={ie.name} autoComplete='off' value={`${currencyIso} ${ie.amount}`} readOnly={true} className='form-control well'/>
+            </td>
+          </tr>
+        )
+      }) : 
+      <tr>
+        <td><h6>No Interest Expenses were incurred in the selected branches within the selected date range.</h6></td>
+        <td align='right'>
+          <input type='text' autoComplete='off' value={`${currencyIso} 0.00`} readOnly={true} className='form-control well'/>
+        </td>
+      </tr>}
+    </>
+  )
+}
+
+export default InterestExpenses;
