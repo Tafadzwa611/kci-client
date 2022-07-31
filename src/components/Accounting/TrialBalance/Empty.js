@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NoData = () => {
+const Empty = () => {
 
     const nodata_container = {
         display: "block",
@@ -33,4 +33,4 @@ const NoData = () => {
     )
 }
 
-export default NoData;
+export default Empty;
