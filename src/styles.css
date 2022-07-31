@@ -2952,6 +2952,23 @@ input:checked + .slider:before {
   background-color: var(--white);
 }
 
+#dark .table.income__statement {
+  background: var(--white);
+}
+
+#dark .table .income__statement-header {
+  background-color: #383838;
+  color: var(--color);
+}
+
+.table.income__statement {
+  background: var(--white);
+}
+
+.table .income__statement-header {
+  background-color: #F2F8FF;
+}
+
 #dark .cashreport-table.selected {
   background-color: #383838;
 }

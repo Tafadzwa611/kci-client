@@ -15,7 +15,7 @@ function NonInterestIncome({totalNonInterestIncome, nonInterestIncome, currencyI
         <input
           name='loansAndAdvances'
           type='text'
-          className='form-control well'
+          className='custom-select-form row-form input-background'
           value={`${currencyIso} ${totalNonInterestIncome}`}
           readOnly
         />
@@ -26,14 +26,14 @@ function NonInterestIncome({totalNonInterestIncome, nonInterestIncome, currencyI
           <tr key={idx}>
             <td><Link to='#' style={{cursor: 'pointer'}} onClick={handleClick} name={nii.name} data-type={nii.name}>{nii.name}</Link></td>
             <td align='right'>
-              <input type='text' name={nii.name} autoComplete='off' value={`${currencyIso} ${nii.amount}`} readOnly={true} className='form-control well'/>
+              <input type='text' name={nii.name} autoComplete='off' value={`${currencyIso} ${nii.amount}`} readOnly={true} className='custom-select-form row-form input-background'/>
             </td>
           </tr>
         )
       }) :
       <tr>
         <td><h6>No Non-Interest Income was received in the selected branches within the selected date range.</h6></td>
-        <td align='right'><input type='text' autoComplete='off' value={`${currencyIso} 0.00`} readOnly={true} className='form-control well'/></td>
+        <td align='right'><input type='text' autoComplete='off' value={`${currencyIso} 0.00`} readOnly={true} className='custom-select-form row-form input-background'/></td>
       </tr>}
     </>
   )

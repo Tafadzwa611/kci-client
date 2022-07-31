@@ -13,7 +13,7 @@ function InterestExpenses({totalInterestExpenses, interestExpenses, currencyIso}
         <td className='text-bold bg-red'>Interest Expenses</td>
         <td className='text-bold bg-red'></td>
         <td align='right' style={{fontWeight: 'bold'}}>
-          <input name='InterestExpenses' type='text' className='form-control well' value={`${currencyIso} ${totalInterestExpenses}`} readOnly/>
+          <input name='InterestExpenses' type='text' className='custom-select-form row-form input-background' value={`${currencyIso} ${totalInterestExpenses}`} readOnly/>
         </td>
       </tr>
       {(interestExpenses.length > 0) ? interestExpenses.map((ie, idx) => {
@@ -21,7 +21,7 @@ function InterestExpenses({totalInterestExpenses, interestExpenses, currencyIso}
           <tr key={idx}>
             <td><Link to='#' style={{cursor: 'pointer'}} onClick={handleClick} name={ie.name} data-type={ie.name}>{ie.name}</Link></td>
             <td align='right'>
-              <input type='text' name={ie.name} autoComplete='off' value={`${currencyIso} ${ie.amount}`} readOnly={true} className='form-control well'/>
+              <input type='text' name={ie.name} autoComplete='off' value={`${currencyIso} ${ie.amount}`} readOnly={true} className='custom-select-form row-form input-background'/>
             </td>
           </tr>
         )
@@ -29,7 +29,7 @@ function InterestExpenses({totalInterestExpenses, interestExpenses, currencyIso}
       <tr>
         <td><h6>No Interest Expenses were incurred in the selected branches within the selected date range.</h6></td>
         <td align='right'>
-          <input type='text' autoComplete='off' value={`${currencyIso} 0.00`} readOnly={true} className='form-control well'/>
+          <input type='text' autoComplete='off' value={`${currencyIso} 0.00`} readOnly={true} className='custom-select-form row-form input-background'/>
         </td>
       </tr>}
     </>

@@ -88,8 +88,6 @@ const ProfitAndLoss = () => {
                 updateSelectedBranchesId={setSelectedBranchesIds}
             />
             <Display report={report} loading={loading} currencyIso={currencyIso} />
-            {/* <NoData /> */}
-            {/* <Table /> */}
         </>
     );
 }

@@ -15,7 +15,7 @@ function LoansAndAdvances({totalAmount, loansAndAdvances, currencyIso}) {
           <input
             name='loansAndAdvances'
             type='text'
-            className='form-control well'
+            className='custom-select-form row-form input-background'
             value={`${currencyIso} ${totalAmount}`}
             readOnly
           />
@@ -34,7 +34,7 @@ function LoansAndAdvances({totalAmount, loansAndAdvances, currencyIso}) {
                 autoComplete='off'
                 value={`${currencyIso} ${la.amount}`}
                 readOnly={true}
-                className='form-control well'
+                className='custom-select-form row-form input-background'
               />
             </td>
           </tr>
@@ -47,7 +47,7 @@ function LoansAndAdvances({totalAmount, loansAndAdvances, currencyIso}) {
                 autoComplete='off'
                 value={`${currencyIso} 0.00`}
                 readOnly={true}
-                className='form-control well'
+                className='custom-select-form row-form input-background'
               />
             </td>
           </tr>}

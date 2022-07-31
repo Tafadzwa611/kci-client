@@ -14,7 +14,7 @@ function Investments({totalInvestments, investments, currencyIso}) {
           <input
             name='investments'
             type='text'
-            className='form-control well'
+            className='custom-select-form row-form input-background'
             value={`${currencyIso} ${totalInvestments}`}
             readOnly
           />
@@ -33,7 +33,7 @@ function Investments({totalInvestments, investments, currencyIso}) {
                 autoComplete='off'
                 value={`${currencyIso} ${inv.amount}`}
                 readOnly={true}
-                className='form-control well'
+                className='custom-select-form row-form input-background'
               />
             </td>
           </tr>
@@ -46,7 +46,7 @@ function Investments({totalInvestments, investments, currencyIso}) {
                 autoComplete='off'
                 value={`${currencyIso} 0.00`}
                 readOnly={true}
-                className='form-control well'
+                className='custom-select-form row-form input-background'
               />
             </td>
           </tr>}
