@@ -215,6 +215,10 @@ body {
   background-color: hsl(0, 0%, 5%);
 }
 
+/* #dark .journal-details {
+  background-color: ;
+} */
+
 #dark .table-heading {
   color: hsl(0, 0%, 87%);
 }
@@ -1778,6 +1782,13 @@ small {
   margin-top: 2rem;
 }
 
+.journal-details {
+  background-color: #f2f8ff;
+  padding: 1.5rem;
+  width: 100%;
+  margin-top: 25px;
+}
+
 .badge {
   display: inline-block;
   padding: 0.35em 0.45em;
@@ -2911,4 +2922,11 @@ input:checked + .slider:before {
 
 .slider.rounded:before {
   border-radius: 50%;
+}
+
+.cashreport-select {
+  background-color: var(--home-section-color);
+  border: 0;
+  outline: none;
+  color: var(--color);
 }

@@ -82,8 +82,9 @@ const Cashflow = () => {
                 />
                 {statement === null ?
                   <NoData /> :
-                  <Table currencyIso={currencyIso} statement={statement}/>}
-                </>
+                  <Table currencyIso={currencyIso} statement={statement}
+                />}
+            </>
     );
 }
 

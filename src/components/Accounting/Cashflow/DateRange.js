@@ -47,7 +47,7 @@ const DateRange = (props) => {
 
     return (
 
-        <div className="font-13 text-light" style={{marginTop:"3rem"}}>
+        <div className="font-13 text-light">
 
             <form onSubmit={onSubmit}>
                 <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0"}}>
