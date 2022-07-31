@@ -60,7 +60,7 @@ function Table(props) {
   }
 
   return (
-        <div className='row' style={{columnGap:"5px", justifyContent:"space-between"}}>
+        <div className='row cash-management-table' style={{columnGap:"5px", justifyContent:"space-between"}}>
           <div style={{width:"60%"}}>
             <div style={{display:"flex", flexDirection:"row", columnGap:"10px", marginBottom:"10px"}}>
               <div>

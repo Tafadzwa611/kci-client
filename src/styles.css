@@ -1091,6 +1091,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-color: var(--home-section-color);
 }
 
+.cash-management-table .btn-default {
+  border-color: var(--home-section-color);
+  background-color: #f2f8ff;
+}
+
 .btn-secondary {
   background: #808080;
   border-color: #808080;
@@ -2939,6 +2944,10 @@ input:checked + .slider:before {
   color: var(--color);
 }
 
+#dark .cashreport-select {
+  background-color: #383838;
+}
+
 #dark .cashreport-table {
   background-color: var(--white);
 }
@@ -2961,4 +2970,9 @@ input:checked + .slider:before {
 
 .cashreport-balance {
   color: var(--color);
+}
+
+#dark .cash-management-table .btn-default {
+  border-color: var(--home-section-color);
+  background-color: #383838;
 }
