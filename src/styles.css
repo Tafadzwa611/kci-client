@@ -215,9 +215,9 @@ body {
   background-color: hsl(0, 0%, 5%);
 }
 
-/* #dark .journal-details {
-  background-color: ;
-} */
+#dark .journal-details {
+  background-color: #383838;
+}
 
 #dark .table-heading {
   color: hsl(0, 0%, 87%);
@@ -229,6 +229,10 @@ body {
 
 #dark .table th {
   color: #1E1E1E;
+}
+
+#dark .table .journal-details.header th {
+  color: var(--color);
 }
 
 #dark .table .text-light {
@@ -1789,6 +1793,10 @@ small {
   margin-top: 25px;
 }
 
+.journal-details.header {
+  color: var(--color);
+}
+
 .badge {
   display: inline-block;
   padding: 0.35em 0.45em;
@@ -2928,5 +2936,29 @@ input:checked + .slider:before {
   background-color: var(--home-section-color);
   border: 0;
   outline: none;
+  color: var(--color);
+}
+
+#dark .cashreport-table {
+  background-color: var(--white);
+}
+
+#dark .cashreport-table.selected {
+  background-color: #383838;
+}
+
+.cashreport-table {
+  background-color: var(--white);
+}
+
+.cashreport-table.selected {
+  background-color: #f2f8ff;
+}
+
+#dark .cashreport-balance {
+  color: hsl(0, 0%, 12%);
+}
+
+.cashreport-balance {
   color: var(--color);
 }

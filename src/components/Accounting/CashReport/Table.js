@@ -86,7 +86,7 @@ function Table(props) {
           </div>
             <table id='cash-balance' className='table table-bordered table-condensed table-hover'>
               <thead>
-                <tr style={{backgroundColor: '#F2F8FF'}}>
+                <tr className="journal-details header">
                   <th>Date</th>
                   <th>Narration</th>
                   <th>Reference</th>
@@ -95,7 +95,7 @@ function Table(props) {
                 </tr>
               </thead>
               <tbody>
-                <tr style={{background: Number(props.statement.balance_bd) >= 0 ? '#7FFF00' : '#FFB6C1'}}>
+                <tr style={{background: Number(props.statement.balance_bd) >= 0 ? '#7FFF00' : '#FFB6C1'}} className="cashreport-balance">
                   <td>{props.statement.report_date}</td>
                   <td>Balance b/d</td>
                   <td></td>
@@ -104,7 +104,7 @@ function Table(props) {
                 </tr>
                 {transactions.map(txn => {
                   return (
-                    <tr key={txn.id} style={{background: txn.id == selectedrowId ? '#f2f8ff' : 'white'}}>
+                    <tr key={txn.id} className={txn.id == selectedrowId ? "cashreport-table selected": "cashreport-table"}>
                       <td></td>
                       <td>{txn.description}</td>
                       <td><a id={txn.id} href='#' onClick={goToJournalDetails}>{txn.reference}</a></td>
@@ -113,7 +113,7 @@ function Table(props) {
                     </tr>
                   )
                 })}
-                <tr style={{background: Number(props.statement.balance_cd) >= 0 ? '#7FFF00' : '#FFB6C1'}}>
+                <tr style={{background: Number(props.statement.balance_cd) >= 0 ? '#7FFF00' : '#FFB6C1'}} className="cashreport-balance">
                   <td></td>
                   <td>Balance c/d</td>
                   <td></td>
