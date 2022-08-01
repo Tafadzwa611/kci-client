@@ -1,10 +1,11 @@
 import React from 'react';
+import { convertDate } from './utils';
 
-const Table = () => {
+const Table = ({journals, currencyIso}) => {
 
     return (
 
-        <div className="table-container font-12">
+        <div className="table-container font-12" style={{padding:"0", border:"none"}}>
             <div className="table-responsive" style={{maxHeight:"800px"}}>
                 <table className="table">
                     <thead>
@@ -18,76 +19,18 @@ const Table = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <a href="/#/journaldetails" className="link">2022.4.8.16.51.18203</a>
-                            </td>
-                            <td>Cash Boz ZWL <em><small>(Main Branch)</small></em></td>
-                            <td>Admin Fee <em><small>(Main Branch)</small></em></td>
-                            <td>ZWL 100.00</td>
-                            <td>ZWL 100.00</td>
-                            <td>08 April 2022</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="/#/journaldetails" className="link">2022.4.8.16.51.57f8b</a>
-                            </td>
-                            <td>Interest Receivable <em><small>(Main Branch)</small></em></td>
-                            <td>Interest Revenue <em><small>(Main Branch)</small></em></td>
-                            <td>ZWL 500.00</td>
-                            <td>ZWL 500.00</td>
-                            <td>08 April 2022</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="/#/journaldetails" className="link">2022.4.8.16.51.eb7aa</a>
-                            </td>
-                            <td>Loans To Clients <em><small>(Main Branch)</small></em></td>
-                            <td>Cash Boz ZWL <em><small>(Main Branch)</small></em></td>
-                            <td>ZWL 1000.00</td>
-                            <td>ZWL 1000.00</td>
-                            <td>08 April 2022</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="/#/journaldetails" className="link">2022.4.8.16.50.372d8</a>
-                            </td>
-                            <td>Cash Boz ZWL <em><small>(Main Branch)</small></em></td>
-                            <td>Interest Receivable <em><small>(Main Branch)</small></em></td>
-                            <td>ZWL 100.00</td>
-                            <td>ZWL 100.00</td>
-                            <td>08 April 2022</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="/#/journaldetails" className="link">2022.4.1.22.2.c416f</a>
-                            </td>
-                            <td>Cash Boz ZWL <em><small>(Main Branch)</small></em></td>
-                            <td>Admin Fee <em><small>(Main Branch)</small></em></td>
-                            <td>ZWL 150.00</td>
-                            <td>ZWL 150.00</td>
-                            <td>01 April 2022</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="/#/journaldetails" className="link">2022.4.1.22.2.5e03e</a>
-                            </td>
-                            <td>Interest Receivable <em><small>(Main Branch)</small></em></td>
-                            <td>Interest Revenue <em><small>(Main Branch)</small></em></td>
-                            <td>ZWL 500.00</td>
-                            <td>ZWL 500.00</td>
-                            <td>01 April 2022</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="/#/journaldetails" className="link">2022.4.1.22.2.50190</a>
-                            </td>
-                            <td>Loans To Clients <em><small>(Main Branch)</small></em></td>
-                            <td>Cash Boz ZWL <em><small>(Main Branch)</small></em></td>
-                            <td>ZWL 1000.00</td>
-                            <td>ZWL 1000.00</td>
-                            <td>01 April 2022</td>
-                        </tr>
+                    {journals.map(journal => {
+                        return (
+                            <tr key={journal.id}>
+                                <td><a href={`/reports/reportsapp/#/jDetails/${journal.id}`}>{journal.transaction_id}</a></td>
+                                <td>{journal.account_debited} <em><small>({journal.branch_debited})</small></em></td>
+                                <td>{journal.account_credited} <em><small>({journal.branch_credited})</small></em></td>
+                                <td>{`${currencyIso} ${journal.amount_debited}`}</td>
+                                <td>{`${currencyIso} ${journal.amount_credited}`}</td>
+                                <td>{convertDate(journal.date_created)}</td>
+                            </tr>
+                        )
+                    })}
                     </tbody>
                 </table>
             </div>

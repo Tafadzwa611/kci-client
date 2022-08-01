@@ -3,6 +3,7 @@ import Cashflow from '../Cashflow/Cashflow';
 import CashReport from '../CashReport/CashReport';
 import ProfitAndLoss from '../ProfitAndLoss/ProfitAndLoss';
 import TrialBalance from '../TrialBalance/TrialBalance';
+import Journals from '../Journals/Journals';
 
 const ViewAccounting = () => {
     const [tab, setTab] = useState('cshflw');
@@ -22,7 +23,7 @@ const ViewAccounting = () => {
                             <button className={tab === "prftnls" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("prftnls")}> Profit & Loss </button>
                             <button className={tab === "trlbnce" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("trlbnce")}> Trial Balance </button>
                             <button className={tab === "emp" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("emp")}> Balance Sheet </button>
-                            <button className={tab === "bnk" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("bnk")}> Journal Entries </button>
+                            <button className={tab === "jrnls" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("jrnls")}> Journal Entries </button>
                             <button className={tab === "kin" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("kin")}> Charts of Accounts </button>
                     </div>
                     <div className='tab-content font-12' style={{marginTop:"3rem"}}>
@@ -30,7 +31,8 @@ const ViewAccounting = () => {
                             'cshflw': <Cashflow setTab={setTab}/>,
                             'cshmngmnt': <CashReport setTab={setTab}/>,
                             'prftnls': <ProfitAndLoss setTab={setTab}/>,
-                            'trlbnce': <TrialBalance setTab={setTab}/>
+                            'trlbnce': <TrialBalance setTab={setTab}/>,
+                            'jrnls': <Journals setTab={setTab}/>
                         }[tab]}
                     </div>
                 </>
