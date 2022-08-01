@@ -9,7 +9,7 @@ const Table = ({journals, currencyIso}) => {
             <div className="table-responsive" style={{maxHeight:"800px"}}>
                 <table className="table">
                     <thead>
-                        <tr className="bg-gray">
+                        <tr className="bg-gray-accs">
                             <th>Transaction ID</th>
                             <th>Account Debited</th>
                             <th>Account Credited</th>

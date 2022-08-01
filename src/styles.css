@@ -3006,3 +3006,28 @@ input:checked + .slider:before {
   background-color: #383838;
 }
 
+#dark .active-tabs-accs {
+  background-color: #3d9970;
+  border-color: #3d9970;
+  color: var(--white);
+}
+
+.active-tabs-accs {
+  background-color: #3d9970;
+  border-color: #3d9970;
+  color: var(--white);
+}
+
+#dark .table .bg-gray-accs th {
+  border-color: var(--home-section-color);
+  background-color: var(--home-section-color);
+  color: var(--light-color);
+}
+
+.bg-gray-accs {
+  border-color: var(--home-section-color);
+  background-color: var(--home-section-color);
+  color: var(--light-color);
+}
+
+
