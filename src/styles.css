@@ -2993,3 +2993,16 @@ input:checked + .slider:before {
   border-color: var(--home-section-color);
   background-color: #383838;
 }
+
+#dark .css-1rhbuit-multiValue {
+  background-color: #383838;
+}
+
+#dark .css-12jo7m5 {
+  color: var(--color);
+}
+
+#dark .select__menu {
+  background-color: #383838;
+}
+
