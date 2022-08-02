@@ -1,9 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { makeRequest } from '../../../../utils/utils';
 import DateRange from './DateRange';
+import Footer from './Footer';
+import Table from './Table';
 
 const MainAccounts = () => {
-    const [mainaccounts, setMainAccounts] = useState([])
+    const [mainaccounts, setMainAccounts] = useState(null)
     const [branches, setBranches] = useState(null);
     const [branchIds, setBranchIds] = useState(null);
     const [nextPageNumber, setNextPageNumber] = useState(null);
@@ -148,58 +150,17 @@ const MainAccounts = () => {
                 branches={branches}
                 setBranchIds={setBranchIds}
             />
-            <div className="table-container font-12" style={{padding:"0", border:"none"}}>
-                <div className="table-responsive" style={{maxHeight:"800px"}}>
-                    <table className="table">
-                        <thead>
-                            <tr className="bg-gray-accs">
-                                <th>GL Code</th>
-                                <th>Account Name</th>
-                                <th>Type</th>
-                                <th>Branch</th>
-                                <th>Date Created</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>5300</td>
-                                <td>Provision for Loan losses</td>
-                                <td>EXPENSE</td>
-                                <td>Main Branch</td>
-                                <td>12/12/21</td>
-                            </tr>
-                            <tr>
-                                <td>5300</td>
-                                <td>Provision for Loan losses</td>
-                                <td>EXPENSE</td>
-                                <td>Main Branch</td>
-                                <td>12/12/21</td>
-                            </tr>
-                            <tr>
-                                <td>5300</td>
-                                <td>Provision for Loan losses</td>
-                                <td>EXPENSE</td>
-                                <td>Main Branch</td>
-                                <td>12/12/21</td>
-                            </tr>
-                            <tr>
-                                <td>5300</td>
-                                <td>Provision for Loan losses</td>
-                                <td>EXPENSE</td>
-                                <td>Main Branch</td>
-                                <td>12/12/21</td>
-                            </tr>
-                            <tr>
-                                <td>5300</td>
-                                <td>Provision for Loan losses</td>
-                                <td>EXPENSE</td>
-                                <td>Main Branch</td>
-                                <td>12/12/21</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <Table 
+                mainaccounts={mainaccounts}
+            />
+            <Footer 
+                mainaccounts={mainaccounts}
+                totalCount={totalCount}
+                nextPageNumber={nextPageNumber}
+                loadMoreAccounts={loadMore}
+                loadingMore={loadingMore}
+            />
+
         </>
     )
 }

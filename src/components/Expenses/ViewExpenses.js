@@ -127,6 +127,8 @@ const ViewExpenses = () => {
         return <DisbursementReportSkeleton />
     }
 
+    console.log(expenses)
+
     return (
         <div className="font-12">
             <div className="card">
@@ -154,7 +156,6 @@ const ViewExpenses = () => {
                     <ExpenseList 
                         expenses={expenses} 
                         setExpenses={setExpenses}
-                        totalCount={totalCount}
                     />
                     <ExpenseFooter 
                         expenses={expenses} 

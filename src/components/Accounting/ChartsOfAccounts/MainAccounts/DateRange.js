@@ -64,8 +64,27 @@ const DateRange = (props) => {
 
             <form onSubmit={onSubmit}>
                 <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0"}}>
-                    <div className="row-payments-container" style={{width:"45%"}}>
-                        <label className="form-label row-label">From</label>
+                    <div className="row-payments-container" style={{width:"72%"}}>
+                        <label className="form-label row-label">Select Branch</label>
+                        <Select
+                            isMulti
+                            name='colors'
+                            options={[props.allOption, ...selectorBranches]}
+                            value={optionSelected}
+                            classNamePrefix='select'
+                            className='basic-multi-select'
+                            placeholder='Select Branches'
+                            onChange={selected => {
+                                if (selected !== null && selected.length > 0 && selected[selected.length - 1].value === props.allOption.value) {
+                                return handleMultiSelect(selectorBranches);
+                                }
+                                handleMultiSelect(selected);
+                            }}
+                            styles={style}
+                        />
+                    </div>
+                    <div className="row-payments-container" style={{width:"15%"}}>
+                        <label className="form-label row-label">Account Type</label>
                         <select className='custom-select-form row-form' style={{margin:"0"}} onChange={(e) => setAccType(e.target.value)} value={accType}>
                             <option value={''}>Select Account Type</option>
                             <option value={'ASSET'}>ASSET</option>
@@ -74,6 +93,14 @@ const DateRange = (props) => {
                             <option value={'INCOME'}>INCOME</option>
                             <option value={'EXPENSE'}>EXPENSE</option>
                         </select>
+                    </div>
+                    <div style={{display:"flex", flexDirection:"column", width:"10%"}}>
+                        <label className="form-label row-label">Filter</label>
+                        {/* <button type="submit" className="btn btn-olive">Apply_Filters_!</button> */}
+                        {searching ?
+                            <button type="submit" className="btn btn-olive" style={{opacity:"0.7", cursor:"none"}}>Searching</button>:
+                            <button type="submit" className="btn btn-olive" >Apply_Filters_!</button>
+                        }
                     </div>
 
                     {/* <div className="row-payments-container" style={{width:"45%"}}>
@@ -86,7 +113,7 @@ const DateRange = (props) => {
                     </div> */}
                 </div>
 
-                <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0", marginTop:"1rem"}}>
+                {/* <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0", marginTop:"1rem"}}>
                     <div className="row-payments-container" style={{width:"80%"}}>
                         <Select
                             isMulti
@@ -108,7 +135,7 @@ const DateRange = (props) => {
                     <div style={{display:"flex", flexDirection:"column"}}>
                         <button type="submit" className="btn btn-olive">Apply_Filters_!</button>
                     </div>
-                </div>
+                </div> */}
             </form>
 
         </div>
