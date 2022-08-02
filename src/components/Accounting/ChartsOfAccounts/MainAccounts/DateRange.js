@@ -65,7 +65,7 @@ const DateRange = (props) => {
             <form onSubmit={onSubmit}>
                 <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0"}}>
                     <div className="row-payments-container" style={{width:"72%"}}>
-                        <label className="form-label row-label">Select Branch</label>
+                        {/* <label className="form-label row-label">Select Branch</label> */}
                         <Select
                             isMulti
                             name='colors'
@@ -84,7 +84,7 @@ const DateRange = (props) => {
                         />
                     </div>
                     <div className="row-payments-container" style={{width:"15%"}}>
-                        <label className="form-label row-label">Account Type</label>
+                        {/* <label className="form-label row-label">Account Type</label> */}
                         <select className='custom-select-form row-form' style={{margin:"0"}} onChange={(e) => setAccType(e.target.value)} value={accType}>
                             <option value={''}>Select Account Type</option>
                             <option value={'ASSET'}>ASSET</option>
@@ -95,7 +95,7 @@ const DateRange = (props) => {
                         </select>
                     </div>
                     <div style={{display:"flex", flexDirection:"column", width:"10%"}}>
-                        <label className="form-label row-label">Filter</label>
+                        {/* <label className="form-label row-label">Filter</label> */}
                         {/* <button type="submit" className="btn btn-olive">Apply_Filters_!</button> */}
                         {searching ?
                             <button type="submit" className="btn btn-olive" style={{opacity:"0.7", cursor:"none"}}>Searching</button>:
