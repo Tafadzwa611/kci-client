@@ -6,8 +6,6 @@ import Footer from './Footer';
 import NoData from './NoData';
 import { makeRequest } from '../../../utils/utils';
 import { debounceFunction, useAsyncReference } from './utils';
-import JournalDetails from './JournalDetails';
-import MiniTable from './MiniTable';
 
 const Journals = () => {
     const [journals, setJournals] = useState([]);

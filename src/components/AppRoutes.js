@@ -135,7 +135,6 @@ const CashflowProjections = lazy(() => import('./Accounting/CashflowProjections/
 const ChartsOfAccounts = lazy(() => import('./Accounting/ChartsOfAccounts/ChartsOfAccounts'));
 const AddMainAccount = lazy(() => import('./Accounting/AddMainAccount/AddMainAccount'));
 const Journals = lazy(() => import('./Accounting/Journals/Journals'));
-const JournalDetails = lazy(() => import('./Accounting/Journals/JournalDetails'));
 const AddJournal = lazy(() => import('./Accounting/AddJournal/AddJournal'));
 const Main = lazy(() => import('./Main'));
 
@@ -769,7 +768,6 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                     <Route exact path='/app/users/branchdetails' element={<BranchDetails/>}/>
                     <Route exact path='/app/accounting/cashflowprojections' element={<CashflowProjections/>}/>
                     <Route exact path='/app/accounting/chartsofaccounts' element={<ChartsOfAccounts/>}/>
-                    <Route exact path='/app/accounting/journaldetails' element={<JournalDetails/>}/>
                     <Route exact path='/app/accounting/addjournal' element={<AddJournal/>}/>
                     </Route>
                 </Route>

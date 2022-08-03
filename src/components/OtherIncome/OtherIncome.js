@@ -22,11 +22,11 @@ const OtherIncome = (props) => {
         <>
             <div style={{display:"flex", flexDirection:"row", width:"100%"}}>
                 <div className="border__bottom" style={{display:"flex", justifyContent:"space-between", flexDirection:"row", padding:"1rem 1.5rem", width:"83.33%", cursor:"pointer"}} key={props.other.id} onClick={showDetailsDiv}>
-                    <div style={{width:"16.66%", textAlign:"center"}}>{props.other.income_type.name}</div>
+                    <div style={{width:"16.66%", textAlign:"center"}}>{props.other.income_type}</div>
                     <div style={{width:"16.66%", textAlign:"center"}}>{props.other.otherincome_name}</div>
                     <div style={{width:"16.67%", textAlign:"center"}}>{props.other.income_date}</div>
                     <div style={{width:"16.67%", textAlign:"center"}}>{props.other.date_created}</div>
-                    <div style={{width:"16.67%", textAlign:"center"}}>{props.other.currency.shortname} {props.other.income_amount}</div>
+                    <div style={{width:"16.67%", textAlign:"center"}}>{props.other.currency} {props.other.income_amount}</div>
                 </div>
                 <div className="border__bottom" style={{display:"flex",justifyContent:"center", flexDirection:"row", padding:"1rem 1.5rem", width:"16.67%", textAlign:"center", marginRight:"1rem"}}>
                     <span className="delete" onClick={showOpenModal}>delete</span>
@@ -39,13 +39,13 @@ const OtherIncome = (props) => {
                     <div className="font-13" style={{padding:"1.5rem", display:"flex", justifyContent:"space-around", flexDirection:"row"}}>
                         <div>
                             <div>Other Income Name: {props.other.otherincome_name}</div>
-                            <div>Other Income Type: {props.other.income_type.name}</div>
-                            <div>Other Income Amount: {props.other.currency.shortname} {props.other.income_amount}</div>
+                            <div>Other Income Type: {props.other.income_type}</div>
+                            <div>Other Income Amount: {props.other.currency} {props.other.income_amount}</div>
                         </div>
                         <div>
                             <div>Reference: {props.other.reference}</div> 
                             <div>Date Created: {props.other.date_created}</div>
-                            <div>Created By: {props.other.created_by.first_name} {props.other.created_by.last_name}</div>
+                            <div>Created By: {props.other.created_by}</div>
                         </div>
                         <div>
                             <div>Other Income Date: {props.other.income_date}</div>

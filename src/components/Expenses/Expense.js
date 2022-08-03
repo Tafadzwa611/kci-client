@@ -22,11 +22,11 @@ const Expense = (props) => {
         <>
             <div style={{display:"flex", flexDirection:"row", width:"100%"}}>
                 <div className="border__bottom" style={{display:"flex", justifyContent:"space-between", flexDirection:"row", padding:"1rem 1.5rem", width:"83.33%", cursor:"pointer"}} key={props.expense.id} onClick={showDetailsDiv}>
-                    <div style={{width:"16.66%", textAlign:"center"}}>{props.expense.expense_type.name}</div>
+                    <div style={{width:"16.66%", textAlign:"center"}}>{props.expense.expense_type}</div>
                     <div style={{width:"16.66%", textAlign:"center"}}>{props.expense.expense_name}</div>
                     <div style={{width:"16.67%", textAlign:"center"}}>{props.expense.expense_date}</div>
                     <div style={{width:"16.67%", textAlign:"center"}}>{props.expense.date_created}</div>
-                    <div style={{width:"16.67%", textAlign:"center"}}>{props.expense.currency.shortname} {props.expense.expense_amount}</div>
+                    <div style={{width:"16.67%", textAlign:"center"}}>{props.expense.currency} {props.expense.expense_amount}</div>
                 </div>
                 <div className="border__bottom" style={{display:"flex",justifyContent:"center", flexDirection:"row", padding:"1rem 1.5rem", width:"16.67%", textAlign:"center", marginRight:"1rem"}}>
                     <span className="delete" onClick={showOpenModal}>delete</span>
@@ -39,13 +39,13 @@ const Expense = (props) => {
                     <div className="font-13" style={{padding:"1.5rem", display:"flex", justifyContent:"space-around", flexDirection:"row"}}>
                         <div>
                             <div>Expense Name: {props.expense.expense_name}</div>
-                            <div>Expense Type: {props.expense.expense_type.name}</div>
-                            <div>Expense Amount: {props.expense.currency.shortname} {props.expense.expense_amount}</div>
+                            <div>Expense Type: {props.expense.expense_type}</div>
+                            <div>Expense Amount: {props.expense.currency} {props.expense.expense_amount}</div>
                         </div>
                         <div>
                             <div>Reference: {props.expense.reference}</div> 
                             <div>Date Created: {props.expense.date_created}</div>
-                            <div>Created By: {props.expense.created_by.first_name} {props.expense.created_by.last_name}</div>
+                            <div>Created By: {props.expense.created_by}</div>
                         </div>
                         <div>
                             <div>Expense Date: {props.expense.expense_date}</div>
