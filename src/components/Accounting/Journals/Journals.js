@@ -6,6 +6,8 @@ import Footer from './Footer';
 import NoData from './NoData';
 import { makeRequest } from '../../../utils/utils';
 import { debounceFunction, useAsyncReference } from './utils';
+import JournalDetails from './JournalDetails';
+import MiniTable from './MiniTable';
 
 const Journals = () => {
     const [journals, setJournals] = useState([]);
@@ -20,6 +22,9 @@ const Journals = () => {
     const [currencies, setCurrencies] = useState(null);
     const [currencyId, setCurrencyId] = useState(null);
     const [currencyIso, setCurrencyIso] = useState(null);
+    const [user, setUser] = useState(null);
+    const [details, setDetails] = useState(false)
+    const [selectedjrnlID, setSelectedJrnlID] = useState(null)
     const pageNum = useRef(1);
 
     useEffect(() => {
@@ -31,6 +36,7 @@ const Journals = () => {
         pageNum.current = 1;
         const data = await getJournals();
         setCurrencyIso(currencies.filter(currency => currency.id == currencyId)[0].shortname);
+        // setUser(journals.filter(usr => usr.id == currencyId)[0].shortname);
         updateUi(data);
     }
   
@@ -125,6 +131,8 @@ const Journals = () => {
         )
     }
 
+    console.log(journals)
+
     return (
         <>
             <DateRange 
@@ -145,7 +153,18 @@ const Journals = () => {
             <Header changeOrder={changeOrder} order={order.current} disableSelect={journals.length === 0} journalCount={journalCount} numberOfJournalsLoaded={journals.length}/>
             {journals.length > 0 ?
             <>
-            <Table currencyIso={currencyIso} journals={journals} />
+            {/* {details ? <JournalDetails journals={journals} selectedjrnl={journals.find(jrnl => jrnl.id == selectedjrnlID)} />:
+            <Table currencyIso={currencyIso} journals={journals} setDetails={setDetails} setSelectedJrnlID={setSelectedJrnlID}/>
+            } */}
+            <Table 
+                currencyIso={currencyIso} 
+                journals={journals} 
+                setDetails={setDetails} 
+                details={details} 
+                setSelectedJrnlID={setSelectedJrnlID} 
+                selectedjrnlID={selectedjrnlID}
+                selectedjrnl={journals.find(jrnl => jrnl.id == selectedjrnlID)}
+            />
             <Footer nextPageNumber={pageNum.current} loadMoreJournals={loadMore} loadingMore={loadingMore}/>
             </> :
             <NoData msg={msg} />}

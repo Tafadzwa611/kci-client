@@ -3030,4 +3030,32 @@ input:checked + .slider:before {
   color: var(--light-color);
 }
 
+.table-container.full__width {
+  width: 100%;
+}
 
+.table-container.journal__table {
+  width: 100%;
+}
+
+.table-responsive.journal__table-container {
+  /* max-height: 200px; */
+  display: flex;
+  column-gap: 1rem;
+}
+
+/* .table-responsive.full__table {
+  max-height: 200px;
+} */
+
+.table__height {
+  max-height: 400px;
+}
+
+#dark .j-details-container{
+  background-color: #383838;
+}
+
+.j-details-container{
+  background-color: #f2f8ff;
+}
