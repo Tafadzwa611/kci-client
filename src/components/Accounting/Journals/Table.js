@@ -36,12 +36,20 @@ const Table = ({journals, currencyIso, setDetails, setSelectedJrnlID, details, s
                         <tbody>
                         {journals.map(journal => {
                             if (details) {
-                                return (
-                                    <tr key={journal.id}>
-                                        <td><a href onClick={handleClick} id={journal.id}>{journal.transaction_id}</a></td>
-                                    </tr>
-                                )
-                                } else { 
+                                if (selectedjrnl.id == journal.id) {
+                                    return (
+                                        <tr key={journal.id}>
+                                            <td><a href onClick={handleClick} id={journal.id} style={{color:"red"}}>{journal.transaction_id}</a></td>
+                                        </tr>
+                                    )
+                                }else{
+                                    return (
+                                        <tr key={journal.id}>
+                                            <td><a href onClick={handleClick} id={journal.id}>{journal.transaction_id}</a></td>
+                                        </tr>
+                                    )
+                                }
+                            }else { 
                                 return (
                                     <tr key={journal.id}>
                                         <td><a href onClick={handleClick} id={journal.id}>{journal.transaction_id}</a></td>

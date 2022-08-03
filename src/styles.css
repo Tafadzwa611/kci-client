@@ -3040,8 +3040,9 @@ input:checked + .slider:before {
 
 .table-responsive.journal__table-container {
   /* max-height: 200px; */
-  display: flex;
+  display: grid;
   column-gap: 1rem;
+  grid-template-columns: 1fr 2fr;
 }
 
 /* .table-responsive.full__table {

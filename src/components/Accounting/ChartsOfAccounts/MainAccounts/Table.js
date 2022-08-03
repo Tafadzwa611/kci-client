@@ -22,7 +22,7 @@ const Table = (props) => {
                                 <td>{account.general_ledger_code}</td>
                                 <td>{account.general_ledger_name}</td>
                                 <td>{account.account_type}</td>
-                                <td>{account.branch.name}</td>
+                                <td>{account.branch}</td>
                                 <td>{convertDate(account.date_created)}</td>
                             </tr>
                             )
