@@ -15,6 +15,8 @@ const MainAccounts = () => {
     // const [currencyId, setCurrencyId] = useState(null);
     const [searching, setSearching] = useState(false);
     const [loadingMore, setLoadingMore] = useState(false);
+    const [selectedMainAccID, setSelectedMainAccID] = useState(null)
+    const [accDetails, setAccDetails] = useState(false)
 
     const pageNum = useRef(1);
 
@@ -136,8 +138,6 @@ const MainAccounts = () => {
         return <div>Loading ...</div>
     }
 
-    console.log(mainaccounts)
-
     return (
         <>
             <DateRange 
@@ -152,6 +152,10 @@ const MainAccounts = () => {
             />
             <Table 
                 mainaccounts={mainaccounts}
+                setSelectedMainAccID={setSelectedMainAccID}
+                selectedMainAccID={selectedMainAccID}
+                accDetails={accDetails}
+                setAccDetails={setAccDetails}
             />
             <Footer 
                 mainaccounts={mainaccounts}

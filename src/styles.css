@@ -3045,12 +3045,8 @@ input:checked + .slider:before {
   grid-template-columns: 1fr 2fr;
 }
 
-/* .table-responsive.full__table {
-  max-height: 200px;
-} */
-
 .table__height {
-  max-height: 400px;
+  max-height: 800px;
 }
 
 #dark .j-details-container{

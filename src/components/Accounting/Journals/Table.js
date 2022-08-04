@@ -14,7 +14,7 @@ const Table = ({journals, currencyIso, setDetails, setSelectedJrnlID, details, s
 
     return (
 
-        <div className="table-container font-12" style={{padding:"0", border:"none"}} className={details ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
+        <div style={{padding:"0", border:"none"}} className={details ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
             <div className={details ? "table-responsive journal__table-container" : "table-responsive full__table"} >
                 <div className="table__height">
                     <table className="table">
@@ -34,34 +34,34 @@ const Table = ({journals, currencyIso, setDetails, setSelectedJrnlID, details, s
                             }
                         </thead>
                         <tbody>
-                        {journals.map(journal => {
-                            if (details) {
-                                if (selectedjrnl.id == journal.id) {
+                            {journals.map(journal => {
+                                if (details) {
+                                    if (selectedjrnl.id == journal.id) {
+                                        return (
+                                            <tr key={journal.id}>
+                                                <td><span onClick={handleClick} id={journal.id} style={{color:"red", fontSize:"0.75rem", cursor:"pointer"}} className="link">{journal.transaction_id}</span></td>
+                                            </tr>
+                                        )
+                                    }else{
+                                        return (
+                                            <tr key={journal.id}>
+                                                <td><span onClick={handleClick} id={journal.id} style={{fontSize:"0.75rem", cursor:"pointer"}} className="link">{journal.transaction_id}</span></td>
+                                            </tr>
+                                        )
+                                    }
+                                }else { 
                                     return (
                                         <tr key={journal.id}>
-                                            <td><a href onClick={handleClick} id={journal.id} style={{color:"red"}}>{journal.transaction_id}</a></td>
-                                        </tr>
-                                    )
-                                }else{
-                                    return (
-                                        <tr key={journal.id}>
-                                            <td><a href onClick={handleClick} id={journal.id}>{journal.transaction_id}</a></td>
+                                            <td><span onClick={handleClick} id={journal.id} style={{fontSize:"0.75rem", cursor:"pointer"}} className="link">{journal.transaction_id}</span></td>
+                                            <td>{journal.account_debited} <em><small>({journal.branch_debited})</small></em></td>
+                                            <td>{journal.account_credited} <em><small>({journal.branch_credited})</small></em></td>
+                                            <td>{`${currencyIso} ${journal.amount_debited}`}</td>
+                                            <td>{`${currencyIso} ${journal.amount_credited}`}</td>
+                                            <td>{convertDate(journal.date_created)}</td>
                                         </tr>
                                     )
                                 }
-                            }else { 
-                                return (
-                                    <tr key={journal.id}>
-                                        <td><a href onClick={handleClick} id={journal.id}>{journal.transaction_id}</a></td>
-                                        <td>{journal.account_debited} <em><small>({journal.branch_debited})</small></em></td>
-                                        <td>{journal.account_credited} <em><small>({journal.branch_credited})</small></em></td>
-                                        <td>{`${currencyIso} ${journal.amount_debited}`}</td>
-                                        <td>{`${currencyIso} ${journal.amount_credited}`}</td>
-                                        <td>{convertDate(journal.date_created)}</td>
-                                    </tr>
-                                )
-                            }
-                        })}
+                            })}
                         </tbody>
                     </table>
                 </div>
