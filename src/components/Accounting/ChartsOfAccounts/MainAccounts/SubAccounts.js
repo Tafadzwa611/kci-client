@@ -45,54 +45,55 @@ const SubAccounts = ({selectedMainAccID, setAccDetails, generalLedgerName}) => {
 
 
     return (
-        <div style={{maxHeight:"400px"}}>
+        <div style={{maxHeight:"800px"}}>
 
-        <div style={{position:"sticky", top:"0", width:"100%"}}>
-            <div style={{display:"flex", flexDirection:"column"}} className="j-details-container">
-                {subAccounts != "" &&
-                    <div className="callout callout-info" style={{margin:"1.5rem"}}>
-                        To view more on <b>{generalLedgerName}</b> sub accounts click the Sub Accounts tab above and filter the main account.
-                    </div>
-                }
-                {subAccounts != "" &&
-                    <table className="table">
-                        <thead>
-                            <tr className="journal-details header" style={{position:"sticky", top:"0"}}>
-                                <th>Date Created</th>
-                                <th>GL Code</th>
-                                <th>Sub Account Name</th>
-                                <th>Currency</th>
-                                <th>Balance</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {subAccounts.map(account => {
-                                return (
-                                    <tr key={account.id}>
-                                        <td>{convertDate(account.date_created)}</td>
-                                        <td>{account.general_ledger_code}</td>
-                                        <td>{account.general_ledger_name}</td>
-                                        <td>{account.currency_shortname}</td>
-                                        <td>{account.account_balance}</td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                }
+            <div style={{position:"sticky", top:"0", width:"100%"}}>
+                <div style={{display:"flex", flexDirection:"column"}} className="j-details-container">
+                    {subAccounts != "" &&
+                        <div className="callout callout-info" style={{margin:"1.5rem"}}>
+                            To view more on <b>{generalLedgerName}</b> sub accounts click the Sub Accounts tab above and filter the main account.
+                        </div>
+                    }
+                    {subAccounts != "" &&
+                        <table className="table">
+                            <thead>
+                                <tr className="journal-details header" style={{position:"sticky", top:"0"}}>
+                                    <th>Date Created</th>
+                                    <th>GL Code</th>
+                                    <th>Sub Account Name</th>
+                                    <th>Currency</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {subAccounts.map(account => {
+                                    return (
+                                        <tr key={account.id}>
+                                            <td>{convertDate(account.date_created)}</td>
+                                            <td>{account.general_ledger_code}</td>
+                                            <td>{account.general_ledger_name}</td>
+                                            <td>{account.currency_shortname}</td>
+                                            <td>{account.account_balance}</td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    }
 
-                {subAccounts == "" && 
-                    <div style={{textAlign:"center", marginTop:"1.5rem"}}>
-                        <span>Main account has no sub accounts.</span>
-                    </div>
-                }
-                <div className="row" style={{marginTop:"0"}}>
-                    <div className="col-12" style={{display:"flex", justifyContent:"flex-end", padding:"1.5rem"}}>
-                        <button><a onClick={e => setAccDetails(false)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
+                    {subAccounts == "" && 
+                        <div style={{textAlign:"center", marginTop:"1.5rem"}}>
+                            <span>Main account has no sub accounts.</span>
+                        </div>
+                    }
+                    <div className="row" style={{marginTop:"0"}}>
+                        <div className="col-12" style={{display:"flex", justifyContent:"flex-end", padding:"1.5rem"}}>
+                            <button><a onClick={e => setAccDetails(false)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+
         </div>
 
     )
