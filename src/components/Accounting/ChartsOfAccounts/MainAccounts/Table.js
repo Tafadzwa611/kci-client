@@ -4,6 +4,8 @@ import SubAccounts from './SubAccounts';
 
 const Table = ({ mainaccounts, selectedMainAccID, setSelectedMainAccID, accDetails, setAccDetails }) => {
 
+    const [generalLedgerName, setGeneralLedgerName] = React.useState(null)
+
     const handleClickMainAcc = (evt) => {
         setSelectedMainAccID(evt.target.id)
         if (evt.target.id != selectedMainAccID){
@@ -12,6 +14,19 @@ const Table = ({ mainaccounts, selectedMainAccID, setSelectedMainAccID, accDetai
             setAccDetails(curr => !curr)
         }
     }
+
+    const getGLN = async () => {
+        const main_account = await mainaccounts.filter(acc => acc.id == selectedMainAccID)
+        if (main_account.length == 1){
+            setGeneralLedgerName(main_account[0].general_ledger_name)
+        }
+    }
+
+    React.useEffect(() => {
+        getGLN();
+    }, [selectedMainAccID])
+
+    console.log(generalLedgerName)
 
     return (
         <div style={{padding:"0", border:"none", marginTop:"2rem"}} className={accDetails ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
@@ -22,11 +37,11 @@ const Table = ({ mainaccounts, selectedMainAccID, setSelectedMainAccID, accDetai
                             {accDetails ?
                                 <tr className="journal-details header" style={{position:"sticky", top:"0"}}>
                                     <th>GL Code</th>
-                                    <th>Account Name</th>
+                                    <th>Main Account Name</th>
                                 </tr>:
                                 <tr className="journal-details header" style={{position:"sticky", top:"0"}}>
                                     <th>GL Code</th>
-                                    <th>Account Name</th>
+                                    <th>Main Account Name</th>
                                     <th>Type</th>
                                     <th>Branch</th>
                                     <th>Date Created</th>
@@ -91,7 +106,7 @@ const Table = ({ mainaccounts, selectedMainAccID, setSelectedMainAccID, accDetai
                     </table>
                 </div>
                 {accDetails && (
-                    <SubAccounts selectedMainAccID={selectedMainAccID} setAccDetails={setAccDetails} />
+                    <SubAccounts selectedMainAccID={selectedMainAccID} setAccDetails={setAccDetails} generalLedgerName={generalLedgerName} />
                 )}
             </div>
         </div>

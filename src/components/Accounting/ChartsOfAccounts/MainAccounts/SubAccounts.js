@@ -2,11 +2,9 @@ import React from 'react';
 import { makeRequest } from '../../../../utils/utils';
 import { convertDate } from '../../Journals/utils';
 
-const SubAccounts = ({selectedMainAccID, setAccDetails}) => {
+const SubAccounts = ({selectedMainAccID, setAccDetails, generalLedgerName}) => {
 
     const [subAccounts, setSubAccounts] = React.useState([]);
-    const [totalAccounts, setTotalAccounts] = React.useState(0);
-    const [accountsLoading, setAccountsLoading] = React.useState(false);
     const [mainAcc, setMainAcc] = React.useState({});
     const [currencies, setCurrencies] = React.useState(null);
 
@@ -51,6 +49,11 @@ const SubAccounts = ({selectedMainAccID, setAccDetails}) => {
 
         <div style={{position:"sticky", top:"0", width:"100%"}}>
             <div style={{display:"flex", flexDirection:"column"}} className="j-details-container">
+                {subAccounts != "" &&
+                    <div className="callout callout-info" style={{margin:"1.5rem"}}>
+                        To view more on <b>{generalLedgerName}</b> sub accounts click the Sub Accounts tab above and filter the main account.
+                    </div>
+                }
                 {subAccounts != "" &&
                     <table className="table">
                         <thead>
