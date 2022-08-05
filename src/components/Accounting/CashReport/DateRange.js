@@ -8,7 +8,7 @@ function DateRange(props) {
       <form onSubmit={props.onSubmit}>
         <div className="row" style={{display:"flex", columnGap:"1px", alignItems:"center", marginTop:"0"}}>
           <div className="input-group">
-              <i class="uil uil-calendar-alt"></i>
+              <i className="uil uil-calendar-alt"></i>
               <input
                 type='date'
                 className='form-control input-background'

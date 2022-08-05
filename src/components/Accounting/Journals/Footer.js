@@ -9,7 +9,7 @@ const Footer = ({
         <div className="footer-container font-12">
             {nextPageNumber === null ?
             <div className="text" style={{border:"none"}}>
-                <i class="uil uil-exclamation-triangle"></i> 
+                <i className="uil uil-exclamation-triangle"></i> 
                 <span>All journals have been loaded</span>
             </div>:
             <LoadMoreButton loadMoreJournals={loadMoreJournals} loadingMore={loadingMore}/>

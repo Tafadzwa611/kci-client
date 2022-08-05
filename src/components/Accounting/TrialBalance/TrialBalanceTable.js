@@ -20,7 +20,7 @@ const TrialBalanceTable = ({trialBalance, currencyIso, loading}) => {
     }, [omitZeroBalances]);
 
     return (
-        <div class="col-12 font-12">
+        <div className="col-12 font-12">
             <div style={{marginTop:"40px", border:"none", padding:"0"}} className="trial_balance_table_container">
                 <div style={{float:"left", margin:"20px", marginLeft:"0", marginTop:"0", display:"flex", flexDirection:"row", alignItems:"center", columnGap:"10px"}}>
                     <div>
@@ -38,8 +38,8 @@ const TrialBalanceTable = ({trialBalance, currencyIso, loading}) => {
                         <label> Omit Accounts with zero balances</label>
                     </div>
                 </div>
-                <div class="table-responsive" style={{maxHeight:"1000px"}}>
-                    <table class="table" style={{width:"100%"}} id='trial-balance'>
+                <div className="table-responsive" style={{maxHeight:"1000px"}}>
+                    <table className="table" style={{width:"100%"}} id='trial-balance'>
                         <thead>
                             <tr>
                                 <th>Account</th>
@@ -73,7 +73,7 @@ const TrialBalanceTable = ({trialBalance, currencyIso, loading}) => {
                     </table>
                 </div>
                 <div style={{display:"flex", justifyContent:"center", alignItems:"center", columnGap:"5px", margin:"20px"}}>
-                    <i class="uil uil-exclamation-triangle" style={{color:"#ffc107"}}></i> 
+                    <i className="uil uil-exclamation-triangle" style={{color:"#ffc107"}}></i> 
                     Please note that, only accounts that had transactions in the selected time periods are shown.
                 </div>
             </div>

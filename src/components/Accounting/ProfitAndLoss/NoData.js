@@ -23,7 +23,7 @@ const NoData = () => {
     return (
         <div style={nodata_container} className="text-light">
             <div className="text" style={flex}>
-                <i class="uil uil-exclamation-triangle" style={uil_triangle}></i> 
+                <i className="uil uil-exclamation-triangle" style={uil_triangle}></i> 
                 <span>Oops! No data in table.</span>
             </div>
             <div>
