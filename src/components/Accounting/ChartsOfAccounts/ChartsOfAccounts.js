@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import MainAccounts from './MainAccounts/MainAccounts';
+import SubAccounts from './SubAccounts/SubAccounts';
 
 const ChartsOfAccounts = () => {
     const [tab, setTab] = useState('mainaccs');
@@ -7,7 +8,7 @@ const ChartsOfAccounts = () => {
         <>
             <div className="bloc-tabs">
                     <button className={tab === "mainaccs" ? "tabs-client active-tabs-accs" : "tabs-client"} onClick={e=> setTab("mainaccs")}> Main Accounts </button>
-                    <button className={tab === "cshmngmnt" ? "tabs-client active-tabs-accs" : "tabs-client"} onClick={e=> setTab("cshmngmnt")}> Sub Accounts </button>
+                    <button className={tab === "subaccs" ? "tabs-client active-tabs-accs" : "tabs-client"} onClick={e=> setTab("subaccs")}> Sub Accounts </button>
                     <button className={tab === "prftnls" ? "tabs-client active-tabs-accs" : "tabs-client"} onClick={e=> setTab("prftnls")}> Assets </button>
                     <button className={tab === "trlbnce" ? "tabs-client active-tabs-accs" : "tabs-client"} onClick={e=> setTab("trlbnce")}> Liabilities </button>
                     <button className={tab === "emp" ? "tabs-client active-tabs-accs" : "tabs-client"} onClick={e=> setTab("emp")}> Equity </button>
@@ -17,7 +18,7 @@ const ChartsOfAccounts = () => {
             <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                 {{
                     'mainaccs': <MainAccounts setTab={setTab}/>,
-                    // 'cshmngmnt': <CashReport setTab={setTab}/>,
+                    'subaccs': <SubAccounts setTab={setTab}/>,
                     // 'prftnls': <ProfitAndLoss setTab={setTab}/>,
                     // 'trlbnce': <TrialBalance setTab={setTab}/>,
                     // 'jrnls': <Journals setTab={setTab}/>,
