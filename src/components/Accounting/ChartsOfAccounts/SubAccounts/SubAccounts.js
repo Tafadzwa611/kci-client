@@ -11,6 +11,8 @@ const SubAccounts = () => {
     const [currencyId, setCurrencyId] = useState(null);
     const [acctype, setAccType] = useState(null);
     const [currency, setCurrency] = useState(null);
+    const [accStatement, setAccStatement] = useState(false)
+    const [selectedSubAccID, setSelectedSubAccID] = useState(null)
     // const [mainaccounts, setMainAccounts] = useState(null)
 
     useEffect(() => {
@@ -92,7 +94,6 @@ const SubAccounts = () => {
     }
 
     function getUrl() {
-        // let url = `/acc-api/chartsofaccs-sub-accounts-list/?page_num=${pageNum.current}`;
         let url = `/acc-api/chartsofaccs-sub-accounts-list/?currency_id=${currencyId}&acc_type=${acctype}`;
         if (branchIds !== null) {
             branchIds.forEach(id => (url += `&branch_ids=${id}`));
@@ -148,6 +149,10 @@ const SubAccounts = () => {
             />
             <Table 
                 subaccounts={subaccounts}
+                accStatement={accStatement}
+                setAccStatement={setAccStatement}
+                selectedSubAccID={selectedSubAccID}
+                setSelectedSubAccID={setSelectedSubAccID}
             />
         </>
     )

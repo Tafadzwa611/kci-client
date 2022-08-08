@@ -16,13 +16,15 @@
   },
   "dependencies": {
     "core-js": "^3.22.5",
+    "file-saver": "^2.0.5",
     "js-cookie": "^3.0.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-html-table-to-excel": "^2.0.0",
     "react-router-dom": "^6.3.0",
     "react-select": "^5.4.0",
-    "regenerator-runtime": "^0.13.9"
+    "regenerator-runtime": "^0.13.9",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",

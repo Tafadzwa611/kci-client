@@ -3045,14 +3045,21 @@ input:checked + .slider:before {
   grid-template-columns: 1fr 2fr;
 }
 
+.table-responsive.journal__table-container.acc__statement {
+  grid-template-columns: 1fr 4fr;
+}
+
 .table__height {
   max-height: 800px;
 }
 
-#dark .j-details-container{
+#dark .j-details-container,
+#dark .view_search_container.online__applications.acc__statement-search{
   background-color: #383838;
 }
 
-.j-details-container{
+.j-details-container,
+.view_search_container.online__applications.acc__statement-search{
   background-color: #f2f8ff;
 }
+

@@ -82,7 +82,7 @@ const SubAccounts = ({selectedMainAccID, setAccDetails, generalLedgerName}) => {
                     }
 
                     {subAccounts == "" && 
-                        <div style={{textAlign:"center", marginTop:"1.5rem"}}>
+                        <div style={{textAlign:"center", marginTop:"1.5rem"}} className="text-light">
                             <span>Main account has no sub accounts.</span>
                         </div>
                     }

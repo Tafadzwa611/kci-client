@@ -103,4 +103,36 @@ const makeRequestWrapper = async (resource, method, setLoggedInUser, data={}) =>
   return response
 }
 
-export { makeRequest, useAuth, makeRequestWrapper };
+const getFormattedDate = (date, format) => {
+
+  // let dd = date.getDate();
+  // let mm = date.getMonth() + 1;
+  // const yyyy = date.getFullYear();
+
+  const [year, month, day] = date.split('-');
+
+  let dd = day;
+  let mm = month;
+  const yyyy =year;
+
+  // if (dd < 10) {
+  //     dd = '0' + dd;
+  // }
+
+  // if (mm < 10) {
+  //     mm = '0' + mm;
+  // }
+  if (format === 'dd/mm/yyyy') {
+      return dd + '/' + mm + '/' + yyyy;
+  }
+
+  if (format === 'mm/dd/yyyy') {
+      return mm + '/' + dd + '/' + yyyy;
+  }
+
+  if (format === 'mm/dd/yyyy H:M') {
+      return `${mm}/${dd}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
+  }
+}
+
+export { makeRequest, useAuth, makeRequestWrapper, getFormattedDate };
