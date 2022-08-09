@@ -11,6 +11,7 @@ const AccountStatement = (
     generalLedgerCode, 
     generalLedgerAccCreationDate, 
     generalLedgerBalance,
+    generalLedgerCurrency,
     transactions,
     setTransactions}
     ) => {
@@ -118,7 +119,7 @@ const AccountStatement = (
                             <b>{generalLedgerName} - {generalLedgerCode}</b>
                         </div>
                         <div>
-                            <b>{generalLedgerBalance}</b>
+                            <b style={{fontSize:"1rem"}}>{generalLedgerCurrency} {generalLedgerBalance}</b>
                         </div>
                     </div>
                     <DateRange 

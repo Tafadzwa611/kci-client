@@ -8,6 +8,7 @@ const Table = ({ subaccounts, accStatement, setAccStatement, selectedSubAccID, s
     const [generalLedgerCode, setGeneralLedgerCode] = React.useState(null)
     const [generalLedgerAccCreationDate, setGeneralLedgerAccCreationDate] = React.useState(null)
     const [generalLedgerBalance, setGeneralLedgerBalance] = React.useState(null)
+    const [generalLedgerCurrency, setGeneralLedgerCurrency] = React.useState(null)
     const [transactions, setTransactions] = React.useState([]);
 
     const handleClickSubAcc = (evt) => {
@@ -27,6 +28,7 @@ const Table = ({ subaccounts, accStatement, setAccStatement, selectedSubAccID, s
             setGeneralLedgerCode(subacc[0].general_ledger_code)
             setGeneralLedgerAccCreationDate(subacc[0].date_created)
             setGeneralLedgerBalance(subacc[0].account_balance)
+            setGeneralLedgerCurrency(subacc[0].currency_shortname)
         }
     }
 
@@ -126,6 +128,7 @@ const Table = ({ subaccounts, accStatement, setAccStatement, selectedSubAccID, s
                         generalLedgerCode={generalLedgerCode}
                         generalLedgerAccCreationDate={generalLedgerAccCreationDate}
                         generalLedgerBalance={generalLedgerBalance}
+                        generalLedgerCurrency={generalLedgerCurrency}
                         transactions={transactions}
                         setTransactions={setTransactions}
                     />

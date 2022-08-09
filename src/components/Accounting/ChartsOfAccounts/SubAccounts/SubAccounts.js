@@ -13,7 +13,6 @@ const SubAccounts = () => {
     const [currency, setCurrency] = useState(null);
     const [accStatement, setAccStatement] = useState(false)
     const [selectedSubAccID, setSelectedSubAccID] = useState(null)
-    // const [mainaccounts, setMainAccounts] = useState(null)
 
     useEffect(() => {
         getBranches();
@@ -27,7 +26,8 @@ const SubAccounts = () => {
         if (currencyId !== null){
             getSubAccounts();
         }
-    }, [currencyId]);
+        setAccStatement(false)
+    }, [currencyId, acctype]);
 
     if (acctype == null){
         setAccType('ASSET')
@@ -51,9 +51,6 @@ const SubAccounts = () => {
           console.log(error);
         }
     }
-
-    // console.log(currencyId)
-    // console.log(currency)
     
     const getCurrency = async () => {
         await fetchCurrency();
