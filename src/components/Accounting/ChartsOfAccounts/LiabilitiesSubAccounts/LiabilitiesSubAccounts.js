@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { makeRequest } from '../../../../utils/utils';
-import LiabilitiesTable from './LiabilitiesTable';
-import LiabilitiesDateRange from './LiabilitiesDateRange';
+import Table from '../AssetsSubAccounts/Table';
+import DateRange from '../AssetsSubAccounts/DateRange';
 
 const LiabilitiesSubAccounts = () => {
     const [subaccounts, setSubAccounts] = useState([])
@@ -121,7 +121,7 @@ const LiabilitiesSubAccounts = () => {
     
     return (
         <>
-            <LiabilitiesDateRange 
+            <DateRange 
                 onSubmit={onSubmit}
                 changeCurrency={changeCurrency}
                 setSubAccounts={setSubAccounts}
@@ -130,7 +130,7 @@ const LiabilitiesSubAccounts = () => {
                 currency={currency}
                 currencyId={currencyId}
             />
-            <LiabilitiesTable 
+            <Table 
                 subaccounts={subaccounts}
                 accStatement={accStatement}
                 setAccStatement={setAccStatement}

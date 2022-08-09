@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { makeRequest } from '../../../../utils/utils';
-import Table from './Table';
-import DateRange from './DateRange';
+import Table from '../AssetsSubAccounts/Table';
+import DateRange from '../AssetsSubAccounts/DateRange';
 
-const AssetsSubAccounts = () => {
+const ExpensesSubAccounts = () => {
     const [subaccounts, setSubAccounts] = useState([])
     const [branches, setBranches] = useState(null);
     const [branchIds, setBranchIds] = useState(null);
@@ -84,7 +84,7 @@ const AssetsSubAccounts = () => {
     }
 
     function getUrl() {
-        let url = `/acc-api/chartsofaccs-sub-accounts-list/?currency_id=${currencyId}&acc_type=ASSET`;
+        let url = `/acc-api/chartsofaccs-sub-accounts-list/?currency_id=${currencyId}&acc_type=EXPENSE`;
         if (branchIds !== null) {
             branchIds.forEach(id => (url += `&branch_ids=${id}`));
         }
@@ -141,4 +141,4 @@ const AssetsSubAccounts = () => {
     )
 }
 
-export default AssetsSubAccounts;
+export default ExpensesSubAccounts;

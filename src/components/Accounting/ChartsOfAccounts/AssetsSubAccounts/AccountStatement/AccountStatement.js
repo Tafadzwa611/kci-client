@@ -4,7 +4,7 @@ import Empty from './Empty';
 import AccountTransactions from './AccountTransactions';
 import { makeRequest, getFormattedDate } from '../../../../../utils/utils';
 
-const AssetsAccountStatement = (
+const AccountStatement = (
     {selectedSubAccID, 
     setAccStatement, 
     generalLedgerName, 
@@ -160,4 +160,4 @@ const AssetsAccountStatement = (
     )
 }
 
-export default AssetsAccountStatement;
+export default AccountStatement;

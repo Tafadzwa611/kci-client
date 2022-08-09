@@ -1,8 +1,8 @@
 import React from 'react';
 import { convertDate } from '../../Journals/utils';
-import AssetsAccountStatement from './AssetsAccountStatement/AssetsAccountStatement';
+import AccountStatement from './AccountStatement/AccountStatement';
 
-const AssetsTable = ({ subaccounts, accStatement, setAccStatement, selectedSubAccID, setSelectedSubAccID }) => {
+const Table = ({ subaccounts, accStatement, setAccStatement, selectedSubAccID, setSelectedSubAccID }) => {
 
     const [generalLedgerName, setGeneralLedgerName] = React.useState(null)
     const [generalLedgerCode, setGeneralLedgerCode] = React.useState(null)
@@ -121,7 +121,7 @@ const AssetsTable = ({ subaccounts, accStatement, setAccStatement, selectedSubAc
                     
                 </div>
                 {accStatement && (
-                    <AssetsAccountStatement 
+                    <AccountStatement 
                         selectedSubAccID={selectedSubAccID} 
                         setAccStatement={setAccStatement} 
                         generalLedgerName={generalLedgerName} 
@@ -138,4 +138,4 @@ const AssetsTable = ({ subaccounts, accStatement, setAccStatement, selectedSubAc
     )
 }
 
-export default AssetsTable;
+export default Table;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 
-const LiabilitiesDateRange = (props) => {
+const DateRange = (props) => {
     const {
         onSubmit, 
         setSubAccounts, 
@@ -74,11 +74,11 @@ const LiabilitiesDateRange = (props) => {
     );
 }
 
-LiabilitiesDateRange.defaultProps = {
+DateRange.defaultProps = {
     allOption: {
         label: 'Select all',
         value: '*'
     }
 };
 
-export default LiabilitiesDateRange;
+export default DateRange;
