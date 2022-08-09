@@ -49,13 +49,18 @@ const SubAccounts = ({selectedMainAccID, setAccDetails, generalLedgerName}) => {
 
             <div style={{position:"sticky", top:"0", width:"100%"}}>
                 <div style={{display:"flex", flexDirection:"column"}} className="j-details-container">
+                    <div className="row" style={{marginTop:"0"}}>
+                        <div className="col-12" style={{display:"flex", justifyContent:"flex-end", padding:"1.5rem"}}>
+                            <button><a onClick={e => setAccDetails(false)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
+                        </div>
+                    </div>
                     {subAccounts != "" &&
-                        <div className="callout callout-info" style={{margin:"1.5rem"}}>
+                        <div className="callout callout-info" style={{margin:"1.5rem", marginTop:"0"}}>
                             To view more on <b>{generalLedgerName}</b> sub accounts click the Sub Accounts tab above and filter the main account.
                         </div>
                     }
                     {subAccounts != "" &&
-                        <table className="table">
+                        <table className="table" style={{marginBottom:"1.5rem"}}>
                             <thead>
                                 <tr className="journal-details header" style={{position:"sticky", top:"0"}}>
                                     <th>Date Created</th>
@@ -82,15 +87,10 @@ const SubAccounts = ({selectedMainAccID, setAccDetails, generalLedgerName}) => {
                     }
 
                     {subAccounts == "" && 
-                        <div style={{textAlign:"center", marginTop:"1.5rem"}} className="text-light">
+                        <div style={{textAlign:"center", marginBottom:"1.5rem"}} className="text-light">
                             <span>Main account has no sub accounts.</span>
                         </div>
                     }
-                    <div className="row" style={{marginTop:"0"}}>
-                        <div className="col-12" style={{display:"flex", justifyContent:"flex-end", padding:"1.5rem"}}>
-                            <button><a onClick={e => setAccDetails(false)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
-                        </div>
-                    </div>
                 </div>
             </div>
 

@@ -13,7 +13,8 @@ const AccountStatement = (
     generalLedgerBalance,
     generalLedgerCurrency,
     transactions,
-    setTransactions}
+    setTransactions
+    }
     ) => {
 
     const [account, setAccount] = React.useState({});
@@ -114,7 +115,13 @@ const AccountStatement = (
             <div style={{position:"sticky", top:"0", width:"100%"}}>
                 <div style={{display:"flex", flexDirection:"column"}} className="j-details-container">
 
-                    <div className="journal-details header" style={{display:"flex", flexDirection:"row", justifyContent:"space-between", paddingTop:"1rem", marginTop:"0"}}>
+                    <div className="row" style={{marginTop:"0"}}>
+                        <div className="col-12" style={{display:"flex", justifyContent:"flex-end", padding:"1.5rem", paddingBottom:"0"}}>
+                            <button><a onClick={e => setAccStatement(false)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
+                        </div>
+                    </div>
+
+                    <div className="journal-details header" style={{display:"flex", flexDirection:"row", justifyContent:"space-between", marginTop:"0"}}>
                         <div>
                             <b>{generalLedgerName} - {generalLedgerCode}</b>
                         </div>
@@ -122,6 +129,7 @@ const AccountStatement = (
                             <b style={{fontSize:"1rem"}}>{generalLedgerCurrency} {generalLedgerBalance}</b>
                         </div>
                     </div>
+
                     <DateRange 
                         minDate={minDate}
                         setMinDate={setMinDate}
