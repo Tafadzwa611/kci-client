@@ -6,16 +6,20 @@
 .dd-button {
     display: inline-block;
     border: 1px solid gray;
-    border-radius: 8px;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
     padding: 10px 30px 10px 20px;
     cursor: pointer;
     white-space: nowrap;
     font-family: inherit;
-    color: #ffffff;
-    background-color: #6c757d;
-    border-color: #6c757d;
+    color: #6F7880;
+    background-color: #F2F8FF;
+    border-color: #F2F8FF;
     font-size: 12px;
+}
+
+#dark .dd-button {
+    border-color: #383838;
+    background-color: #383838;
+    color: #fff;
 }
 
 .dd-button:after {
@@ -28,14 +32,18 @@
     height: 0; 
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-top: 5px solid white;
+    border-top: 5px solid #6F7880;
     font-size: 12px;
 }
 
+#dark .dd-button:after {
+    border-top: 5px solid #fff;
+}
+
 .dd-button:hover {
-    color: #ffffff;
-    background-color: #5a6268;
-    border-color: #545b62;
+    color: #6F7880;
+    background-color: #F2F8FF;
+    border-color: #F2F8FF;
 }
 
 
@@ -47,14 +55,16 @@
     position: absolute;
     top: 100%;
     border: 1px solid #ccc;
-    border-radius: 4px;
     padding: 0;
     margin: 2px 0 0 0;
-    box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
     background-color: #ffffff;
     list-style-type: none;
     font-size: 12px;
     z-index: 1;
+}
+
+#dark .dd-menu {
+    background-color: #383838;
 }
 
 .dd-input + .dd-menu {
@@ -73,6 +83,10 @@
 
 .dd-menu li:hover {
     background-color: #f6f6f6;
+}
+
+#dark .dd-menu li:hover {
+    background-color: #383838;
 }
 
 .dd-menu li a {

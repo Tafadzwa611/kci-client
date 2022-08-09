@@ -10,11 +10,12 @@ const AccountStatement = (
     generalLedgerName, 
     generalLedgerCode, 
     generalLedgerAccCreationDate, 
-    generalLedgerBalance}
+    generalLedgerBalance,
+    transactions,
+    setTransactions}
     ) => {
 
     const [account, setAccount] = React.useState({});
-    const [transactions, setTransactions] = React.useState([]);
     const [transactionsLoading, setTransactionsLoading] = React.useState(false);
     const [loadingMoreTransactions, setLoadingMoreTransactions] = React.useState(false);
     const [error, setError] = React.useState(false);
@@ -23,7 +24,6 @@ const AccountStatement = (
     const [emptyMessage, setEmptyMessage] = React.useState("Select date range to view transactions.");
     const [minDate, setMinDate] = React.useState("");
     const [maxDate, setMaxDate] = React.useState("");
-    // const account_id = selectedSubAccID;
     const urlRef = React.useRef("");
     const queryParams = React.useRef({});
     const isFirstRun = React.useRef(true);
@@ -80,12 +80,10 @@ const AccountStatement = (
         setTransactions([]);
         isFirstRun.current = true;
         if (minDate !== "") {
-            // queryParams.current['minDate'] = moment(minDate).format('MM/DD/YYYY');
             queryParams.current['minDate'] = getFormattedDate(minDate, 'mm/dd/yyyy');
         }
 
         if (maxDate !== "") {
-            // queryParams.current['maxDate'] = moment(maxDate).format('MM/DD/YYYY');
             queryParams.current['maxDate'] = getFormattedDate(maxDate, 'mm/dd/yyyy');
         }
 
@@ -105,6 +103,7 @@ const AccountStatement = (
         setEmptyMessage("Select date range to view transactions.");
         setMinDate("");
         setMaxDate("");
+        setTransactions([]);
         isFirstRun.current = true;
     }
 
@@ -133,7 +132,7 @@ const AccountStatement = (
                         Reset={Reset}
                     />
                     {transactionsLoading ?
-                        <div> Loading... </div> :
+                        <div style={{margin:"0 1.5rem"}}> Loading... </div> :
                         transactions.length === 0 ? 
                             <Empty message={emptyMessage} /> :
                             <AccountTransactions
