@@ -6,7 +6,6 @@ const SubAccounts = ({selectedMainAccID, setAccDetails, generalLedgerName}) => {
 
     const [subAccounts, setSubAccounts] = React.useState([]);
     const [mainAcc, setMainAcc] = React.useState({});
-    const [currencies, setCurrencies] = React.useState(null);
 
     const fetchMainAcc = React.useCallback(async function() {
         const response = await makeRequest.get(`/acc-api/account-details/${selectedMainAccID}/`, {timeout: 8000});
@@ -15,14 +14,6 @@ const SubAccounts = ({selectedMainAccID, setAccDetails, generalLedgerName}) => {
             setMainAcc(account);
         }
     }, []);
-
-    // const fetchCurrencies = React.useCallback(async function() {
-    //     const response = await makeRequest.get('/usersapi/list_currencies/', {timeout: 8000});
-    //     if (response.ok) {
-    //         let currencies = await response.json();
-    //         setCurrencies(currencies);
-    //     }
-    // }, []);
 
     const fetchSubAccounts = React.useCallback(async function({selectedMainAccID}) {
         let url = `/acc-api/sub_accounts_api/?main_acc=${selectedMainAccID}`;
@@ -35,14 +26,8 @@ const SubAccounts = ({selectedMainAccID, setAccDetails, generalLedgerName}) => {
 
     React.useEffect(() => {
         fetchMainAcc();
-        // fetchCurrencies();
         fetchSubAccounts({selectedMainAccID});
     }, [selectedMainAccID]);
-
-    // if (currencies===null) {
-    //     return <div>Loading</div>
-    // }
-
 
     return (
         <div style={{maxHeight:"800px"}}>
