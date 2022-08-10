@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NoData = () => {
+const Empty = ({ message }) => {
 
     const nodata_container = {
         display: "block",
@@ -21,16 +21,16 @@ const NoData = () => {
     }
 
     return (
-        <div style={nodata_container}>
+        <div style={nodata_container} className="text-light">
             <div className="text" style={flex}>
-                <i class="uil uil-exclamation-triangle" style={uil_triangle}></i> 
+                <i className="uil uil-exclamation-triangle" style={uil_triangle}></i> 
                 <span>Oops! No data in table.</span>
             </div>
             <div>
-                <span>Select date of balance sheet and at least one branch.</span>
+                <span>{ message }</span>
             </div>
         </div>
     )
 }
 
-export default NoData;
+export default Empty;
