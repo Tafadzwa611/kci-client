@@ -25,11 +25,11 @@ const BalanceSheetEquityLiabs = ({
                         <td colSpan="3" className="text-center"><b>LIABILITY AND EQUITY</b></td>
                     </tr>
                     <tr>
-                        <td style={{borderBottom: '1px solid #000'}} className="text-blue">
+                        <td className="text-blue">
                             <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Short term debt</b>
                         </td>
-                        <td style={{borderBottom: '1px solid #000'}}></td>
-                        <td style={{textAlign: 'right', borderBottom: '1px solid #000'}} className="text-bold">
+                        <td></td>
+                        <td style={{textAlign: 'right'}} className="text-bold">
                             <input
                                 type="text"
                                 value={balanceSheet.total_short_term_liabilities}
@@ -41,7 +41,7 @@ const BalanceSheetEquityLiabs = ({
                     {balanceSheet.short_term_liabilities.map(liab => {
                         return (
                             <tr key={liab.id}>
-                                <td style={{borderBottom: '1px solid #000'}}>
+                                <td>
                                     <Link
                                         to='#'
                                         onClick={handleClick}
@@ -53,7 +53,7 @@ const BalanceSheetEquityLiabs = ({
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{liab.general_ledger_name} - {liab.branch}
                                     </Link>
                                 </td>
-                                <td style={{textAlign: 'right', borderBottom: '1px solid #000'}}>
+                                <td style={{textAlign: 'right'}}>
                                     <input
                                         type="text"
                                         value={liab.account_balance}
@@ -61,16 +61,16 @@ const BalanceSheetEquityLiabs = ({
                                         readOnly={true}
                                     />
                                 </td>
-                                <td style={{borderBottom: '1px solid #000'}}></td>
+                                <td></td>
                             </tr>
                         )
                     })}
                     <tr>
-                        <td style={{borderBottom: '1px solid #000'}} className="text-blue">
+                        <td className="text-blue">
                             <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total current liabilities</b>
                         </td>
-                        <td style={{borderBottom: '1px solid #000'}}></td>
-                        <td style={{textAlign: 'right', borderBottom: '1px solid #000'}} className="text-bold">
+                        <td></td>
+                        <td style={{textAlign: 'right'}} className="text-bold">
                             <input
                                 type="text"
                                 value={balanceSheet.total_short_term_liabilities}
@@ -80,11 +80,11 @@ const BalanceSheetEquityLiabs = ({
                         </td>
                     </tr>
                     <tr>
-                        <td style={{borderBottom: '1px solid #000'}} className="text-blue">
+                        <td className="text-blue">
                             <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Long term debt</b>
                         </td>
-                        <td style={{borderBottom: '1px solid #000'}}></td>
-                        <td style={{textAlign: 'right', borderBottom: '1px solid #000'}} className="text-bold">
+                        <td></td>
+                        <td style={{textAlign: 'right'}} className="text-bold">
                             <input
                                 type="text"
                                 value={balanceSheet.total_long_term_liabilities}
@@ -96,7 +96,7 @@ const BalanceSheetEquityLiabs = ({
                     {balanceSheet.long_term_liabilities.map(liab => {
                         return (
                             <tr key={liab.id}>
-                                <td style={{borderBottom: '1px solid #000'}}>
+                                <td>
                                     <Link
                                         to='#'
                                         onClick={handleClick}
@@ -108,7 +108,7 @@ const BalanceSheetEquityLiabs = ({
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{liab.general_ledger_name} - {liab.branch}
                                     </Link>
                                 </td>
-                                <td style={{textAlign: 'right', borderBottom: '1px solid #000'}}>
+                                <td style={{textAlign: 'right'}}>
                                     <input
                                         type="text"
                                         value={liab.account_balance}
@@ -116,16 +116,16 @@ const BalanceSheetEquityLiabs = ({
                                         readOnly={true}
                                     />
                                 </td>
-                                <td style={{borderBottom: '1px solid #000'}}></td>
+                                <td></td>
                             </tr>
                         )
                     })}
                     <tr>
-                        <td style={{borderBottom: '1px solid #000'}} className="text-blue">
+                        <td className="text-blue">
                             <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total liabilities</b>
                         </td>
-                        <td style={{borderBottom: '1px solid #000'}}></td>
-                        <td style={{textAlign: 'right', borderBottom: '1px solid #000'}} className="text-bold">
+                        <td></td>
+                        <td style={{textAlign: 'right'}} className="text-bold">
                             <input
                                 type="text"
                                 value={balanceSheet.total_liabilities}
@@ -135,11 +135,11 @@ const BalanceSheetEquityLiabs = ({
                         </td>
                     </tr>
                     <tr>
-                        <td style={{borderBottom: '1px solid #000'}} className="text-blue">
+                        <td className="text-blue">
                             <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EQUITY</b>
                         </td>
-                        <td style={{borderBottom: '1px solid #000'}}></td>
-                        <td style={{textAlign: 'right', borderBottom: '1px solid #000'}} className="text-bold">
+                        <td></td>
+                        <td style={{textAlign: 'right'}} className="text-bold">
                             <input
                                 type="text"
                                 value={balanceSheet.total_equity}
@@ -151,7 +151,7 @@ const BalanceSheetEquityLiabs = ({
                     {balanceSheet.equity.map(eq => {
                         return (
                             <tr key={eq.id}>
-                                <td style={{borderBottom: '1px solid #000'}}>
+                                <td>
                                     <Link
                                         to='#'
                                         onClick={handleClick}
@@ -163,7 +163,7 @@ const BalanceSheetEquityLiabs = ({
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{eq.general_ledger_name} - {eq.branch}
                                     </Link>
                                 </td>
-                                <td style={{textAlign: 'right', borderBottom: '1px solid #000'}}>
+                                <td style={{textAlign: 'right'}}>
                                     <input
                                         type="text"
                                         value={eq.account_balance}
@@ -171,16 +171,16 @@ const BalanceSheetEquityLiabs = ({
                                         readOnly={true}
                                     />
                                 </td>
-                                <td style={{borderBottom: '1px solid #000'}}></td>
+                                <td></td>
                             </tr>
                         )
                     })}
                     <tr>
-                        <td style={{borderBottom: '1px solid #000'}} className="text-blue">
+                        <td className="text-blue">
                             <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Equity</b>
                         </td>
-                        <td style={{borderBottom: '1px solid #000'}}></td>
-                        <td style={{textAlign: 'right', borderBottom: '1px solid #000'}} className="text-bold">
+                        <td></td>
+                        <td style={{textAlign: 'right'}} className="text-bold">
                             <input
                                 type="text"
                                 value={balanceSheet.total_equity}

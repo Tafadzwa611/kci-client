@@ -30,11 +30,11 @@ const BalanceSheetAssetsTable = ({
                             </td>
                         </tr>
                         <tr>
-                            <td style={{borderBottom: '1px solid #000'}} className="text-blue">
+                            <td className="text-blue">
                                 <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cash and Cash Equivalents</b>
                             </td>
-                            <td style={{borderBottom: '1px solid #000'}}></td>
-                            <td style={{textAlign: 'right', borderBottom: '1px solid #000'}} className='text-bold'>
+                            <td></td>
+                            <td style={{textAlign: 'right'}} className='text-bold'>
                                 <input
                                     type="text"
                                     value={balanceSheet.cash_and_cash_equivalents_total}
@@ -65,10 +65,10 @@ const BalanceSheetAssetsTable = ({
                                     readOnly={true}
                                 />
                             </td>
-                            <td style={{borderBottom: '1px solid #000'}}></td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td style={{borderBottom: '1px solid #000'}}>
+                            <td>
                                 <Link
                                     to='#'
                                     style={{cursor: 'pointer'}}
@@ -81,7 +81,7 @@ const BalanceSheetAssetsTable = ({
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cash in bank
                                 </Link>
                             </td>
-                            <td style={{textAlign: 'right', borderBottom: '1px solid #000'}}>
+                            <td style={{textAlign: 'right'}}>
                                 <input
                                     type="text"
                                     value={balanceSheet.cash_in_bank}
@@ -89,15 +89,15 @@ const BalanceSheetAssetsTable = ({
                                     readOnly={true}
                                 />
                             </td>
-                            <td style={{borderBottom: '1px solid #000'}}></td>
+                            <td></td>
                         </tr>
                         {balanceSheet.financial_assets.length > 0 &&
                         <tr>
-                            <td style={{borderBottom: '1px solid #000'}} className="text-blue">
+                            <td className="text-blue">
                                 <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Financial assets held for trading</b>
                             </td>
-                            <td style={{borderBottom: '1px solid #000'}}></td>
-                            <td style={{textAlign: 'right', borderBottom: '1px solid #000'}} className='text-bold'>
+                            <td></td>
+                            <td style={{textAlign: 'right'}} className='text-bold'>
                                 <input
                                     type="text"
                                     value={balanceSheet.financial_assets_total}
@@ -109,7 +109,7 @@ const BalanceSheetAssetsTable = ({
                         {balanceSheet.financial_assets.map(fa => {
                             return (
                                 <tr key={fa.general_ledger_name}>
-                                    <td style={{borderBottom: '1px solid #000'}}>
+                                    <td>
                                         <Link
                                             to='#'
                                             style={{cursor: 'pointer'}}
@@ -121,7 +121,7 @@ const BalanceSheetAssetsTable = ({
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{fa.general_ledger_name}
                                         </Link>
                                     </td>
-                                    <td style={{textAlign: 'right', borderBottom: '1px solid #000'}}>
+                                    <td style={{textAlign: 'right'}}>
                                         <input
                                             type="text"
                                             value={fa.account_balance}
@@ -129,16 +129,16 @@ const BalanceSheetAssetsTable = ({
                                             readOnly={true}
                                         />
                                     </td>
-                                    <td style={{borderBottom: '1px solid #000'}}></td>
+                                    <td></td>
                                 </tr>
                             )
                         })}
                         <tr>
-                            <td style={{borderBottom: '1px solid #000'}} className="text-blue">
+                            <td className="text-blue">
                                 <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Loans-Gross</b>
                             </td>
-                            <td style={{borderBottom: '1px solid #000'}}></td>
-                            <td style={{textAlign: 'right', borderBottom: '1px solid #000'}} className="text-bold">
+                            <td></td>
+                            <td style={{textAlign: 'right'}} className="text-bold">
                                 <input
                                     type="text"
                                     value={balanceSheet.loan_portfolio_total_value}
@@ -150,7 +150,7 @@ const BalanceSheetAssetsTable = ({
                         {balanceSheet.loan_portfolio.map(lp => {
                             return (
                                 <tr key={lp.reason_for_borrowing}>
-                                    <td style={{borderBottom: '1px solid #000'}}>
+                                    <td>
                                         <Link
                                             to='#'
                                             style={{cursor: 'pointer'}}
@@ -163,7 +163,7 @@ const BalanceSheetAssetsTable = ({
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{lp.reason_for_borrowing}
                                         </Link>
                                     </td>
-                                    <td style={{textAlign: 'right', borderBottom: '1px solid #000'}}>
+                                    <td style={{textAlign: 'right'}}>
                                         <input
                                             type="text"
                                             value={lp.loans_total_value}
@@ -171,14 +171,14 @@ const BalanceSheetAssetsTable = ({
                                             readOnly={true}
                                         />
                                     </td>
-                                    <td style={{borderBottom: '1px solid #000'}}></td>
+                                    <td></td>
                                 </tr>
                             )
                         })}
                         <tr>
-                            <td style={{borderBottom: '1px solid #000'}} className='text-blue'><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Net Loan Portfolio</b></td>
-                            <td style={{borderBottom: '1px solid #000'}}></td>
-                            <td style={{textAlign: 'right', borderBottom: '1px solid #000'}} className='text-bold'>
+                            <td className='text-blue'><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Net Loan Portfolio</b></td>
+                            <td></td>
+                            <td style={{textAlign: 'right'}} className='text-bold'>
                                 <input
                                     type='text'
                                     value={balanceSheet.loan_portfolio_total_value}
@@ -188,7 +188,7 @@ const BalanceSheetAssetsTable = ({
                             </td>
                         </tr>
                         <tr>
-                            <td style={{borderBottom: '1px solid #000'}}>
+                            <td>
                                 <Link
                                     to='#'
                                     style={{cursor: 'pointer'}}
@@ -200,7 +200,7 @@ const BalanceSheetAssetsTable = ({
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Other short-term assets
                                 </Link>
                             </td>
-                            <td style={{textAlign: 'right', borderBottom: '1px solid #000'}}>
+                            <td style={{textAlign: 'right'}}>
                                 <input
                                     type='text'
                                     value={balanceSheet.other_current_assets}
@@ -208,14 +208,14 @@ const BalanceSheetAssetsTable = ({
                                     readOnly={true}
                                 />
                             </td>
-                            <td style={{borderBottom: '1px solid #000'}}></td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td style={{borderBottom: '1px solid #000'}} className='text-blue'>
+                            <td className='text-blue'>
                                 <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Current Assets</b>
                             </td>
-                            <td style={{borderBottom: '1px solid #000'}}></td>
-                            <td style={{textAlign: 'right', borderBottom: '1px solid #000'}}>
+                            <td></td>
+                            <td style={{textAlign: 'right'}}>
                                 <input
                                     type='text'
                                     value={balanceSheet.total_current_assets}
@@ -225,7 +225,7 @@ const BalanceSheetAssetsTable = ({
                             </td>
                         </tr>
                         <tr>
-                            <td style={{borderBottom: '1px solid #000'}}>
+                            <td>
                                 <Link
                                     to='#'
                                     style={{cursor: 'pointer'}}
@@ -237,7 +237,7 @@ const BalanceSheetAssetsTable = ({
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fixed assets
                                 </Link>
                             </td>
-                            <td style={{textAlign: 'right', borderBottom: '1px solid #000'}}>
+                            <td style={{textAlign: 'right'}}>
                                 <input
                                     type='text'
                                     value={balanceSheet.total_fixed_assets}
@@ -245,14 +245,14 @@ const BalanceSheetAssetsTable = ({
                                     readOnly={true}
                                 />
                             </td>
-                            <td style={{borderBottom: '1px solid #000'}}></td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td style={{borderBottom: '1px solid #000'}} className='text-blue'>
+                            <td className='text-blue'>
                                 <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Assets</b>
                             </td>
-                            <td style={{borderBottom: '1px solid #000'}}></td>
-                            <td style={{textAlign: 'right', borderBottom: '1px solid #000'}}>
+                            <td></td>
+                            <td style={{textAlign: 'right'}}>
                                 <input
                                     type='text'
                                     value={balanceSheet.total_assets}
