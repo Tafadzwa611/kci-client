@@ -187,42 +187,42 @@ export const SidebarData = [
                 title: 'View Accounting',
                 path: '/app/accounting/viewaccounting',                
             },
-            {
-                title: 'Cashflow',
-                path: '/app/accounting/cashflow',                
-            },
-            {
-                title: 'Profit and Loss',
-                path: '/app/accounting/profitandloss',                
-            },
-            {
-                title: 'Trial Balance',
-                path: '/app/accounting/trialbalance',                
-            },
-            {
-                title: 'Balance Sheet',
-                path: '/app/accounting/balancesheet',                
-            },
-            {
-                title: 'Cashflow Projections',
-                path: '/app/accounting/cashflowprojections',                
-            },
-            {
-                title: 'Charts of Accounts',
-                path: '/app/accounting/chartsofaccounts',                
-            },
-            {
-                title: 'Add Main Account',
-                path: '/app/accounting/addmainaccount',                
-            },
-            {
-                title: 'Journals',
-                path: '/app/accounting/journals',                
-            },
-            {
-                title: 'Add Journal',
-                path: '/app/accounting/addjournal',                
-            },
+            // {
+            //     title: 'Cashflow',
+            //     path: '/app/accounting/cashflow',                
+            // },
+            // {
+            //     title: 'Profit and Loss',
+            //     path: '/app/accounting/profitandloss',                
+            // },
+            // {
+            //     title: 'Trial Balance',
+            //     path: '/app/accounting/trialbalance',                
+            // },
+            // {
+            //     title: 'Balance Sheet',
+            //     path: '/app/accounting/balancesheet',                
+            // },
+            // {
+            //     title: 'Cashflow Projections',
+            //     path: '/app/accounting/cashflowprojections',                
+            // },
+            // {
+            //     title: 'Charts of Accounts',
+            //     path: '/app/accounting/chartsofaccounts',                
+            // },
+            // {
+            //     title: 'Add Main Account',
+            //     path: '/app/accounting/addmainaccount',                
+            // },
+            // {
+            //     title: 'Journals',
+            //     path: '/app/accounting/journals',                
+            // },
+            // {
+            //     title: 'Add Journal',
+            //     path: '/app/accounting/addjournal',                
+            // },
         ]
     },
 ]

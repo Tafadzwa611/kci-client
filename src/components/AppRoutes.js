@@ -35,10 +35,10 @@ import DailyReportSkeleton from './Skeletons/Charts/DailyReportSkeleton';
 import PortfolioAtRiskSkeleton from './Skeletons/Charts/PortfolioAtRiskSkeleton';
 import AgingReportSkeleton from './Skeletons/Charts/AgingReportSkeleton';
 import CashflowSkeleton from './Skeletons/Charts/CashflowSkeleton';
-import TrialBalanceSkeleton from './Skeletons/Charts/TrialBalanceSkeleton';
-import BalanceSheetSkeleton from './Skeletons/Charts/BalanceSheetSkeleton';
+// import TrialBalanceSkeleton from './Skeletons/Charts/TrialBalanceSkeleton';
+// import BalanceSheetSkeleton from './Skeletons/Charts/BalanceSheetSkeleton';
 import AddMainAccountSkeleton from './Skeletons/Forms/AddMainAccountSkeleton';
-import SkeletonJournals from './Skeletons/Charts/SkeletonJournals';
+// import SkeletonJournals from './Skeletons/Charts/SkeletonJournals';
 import ClientDetailsSkeleton from './Skeletons/Charts/ClientDetailsSkeleton';
 import LoanDetailSkeleton from './Skeletons/Charts/LoanDetailSkeleton';
 import NotificationSkeleton from './Skeletons/Charts/NotificationSkeleton';
@@ -127,15 +127,15 @@ const AgingReport = lazy(() => import('./Reports/AgingReport/AgingReport'));
 const PortfolioAtRiskReport = lazy(() => import('./Reports/PortfolioAtRiskReport/PortfolioAtRiskReport'));
 // Accounting 
 const ViewAccounting = lazy(() => import('./Accounting/ViewAccounting/ViewAccounting'));
-const Cashflow = lazy(() => import('./Accounting/Cashflow/Cashflow'));
-const ProfitAndLoss = lazy(() => import('./Accounting/ProfitAndLoss/ProfitAndLoss'));
-const TrialBalance = lazy(() => import('./Accounting/TrialBalance/TrialBalance'));
-const BalanceSheet = lazy(() => import('./Accounting/BalanceSheet/BalanceSheet'));
-const CashflowProjections = lazy(() => import('./Accounting/CashflowProjections/CashflowProjections'));
-const ChartsOfAccounts = lazy(() => import('./Accounting/ChartsOfAccounts/ChartsOfAccounts'));
+// const Cashflow = lazy(() => import('./Accounting/Cashflow/Cashflow'));
+// const ProfitAndLoss = lazy(() => import('./Accounting/ProfitAndLoss/ProfitAndLoss'));
+// const TrialBalance = lazy(() => import('./Accounting/TrialBalance/TrialBalance'));
+// const BalanceSheet = lazy(() => import('./Accounting/BalanceSheet/BalanceSheet'));
+// const CashflowProjections = lazy(() => import('./Accounting/CashflowProjections/CashflowProjections'));
+// const ChartsOfAccounts = lazy(() => import('./Accounting/ChartsOfAccounts/ChartsOfAccounts'));
 const AddMainAccount = lazy(() => import('./Accounting/AddMainAccount/AddMainAccount'));
-const Journals = lazy(() => import('./Accounting/Journals/Journals'));
-const AddJournal = lazy(() => import('./Accounting/AddJournal/AddJournal'));
+// const Journals = lazy(() => import('./Accounting/Journals/Journals'));
+// const AddJournal = lazy(() => import('./Accounting/AddJournal/AddJournal'));
 const Main = lazy(() => import('./Main'));
 
 const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPropagatePayments}) => {
@@ -620,8 +620,8 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
                     <Route exact path='/app/accounting/viewaccounting' element={<ViewAccounting/>}/>
-                    <Route exact path='/app/accounting/cashflow' element={<Cashflow/>}/>
-                    <Route exact path='/app/accounting/profitandloss' element={<ProfitAndLoss/>}/>
+                    {/* <Route exact path='/app/accounting/cashflow' element={<Cashflow/>}/>
+                    <Route exact path='/app/accounting/profitandloss' element={<ProfitAndLoss/>}/> */}
                     </Route>
                 </Route>
                 </Routes>
@@ -629,7 +629,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<TrialBalanceSkeleton />}>
+            {/* <Suspense fallback={<TrialBalanceSkeleton />}>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -641,9 +641,9 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 </Routes>
 
             </LoggedInUserProvider>
-            </Suspense>
+            </Suspense> */}
 
-            <Suspense fallback={<BalanceSheetSkeleton />}>
+            {/* <Suspense fallback={<BalanceSheetSkeleton />}>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -655,7 +655,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 </Routes>
 
             </LoggedInUserProvider>
-            </Suspense>
+            </Suspense> */}
 
             <Suspense fallback={<AddMainAccountSkeleton />}>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
@@ -671,7 +671,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<SkeletonJournals />}>
+            {/* <Suspense fallback={<SkeletonJournals />}>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -683,7 +683,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 </Routes>
 
             </LoggedInUserProvider>
-            </Suspense>
+            </Suspense> */}
 
             <Suspense fallback={<ClientDetailsSkeleton />}>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
@@ -766,9 +766,9 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                     <Route exact path='/app/dashboard' element={<Dashboard/>}/>
                     <Route exact path='/app/payments/paymentschart' element={<PaymentsChart/>}/>
                     <Route exact path='/app/users/branchdetails' element={<BranchDetails/>}/>
-                    <Route exact path='/app/accounting/cashflowprojections' element={<CashflowProjections/>}/>
+                    {/* <Route exact path='/app/accounting/cashflowprojections' element={<CashflowProjections/>}/>
                     <Route exact path='/app/accounting/chartsofaccounts' element={<ChartsOfAccounts/>}/>
-                    <Route exact path='/app/accounting/addjournal' element={<AddJournal/>}/>
+                    <Route exact path='/app/accounting/addjournal' element={<AddJournal/>}/> */}
                     </Route>
                 </Route>
                 </Routes>
