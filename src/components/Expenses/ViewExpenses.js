@@ -4,7 +4,6 @@ import Filter from './Filter';
 import ExpenseFooter from './ExpenseFooter';
 import { makeRequest } from '../../utils/utils';
 import DisbursementReportSkeleton from '../Skeletons/Charts/DisbursementReportSkeleton';
-import { async } from 'regenerator-runtime';
 
 
 const ViewExpenses = () => {
@@ -20,6 +19,8 @@ const ViewExpenses = () => {
     const [loadingMore, setLoadingMore] = useState(false);
     const [open, setOpen] = useState(false);
     const [searching, setSearching] = useState(false);
+    const [details, setDetails] = useState(false)
+    const [selectedExpID, setSelectedExpID] = useState(null)
 
 
     const pageNum = useRef(1);
@@ -156,6 +157,11 @@ const ViewExpenses = () => {
                     <ExpenseList 
                         expenses={expenses} 
                         setExpenses={setExpenses}
+                        details={details}
+                        setDetails={setDetails}
+                        selectedexp={expenses.find(exp => exp.id == selectedExpID)}
+                        setSelectedExpID={setSelectedExpID}
+                        selectedExpID={selectedExpID}
                     />
                     <ExpenseFooter 
                         expenses={expenses} 
