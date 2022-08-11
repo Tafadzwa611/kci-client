@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DeleteModal = ({closeModal, deleteOtherIncome, income}) => {
+const DeleteModal = ({closeModal, deleteOtherIncome}) => {
     return (
         <div className="modalBackground">
             <div className="modalContainer">
@@ -11,7 +11,7 @@ const DeleteModal = ({closeModal, deleteOtherIncome, income}) => {
                     Are you sure ? 
                 </div>
                 <div className="para">
-                    You want to delete {income} income.
+                    You want to delete income.
                 </div>
                 <div className="modal-footer">
                     <button className="btn btn-info" onClick={deleteOtherIncome}>Continue</button>

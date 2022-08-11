@@ -91,6 +91,7 @@ function CreateOtherincomeModal({open, setOpen, setOtherIncomes}) {
     const response = await makeRequest.post('/otherincomeapi/add_otherincome/', body, {timeout: 8000});
     if (response.ok) {
       const data = await response.json();
+      console.log(data)
       setOtherIncomes(curr => [data, ...curr])
       setOpen(curr => !curr)
       setOth(initialState)

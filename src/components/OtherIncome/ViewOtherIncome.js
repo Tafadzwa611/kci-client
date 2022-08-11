@@ -19,6 +19,8 @@ const ViewOtherIncome = () => {
     const [loadingMore, setLoadingMore] = useState(false);
     const [open, setOpen] = useState(false);
     const [searching, setSearching] = useState(false);
+    const [details, setDetails] = useState(false)
+    const [selectedIncID, setSelectedIncID] = useState(null)
 
 
     const pageNum = useRef(1);
@@ -154,6 +156,11 @@ const ViewOtherIncome = () => {
                         otherincomes={otherincomes} 
                         setOtherIncomes={setOtherIncomes}
                         totalCount={totalCount}
+                        details={details}
+                        setDetails={setDetails}
+                        selectedinc={otherincomes.find(inc => inc.id == selectedIncID)}
+                        setSelectedIncID={setSelectedIncID}
+                        selectedIncID={selectedIncID}
                     />
                     <OtherIncomeFooter 
                         otherincomes={otherincomes} 
