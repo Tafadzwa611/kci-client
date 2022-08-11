@@ -21,6 +21,8 @@ const ViewExpenses = () => {
     const [searching, setSearching] = useState(false);
     const [details, setDetails] = useState(false)
     const [selectedExpID, setSelectedExpID] = useState(null)
+    const [branches, setBranches] = useState(null);
+    const [branchIds, setBranchIds] = useState(null);
 
 
     const pageNum = useRef(1);
@@ -34,6 +36,10 @@ const ViewExpenses = () => {
     useEffect(() => {
         getCurrency();
     }, [])
+
+    useEffect(() => {
+        getBranches();
+    }, []);
 
     const getExpenses = async () => {
         window.scrollTo(0, 0);
@@ -90,9 +96,33 @@ const ViewExpenses = () => {
         pageNum.current = 1;
     }
 
+    const getBranches = async () => {
+        window.scrollTo(0, 0);
+        const branches = await fetchBranches();
+        setBranches(branches);
+    };
+
+    async function fetchBranches() {
+        try {
+            const response = await makeRequest.get('/usersapi/get-branches/', {timeout: 6000});
+            if (response.ok) {
+                const json_res = await response.json();
+            return json_res.results;
+            }else {
+                const error = await response.json();
+                console.log(error);
+            }
+        }catch(error) {
+            console.log(error);
+        }
+    }
+
     function getUrl() {
 
         let url = `/expensesapi/expenseslist/?page_num=${pageNum.current}&currency_id=${currencyId}`;
+        if (branchIds !== null) {
+            branchIds.forEach(id => (url += `&branch_ids=${id}`));
+        }
 
         if (expName !== '') {
           url += `&exp_name=${expName}`;
@@ -124,11 +154,9 @@ const ViewExpenses = () => {
         setExpenses(data.expenses);
     }
 
-    if (currency === null) {
+    if (currency === null || branches === null) {
         return <DisbursementReportSkeleton />
     }
-
-    console.log(expenses)
 
     return (
         <div className="font-12">
@@ -150,6 +178,8 @@ const ViewExpenses = () => {
                     changeCurrency={changeCurrency}
                     searching={searching}
                     setSearching={setSearching}
+                    branches={branches}
+                    setBranchIds={setBranchIds}
                 />
             </div>
             {expenses != "" &&

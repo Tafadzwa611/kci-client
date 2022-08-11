@@ -1,6 +1,6 @@
 import React from 'react';
 import CreateExpenseModal from './CreateExpenseModal';
-import { NavLink } from 'react-router-dom';
+import Select from 'react-select';
 
 
 const Filter = (props) => {
@@ -21,8 +21,27 @@ const Filter = (props) => {
         setExpenses,
         changeCurrency,
         searching,
-        setSearching
+        setSearching,
+        branches,
+        setBranchIds,
     } = props;
+
+    const style = {
+        control: base => ({
+            ...base,
+            border: '1px solid #dee2e6',
+            boxShadow: "none",
+            '&:hover':'1px solid #dee2e6',
+        })
+    };
+
+    const [optionSelected, setOptionSelected] = React.useState([]);
+    const selectorBranches = [...branches.map(result => ({...result, label: result.name, value:result.id}))];
+  
+    const handleMultiSelect = selected => {
+        setOptionSelected(selected);
+        setBranchIds(selected.map(branch => branch.id));
+    }
 
     return (
         <div className="card-body">
@@ -63,19 +82,43 @@ const Filter = (props) => {
                                     />
                                 </div>
                             </div>
+                            <div style={{width:"100%"}}>
+                                <label className="form-label">Search</label>
+                                <div className="reports-input-group" style={{margin:"10px 0 0"}}>
+                                    {/* <i className="uil uil-search"></i> */}
+                                    <input 
+                                        className="reports-form-control" 
+                                        placeholder="Enter Expense Name..."
+                                        autoComplete='off'
+                                        type="text"
+                                        value={expName}
+                                        onChange={(e) => setExpName(e.target.value)}
+                                    />
+                                </div>
+                            </div>
                         </div>
 
                         <div style={{marginTop:"20px"}}>
                             <div className="disbursement-report-fields">
-                                <input 
-                                    className="report-custom-form-control normal-input" 
-                                    placeholder="Enter Expense Name..."
-                                    autoComplete='off'
-                                    type="text"
-                                    value={expName}
-                                    onChange={(e) => setExpName(e.target.value)}
-                                />
-                                <select className="report-custom-form-control currency" value={currencyId} onChange={changeCurrency}>
+                                <div className="row-payments-container" style={{width:"75%"}}>
+                                    <Select
+                                        isMulti
+                                        name='colors'
+                                        options={[props.allOption, ...selectorBranches]}
+                                        value={optionSelected}
+                                        classNamePrefix='select'
+                                        className='basic-multi-select'
+                                        placeholder='Select Branches'
+                                        onChange={selected => {
+                                            if (selected !== null && selected.length > 0 && selected[selected.length - 1].value === props.allOption.value) {
+                                            return handleMultiSelect(selectorBranches);
+                                            }
+                                            handleMultiSelect(selected);
+                                        }}
+                                        styles={style}
+                                    />
+                                </div>
+                                <select className="report-custom-form-control currency" value={currencyId} onChange={changeCurrency} style={{width:"15%"}}>
                                     {currency.map(cur => {
                                         return <option key={cur.id} value={cur.id}>{cur.shortname}</option>
                                     })}
@@ -94,5 +137,13 @@ const Filter = (props) => {
         </div>
         );
     }
+
+    Filter.defaultProps = {
+        allOption: {
+            label: 'Select all',
+            value: '*'
+        }
+    };
+    
 
 export default Filter;

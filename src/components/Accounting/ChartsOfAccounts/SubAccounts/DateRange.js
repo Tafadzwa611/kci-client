@@ -33,9 +33,6 @@ const DateRange = (props) => {
       setBranchIds(selected.map(branch => branch.id));
     }
 
-    console.log(currencyId)
-  
-
     return (
 
         <div className="font-13 text-light">
