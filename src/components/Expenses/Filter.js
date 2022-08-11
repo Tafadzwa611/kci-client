@@ -85,7 +85,6 @@ const Filter = (props) => {
                             <div style={{width:"100%"}}>
                                 <label className="form-label">Search</label>
                                 <div className="reports-input-group" style={{margin:"10px 0 0"}}>
-                                    {/* <i className="uil uil-search"></i> */}
                                     <input 
                                         className="reports-form-control" 
                                         placeholder="Enter Expense Name..."
