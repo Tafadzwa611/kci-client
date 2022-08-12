@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { makeRequest } from '../../../../utils/utils';
+import CreateMainAccountModal from './CreateMainAccountModal';
 import DateRange from './DateRange';
 import Footer from './Footer';
 import Table from './Table';
@@ -17,6 +18,7 @@ const MainAccounts = () => {
     const [loadingMore, setLoadingMore] = useState(false);
     const [selectedMainAccID, setSelectedMainAccID] = useState(null)
     const [accDetails, setAccDetails] = useState(false)
+    const [open, setOpen] = useState(false);
 
     const pageNum = useRef(1);
 
@@ -140,6 +142,12 @@ const MainAccounts = () => {
 
     return (
         <>
+            <div style={{marginBottom:"1.5rem"}}>
+                <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)} 
+                    style={{backgroundColor:"#3d9970", borderColor: "#3d9970"}}>Add Main Account
+                </button>
+            </div>
+            <CreateMainAccountModal open={open} setOpen={setOpen} setMainAccounts={setMainAccounts} />
             <DateRange 
                 accType={accType}
                 setAccType={setAccType}
