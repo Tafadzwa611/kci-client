@@ -112,7 +112,7 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
 
   return (
     <div className={open ? 'modal fade show' : 'modal fade'} style={{display: open ? 'block' : 'none'}}>
-      <div className='modal-dialog modal-lg modal-dialog-scrollable'>
+      <div className='modal-dialog modal-lg modal-dialog-scrollable text-light'>
         <div className='modal-content'>
           <div className='modal-header'>
             <label className="form-title">[ Add Expense ]</label>
