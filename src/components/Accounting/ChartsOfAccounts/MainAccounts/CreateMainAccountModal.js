@@ -5,6 +5,7 @@ const initialState = {general_ledger_name: '', general_ledger_code: '', account_
 
 function CreateMainAccountModal({open, setOpen, setMainAccounts}) {
   const [acc, setAcc] = useState(initialState);
+  const [disable, setDisable] = React.useState(true);
   const [serverErrors, setServerErrors] = useState([]);
   const [errors, setErrors] = useState({});
 
@@ -14,8 +15,16 @@ function CreateMainAccountModal({open, setOpen, setMainAccounts}) {
     validate(e)
   };
 
+
+  React.useEffect(() => {
+    if  (acc.general_ledger_name != "" && acc.general_ledger_code != "" &&  acc.account_type != "" && acc.date_created != "" ) {
+      setDisable(false)
+    }
+  },[acc]);
+  
   const validate = (evt) => {
     if (evt.target.required && evt.target.value === '') {
+      setDisable(true)
       setErrors(curr => {
         return {...curr, [evt.target.name]: 'This field is required'}
       })
@@ -40,14 +49,15 @@ function CreateMainAccountModal({open, setOpen, setMainAccounts}) {
         setMainAccounts(curr => [data, ...curr])
         setOpen(curr => !curr)
         setAcc(initialState)
+        setServerErrors([])
         return data
     }
         const errors = await response.json();
-        // console.log(errors);
         setServerErrors(errors);
-        console.log(serverErrors)
         window.scrollTo(0, 0);
   }
+
+  console.log(errors)
 
   return (
     <div className={open ? 'modal fade show' : 'modal fade'} style={{display: open ? 'block' : 'none'}}>
@@ -93,7 +103,7 @@ function CreateMainAccountModal({open, setOpen, setMainAccounts}) {
             </div>
 
             <div className='row custom-background' style={{marginTop: '15px'}}>
-              <label className='form-label'>Account Type</label>
+              <label className='form-label'>Account Type<span style={{color: 'red'}}>*</span></label>
               <div className='col-9'>
                 <select name='account_type' className='custom-select-form' onFocus={validate} onChange={handleAccountChange} value={acc.account_type} required>
                     <option></option>
@@ -107,7 +117,7 @@ function CreateMainAccountModal({open, setOpen, setMainAccounts}) {
             </div>
 
             <div className='row custom-background' style={{marginTop: '15px'}}>
-              <label className='form-label'>Description<span style={{color: 'red'}}>*</span></label>
+              <label className='form-label'>Description</label>
               <div className='col-9'>
                 <input name='description' type='text' className='custom-select-form' autoComplete='new-password' onChange={handleAccountChange} value={acc.description}/>
               </div>
@@ -121,7 +131,7 @@ function CreateMainAccountModal({open, setOpen, setMainAccounts}) {
 
           <div className='modal-footer justify-content-between'>
             <button type='button' className='btn btn-default' onClick={(e) => setOpen(curr => !curr)}>Close</button>
-            <button type='submit' className='btn btn-info' onClick={submit}>
+            <button type='submit' className='btn btn-info' onClick={submit} style={disable ? {pointerEvents: 'none', opacity: '0.7'} : {}} disabled={disable}>
               Add Main Account
             </button>
           </div>
