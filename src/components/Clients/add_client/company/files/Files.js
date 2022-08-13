@@ -24,7 +24,7 @@ function Files({selectedFiles, setSelectedFiles, uploadedFilesList, setUploadedF
 
   return (
     <>
-      <div className='card-body font-13 text-light'>
+      <div className='text-light'>
         <input type='file' name='file' id="selectedFile" onChange={changeHandler} multiple style={{display: 'none'}}/>
         <div className='row' style={{margin: '15px 0'}}>
           <div className='col-6'>

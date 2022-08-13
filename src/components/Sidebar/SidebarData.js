@@ -11,14 +11,6 @@ export const SidebarData = [
                 title: 'View Clients',
                 path: '/app/clients/viewclients',                
             },
-            {
-                title: 'Add Client',
-                path: '/app/clients/addclient',                
-            },
-            {
-                title: 'Online Applications',
-                path: '/app/clients/viewonlineapplications',                
-            },
         ]
     },
     {

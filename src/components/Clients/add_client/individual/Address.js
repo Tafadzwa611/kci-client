@@ -21,7 +21,7 @@ function Address({addrList, setAddrList, setTab}) {
 
   return (
     <>
-      <div className='card-body font-13 text-light'>
+      <div className='text-light'>
         <AddAddress open={open} setOpen={setOpen} setAddrList={setAddrList}/>
         {openUpdate && <UpdateAddress open={openUpdate} setOpen={setOpenUpdate} addr={addrToUpdate} setAddr={setAddrToUpdate} addrList={addrList} setAddrList={setAddrList}/>}
         Note* At least one address is required.

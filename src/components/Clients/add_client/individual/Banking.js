@@ -10,7 +10,7 @@ function Banking({bankInfo, setBankInfo, setTab}) {
 
   return (
     <>
-      <div className='card-body text-light'>
+      <div className='text-light'>
         <div className='row custom-background' style={{marginTop: '15px'}}>
           <label className='form-label'><b>Bank Name</b></label>
           <div className='col-8'>

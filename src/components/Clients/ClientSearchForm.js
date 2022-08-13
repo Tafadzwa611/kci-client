@@ -20,7 +20,7 @@ class ClientSearchForm extends Component {
         const {loading} = this.state;
 
         return (
-            <div className="card-body">
+            <div>
                 <form>
                     <div className="row-containers">
                         <div className="row row-payments">
@@ -84,7 +84,7 @@ class ClientSearchForm extends Component {
                         </div>
                     </div>
 
-                    <div className="filter-container">
+                    {/* <div className="filter-container">
                         <h5 className="table-heading">View Clients</h5>
                         <div className="filter-container-float-right">
                             <div className="show">
@@ -99,7 +99,7 @@ class ClientSearchForm extends Component {
                             </div>
                             <button className="btn btn-export"><i class="uil uil-download-alt"></i> <span>Download Excel</span></button>
                         </div>
-                    </div>
+                    </div> */}
                 </form>
             </div>
             );

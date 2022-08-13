@@ -32,7 +32,7 @@ function Company({clientType, setClientType}) {
             <button className={tab === "bfiles" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("bfiles")}> Business Files </button>
             <button className={tab === "coverview" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("coverview")}> Overview </button>
       </div>
-      <div className='tab-content'>
+      <div className='tab-content font-12' style={{marginTop:"3rem"}}>
         {{
           'new': <NewClient clientType={clientType} setClientType={setClientType} setTab={setTab}/>,
           'cinfo': <PrimaryContactInfo clientInfo={clientInfo} setClientInfo={setClientInfo} clientErrors={clientErrors} setClientErrors={setClientErrors} setTab={setTab}/>,

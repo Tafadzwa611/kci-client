@@ -3,7 +3,7 @@ import React from 'react';
 function Form({clientInfo, clientErrors, setTab, handleChange, validate, validateEmail}) {
   return (
     <>
-      <div className='card-body text-light'>
+      <div className='text-light'>
         <div className='row custom-background' style={{marginTop: '15px'}}>
           <label className='form-label'><b>First Name</b><span style={{color: 'red'}}>*</span></label>
           <div className='col-8'>

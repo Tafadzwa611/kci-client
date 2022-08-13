@@ -5,7 +5,7 @@ import ProtectedRoutes from './ProtectedRoutes';
 import Cookies from 'js-cookie';
 
 import SkeletonTable from './Skeletons/Charts/SkeletonTable';
-import AddClientSkeleton from './Skeletons/Forms/AddClientSkeleton';
+// import AddClientSkeleton from './Skeletons/Forms/AddClientSkeleton';
 import AddLoanFormSkeleton from './Skeletons/Forms/AddLoanFormSkeleton';
 import AddCurrencyFormSkeleton from './Skeletons/Forms/AddCurrencyFormSkeleton';
 import AddAssetManagementFormSkeleton from './Skeletons/Forms/AddAssetManagementFormSkeleton';
@@ -49,8 +49,8 @@ const Home = lazy(() => import('./Home/Home'));
 const Dashboard = lazy(() => import('./Dashboard/Dashboard'));
 const Admin = lazy(() => import('./Admin'));
 // Clients 
-const AddClient = lazy(() => import('./Clients/add_client/AddClient'));
-const ViewClients = lazy(() => import('./Clients/ViewClients'));
+// const AddClient = lazy(() => import('./Clients/add_client/AddClient'));
+const ViewClients = lazy(() => import('./Clients/ViewClients/ViewClients'));
 const ClientDetail = lazy(() => import('./Clients/ClientDetail'));
 const TransferClient = lazy(() => import('./Clients/TransferClient'));
 const ViewOnlineApplications = lazy(() => import('./Clients/ViewOnlineApplications'));
@@ -152,19 +152,19 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
     return (
         <div className="container">
 
-            <Suspense fallback={<AddClientSkeleton />}>
+            {/* <Suspense fallback={<AddClientSkeleton />}>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
-                    <Route exact path='/app/clients/addclient' element={<AddClient/>}/>
+                    <Route exact path='/app/clients/viewclients' element={<AddClient/>}/>
                     </Route>
                 </Route>
                 </Routes>
 
             </LoggedInUserProvider>
-            </Suspense>
+            </Suspense> */}
 
             <Suspense fallback={<OnlineApplicationsSkeleton />}>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>

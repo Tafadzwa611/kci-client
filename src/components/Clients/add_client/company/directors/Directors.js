@@ -19,7 +19,7 @@ function Directors({dirList, setDirList, setTab}) {
 
   return (
     <>
-      <div className='card-body font-13 text-light'>
+      <div className='text-light'>
       <AddDir open={open} setOpen={setOpen} setDirList={setDirList}/>
       {openUpdate && <UpdateDir open={openUpdate} dir={dirToUpdate} setDir={setDirToUpdate} dirList={dirList} setDirList={setDirList}/>}
 

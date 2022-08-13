@@ -33,7 +33,7 @@ function Individual({clientType, setClientType}) {
             <button className={tab === "files" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("files")}> Client Files </button>
             <button className={tab === "overview" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("overview")}> Overview </button>
       </div>
-      <div className='tab-content'>
+      <div className='tab-content font-12' style={{marginTop:"3rem"}}>
         {{
           'new': <NewClient clientType={clientType} setClientType={setClientType} setTab={setTab}/>,
           'info': <ClientInformation clientInfo={clientInfo} setClientInfo={setClientInfo} clientErrors={clientErrors} setClientErrors={setClientErrors} setTab={setTab}/>,

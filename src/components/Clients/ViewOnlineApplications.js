@@ -9,7 +9,7 @@ const ViewOnlineApplications = () => {
     const heading = 'View Online Applications';
 
     return (
-        <div className="font-12 slide">
+        <div className="font-12">
             <div className="card">
                 <OnlineApplicationSearchForm heading={heading}/>
             </div>

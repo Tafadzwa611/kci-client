@@ -20,7 +20,7 @@ function NextOfKin({nokList, setNokList, setTab}) {
 
   return (
     <>
-      <div className='card-body font-13 text-light'>
+      <div className='text-light'>
         <AddNextOfKin open={open} setOpen={setOpen} setNokList={setNokList}/>
         {openUpdate && <UpdateNextOfKin open={openUpdate} nok={nokToUpdate} setNok={setNokToUpdate} nokList={nokList} setNokList={setNokList}/>}
         <div className='row' style={{margin: '15px 0'}}>

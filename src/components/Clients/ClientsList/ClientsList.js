@@ -1,16 +1,14 @@
 import React from 'react';
-import ClientList from './ClientList';
-import ClientSearchForm from './ClientSearchForm';
+import ClientList from '../ClientList';
+import ClientSearchForm from '../ClientSearchForm';
 
 
-const ViewClients = () => {
+const ClientsList = () => {
 
     return (
-        <div className="font-12 slide">
-            <div className="card">
+        <div className="font-12">
                 <ClientSearchForm/>
-            </div>
-            <div className="card">
+
                 <ClientList />
                 <div className="table-footer-container card-body clients_table">
                     <div className="table-footer-up">
@@ -24,10 +22,10 @@ const ViewClients = () => {
                         <span>All clients have been loaded</span>
                     </div> */}
                 </div>
-            </div>
+
 
         </div>
     );
 }
 
-export default ViewClients;
+export default ClientsList;

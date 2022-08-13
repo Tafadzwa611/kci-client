@@ -190,6 +190,7 @@ export const AddCashAccountForm = ({ setSubAccounts, currencies, mainAccountId, 
                         </textarea>
                     </div>
                 </div>
+                <div style={{paddingBottom: "1rem"}}></div>
                 <div className='modal-footer justify-content-between'>
                     <button type='button' className='btn btn-default' onClick={(e) => setOpen(curr => !curr)}>Close</button>
                     <button type='submit' className='btn btn-info' onClick={handleSubmission}>
