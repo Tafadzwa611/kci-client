@@ -5,6 +5,7 @@ const initialState = {expense_type: '', expense_name: '', expense_amount: '', ex
 
 function CreateExpenseModal({open, setOpen, setExpenses}) {
   const [exp, setExp] = useState(initialState);
+  const [disable, setDisable] = useState(true);
   const [serverErrors, setServerErrors] = useState({});
 
   const [errors, setErrors] = useState({});
@@ -17,8 +18,15 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
     validate(e)
   };
 
+  useEffect(() => {
+    if  (exp.expense_type != "" && exp.expense_name != "" &&  exp.expense_amount != "" && exp.expense_date != "" && exp.fund_account_id != "" ) {
+      setDisable(false)
+    }
+  },[exp]);
+
   const validate = (evt) => {
     if (evt.target.required && evt.target.value === '') {
+      setDisable(true)
       setErrors(curr => {
         return {...curr, [evt.target.name]: 'This field is required'}
       })
@@ -171,14 +179,14 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
             </div>
 
             <div className='row custom-background' style={{marginTop: '15px'}}>
-              <label className='form-label'>Reference<span style={{color: 'red'}}>*</span></label>
+              <label className='form-label'>Reference</label>
               <div className='col-9'>
                 <input name='reference' type='text' className='custom-select-form' autoComplete='new-password' onChange={handleExpenseChange} value={exp.reference}/>
               </div>
             </div>
 
             <div className='row custom-background' style={{marginTop: '15px'}}>
-              <label className='form-label'>Description<span style={{color: 'red'}}>*</span></label>
+              <label className='form-label'>Description</label>
               <div className='col-9'>
                 <input name='description' type='text' className='custom-select-form' autoComplete='new-password' onChange={handleExpenseChange} value={exp.description}/>
               </div>
@@ -192,7 +200,7 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
 
           <div className='modal-footer justify-content-between'>
             <button type='button' className='btn btn-default' onClick={(e) => setOpen(curr => !curr)}>Close</button>
-            <button type='submit' className='btn btn-info' onClick={submit}>
+            <button type='submit' className='btn btn-info' onClick={submit} style={disable ? {pointerEvents: 'none', opacity: '0.7'} : {}} disabled={disable}>
               Add Expense
             </button>
           </div>

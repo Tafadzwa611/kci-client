@@ -6,7 +6,7 @@ const initialState = {income_type: '', otherincome_name: '', income_amount: '', 
 function CreateOtherincomeModal({open, setOpen, setOtherIncomes}) {
   const [oth, setOth] = useState(initialState);
   const [serverErrors, setServerErrors] = useState({});
-
+  const [disable, setDisable] = useState(true);
   const [errors, setErrors] = useState({});
   const [otherIncomeTypes, setOtherIncomeTypes] = useState(null);
   const [fundAccount, setFundAccount] = useState(null);
@@ -17,8 +17,15 @@ function CreateOtherincomeModal({open, setOpen, setOtherIncomes}) {
     validate(e)
   };
 
+  useEffect(() => {
+    if  (oth.income_type != "" && oth.otherincome_name != "" &&  oth.income_amount != "" && oth.income_date != "" && oth.fund_account_id != "" ) {
+      setDisable(false)
+    }
+  },[oth]);
+
   const validate = (evt) => {
     if (evt.target.required && evt.target.value === '') {
+      setDisable(true)
       setErrors(curr => {
         return {...curr, [evt.target.name]: 'This field is required'}
       })
@@ -172,14 +179,14 @@ function CreateOtherincomeModal({open, setOpen, setOtherIncomes}) {
             </div>
 
             <div className='row custom-background' style={{marginTop: '15px'}}>
-              <label className='form-label'>Reference<span style={{color: 'red'}}>*</span></label>
+              <label className='form-label'>Reference</label>
               <div className='col-9'>
                 <input name='reference' type='text' className='custom-select-form' autoComplete='new-password' onChange={handleOtherIncomeChange} value={oth.reference}/>
               </div>
             </div>
 
             <div className='row custom-background' style={{marginTop: '15px'}}>
-              <label className='form-label'>Description<span style={{color: 'red'}}>*</span></label>
+              <label className='form-label'>Description</label>
               <div className='col-9'>
                 <input name='description' type='text' className='custom-select-form' autoComplete='new-password' onChange={handleOtherIncomeChange} value={oth.description}/>
               </div>
@@ -193,7 +200,7 @@ function CreateOtherincomeModal({open, setOpen, setOtherIncomes}) {
 
           <div className='modal-footer justify-content-between'>
             <button type='button' className='btn btn-default' onClick={(e) => setOpen(curr => !curr)}>Close</button>
-            <button type='submit' className='btn btn-info' onClick={submit}>
+            <button type='submit' className='btn btn-info' onClick={submit} style={disable ? {pointerEvents: 'none', opacity: '0.7'} : {}} disabled={disable}>
               Add Other Income
             </button>
           </div>

@@ -1,19 +1,14 @@
 import React from 'react';
 import { makeRequest } from '../../../../utils/utils';
 import { convertDate } from '../../Journals/utils';
+import CreateSubAccountModal from './CreateSubAccount/CreateSubAccountModal';
+import { AddCashAccountForm, AddAccountForm } from './CreateSubAccount/Forms';
 
-const SubAccounts = ({selectedMainAccID, setAccDetails, generalLedgerName}) => {
+const SubAccounts = ({selectedMainAccID, setAccDetails, generalLedgerName, generalLedgerCode}) => {
 
     const [subAccounts, setSubAccounts] = React.useState([]);
-    const [mainAcc, setMainAcc] = React.useState({});
-
-    const fetchMainAcc = React.useCallback(async function() {
-        const response = await makeRequest.get(`/acc-api/account-details/${selectedMainAccID}/`, {timeout: 8000});
-        if (response.ok) {
-            let account = await response.json();
-            setMainAcc(account);
-        }
-    }, []);
+    const [currencies, setCurrencies] = React.useState(null);
+    const [open, setOpen] = React.useState(false);
 
     const fetchSubAccounts = React.useCallback(async function({selectedMainAccID}) {
         let url = `/acc-api/sub_accounts_api/?main_acc=${selectedMainAccID}`;
@@ -25,17 +20,38 @@ const SubAccounts = ({selectedMainAccID, setAccDetails, generalLedgerName}) => {
     }, [])
 
     React.useEffect(() => {
-        fetchMainAcc();
+        fetchCurrencies();
         fetchSubAccounts({selectedMainAccID});
     }, [selectedMainAccID]);
 
+    const fetchCurrencies = React.useCallback(async function() {
+        const response = await makeRequest.get('/usersapi/list_currencies/', {timeout: 8000});
+        if (response.ok) {
+            let currencies = await response.json();
+            setCurrencies(currencies);
+        }
+    }, []);
+
+    if (currencies===null) {
+        return <div>Loading...</div>
+    }
+
+
     return (
         <div style={{maxHeight:"800px"}}>
-
+            {generalLedgerCode == '2100' ?
+                <CreateSubAccountModal open={open} setOpen={setOpen} modalContent={<AddCashAccountForm  setSubAccounts={setSubAccounts} currencies={currencies} mainAccountId={selectedMainAccID} setOpen={setOpen}/>} /> :
+                <CreateSubAccountModal open={open} setOpen={setOpen} modalContent={<AddAccountForm  setSubAccounts={setSubAccounts} currencies={currencies} mainAccountId={selectedMainAccID} setOpen={setOpen}/>} />
+            }
             <div style={{position:"sticky", top:"0", width:"100%"}}>
                 <div style={{display:"flex", flexDirection:"column"}} className="j-details-container">
-                    <div className="row" style={{marginTop:"0"}}>
-                        <div className="col-12" style={{display:"flex", justifyContent:"flex-end", padding:"1.5rem"}}>
+                    <div style={{padding:"1.5rem", display:"flex", justifyContent:"space-between"}}>
+                        <div>
+                            <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)} 
+                                style={{backgroundColor:"#3d9970", borderColor: "#3d9970"}} id="add-sub-account">Add Sub Account
+                            </button>
+                        </div>
+                        <div >
                             <button><a onClick={e => setAccDetails(false)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ import SubAccounts from './SubAccounts';
 const Table = ({ mainaccounts, selectedMainAccID, setSelectedMainAccID, accDetails, setAccDetails }) => {
 
     const [generalLedgerName, setGeneralLedgerName] = React.useState(null)
+    const [generalLedgerCode, setGeneralLedgerCode] = React.useState(null)
 
     const handleClickMainAcc = (evt) => {
         setSelectedMainAccID(evt.target.id)
@@ -19,6 +20,7 @@ const Table = ({ mainaccounts, selectedMainAccID, setSelectedMainAccID, accDetai
         const main_account = await mainaccounts.filter(acc => acc.id == selectedMainAccID)
         if (main_account.length == 1){
             setGeneralLedgerName(main_account[0].general_ledger_name)
+            setGeneralLedgerCode(main_account[0].general_ledger_code)
         }
     }
 
@@ -106,7 +108,12 @@ const Table = ({ mainaccounts, selectedMainAccID, setSelectedMainAccID, accDetai
                     </table>
                 </div>
                 {accDetails && (
-                    <SubAccounts selectedMainAccID={selectedMainAccID} setAccDetails={setAccDetails} generalLedgerName={generalLedgerName} />
+                    <SubAccounts 
+                        selectedMainAccID={selectedMainAccID} 
+                        setAccDetails={setAccDetails} 
+                        generalLedgerName={generalLedgerName} 
+                        generalLedgerCode={generalLedgerCode}
+                    />
                 )}
             </div>
         </div>

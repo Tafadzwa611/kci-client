@@ -5,7 +5,7 @@ const initialState = {general_ledger_name: '', general_ledger_code: '', account_
 
 function CreateMainAccountModal({open, setOpen, setMainAccounts}) {
   const [acc, setAcc] = useState(initialState);
-  const [disable, setDisable] = React.useState(true);
+  const [disable, setDisable] = useState(true);
   const [serverErrors, setServerErrors] = useState([]);
   const [errors, setErrors] = useState({});
 
@@ -15,8 +15,7 @@ function CreateMainAccountModal({open, setOpen, setMainAccounts}) {
     validate(e)
   };
 
-
-  React.useEffect(() => {
+  useEffect(() => {
     if  (acc.general_ledger_name != "" && acc.general_ledger_code != "" &&  acc.account_type != "" && acc.date_created != "" ) {
       setDisable(false)
     }
@@ -56,8 +55,6 @@ function CreateMainAccountModal({open, setOpen, setMainAccounts}) {
         setServerErrors(errors);
         window.scrollTo(0, 0);
   }
-
-  console.log(errors)
 
   return (
     <div className={open ? 'modal fade show' : 'modal fade'} style={{display: open ? 'block' : 'none'}}>
