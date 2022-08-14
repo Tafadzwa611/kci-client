@@ -3049,6 +3049,10 @@ input:checked + .slider:before {
   grid-template-columns: 1fr 4fr;
 }
 
+.table-responsive.journal__table-container.clientstable {
+  grid-template-columns: 1fr 4fr;
+}
+
 .table__height {
   max-height: 800px;
 }

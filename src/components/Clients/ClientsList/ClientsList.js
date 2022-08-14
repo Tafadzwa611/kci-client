@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { makeRequest } from '../../../utils/utils';
 import ClientsTable from './ClientsTable';
 import Filter from './Filter';
+import Footer from './Footer';
 
 function ClientsList() {
   const [clients, setClients] = useState(null);
@@ -17,6 +18,8 @@ function ClientsList() {
   const [typeOfClient, setTypeOfClient] = useState('');
   const [gender, setGender] = useState('');
   const [loadingMore, setLoadingMore] = useState(false);
+  const [details, setDetails] = useState(false)
+  const [selectedclientID, setSelectedClientID] = useState(null)
   
   const pageNum = useRef(1);
 
@@ -135,7 +138,20 @@ function ClientsList() {
             onSubmit={onSubmit}
         />
         <div style={{paddingTop: '1.5rem'}}></div>
-        <ClientsTable clients={clients} totalCount={totalCount} nextPageNumber={nextPageNumber} loadMoreClients={loadMore} loadingMore={loadingMore}/>
+        <ClientsTable 
+          clients={clients} 
+          totalCount={totalCount} 
+          setDetails={setDetails} 
+          details={details} 
+          setSelectedClientID={setSelectedClientID} 
+          selectedclientID={selectedclientID}
+          selectedclient={clients.find(clnt => clnt.id == selectedclientID)}
+        />
+        <Footer 
+          nextPageNumber={nextPageNumber} 
+          loadMoreClients={loadMore} 
+          loadingMore={loadingMore}
+        />
     </>
   )
 }
