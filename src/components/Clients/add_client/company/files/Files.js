@@ -43,17 +43,17 @@ function Files({selectedFiles, setSelectedFiles, uploadedFilesList, setUploadedF
             <div className='table-responsive'>
                 <table className='table' id='chart' style={{width:"100%"}}>
                     <thead>
-                    <tr className="business_files_thead">
-                        <th>File Name</th>
-                        <th>File Size</th>
-                        <th>Action</th>
+                    <tr className="journal-details header">
+                        <th style={{border:"none"}}>File Name</th>
+                        <th style={{border:"none"}}>File Size</th>
+                        <th style={{border:"none"}}>Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     {selectedFiles.length > 0 ?
                         selectedFiles.map((file_obj, idx) => 
                         <SingleFile key={idx} file_obj={file_obj} uploadedFilesList={uploadedFilesList} setSelectedFiles={setSelectedFiles} setUploadedFilesList={setUploadedFilesList}/>) :
-                        <tr className="business_files_body" style={{borderTop:"0"}}><td colSpan={3} style={{textAlign: 'center'}}>No selected files.</td></tr>}
+                        <tr style={{borderTop:"0"}}><td colSpan={3} style={{textAlign: 'center'}}>No selected files.</td></tr>}
                     </tbody>
                 </table>
             </div>

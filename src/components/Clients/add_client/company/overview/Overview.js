@@ -4,10 +4,8 @@ import BusinessInfo from './BusinessInfo';
 import DirectorsTable from './DirectorsTable';
 import FilesTable from './FilesTable';
 import { makeRequest } from '../../../../../utils/utils'
-// import {useHistory} from 'react-router-dom';
 
-function Overview({clientInfo, businessInfo, dirList, businessErrors, clientErrors, uploadedFilesList, bankInfo}) {
-//   let history = useHistory();
+function Overview({clientInfo, businessInfo, dirList, businessErrors, clientErrors, uploadedFilesList, bankInfo, setTab, setMainTab}) {
 
   const submit = async () => {
     const filteredClientInfo = Object.fromEntries(Object.entries({...clientInfo, ...bankInfo, file_list: uploadedFilesList}).filter(([key, value]) => value !== ''));
@@ -16,7 +14,7 @@ function Overview({clientInfo, businessInfo, dirList, businessErrors, clientErro
     const response = await makeRequest.post('/clientsapi/add_client/', body, {timeout: 6000});
     if (response.ok) {
       const data = await response.json();
-    //   history.push(`/cDetails/${data.client_id}`);
+      setMainTab('clients')
       return
     }
     const errors = await response.json();
@@ -38,7 +36,7 @@ function Overview({clientInfo, businessInfo, dirList, businessErrors, clientErro
         <FilesTable uploadedFilesList={uploadedFilesList}/>
       </>
       <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-        <button onClick={e => setTab('files')} type='button' className='btn btn-default'>Back</button>
+        <button onClick={e => setTab('bfiles')} type='button' className='btn btn-default'>Back</button>
         <button onClick={submit} type='button' style={disableSubmit ? {pointerEvents: 'none', opacity: '0.7'} : {}} disabled={disableSubmit} className='btn btn-info'>
           Submit
         </button>

@@ -9,6 +9,7 @@ function AddDir({open, setOpen, setDirList}) {
   const handleSubmit = () => {
     setDirList(curr => [...curr, {...dir, id: uuidv4()}]);
     setDir(initialState);
+    setOpen(false);
   }
 
   const disableAdd = Object.values(dir).findIndex(el => el==='') != -1;

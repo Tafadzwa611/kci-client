@@ -33,23 +33,23 @@ function Directors({dirList, setDirList, setTab}) {
           </div>
         </div>
 
-        <div className="table-container company_directors">
+        <div className="table-container" style={{padding:"0", border:"none"}}>
             <div className='table-responsive' style={{marginTop: '15px'}}>
             <table className='table' style={{width:"100%"}}>
                 <thead>
-                <tr className="company_directors_thead">
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Identification Number</th>
-                    <th>Phone Number</th>
-                    <th>Gender</th>
-                    <th>Date Of Birth</th>
-                    <th>Action</th>
+                <tr className="journal-details header">
+                    <th style={{border:"none"}}>First Name</th>
+                    <th style={{border:"none"}}>Last Name</th>
+                    <th style={{border:"none"}}>Identification Number</th>
+                    <th style={{border:"none"}}>Phone Number</th>
+                    <th style={{border:"none"}}>Gender</th>
+                    <th style={{border:"none"}}>Date Of Birth</th>
+                    <th style={{border:"none"}}>Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 {dirList.length > 0 ? dirList.map((director, idx) => <DirRow key={idx} director={director} setDirToUpdate={setDirToUpdate} isFirstRun={isFirstRun} setDirList={setDirList}/>):
-                <tr className="company_directors_body" style={{borderTop:"0"}}><td colSpan={7} style={{textAlign: 'center'}}>No data in table.</td></tr>}
+                <tr style={{borderTop:"0"}}><td colSpan={7} style={{textAlign: 'center'}}>No data in table.</td></tr>}
                 </tbody>
             </table>
             </div>

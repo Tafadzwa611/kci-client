@@ -1,14 +1,11 @@
 import React from 'react';
-// import {useHistory} from 'react-router-dom';
-// import { convertDate, getAge } from '../client_details/company/utils';
+import { convertDate, getAge } from '../../Accounting/Journals/utils';
 import Footer from './Footer';
 
 function ClientsTable({clients, nextPageNumber, loadMoreClients, totalCount, loadingMore}) {
-//   let history = useHistory();
 
   const goToClientDetails = (evt) => {
     evt.preventDefault();
-    // history.push(`/cDetails/${evt.target.id}`);
   }
 
   return (
@@ -36,10 +33,8 @@ function ClientsTable({clients, nextPageNumber, loadMoreClients, totalCount, loa
                         <td>{client.type_of_client}</td>
                         <td>{client.phone_number}</td>
                         <td>{client.gender}</td>
-                        {/* <td>{convertDate(client.registration_date)}</td>  
-                        <td>{convertDate(client.date_of_birth)} <em>({getAge(client.date_of_birth)} years)</em></td> */}
-                        <td>13/08/22</td>  
-                        <td>27/02/27<em>(27 years)</em></td>
+                        <td>{convertDate(client.registration_date)}</td>  
+                        <td>{convertDate(client.date_of_birth)} <em>({getAge(client.date_of_birth)} years)</em></td>
                         <td>{client.branch}</td>
                       </tr>
                     )

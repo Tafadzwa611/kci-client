@@ -10,7 +10,7 @@ import Banking from './banking/Banking';
 const initClientInfo = {first_name: '', last_name: '', gender: '', date_of_birth: '', registration_date: '', phone_number: '', identification_number: '', identification_type: '', email: ''};
 const initBusinessInfo = {name: '', business_type: '', business_start_date: '', registration_date: '', address: '', city: '', country: ''};
 
-function Company({clientType, setClientType}) {
+function Company({clientType, setClientType, setMainTab}) {
   const [tab, setTab] = useState('new');
   const [clientInfo, setClientInfo] = useState(initClientInfo);
   const [businessInfo, setBusinessInfo] = useState(initBusinessInfo);
@@ -47,6 +47,8 @@ function Company({clientType, setClientType}) {
             businessErrors={businessErrors}
             businessInfo={businessInfo}
             dirList={dirList}
+            setMainTab={setMainTab}
+            setTab={setTab}
             uploadedFilesList={uploadedFilesList}
             />,
         }[tab]}

@@ -8,7 +8,7 @@ const AddClient = ({setMainTab}) => {
 
     return (
         <>
-            {(clientType==='individual') ? <Individual clientType={clientType} setClientType={setClientType} setMainTab={setMainTab}/> : <Company clientType={clientType} setClientType={setClientType}/>}
+            {(clientType==='individual') ? <Individual clientType={clientType} setClientType={setClientType} setMainTab={setMainTab}/> : <Company clientType={clientType} setClientType={setClientType} setMainTab={setMainTab}/>}
         </>
     )
 }
