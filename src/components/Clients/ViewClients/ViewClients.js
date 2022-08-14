@@ -22,8 +22,8 @@ const ViewClients = () => {
                     </div>
                     <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                         {{
-                            'clients': <ClientsList setTab={setTab}/>,
-                            'cshmngmnt': <AddClient setTab={setTab}/>,
+                            'clients': <ClientsList setMainTab={setTab}/>,
+                            'cshmngmnt': <AddClient setMainTab={setTab}/>,
                         }[tab]}
                     </div>
                 </>

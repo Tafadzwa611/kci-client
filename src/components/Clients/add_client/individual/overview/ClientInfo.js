@@ -3,7 +3,7 @@ import React from 'react';
 function ClientInfo({clientInfo, clientErrors}) {
   return (
     <div className="text-light">
-      <div className='row custom-background' style={{marginTop: '0'}}>
+      <div className='row custom-background' style={{marginTop: '15px'}}>
         <label className='form-label'>First Name</label>
         <div className='col-8'>
           <input type='text' className='custom-select-form' value={clientInfo.first_name} disabled/>
@@ -11,7 +11,7 @@ function ClientInfo({clientInfo, clientErrors}) {
         </div>
       </div>
 
-      <div className='row custom-background' style={{marginTop: '0'}}>
+      <div className='row custom-background' style={{marginTop: '15px'}}>
         <label className='form-label'>Last Name</label>
         <div className='col-8'>
           <input type='text' className='custom-select-form' value={clientInfo.last_name} disabled/>
@@ -19,7 +19,7 @@ function ClientInfo({clientInfo, clientErrors}) {
         </div>
       </div>
 
-      <div className='row custom-background' style={{marginTop: '0'}}>
+      <div className='row custom-background' style={{marginTop: '15px'}}>
         <label className='form-label'>Gender</label>
         <div className='col-8'>
           <input type='text' className='custom-select-form' value={{MALE: 'Male', FEMALE: 'Female'}[clientInfo.gender]} disabled/>
@@ -27,7 +27,7 @@ function ClientInfo({clientInfo, clientErrors}) {
         </div>
       </div>
 
-      <div className='row custom-background' style={{marginTop: '0'}}>
+      <div className='row custom-background' style={{marginTop: '15px'}}>
         <label className='form-label'>Date of Birth</label>
         <div className='col-8'>
           <input type='text' className='custom-select-form' value={convertDate(clientInfo.date_of_birth)} disabled/>
@@ -35,7 +35,7 @@ function ClientInfo({clientInfo, clientErrors}) {
         </div>
       </div>
 
-      <div className='row custom-background' style={{marginTop: '0'}}>
+      <div className='row custom-background' style={{marginTop: '15px'}}>
         <label className='form-label'>Client Registration Date</label>
         <div className='col-8'>
           <input type='text' className='custom-select-form' value={convertDate(clientInfo.registration_date)} disabled/>
@@ -43,7 +43,7 @@ function ClientInfo({clientInfo, clientErrors}) {
         </div>
       </div>
 
-      <div className='row custom-background' style={{marginTop: '0'}}>
+      <div className='row custom-background' style={{marginTop: '15px'}}>
         <label className='form-label'>Phone Number</label>
         <div className='col-8'>
           <input type='text' className='custom-select-form' value={clientInfo.phone_number} disabled/>
@@ -51,7 +51,7 @@ function ClientInfo({clientInfo, clientErrors}) {
         </div>
       </div>
 
-      <div className='row custom-background' style={{marginTop: '0'}}>
+      <div className='row custom-background' style={{marginTop: '15px'}}>
         <label className='form-label'>Identification Number</label>
         <div className='col-8'>
           <input type='text' className='custom-select-form' value={clientInfo.identification_number} disabled/>
@@ -60,7 +60,7 @@ function ClientInfo({clientInfo, clientErrors}) {
         </div>
       </div>
 
-      <div className='row custom-background' style={{marginTop: '0'}}>
+      <div className='row custom-background' style={{marginTop: '15px'}}>
         <label className='form-label'>Identification Type</label>
         <div className='col-8'>
           <input
@@ -73,7 +73,7 @@ function ClientInfo({clientInfo, clientErrors}) {
         </div>
       </div>
 
-      <div className='row custom-background' style={{marginTop: '0'}}>
+      <div className='row custom-background' style={{marginTop: '15px'}}>
         <label className='form-label'>Email</label>
         <div className='col-8'>
           <input type='text' className='custom-select-form' value={clientInfo.email} disabled/>

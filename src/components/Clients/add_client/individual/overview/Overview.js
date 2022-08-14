@@ -5,8 +5,7 @@ import EmploymentOverview from './EmploymentOverview';
 import BankingOverview from './BankingOverview';
 import NextOfKinOverview from './NextOfKinOverview';
 import FilesOverview from './FilesOverview';
-import { makeRequest } from '../../../../../utils/utils'
-// import {useHistory} from 'react-router-dom';
+import { makeRequest } from '../../../../../utils/utils';
 
 function Overview({
   clientInfo,
@@ -17,10 +16,10 @@ function Overview({
   uploadedFilesList,
   setTab,
   clientErrors,
-  employmentErrors
+  employmentErrors,
+  setMainTab
 }) {
   const [serverErrors, setServerErrors] = useState({});
-//   let history = useHistory();
 
   const submit = async () => {
     const filteredEmployerInfo = Object.fromEntries(Object.entries(employerInfo).filter(([key, value]) => value !== ''));
@@ -38,7 +37,7 @@ function Overview({
     const response = await makeRequest.post('/clientsapi/add_client/', body, {timeout: 8000});
     if (response.ok) {
       const data = await response.json();
-    //   history.push(`/cDetails/${data.client_id}`);
+      setMainTab('clients');
       return
     }
     const errors = await response.json();

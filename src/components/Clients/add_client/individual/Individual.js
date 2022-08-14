@@ -8,7 +8,7 @@ import NextOfKin from './NextOfKin';
 import Address from './Address';
 import Overview from './overview/Overview';
 
-function Individual({clientType, setClientType}) {
+function Individual({clientType, setClientType, setMainTab}) {
   const [tab, setTab] = useState('new');
   const [clientInfo, setClientInfo] = useState({first_name: '', last_name: '', gender: '', date_of_birth: '', registration_date: '',
     phone_number: '', identification_number: '', identification_type: '', email: ''});
@@ -50,6 +50,7 @@ function Individual({clientType, setClientType}) {
             nokList={nokList}
             uploadedFilesList={uploadedFilesList}
             setTab={setTab}
+            setMainTab={setMainTab}
             clientErrors={clientErrors}
             employmentErrors={employmentErrors}/>
         }[tab]}
