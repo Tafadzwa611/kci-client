@@ -2,7 +2,7 @@ import React from 'react';
 
 function FilesOverview({uploadedFilesList}) {
   return (
-    <div className='form-group row text-light' style={{marginTop: '15px'}}>
+    <div className='form-group row text-light' style={{marginTop: '1.5rem'}}>
       <label className='col-sm-1 control-label'>File List</label>
       <table className='table table-bordered table-head-fixed text-nowrap' id='chart' width='100%'>
         <thead>

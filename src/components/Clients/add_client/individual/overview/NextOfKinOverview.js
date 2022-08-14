@@ -2,7 +2,7 @@ import React from 'react';
 
 function NextOfKinOverview({nokList}) {
   return (
-    <div className='form-group row text-light' style={{marginTop: '15px'}}>
+    <div className='form-group row text-light' style={{marginTop: '1.5rem'}}>
       <label className='col-sm-1 control-label'>Next Of Kin List</label>
       <table className='table' id='chart' style={{width:"100%"}}>
         <thead>
