@@ -62,11 +62,11 @@ function Overview({
         <NextOfKinOverview nokList={nokList}/>
         <FilesOverview uploadedFilesList={uploadedFilesList}/>
       </div>
-      <div>
-        <button onClick={submit} type='button' style={disableSubmit ? {pointerEvents: 'none', opacity: '0.7'} : {}} disabled={disableSubmit} className='btn btn-info float-right'>
+      <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+        <button onClick={e => setTab('files')} type='button' className='btn btn-default'>Back</button>
+        <button onClick={submit} type='button' style={disableSubmit ? {pointerEvents: 'none', opacity: '0.7'} : {}} disabled={disableSubmit} className='btn btn-info'>
           Submit
         </button>
-        <button onClick={e => setTab('files')} type='button' className='btn btn-default'>Back</button>
       </div>
     </>
   )

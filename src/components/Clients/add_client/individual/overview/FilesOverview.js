@@ -6,7 +6,7 @@ function FilesOverview({uploadedFilesList}) {
       <label className='col-sm-1 control-label'>File List</label>
       <table className='table table-bordered table-head-fixed text-nowrap' id='chart' width='100%'>
         <thead>
-          <tr>
+          <tr className="journal-details header">
             <th>File Name</th>
           </tr>
         </thead>

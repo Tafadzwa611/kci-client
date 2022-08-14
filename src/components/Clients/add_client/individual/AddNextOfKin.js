@@ -8,6 +8,7 @@ function AddNextOfKin({open, setOpen, setNokList}) {
   const handleSubmit = () => {
     setNokList(curr => [...curr, {...nok, id: uuidv4()}]);
     setNok(initialState);
+    setOpen(false);
   }
 
   const disableAdd = Object.values(nok).findIndex(el => el==='') != -1;
@@ -149,7 +150,7 @@ const ModalBody = ({nok, setNok}) => {
         </div>
 
         <div className='row custom-background' style={{marginTop: '15px'}}>
-          <label className='form-label'>Country</label>
+          <label className='form-label'>Country<span style={{color: 'red'}}>*</span></label>
           <div className='col-9'>
             <input name='country' type='text' className='custom-select-form' autoComplete='new-password' onFocus={validate} onChange={handleChange} value={nok.country} required/>
             <p style={{color: 'red'}}>{errors['country']}</p>

@@ -34,21 +34,21 @@ function Address({addrList, setAddrList, setTab}) {
             </div>
           </div>
         </div>
-        <div className="table-container client_address">
+        <div className="table-container" style={{padding:"0", border:"none"}}>
             <div className='table-responsive'>
             <table className='table' id='chart' style={{width:"100%"}}>
                 <thead>
-                <tr className="client_address_thead">
-                    <th>Address</th>
-                    <th>City/Town</th>
-                    <th>Country</th>
-                    <th>Ownership</th>
-                    <th>Action</th>
+                <tr className="journal-details header">
+                    <th style={{border:"none"}}>Address</th>
+                    <th style={{border:"none"}}>City/Town</th>
+                    <th style={{border:"none"}}>Country</th>
+                    <th style={{border:"none"}}>Ownership</th>
+                    <th style={{border:"none"}}>Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 {addrList.length > 0 ? addrList.map((addr, idx) => <SingleAddress key={idx} isFirstRun={isFirstRun} addr={addr} setAddrList={setAddrList} setAddrToUpdate={setAddrToUpdate}/>):
-                <tr className="client_address_body" style={{borderTop:"0"}}><td colSpan={9} style={{textAlign: 'center'}}>No data in table.</td></tr>}
+                <tr style={{borderTop:"0"}}><td colSpan={9} style={{textAlign: 'center'}}>No data in table.</td></tr>}
                 </tbody>
             </table>
             </div>

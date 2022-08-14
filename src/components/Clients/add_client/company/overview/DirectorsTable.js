@@ -6,7 +6,7 @@ function DirectorsTable({dirList}) {
       <label className='col-sm-2 control-label'>Company Directors</label>
       <table className='table table-bordered table-head-fixed text-nowrap' id='chart' width='100%'>
         <thead>
-          <tr>
+          <tr className="journal-details header">
             <th>First Name</th>
             <th>Last Name</th>
             <th>Identification Number</th>

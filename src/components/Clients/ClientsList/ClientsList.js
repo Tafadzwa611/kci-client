@@ -20,14 +20,18 @@ function ClientsList() {
   
   const pageNum = useRef(1);
 
-  useEffect(async () => {
+  useEffect(() => {
+    getClients();
+  }, []);
+
+  const getClients = async () => {
     window.scrollTo(0, 0);
     const data = await fetchClients();
     const branches = await fetchBranches();
     setClients(data.clients);
     setBranches(branches);
     setTotalCount(data.count);
-  }, []);
+  }
 
   async function fetchClients() {
     try {

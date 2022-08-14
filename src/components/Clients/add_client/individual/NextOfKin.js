@@ -33,26 +33,26 @@ function NextOfKin({nokList, setNokList, setTab}) {
           </div>
         </div>
 
-        <div className="table-container client_next_of_kin">
+        <div className="table-container" style={{padding:"0", border:"none"}}>
             <div className='table-responsive'>
                 <table className='table' id='chart' style={{width:"100%"}}>
                     <thead>
-                        <tr className="next_of_kin_thead">
-                            <th>First_Name</th>
-                            <th>Last_Name</th>
-                            <th>Gender</th>
-                            <th>Relationship_to_Applicant</th>
-                            <th>Phone_Number</th>
-                            <th>Physical_Address</th>
-                            <th>City/Town</th>
-                            <th>Country</th>
-                            <th>Ownership</th>
-                            <th>Action</th>
+                        <tr className="journal-details header">
+                            <th style={{border:"none"}}>First_Name</th>
+                            <th style={{border:"none"}}>Last_Name</th>
+                            <th style={{border:"none"}}>Gender</th>
+                            <th style={{border:"none"}}>Relationship_to_Applicant</th>
+                            <th style={{border:"none"}}>Phone_Number</th>
+                            <th style={{border:"none"}}>Physical_Address</th>
+                            <th style={{border:"none"}}>City/Town</th>
+                            <th style={{border:"none"}}>Country</th>
+                            <th style={{border:"none"}}>Ownership</th>
+                            <th style={{border:"none"}}>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {nokList.length > 0 ? nokList.map((nok, idx) => <NokRow key={idx} setNokToUpdate={setNokToUpdate} isFirstRun={isFirstRun} nok={nok} setNokList={setNokList}/>):
-                        <tr className="next_of_kin_body" style={{borderTop:"0"}}><td colSpan={10} style={{textAlign: 'center'}}>No data in table.</td></tr>}
+                        <tr style={{borderTop:"0"}}><td colSpan={10} style={{textAlign: 'center'}}>No data in table.</td></tr>}
                     </tbody>
                 </table>
             </div>

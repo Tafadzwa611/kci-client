@@ -6,7 +6,7 @@ function NextOfKinOverview({nokList}) {
       <label className='col-sm-1 control-label'>Next Of Kin List</label>
       <table className='table' id='chart' style={{width:"100%"}}>
         <thead>
-          <tr>
+          <tr className="journal-details header">
             <th>First Name</th>
             <th>Last Name</th>
             <th>Gender</th>

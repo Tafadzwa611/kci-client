@@ -8,6 +8,7 @@ function AddAddress({open, setOpen, setAddrList}) {
   const handleSubmit = () => {
     setAddrList(curr => [...curr, {...addr, id: uuidv4()}]);
     setAddr(initialState);
+    setOpen(false);
   }
 
   const disableAdd = Object.values(addr).findIndex(el => el==='') != -1;
