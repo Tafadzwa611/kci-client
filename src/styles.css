@@ -678,7 +678,7 @@ span {
   background: var(--white);
   height: 100%;
   width: 260px;
-  z-index: 100;
+  /* z-index: 100; */
   transition: 0.5s ease;
   box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
 }
@@ -875,7 +875,7 @@ span {
   display: flex;
   align-items: center;
   background: var(--white);
-  box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
+  /* box-shadow: 0 0 35px 0 rgba(154,161,171,.15); */
   justify-content: space-between;
 }
 
@@ -1089,6 +1089,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .btn-default {
   border-color: var(--home-section-color);
   background-color: var(--home-section-color);
+}
+
+.btn-default.client__details {
+  background-color: #fff;
+}
+
+#dark .btn-default.client__details {
+  border-color: #1F1F1F;
+  background-color: #1F1F1F;
 }
 
 .cash-management-table .btn-default {

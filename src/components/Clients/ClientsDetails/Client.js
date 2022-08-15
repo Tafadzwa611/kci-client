@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { makeRequest } from '../../../utils/utils';
 import IndividualClientDetails from './IndividualClientDetails/IndividualClientDetals';
 import CompanyClientDetails from './CompanyClientDetails/CompanyClientDetails';
-import { async } from 'regenerator-runtime';
 
 function Client({selectedclientID}) {
   const [client, setClient] = useState(null);
@@ -19,12 +18,10 @@ function Client({selectedclientID}) {
   }, [selectedclientID]);
 
   const getClient = async () => {
-    window.scrollTo(0, 0);
     await fetchClient();
   }
 
   const getBranches = async () => {
-    window.scrollTo(0, 0);
     await fetchBranches();
   }
 

@@ -69,7 +69,7 @@ const ModalBody = ({addr, setAddr}) => {
           </div>
         </div>
 
-        <div className='row' style={{marginTop: '15px'}}>
+        <div className='row custom-background' style={{marginTop: '15px'}}>
           <label className='form-label'>Ownership<span style={{color: 'red'}}>*</span></label>
           <div className='col-9'>
             <select name='ownership' className='custom-select-form' onFocus={validate} onChange={handleChange} value={addr.ownership} required>

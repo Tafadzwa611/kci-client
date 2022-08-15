@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-// import ClientDetails from './clientdetails/ClientDetails';
+import Details from './Details/Details';
 // import ClientAddresses from './clientaddresses/ClientAddresses';
 // import NextOfKin from './nok/NextOfKin';
 // import Files from './files/Files';
@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 // import BankingDetails from './bankingdetails/BankingDetails';
 // import Transactions from '../company/transactions/Transactions';
 
-function IndividualClientDetails({client, setClient, addresses, setAddresses, nokList, setNokList, clientId, files, branches, setFiles}) {
+function IndividualClientDetails({client, setClient, addresses, setAddresses, nokList, setNokList, clientId, files, branches, setFiles, setOpen}) {
   const [tab, setTab] = useState('details');
 
   return (
@@ -24,7 +24,7 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
         </div>
         <div className='tab-content font-12' style={{marginTop:"3rem"}}>
             {{
-                // 'clients': <ClientsList setMainTab={setTab}/>,
+                'details': <Details clientId={clientId} setClient={setClient} client={client} branches={branches} setOpen={setOpen}/>,
                 // 'cshmngmnt': <AddClient setMainTab={setTab}/>,
             }[tab]}
         </div>
