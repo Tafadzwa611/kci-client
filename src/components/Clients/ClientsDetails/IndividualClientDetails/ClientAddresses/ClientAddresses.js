@@ -21,7 +21,7 @@ function ClientAddresses({addresses, setAddresses, clientId}) {
             <AddAddress open={open} setOpen={setOpen} clientId={clientId} setAddresses={setAddresses}/>
             <div style={{marginBottom:"1.5rem"}}>
                 <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)} 
-                    style={{backgroundColor:"#3d9970", borderColor: "#3d9970"}}>Add Address
+                    >Add Address
                 </button>
             </div>
 

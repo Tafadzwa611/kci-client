@@ -4,7 +4,7 @@ import Details from './Details/Details';
 import ClientAddresses from './ClientAddresses/ClientAddresses';
 // import NextOfKin from './nok/NextOfKin';
 // import Files from './files/Files';
-// import EmploymentDetails from './employment/EmploymentDetails';
+import EmploymentDetails from './Employment/EmploymentDetails';
 // import BankingDetails from './bankingdetails/BankingDetails';
 // import Transactions from '../company/transactions/Transactions';
 
@@ -26,6 +26,7 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
             {{
                 'details': <Details clientId={clientId} setClient={setClient} client={client} branches={branches} setOpen={setOpen}/>,
                 'addresses': <ClientAddresses clientId={clientId} addresses={addresses} setAddresses={setAddresses} />,
+                'emp': <EmploymentDetails clientId={clientId} setClient={setClient} client={client} />,
             }[tab]}
         </div>
     </>
