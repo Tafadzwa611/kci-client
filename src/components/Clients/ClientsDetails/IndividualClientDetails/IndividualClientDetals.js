@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import Details from './Details/Details';
-// import ClientAddresses from './clientaddresses/ClientAddresses';
+import ClientAddresses from './ClientAddresses/ClientAddresses';
 // import NextOfKin from './nok/NextOfKin';
 // import Files from './files/Files';
 // import EmploymentDetails from './employment/EmploymentDetails';
@@ -25,7 +25,7 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
         <div className='tab-content font-12' style={{marginTop:"3rem"}}>
             {{
                 'details': <Details clientId={clientId} setClient={setClient} client={client} branches={branches} setOpen={setOpen}/>,
-                // 'cshmngmnt': <AddClient setMainTab={setTab}/>,
+                'addresses': <ClientAddresses clientId={clientId} addresses={addresses} setAddresses={setAddresses} />,
             }[tab]}
         </div>
     </>
