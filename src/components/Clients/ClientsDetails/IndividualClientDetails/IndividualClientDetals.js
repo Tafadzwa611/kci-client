@@ -6,7 +6,7 @@ import NextOfKin from './nok/NextOfKin';
 import Files from './Files/Files';
 import EmploymentDetails from './Employment/EmploymentDetails';
 import BankingDetails from './BankingDetails/BankingDetails';
-// import Transactions from '../company/transactions/Transactions';
+import Transactions from './Transactions/Transactions';
 
 function IndividualClientDetails({client, setClient, addresses, setAddresses, nokList, setNokList, clientId, files, branches, setFiles, setOpen}) {
   const [tab, setTab] = useState('details');
@@ -30,6 +30,7 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
                 'bnk': <BankingDetails clientId={clientId} setClient={setClient} client={client} />,
                 'nok': <NextOfKin clientId={clientId} nokList={nokList} setNokList={setNokList} />,
                 'files': <Files clientId={clientId} files={files} setFiles={setFiles} />,
+                'txns': <Transactions clientId={clientId} />,
             }[tab]}
         </div>
     </>
