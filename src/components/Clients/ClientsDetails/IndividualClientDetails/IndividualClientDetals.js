@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Details from './Details/Details';
 import ClientAddresses from './ClientAddresses/ClientAddresses';
 import NextOfKin from './nok/NextOfKin';
-// import Files from './files/Files';
+import Files from './Files/Files';
 import EmploymentDetails from './Employment/EmploymentDetails';
 import BankingDetails from './BankingDetails/BankingDetails';
 // import Transactions from '../company/transactions/Transactions';
@@ -29,6 +29,7 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
                 'emp': <EmploymentDetails clientId={clientId} setClient={setClient} client={client} />,
                 'bnk': <BankingDetails clientId={clientId} setClient={setClient} client={client} />,
                 'nok': <NextOfKin clientId={clientId} nokList={nokList} setNokList={setNokList} />,
+                'files': <Files clientId={clientId} files={files} setFiles={setFiles} />,
             }[tab]}
         </div>
     </>
