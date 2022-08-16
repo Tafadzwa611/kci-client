@@ -138,7 +138,7 @@ const AddMainAccount = lazy(() => import('./Accounting/AddMainAccount/AddMainAcc
 // const AddJournal = lazy(() => import('./Accounting/AddJournal/AddJournal'));
 const Main = lazy(() => import('./Main'));
 
-const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPropagatePayments}) => {
+const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPropagatePayments, setSidebar}) => {
 
     const [loggedInUser, setLoggedInUser] = React.useState(null);
 
@@ -443,7 +443,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
-                    <Route exact path='/app/clients/viewclients' element={<ViewClients/>}/>
+                    <Route exact path='/app/clients/viewclients' element={<ViewClients setSidebar={setSidebar} />}/>
                     <Route exact path='/app/loans/viewloans' element={<ViewLoans/>}/>
                     </Route>
                 </Route>

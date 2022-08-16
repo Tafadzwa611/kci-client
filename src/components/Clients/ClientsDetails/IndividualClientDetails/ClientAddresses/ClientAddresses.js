@@ -27,23 +27,23 @@ function ClientAddresses({addresses, setAddresses, clientId}) {
 
             <table className='table'>
                 <thead>
-                    <tr className="journal-details header">
-                        <th style={{paddingLeft:"0", width:"30%"}}>Address</th>
-                        <th style={{paddingLeft:"0"}}>City/Town</th>
-                        <th style={{paddingLeft:"0"}}>Country</th>
-                        <th style={{paddingLeft:"0"}}>Ownership</th>
-                        <th style={{paddingLeft:"0"}}>Action</th>
+                    <tr className="client__address__table">
+                        <th className="table-head-dark-color" style={{width:"30%"}}>Address</th>
+                        <th className="table-head-dark-color">City/Town</th>
+                        <th className="table-head-dark-color">Country</th>
+                        <th className="table-head-dark-color">Ownership</th>
+                        <th className="table-head-dark-color">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                 {addresses.length > 0 ? addresses.map(addr => {
                     return (
                     <tr key={addr.id}>
-                        <td style={{paddingLeft:"0"}}>{addr.address}</td>
-                        <td style={{paddingLeft:"0"}}>{addr.city}</td>
-                        <td style={{paddingLeft:"0"}}>{addr.country}</td>
-                        <td style={{paddingLeft:"0"}}>{addr.ownership}</td>
-                        <td style={{paddingLeft:"0"}}>
+                        <td>{addr.address}</td>
+                        <td>{addr.city}</td>
+                        <td>{addr.country}</td>
+                        <td>{addr.ownership}</td>
+                        <td>
                         <input id={addr.id} type='button' value='Delete...' onClick={deleteAddress}/>
                         </td>
                     </tr>

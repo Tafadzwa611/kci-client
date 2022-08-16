@@ -8,11 +8,19 @@ import EmploymentDetails from './Employment/EmploymentDetails';
 import BankingDetails from './BankingDetails/BankingDetails';
 import Transactions from './Transactions/Transactions';
 
-function IndividualClientDetails({client, setClient, addresses, setAddresses, nokList, setNokList, clientId, files, branches, setFiles, setOpen}) {
+function IndividualClientDetails({client, setClient, addresses, setAddresses, nokList, setNokList, clientId, files, branches, setFiles, setOpen, setSidebar, setDetails}) {
   const [tab, setTab] = useState('details');
+
+  const handleClose = () => {
+    setSidebar(false);
+    setDetails(false);
+  }
 
   return (
     <>
+        <div style={{marginBottom:"1.5rem", display:"flex", justifyContent:"end"}}>
+          <button className="btn btn-default client__details" onClick={handleClose}>Close</button>
+        </div>
         <div className="bloc-tabs">
             <button className={tab === "details" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("details")}> Personal Info </button>
             <button className={tab === "addresses" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("addresses")}> Address List </button>

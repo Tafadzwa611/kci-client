@@ -17,17 +17,17 @@ function NextOfKin({nokList, setNokList, clientId}) {
             </div>
             <table className='table'>
                 <thead>
-                <tr className="journal-details header">
-                    <th style={{paddingLeft:"0"}}>First Name</th>
-                    <th style={{paddingLeft:"0"}}>Last Name</th>
-                    <th style={{paddingLeft:"0"}}>Gender</th>
-                    <th style={{paddingLeft:"0"}}>Relationship to Applicant</th>
-                    <th style={{paddingLeft:"0"}}>Phone Number</th>
-                    <th style={{paddingLeft:"0"}}>Physical Address</th>
-                    <th style={{paddingLeft:"0"}}>City/Town</th>
-                    <th style={{paddingLeft:"0"}}>Country</th>
-                    <th style={{paddingLeft:"0"}}>Ownership</th>
-                    <th style={{paddingLeft:"0"}}>Action</th>
+                <tr className="client__address__table">
+                    <th className="table-head-dark-color">First Name</th>
+                    <th className="table-head-dark-color">Last Name</th>
+                    <th className="table-head-dark-color">Gender</th>
+                    <th className="table-head-dark-color">Relationship to Applicant</th>
+                    <th className="table-head-dark-color">Phone Number</th>
+                    <th className="table-head-dark-color">Physical Address</th>
+                    <th className="table-head-dark-color">City/Town</th>
+                    <th className="table-head-dark-color">Country</th>
+                    <th className="table-head-dark-color">Ownership</th>
+                    <th className="table-head-dark-color">Action</th>
                 </tr>
                 </thead>
                 <tbody>

@@ -2,14 +2,16 @@ import React from 'react';
 import Client from '../ClientsDetails/Client';
 import { convertDate, getAge } from '../../Accounting/Journals/utils';
 
-function ClientsTable({clients, totalCount, setDetails, details, setSelectedClientID, selectedclientID, selectedclient}) {
+function ClientsTable({clients, totalCount, setDetails, details, setSelectedClientID, selectedclientID, selectedclient, setSidebar}) {
 
   const handleClick = (e) => {
     setSelectedClientID(e.target.id)
     if (e.target.id != selectedclientID){
-      setDetails(true)
+      setDetails(true);
+      setSidebar(true);
     }else{
       setDetails(curr => !curr)
+      setSidebar(curr => !curr)
     }
   }
 
@@ -73,7 +75,7 @@ function ClientsTable({clients, totalCount, setDetails, details, setSelectedClie
           <div style={{position:"sticky", top:"0", width:"100%"}}>
               <div className="j-details-container" style={{padding:"1.5rem"}}>
 
-                <Client selectedclientID={selectedclientID} />
+                <Client selectedclientID={selectedclientID} setSidebar={setSidebar} setDetails={setDetails} />
 
               </div>
           </div>

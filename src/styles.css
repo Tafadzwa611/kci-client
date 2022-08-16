@@ -1811,6 +1811,23 @@ small {
   color: var(--color);
 }
 
+.client__address__table {
+  background-color: #fff;
+  padding: 1.5rem;
+  width: 100%;
+  margin-top: 25px;
+  color: var(--color);
+}
+
+#dark .client__address__table {
+  background-color: #1F1F1F;
+  color: var(--light-color);
+}
+
+#dark .table-head-dark-color {
+  color: var(--light-color) !important;
+}
+
 .badge {
   display: inline-block;
   padding: 0.35em 0.45em;

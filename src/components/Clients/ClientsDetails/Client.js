@@ -3,7 +3,7 @@ import { makeRequest } from '../../../utils/utils';
 import IndividualClientDetails from './IndividualClientDetails/IndividualClientDetals';
 import CompanyClientDetails from './CompanyClientDetails/CompanyClientDetails';
 
-function Client({selectedclientID}) {
+function Client({selectedclientID, setSidebar, setDetails}) {
   const [client, setClient] = useState(null);
   const [addresses, setAddresses] = useState([]);
   const [nokList, setNokList] = useState([]);
@@ -80,6 +80,8 @@ function Client({selectedclientID}) {
       setFiles={setFiles}
       branches={branches}
       clientId={selectedclientID}
+      setSidebar={setSidebar}
+      setDetails={setDetails}
     /> :
     <CompanyClientDetails
       client={client}

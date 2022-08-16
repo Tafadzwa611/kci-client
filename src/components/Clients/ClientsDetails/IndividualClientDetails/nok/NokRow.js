@@ -16,16 +16,16 @@ function NokRow({nok, setNokList}) {
 
   return (
     <tr>
-        <td style={{paddingLeft:"0"}}>{nok.first_name}</td>
-        <td style={{paddingLeft:"0"}}>{nok.last_name}</td>
-        <td style={{paddingLeft:"0"}}>{nok.gender}</td>
-        <td style={{paddingLeft:"0"}}>{nok.relationship}</td>
-        <td style={{paddingLeft:"0"}}>{nok.phone_number}</td>
-        <td style={{paddingLeft:"0"}}>{nok.address}</td>
-        <td style={{paddingLeft:"0"}}>{nok.city}</td>
-        <td style={{paddingLeft:"0"}}>{nok.country}</td>
-        <td style={{paddingLeft:"0"}}>{nok.ownership}</td>
-        <td style={{paddingLeft:"0"}}>
+        <td>{nok.first_name}</td>
+        <td>{nok.last_name}</td>
+        <td>{nok.gender}</td>
+        <td>{nok.relationship}</td>
+        <td>{nok.phone_number}</td>
+        <td>{nok.address}</td>
+        <td>{nok.city}</td>
+        <td>{nok.country}</td>
+        <td>{nok.ownership}</td>
+        <td>
             <input type='button' value='Remove...' onClick={deleteNok}/>
         </td>
     </tr>

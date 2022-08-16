@@ -166,6 +166,7 @@ function App() {
                   showIsAccountinOn={showIsAccountinOn}
                   propagatePayments={propagatePayments}
                   showPropagatePayments={showPropagatePayments}
+                  setSidebar={setSidebar}
                 />
 
               </div>

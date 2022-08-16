@@ -3,7 +3,7 @@ import ClientsList from '../ClientsList/ClientsList'
 import AddClient from '../add_client/AddClient';
 
 
-const ViewClients = () => {
+const ViewClients = ({setSidebar}) => {
 
     const [tab, setTab] = useState('clients');
 
@@ -22,7 +22,7 @@ const ViewClients = () => {
                     </div>
                     <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                         {{
-                            'clients': <ClientsList setMainTab={setTab}/>,
+                            'clients': <ClientsList setSidebar={setSidebar} setMainTab={setTab}/>,
                             'cshmngmnt': <AddClient setMainTab={setTab}/>,
                         }[tab]}
                     </div>
