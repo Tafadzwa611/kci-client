@@ -29,11 +29,11 @@ function Files({files, setFiles, clientId}) {
                         Browse...
                     </button>
                 </div>
-                <table className='table'>
+                <table className="table">
                     <thead>
-                        <tr className="journal-details header">
-                            <th style={{paddingLeft:"0"}}>File Name</th>
-                            <th style={{paddingLeft:"0"}}>Action</th>
+                        <tr className="client__address__table">
+                            <th className="table-head-dark-color">File Name</th>
+                            <th className="table-head-dark-color">Action</th>
                         </tr>
                     </thead>
                     <tbody>

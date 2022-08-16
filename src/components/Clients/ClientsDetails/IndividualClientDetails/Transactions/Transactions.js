@@ -63,19 +63,15 @@ function Transactions({clientId}) {
 
   return (
         <>
-            <div className='row'>
-                <div className='col-12'>
-                    <div className='pull-right'>
-                        <ReactHTMLTableToExcel
-                        id='test-table-xls-button'
-                        className='download-table-xls-button'
-                        table='transactions'
-                        filename='tablexls'
-                        sheet='tablexls'
-                        buttonText='Download as XLS'/>
-                        <CurrencySelector currencies={currencies} currencyId={currencyId} setCurrencyId={setCurrencyId}/>
-                    </div>
-                </div>
+            <div style={{marginBottom:"1.5rem", display:"flex", justifyContent:"end", columnGap:"10px"}} className="text-light">
+                <ReactHTMLTableToExcel
+                id='test-table-xls-button'
+                className='btn btn-default client__details'
+                table='transactions'
+                filename='tablexls'
+                sheet='tablexls'
+                buttonText='Download as XLS'/>
+                <CurrencySelector currencies={currencies} currencyId={currencyId} setCurrencyId={setCurrencyId}/>
             </div>
             <table id='transactions' className='table'>
                 <thead>
@@ -111,7 +107,7 @@ function CurrencySelector({currencies, currencyId, setCurrencyId}) {
     }
 
     return (
-        <select value={currencyId} onChange={changeCurrency}>
+        <select value={currencyId} onChange={changeCurrency} className="btn btn-default client__details">
         {currencies.map(currency => {
             return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
         })}
