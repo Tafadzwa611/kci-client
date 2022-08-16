@@ -94,6 +94,8 @@ function Client({selectedclientID, setSidebar, setDetails}) {
       files={files}
       setFiles={setFiles}
       clientId={selectedclientID}
+      setSidebar={setSidebar}
+      setDetails={setDetails}
     />
   )
 }
