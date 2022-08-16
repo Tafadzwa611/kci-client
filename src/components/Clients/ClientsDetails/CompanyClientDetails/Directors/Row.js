@@ -1,11 +1,11 @@
 import React from 'react';
-import { convertDate } from '../utils';
-import {fetcherWithTimeout} from 'common/es';
+import { convertDate } from '../../../../Accounting/Journals/utils';
+import { makeRequest } from '../../../../../utils/utils';
 
 function Row({director, setDirectors}) {
   const deleteDirector = async (evt) => {
     try {
-      const response = await fetcherWithTimeout.delete(`/clientsapi/delete_dir/${evt.target.id}`, {timeout: 30000});
+      const response = await makeRequest.delete(`/clientsapi/delete_dir/${evt.target.id}`, {timeout: 8000});
       if (response.ok) {
         setDirectors(curr => curr.filter(dir => dir.id != evt.target.id));
       }

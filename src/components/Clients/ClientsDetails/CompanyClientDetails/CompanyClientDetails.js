@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ClientDetails from './ClientDetails/ClientDetails';
 import BusinessInfo from './BusinessInfo/BusinessInfo';
-// import Directors from './directors/Directors';
+import Directors from './Directors/Directors';
 // import BankingDetails from './bankingdetails/BankingDetails';
 // import Files from './files/Files';
 // import Transactions from './transactions/Transactions';
@@ -31,7 +31,7 @@ function CompanyClientDetails({client, branches, files, setFiles, setClient, bus
           {{
               'details': <ClientDetails setClient={setClient} client={client} branches={branches} clientId={clientId}/>,
               'business': <BusinessInfo setBusiness={setBusiness} business={business} branches={branches} clientId={clientId}/>,
-              // 'directors': <Directors directors={directors} business={business} setDirectors={setDirectors}/>,
+              'directors': <Directors directors={directors} business={business} setDirectors={setDirectors}/>,
               // 'bnk': <BankingDetails client={client} clientId={clientId} setClient={setClient}/>,
               // 'files': <Files files={files} setFiles={setFiles} clientId={clientId}/>,
               // 'txns': <Transactions clientId={clientId}/>,
