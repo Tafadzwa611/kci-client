@@ -53,7 +53,7 @@ const Admin = lazy(() => import('./Admin'));
 const ViewClients = lazy(() => import('./Clients/ViewClients/ViewClients'));
 const ClientDetail = lazy(() => import('./Clients/ClientDetail'));
 const TransferClient = lazy(() => import('./Clients/TransferClient'));
-const ViewOnlineApplications = lazy(() => import('./Clients/ViewOnlineApplications'));
+// const ViewOnlineApplications = lazy(() => import('./Clients/ViewOnlineApplications'));
 // Loans 
 const AddLoan = lazy(() => import('./Loans/AddLoan'));
 const ViewLoans = lazy(() => import('./Loans/Loans/ViewLoans'));
@@ -172,7 +172,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
-                    <Route exact path='/app/clients/viewonlineapplications' element={<ViewOnlineApplications/>}/>
+                    {/* <Route exact path='/app/clients/viewonlineapplications' element={<ViewOnlineApplications/>}/> */}
                     <Route exact path='/app/loans/viewdueloans' element={<ViewDueLoans/>}/>
                     <Route exact path='/app/loans/viewdefaultsandarrears' element={<ViewDefaultsAndArrears/>}/>
                     <Route exact path='/app/loans/viewrefunds' element={<ViewRefunds/>}/>

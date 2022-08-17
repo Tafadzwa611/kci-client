@@ -1,5 +1,5 @@
 import React from 'react';
-import Tabs from './Tabs';
+// import Tabs from './Tabs';
 
 const ClientDetail = () => {
 
@@ -12,7 +12,7 @@ const ClientDetail = () => {
 
         <div className="card">
             <div style={card}>
-                <Tabs />
+                {/* <Tabs /> */}
             </div>
         </div>
 

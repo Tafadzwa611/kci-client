@@ -39,7 +39,7 @@ function Files({selectedFiles, setSelectedFiles, uploadedFilesList, setUploadedF
           </div>
         </div>
 
-        <div className="table-container busines_files">
+        <div className="table-container" style={{padding:"0", border:"none"}}>
             <div className='table-responsive'>
                 <table className='table' id='chart' style={{width:"100%"}}>
                     <thead>

@@ -1012,11 +1012,11 @@ span {
   padding-left: 10px;
 }
 
-input[type="date"]::-webkit-inner-spin-button,
-input[type="date"]::-webkit-calendar-picker-indicator {
+/* input[type="date"]::-webkit-inner-spin-button, */
+/* input[type="date"]::-webkit-calendar-picker-indicator {
   display: none;
   -webkit-appearance: none;
-}
+} */
 
 .input-group input {
   outline: none;
