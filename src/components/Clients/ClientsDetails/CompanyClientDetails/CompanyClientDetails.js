@@ -3,7 +3,7 @@ import ClientDetails from './ClientDetails/ClientDetails';
 import BusinessInfo from './BusinessInfo/BusinessInfo';
 import Directors from './Directors/Directors';
 import BankingDetails from './BankingDetails/BankingDetails';
-// import Files from './files/Files';
+import Files from './Files/Files';
 import Transactions from '../IndividualClientDetails/Transactions/Transactions';
 
 function CompanyClientDetails({client, branches, files, setFiles, setClient, business, setBusiness, directors, setDirectors, clientId, setDetails, setSidebar}) {
@@ -33,7 +33,7 @@ function CompanyClientDetails({client, branches, files, setFiles, setClient, bus
               'business': <BusinessInfo setBusiness={setBusiness} business={business} branches={branches} clientId={clientId}/>,
               'directors': <Directors directors={directors} business={business} setDirectors={setDirectors}/>,
               'bnk': <BankingDetails client={client} clientId={clientId} setClient={setClient}/>,
-              // 'files': <Files files={files} setFiles={setFiles} clientId={clientId}/>,
+              'files': <Files files={files} setFiles={setFiles} clientId={clientId}/>,
               'txns': <Transactions clientId={clientId}/>,
           }[tab]}
       </div>

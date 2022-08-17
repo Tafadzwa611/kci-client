@@ -1,6 +1,6 @@
 
 import React, {useState} from 'react';
-import {fetcherWithTimeout} from 'common/es';
+import { makeRequest } from '../../../../../utils/utils'
 
 function SingleFile({fileObj, clientId, setFiles}) {
   const [progress, setProgress] = useState(0);
@@ -26,7 +26,7 @@ function SingleFile({fileObj, clientId, setFiles}) {
       return setFiles(curr => curr.filter(f => f.uuid != fileObj.uuid));
     }
     try {
-      const response = await fetcherWithTimeout.delete(`/clientsapi/delete_file/${fileObj.id}`, {timeout: 30000});
+      const response = await makeRequest.delete(`/clientsapi/delete_file/${fileObj.id}`, {timeout: 8000});
       if (response.ok) {
         setFiles(curr => curr.filter(f => f.id != fileObj.id));
       }
