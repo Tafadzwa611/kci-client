@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {Fragment} from 'react';
+import { FirstRow, SecondRow, ThirdRow, FourthRow } from './TableRows';
 
-const Table = () => {
+const Table = ({ clients, currencyIso }) => {
     return (
-        <div className="table-container">
+        <div className="table-container" style={{padding:"0", paddingTop:"1.5rem", border:"none"}}>
             <div className="table-responsive font-12" style={{maxHeight:"600px"}}>
                 <table className="table" style={{width:"100%"}}>
                     <thead>
@@ -19,50 +20,16 @@ const Table = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="text-bold bg-gray text-left" colspan="9">Tavonga Gudyanga</td>
-                            <td style={{display:"none"}}></td>
-                            <td style={{display:"none"}}></td>
-                            <td style={{display:"none"}}></td>
-                            <td style={{display:"none"}}></td>
-                            <td style={{display:"none"}}></td>
-                            <td style={{display:"none"}}></td>
-                            <td style={{display:"none"}}></td>
-                            <td style={{display:"none"}}></td>
-                        </tr>
-                        <tr>
-                            <td style={{textAlign:"right"}} className="reports-table-border-left">2</td>
-                            <td style={{textAlign:"right"}}>1100.00</td>
-                            <td style={{textAlign:"right"}}>1100.00</td>
-                            <td className="text-bold text-red text-right">Amount:</td>
-                            <td className="text-bold text-red text-right">1100.00</td>
-                            <td className="text-bold text-red text-right">530.00</td>
-                            <td className="text-bold text-red text-right">0.00</td>
-                            <td className="text-bold text-red text-right">0.00</td>
-                            <td className="text-bold text-red text-right reports-table-border-right">1630.00</td>
-                        </tr>
-                        <tr>
-                            <td className="reports-table-border-left"></td>
-                            <td></td>
-                            <td></td>
-                            <td className="text-bold text-green" style={{textAlign:"right"}}>Total_Payments:</td>
-                            <td className="text-bold text-green" style={{textAlign:"right"}}>0.00</td>
-                            <td className="text-bold text-green" style={{textAlign:"right"}}>0.00</td>
-                            <td className="text-bold text-green" style={{textAlign:"right"}}>0.00</td>
-                            <td className="text-bold text-green" style={{textAlign:"right"}}>0.00</td>
-                            <td className="text-bold text-green reports-table-border-right" style={{textAlign:"right"}}>0.00</td>
-                        </tr>
-                        <tr>
-                            <td style={{textAlign:"right", borderBottom:"1px solid #dee2e6"}} className="reports-table-border-left"></td>
-                            <td style={{textAlign:"right", borderBottom:"1px solid #dee2e6"}}></td>
-                            <td style={{textAlign:"right", borderBottom:"1px solid #dee2e6"}}></td>
-                            <td className="text-bold" style={{textAlign:"right", borderBottom:"1px solid #dee2e6", width:"9%"}}>Net Due:</td>
-                            <td className="text-bold" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>1100.00</td>
-                            <td className="text-bold" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>530.00</td>
-                            <td className="text-bold" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>0.00</td>
-                            <td className="text-bold" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>0.00</td>
-                            <td className="text-bold reports-table-border-right" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>1630.00</td>
-                        </tr>
+                    {clients.map(client => {
+                        return (
+                        <Fragment key={client.id}>
+                            <FirstRow client={client}/>
+                            <SecondRow client={client} currencyIso={currencyIso}/>
+                            <ThirdRow client={client} currencyIso={currencyIso}/>
+                            <FourthRow client={client} currencyIso={currencyIso}/>
+                        </Fragment>
+                        )
+                    })}
                     </tbody>
                 </table>
             </div>

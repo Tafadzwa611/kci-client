@@ -115,6 +115,7 @@ const ExpenseDetails = lazy(() => import('./Expenses/ExpenseDetails'));
 const AddExpense = lazy(() => import('./Expenses/AddExpense'));
 // Repots 
 const ClientsReport = lazy(() => import('./Reports/ClientsReport/ClientsReport'));
+const ViewReports = lazy(() => import('./Reports/ViewReports/ViewReports'));
 const LoansReport = lazy(() => import('./Reports/LoansReport/LoansReport'));
 const MonthlyReport = lazy(() => import('./Reports/MonthlyReport/MonthlyReport'));
 const TopBorrowers = lazy(() => import('./Reports/TopBorrowers/TopBorrowers'));
@@ -478,7 +479,8 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
                     <Route exact path='/app/reports/clientsreport' element={<ClientsReport/>}/>
-                    <Route exact path='/app/reports/loansreport' element={<LoansReport/>}/>
+                    <Route exact path='/app/reports/viewreports' element={<ViewReports/>}/>
+                    {/* <Route exact path='/app/reports/loansreport' element={<LoansReport/>}/> */}
                     </Route>
                 </Route>
                 </Routes>

@@ -124,6 +124,10 @@ export const SidebarData = [
         iconOpened:<i className="uil uil-angle-up arrow"></i>,
         subNav: [
             {
+                title: 'View Reports',
+                path: '/app/reports/viewreports',                
+            },
+            {
                 title: 'Clients Report',
                 path: '/app/reports/clientsreport',                
             },
