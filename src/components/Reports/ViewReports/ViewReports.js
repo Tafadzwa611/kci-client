@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ClientsReport from '../ClientsReport/ClientsReport';
-// import AddClient from '../add_client/AddClient';
+import LoansReport from '../LoansReport/LoansReport';
 
 
 const ViewReports = () => {
@@ -32,7 +32,7 @@ const ViewReports = () => {
                     <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                         {{
                             'clientsreport': <ClientsReport />,
-                            // 'loansreport': <AddClient setMainTab={setTab}/>,
+                            'loansreport': <LoansReport />,
                         }[tab]}
                     </div>
                 </>
