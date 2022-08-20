@@ -1,22 +1,28 @@
 import React from 'react';
 
-const Footer = () => {
+const Footer = ({ nextPageNumber, loadMoreAccounts, loadingMore }) => {
     return (
         <div className="footer-container font-12">
-
-            <div className="text">
-                <i class="uil uil-exclamation-triangle"></i> 
-                <span>All borrowers have been loaded</span>
-            </div>
-
-            {/* when loading more uncomment the code below and comment the div with className text above  */}
-
-            {/* <div className="load-btn">
-                <button className="btn btn-olive">Load More</button>
-            </div> */}
-            
+            {nextPageNumber.current === null ?
+            <div className="text" style={{border:"none"}}>
+                <i className="uil uil-exclamation-triangle"></i> 
+                <span>All borrowers have been loaded.</span>
+            </div>:
+            <LoadMoreButton loadMoreAccounts={loadMoreAccounts} loadingMore={loadingMore} />
+            }
         </div>
     );
 }
+
+const LoadMoreButton = ({loadMoreAccounts, loadingMore}) => {
+    const styles = loadingMore ? {pointerEvents: 'none', opacity: '0.7'} : {};
+    return (
+      <div className='load-btn' style={{border:"none"}}>
+          <button className="btn btn-olive" style={styles} name='moreAccounts' onClick={loadMoreAccounts}>
+            {loadingMore ? 'Please wait..' : 'View More Loans'}
+          </button>
+      </div>
+    )
+  }
 
 export default Footer;

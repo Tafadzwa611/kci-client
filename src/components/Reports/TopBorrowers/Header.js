@@ -1,15 +1,12 @@
 import React from 'react';
 
-const Header = () => {
+const Header = ({ changeOrder, order, disableSelect }) => {
     return (
-        <div className="header-container font-12">
-            <select disabled>
-                <option value="-id">Show top borrowers first</option>
-                <option value="id">Show old borrowers last</option>
+        <div className="header-container font-12" style={{padding:"0", border:"none"}}>
+            <select onChange={changeOrder} value={order} disabled={disableSelect} style={{margin:"0"}}>
+                <option value={'-id'}>Show top borrowers first</option>
+                <option value={'id'}>Show top borrowers last</option>
             </select>
-            <div style={{display:"none"}}>
-                Showing 1 of 100 loans
-            </div>
         </div>
     );
 }
