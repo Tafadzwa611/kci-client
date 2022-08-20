@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import ClientsReport from '../ClientsReport/ClientsReport';
 import LoansReport from '../LoansReport/LoansReport';
+import MonthlyReport from '../MonthlyReport/MonthlyReport';
 
 
 const ViewReports = () => {
@@ -33,6 +34,7 @@ const ViewReports = () => {
                         {{
                             'clientsreport': <ClientsReport />,
                             'loansreport': <LoansReport />,
+                            'monthlyreport': <MonthlyReport />,
                         }[tab]}
                     </div>
                 </>

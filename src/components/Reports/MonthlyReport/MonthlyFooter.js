@@ -6,14 +6,8 @@ const MonthlyFooter = () => {
 
             <div className="text">
                 <i class="uil uil-exclamation-triangle"></i> 
-                <span>All clients have been loaded</span>
+                <span>All data has been loaded.</span>
             </div>
-
-            {/* when loading more uncomment the code below and comment the div with className text above  */}
-
-            {/* <div className="load-btn">
-                <button className="btn btn-olive">Load More</button>
-            </div> */}
             
         </div>
     );

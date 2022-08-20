@@ -46,7 +46,7 @@ const Filter = (props) => {
     };
 
     return (
-        <div className="reports__filter__container font-13 text-light" style={{padding:"20px"}}>
+        <div className="reports__filter__container font-13 text-light" style={{padding:"0", border:"none"}}>
             <div>
                 <form onSubmit={onSubmit}>
                     <div className="row-containers" style={{padding:"0", border:"none"}}>
