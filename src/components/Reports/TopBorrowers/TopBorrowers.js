@@ -49,10 +49,10 @@ const TopBorrowers = () => {
     }, [month, selectedBranchesIds]);
   
     useEffect(() => {
-        getSetReport();
+        getReportData();
     }, [order]);
 
-    const getSetReport = async () => {
+    const getReportData = async () => {
         if (!isFirstRun.current) {
             pageNum.current = 1;
             const report = await getReport();

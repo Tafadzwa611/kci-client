@@ -1,7 +1,7 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom'
+import React, { Fragment } from 'react';
+import { convertDate } from '../../Accounting/Journals/utils';
 
-const Table = () => {
+const Table = ({report, currencyIso}) => {
     return (
         <div className="table-container">
             <div className="table-responsive font-12" style={{maxHeight:"600px"}}>
@@ -19,42 +19,30 @@ const Table = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="text-bold bg-gray text-left" colspan="9">2022-04-01</td>
-                            <td style={{display:"none"}}></td>
-                            <td style={{display:"none"}}></td>
-                            <td style={{display:"none"}}></td>
-                        </tr>
-                        <tr className="table-row">
-                            <td style={{textAlign:"right"}}><NavLink className="link" to="/clientdetails">Fsfgs Fhsdfhds</NavLink></td>
-                            <td style={{textAlign:"right"}}><NavLink className="link" to="/loandetails">L10000000001</NavLink></td>
-                            <td style={{textAlign:"right"}}>Main Branch</td>
-                            <td style={{textAlign:"right"}}>300.00</td>
-                            <td style={{textAlign:"right"}}>60.00</td>
-                            <td style={{textAlign:"right"}}>360.00</td>
-                            <td style={{textAlign:"right"}}>0.00</td>
-                            <td style={{textAlign:"right"}}>360.00</td>
-                        </tr>
-                        <tr className="table-row">
-                            <td style={{textAlign:"right"}}><NavLink className="link" to="/clientdetails">Fsfgs Fhsdfhds</NavLink></td>
-                            <td style={{textAlign:"right"}}><NavLink className="link" to="/loandetails">L10000000001</NavLink></td>
-                            <td style={{textAlign:"right"}}>Main Branch</td>
-                            <td style={{textAlign:"right"}}>1000.00</td>
-                            <td style={{textAlign:"right"}}>500.00</td>
-                            <td style={{textAlign:"right"}}>1500.00</td>
-                            <td style={{textAlign:"right"}}>0.00</td>
-                            <td style={{textAlign:"right"}}>1500.00</td>
-                        </tr>
-                        <tr className="table-row">
-                            <td style={{textAlign:"right"}}><NavLink className="link" to="/clientdetails">Fsfgs Fhsdfhds</NavLink></td>
-                            <td style={{textAlign:"right"}}><NavLink className="link" to="/loandetails">L10000000001</NavLink></td>
-                            <td style={{textAlign:"right"}}>Main Branch</td>
-                            <td style={{textAlign:"right"}}>100.00</td>
-                            <td style={{textAlign:"right"}}>30.00</td>
-                            <td style={{textAlign:"right"}}>130.00</td>
-                            <td style={{textAlign:"right"}}>0.00</td>
-                            <td style={{textAlign:"right"}}>130.00</td>
-                        </tr>
+                        {report.map(date => {
+                            return (
+                            <Fragment key={date.day}>
+                                <tr>
+                                <td className='text-bold bg-gray text-left' colSpan='9'>{convertDate(date.day)}</td>
+                                <td style={{display: 'none'}}></td>
+                                <td style={{display: 'none'}}></td>
+                                <td style={{display: 'none'}}></td>
+                                </tr>
+                                {date.loans.map(loan => (
+                                <tr key={loan.id}>
+                                    <td style={{textAlign: 'right'}}><a id={loan.client_id} href='#'>{loan.fullname}</a></td>
+                                    <td style={{textAlign: 'right'}}><a href="#">{loan.loan_id}</a></td>
+                                    <td style={{textAlign: 'right'}}>{loan.branch}</td>
+                                    <td style={{textAlign: 'right'}}>{`${currencyIso} ${loan.principal}`}</td>
+                                    <td style={{textAlign: 'right'}}>{`${currencyIso} ${loan.interest}`}</td>
+                                    <td style={{textAlign: 'right'}}>{`${currencyIso} ${loan.amount_due}`}</td>
+                                    <td style={{textAlign: 'right'}}>{`${currencyIso} ${loan.total_amount_paid}`}</td>
+                                    <td style={{textAlign: 'right'}}>{`${currencyIso} ${loan.balance}`}</td>
+                                </tr>
+                                ))}
+                            </Fragment>
+                            )
+                        })}
                     </tbody>
                 </table>
             </div>
