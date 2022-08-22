@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-const Table = () => {
+const Table = ({report, currencyIso}) => {
+
     return (
         <div className="table-container">
             <div class="table-responsive font-12" style={{maxHeight:"600px"}}>
@@ -15,19 +16,27 @@ const Table = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="text-bold bg-gray text-left" colspan="9">2022-04-01</td>
-                            <td style={{display:"none"}}></td>
-                            <td style={{display:"none"}}></td>
-                            <td style={{display:"none"}}></td>
-                        </tr>
-                        <tr className="table-row">
-                            <td style={{textAlign:"right"}}><a id="2" className="link" href="#">Tavonga Gudyanga</a></td>
-                            <td style={{textAlign:"right"}}><a href="#" className="link">L10000000002</a></td>
-                            <td style={{textAlign:"right"}}>Main Branch</td>
-                            <td style={{textAlign:"right"}}>Admin Fee</td>
-                            <td style={{textAlign:"right"}}>ZWL 150.00</td>
-                        </tr>
+                        {report.map(date => {
+                            return (
+                                <Fragment key={date.day}>
+                                    <tr>
+                                        <td class="text-bold bg-gray text-left" colspan="9">{ date.day }</td>
+                                        <td style={{display:"none"}}></td>
+                                        <td style={{display:"none"}}></td>
+                                        <td style={{display:"none"}}></td>
+                                    </tr>
+                                    {date.fees_recorded.map(fee => (
+                                        <tr key={fee.loan_pk} className="table-row">
+                                            <td style={{textAlign:"right"}}><a id="2" className="link" href="#">{ fee.fullname }</a></td>
+                                            <td style={{textAlign:"right"}}><a href="#" className="link">{ fee.loan_id }</a></td>
+                                            <td style={{textAlign:"right"}}>{ fee.branch }</td>
+                                            <td style={{textAlign:"right"}}>{ fee.fee_name }</td>
+                                            <td style={{textAlign:"right"}}>{`${currencyIso} ${fee.amount}`}</td>
+                                        </tr>
+                                    ))}
+                                </Fragment>
+                            )
+                        })}
                     </tbody>
                 </table>
             </div>
