@@ -83,7 +83,7 @@ const Filter = (props) => {
                                 </div>
                                 <div style={{width:"100%"}}>
                                     <label className="form-label">Search</label>
-                                    <div className="reports-input-group" style={{margin:"10px 0 0"}}>
+                                    <div className="reports-input-group" style={{margin:"10px 0 0", border:"none"}}>
                                         <input 
                                             className="report-custom-form-control normal-input" 
                                             placeholder="Enter Expense Name..."
@@ -91,6 +91,7 @@ const Filter = (props) => {
                                             type="text"
                                             value={othInName}
                                             onChange={(e) => setOthInName(e.target.value)}
+                                            style={{width:"100%"}}
                                         />
                                     </div>
                                 </div>
