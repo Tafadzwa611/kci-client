@@ -6,6 +6,7 @@ import TopBorrowers from '../TopBorrowers/TopBorrowers';
 import DisbursementReport from '../DisbursementReport/DisbursementReport';
 import LoanProductReport from '../LoanProductReport/LoanProductReport';
 import FeesReport from '../FeesReport/FeesReport';
+import LoanOfficerReport from '../LoanOfficerReport/LoanOfficerReport';
 
 const ViewReports = () => {
 
@@ -42,6 +43,7 @@ const ViewReports = () => {
                             'disbursmntreport': <DisbursementReport />,
                             'loanpdtrpt': <LoanProductReport />,
                             'feesrpt': <FeesReport />,
+                            'loanoffrreport': <LoanOfficerReport />,
                         }[tab]}
                     </div>
                 </>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 const Table = ({report, currencyIso}) => {
     return (
@@ -21,7 +21,7 @@ const Table = ({report, currencyIso}) => {
                     <tbody>
                         {report.map(lp => {
                             return (
-                                <>
+                                <Fragment key={lp.id}>
                                     <tr>
                                         <td className="text-bold bg-gray text-left" colspan="9">{ lp.name } - { lp.interest_method }</td>
                                         <td style={{display:"none"}}></td>
@@ -66,7 +66,7 @@ const Table = ({report, currencyIso}) => {
                                         <td className="text-bold" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>{`${currencyIso} ${lp.sum_penalty_due}`}</td>
                                         <td className="text-bold reports-table-border-right" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>{`${currencyIso} ${lp.total_due}`}</td>
                                     </tr>
-                                </>
+                                </Fragment>
                             )
                         })}
                     </tbody>
