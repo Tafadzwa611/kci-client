@@ -5,7 +5,7 @@ import LoanList from './LoanList';
 const Table = () => {
 
     return (
-        <div style={{marginTop:"40px"}} className="aging_report">
+        <div style={{marginTop:"40px", border:"none", padding:"0"}} className="aging_report">
             <LoanList />
             <div className="load-more-container card-body" style={{borderTop:"1px solid #eef2f7"}}>
                 <p className="load-more-container-left">

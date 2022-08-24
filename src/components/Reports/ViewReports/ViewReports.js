@@ -8,6 +8,7 @@ import LoanProductReport from '../LoanProductReport/LoanProductReport';
 import FeesReport from '../FeesReport/FeesReport';
 import LoanOfficerReport from '../LoanOfficerReport/LoanOfficerReport';
 import DailyReport from '../DailyReport/DailyReport';
+import AgingReport from '../AgingReport/AgingReport';
 
 const ViewReports = () => {
 
@@ -46,6 +47,7 @@ const ViewReports = () => {
                             'feesrpt': <FeesReport />,
                             'loanoffrreport': <LoanOfficerReport />,
                             'dailyrpt': <DailyReport />,
+                            'agingrpt': <AgingReport />,
                         }[tab]}
                     </div>
                 </>

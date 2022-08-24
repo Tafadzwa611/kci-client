@@ -15,8 +15,8 @@ const DateRange =()=> {
     }
 
     return (
-        <div className="report-container font-13">
-            <div className="row-reports date-ranger-upper-top"> 
+        <div className="report-container font-13" style={{border:"none", padding:"0"}}>
+            <div className="row-reports date-ranger-upper-top" style={{margin:"0"}}> 
                 <div className="fields-container">
                     <label className="form-label">Start Date</label>
                     <div className="input-group" style={input_group}>
@@ -42,7 +42,7 @@ const DateRange =()=> {
                     </div>
                 </div>
             </div>
-            <div className="row-reports date-ranger-bottom">
+            <div className="row-reports date-ranger-bottom" style={{margin:"0"}}>
                 <div className="fields-container-select" style={mystyle_select}>
                     <select className='custom-select-form' placeholder="Select Loan Period" style={mystyle}>
                         <option style={{display:"none"}} selected>Select Period </option>
