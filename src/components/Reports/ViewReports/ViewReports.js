@@ -9,6 +9,7 @@ import FeesReport from '../FeesReport/FeesReport';
 import LoanOfficerReport from '../LoanOfficerReport/LoanOfficerReport';
 import DailyReport from '../DailyReport/DailyReport';
 import AgingReport from '../AgingReport/AgingReport';
+import PortfolioAtRiskReport from '../PortfolioAtRiskReport/PortfolioAtRiskReport'
 
 const ViewReports = () => {
 
@@ -48,6 +49,7 @@ const ViewReports = () => {
                             'loanoffrreport': <LoanOfficerReport />,
                             'dailyrpt': <DailyReport />,
                             'agingrpt': <AgingReport />,
+                            'parreport': <PortfolioAtRiskReport />,
                         }[tab]}
                     </div>
                 </>
