@@ -127,50 +127,50 @@ export const SidebarData = [
                 title: 'View Reports',
                 path: '/app/reports/viewreports',                
             },
-            {
-                title: 'Clients Report',
-                path: '/app/reports/clientsreport',                
-            },
-            {
-                title: 'Loans Report',
-                path: '/app/reports/loansreport',                
-            },
-            {
-                title: 'Monthly Report',
-                path: '/app/reports/monthlyreport',                
-            },
-            {
-                title: 'Top Borrowers',
-                path: '/app/reports/topborrowers',                
-            },
-            {
-                title: 'Disbursement Report',
-                path: '/app/reports/disbursementreport',                
-            },
-            {
-                title: 'Loan Product Report',
-                path: '/app/reports/loanproductreport',                
-            },
-            {
-                title: 'Fees Report',
-                path: '/app/reports/feesreport',                
-            },
-            {
-                title: 'Loan Officer Report',
-                path: '/app/reports/loanofficerreport',                
-            },
-            {
-                title: 'Daily Report',
-                path: '/app/reports/dailyreport',                
-            },
-            {
-                title: 'Aging Report',
-                path: '/app/reports/agingreport',                
-            },
-            {
-                title: 'Portfolio At Risk',
-                path: '/app/reports/portfolioatriskreport',                
-            },
+            // {
+            //     title: 'Clients Report',
+            //     path: '/app/reports/clientsreport',                
+            // },
+            // {
+            //     title: 'Loans Report',
+            //     path: '/app/reports/loansreport',                
+            // },
+            // {
+            //     title: 'Monthly Report',
+            //     path: '/app/reports/monthlyreport',                
+            // },
+            // {
+            //     title: 'Top Borrowers',
+            //     path: '/app/reports/topborrowers',                
+            // },
+            // {
+            //     title: 'Disbursement Report',
+            //     path: '/app/reports/disbursementreport',                
+            // },
+            // {
+            //     title: 'Loan Product Report',
+            //     path: '/app/reports/loanproductreport',                
+            // },
+            // {
+            //     title: 'Fees Report',
+            //     path: '/app/reports/feesreport',                
+            // },
+            // {
+            //     title: 'Loan Officer Report',
+            //     path: '/app/reports/loanofficerreport',                
+            // },
+            // {
+            //     title: 'Daily Report',
+            //     path: '/app/reports/dailyreport',                
+            // },
+            // {
+            //     title: 'Aging Report',
+            //     path: '/app/reports/agingreport',                
+            // },
+            // {
+            //     title: 'Portfolio At Risk',
+            //     path: '/app/reports/portfolioatriskreport',                
+            // },
         ]
     },
     {

@@ -25,15 +25,15 @@ import UploadPaymentsFileSkeleton from './Skeletons/Forms/UploadPaymentsFileSkel
 import AddPaymentsSkeleton from './Skeletons/Forms/AddPaymentsSkeleton';
 import AddAssetFormSkeleton from './Skeletons/Forms/AddAssetFormSkeleton';
 import ClientsReportSkeleton from './Skeletons/Charts/ClientsReportSkeleton';
-import MonthlyReportSkeleton from './Skeletons/Charts/MonthlyReportSkeleton';
-import TopBorrowersSkeleton from './Skeletons/Charts/TopBorrowersSkeleton';
+// import MonthlyReportSkeleton from './Skeletons/Charts/MonthlyReportSkeleton';
+// import TopBorrowersSkeleton from './Skeletons/Charts/TopBorrowersSkeleton';
 import DisbursementReportSkeleton from './Skeletons/Charts/DisbursementReportSkeleton';
-import LoanProductReportSkeleton from './Skeletons/Charts/LoanProductReportSkeleton';
-import FeesReportSkeleton from './Skeletons/Charts/FeesReportSkeleton';
-import LoanOfficerReportSkeleton from './Skeletons/Charts/LoanOfficerReportSkeleton';
-import DailyReportSkeleton from './Skeletons/Charts/DailyReportSkeleton';
-import PortfolioAtRiskSkeleton from './Skeletons/Charts/PortfolioAtRiskSkeleton';
-import AgingReportSkeleton from './Skeletons/Charts/AgingReportSkeleton';
+// import LoanProductReportSkeleton from './Skeletons/Charts/LoanProductReportSkeleton';
+// import FeesReportSkeleton from './Skeletons/Charts/FeesReportSkeleton';
+// import LoanOfficerReportSkeleton from './Skeletons/Charts/LoanOfficerReportSkeleton';
+// import DailyReportSkeleton from './Skeletons/Charts/DailyReportSkeleton';
+// import PortfolioAtRiskSkeleton from './Skeletons/Charts/PortfolioAtRiskSkeleton';
+// import AgingReportSkeleton from './Skeletons/Charts/AgingReportSkeleton';
 import CashflowSkeleton from './Skeletons/Charts/CashflowSkeleton';
 // import TrialBalanceSkeleton from './Skeletons/Charts/TrialBalanceSkeleton';
 // import BalanceSheetSkeleton from './Skeletons/Charts/BalanceSheetSkeleton';
@@ -114,18 +114,18 @@ const ViewExpenses = lazy(() => import('./Expenses/ViewExpenses'));
 const ExpenseDetails = lazy(() => import('./Expenses/ExpenseDetails'));
 const AddExpense = lazy(() => import('./Expenses/AddExpense'));
 // Repots 
-const ClientsReport = lazy(() => import('./Reports/ClientsReport/ClientsReport'));
+// const ClientsReport = lazy(() => import('./Reports/ClientsReport/ClientsReport'));
 const ViewReports = lazy(() => import('./Reports/ViewReports/ViewReports'));
-const LoansReport = lazy(() => import('./Reports/LoansReport/LoansReport'));
-const MonthlyReport = lazy(() => import('./Reports/MonthlyReport/MonthlyReport'));
-const TopBorrowers = lazy(() => import('./Reports/TopBorrowers/TopBorrowers'));
-const DisbursementReport = lazy(() => import('./Reports/DisbursementReport/DisbursementReport'));
-const LoanProductReport = lazy(() => import('./Reports/LoanProductReport/LoanProductReport'));
-const FeesReport = lazy(() => import('./Reports/FeesReport/FeesReport'));
-const LoanOfficerReport = lazy(() => import('./Reports/LoanOfficerReport/LoanOfficerReport'));
-const DailyReport = lazy(() => import('./Reports/DailyReport/DailyReport'));
-const AgingReport = lazy(() => import('./Reports/AgingReport/AgingReport'));
-const PortfolioAtRiskReport = lazy(() => import('./Reports/PortfolioAtRiskReport/PortfolioAtRiskReport'));
+// const LoansReport = lazy(() => import('./Reports/LoansReport/LoansReport'));
+// const MonthlyReport = lazy(() => import('./Reports/MonthlyReport/MonthlyReport'));
+// const TopBorrowers = lazy(() => import('./Reports/TopBorrowers/TopBorrowers'));
+// const DisbursementReport = lazy(() => import('./Reports/DisbursementReport/DisbursementReport'));
+// const LoanProductReport = lazy(() => import('./Reports/LoanProductReport/LoanProductReport'));
+// const FeesReport = lazy(() => import('./Reports/FeesReport/FeesReport'));
+// const LoanOfficerReport = lazy(() => import('./Reports/LoanOfficerReport/LoanOfficerReport'));
+// const DailyReport = lazy(() => import('./Reports/DailyReport/DailyReport'));
+// const AgingReport = lazy(() => import('./Reports/AgingReport/AgingReport'));
+// const PortfolioAtRiskReport = lazy(() => import('./Reports/PortfolioAtRiskReport/PortfolioAtRiskReport'));
 // Accounting 
 const ViewAccounting = lazy(() => import('./Accounting/ViewAccounting/ViewAccounting'));
 // const Cashflow = lazy(() => import('./Accounting/Cashflow/Cashflow'));
@@ -478,7 +478,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
-                    <Route exact path='/app/reports/clientsreport' element={<ClientsReport/>}/>
+                    {/* <Route exact path='/app/reports/clientsreport' element={<ClientsReport/>}/> */}
                     <Route exact path='/app/reports/viewreports' element={<ViewReports/>}/>
                     {/* <Route exact path='/app/reports/loansreport' element={<LoansReport/>}/> */}
                     </Route>
@@ -488,7 +488,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<MonthlyReportSkeleton />}>
+            {/* <Suspense fallback={<MonthlyReportSkeleton />}>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -500,9 +500,9 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 </Routes>
 
             </LoggedInUserProvider>
-            </Suspense>
+            </Suspense> */}
 
-            <Suspense fallback={<TopBorrowersSkeleton />}>
+            {/* <Suspense fallback={<TopBorrowersSkeleton />}>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -514,7 +514,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 </Routes>
 
             </LoggedInUserProvider>
-            </Suspense>
+            </Suspense> */}
 
             <Suspense fallback={<DisbursementReportSkeleton />}>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
@@ -522,7 +522,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
-                    <Route exact path='/app/reports/disbursementreport' element={<DisbursementReport/>}/>
+                    {/* <Route exact path='/app/reports/disbursementreport' element={<DisbursementReport/>}/> */}
                     <Route exact path='/app/expenses/viewexpenses' element={<ViewExpenses/>}/>
                     </Route>
                 </Route>
@@ -531,7 +531,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<LoanProductReportSkeleton />}>
+            {/* <Suspense fallback={<LoanProductReportSkeleton />}>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -585,9 +585,9 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 </Routes>
 
             </LoggedInUserProvider>
-            </Suspense>
+            </Suspense> */}
 
-            <Suspense fallback={<PortfolioAtRiskSkeleton />}>
+            {/* <Suspense fallback={<PortfolioAtRiskSkeleton />}>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -599,9 +599,9 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 </Routes>
 
             </LoggedInUserProvider>
-            </Suspense>
+            </Suspense> */}
 
-            <Suspense fallback={<AgingReportSkeleton />}>
+            {/* <Suspense fallback={<AgingReportSkeleton />}>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -613,7 +613,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 </Routes>
 
             </LoggedInUserProvider>
-            </Suspense>
+            </Suspense> */}
 
             <Suspense fallback={<CashflowSkeleton />}>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
