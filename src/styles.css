@@ -2396,7 +2396,11 @@ small {
 }
 
 .book-value-select-section .fields-container-select.select_container_width {
-  width: 49%;
+  width: 10%;
+}
+
+.book-value-select-section .fields-container-select.select_container_width.branch {
+  width: 88%;
 }
 
 .book-value-select-section .fields-container-select .custom-select-form.select_width {
@@ -2449,7 +2453,7 @@ small {
   padding: 20px;
   width: 100%;
   margin-top: 20px; 
-  height: 250px;
+  height: 320px;
 }
 
 .chart-scroller {

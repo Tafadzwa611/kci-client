@@ -1,4 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import { async } from 'regenerator-runtime';
+import { makeRequest } from '../../utils/utils';
+import LoansReleased from './LoansReleased/LoansReleased';
 
 export default function Dashboard() {
 
@@ -10,9 +13,59 @@ export default function Dashboard() {
   const showDiv3 = () => setDiv3(!div3)
   const [div4, setDiv4] = useState(false);
   const showDiv4 = () => setDiv4(!div4)
+
+  const [branches, setBranches] = useState(null);
+  const [currencies, setCurrencies] = useState(null);
+
+    useEffect(() => {
+        getBranchCurrencyData();
+    }, []);
+
+    const getBranchCurrencyData = async () => {
+        await fetchBranches();
+        await fetchCurrencies();
+    }
+
+    async function fetchBranches() {
+        try {
+            const response = await makeRequest.get('/usersapi/get-branches/', {timeout: 8000});
+            if (response.ok) {
+                const data = await response.json();
+                return setBranches([...data.results.map(result => ({...result, label: result.name, value:result.id}))]);
+            }else {
+                const error = await response.json();
+                console.log(error);
+            }
+        }catch(error) {
+            console.log(error);
+        }
+    }
+
+    async function fetchCurrencies() {
+        try {
+            const response = await makeRequest.get('/usersapi/list_currencies/', {timeout: 8000});
+            if (response.ok) {
+                const data = await response.json();
+                return setCurrencies([...data.map(result => ({...result, label: result.shortname, value:result.id}))]);
+            }else {
+                const error = await response.json();
+                console.log(error);
+            }
+        }catch(error) {
+            console.log(error);
+        }
+    }
+
+    if (branches === null || currencies === null) {
+        return (
+            <div>
+                Loading...
+            </div>
+        )
+    }
   
   return (
-    <div className="font-13 slide">
+    <div className="font-13">
       <div style={{padding:"24px", paddingBottom:"0"}}>
           <h3>Dashboard</h3>
       </div>
@@ -122,6 +175,7 @@ export default function Dashboard() {
           </div>
       </div>
 
+
       <div className="card">
           <div className="card-body">
 
@@ -227,7 +281,9 @@ export default function Dashboard() {
           </div>
       </div>
 
-      <div className="card">
+        <LoansReleased branches={branches} currencies={currencies}/>
+
+      {/* <div className="card">
           <div className="card-body">
 
               <div className="book-value-section">
@@ -284,7 +340,7 @@ export default function Dashboard() {
               </div>
 
           </div>
-      </div>
+      </div> */}
 
       <div className="card">
           <div className="card-body">
