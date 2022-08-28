@@ -106,7 +106,7 @@ function LoansReleased({branches, currencies}) {
 
                   <div className="book-value-select-section">
                       <div className="fields-container-select select_container_width">
-                          <select value={currencyId} onChange={changeCurrency} className="custom-select-form select_width">
+                          <select value={currencyId} onChange={changeCurrency} className="custom-select-form select_width" style={{padding:"0.5125rem 0.9rem"}}>
                             {currencies.map(currency => {
                                 return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
                             })}

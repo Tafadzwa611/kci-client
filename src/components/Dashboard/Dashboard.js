@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { makeRequest } from '../../utils/utils';
 import LoansReleased from './LoansReleased/LoansReleased';
 import LoanCollections from './LoanCollections/LoanCollections';
+import AllLoans from './AllLoans/AllLoans';
 
 export default function Dashboard() {
 
@@ -294,91 +295,7 @@ export default function Dashboard() {
 
               <div className="book-value-section">
 
-                  <div className="loans_clients_summary_container">
-
-                      <div className="loans_clients_summary_container-header" onClick={showDiv1}>
-                          <div>
-                              <h1 className="dashboard-section-title">All Loans</h1>
-                              <span className="dashboard-section-amount-or-number">2789</span>
-                          </div>
-
-                          <i className={div1 ? 'uil uil-angle-down arrow_rotate loans_clients_summary-arrow' : 'uil uil-angle-down loans_clients_summary-arrow'}></i>
-                      </div>
-
-                      <div className={div1 ? 'loan_client_item_list grid showDiv' : 'loan_client_item_list grid'}>
-
-                          <div className="loans__clients__data">
-                              <div className="loan_client_summary__titles">
-                                  <h3 className="loan_client_item_name">Open Loans</h3>
-                                  <span className="loan_client_item_number">356 ( 90% )</span>
-                              </div>
-                              <div className="loan_client_item__bar">
-                                  <span className="loan_client_item__percentage" style={{width:"90%"}}></span>
-                              </div>
-                          </div>
-
-                          <div className="loans__clients__data">
-                              <div className="loan_client_summary__titles">
-                                  <h3 className="loan_client_item_name">Loans In Arrears</h3>
-                                  <span className="loan_client_item_number">789 ( 80% )</span>
-                              </div>
-                              <div className="loan_client_item__bar">
-                                  <span className="loan_client_item__percentage in_arrears" style={{width:"80%"}}></span>
-                              </div>
-                          </div>
-
-                          <div className="loans__clients__data">
-                              <div className="loan_client_summary__titles">
-                                  <h3 className="loan_client_item_name">Fully Paid Loans</h3>
-                                  <span className="loan_client_item_number">657 ( 60% )</span>
-                              </div>
-                              <div className="loan_client_item__bar">
-                                  <span className="loan_client_item__percentage fully_paid" style={{width:"60%"}}></span>
-                              </div>
-                          </div>
-
-                          <div className="loans__clients__data">
-                              <div className="loan_client_summary__titles">
-                                  <h3 className="loan_client_item_name">Over Paid Loans</h3>
-                                  <span className="loan_client_item_number">878 ( 85% )</span>
-                              </div>
-                              <div className="loan_client_item__bar">
-                                  <span className="loan_client_item__percentage over_paid_loans" style={{width:"85%"}}></span>
-                              </div>
-                          </div>
-
-                          <div className="loans__clients__data">
-                              <div className="loan_client_summary__titles">
-                                  <h3 className="loan_client_item_name">Defaulted Loans</h3>
-                                  <span className="loan_client_item_number">678 ( 45% )</span>
-                              </div>
-                              <div className="loan_client_item__bar">
-                                  <span className="loan_client_item__percentage defaulted_loans" style={{width:"45%"}}></span>
-                              </div>
-                          </div>
-
-                          <div className="loans__clients__data">
-                              <div className="loan_client_summary__titles">
-                                  <h3 className="loan_client_item_name">Written Off Loans</h3>
-                                  <span className="loan_client_item_number">356 ( 10% )</span>
-                              </div>
-                              <div className="loan_client_item__bar">
-                                  <span className="loan_client_item__percentage written_off_loans" style={{width:"10%"}}></span>
-                              </div>
-                          </div>
-
-                          <div className="loans__clients__data">
-                              <div className="loan_client_summary__titles">
-                                  <h3 className="loan_client_item_name">Processing Loans</h3>
-                                  <span className="loan_client_item_number">109 ( 5% )</span>
-                              </div>
-                              <div className="loan_client_item__bar">
-                                  <span className="loan_client_item__percentage processing_loans" style={{width:"5%"}}></span>
-                              </div>
-                          </div>
-
-                      </div>
-                  </div>
+                <AllLoans branches={branches} currencies={currencies} div1={div1} showDiv1={showDiv1} />
 
                   <div className="loans_clients_summary_container" style={{marginTop:"20px"}}>
 
