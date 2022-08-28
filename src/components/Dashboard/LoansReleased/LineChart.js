@@ -43,14 +43,11 @@ function LineChart({ data, wrapperWidth }) {
   };
 
   return (
-    // <div className='chartWrapper'>
-      <div style={{maxWidth:"100%", overflowX:"auto"}}>
-        {/* <div className='chartAreaWrapper2' style={{width: `${wrapperWidth}px`, height: '480px'}}>  */}
-        <div style={{width: '100vw', height: '280px'}}>
-          <Line options={options} data={data}/>
-        </div>
-      </div> 
-    // </div>
+    <div style={{maxWidth:"100%", overflowX:"auto"}}>
+      <div style={{width: '100vw', height: '280px'}}>
+        <Line options={options} data={data}/>
+      </div>
+    </div> 
   )
 }
 

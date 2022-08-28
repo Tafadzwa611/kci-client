@@ -1,21 +1,25 @@
 import React, {useState, useEffect} from 'react';
-import { async } from 'regenerator-runtime';
 import { makeRequest } from '../../utils/utils';
 import LoansReleased from './LoansReleased/LoansReleased';
+import LoanCollections from './LoanCollections/LoanCollections';
 
 export default function Dashboard() {
 
-  const [div1, setDiv1] = useState(false);
-  const showDiv1 = () => setDiv1(!div1)
-  const [div2, setDiv2] = useState(false);
-  const showDiv2 = () => setDiv2(!div2)
-  const [div3, setDiv3] = useState(false);
-  const showDiv3 = () => setDiv3(!div3)
-  const [div4, setDiv4] = useState(false);
-  const showDiv4 = () => setDiv4(!div4)
+    const [div1, setDiv1] = useState(false);
+    const showDiv1 = () => setDiv1(!div1)
+    const [div2, setDiv2] = useState(false);
+    const showDiv2 = () => setDiv2(!div2)
+    const [div3, setDiv3] = useState(false);
+    const showDiv3 = () => setDiv3(!div3)
+    const [div4, setDiv4] = useState(false);
+    const showDiv4 = () => setDiv4(!div4)
 
-  const [branches, setBranches] = useState(null);
-  const [currencies, setCurrencies] = useState(null);
+    const [branches, setBranches] = useState(null);
+    const [currencies, setCurrencies] = useState(null);
+
+    useEffect(() => {
+        document.title = 'Dashboard';
+    })
 
     useEffect(() => {
         getBranchCurrencyData();
@@ -283,64 +287,7 @@ export default function Dashboard() {
 
         <LoansReleased branches={branches} currencies={currencies}/>
 
-      {/* <div className="card">
-          <div className="card-body">
-
-              <div className="book-value-section">
-
-                  <div className="book-value-select-section">
-                      <div className="fields-container-select select_container_width">
-                          <select className="custom-select-form select_width" placeholder="Select Currency">
-                              <option style={{display:"none"}}>Select Currency </option>
-                              <option>USD</option>
-                              <option>ZWL</option>
-                          </select>
-                      </div>
-                      <div className="fields-container-select select_container_width">
-                          <select className="custom-select-form select_width" placeholder="Select Branch">
-                              <option style={{display:"none"}}>Select Branch </option>
-                              <option>Main Branch</option>
-                              <option>Marondera</option>
-                          </select>
-                      </div>
-                  </div>
-
-                  <div className="book-value-update-section">
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-title">Loans Released</p>
-                          <p className="dashboard-section-amount-or-number">1290</p>
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Daily Change</p>
-                          <p className="dashboard-section-amount-or-number upward-change"><span>0.8%</span> <i className="uil uil-arrow-growth"></i></p>
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Weekly Change</p>
-                          <p className="dashboard-section-amount-or-number downward-change"><span>0.8%</span> <i className="uil uil-chart-down"></i></p>
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Monthly Change</p>
-                          <p className="dashboard-section-amount-or-number no-change"><span>0.0%</span> <i className="uil uil-arrows-h-alt"></i></p>
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Yearly Change</p>
-                          <p className="dashboard-section-amount-or-number downward-change"><span>0.8%</span> <i className="uil uil-chart-down"></i></p>
-                      </div>
-                  </div>
-
-                  <div className="chart-section">
-                      <div className="chart-container">
-                          chart
-                      </div>
-                      <div className="chart-scroller bottom">
-                          <i className="uil uil-arrow-circle-left"></i>
-                      </div>
-                  </div>
-
-              </div>
-
-          </div>
-      </div> */}
+        <LoanCollections branches={branches} currencies={currencies}/>
 
       <div className="card">
           <div className="card-body">
@@ -484,7 +431,7 @@ export default function Dashboard() {
           </div>
       </div>
 
-      <div className="card">
+      {/* <div className="card">
           <div className="card-body">
 
               <div className="book-value-section">
@@ -521,7 +468,7 @@ export default function Dashboard() {
               </div>
 
           </div>
-      </div>
+      </div> */}
 
       <div className="card">
           <div className="card-body">
