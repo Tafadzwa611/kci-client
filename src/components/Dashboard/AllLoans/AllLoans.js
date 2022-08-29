@@ -62,7 +62,7 @@ const AllLoans = ({div1, showDiv1, branches, currencies}) => {
             <div className="loans_clients_summary_container-header" onClick={showDiv1}>
                 <div>
                     <h1 className="dashboard-section-title">All Loans</h1>
-                    <span className="dashboard-section-amount-or-number">2789</span>
+                    <span className="dashboard-section-amount-or-number">{allloans['all_loans_count']}</span>
                 </div>
 
                 <i className={div1 ? 'uil uil-angle-down arrow_rotate loans_clients_summary-arrow' : 'uil uil-angle-down loans_clients_summary-arrow'}></i>
@@ -96,70 +96,70 @@ const AllLoans = ({div1, showDiv1, branches, currencies}) => {
                 <div className="loans__clients__data">
                     <div className="loan_client_summary__titles">
                         <h3 className="loan_client_item_name">Open Loans</h3>
-                        <span className="loan_client_item_number">{allloans['arrears_loans_count']} ( 90% )</span>
+                        <span className="loan_client_item_number">{allloans['open_loans_count']} ( {allloans['open_loans_percentage']}% )</span>
                     </div>
                     <div className="loan_client_item__bar">
-                        <span className="loan_client_item__percentage" style={{width:"90%"}}></span>
+                        <span className="loan_client_item__percentage" style={{width: `${allloans['open_loans_percentage']}%`}}></span>
                     </div>
                 </div>
 
                 <div className="loans__clients__data">
                     <div className="loan_client_summary__titles">
                         <h3 className="loan_client_item_name">Loans In Arrears</h3>
-                        <span className="loan_client_item_number">789 ( 80% )</span>
+                        <span className="loan_client_item_number">{allloans['arrears_loans_count']} ( {allloans['arrears_loans_percentage']}% )</span>
                     </div>
                     <div className="loan_client_item__bar">
-                        <span className="loan_client_item__percentage in_arrears" style={{width:"80%"}}></span>
+                        <span className="loan_client_item__percentage in_arrears" style={{width: `${allloans['arrears_loans_percentage']}%`}}></span>
                     </div>
                 </div>
 
                 <div className="loans__clients__data">
                     <div className="loan_client_summary__titles">
                         <h3 className="loan_client_item_name">Fully Paid Loans</h3>
-                        <span className="loan_client_item_number">657 ( 60% )</span>
+                        <span className="loan_client_item_number">{allloans['fully_paid_loans_count']} ( {allloans['fully_paid_loans_percentage']}% )</span>
                     </div>
                     <div className="loan_client_item__bar">
-                        <span className="loan_client_item__percentage fully_paid" style={{width:"60%"}}></span>
+                        <span className="loan_client_item__percentage fully_paid" style={{width: `${allloans['fully_paid_loans_percentage']}%`}}></span>
                     </div>
                 </div>
 
                 <div className="loans__clients__data">
                     <div className="loan_client_summary__titles">
                         <h3 className="loan_client_item_name">Over Paid Loans</h3>
-                        <span className="loan_client_item_number">878 ( 85% )</span>
+                        <span className="loan_client_item_number">{allloans['overpaid_loans_count']} ( {allloans['overpaid_loans_percentage']}% )</span>
                     </div>
                     <div className="loan_client_item__bar">
-                        <span className="loan_client_item__percentage over_paid_loans" style={{width:"85%"}}></span>
+                        <span className="loan_client_item__percentage over_paid_loans" style={{width: `${allloans['overpaid_loans_percentage']}%`}}></span>
                     </div>
                 </div>
 
                 <div className="loans__clients__data">
                     <div className="loan_client_summary__titles">
-                        <h3 className="loan_client_item_name">Defaulted Loans</h3>
-                        <span className="loan_client_item_number">678 ( 45% )</span>
+                        <h3 className="loan_client_item_name">Early Settled Loans</h3>
+                        <span className="loan_client_item_number">{allloans['early_settled_loans_count']} ( {allloans['early_settled_loans_percentage']}% )</span>
                     </div>
                     <div className="loan_client_item__bar">
-                        <span className="loan_client_item__percentage defaulted_loans" style={{width:"45%"}}></span>
+                        <span className="loan_client_item__percentage processing_loans" style={{width: `${allloans['early_settled_loans_percentage']}%`}}></span>
                     </div>
                 </div>
 
                 <div className="loans__clients__data">
                     <div className="loan_client_summary__titles">
                         <h3 className="loan_client_item_name">Written Off Loans</h3>
-                        <span className="loan_client_item_number">356 ( 10% )</span>
+                        <span className="loan_client_item_number">{allloans['written_off_loans_count']} ( {allloans['written_off_loans_percentage']}% )</span>
                     </div>
                     <div className="loan_client_item__bar">
-                        <span className="loan_client_item__percentage written_off_loans" style={{width:"10%"}}></span>
+                        <span className="loan_client_item__percentage fully_paid" style={{width: `${allloans['written_off_loans_percentage']}%`}}></span>
                     </div>
                 </div>
 
                 <div className="loans__clients__data">
                     <div className="loan_client_summary__titles">
                         <h3 className="loan_client_item_name">Processing Loans</h3>
-                        <span className="loan_client_item_number">109 ( 5% )</span>
+                        <span className="loan_client_item_number">{allloans['processing_loans_count']} ( {allloans['processing_loans_percentage']}% )</span>
                     </div>
                     <div className="loan_client_item__bar">
-                        <span className="loan_client_item__percentage processing_loans" style={{width:"5%"}}></span>
+                        <span className="loan_client_item__percentage processing_loans" style={{width: `${allloans['processing_loans_percentage']}%`}}></span>
                     </div>
                 </div>
 
