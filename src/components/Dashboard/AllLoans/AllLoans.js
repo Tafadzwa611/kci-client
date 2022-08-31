@@ -155,6 +155,16 @@ const AllLoans = ({div1, showDiv1, branches, currencies}) => {
 
                 <div className="loans__clients__data">
                     <div className="loan_client_summary__titles">
+                        <h3 className="loan_client_item_name">Restructured Loans</h3>
+                        <span className="loan_client_item_number">{allloans['restructured_loans_count']} ( {allloans['restructured_loans_percentage']}% )</span>
+                    </div>
+                    <div className="loan_client_item__bar">
+                        <span className="loan_client_item__percentage restructured_loans" style={{width: `${allloans['restructured_loans_percentage']}%`}}></span>
+                    </div>
+                </div>
+
+                <div className="loans__clients__data">
+                    <div className="loan_client_summary__titles">
                         <h3 className="loan_client_item_name">Processing Loans</h3>
                         <span className="loan_client_item_number">{allloans['processing_loans_count']} ( {allloans['processing_loans_percentage']}% )</span>
                     </div>
