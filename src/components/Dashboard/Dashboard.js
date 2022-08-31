@@ -4,6 +4,7 @@ import LoansReleased from './LoansReleased/LoansReleased';
 import LoanCollections from './LoanCollections/LoanCollections';
 import AllLoans from './AllLoans/AllLoans';
 import AllClients from './AllClients/AllClients';
+import Status from './Status/Status';
 
 export default function Dashboard() {
 
@@ -291,97 +292,20 @@ export default function Dashboard() {
 
         <LoanCollections branches={branches} currencies={currencies}/>
 
-      <div className="card">
-          <div className="card-body">
+        <div className="card">
+            <div className="card-body">
 
-              <div className="book-value-section">
+                <div className="book-value-section">
 
-                <AllLoans branches={branches} currencies={currencies} div1={div1} showDiv1={showDiv1} />
-                <AllClients branches={branches} div2={div2} showDiv2={showDiv2} />
+                    <AllLoans branches={branches} currencies={currencies} div1={div1} showDiv1={showDiv1} />
+                    <AllClients branches={branches} div2={div2} showDiv2={showDiv2} />
 
-              </div>
+                </div>
 
-          </div>
-      </div>
+            </div>
+        </div>
 
-      {/* <div className="card">
-          <div className="card-body">
-
-              <div className="book-value-section">
-
-                  <div className="book-value-select-section">
-                      <div className="fields-container-select select_container_width">
-                          <select className="custom-select-form select_width" placeholder="Select Currency">
-                              <option style={{display:"none"}}>Select Currency </option>
-                              <option>USD</option>
-                              <option>ZWL</option>
-                          </select>
-                      </div>
-                      <div className="fields-container-select select_container_width">
-                          <select className="custom-select-form select_width" placeholder="Select Branch">
-                              <option style={{display:"none"}}>Select Branch </option>
-                              <option>Main Branch</option>
-                              <option>Marondera</option>
-                          </select>
-                      </div>
-                  </div>
-
-                  <div className="chart-section">
-                      <div className="chart-scroller header">
-                          <h1 className="dashboard-section-title">Loan Released vs Loan Collections - Monthly</h1>
-                      </div>
-                      <div className="chart-container" style={{marginTop:"0"}}>
-                          chart
-                      </div>
-                      <div className="chart-scroller bottom">
-                          <i className="uil uil-arrow-circle-left"></i>
-                      </div>
-                  </div>
-
-              </div>
-
-          </div>
-      </div> */}
-
-      <div className="card">
-          <div className="card-body">
-
-              <div className="book-value-section">
-
-                  <div className="book-value-select-section">
-                      <div className="fields-container-select select_container_width">
-                          <select className="custom-select-form select_width" placeholder="Select Currency">
-                              <option style={{display:"none"}}>Select Currency </option>
-                              <option>USD</option>
-                              <option>ZWL</option>
-                          </select>
-                      </div>
-                      <div className="fields-container-select select_container_width">
-                          <select className="custom-select-form select_width" placeholder="Select Branch">
-                              <option style={{display:"none"}}>Select Branch </option>
-                              <option>Main Branch</option>
-                              <option>Marondera</option>
-                          </select>
-                      </div>
-                  </div>
-
-                  <div className="chart-section">
-                      <div className="chart-scroller header">
-                          <h1 className="dashboard-section-title">No. of Open vs Restructured vs Fully Paid vs Over Paid vs Early Settlement vs Defaulted Loans</h1>
-                      </div>
-                      <div className="chart-container" style={{marginTop:"0"}}>
-                          chart
-                      </div>
-                      <div className="chart-scroller bottom">
-                          <i className="uil uil-arrow-circle-left"></i>
-                      </div>
-                  </div>
-
-              </div>
-
-          </div>
-      </div>
-
+        <Status branches={branches} currencies={currencies}/>
   </div>
   )
 }
