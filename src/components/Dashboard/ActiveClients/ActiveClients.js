@@ -110,6 +110,12 @@ const ActiveClients = ({div4, showDiv4, branches, currencies}) => {
                                     <i className="uil uil-chart-down"></i>
                                 </p>
                             }
+                            {allactiveclients['active_daily_change'] == null &&
+                                <p className="dashboard-section-amount-or-number no-change">
+                                    <span>0.00%</span> 
+                                    <i className="uil uil-arrows-h-alt"></i>
+                                </p>
+                            }
                         </div>
                         <div className="book-value-info-box">
                             <p className="dashboard-section-sub-title">Weekly Change</p>
@@ -129,6 +135,12 @@ const ActiveClients = ({div4, showDiv4, branches, currencies}) => {
                                 <p className="dashboard-section-amount-or-number downward-change">
                                     <span>{allactiveclients['active_weekly_change']}%</span> 
                                     <i className="uil uil-chart-down"></i>
+                                </p>
+                            }
+                            {allactiveclients['active_weekly_change'] == null &&
+                                <p className="dashboard-section-amount-or-number no-change">
+                                    <span>0.00%</span> 
+                                    <i className="uil uil-arrows-h-alt"></i>
                                 </p>
                             }
                         </div>
@@ -152,6 +164,12 @@ const ActiveClients = ({div4, showDiv4, branches, currencies}) => {
                                     <i className="uil uil-chart-down"></i>
                                 </p>
                             }
+                            {allactiveclients['active_monthly_change'] == null &&
+                                <p className="dashboard-section-amount-or-number no-change">
+                                    <span>0.00%</span> 
+                                    <i className="uil uil-arrows-h-alt"></i>
+                                </p>
+                            }
                         </div>
                         <div className="book-value-info-box">
                             <p className="dashboard-section-sub-title">Yearly Change</p>
@@ -171,6 +189,12 @@ const ActiveClients = ({div4, showDiv4, branches, currencies}) => {
                                 <p className="dashboard-section-amount-or-number downward-change">
                                     <span>{allactiveclients['active_yearly_change']}%</span> 
                                     <i className="uil uil-chart-down"></i>
+                                </p>
+                            }
+                            {allactiveclients['active_yearly_change'] == null &&
+                                <p className="dashboard-section-amount-or-number no-change">
+                                    <span>0.00%</span> 
+                                    <i className="uil uil-arrows-h-alt"></i>
                                 </p>
                             }
                         </div>
