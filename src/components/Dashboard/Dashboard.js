@@ -183,8 +183,7 @@ export default function Dashboard() {
           </div>
       </div>
 
-
-        <ActiveClients branches={branches} currencies={currencies} div4={div4} showDiv4={showDiv4} />
+        <ActiveClients branches={branches} currencies={currencies} div4={div4} showDiv4={showDiv4} /> 
 
         <LoansReleased branches={branches} currencies={currencies}/>
 
