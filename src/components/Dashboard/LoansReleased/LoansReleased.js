@@ -132,7 +132,7 @@ function LoansReleased({branches, currencies}) {
                   <div className="book-value-update-section">
                       <div className="book-value-info-box">
                           <p className="dashboard-section-title">Loans Released</p>
-                          <p className="dashboard-section-amount-or-number">{allloansreleased['loans_released_total_sum_amount']}</p>
+                          <p className="dashboard-section-amount-or-number">{currency} {allloansreleased['loans_released_total_sum_amount']}</p>
                       </div>
                       <div className="book-value-info-box">
                           <p className="dashboard-section-sub-title">Daily Change</p>

@@ -8,13 +8,14 @@ function LoanCollections({branches, currencies}) {
     const [dataSets, setDataSets] = useState(null);
     const [showDisbursements, setShowDisbursements] = useState(false);
     const [selectedBranchesIds, setSelectedBranchesIds] = useState([]);
-    // const [wrapperWidth, setWrapperWidth] = useState(1517);
     const zwlId = currencies.filter(currency => currency.shortname === 'ZWL')[0].id;
     const [currencyId, setCurrencyId] = useState(zwlId);
     const pageNum = useRef(1);
     const isFirstRun = useRef(true);
     const months = {0: 'Jan', 1: 'Feb', 2: 'Mar', 3: 'Apr', 4: 'May', 5: 'Jun', 6: 'Jul', 7: 'Aug', 8: 'Sep', 9: 'Oct', 10: 'Nov', 11: 'Dec'};
     const [optionSelected, setOptionSelected] = useState([]);
+    const [allloanscollections, setAllLoansCollections]= useState([])
+    const [currency, setCurrency] = useState('ZWL');
 
     const handleMultiSelect = selected => {
         setOptionSelected(selected);
@@ -37,6 +38,8 @@ function LoanCollections({branches, currencies}) {
     const getDataCollections = async () => {
         if (!isFirstRun.current) {
             pageNum.current = 1;
+            const newCurrency = currencies.filter(currency => currency.id == currencyId)[0].shortname;
+            setCurrency(newCurrency);
             const report = await getData();
             updateUi(report);
         }
@@ -56,6 +59,7 @@ function LoanCollections({branches, currencies}) {
             const report = (data.length === 1) ? {...data[0]} : {...data[0], ...data[1]};
             pageNum.current = report.next_page_num;
             isFirstRun.current = false;
+            setAllLoansCollections(report)
             return report
         }catch(error) {
             console.log(error);
@@ -166,23 +170,91 @@ function LoanCollections({branches, currencies}) {
                         <div className="book-value-update-section">
                             <div className="book-value-info-box">
                                 <p className="dashboard-section-title">Loan Collections</p>
-                                <p className="dashboard-section-amount-or-number">1290</p>
+                                <p className="dashboard-section-amount-or-number">{currency} {allloanscollections['loans_collections_total_sum_amount']}</p>
                             </div>
                             <div className="book-value-info-box">
                                 <p className="dashboard-section-sub-title">Daily Change</p>
-                                <p className="dashboard-section-amount-or-number upward-change"><span>0.8%</span> <i className="uil uil-arrow-growth"></i></p>
+                                {allloanscollections['loans_collections_yesterday_change'] > 0 &&
+                                    <p className="dashboard-section-amount-or-number upward-change">
+                                        <span>{allloanscollections['loans_collections_yesterday_change']}%</span> 
+                                        <i className="uil uil-arrow-growth"></i>
+                                    </p>
+                                }
+                                {allloanscollections['loans_collections_yesterday_change'] == 0 &&
+                                    <p className="dashboard-section-amount-or-number no-change">
+                                        <span>{allloanscollections['loans_collections_yesterday_change']}%</span> 
+                                        <i className="uil uil-arrows-h-alt"></i>
+                                    </p>
+                                }
+                                {allloanscollections['loans_collections_yesterday_change'] < 0 &&
+                                    <p className="dashboard-section-amount-or-number downward-change">
+                                        <span>{allloanscollections['loans_collections_yesterday_change']}%</span> 
+                                        <i className="uil uil-chart-down"></i>
+                                    </p>
+                                }
                             </div>
                             <div className="book-value-info-box">
                                 <p className="dashboard-section-sub-title">Weekly Change</p>
-                                <p className="dashboard-section-amount-or-number downward-change"><span>0.8%</span> <i className="uil uil-chart-down"></i></p>
+                                {allloanscollections['loans_collections_last_week_change'] > 0 &&
+                                    <p className="dashboard-section-amount-or-number upward-change">
+                                        <span>{allloanscollections['loans_collections_last_week_change']}%</span> 
+                                        <i className="uil uil-arrow-growth"></i>
+                                    </p>
+                                }
+                                {allloanscollections['loans_collections_last_week_change'] == 0 &&
+                                    <p className="dashboard-section-amount-or-number no-change">
+                                        <span>{allloanscollections['loans_collections_last_week_change']}%</span> 
+                                        <i className="uil uil-arrows-h-alt"></i>
+                                    </p>
+                                }
+                                {allloanscollections['loans_collections_last_week_change'] < 0 &&
+                                    <p className="dashboard-section-amount-or-number downward-change">
+                                        <span>{allloanscollections['loans_collections_last_week_change']}%</span> 
+                                        <i className="uil uil-chart-down"></i>
+                                    </p>
+                                }
                             </div>
                             <div className="book-value-info-box">
                                 <p className="dashboard-section-sub-title">Monthly Change</p>
-                                <p className="dashboard-section-amount-or-number no-change"><span>0.0%</span> <i className="uil uil-arrows-h-alt"></i></p>
+                                {allloanscollections['loans_collections_last_month_change'] > 0 &&
+                                    <p className="dashboard-section-amount-or-number upward-change">
+                                        <span>{allloanscollections['loans_collections_last_month_change']}%</span> 
+                                        <i className="uil uil-arrow-growth"></i>
+                                    </p>
+                                }
+                                {allloanscollections['loans_collections_last_month_change'] == 0 &&
+                                    <p className="dashboard-section-amount-or-number no-change">
+                                        <span>{allloanscollections['loans_collections_last_month_change']}%</span> 
+                                        <i className="uil uil-arrows-h-alt"></i>
+                                    </p>
+                                }
+                                {allloanscollections['loans_collections_last_month_change'] < 0 &&
+                                    <p className="dashboard-section-amount-or-number downward-change">
+                                        <span>{allloanscollections['loans_collections_last_month_change']}%</span> 
+                                        <i className="uil uil-chart-down"></i>
+                                    </p>
+                                }
                             </div>
                             <div className="book-value-info-box">
                                 <p className="dashboard-section-sub-title">Yearly Change</p>
-                                <p className="dashboard-section-amount-or-number downward-change"><span>0.8%</span> <i className="uil uil-chart-down"></i></p>
+                                {allloanscollections['loans_collections_last_year_change'] > 0 &&
+                                    <p className="dashboard-section-amount-or-number upward-change">
+                                        <span>{allloanscollections['loans_collections_last_year_change']}%</span> 
+                                        <i className="uil uil-arrow-growth"></i>
+                                    </p>
+                                }
+                                {allloanscollections['loans_collections_last_year_change'] == 0 &&
+                                    <p className="dashboard-section-amount-or-number no-change">
+                                        <span>{allloanscollections['loans_collections_last_year_change']}%</span> 
+                                        <i className="uil uil-arrows-h-alt"></i>
+                                    </p>
+                                }
+                                {allloanscollections['loans_collections_last_year_change'] < 0 &&
+                                    <p className="dashboard-section-amount-or-number downward-change">
+                                        <span>{allloanscollections['loans_collections_last_year_change']}%</span> 
+                                        <i className="uil uil-chart-down"></i>
+                                    </p>
+                                }
                             </div>
                         </div>
 
