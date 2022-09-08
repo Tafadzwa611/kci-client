@@ -269,7 +269,7 @@ function LoanBook({div3, showDiv3, branches, currencies}) {
                                 <div className="loans__clients__data">
                                     <div className="loan_client_summary__titles">
                                         <h3 className="loan_client_item_name">Loans In Arrears</h3>
-                                        <span className="loan_client_item_number">{loanbookvalues['arrears_loans_count']} ({loanbookvalues['arrears_loans_percentage']}5 ) / {currency} {loanbookvalues['sum_arrears_loans']}</span>
+                                        <span className="loan_client_item_number">{loanbookvalues['arrears_loans_count']} ({loanbookvalues['arrears_loans_percentage']}% ) / {currency} {loanbookvalues['sum_arrears_loans']}</span>
                                     </div>
                                     <div className="loan_client_item__bar">
                                         <span className="loan_client_item__percentage in_arrears" style={{width: `${loanbookvalues['arrears_loans_percentage']}%`}}></span>
