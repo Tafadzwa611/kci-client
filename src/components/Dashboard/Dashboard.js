@@ -6,6 +6,7 @@ import AllLoans from './AllLoans/AllLoans';
 import AllClients from './AllClients/AllClients';
 import Status from './Status/Status';
 import ActiveClients from './ActiveClients/ActiveClients';
+import LoanBook from './LoanBook/LoanBook';
 
 export default function Dashboard() {
 
@@ -182,6 +183,8 @@ export default function Dashboard() {
 
           </div>
       </div>
+
+        <LoanBook branches={branches} currencies={currencies} div3={div3} showDiv3={showDiv3}/>
 
         <ActiveClients branches={branches} currencies={currencies} div4={div4} showDiv4={showDiv4} /> 
 
