@@ -74,138 +74,34 @@ export default function Dashboard() {
     }
   
   return (
-    <div className="font-13">
-      <div style={{padding:"24px", paddingBottom:"0"}}>
-          <h3>Dashboard</h3>
-      </div>
+        <div className="font-13">
+            
+            <div style={{padding:"24px", paddingBottom:"0"}}>
+                <h3>Dashboard</h3>
+            </div>
 
-      <div className="card">
-          <div className="card-body">
+            <LoanBook branches={branches} currencies={currencies} div3={div3} showDiv3={showDiv3}/>
 
-              <div className="book-value-section">
+            <ActiveClients branches={branches} currencies={currencies} div4={div4} showDiv4={showDiv4} /> 
 
-                  <div className="book-value-select-section">
-                      <div className="fields-container-select select_container_width">
-                          <select className="custom-select-form select_width" placeholder="Select Currency">
-                              <option style={{display:"none"}}>Select Currency </option>
-                              <option>USD</option>
-                              <option>ZWL</option>
-                          </select>
-                      </div>
-                      <div className="fields-container-select select_container_width">
-                          <select className="custom-select-form select_width" placeholder="Select Branch">
-                              <option style={{display:"none"}}>Select Branch </option>
-                              <option>Main Branch</option>
-                              <option>Marondera</option>
-                          </select>
-                      </div>
-                  </div>
+            <LoansReleased branches={branches} currencies={currencies}/>
 
-                  <div className="book-value-update-section">
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-title">Loan Book Value</p>
-                          <p className="dashboard-section-amount-or-number">ZWL 1 909 670.90</p>
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Daily Change</p>
-                          <p className="dashboard-section-amount-or-number upward-change"><span>0.8%</span> <i className="uil uil-arrow-growth"></i></p>
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Weekly Change</p>
-                          <p className="dashboard-section-amount-or-number downward-change"><span>0.8%</span> <i className="uil uil-chart-down"></i></p>
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Monthly Change</p>
-                          <p className="dashboard-section-amount-or-number no-change"><span>0.0%</span> <i className="uil uil-arrows-h-alt"></i></p>
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Yearly Change</p>
-                          <p className="dashboard-section-amount-or-number downward-change"><span>0.8%</span> <i className="uil uil-chart-down"></i></p>
-                      </div>
-                  </div>
+            <LoanCollections branches={branches} currencies={currencies}/>
 
-                  <div className="loans_clients_summary_container" style={{marginTop:"20px"}}>
+            <div className="card">
+                <div className="card-body">
 
-                      <div className="loans_clients_summary_container-header" onClick={showDiv3}>
-                          <div>
-                              <h1 className="dashboard-section-title">Loan Book Value Categories</h1>
-                          </div>
+                    <div className="book-value-section">
 
-                          <i className={div3 ? 'uil uil-angle-down arrow_rotate loans_clients_summary-arrow' : 'uil uil-angle-down loans_clients_summary-arrow'}></i>
-                      </div>
+                        <AllLoans branches={branches} currencies={currencies} div1={div1} showDiv1={showDiv1} />
+                        <AllClients branches={branches} div2={div2} showDiv2={showDiv2} />
 
-                      <div className={div3 ? 'loan_client_item_list grid showDiv' : 'loan_client_item_list grid'}>
-
-                          <div className="loans__clients__data">
-                              <div className="loan_client_summary__titles">
-                                  <h3 className="loan_client_item_name">Open Loans</h3>
-                                  <span className="loan_client_item_number">ZWL 789 890.04 ( 80% )</span>
-                              </div>
-                              <div className="loan_client_item__bar">
-                                  <span className="loan_client_item__percentage" style={{width:"80%"}}></span>
-                              </div>
-                          </div>
-
-                          <div className="loans__clients__data">
-                              <div className="loan_client_summary__titles">
-                                  <h3 className="loan_client_item_name">Loans In Arrears</h3>
-                                  <span className="loan_client_item_number">ZWL 127 890.89 ( 60% )</span>
-                              </div>
-                              <div className="loan_client_item__bar">
-                                  <span className="loan_client_item__percentage in_arrears" style={{width:"60%"}}></span>
-                              </div>
-                          </div>
-
-                          <div className="loans__clients__data">
-                              <div className="loan_client_summary__titles">
-                                  <h3 className="loan_client_item_name">Defaulted Loans</h3>
-                                  <span className="loan_client_item_number">ZWL 657 989.90 ( 85% )</span>
-                              </div>
-                              <div className="loan_client_item__bar">
-                                  <span className="loan_client_item__percentage defaulted_loans" style={{width:"85%"}}></span>
-                              </div>
-                          </div>
-
-                      </div>
-
-                  </div>
-
-                  <div className="chart-section">
-                      <div className="chart-container">
-                          chart
-                      </div>
-                      <div className="chart-scroller bottom">
-                          <i className="uil uil-arrow-circle-left"></i>
-                      </div>
-                  </div>
-
-              </div>
-
-          </div>
-      </div>
-
-        <LoanBook branches={branches} currencies={currencies} div3={div3} showDiv3={showDiv3}/>
-
-        <ActiveClients branches={branches} currencies={currencies} div4={div4} showDiv4={showDiv4} /> 
-
-        <LoansReleased branches={branches} currencies={currencies}/>
-
-        <LoanCollections branches={branches} currencies={currencies}/>
-
-        <div className="card">
-            <div className="card-body">
-
-                <div className="book-value-section">
-
-                    <AllLoans branches={branches} currencies={currencies} div1={div1} showDiv1={showDiv1} />
-                    <AllClients branches={branches} div2={div2} showDiv2={showDiv2} />
+                    </div>
 
                 </div>
-
             </div>
-        </div>
 
-        <Status branches={branches} currencies={currencies}/>
-  </div>
-  )
+            <Status branches={branches} currencies={currencies}/>
+        </div>
+    )
 }

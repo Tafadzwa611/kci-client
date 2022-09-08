@@ -100,233 +100,205 @@ function LoanBook({div3, showDiv3, branches, currencies}) {
   };
 
   return (
-    <>
-          <div className="card">
-          <div className="card-body">
+        <>
+            <div className="card">
+                <div className="card-body">
 
-              <div className="book-value-section">
+                    <div className="book-value-section">
 
-                  <div className="book-value-select-section">
-                      <div className="fields-container-select select_container_width">
-                          <select value={currencyId} onChange={changeCurrency} className="custom-select-form select_width" style={{padding:"0.5125rem 0.9rem"}}>
-                            {currencies.map(currency => {
-                                return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
-                            })}
-                          </select>
-                      </div>
-                      <div className="fields-container-select select_container_width branch">
-                          <Select
-                            isMulti
-                            name='branches'
-                            options={branches}
-                            value={optionSelected}
-                            classNamePrefix='select'
-                            className='basic-multi-select'
-                            placeholder='Select Branches'
-                            onChange={selected => handleMultiSelect(selected)}
-                            styles={style}
-                          />
-                      </div>
-                  </div>
-
-                  {/* <div className="book-value-update-section">
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-title">Active Clients</p>
-                          <p className="dashboard-section-amount-or-number">{loanbookvalues['total_active_clients']}</p>
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Daily Change</p>
-                          {loanbookvalues['active_daily_change'] > 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
-                                <span>{loanbookvalues['active_daily_change']}%</span> 
-                                <i className="uil uil-arrow-growth"></i>
-                            </p>
-                          }
-                          {loanbookvalues['active_daily_change'] == 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
-                                <span>{loanbookvalues['active_daily_change']}%</span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                          {loanbookvalues['active_daily_change'] < 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
-                                <span>{loanbookvalues['active_daily_change']}%</span> 
-                                <i className="uil uil-chart-down"></i>
-                            </p>
-                          }
-                          {loanbookvalues['active_daily_change'] == null &&
-                            <p className="dashboard-section-amount-or-number no-change">
-                                <span></span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Weekly Change</p>
-                          {loanbookvalues['active_weekly_change'] > 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
-                                <span>{loanbookvalues['active_weekly_change']}%</span> 
-                                <i className="uil uil-arrow-growth"></i>
-                            </p>
-                          }
-                          {loanbookvalues['active_weekly_change'] == 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
-                                <span>{loanbookvalues['active_weekly_change']}%</span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                          {loanbookvalues['active_weekly_change'] < 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
-                                <span>{loanbookvalues['active_weekly_change']}%</span> 
-                                <i className="uil uil-chart-down"></i>
-                            </p>
-                          }
-                          {loanbookvalues['active_weekly_change'] == null &&
-                            <p className="dashboard-section-amount-or-number no-change">
-                                <span></span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Monthly Change</p>
-                          {loanbookvalues['active_monthly_change'] > 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
-                                <span>{loanbookvalues['active_monthly_change']}%</span> 
-                                <i className="uil uil-arrow-growth"></i>
-                            </p>
-                          }
-                          {loanbookvalues['active_monthly_change'] == 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
-                                <span>{loanbookvalues['active_monthly_change']}%</span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                          {loanbookvalues['active_monthly_change'] < 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
-                                <span>{loanbookvalues['active_monthly_change']}%</span> 
-                                <i className="uil uil-chart-down"></i>
-                            </p>
-                          }
-                          {loanbookvalues['active_monthly_change'] == null &&
-                            <p className="dashboard-section-amount-or-number no-change">
-                                <span></span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Yearly Change</p>
-                          {loanbookvalues['active_yearly_change'] > 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
-                                <span>{loanbookvalues['active_yearly_change']}%</span> 
-                                <i className="uil uil-arrow-growth"></i>
-                            </p>
-                          }
-                          {loanbookvalues['active_yearly_change'] == 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
-                                <span>{loanbookvalues['active_yearly_change']}%</span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                          {loanbookvalues['active_yearly_change'] < 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
-                                <span>{loanbookvalues['active_yearly_change']}%</span> 
-                                <i className="uil uil-chart-down"></i>
-                            </p>
-                          }
-                          {loanbookvalues['active_yearly_change'] == null &&
-                            <p className="dashboard-section-amount-or-number no-change">
-                                <span></span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                      </div>
-                  </div> */}
-
-                  {/* <div className="loans_clients_summary_container" style={{marginTop:"20px"}}>
-
-                    <div className="loans_clients_summary_container-header" onClick={showDiv4}>
-                        <div>
-                            <h1 className="dashboard-section-title">Active Clients Categories</h1>
-                        </div>
-
-                        <i className={div4 ? 'uil uil-angle-down arrow_rotate loans_clients_summary-arrow' : 'uil uil-angle-down loans_clients_summary-arrow'}></i>
-                    </div>
-
-                    <div className={div4 ? 'loan_client_item_list grid showDiv' : 'loan_client_item_list grid'}>
-
-                        <div className="loans__clients__data">
-                            <div className="loan_client_summary__titles">
-                                <h3 className="loan_client_item_name">Active Female Individual Clients</h3>
-                                <span className="loan_client_item_number" style={{display:"flex", columnGap:"5px"}}>
-                                    {loanbookvalues['female_active_clients_count']} ( {loanbookvalues['female_active_clients_percentage']}% ) /
-                                    <div className="tooltip">
-                                        <span className="link">{currency} {loanbookvalues['sum_female_active_clients_loans']}</span>
-                                        <span className="tooltiptext">Total amount disbursed</span>
-                                    </div>
-                                </span>
+                        <div className="book-value-select-section">
+                            <div className="fields-container-select select_container_width">
+                                <select value={currencyId} onChange={changeCurrency} className="custom-select-form select_width" style={{padding:"0.5125rem 0.9rem"}}>
+                                    {currencies.map(currency => {
+                                        return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
+                                    })}
+                                </select>
                             </div>
-                            <div className="loan_client_item__bar">
-                                <span className="loan_client_item__percentage" style={{width: `${loanbookvalues['female_active_clients_percentage']}%`}}></span>
+                            <div className="fields-container-select select_container_width branch">
+                                <Select
+                                    isMulti
+                                    name='branches'
+                                    options={branches}
+                                    value={optionSelected}
+                                    classNamePrefix='select'
+                                    className='basic-multi-select'
+                                    placeholder='Select Branches'
+                                    onChange={selected => handleMultiSelect(selected)}
+                                    styles={style}
+                                />
                             </div>
                         </div>
 
-                        <div className="loans__clients__data">
-                            <div className="loan_client_summary__titles">
-                                <h3 className="loan_client_item_name">Active Male Individual Clients</h3>
-                                <span className="loan_client_item_number" style={{display:"flex", columnGap:"5px"}}>
-                                    {loanbookvalues['male_active_clients_count']} ( {loanbookvalues['male_active_clients_percentage']}% ) / 
-                                    <div className="tooltip">
-                                        <span className="link">{currency} {loanbookvalues['sum_male_active_clients_loans']}</span>
-                                        <span className="tooltiptext">Total amount disbursed</span>
-                                    </div>
-                                </span>
+                        <div className="book-value-update-section">
+                            <div className="book-value-info-box">
+                                <p className="dashboard-section-title">Loan Book Value</p>
+                                <p className="dashboard-section-amount-or-number">{loanbookvalues['loan_book_current_value']}</p>
                             </div>
-                            <div className="loan_client_item__bar">
-                                <span className="loan_client_item__percentage" style={{width: `${loanbookvalues['male_active_clients_percentage']}%`}}></span>
+                            <div className="book-value-info-box">
+                                <p className="dashboard-section-sub-title">Daily Change</p>
+                                {loanbookvalues['daily_change'] > 0 &&
+                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
+                                        <span>{loanbookvalues['daily_change']}%</span> 
+                                        <i className="uil uil-arrow-growth"></i>
+                                    </p>
+                                }
+                                {loanbookvalues['daily_change'] == 0 &&
+                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
+                                        <span>{loanbookvalues['daily_change']}%</span> 
+                                        <i className="uil uil-arrows-h-alt"></i>
+                                    </p>
+                                }
+                                {loanbookvalues['daily_change'] < 0 &&
+                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
+                                        <span>{loanbookvalues['daily_change']}%</span> 
+                                        <i className="uil uil-chart-down"></i>
+                                    </p>
+                                }
+                                {loanbookvalues['daily_change'] == null &&
+                                    <p className="dashboard-section-amount-or-number no-change">
+                                        <span></span> 
+                                        <i className="uil uil-arrows-h-alt"></i>
+                                    </p>
+                                }
+                            </div>
+                            <div className="book-value-info-box">
+                                <p className="dashboard-section-sub-title">Weekly Change</p>
+                                {loanbookvalues['weekly_change'] > 0 &&
+                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
+                                        <span>{loanbookvalues['weekly_change']}%</span> 
+                                        <i className="uil uil-arrow-growth"></i>
+                                    </p>
+                                }
+                                {loanbookvalues['weekly_change'] == 0 &&
+                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
+                                        <span>{loanbookvalues['weekly_change']}%</span> 
+                                        <i className="uil uil-arrows-h-alt"></i>
+                                    </p>
+                                }
+                                {loanbookvalues['weekly_change'] < 0 &&
+                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
+                                        <span>{loanbookvalues['weekly_change']}%</span> 
+                                        <i className="uil uil-chart-down"></i>
+                                    </p>
+                                }
+                                {loanbookvalues['weekly_change'] == null &&
+                                    <p className="dashboard-section-amount-or-number no-change">
+                                        <span></span> 
+                                        <i className="uil uil-arrows-h-alt"></i>
+                                    </p>
+                                }
+                            </div>
+                            <div className="book-value-info-box">
+                                <p className="dashboard-section-sub-title">Monthly Change</p>
+                                {loanbookvalues['monthly_change'] > 0 &&
+                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
+                                        <span>{loanbookvalues['monthly_change']}%</span> 
+                                        <i className="uil uil-arrow-growth"></i>
+                                    </p>
+                                }
+                                {loanbookvalues['monthly_change'] == 0 &&
+                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
+                                        <span>{loanbookvalues['monthly_change']}%</span> 
+                                        <i className="uil uil-arrows-h-alt"></i>
+                                    </p>
+                                }
+                                {loanbookvalues['monthly_change'] < 0 &&
+                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
+                                        <span>{loanbookvalues['monthly_change']}%</span> 
+                                        <i className="uil uil-chart-down"></i>
+                                    </p>
+                                }
+                                {loanbookvalues['monthly_change'] == null &&
+                                    <p className="dashboard-section-amount-or-number no-change">
+                                        <span></span> 
+                                        <i className="uil uil-arrows-h-alt"></i>
+                                    </p>
+                                }
+                            </div>
+                            <div className="book-value-info-box">
+                                <p className="dashboard-section-sub-title">Yearly Change</p>
+                                {loanbookvalues['yearly_change'] > 0 &&
+                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
+                                        <span>{loanbookvalues['yearly_change']}%</span> 
+                                        <i className="uil uil-arrow-growth"></i>
+                                    </p>
+                                }
+                                {loanbookvalues['yearly_change'] == 0 &&
+                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
+                                        <span>{loanbookvalues['yearly_change']}%</span> 
+                                        <i className="uil uil-arrows-h-alt"></i>
+                                    </p>
+                                }
+                                {loanbookvalues['yearly_change'] < 0 &&
+                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
+                                        <span>{loanbookvalues['yearly_change']}%</span> 
+                                        <i className="uil uil-chart-down"></i>
+                                    </p>
+                                }
+                                {loanbookvalues['yearly_change'] == null &&
+                                    <p className="dashboard-section-amount-or-number no-change">
+                                        <span></span> 
+                                        <i className="uil uil-arrows-h-alt"></i>
+                                    </p>
+                                }
                             </div>
                         </div>
 
-                        <div className="loans__clients__data">
-                            <div className="loan_client_summary__titles">
-                                <h3 className="loan_client_item_name">Active Company/Co-operative Clients</h3>
-                                <span className="loan_client_item_number" style={{display:"flex", columnGap:"5px"}}>
-                                    {loanbookvalues['group_active_count']} ( {loanbookvalues['group_active_percentage']}% ) / 
-                                    <div className="tooltip">
-                                        <span className="link">{currency} {loanbookvalues['sum_groups_active_clients_loans']}</span>
-                                        <span className="tooltiptext">Total amount disbursed</span>
-                                    </div>
-                                </span>
+                        <div className="loans_clients_summary_container" style={{marginTop:"20px"}}>
+
+                            <div className="loans_clients_summary_container-header" onClick={showDiv3}>
+                                <div>
+                                    <h1 className="dashboard-section-title">Loan Book Value Categories</h1>
+                                </div>
+
+                                <i className={div3 ? 'uil uil-angle-down arrow_rotate loans_clients_summary-arrow' : 'uil uil-angle-down loans_clients_summary-arrow'}></i>
                             </div>
-                            <div className="loan_client_item__bar">
-                                <span className="loan_client_item__percentage" style={{width: `${loanbookvalues['group_active_percentage']}%`}}></span>
+
+                            <div className={div3 ? 'loan_client_item_list grid showDiv' : 'loan_client_item_list grid'}>
+
+                                <div className="loans__clients__data">
+                                    <div className="loan_client_summary__titles">
+                                        <h3 className="loan_client_item_name">Open Loans</h3>
+                                        <span className="loan_client_item_number">{loanbookvalues['open_loans_count']} ({loanbookvalues['open_loans_percentage']}% ) / {currency} {loanbookvalues['sum_open_loans']}</span>
+                                    </div>
+                                    <div className="loan_client_item__bar">
+                                        <span className="loan_client_item__percentage" style={{width: `${loanbookvalues['open_loans_percentage']}%`}}></span>
+                                    </div>
+                                </div>
+
+                                <div className="loans__clients__data">
+                                    <div className="loan_client_summary__titles">
+                                        <h3 className="loan_client_item_name">Loans In Arrears</h3>
+                                        <span className="loan_client_item_number">{loanbookvalues['arrears_loans_count']} ({loanbookvalues['arrears_loans_percentage']}5 ) / {currency} {loanbookvalues['sum_arrears_loans']}</span>
+                                    </div>
+                                    <div className="loan_client_item__bar">
+                                        <span className="loan_client_item__percentage in_arrears" style={{width: `${loanbookvalues['arrears_loans_percentage']}%`}}></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div className="chart-section">
+                            <div className="chart-container">
+                                <div className='chart'>
+                                {(labels===null || dataSets===null) ?
+                                <div style={{width: '100px', margin: 'auto'}}>loading...</div> :
+                                <LineChart data={{labels: labels, datasets: dataSets}}/>}
+                                </div>
+                            </div>
+                            <div className="chart-scroller bottom">
+                                <i onClick={loadMore} className="uil uil-arrow-circle-left" style={{cursor:"pointer"}}></i>
                             </div>
                         </div>
 
                     </div>
 
-                </div> */}
-
-                  <div className="chart-section">
-                      <div className="chart-container">
-                        <div className='chart'>
-                          {(labels===null || dataSets===null) ?
-                          <div style={{width: '100px', margin: 'auto'}}>loading...</div> :
-                          <LineChart data={{labels: labels, datasets: dataSets}}/>}
-                        </div>
-                      </div>
-                      <div className="chart-scroller bottom">
-                          <i onClick={loadMore} className="uil uil-arrow-circle-left" style={{cursor:"pointer"}}></i>
-                      </div>
-                  </div>
-
-              </div>
-
-          </div>
-      </div>
-    </>
-  )
+                </div>
+            </div>
+        </>
+    )
 }
 
 export default LoanBook;
