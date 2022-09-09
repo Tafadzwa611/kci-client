@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import LineChart from '../LoansReleased/LineChart';
 import { makeRequest } from '../../../utils/utils';
 import Select from 'react-select';
+import Loader from '../../Loader/loader';
 
 function ActiveClients({div4, showDiv4, branches, currencies}) {
   const [labels, setLabels] = useState(null);
@@ -312,7 +313,9 @@ function ActiveClients({div4, showDiv4, branches, currencies}) {
                       <div className="chart-container">
                         <div className='chart'>
                           {(labels===null || dataSets===null) ?
-                          <div style={{width: '100px', margin: 'auto'}}>loading...</div> :
+                          <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"115px"}}>
+                            <Loader/>
+                          </div> :
                           <LineChart data={{labels: labels, datasets: dataSets}}/>}
                         </div>
                       </div>

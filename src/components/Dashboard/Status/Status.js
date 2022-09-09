@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { makeRequest } from '../../../utils/utils';
 import BarChart from './BarChart';
 import Select from 'react-select';
+import Loader from '../../Loader/loader';
 
 const Status = ({branches, currencies}) => {
     const [labels, setLabels] = useState(null);
@@ -149,7 +150,9 @@ const Status = ({branches, currencies}) => {
                         <div className="chart-container" style={{marginTop:"0"}}>
                             <div className='chart'>
                                 {(labels===null || dataSets===null) ?
-                                <div style={{width: '100px', margin: 'auto'}}>Loading...</div> :
+                                <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"115px"}}>
+                                    <Loader/>
+                                </div> :
                                 <BarChart wrapperWidth={wrapperWidth} data={{labels: labels, datasets: dataSets}}/>}
                             </div>
                         </div>

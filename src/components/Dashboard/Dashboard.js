@@ -7,6 +7,7 @@ import AllClients from './AllClients/AllClients';
 import Status from './Status/Status';
 import ActiveClients from './ActiveClients/ActiveClients';
 import LoanBook from './LoanBook/LoanBook';
+import Loader from '../Loader/loader';
 
 export default function Dashboard() {
 
@@ -67,8 +68,8 @@ export default function Dashboard() {
 
     if (branches === null || currencies === null) {
         return (
-            <div>
-                Loading...
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center", minHeight:"100vh"}}>
+                <Loader />
             </div>
         )
     }
