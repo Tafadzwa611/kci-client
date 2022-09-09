@@ -56,7 +56,7 @@ const TransferClient = lazy(() => import('./Clients/TransferClient'));
 // const ViewOnlineApplications = lazy(() => import('./Clients/ViewOnlineApplications'));
 // Loans 
 const AddLoan = lazy(() => import('./Loans/AddLoan'));
-const ViewLoans = lazy(() => import('./Loans/Loans/ViewLoans'));
+const ViewLoans = lazy(() => import('./Loans/ViewLoans/ViewLoans'));
 const ViewDueLoans = lazy(() => import('./Loans/DueLoans/ViewDueLoans'));
 const ViewDefaultsAndArrears = lazy(() => import('./Loans/DefaultedAndArrearsLoans/ViewDefaultsAndArrears'));
 const ViewRefunds = lazy(() => import('./Loans/Refunds/ViewRefunds'));

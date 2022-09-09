@@ -9,8 +9,6 @@ const Login = lazy(() => import('./Login'));
 const ForgotPassword = lazy(() => import('./ForgotPassword'));
 const ResetPassword = lazy(() => import('./ResetPassword'));
 
-import SubMenu from './Sidebar/SubMenu';
-import { SidebarData } from './Sidebar/SidebarData';
 import LogoutContainer from '../LogoutContainer';
 
 // for theme 
@@ -110,14 +108,35 @@ function App() {
                     <i className="uil uil-estate"></i>
                     <span>Dashboard</span>
                   </NavLink>
-                  <ul className="sub-menu blank">
-                    <li><NavLink className="link_name" to="/app/dashboard">Dashboard</NavLink></li>
-                  </ul>
+                  <NavLink to="/app/clients/viewclients" className="link_name dashboard">
+                    <i className="uil uil-user"></i>
+                    <span>View Clients</span>
+                  </NavLink>
+                  <NavLink to="app/loans/viewloans" className="link_name dashboard">
+                    <i className="uil uil-sort"></i>
+                    <span>View Loans</span>
+                  </NavLink>
+                  <NavLink to="app/payments/viewpayments" className="link_name dashboard">
+                    <i className="uil uil-scroll-h"></i>
+                    <span>View Payments</span>
+                  </NavLink>
+                  <NavLink to="app/otherincome/viewotherincome" className="link_name dashboard">
+                    <i className="uil uil-folder-plus"></i>
+                    <span>View Other Income</span>
+                  </NavLink>
+                  <NavLink to="app/expenses/viewexpenses" className="link_name dashboard">
+                    <i className="uil uil-folder-minus"></i>
+                    <span>View Expenses</span>
+                  </NavLink>
+                  <NavLink to="app/reports/viewreports" className="link_name dashboard">
+                    <i className="uil uil-books"></i>
+                    <span>View Reports</span>
+                  </NavLink>
+                  <NavLink to="app/accounting/viewaccounting" className="link_name dashboard">
+                    <i className="uil uil-receipt"></i>
+                    <span>View Accounting</span>
+                  </NavLink>
                 </li>
-
-                {SidebarData.map((item, index) => {
-                  return <SubMenu item={item} key={index} />;
-                })}
 
               </ul>
 

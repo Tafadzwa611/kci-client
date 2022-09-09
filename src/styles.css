@@ -736,9 +736,9 @@ span {
   transition: all 0.4s ease;
 }
 
-.sidebar .nav-links li:hover {
+/* .sidebar .nav-links li:hover {
   background: var(--home-section-color);
-}
+} */
 
 .sidebar .nav-links li .icon-links {
   display: flex;
