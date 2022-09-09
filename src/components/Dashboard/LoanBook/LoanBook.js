@@ -132,7 +132,7 @@ function LoanBook({div3, showDiv3, branches, currencies}) {
                         <div className="book-value-update-section">
                             <div className="book-value-info-box">
                                 <p className="dashboard-section-title">Loan Book Value</p>
-                                <p className="dashboard-section-amount-or-number">{loanbookvalues['loan_book_current_value']}</p>
+                                <p className="dashboard-section-amount-or-number">{currency} {loanbookvalues['loan_book_current_value']}</p>
                             </div>
                             <div className="book-value-info-box">
                                 <p className="dashboard-section-sub-title">Daily Change</p>
