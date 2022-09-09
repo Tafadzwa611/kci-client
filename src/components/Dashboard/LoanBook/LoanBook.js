@@ -259,7 +259,13 @@ function LoanBook({div3, showDiv3, branches, currencies}) {
                                 <div className="loans__clients__data">
                                     <div className="loan_client_summary__titles">
                                         <h3 className="loan_client_item_name">Open Loans</h3>
-                                        <span className="loan_client_item_number">{loanbookvalues['open_loans_count']} ({loanbookvalues['open_loans_percentage']}% ) / {currency} {loanbookvalues['sum_open_loans']}</span>
+                                        <span className="loan_client_item_number" style={{display:"flex", columnGap:"5px"}}>
+                                            {loanbookvalues['open_loans_count']} ({loanbookvalues['open_loans_percentage']}% ) / 
+                                            <div className="tooltip">
+                                                <span className="link">{currency} {loanbookvalues['sum_open_loans']}</span>
+                                                <span className="tooltiptext">Open loans total due excluding penalties and fees</span>
+                                            </div>
+                                        </span>
                                     </div>
                                     <div className="loan_client_item__bar">
                                         <span className="loan_client_item__percentage" style={{width: `${loanbookvalues['open_loans_percentage']}%`}}></span>
@@ -269,7 +275,13 @@ function LoanBook({div3, showDiv3, branches, currencies}) {
                                 <div className="loans__clients__data">
                                     <div className="loan_client_summary__titles">
                                         <h3 className="loan_client_item_name">Loans In Arrears</h3>
-                                        <span className="loan_client_item_number">{loanbookvalues['arrears_loans_count']} ({loanbookvalues['arrears_loans_percentage']}% ) / {currency} {loanbookvalues['sum_arrears_loans']}</span>
+                                        <span className="loan_client_item_number" style={{display:"flex", columnGap:"5px"}}>
+                                            {loanbookvalues['arrears_loans_count']} ({loanbookvalues['arrears_loans_percentage']}% ) / 
+                                            <div className="tooltip">
+                                                <span className="link">{currency} {loanbookvalues['sum_arrears_loans']}</span>
+                                                <span className="tooltiptext">Arrears loans total due excluding penalties and fees</span>
+                                            </div>
+                                        </span>
                                     </div>
                                     <div className="loan_client_item__bar">
                                         <span className="loan_client_item__percentage in_arrears" style={{width: `${loanbookvalues['arrears_loans_percentage']}%`}}></span>

@@ -96,7 +96,13 @@ const AllLoans = ({div1, showDiv1, branches, currencies}) => {
                 <div className="loans__clients__data">
                     <div className="loan_client_summary__titles">
                         <h3 className="loan_client_item_name">Open Loans</h3>
-                        <span className="loan_client_item_number">{allloans['open_loans_count']} ( {allloans['open_loans_percentage']}% )</span>
+                        <span className="loan_client_item_number" style={{display:"flex", columnGap:"5px"}}>
+                            {allloans['open_loans_count']} ( {allloans['open_loans_percentage']}% ) / 
+                            <div className="tooltip">
+                                <span className="link">{currency} {allloans['open_loans_sum']}</span>
+                                <span className="tooltiptext">Open loans total due including penalties and fees</span>
+                            </div>
+                        </span>
                     </div>
                     <div className="loan_client_item__bar">
                         <span className="loan_client_item__percentage" style={{width: `${allloans['open_loans_percentage']}%`}}></span>
@@ -106,7 +112,13 @@ const AllLoans = ({div1, showDiv1, branches, currencies}) => {
                 <div className="loans__clients__data">
                     <div className="loan_client_summary__titles">
                         <h3 className="loan_client_item_name">Loans In Arrears</h3>
-                        <span className="loan_client_item_number">{allloans['arrears_loans_count']} ( {allloans['arrears_loans_percentage']}% )</span>
+                        <span className="loan_client_item_number" style={{display:"flex", columnGap:"5px"}}>
+                            {allloans['arrears_loans_count']} ( {allloans['arrears_loans_percentage']}% ) / 
+                            <div className="tooltip">
+                                <span className="link">{currency} {allloans['arrears_loans_sum']}</span>
+                                <span className="tooltiptext">Arrears loans total due including penalties and fees</span>
+                            </div>
+                        </span>
                     </div>
                     <div className="loan_client_item__bar">
                         <span className="loan_client_item__percentage in_arrears" style={{width: `${allloans['arrears_loans_percentage']}%`}}></span>
@@ -146,7 +158,13 @@ const AllLoans = ({div1, showDiv1, branches, currencies}) => {
                 <div className="loans__clients__data">
                     <div className="loan_client_summary__titles">
                         <h3 className="loan_client_item_name">Written Off Loans</h3>
-                        <span className="loan_client_item_number">{allloans['written_off_loans_count']} ( {allloans['written_off_loans_percentage']}% )</span>
+                        <span className="loan_client_item_number" style={{display:"flex", columnGap:"5px"}}>
+                            {allloans['written_off_loans_count']} ( {allloans['written_off_loans_percentage']}% ) / 
+                            <div className="tooltip">
+                                <span className="link">{currency} {allloans['written_off_loans_sum']}</span>
+                                <span className="tooltiptext">Written off loans including penalties and fees</span>
+                            </div>
+                        </span>
                     </div>
                     <div className="loan_client_item__bar">
                         <span className="loan_client_item__percentage fully_paid" style={{width: `${allloans['written_off_loans_percentage']}%`}}></span>
