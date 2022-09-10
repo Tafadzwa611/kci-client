@@ -1,0 +1,208 @@
+import React, {useState} from 'react';
+import Select from 'react-select';
+
+const Filter = (props) => {
+    const {
+        minLoanAddedOn,
+        maxLoanAddedOn,
+        setMinLoanAddedOn,
+        setMaxLoanAddedOn,
+        branches,
+        currencies,
+        setBranchIds,
+        currencyId,
+        setCurrencyId,
+        setStatus,
+        loading,
+        minPrincipalAmountDue,
+        setMinPrincipalAmountDue,
+        maxPrincipalAmountDue,
+        setMaxPrincipalAmountDue,
+        minAmountPaid,
+        setMinAmountPaid,
+        maxAmountPaid,
+        setMaxAmountPaid,
+        onSubmit
+    } = props;
+    const [optionSelected, setOptionSelected] = useState([]);
+    const [selectedStatus, setSelectedStatus] = useState([]);
+    const selectorBranches = [...branches.map(result => ({...result, label: result.name, value:result.id}))];
+    const statusValues = ['Processing', 'Open', 'Arrears', 'Fully Paid', 'Over Paid', 'Rejected', 'Written-Off', 'Restructured', 'Early Settlement'];
+    const selectorStatuses = statusValues.map(val => ({label: val, value: val}));
+
+    const handleMultiSelect = selected => {
+        setOptionSelected(selected);
+        setBranchIds(selected.map(branch => branch.id));
+    }
+    
+    const handleStatusSelect = selected => {
+        setSelectedStatus(selected);
+        setStatus(selected.map(val => val.value));
+    }
+    
+    const changeCurrency = (evt) => {
+        setCurrencyId(evt.target.value);
+    }
+
+    const style = {
+        control: base => ({
+            ...base,
+            border: '1px solid #dee2e6',
+            boxShadow: "none",
+            '&:hover':'1px solid #dee2e6',
+        })
+    };
+    
+    return (
+        <div className="loans-filter">
+            <form onSubmit={onSubmit}>
+                <div className="row-containers">
+                    <div className="row row-payments">
+                        <div className="row-payments-container">
+                            <label className="form-label row-label">Min Disbursement Date</label>
+                            <div className="input-group" style={{margin:"10px 0"}}>
+                                <i className="uil uil-calendar-alt"></i>
+                                <input 
+                                    className="custom-select-form row-form input-background" 
+                                    type='date'
+                                    value={minLoanAddedOn}
+                                    onKeyDown={(e) => e.preventDefault()}
+                                    onChange={(e) => setMinLoanAddedOn(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        <div className="row-payments-container">
+                            <label className="form-label row-label">Max Disbursement Date</label>
+                            <div className="input-group" style={{margin:"10px 0"}}>
+                                <i className="uil uil-calendar-alt"></i>
+                                <input 
+                                    className="custom-select-form row-form input-background" 
+                                    type='date'
+                                    value={maxLoanAddedOn}
+                                    onKeyDown={(e) => e.preventDefault()}
+                                    onChange={(e) => setMaxLoanAddedOn(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        <div className="row-payments-container">
+                            <label className="form-label row-label">Min Principal Outstanding</label>
+                            <div className="input-group" style={{margin:"10px 0"}}>
+                                <input 
+                                    className="custom-select-form row-form input-background" 
+                                    placeholder="Min Principal Outstanding" 
+                                    type='number'
+                                    value={minPrincipalAmountDue}
+                                    placeholder='Min Principal Outstanding'
+                                    onChange={(e) => setMinPrincipalAmountDue(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        <div className="row-payments-container">
+                            <label className="form-label row-label">Max Principal Outstanding</label>
+                            <div className="input-group" style={{margin:"10px 0"}}>
+                                <input 
+                                    className="custom-select-form row-form input-background" 
+                                    placeholder="Max Principal Outstanding" 
+                                    type='number'
+                                    value={maxPrincipalAmountDue}
+                                    placeholder='Max Principal Outstanding'
+                                    onChange={(e) => setMaxPrincipalAmountDue(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        <div className="row-payments-container">
+                            <label className="form-label row-label">Min Amount Paid</label>
+                            <div className="input-group" style={{margin:"10px 0"}}>
+                                <input 
+                                    className="custom-select-form row-form input-background" 
+                                    placeholder="Min Amount Paid" 
+                                    type='number'
+                                    value={minAmountPaid}
+                                    placeholder='Min Amount Paid'
+                                    onChange={(e) => setMinAmountPaid(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        <div className="row-payments-container">
+                            <label className="form-label row-label">Max Amount Paid</label>
+                            <div className="input-group" style={{margin:"10px 0"}}>
+                                <input 
+                                    className="custom-select-form row-form input-background" 
+                                    placeholder="Max Amount Paid" 
+                                    type='number'
+                                    value={maxAmountPaid}
+                                    placeholder='Max Amount Paid'
+                                    onChange={(e) => setMaxAmountPaid(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row row-payments row-loans" style={{marginTop:"1rem"}}>
+                        <div className="row-payments-container" style={{width:"49%"}}>
+                            <Select
+                                isMulti
+                                name='status'
+                                options={[props.allOption, ...selectorStatuses]}
+                                value={selectedStatus}
+                                classNamePrefix='select'
+                                className='basic-multi-select'
+                                placeholder='Select Status'
+                                onChange={selected => {
+                                    if (selected !== null && selected.length > 0 && selected[selected.length - 1].value === props.allOption.value) {
+                                    return handleStatusSelect(selectorStatuses);
+                                    }
+                                    handleStatusSelect(selected);
+                                }}
+                                styles={style}
+                            />
+                        </div>
+                        <div className="row-payments-container" style={{width:"49%"}}>
+                            <select className='custom-select-form row-form' value={currencyId} onChange={changeCurrency} style={{width:"100%"}}>
+                                {currencies.map(currency => {
+                                    return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
+                                })}
+                            </select>
+                        </div>
+                    </div>
+                    <div className="row row-payments row-loans" style={{marginTop:"1rem"}}>
+                        <div className="row-payments-container" style={{width:"85%"}}> 
+                            <Select
+                                isMulti
+                                name='branches'
+                                options={[props.allOption, ...selectorBranches]}
+                                value={optionSelected}
+                                classNamePrefix='select'
+                                className='basic-multi-select'
+                                placeholder='Select Branches'
+                                onChange={selected => {
+                                    if (selected !== null && selected.length > 0 && selected[selected.length - 1].value === props.allOption.value) {
+                                    return handleMultiSelect(selectorBranches);
+                                    }
+                                    handleMultiSelect(selected);
+                                }}
+                                styles={style}
+                            />
+                        </div>
+                        <span>
+                            {loading ?
+                            <button type='submit' className='btn btn-info'>
+                            <i className="fa fa-spinner fa-spin"></i> Please wait..
+                            </button>:
+                            <button type='submit' className='btn btn-info'>Apply filters!</button>}
+                        </span>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    );
+}
+
+Filter.defaultProps = {
+    allOption: {
+        label: 'Select all',
+        value: '*'
+    }
+};
+
+export default Filter;

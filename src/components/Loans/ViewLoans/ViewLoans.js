@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-// import ClientsList from '../ClientsList/ClientsList'
+import LoansList from '../LoansList/LoansList'
 // import AddClient from '../add_client/AddClient';
 
 
@@ -22,7 +22,7 @@ const ViewLoans = ({setSidebar}) => {
                     </div>
                     <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                         {{
-                            // 'loans': <ClientsList setSidebar={setSidebar} setMainTab={setTab}/>,
+                            'loans': <LoansList setSidebar={setSidebar} setMainTab={setTab}/>,
                             // 'cshmngmnt': <AddClient setMainTab={setTab}/>,
                         }[tab]}
                     </div>
