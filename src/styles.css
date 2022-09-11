@@ -450,7 +450,11 @@ a {
 /* --------------------------------------------------- */
 .toggle-theme {
   cursor: pointer;
-  margin-right: 20px;
+  margin-right: 1rem;
+}
+
+.notifications-icon {
+  padding-right: 1rem;
 }
 
 a { 
@@ -621,6 +625,11 @@ span {
 }
 
 .logo {
+  color: var(--info);
+}
+
+.uil-sign-out-alt.nav-right {
+  font-size: 25px;
   color: var(--info);
 }
 
@@ -3008,4 +3017,13 @@ input:checked + .slider:before {
     50.1%{
         stroke-dashoffset: 252;
     }
+}
+
+.nav-logout {
+  display: flex;
+  column-gap: 1rem;
+  padding: 0 1rem;
+  height: 4rem;
+  background: var(--home-section-color);
+  align-items: center;
 }

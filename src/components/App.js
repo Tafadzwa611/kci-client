@@ -102,42 +102,36 @@ function App() {
                     <NavLink to="/app/home" className="logo">
                       <div className="logo-details">
                         <i className="uil uil-10-plus"></i>
-                        {/* <span className="logo_name">Lenda</span> */}
                       </div>
                     </NavLink>
                   </div>
                   <div style={{display:"flex"}}>
                     <NavLink to="app/dashboard" className="btn btn-default dashboard">
-                      {/* <i className="uil uil-estate"></i> */}
                       <span>Dashboard</span>
                     </NavLink>
                     <NavLink to="/app/clients/viewclients" className="btn btn-default dashboard">
-                      {/* <i className="uil uil-user"></i> */}
                       <span>View Clients</span>
                     </NavLink>
                     <NavLink to="app/loans/viewloans" className="btn btn-default dashboard">
-                      {/* <i className="uil uil-sort"></i> */}
                       <span>View Loans</span>
                     </NavLink>
                     <NavLink to="app/payments/viewpayments" className="btn btn-default dashboard">
-                      {/* <i className="uil uil-scroll-h"></i> */}
                       <span>View Payments</span>
                     </NavLink>
                     <NavLink to="app/otherincome/viewotherincome" className="btn btn-default dashboard">
-                      {/* <i className="uil uil-folder-plus"></i> */}
                       <span>View Other Income</span>
                     </NavLink>
                     <NavLink to="app/expenses/viewexpenses" className="btn btn-default dashboard">
-                      {/* <i className="uil uil-folder-minus"></i> */}
                       <span>View Expenses</span>
                     </NavLink>
                     <NavLink to="app/reports/viewreports" className="btn btn-default dashboard">
-                      {/* <i className="uil uil-books"></i> */}
                       <span>View Reports</span>
                     </NavLink>
                     <NavLink to="app/accounting/viewaccounting" className="btn btn-default dashboard">
-                      {/* <i className="uil uil-receipt"></i> */}
                       <span>View Accounting</span>
+                    </NavLink>
+                    <NavLink to="/app/users/admin" className="btn btn-default dashboard">
+                      <span>Admin</span>
                     </NavLink>
                   </div>
                   <div>
@@ -145,24 +139,16 @@ function App() {
                   </div>
                 </div>
 
-                <div className="home-content-header-float-right">
+                <div className="home-content-header-float-right" style={{paddingRight:"1.5rem", display:"flex", alignItems:"center"}}>
 
                   <i className={theme === "light" ? 'uil uil-moon toggle-theme' : 'uil uil-sun toggle-theme'} onClick={toggleTheme}></i>
-                  <NavLink to="/notifications" className="first-atag">
+                  <NavLink to="/notifications" className="first-atag notifications-icon">
                     <i className="uil uil-bell"></i>
                   </NavLink>
-
-                  <li className="home-content-header-right-list">
-                    <a className="home-content-header-right" onClick={showLogout}>
-                      <i className="uil uil-user-circle user_image"></i>
-                      <div className="home-content-header-right-sub">
-                        <span className="user_name">{loggedInUser.first_name} {loggedInUser.last_name}</span>
-                        <span className="company_name">Theocash Capital Pvt Ltd</span>
-                      </div>
-                    </a>
-                    { logout && <LogoutContainer showLogout={showLogout} />}
-                  </li>
-
+                  <div className="nav-logout">
+                    <span className="user_name">{loggedInUser.first_name} {loggedInUser.last_name}</span>
+                    <i className="uil uil-sign-out-alt nav-right"></i>
+                  </div>
                 </div>
 
               </div>
