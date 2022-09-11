@@ -23,6 +23,8 @@ function LoansList() {
   const [currencyId, setCurrencyId] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [details, setDetails] = useState(false)
+  const [selectedLoanID, setSelectedLoanID] = useState(null)
   const pageNum = useRef(1);
   const isFirstRun = useRef(true);
 
@@ -194,6 +196,11 @@ function LoansList() {
             loadingMore={loadingMore}
             currencies={currencies}
             currencyId={currencyId}
+            setDetails={setDetails} 
+            details={details} 
+            selectedLoanID={selectedLoanID}
+            setSelectedLoanID={setSelectedLoanID}
+            selectedloan={loans.find(loan => loan.id == selectedLoanID)}
         />
     </>
   )

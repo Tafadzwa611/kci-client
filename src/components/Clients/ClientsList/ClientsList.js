@@ -4,7 +4,7 @@ import ClientsTable from './ClientsTable';
 import Filter from './Filter';
 import Footer from './Footer';
 
-function ClientsList({setSidebar}) {
+function ClientsList() {
   const [clients, setClients] = useState(null);
   const [branches, setBranches] = useState(null);
   const [branchIds, setBranchIds] = useState(null);
@@ -146,7 +146,6 @@ function ClientsList({setSidebar}) {
           setSelectedClientID={setSelectedClientID} 
           selectedclientID={selectedclientID}
           selectedclient={clients.find(clnt => clnt.id == selectedclientID)}
-          setSidebar={setSidebar}
         />
         <Footer 
           nextPageNumber={nextPageNumber} 
