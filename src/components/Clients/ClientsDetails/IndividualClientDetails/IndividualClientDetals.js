@@ -8,11 +8,10 @@ import EmploymentDetails from './Employment/EmploymentDetails';
 import BankingDetails from './BankingDetails/BankingDetails';
 import Transactions from './Transactions/Transactions';
 
-function IndividualClientDetails({client, setClient, addresses, setAddresses, nokList, setNokList, clientId, files, branches, setFiles, setOpen, setSidebar, setDetails}) {
+function IndividualClientDetails({client, setClient, addresses, setAddresses, nokList, setNokList, clientId, files, branches, setFiles, setOpen, setDetails}) {
   const [tab, setTab] = useState('details');
 
   const handleClose = () => {
-    setSidebar(false);
     setDetails(false);
   }
 

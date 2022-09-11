@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import LoansList from '../LoansList/LoansList'
+import LoansList from '../LoansList/LoansList';
 // import AddClient from '../add_client/AddClient';
 
 

@@ -2011,6 +2011,10 @@ small {
   border-top: 0;
 }
 
+.tr-class td {
+  vertical-align: middle !important;
+}
+
 .text-right {
   text-align: right !important;
 }

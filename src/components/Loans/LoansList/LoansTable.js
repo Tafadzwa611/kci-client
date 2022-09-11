@@ -23,16 +23,16 @@ function LoansTable({loans, nextPageNumber, loadMoreLoans, totalCount, loadingMo
   }, 0);
 
   const statusClasses = {
-    'Fully Paid': 'right badge badge-success',
-    'Early Settlement': 'right badge badge-success',
-    'Restructured': 'right badge badge-dark',
-    'Processing': 'right badge badge-info',
-    'Arrears': 'right badge badge-info',
-    'Open': 'right badge badge-primary',
-    'Over Paid': 'right badge badge-warning',
-    'Defaulted': 'right badge badge-danger',
-    'Rejected': 'right badge badge-danger',
-    'Written-Off': 'right badge badge-danger',
+    'Fully Paid': 'badge badge-success',
+    'Early Settlement': 'badge badge-success',
+    'Restructured': 'badge badge-dark',
+    'Processing': 'badge badge-info-lighter',
+    'Arrears': 'badge badge-info-light',
+    'Open': 'badge badge-info',
+    'Over Paid': 'badge badge-warning',
+    'Defaulted': 'badge badge-danger',
+    'Rejected': 'badge badge-danger',
+    'Written-Off': 'badge badge-dark',
   }
  
   return (
@@ -77,7 +77,7 @@ function LoansTable({loans, nextPageNumber, loadMoreLoans, totalCount, loadingMo
                       <td><span style={{display:"flex"}}><span>{loan.currency} </span><span>{parseFloat(loan.principal_amount_due).toFixed(2)}</span></span></td>
                       <td><span style={{display:"flex"}}><span>{loan.currency} </span><span>{parseFloat(loan.amount_due_at_maturity).toFixed(2)}</span></span></td>
                       <td><span style={{display:"flex"}}><span>{loan.currency} </span><span>{parseFloat(loan.total_amount_paid).toFixed(2)}</span></span></td>
-                      <td><small className={statusClasses[loan.status]} style={{margin: '3px'}}>{loan.status}</small></td>
+                      <td><span className={statusClasses[loan.status]} style={{marginBottom:"3px"}}>{loan.status}</span></td>
                     </tr>
                   )
                 }) : <tr><td colSpan={10} style={{textAlign: 'center'}}>No loans could be found.</td></tr>}

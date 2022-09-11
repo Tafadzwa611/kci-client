@@ -138,7 +138,7 @@ const Filter = (props) => {
                         </div>
                     </div>
                     <div className="row row-payments row-loans" style={{marginTop:"1rem"}}>
-                        <div className="row-payments-container" style={{width:"49%"}}>
+                        <div className="row-payments-container" style={{width:"70%"}}>
                             <Select
                                 isMulti
                                 name='status'
@@ -156,7 +156,7 @@ const Filter = (props) => {
                                 styles={style}
                             />
                         </div>
-                        <div className="row-payments-container" style={{width:"49%"}}>
+                        <div className="row-payments-container" style={{width:"28%"}}>
                             <select className='custom-select-form row-form' value={currencyId} onChange={changeCurrency} style={{width:"100%"}}>
                                 {currencies.map(currency => {
                                     return <option key={currency.id} value={currency.id}>{currency.shortname}</option>

@@ -6,11 +6,10 @@ import BankingDetails from './BankingDetails/BankingDetails';
 import Files from './Files/Files';
 import Transactions from '../IndividualClientDetails/Transactions/Transactions';
 
-function CompanyClientDetails({client, branches, files, setFiles, setClient, business, setBusiness, directors, setDirectors, clientId, setDetails, setSidebar}) {
+function CompanyClientDetails({client, branches, files, setFiles, setClient, business, setBusiness, directors, setDirectors, clientId, setDetails}) {
   const [tab, setTab] = useState('details');
 
   const handleClose = () => {
-    setSidebar(false);
     setDetails(false);
   }
 
