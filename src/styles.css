@@ -2015,6 +2015,10 @@ small {
   vertical-align: middle !important;
 }
 
+.due-loans-border {
+  border: 1px solid var(--border-color);
+}
+
 .text-right {
   text-align: right !important;
 }

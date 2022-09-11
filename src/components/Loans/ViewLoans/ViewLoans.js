@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import LoansList from '../LoansList/LoansList';
-// import AddClient from '../add_client/AddClient';
+import DueLoansList from '../DueLoans/DueLoansList';
+
 
 
 const ViewLoans = ({setSidebar}) => {
@@ -18,12 +19,14 @@ const ViewLoans = ({setSidebar}) => {
                 <>
                     <div className="bloc-tabs">
                             <button className={tab === "loans" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("loans")}> View Loans </button>
-                            <button className={tab === "cshmngmnt" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("cshmngmnt")}> Add Client </button>
+                            <button className={tab === "addloan" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("addloan")}> Add Loan </button>
+                            <button className={tab === "dueloans" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("dueloans")}> Due Loans </button>
+                            <button className={tab === "arrsloans" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("arrsloans")}> Arrears loans </button>
                     </div>
                     <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                         {{
                             'loans': <LoansList setSidebar={setSidebar} setMainTab={setTab}/>,
-                            // 'cshmngmnt': <AddClient setMainTab={setTab}/>,
+                            'dueloans': <DueLoansList setMainTab={setTab}/>,
                         }[tab]}
                     </div>
                 </>

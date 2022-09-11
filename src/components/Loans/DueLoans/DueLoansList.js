@@ -1,56 +1,145 @@
-import React from 'react';
-import DueLoan from './DueLoan';
+import React, { useState, useEffect, useRef } from 'react';
+import Filter from './Filter';
+import { makeRequest } from '../../../utils/utils';
+import LoansTable from './LoansTable';
 
-const DueLoansList = () => {
 
-    var dueloans = [
-        {full_name:'Tafadzwa Kuno',  loan_number:'THEO87898H', payment_date:'03/25/22', installment_due:'4000', amount_paid:'0', status:'Over Paid', id:'1'},
-        {full_name:'Tatenda Gudyanga',  loan_number:'THEO87898H', payment_date:'03/25/22', installment_due:'4000', amount_paid:'0', status:'Open', id:'2'},
-        {full_name:'Victor Kuno',  loan_number:'THEO87898H', payment_date:'03/25/22', installment_due:'4000', amount_paid:'0', status:'Open', id:'3'},
-        {full_name:'Tavonga Gudyanga',  loan_number:'THEO87898H', payment_date:'03/25/22', installment_due:'4000', amount_paid:'0', status:'Arrears', id:'4'},
-        {full_name:'Lawful Gudyanga',  loan_number:'THEO87898H', payment_date:'03/25/22', installment_due:'4000', amount_paid:'0', status:'Arrears', id:'5'},
-        {full_name:'James Chisada',  loan_number:'THEO87898H', payment_date:'03/25/22', installment_due:'4000', amount_paid:'0', status:'Open', id:'6'},
-        {full_name:'Tawanda mangwarira',  loan_number:'THEO87898H', payment_date:'03/25/22', installment_due:'4000', amount_paid:'0', status:'Open', id:'7'},
-        {full_name:'Nyasha Hope',  loan_number:'THEO87898H', payment_date:'03/25/22', installment_due:'4000', amount_paid:'0', status:'Open', id:'8'},
-        {full_name:'Joseph Mazambara',  loan_number:'THEO87898H', payment_date:'03/25/22', installment_due:'4000', amount_paid:'0', status:'Fully Paid', id:'9'},
-        {full_name:'Divine Chikukutu',  loan_number:'THEO87898H', payment_date:'03/25/22', installment_due:'4000', amount_paid:'0', status:'Open', id:'10'},
-        // {full_name:'Tadiwa Majoko',  loan_number:'THEO87898H', payment_date:'03/25/22', installment_due:'4000', amount_paid:'0', status:'Open', id:'11'},
-        // {full_name:'Nomsa Chipise',  loan_number:'THEO87898H', payment_date:'03/25/22', installment_due:'4000', amount_paid:'0', status:'Open', id:'12'},
-        // {full_name:'Tatenda Kuno',  loan_number:'THEO87898H', payment_date:'03/25/22', installment_due:'4000', amount_paid:'0', status:'Open', id:'13'},
-        // {full_name:'Grace Mabunu',  loan_number:'THEO87898H', payment_date:'03/25/22', installment_due:'4000', amount_paid:'0', status:'Open', id:'14'},
-        // {full_name:'Steve Harvey',  loan_number:'THEO87898H', payment_date:'03/25/22', installment_due:'4000', amount_paid:'0', status:'Open', id:'15'},
-        // {full_name:'Michael Ballack',  loan_number:'THEO87898H', payment_date:'03/25/22', installment_due:'4000', amount_paid:'0', status:'Open', id:'16'}
-    ];
+function DueLoansList() {
+  const today = new Date();
+  const [loans, setLoans] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [nextPageNumber, setNextPageNumber] = useState(null);
+  const [month, setMonth] = useState(`${today.getFullYear()}-${today.getMonth() < 10 ? `0${today.getMonth()+1}` : today.getMonth()+1}`);
+  const [branches, setBranches] = useState(null);
+  const [branchIds, setBranchIds] = useState(null);
+  const [currencyId, setCurrencyId] = useState(null);
+  const [currencies, setCurrencies] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const pageNum = useRef(1);
+  const isFirstRun = useRef(true);
 
-    return (
-        <div className='table-responsive font-12'>
-            <table className='table table-centered table-hover'>
-                <thead className="thead-light">
-                    <tr>
-                        <th style={{textAlign:"start"}}>Client</th>
-                        <th style={{textAlign:"start"}}>Loan_Number</th>
-                        <th style={{textAlign:"start"}}>Payment_Date</th>
-                        <th style={{textAlign:"start"}}>Installment_Due</th>
-                        <th style={{textAlign:"start"}}>Pending_Due</th>
-                        <th style={{textAlign:"start"}}>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {dueloans.map(loan => (
-                        <DueLoan 
-                            key={loan.id} 
-                            full_name={loan.full_name}
-                            loan_number={loan.loan_number}
-                            payment_date={loan.payment_date} 
-                            installment_due={loan.installment_due}
-                            amount_paid={loan.amount_paid}
-                            status={loan.status} 
-                        />
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    );
+  useEffect(() => {
+    getBranches();
+  }, []);
+
+  const getBranches = async () => {
+    await fetchCurrencies();
+    const branches = await fetchBranches();
+    setBranches(branches);
+  }
+
+  useEffect(() => {
+    getLoans();
+  }, [currencyId]);
+
+  const getLoans = async () => {
+    if (currencyId != null && isFirstRun.current) {
+      isFirstRun.current = false;
+      const data = await fetchLoans();
+      setLoans(data.loans);
+      setTotalCount(data.count);
+    }
+  }
+
+  async function fetchLoans() {
+    try {
+      const url = getUrl();
+      const response = await makeRequest.get(url, {timeout: 8000});
+      if (response.ok) {
+        const json_res = await response.json();
+        setNextPageNumber(json_res.next_page_num);
+        setLoading(false);
+        setLoadingMore(false);
+        return json_res;
+      }else {
+        const error = await response.json();
+        console.log(error);
+      }
+    }catch(error) {
+      console.log(error);
+    }
+  }
+
+  async function fetchCurrencies() {
+    try {
+      const response = await makeRequest.get('/usersapi/list_currencies/', {timeout: 8000});
+      if (response.ok) {
+        const data = await response.json();
+        if (currencyId===null) {
+          const zwlId = data.filter(currency => currency.shortname === 'ZWL')[0].id;
+          setCurrencyId(zwlId);
+        }
+        return setCurrencies([...data.map(result => ({...result, label: result.shortname, value:result.id}))]);
+      }else {
+        const error = await response.json();
+        console.log(error);
+      }
+    }catch(error) {
+      console.log(error);
+    }
+  }
+
+  async function fetchBranches() {
+    try {
+      const response = await makeRequest.get('/usersapi/get-branches/', {timeout: 8000});
+      if (response.ok) {
+        const json_res = await response.json();
+        return json_res.results;
+      }else {
+        const error = await response.json();
+        console.log(error);
+      }
+    }catch(error) {
+      console.log(error);
+    }
+  }
+
+  function getUrl() {
+    let url = `/loansapi/due_loans_list/?page_num=${pageNum.current}&currency_id=${currencyId}&due_month=${month}`
+    if (branchIds !== null) {
+      branchIds.forEach(id => (url += `&branch_ids=${id}`));
+    }
+    return url
+  }
+
+  const onSubmit = async (evt) => {
+    evt.preventDefault();
+    setLoading(true);
+    const data = await fetchLoans();
+    setLoans(data.loans);
+    setTotalCount(data.count);
+  }
+
+  const loadMore = async (evt) => {
+    evt.preventDefault();
+    setLoadingMore(true);
+    pageNum.current += 1;
+    const data = await fetchLoans();
+    setLoans(curr => [...curr,...data.loans]);
+  }
+
+  if (currencies===null || branches===null) {
+    return <div>Loading...</div>
+  }
+
+  return (
+    <>
+      <Filter
+        month={month}
+        currencies={currencies}
+        currencyId={currencyId}
+        branches={branches}
+        loading={loading}
+        setBranchIds={setBranchIds}
+        setCurrencyId={setCurrencyId}
+        setMonth={setMonth}
+        onSubmit={onSubmit}
+      />
+      <div style={{paddingTop: '17px'}}></div>
+      <LoansTable loans={loans} totalCount={totalCount} nextPageNumber={nextPageNumber} loadMoreLoans={loadMore} loadingMore={loadingMore}/>
+    </>
+  )
 }
 
 export default DueLoansList;
