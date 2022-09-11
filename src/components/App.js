@@ -93,66 +93,55 @@ function App() {
 
           <Router>
 
-            <div className={sidebar ? 'sidebar close' : 'sidebar'}>
-
-              <NavLink to="/app/home" className="logo">
-                <div className="logo-details">
-                  <i className="uil uil-10-plus"></i>
-                  <span className="logo_name">Lenda</span>
-                </div>
-              </NavLink>
-
-              <ul className="nav-links">
-                <li>
-                  <NavLink to="app/dashboard" className="link_name dashboard">
-                    <i className="uil uil-estate"></i>
-                    <span>Dashboard</span>
-                  </NavLink>
-                  <NavLink to="/app/clients/viewclients" className="link_name dashboard">
-                    <i className="uil uil-user"></i>
-                    <span>View Clients</span>
-                  </NavLink>
-                  <NavLink to="app/loans/viewloans" className="link_name dashboard">
-                    <i className="uil uil-sort"></i>
-                    <span>View Loans</span>
-                  </NavLink>
-                  <NavLink to="app/payments/viewpayments" className="link_name dashboard">
-                    <i className="uil uil-scroll-h"></i>
-                    <span>View Payments</span>
-                  </NavLink>
-                  <NavLink to="app/otherincome/viewotherincome" className="link_name dashboard">
-                    <i className="uil uil-folder-plus"></i>
-                    <span>View Other Income</span>
-                  </NavLink>
-                  <NavLink to="app/expenses/viewexpenses" className="link_name dashboard">
-                    <i className="uil uil-folder-minus"></i>
-                    <span>View Expenses</span>
-                  </NavLink>
-                  <NavLink to="app/reports/viewreports" className="link_name dashboard">
-                    <i className="uil uil-books"></i>
-                    <span>View Reports</span>
-                  </NavLink>
-                  <NavLink to="app/accounting/viewaccounting" className="link_name dashboard">
-                    <i className="uil uil-receipt"></i>
-                    <span>View Accounting</span>
-                  </NavLink>
-                </li>
-
-              </ul>
-
-            </div>
-
             <section className="home-section">
 
               <div className="home-content">
 
-                <div className="home-content-header-left">
-                  <i onClick={showSidebar} className="uil uil-bars"></i>
-                  <div className="search-button-header">
-                    <input type="text" className="search" placeholder="Search By Name or Ec #" />
-                    <button type="submit">
-                      <i className="uil uil-search btn-search"></i>
-                    </button>
+                <div className="home-content-header-left" style={{display:"flex", columnGap:"3rem"}}>
+                  <div>
+                    <NavLink to="/app/home" className="logo">
+                      <div className="logo-details">
+                        <i className="uil uil-10-plus"></i>
+                        {/* <span className="logo_name">Lenda</span> */}
+                      </div>
+                    </NavLink>
+                  </div>
+                  <div style={{display:"flex"}}>
+                    <NavLink to="app/dashboard" className="btn btn-default dashboard">
+                      {/* <i className="uil uil-estate"></i> */}
+                      <span>Dashboard</span>
+                    </NavLink>
+                    <NavLink to="/app/clients/viewclients" className="btn btn-default dashboard">
+                      {/* <i className="uil uil-user"></i> */}
+                      <span>View Clients</span>
+                    </NavLink>
+                    <NavLink to="app/loans/viewloans" className="btn btn-default dashboard">
+                      {/* <i className="uil uil-sort"></i> */}
+                      <span>View Loans</span>
+                    </NavLink>
+                    <NavLink to="app/payments/viewpayments" className="btn btn-default dashboard">
+                      {/* <i className="uil uil-scroll-h"></i> */}
+                      <span>View Payments</span>
+                    </NavLink>
+                    <NavLink to="app/otherincome/viewotherincome" className="btn btn-default dashboard">
+                      {/* <i className="uil uil-folder-plus"></i> */}
+                      <span>View Other Income</span>
+                    </NavLink>
+                    <NavLink to="app/expenses/viewexpenses" className="btn btn-default dashboard">
+                      {/* <i className="uil uil-folder-minus"></i> */}
+                      <span>View Expenses</span>
+                    </NavLink>
+                    <NavLink to="app/reports/viewreports" className="btn btn-default dashboard">
+                      {/* <i className="uil uil-books"></i> */}
+                      <span>View Reports</span>
+                    </NavLink>
+                    <NavLink to="app/accounting/viewaccounting" className="btn btn-default dashboard">
+                      {/* <i className="uil uil-receipt"></i> */}
+                      <span>View Accounting</span>
+                    </NavLink>
+                  </div>
+                  <div>
+
                   </div>
                 </div>
 

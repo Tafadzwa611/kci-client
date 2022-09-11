@@ -30,8 +30,8 @@ function UpdateBankingDetails({details, open, setClient, clientId, setOpen}) {
   const disableAdd = Object.values(errors).findIndex(el => el!=='') != -1;
 
   return (
-    <div className={open ? 'modal fade show' : 'modal fade'} style={{display: open ? 'block' : 'none'}}>
-      <div className='modal-dialog modal-lg modal-dialog-scrollable text-light'>
+    <div className={open ? 'modal fade show' : 'modal fade'} style={{display: open ? 'block' : 'none', top:"4rem"}}>
+      <div className='modal-dialog modal-lg modal-dialog-scrollable text-light' style={{maxHeight:"calc(100% - 6rem)"}}>
           <div className='modal-content'>
               <div className='modal-header'>
                   <label className="form-title">[ Update Banking Info ]</label>
