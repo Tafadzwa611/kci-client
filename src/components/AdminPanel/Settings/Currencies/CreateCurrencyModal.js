@@ -43,7 +43,6 @@ function CreateCurrencyModal({open, setOpen, setCurrencies}) {
     const errors = await response.json();
     console.log(errors);
     setServerErrors(errors);
-    window.scrollTo(0, 0);
   }
 
 

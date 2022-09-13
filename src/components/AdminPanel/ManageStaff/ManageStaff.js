@@ -1,0 +1,22 @@
+import React, {useState} from 'react';
+
+const ManageStaff = () => {
+
+    const [tab, setTab] = useState('staff');
+    
+    return (
+        <>
+            <div className="bloc-tabs">
+                    <button className={tab === "staff" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("staff")}> Staff </button>
+                    <button className={tab === "rolesndperm" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("rolesndperm")}> Staff Roles and Permissions </button>
+            </div>
+            <div className='tab-content font-12' style={{marginTop:"3rem"}}>
+                {{
+                    // 'staff': <ManageStaff setMainTab={setTab}/>,
+                }[tab]}
+            </div>
+        </>
+    )
+}
+
+export default ManageStaff;

@@ -13,8 +13,6 @@ const Currencies = () => {
     }, []);
 
     const getCurrencies = async () => {
-        window.scrollTo(0, 0);
-        document.title = 'Currencies';
         const data = await fetchCurrencies();
         setCurrencies(data);
     };
