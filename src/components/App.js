@@ -133,6 +133,9 @@ function App() {
                     <NavLink to="/app/users/admin" className="btn btn-default dashboard">
                       <span>Admin</span>
                     </NavLink>
+                    <NavLink to="/app/users/admin2" className="btn btn-default dashboard">
+                      <span>Admin2</span>
+                    </NavLink>
                   </div>
                   <div>
 

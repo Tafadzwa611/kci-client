@@ -10,7 +10,7 @@ import AddLoanFormSkeleton from './Skeletons/Forms/AddLoanFormSkeleton';
 import AddCurrencyFormSkeleton from './Skeletons/Forms/AddCurrencyFormSkeleton';
 import AddAssetManagementFormSkeleton from './Skeletons/Forms/AddAssetManagementFormSkeleton';
 import BankNamesSkeleton from './Skeletons/Charts/BankNamesSkeleton';
-import AccountSettingsSkeleton from './Skeletons/Charts/AccountSettingsSkeleton';
+// import AccountSettingsSkeleton from './Skeletons/Charts/AccountSettingsSkeleton';
 import AddBankNameSkeleton from './Skeletons/Forms/AddBankNameSkeleton';
 import AddStaffSkeleton from './Skeletons/Forms/AddStaffSkeleton';
 import AddLoanFeeSkeleton from './Skeletons/Forms/AddLoanFeeSkeleton';
@@ -44,6 +44,7 @@ import LoanDetailSkeleton from './Skeletons/Charts/LoanDetailSkeleton';
 import NotificationSkeleton from './Skeletons/Charts/NotificationSkeleton';
 import UserProfileSkeleton from './Skeletons/Charts/UserProfileSkeleton';
 import OtherIncomeDetailsSkeleton from './Skeletons/Charts/OtherIncomeDetailsSkeleton';
+import AdminPanel from './AdminPanel/AdminPanel';
 
 const Home = lazy(() => import('./Home/Home'));
 const Dashboard = lazy(() => import('./Dashboard/Dashboard'));
@@ -80,7 +81,7 @@ const UploadPaymentsFile = lazy(() => import('./Payments/UploadPaymentsFile'));
 const PaymentsChart = lazy(() => import('./Payments/PaymentsChart'));
 // Users 
 const Notifications = lazy(() => import('./Users/Notifications'));
-const AccountSettings = lazy(() => import('./Users/AccountSettings'));
+// const AccountSettings = lazy(() => import('./Users/AccountSettings'));
 const BankNames = lazy(() => import('./Users/BankNames'));
 const Staff = lazy(() => import('./Users/Staff'));
 const AddBankName = lazy(() => import('./Users/AddBankName'));
@@ -91,8 +92,8 @@ const StaffRoles = lazy(() => import('./Users/StaffRoles'));
 const AddBranch = lazy(() => import('./Users/AddBranch'));
 const AddStaffRole = lazy(() => import('./Users/AddStaffRole'));
 const BranchDetails = lazy(() => import('./Users/BranchDetails'));
-const Currencies = lazy(() => import('./Users/Currencies'));
-const AddCurrency = lazy(() => import('./Users/AddCurrency'));
+// const Currencies = lazy(() => import('./Users/Currencies'));
+// const AddCurrency = lazy(() => import('./Users/AddCurrency'));
 // // Other Income 
 const OtherIncomeTypes = lazy(() => import('./OtherIncome/OtherIncomeTypes'));
 const AddOtherIncomeType = lazy(() => import('./OtherIncome/AddOtherIncomeType'));
@@ -208,7 +209,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
-                    <Route exact path='/app/users/addcurrency' element={<AddCurrency/>}/>
+                    {/* <Route exact path='/app/users/addcurrency' element={<AddCurrency/>}/> */}
                     <Route exact path='/app/expenses/addexpensetype' element={<AddExpenseType/>}/>
                     <Route exact path='/app/otherincome/addotherincometype' element={<AddOtherIncomeType/>}/>
                     </Route>
@@ -240,7 +241,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
                     <Route exact path='/app/users/banknames' element={<BankNames/>}/>
-                    <Route exact path='/app/users/currencies' element={<Currencies/>}/>
+                    {/* <Route exact path='/app/users/currencies' element={<Currencies/>}/> */}
                     <Route exact path='/app/users/branches' element={<Branches/>}/>
                     <Route exact path='/app/expenses/expensetypes' element={<ExpenseTypes/>}/>
                     <Route exact path='/app/assets/assettypes' element={<AssetTypes/>}/>
@@ -256,7 +257,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<AccountSettingsSkeleton />}>
+            {/* <Suspense fallback={<AccountSettingsSkeleton />}>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -277,7 +278,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 </Routes>
 
             </LoggedInUserProvider>
-            </Suspense>
+            </Suspense> */}
 
             <Suspense fallback={<AddBankNameSkeleton />}>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
@@ -403,6 +404,18 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
                     <Route exact path='/app/users/admin' element={<Admin/>}/>
+                    <Route 
+                        exact 
+                        path='/app/users/admin2' 
+                        element={
+                            <AdminPanel
+                                isAccountinOn={isAccountinOn}
+                                showIsAccountinOn={showIsAccountinOn}
+                                propagatePayments={propagatePayments}
+                                showPropagatePayments={showPropagatePayments}
+                            />
+                        }
+                    />
                     </Route>
                 </Route>
                 </Routes>

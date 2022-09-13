@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 const Admin = () => {
     return (
-        <div className="card slide">
+        <div className="card">
             <div className="card-body">
 
                 <h5 className="table-heading">Admin Panel</h5>
@@ -12,8 +12,6 @@ const Admin = () => {
                     <div className="row">
                         <div className="col-sm-4">
                             <strong>Settings</strong><br/>
-                            <NavLink className="link" to="/app/users/accountsettings">Account Settings</NavLink><br/>
-                            <NavLink className="link" to="/app/users/banknames">Bank Names</NavLink><br/>
                             <NavLink className="link" to="/app/users/currencies">Currencies</NavLink><br/>
                         </div>
                         <div className="col-sm-4">
