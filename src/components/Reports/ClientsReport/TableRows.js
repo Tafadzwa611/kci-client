@@ -3,7 +3,7 @@ import React from 'react';
 const FirstRow = ({client}) => {
   return (
     <tr>
-      <td className='text-bold bg-gray text-left' colSpan='9'>{ client.fullname }</td>
+      <td className='text-bold text-left journal-details header' colSpan='9'>{ client.fullname }</td>
       <td style={{display: 'none'}}></td>
       <td style={{display: 'none'}}></td>
       <td style={{display: 'none'}}></td>
@@ -51,15 +51,15 @@ const ThirdRow = ({client, currencyIso}) => {
 const FourthRow = ({client, currencyIso}) => {
   return (
     <tr>
-      <td style={{textAlign:"right", borderBottom:"1px solid #dee2e6"}} className="reports-table-border-left"></td>
-      <td style={{textAlign:"right", borderBottom:"1px solid #dee2e6"}}></td>
-      <td style={{textAlign:"right", borderBottom:"1px solid #dee2e6"}}></td>
-      <td className="text-bold" style={{textAlign:"right", borderBottom:"1px solid #dee2e6", width:"9%"}}>Net Due:</td>
-      <td className="text-bold" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>{`${currencyIso} ${client.sum_principal_due}`}</td>
-      <td className="text-bold" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>{`${currencyIso} ${client.sum_interest_amount_due}`}</td>
-      <td className="text-bold" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>{`${currencyIso} ${client.sum_fees_due}`}</td>
-      <td className="text-bold" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>{`${currencyIso} ${client.sum_penalty_due}`}</td>
-      <td className="text-bold reports-table-border-right" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>{`${currencyIso} ${client.total_due}`}</td>
+      <td style={{textAlign:"right"}} className="reports-table-border-left last__row__border"></td>
+      <td style={{textAlign:"right"}} className="last__row__border"></td>
+      <td style={{textAlign:"right"}} className="last__row__border"></td>
+      <td className="text-bold last__row__border" style={{textAlign:"right", width:"9%"}}>Net Due:</td>
+      <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${client.sum_principal_due}`}</td>
+      <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${client.sum_interest_amount_due}`}</td>
+      <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${client.sum_fees_due}`}</td>
+      <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${client.sum_penalty_due}`}</td>
+      <td className="text-bold last__row__border reports-table-border-right" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${client.total_due}`}</td>
     </tr>
   )
 }

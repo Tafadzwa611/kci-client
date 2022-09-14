@@ -3035,3 +3035,11 @@ input:checked + .slider:before {
   background: var(--home-section-color);
   align-items: center;
 }
+
+.last__row__border {
+  border-bottom: 1px solid #eef2f7;
+}
+
+#dark .last__row__border {
+  border-bottom: 1px solid var(--border-color);
+}
