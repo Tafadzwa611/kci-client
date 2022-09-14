@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import Staff from './Staff/Staff';
+import StaffRolesAndPermissions from './StaffRolesAndPermissions/StaffRolesAndPermissions'
 
 const ManageStaff = () => {
 
@@ -12,7 +14,8 @@ const ManageStaff = () => {
             </div>
             <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                 {{
-                    // 'staff': <ManageStaff setMainTab={setTab}/>,
+                    'staff': <Staff setMainTab={setTab}/>,
+                    'rolesndperm': <StaffRolesAndPermissions setMainTab={setTab}/>,
                 }[tab]}
             </div>
         </>

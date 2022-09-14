@@ -45,7 +45,7 @@ const Currencies = () => {
             <div className="table-responsive font-12">
                 <table className="table table-hover">
                     <tbody>
-                        <tr className="bg-gray">
+                        <tr className="journal-details header">
                             <th>Full_Name</th>
                             <th>ISO Code</th>
                         </tr>  
