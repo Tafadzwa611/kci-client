@@ -99,7 +99,7 @@ const MonthlyReport = () => {
             <MonthlyHeader changeOrder={changeOrder} order={order} disableSelect={report.length === 0} />
             {report.length > 0 ?
                 <>
-                    <MonthlyTable />
+                    <MonthlyTable report={report} currencyIso={currencyIso} />
                     <MonthlyFooter />
                 </>:
                 <NoData msg={msg} />

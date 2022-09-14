@@ -3,7 +3,7 @@ import { FirstRow, SecondRow, ThirdRow } from './TableRows';
 
 const MonthlyTable = ({report, currencyIso}) => {
     return (
-        <div className="table-container">
+        <div className="table-container" style={{padding:"0", paddingTop:"1.5rem", border:"none"}}>
             <div className="table-responsive font-12" style={{maxHeight:"600px"}}>
                 <table className="table" style={{width:"100%"}}>
                     <thead>

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = ({ nextPageNumber, loadMoreAccounts, loadingMore }) => {
     return (
-        <div className="footer-container font-12">
+        <div className="footer-container font-12 text-light">
             {nextPageNumber.current === null ?
             <div className="text" style={{border:"none"}}>
                 <i className="uil uil-exclamation-triangle"></i> 

@@ -6,7 +6,7 @@ const FirstRow = ({ monthlyReport }) => {
   const monthYear = new Intl.DateTimeFormat('en-US', options).format(date);
   return (
     <tr>
-      <td className='text-bold bg-gray text-left' colSpan='12'>{ monthYear }</td>
+      <td className='text-bold journal-details header text-left' colSpan='12'>{ monthYear }</td>
       <td style={{display: 'none'}}></td>
       <td style={{display: 'none'}}></td>
       <td style={{display: 'none'}}></td>
@@ -44,18 +44,18 @@ const SecondRow = ({monthlyReport, currencyIso}) => {
 const ThirdRow = ({monthlyReport, currencyIso}) => {
   return (
     <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td className='text-bold text-green' style={{textAlign: 'right'}}>Total Payments:</td>
-      <td className='text-bold text-green' style={{textAlign: 'right'}}>{`${currencyIso} ${monthlyReport.total_principal_paid}`}</td>
-      <td className='text-bold text-green' style={{textAlign: 'right'}}>{`${currencyIso} ${monthlyReport.total_interest_paid}`}</td>
-      <td className='text-bold text-green' style={{textAlign: 'right'}}>{`${currencyIso} ${monthlyReport.total_fees_paid}`}</td>
-      <td className='text-bold text-green' style={{textAlign: 'right'}}>{`${currencyIso} ${monthlyReport.total_penalty_paid}`}</td>
-      <td className='text-bold text-green' style={{textAlign: 'right'}}>{`${currencyIso} ${monthlyReport.total_paid}`}</td>
+      <td className="last__row__border"></td>
+      <td className="last__row__border"></td>
+      <td className="last__row__border"></td>
+      <td className="last__row__border"></td>
+      <td className="last__row__border"></td>
+      <td className="last__row__border"></td>
+      <td className='text-bold text-green last__row__border' style={{textAlign: 'right'}}>Total Payments:</td>
+      <td className='text-bold text-green last__row__border' style={{textAlign: 'right'}}>{`${currencyIso} ${monthlyReport.total_principal_paid}`}</td>
+      <td className='text-bold text-green last__row__border' style={{textAlign: 'right'}}>{`${currencyIso} ${monthlyReport.total_interest_paid}`}</td>
+      <td className='text-bold text-green last__row__border' style={{textAlign: 'right'}}>{`${currencyIso} ${monthlyReport.total_fees_paid}`}</td>
+      <td className='text-bold text-green last__row__border' style={{textAlign: 'right'}}>{`${currencyIso} ${monthlyReport.total_penalty_paid}`}</td>
+      <td className='text-bold text-green last__row__border' style={{textAlign: 'right'}}>{`${currencyIso} ${monthlyReport.total_paid}`}</td>
     </tr>
   )
 }
@@ -63,18 +63,18 @@ const ThirdRow = ({monthlyReport, currencyIso}) => {
 const FourthRow = ({ monthlyReport }) => {
   return (
     <tr>
-      <td style={{textAlign: 'right', borderBottom: '1px #000000 solid'}}></td>
-      <td style={{textAlign: 'right', borderBottom: '1px #000000 solid'}}></td>
-      <td style={{textAlign: 'right', borderBottom: '1px #000000 solid'}}></td>
-      <td style={{textAlign: 'right', borderBottom: '1px #000000 solid'}}></td>
-      <td style={{textAlign: 'right', borderBottom: '1px #000000 solid'}}></td>
-      <td style={{textAlign: 'right', borderBottom: '1px #000000 solid'}}></td>
-      <td className='text-bold' style={{textAlign: 'right', borderBottom: '1px #000000 solid', width:'9%'}}>Net Due:</td>
-      <td className='text-bold' style={{textAlign: 'right', fontWeight:'bold', borderBottom: '1px #000000 solid'}}>{ monthlyReport.sum_principal_due }</td>
-      <td className='text-bold' style={{textAlign: 'right', fontWeight:'bold', borderBottom: '1px #000000 solid'}}>{ monthlyReport.sum_interest_due }</td>
-      <td className='text-bold' style={{textAlign: 'right', fontWeight:'bold', borderBottom: '1px #000000 solid'}}>{ monthlyReport.sum_fees_due }</td>
-      <td className='text-bold' style={{textAlign: 'right', fontWeight:'bold', borderBottom: '1px #000000 solid'}}>{ monthlyReport.sum_penalty_due }</td>
-      <td className='text-bold' style={{textAlign: 'right', fontWeight:'bold', borderBottom: '1px #000000 solid'}}>{ monthlyReport.total_due }</td>
+      <td style={{textAlign: 'right'}} className="last__row__border"></td>
+      <td style={{textAlign: 'right'}} className="last__row__border"></td>
+      <td style={{textAlign: 'right'}} className="last__row__border"></td>
+      <td style={{textAlign: 'right'}} className="last__row__border"></td>
+      <td style={{textAlign: 'right'}} className="last__row__border"></td>
+      <td style={{textAlign: 'right'}} className="last__row__border"></td>
+      <td className='text-bold last__row__border' style={{textAlign: 'right', width:'9%'}}>Net Due:</td>
+      <td className='text-bold last__row__border' style={{textAlign: 'right', fontWeight:'bold'}}>{ monthlyReport.sum_principal_due }</td>
+      <td className='text-bold last__row__border' style={{textAlign: 'right', fontWeight:'bold'}}>{ monthlyReport.sum_interest_due }</td>
+      <td className='text-bold last__row__border' style={{textAlign: 'right', fontWeight:'bold'}}>{ monthlyReport.sum_fees_due }</td>
+      <td className='text-bold last__row__border' style={{textAlign: 'right', fontWeight:'bold'}}>{ monthlyReport.sum_penalty_due }</td>
+      <td className='text-bold last__row__border' style={{textAlign: 'right', fontWeight:'bold'}}>{ monthlyReport.total_due }</td>
     </tr>
   )
 }

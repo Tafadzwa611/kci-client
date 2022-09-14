@@ -131,8 +131,8 @@ const TopBorrowers = () => {
             <Header changeOrder={changeOrder} order={order} disableSelect={report.length === 0} />
             {report.length > 0 ?
                 <>
-                    <Table />
-                    <Footer />
+                    <Table report={report} currencyIso={currencyIso} />
+                    <Footer nextPageNumber={pageNum} loadMoreAccounts={loadMore} loadingMore={loading} />
                 </>:
                 <NoData msg={msg} />
             }
