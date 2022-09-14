@@ -9,7 +9,7 @@ const Table = ({report, dateOfReport, currencyIso}) => {
                 <table className="table">
                     <tbody>
                         <tr>
-                            <td className="text-bold bg-gray text-left" colspan="6">Clients</td>
+                            <td className="text-bold journal-details header text-left" colspan="6">Clients</td>
                         </tr>
                         <tr>
                             <td></td>
@@ -28,7 +28,7 @@ const Table = ({report, dateOfReport, currencyIso}) => {
                             <td></td>
                         </tr>
                         <tr>
-                            <td className="text-bold bg-gray text-left" colspan="6">Loans</td>
+                            <td className="text-bold journal-details header text-left" colspan="6">Loans</td>
                         </tr>
                         <tr>
                             <td></td>
@@ -47,7 +47,7 @@ const Table = ({report, dateOfReport, currencyIso}) => {
                             <td>{`${currencyIso} ${report.sum_restructure_loans_principal}`}</td>
                         </tr>
                         <tr>
-                            <td className="text-bold bg-gray text-left" colspan="6">Payments</td>
+                            <td className="text-bold journal-details header text-left" colspan="6">Payments</td>
                         </tr>
                         <tr>
                             <td></td>
@@ -70,7 +70,7 @@ const Table = ({report, dateOfReport, currencyIso}) => {
                             )
                         })}
                         <tr>
-                            <td className="text-bold bg-gray text-left" colspan="6">Fees</td>
+                            <td className="text-bold journal-details header text-left" colspan="6">Fees</td>
                         </tr>
                         <tr>
                             <td></td>
