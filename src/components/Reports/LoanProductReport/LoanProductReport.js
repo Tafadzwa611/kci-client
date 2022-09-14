@@ -97,8 +97,8 @@ const LoanProductReport = () => {
             />
             {report.length > 0 ?
               <>
-                <Table />
-                <Footer />
+                <Table report={report} currencyIso={currencyIso} />
+                <Footer minDate={minDate} maxDate={maxDate} />
               </>:
               <NoData msg={msg} />
             }

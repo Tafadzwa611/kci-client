@@ -3,7 +3,7 @@ import { convertDate } from '../../Accounting/Journals/utils';
 
 const Table = ({report, currencyIso}) => {
     return (
-        <div className="table-container">
+        <div className="table-container" style={{padding:"0", paddingTop:"1.5rem", border:"none"}}>
             <div className="table-responsive font-12" style={{maxHeight:"600px"}}>
                 <table className="table table-hover">
                     <thead>
@@ -23,15 +23,15 @@ const Table = ({report, currencyIso}) => {
                             return (
                             <Fragment key={date.day}>
                                 <tr>
-                                <td className='text-bold bg-gray text-left' colSpan='9'>{convertDate(date.day)}</td>
+                                <td className='text-bold journal-details header text-left' colSpan='9'>{convertDate(date.day)}</td>
                                 <td style={{display: 'none'}}></td>
                                 <td style={{display: 'none'}}></td>
                                 <td style={{display: 'none'}}></td>
                                 </tr>
                                 {date.loans.map(loan => (
                                 <tr key={loan.id}>
-                                    <td style={{textAlign: 'right'}}><a id={loan.client_id} href='#'>{loan.fullname}</a></td>
-                                    <td style={{textAlign: 'right'}}><a href="#">{loan.loan_id}</a></td>
+                                    <td style={{textAlign: 'right'}}>{loan.fullname}</td>
+                                    <td style={{textAlign: 'right'}}>{loan.loan_id}</td>
                                     <td style={{textAlign: 'right'}}>{loan.branch}</td>
                                     <td style={{textAlign: 'right'}}>{`${currencyIso} ${loan.principal}`}</td>
                                     <td style={{textAlign: 'right'}}>{`${currencyIso} ${loan.interest}`}</td>

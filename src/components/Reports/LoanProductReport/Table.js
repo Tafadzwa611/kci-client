@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 
 const Table = ({report, currencyIso}) => {
     return (
-        <div className="table-container">
+        <div className="table-container" style={{padding:"0", paddingTop:"1.5rem", border:"none"}}>
             <div className="table-responsive font-12" style={{maxHeight:"600px"}}>
                 <table className="table" style={{width:"100%"}}>
                     <thead>
@@ -23,7 +23,7 @@ const Table = ({report, currencyIso}) => {
                             return (
                                 <Fragment key={lp.id}>
                                     <tr>
-                                        <td className="text-bold bg-gray text-left" colspan="9">{ lp.name } - { lp.interest_method }</td>
+                                        <td className="text-bold journal-details header text-left" colspan="9">{ lp.name } - { lp.interest_method }</td>
                                         <td style={{display:"none"}}></td>
                                         <td style={{display:"none"}}></td>
                                         <td style={{display:"none"}}></td>
@@ -56,15 +56,15 @@ const Table = ({report, currencyIso}) => {
                                         <td className="text-bold text-green reports-table-border-right" style={{textAlign:"right"}}>{`${currencyIso} ${lp.total_paid}`}</td>
                                     </tr>
                                     <tr>
-                                        <td style={{textAlign:"right", borderBottom:"1px solid #dee2e6"}} className="reports-table-border-left"></td>
-                                        <td style={{textAlign:"right", borderBottom:"1px solid #dee2e6"}}></td>
-                                        <td style={{textAlign:"right", borderBottom:"1px solid #dee2e6"}}></td>
-                                        <td className="text-bold" style={{textAlign:"right", borderBottom:"1px solid #dee2e6", width:"9%"}}>Net_Due:</td>
-                                        <td className="text-bold" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>{`${currencyIso} ${lp.sum_principal_due}`}</td>
-                                        <td className="text-bold" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>{`${currencyIso} ${lp.sum_interest_amount_due}`}</td>
-                                        <td className="text-bold" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>{`${currencyIso} ${lp.sum_fees_due}`}</td>
-                                        <td className="text-bold" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>{`${currencyIso} ${lp.sum_penalty_due}`}</td>
-                                        <td className="text-bold reports-table-border-right" style={{textAlign:"right", fontWeight:"bold", borderBottom:"1px solid #dee2e6"}}>{`${currencyIso} ${lp.total_due}`}</td>
+                                        <td style={{textAlign:"right"}}  className="reports-table-border-left last__row__border"></td>
+                                        <td style={{textAlign:"right"}} className="last__row__border"></td>
+                                        <td style={{textAlign:"right"}} className="last__row__border"></td>
+                                        <td className="text-bold last__row__border" style={{textAlign:"right", width:"9%"}}>Net_Due:</td>
+                                        <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${lp.sum_principal_due}`}</td>
+                                        <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${lp.sum_interest_amount_due}`}</td>
+                                        <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${lp.sum_fees_due}`}</td>
+                                        <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${lp.sum_penalty_due}`}</td>
+                                        <td className="text-bold last__row__border reports-table-border-right" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${lp.total_due}`}</td>
                                     </tr>
                                 </Fragment>
                             )

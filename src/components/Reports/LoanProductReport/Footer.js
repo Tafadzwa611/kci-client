@@ -3,10 +3,10 @@ import { convertDate } from '../../Accounting/Journals/utils';
 
 const Footer = ({ minDate, maxDate }) => {
     return (
-        <div className="footer-container font-12">
+        <div className="footer-container font-12 text-light">
 
             <div className="text">
-                <i class="uil uil-exclamation-triangle"></i> 
+                <i className="uil uil-exclamation-triangle"></i> 
                 <span>Showing summary of loans created between {convertDate(minDate)} and {convertDate(maxDate)}.</span>
             </div>
             

@@ -143,7 +143,7 @@ const DisbursementReport = () => {
             {reportLoaded && report.length > 0 ?
             <>
                 <Table report={report} currencyIso={currencyIso} />
-                <Footer nextPageNumber={pageNum.current} loadMoreLoans={loadMore} loadingMore={loadingMore} />
+                <Footer nextPageNumber={pageNum} loadMoreLoans={loadMore} loadingMore={loadingMore} />
             </> :
             <NoData msg={msg} />}
         </>
