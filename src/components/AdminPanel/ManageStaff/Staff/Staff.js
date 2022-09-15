@@ -52,6 +52,7 @@ const Staff = () => {
                             <th>Contact Info</th>
                             <th>Staff_Role</th>
                             <th>Branch</th>
+                            <th>Action</th>
                         </tr>  
                         {users.map((user) => (
                             <tr className="table-row" key={user.id}>
@@ -59,6 +60,12 @@ const Staff = () => {
                                 <td>{user.email}</td>
                                 <td>{user.staff_role}</td>
                                 <td>{user.branch}</td>
+                                <td>
+                                    <div className="action-btns">
+                                        <span>Reset Password</span>
+                                        <span>Edit</span>
+                                    </div>
+                                </td>
                             </tr>
                         ))}
                     </tbody>

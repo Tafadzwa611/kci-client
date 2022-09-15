@@ -3043,3 +3043,22 @@ input:checked + .slider:before {
 #dark .last__row__border {
   border-bottom: 1px solid var(--border-color);
 }
+
+.action-btns {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2px;
+}
+
+.action-btns span {
+  width: 100px;
+  background-color: #f2f8ff;
+  text-align: center;
+  padding: 0.125rem 0.25rem;
+  font-size: 0.75rem;
+  color: var(--color);
+}
+
+#dark .action-btns span  {
+  background: #383838;
+}
