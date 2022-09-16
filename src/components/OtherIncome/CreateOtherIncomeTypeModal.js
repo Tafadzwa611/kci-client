@@ -83,7 +83,7 @@ function CreateOtherIncomeTypeModal({open, setOpen, setOtherIncomeTypes}) {
             <label className="form-title">[ Add Other Income Type ]</label>
             <button type='button' className='close' onClick={(e) => setOpen(curr => !curr)} style={{cursor:"pointer"}}><span aria-hidden='true'>&times;</span></button>
           </div>
-          <div className='modal-body'>
+          <div className='modal-body text-light'>
 
             {serverErrors.map((error, index) => (
               <div className='row custom-background' style={{marginTop: '15px'}}>

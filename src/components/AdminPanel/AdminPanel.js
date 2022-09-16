@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import Settings from './Settings/Settings'
 import ManageStaff from './ManageStaff/ManageStaff';
+import OtherIncomeTypes from '../OtherIncome/OtherIncomeTypes';
+import ExpenseTypes from '../Expenses/ExpenseTypes';
 
 const AdminPanel = ({isAccountinOn,propagatePayments,showIsAccountinOn,showPropagatePayments}) => {
 
@@ -27,6 +29,8 @@ const AdminPanel = ({isAccountinOn,propagatePayments,showIsAccountinOn,showPropa
                         {{
                             'settings': <Settings isAccountinOn={isAccountinOn} propagatePayments={propagatePayments} showIsAccountinOn={showIsAccountinOn} showPropagatePayments={showPropagatePayments} setMainTab={setTab}/>,
                             'managestf': <ManageStaff setMainTab={setTab}/>,
+                            'manageothin': <OtherIncomeTypes setMainTab={setTab}/>,
+                            'manageexp': <ExpenseTypes setMainTab={setTab}/>,
                         }[tab]}
                     </div>
                 </>

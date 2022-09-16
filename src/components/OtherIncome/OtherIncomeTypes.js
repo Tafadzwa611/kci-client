@@ -37,35 +37,31 @@ const OtherIncomeTypes = () => {
     }
 
     if (otherincomeTypes == null) {
-        return <BankNamesSkeleton />;
+        return <div>Loading...</div>;
     } 
     else {
         return (
-            <div className="card font-12">
-                <div className="card-body">
-
-                    <h5 className="table-heading">Other Income Types</h5>
-                    <CreateOtherIncomeTypeModal open={open} setOpen={setOpen} setOtherIncomeTypes={setOtherIncomeTypes} />
-                    <div style={{margin:"20px 0"}}>
-                        <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Other Income Type</button>
-                    </div>
-                    <div className="table-responsive font-12">
-                        <table className="table table-hover">
-                            <tbody>
-                                <tr className="bg-gray">
-                                    <th>Name</th>
-                                </tr>                      
-                                {otherincomeTypes.map((otherincome_type) => (
-                                    <tr className="table-row" key={otherincome_type.id}>
-                                        <td>{otherincome_type.name}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-
+                <>
+                <CreateOtherIncomeTypeModal open={open} setOpen={setOpen} setOtherIncomeTypes={setOtherIncomeTypes} />
+                <div style={{margin:"20px 0"}}>
+                    <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Other Income Type</button>
                 </div>
-            </div>
+                <div className="table-responsive font-12">
+                    <table className="table">
+                        <tbody>
+                            <tr className="journal-details header">
+                                <th>Name</th>
+                            </tr>                      
+                            {otherincomeTypes.map((otherincome_type) => (
+                                <tr className="table-row" key={otherincome_type.id}>
+                                    <td>{otherincome_type.name}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
+            </>
         );
     }
 }

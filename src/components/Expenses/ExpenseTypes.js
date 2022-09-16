@@ -36,35 +36,30 @@ const ExpenseTypes = () => {
     }
 
     if (expenseTypes == null) {
-        return <BankNamesSkeleton />;
+        return <div>Loading...</div>;
     } 
     else {
         return (
-            <div className="card font-12">
-                <div className="card-body">
-                    
-                    <h5 className="table-heading">Expense Types</h5>
-                    <CreateExpenseTypeModal open={open} setOpen={setOpen} setExpenseTypes={setExpenseTypes} />
-                    <div style={{margin:"20px 0"}}>
-                        <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Expense Type</button>
-                    </div>
-                    <div className="table-responsive font-12">
-                        <table className="table table-hover">
-                            <tbody>
-                                <tr className="bg-gray">
-                                    <th>Name</th>
-                                </tr>    
-                                {expenseTypes.map((expense_type) => (
-                                    <tr className="table-row" key={expense_type.id}>
-                                        <td>{expense_type.name}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-
+            <>
+                <CreateExpenseTypeModal open={open} setOpen={setOpen} setExpenseTypes={setExpenseTypes} />
+                <div style={{margin:"20px 0"}}>
+                    <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Expense Type</button>
                 </div>
-            </div>
+                <div className="table-responsive font-12">
+                    <table className="table">
+                        <tbody>
+                            <tr className="journal-details header">
+                                <th>Name</th>
+                            </tr>    
+                            {expenseTypes.map((expense_type) => (
+                                <tr className="table-row" key={expense_type.id}>
+                                    <td>{expense_type.name}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </>
         );
 
     }
