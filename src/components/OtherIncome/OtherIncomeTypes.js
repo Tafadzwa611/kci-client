@@ -57,6 +57,11 @@ const OtherIncomeTypes = () => {
                                     <td>{otherincome_type.name}</td>
                                 </tr>
                             ))}
+                            {otherincomeTypes == "" && 
+                                <tr style={{display:"flex", justifyContent:"center"}}>
+                                    <td>No data available.</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>

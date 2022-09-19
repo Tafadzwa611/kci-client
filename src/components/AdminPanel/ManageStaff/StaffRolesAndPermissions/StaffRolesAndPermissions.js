@@ -1,10 +1,12 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {makeRequest} from '../../../../utils/utils';
+import EditStaffRolesPermissions from './EditStaffRolesPermissions';
 
 const StaffRolesAndPermissions = () => {
 
     const [staffroles, setStaffRoles] = useState([]);
     const [open, setOpen] = useState(false);
+    const [selectedroleID, setSelectedRoleID] = useState(null)
 
     useEffect(() => {
         getStaffRoles()
@@ -31,13 +33,18 @@ const StaffRolesAndPermissions = () => {
         }
     }
 
+    const handleClick = (e) => {
+        setSelectedRoleID(e.target.id)
+        setOpen(true)
+    }
+
     if (staffroles == null) {
         return <div>Loading ...</div>;
     } 
 
     return (
         <>
-            {/* <CreateCurrencyModal open={open} setOpen={setOpen} setCurrencies={setCurrencies} /> */}
+            <EditStaffRolesPermissions open={open} setOpen={setOpen} selectedroleID={selectedroleID}/>
             <div style={{margin:"20px 0"}}>
                 <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Staff Role</button>
             </div>
@@ -53,7 +60,7 @@ const StaffRolesAndPermissions = () => {
                             <tr className="table-row" key={role.id}>
                                 <td>{role.role}</td>
                                 <td>
-                                    <button className="btn btn-info">Set Permissions</button>
+                                    <button type='button' className="btn btn-info" id={role.id} onClick={handleClick}>Set Permissions</button>
                                 </td>
                                 <td>
                                     <div className="action-btns">

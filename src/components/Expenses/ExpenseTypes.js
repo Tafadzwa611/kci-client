@@ -56,6 +56,11 @@ const ExpenseTypes = () => {
                                     <td>{expense_type.name}</td>
                                 </tr>
                             ))}
+                            {expenseTypes == "" && 
+                                <tr style={{display:"flex", justifyContent:"center"}}>
+                                    <td>No data available.</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>

@@ -3,6 +3,8 @@ import Settings from './Settings/Settings'
 import ManageStaff from './ManageStaff/ManageStaff';
 import OtherIncomeTypes from '../OtherIncome/OtherIncomeTypes';
 import ExpenseTypes from '../Expenses/ExpenseTypes';
+import ManageLoans from './ManageLoans/ManageLoans';
+import ManageBranches from './ManageBranches/ManageBranches';
 
 const AdminPanel = ({isAccountinOn,propagatePayments,showIsAccountinOn,showPropagatePayments}) => {
 
@@ -28,6 +30,8 @@ const AdminPanel = ({isAccountinOn,propagatePayments,showIsAccountinOn,showPropa
                     <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                         {{
                             'settings': <Settings isAccountinOn={isAccountinOn} propagatePayments={propagatePayments} showIsAccountinOn={showIsAccountinOn} showPropagatePayments={showPropagatePayments} setMainTab={setTab}/>,
+                            'managelns': <ManageLoans setMainTab={setTab}/>,
+                            'managebrnchs': <ManageBranches setMainTab={setTab}/>,
                             'managestf': <ManageStaff setMainTab={setTab}/>,
                             'manageothin': <OtherIncomeTypes setMainTab={setTab}/>,
                             'manageexp': <ExpenseTypes setMainTab={setTab}/>,
