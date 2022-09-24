@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Payments from '../Payments/Payments';
+import ViewPaymentsChart from '../PaymentsChart/ViewPaymentsChart';
 
 const ViewPayments = () => {
 
@@ -23,7 +24,7 @@ const ViewPayments = () => {
                     <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                         {{
                             'payments': <Payments setMainTab={setTab}/>,
-                            // 'cshmngmnt': <AddClient setMainTab={setTab}/>,
+                            'paymentcharts': <ViewPaymentsChart setMainTab={setTab}/>,
                         }[tab]}
                     </div>
                 </>
