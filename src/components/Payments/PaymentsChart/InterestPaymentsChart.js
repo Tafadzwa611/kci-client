@@ -4,7 +4,7 @@ import { makeRequest } from '../../../utils/utils';
 import Select from 'react-select';
 import Loader from '../../Loader/loader';
 
-function PrincipalPaymentsChart({branches, currencies}) {
+function InterestPaymentsChart({branches, currencies}) {
   const [labels, setLabels] = useState(null);
   const [dataSets, setDataSets] = useState(null);
   const [selectedBranchesIds, setSelectedBranchesIds] = useState([]);
@@ -15,7 +15,7 @@ function PrincipalPaymentsChart({branches, currencies}) {
   const isFirstRun = useRef(true);
   const months = {0: 'Jan', 1: 'Feb', 2: 'Mar', 3: 'Apr', 4: 'May', 5: 'Jun', 6: 'Jul', 7: 'Aug', 8: 'Sep', 9: 'Oct', 10: 'Nov', 11: 'Dec'};
   const [optionSelected, setOptionSelected] = useState([]);
-  const [principalCollections, setPrincipalCollections]= useState([])
+  const [interestCollections, setInterestCollections]= useState([])
 
   const handleMultiSelect = selected => {
       setOptionSelected(selected);
@@ -47,14 +47,14 @@ function PrincipalPaymentsChart({branches, currencies}) {
 
   async function fetchData() {
     try {
-      let url = `/loansapi/principal_payments_chart/?currency_id=${currencyId}&page_num=${pageNum.current}&components=Principal`;
+      let url = `/loansapi/interest_payments_chart/?currency_id=${currencyId}&page_num=${pageNum.current}&components=Interest`;
       selectedBranchesIds.forEach(id => (url += `&branch_ids=${id}`));
       const response = await makeRequest.get(url, {timeout: 8000});
       if (response.ok) {
         const report = await response.json();
         pageNum.current = report.next_page_num;
         isFirstRun.current = false;
-        setPrincipalCollections(report);
+        setInterestCollections(report);
         return report
       }else {
         const error = await response.json();
@@ -102,7 +102,7 @@ function PrincipalPaymentsChart({branches, currencies}) {
 
   return (
     <>
-      <div className="book-value-section">
+      <div className="book-value-section" style={{marginTop:"1.5rem"}}>
 
         <div className="book-value-select-section">
             <div className="fields-container-select select_container_width">
@@ -129,7 +129,7 @@ function PrincipalPaymentsChart({branches, currencies}) {
 
         <div className="chart-section">
           <div className="chart-scroller header">
-            <h1 className="dashboard-section-title">Principal Collections</h1>
+            <h1 className="dashboard-section-title">Interest Collections</h1>
           </div>
             <div className="chart-container" style={{marginTop:"0"}}>
               <div className='chart'>
@@ -150,4 +150,4 @@ function PrincipalPaymentsChart({branches, currencies}) {
   )
 }
 
-export default PrincipalPaymentsChart;
+export default InterestPaymentsChart;

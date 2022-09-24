@@ -1,5 +1,6 @@
 import React from 'react';
 import PrincipalPaymentsChart from './PrincipalPaymentsChart';
+import InterestPaymentsChart from './InterestPaymentsChart';
 import { makeRequest } from '../../../utils/utils';
 
 const ViewPaymentsChart = () => {
@@ -57,6 +58,7 @@ const ViewPaymentsChart = () => {
     return (
         <>
             <PrincipalPaymentsChart branches={branches} currencies={currencies} />
+            <InterestPaymentsChart branches={branches} currencies={currencies} />
         </>
     )
 }
