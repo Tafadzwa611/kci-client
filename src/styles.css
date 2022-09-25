@@ -215,7 +215,8 @@ body {
   background-color: hsl(0, 0%, 5%);
 }
 
-#dark .journal-details {
+#dark .journal-details,
+#dark .par-card {
   background-color: #383838;
 }
 
@@ -1658,6 +1659,10 @@ small {
   margin-top: 25px;
 }
 
+.par-card {
+  background-color: #f2f8ff;
+}
+
 .journal-details.header {
   color: var(--color);
 }
@@ -3060,5 +3065,23 @@ input:checked + .slider:before {
 }
 
 #dark .action-btns span  {
+  background: #383838;
+}
+
+.par-info-part-sect {
+  width: calc(100% - 400px);
+}
+
+.par-card .css-1insrsq-control {
+  background: var(--white);
+  border-style: none;
+}
+
+.age-report-select-disabled .css-1insrsq-control {
+  background: #f2f8ff;
+  border-style: none;
+}
+
+#dark .age-report-select-disabled .css-1insrsq-control {
   background: #383838;
 }

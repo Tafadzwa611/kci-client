@@ -8,7 +8,7 @@ import LoanProductReport from '../LoanProductReport/LoanProductReport';
 import FeesReport from '../FeesReport/FeesReport';
 import LoanOfficerReport from '../LoanOfficerReport/LoanOfficerReport';
 import DailyReport from '../DailyReport/DailyReport';
-import AgingReport from '../AgingReport/AgingReport';
+// import AgingReport from '../AgingReport/AgingReport';
 import PortfolioAtRiskReport from '../PortfolioAtRiskReport/PortfolioAtRiskReport'
 
 const ViewReports = () => {
@@ -34,7 +34,7 @@ const ViewReports = () => {
                             <button className={tab === "feesrpt" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("feesrpt")}> Fees Report </button>
                             <button className={tab === "loanoffrreport" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("loanoffrreport")}> loans Officer Report </button>
                             <button className={tab === "dailyrpt" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("dailyrpt")}> Daily report </button>
-                            <button className={tab === "agingrpt" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("agingrpt")}> Aging Report </button>
+                            {/* <button className={tab === "agingrpt" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("agingrpt")}> Aging Report </button> */}
                             <button className={tab === "parreport" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("parreport")}> Par Report </button>
                     </div>
                     <div className='tab-content font-12' style={{marginTop:"3rem"}}>
@@ -48,7 +48,7 @@ const ViewReports = () => {
                             'feesrpt': <FeesReport />,
                             'loanoffrreport': <LoanOfficerReport />,
                             'dailyrpt': <DailyReport />,
-                            'agingrpt': <AgingReport />,
+                            // 'agingrpt': <AgingReport />,
                             'parreport': <PortfolioAtRiskReport />,
                         }[tab]}
                     </div>
