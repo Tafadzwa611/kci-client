@@ -20,6 +20,10 @@ function Payments({statement, currencyIso}) {
         <td style={{textAlign: 'right'}}>{currencyIso} {statement.money_paid_to_creditors}</td>
       </tr>
       <tr>
+        <td><b>Payments</b><em><small> ( for new assets )</small></em></td>
+        <td style={{textAlign: 'right'}}>{currencyIso} {statement.cash_to_other_assets}</td>
+      </tr>
+      <tr>
         <td><b>Loans Released (Principal)</b></td>
         <td style={{textAlign: 'right'}}>{currencyIso} {statement.amount_disbursed}</td>
       </tr>

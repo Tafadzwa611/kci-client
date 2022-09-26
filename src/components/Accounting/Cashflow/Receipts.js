@@ -12,6 +12,14 @@ function Receipts({statement, currencyIso}) {
         <td style={{textAlign: 'right'}}>{currencyIso} {statement.cash_at_opening}</td>
       </tr>
       <tr>
+        <td><b>Cash</b><em><small> ( @ from equity )</small></em></td>
+        <td style={{textAlign: 'right'}}>{currencyIso} {statement.cash_from_equity}</td>
+      </tr>
+      <tr>
+        <td><b>Cash</b><em><small> ( @ from assets )</small></em></td>
+        <td style={{textAlign: 'right'}}>{currencyIso} {statement.cash_from_other_assets}</td>
+      </tr>
+      <tr>
         <td><b>Cash</b><em><small> ( from overpaid loans )</small></em></td>
         <td style={{textAlign: 'right'}}>{currencyIso} {statement.overpayments}</td>
       </tr>
