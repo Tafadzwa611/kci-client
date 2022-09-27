@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import LoansList from '../LoansList/LoansList';
 import DueLoansList from '../DueLoans/DueLoansList';
+import ViewDefaultsAndArrears from '../DefaultedAndArrearsLoans/ViewDefaultsAndArrears';
 
 
 
@@ -27,6 +28,7 @@ const ViewLoans = ({setSidebar}) => {
                         {{
                             'loans': <LoansList setSidebar={setSidebar} setMainTab={setTab}/>,
                             'dueloans': <DueLoansList setMainTab={setTab}/>,
+                            'arrsloans': <ViewDefaultsAndArrears setMainTab={setTab}/>,
                         }[tab]}
                     </div>
                 </>

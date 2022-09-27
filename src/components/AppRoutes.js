@@ -59,7 +59,7 @@ const TransferClient = lazy(() => import('./Clients/TransferClient'));
 const AddLoan = lazy(() => import('./Loans/AddLoan'));
 const ViewLoans = lazy(() => import('./Loans/ViewLoans/ViewLoans'));
 // const ViewDueLoans = lazy(() => import('./Loans/DueLoans/ViewDueLoans'));
-const ViewDefaultsAndArrears = lazy(() => import('./Loans/DefaultedAndArrearsLoans/ViewDefaultsAndArrears'));
+// const ViewDefaultsAndArrears = lazy(() => import('./Loans/DefaultedAndArrearsLoans/ViewDefaultsAndArrears'));
 const ViewRefunds = lazy(() => import('./Loans/Refunds/ViewRefunds'));
 const LoanDetail = lazy(() => import('./Loans/LoanDetails/LoanDetail'));
 const AddLoanPayment = lazy(() => import('./Loans/LoanDetails/AddLoanPayment'));
@@ -176,7 +176,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                     <Route path='app' element={<Main />}>
                     {/* <Route exact path='/app/clients/viewonlineapplications' element={<ViewOnlineApplications/>}/> */}
                     {/* <Route exact path='/app/loans/viewdueloans' element={<ViewDueLoans/>}/> */}
-                    <Route exact path='/app/loans/viewdefaultsandarrears' element={<ViewDefaultsAndArrears/>}/>
+                    {/* <Route exact path='/app/loans/viewdefaultsandarrears' element={<ViewDefaultsAndArrears/>}/> */}
                     <Route exact path='/app/loans/viewrefunds' element={<ViewRefunds/>}/>
                     <Route exact path='/app/otherincome/viewotherincome' element={<ViewOtherIncome/>}/>
                     <Route exact path='/app/payments/viewpayments' element={<ViewPayments/>}/>
