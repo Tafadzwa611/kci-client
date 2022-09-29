@@ -2433,7 +2433,7 @@ small {
   background-color: #343A40;
 }
 
-.spinner {
+/* .spinner {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2468,7 +2468,7 @@ small {
   70%, 90% {
       width: 100%;
   }
-}
+} */
 
 .row.custom-background .custom-select-form, .row-payments-container.custom-background .custom-select-form {
   background: var(--white);
@@ -2991,46 +2991,37 @@ input:checked + .slider:before {
 }
 
 /* ------------------loader------------ */
-.loader-svg-rotate 
-{
-    position: relative;
-    width: 50px;
-    height: 50px;
-    animation: rotate__svg 2s linear infinite;
+@keyframes spinner {
+  to {transform: rotate(360deg);}
 }
-@keyframes rotate__svg {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+
+.spinner {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid #ccccff;
+  border-top-color: var(--info);
+  animation: spinner .8s linear infinite;
 }
-.loader-svg
-{
-    width: 100%;
-    height: 100%;
-    fill: none;
-    stroke-width: 5;
-    stroke:  var(--info);;
-    stroke-linecap: round;
-    transform: translate(5px, 5px);
-    stroke-dasharray: 126;
-    stroke-dashoffset: 126;
-    animation: animate__loader 4s linear infinite;
+
+.mini-spinner {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ccccff;
+  border-top-color: var(--info);
+  animation: spinner .8s linear infinite;
 }
-@keyframes animate__loader 
-{
-    0%, 100%{
-        stroke-dashoffset: 126;
-    }
-    50%{
-        stroke-dashoffset: 0;
-    }
-    50.1%{
-        stroke-dashoffset: 252;
-    }
+
+#dark .spinner,
+#dark .mini-spinner {
+  border: 2px solid #808080;
+  border-top-color: var(--info);
 }
+
+/* end of spinner */
 
 .nav-logout {
   display: flex;
