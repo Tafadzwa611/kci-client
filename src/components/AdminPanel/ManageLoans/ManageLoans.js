@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-// import Staff from './Staff/Staff';
-// import StaffRolesAndPermissions from './StaffRolesAndPermissions/StaffRolesAndPermissions'
+import Products from './Products/Products';
 
 const ManageLoans = () => {
 
@@ -14,7 +13,7 @@ const ManageLoans = () => {
             </div>
             <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                 {{
-                    // 'staff': <Staff setMainTab={setTab}/>,
+                    'products': <Products setMainTab={setTab}/>,
                     // 'rolesndperm': <StaffRolesAndPermissions setMainTab={setTab}/>,
                 }[tab]}
             </div>
