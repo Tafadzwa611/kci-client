@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-// import Loader from './Loader';
+import MiniLoader from '../../Loader/MiniLoader';
 
 const TrialBalanceTable = ({trialBalance, currencyIso, loading}) => {
 
     if (loading) {
-        return <div>Loading ...</div>
+        return <MiniLoader />
     }
     
     const [omitZeroBalances, setOmitZeroBalances] = useState(false);

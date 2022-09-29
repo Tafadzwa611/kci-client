@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import { makeRequest } from '../../../../utils/utils';
 import Table from './Table';
 import DateRange from './DateRange';
+import MiniLoader from '../../../Loader/MiniLoader';
 
 const AssetsSubAccounts = () => {
     const [subaccounts, setSubAccounts] = useState([])
@@ -116,7 +117,7 @@ const AssetsSubAccounts = () => {
     }
     
     if (subaccounts === null || branches === null || currency === null) {
-        return <div>Loading ...</div>
+        return <MiniLoader />
     }
     
     return (

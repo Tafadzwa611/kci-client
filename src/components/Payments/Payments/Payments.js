@@ -3,6 +3,7 @@ import PaymentsList from './PaymentsList';
 import PaymentsFilter from './PaymentsFilter';
 import PaymentsFooter from './PaymentsFooter';
 import { makeRequest } from '../../../utils/utils';
+import MiniLoader from '../../Loader/MiniLoader';
 
 
 const Payments = () => {
@@ -155,7 +156,7 @@ const Payments = () => {
     }
 
     if (currency === null || branches === null) {
-        return <div>Loading...</div>
+        return <MiniLoader />
     }
 
     return (

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { makeRequest } from '../../utils/utils';
+import MiniLoader from '../Loader/MiniLoader';
 
 const initialState = {expense_type: '', expense_name: '', expense_amount: '', expense_date: '', reference: '', description: '', fund_account_id:''};
 
@@ -83,7 +84,7 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
   };
 
   if (expenseTypes===null || fundAccount===null) {
-    return <div>Loading</div>
+    return <MiniLoader />
   }
 
   const submit = async () => {

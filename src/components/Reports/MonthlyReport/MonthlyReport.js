@@ -5,6 +5,7 @@ import MonthlyFooter from './MonthlyFooter';
 import Filter from './Filter';
 import NoData from '../ClientsReport/NoData';
 import { makeRequest } from '../../../utils/utils';
+import MiniLoader from '../../Loader/MiniLoader';
 
 const MonthlyReport = () => {
     const [month, setMonth] = useState('');
@@ -81,7 +82,7 @@ const MonthlyReport = () => {
     }, [order]);
   
     if (currencies===null) {
-        return <div>loading...</div>
+        return <MiniLoader />
     }
 
     return (

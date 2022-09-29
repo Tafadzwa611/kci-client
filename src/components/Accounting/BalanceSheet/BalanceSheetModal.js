@@ -1,5 +1,5 @@
 import React from 'react';
-// import Loader from './Loader';
+import MiniLoader from '../../Loader/MiniLoader';
 
 const BalanceSheetModal = ({
     modalAccounts,
@@ -19,7 +19,7 @@ const BalanceSheetModal = ({
             <div className='modal-body'>
   
                 {loadingModalAccounts ? 
-                    <div>Loading...</div>:
+                    <MiniLoader />:
                     <table className='table table-head-fixed text-nowrap'>
                         <thead>
                             <tr>

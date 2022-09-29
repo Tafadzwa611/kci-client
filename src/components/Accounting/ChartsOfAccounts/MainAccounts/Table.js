@@ -28,8 +28,6 @@ const Table = ({ mainaccounts, selectedMainAccID, setSelectedMainAccID, accDetai
         getGLN();
     }, [selectedMainAccID])
 
-    console.log(generalLedgerName)
-
     return (
         <div style={{padding:"0", border:"none", marginTop:"2rem"}} className={accDetails ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
             <div className={accDetails ? "table-responsive journal__table-container" : "table-responsive full__table"}>

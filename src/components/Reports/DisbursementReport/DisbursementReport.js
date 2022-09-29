@@ -5,6 +5,7 @@ import Table from './Table';
 import Footer from './Footer';
 import NoData from '../ClientsReport/NoData';
 import { makeRequest } from '../../../utils/utils';
+import MiniLoader from '../../Loader/MiniLoader';
 
 const DisbursementReport = () => {
     const [report, setReport] = useState([]);
@@ -116,7 +117,7 @@ const DisbursementReport = () => {
     }
   
     if (currencies===null) {
-        return <div>loading...</div>
+        return <MiniLoader />
     }
 
     return (

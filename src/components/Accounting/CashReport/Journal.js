@@ -1,11 +1,11 @@
 import React from 'react';
-// import Loader from '../trialbalance/Loader';
+import MiniLoader from '../../Loader/MiniLoader';
 
 function Journal(props) {
   const {journal, setShowJournal, setSelectedrowId} = props;
 
   if (journal === null) {
-    return <div>Loading</div>
+    return <MiniLoader />
   }
 
   const closeJournalDetails = (evt) => {

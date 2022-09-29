@@ -3,6 +3,7 @@ import DateRange from './DateRange';
 import { makeRequest } from '../../../utils/utils';
 import NoData from './NoData';
 import Table from './Table';
+import MiniLoader from '../../Loader/MiniLoader';
 
 function CashReport() {
   const [accounts, setAccounts] = useState(null);
@@ -56,7 +57,7 @@ function CashReport() {
   }
 
   if (accounts === null) {
-    return 'loading'
+    return <MiniLoader />
   }
 
   return (

@@ -3,6 +3,7 @@ import DateRange from './DateRange';
 import NoData from './NoData';
 import Table from './Table';
 import { makeRequest } from '../../../utils/utils';
+import MiniLoader from '../../Loader/MiniLoader';
 
 const Cashflow = () => {
 
@@ -60,9 +61,7 @@ const Cashflow = () => {
   
     if (currencies===null) {
       return (
-        <div>
-          Loading
-        </div>
+        <MiniLoader />
       )
     }
 

@@ -5,6 +5,7 @@ import Table from './Table';
 import Footer from './Footer';
 import NoData from '../ClientsReport/NoData';
 import { makeRequest } from '../../../utils/utils';
+import MiniLoader from '../../Loader/MiniLoader';
 
 const DailyReport = () => {
     const [dateOfReport, setDateOfReport] = useState('');
@@ -69,7 +70,7 @@ const DailyReport = () => {
     }
   
     if (currencies===null) {
-        return <div>loading...</div>
+        return <MiniLoader />
     }
   
     return (

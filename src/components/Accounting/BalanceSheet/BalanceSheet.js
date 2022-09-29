@@ -4,6 +4,7 @@ import DateSelect from './DateSelect';
 import SelectBranch from './SelectBranch';
 import BalanceSheetTable from './BalanceSheetTable';
 import Error from './Error';
+import MiniLoader from '../../Loader/MiniLoader';
 
 const BalanceSheet = () => {
     //branches
@@ -135,7 +136,7 @@ const BalanceSheet = () => {
 
     if (loading || currencies===null) {
         return (
-            <div>Loading...</div>
+            <MiniLoader />
         )
     }
 

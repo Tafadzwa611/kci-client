@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { makeRequest } from '../../../utils/utils';
 import IndividualClientDetails from './IndividualClientDetails/IndividualClientDetals';
 import CompanyClientDetails from './CompanyClientDetails/CompanyClientDetails';
+import MiniLoader from '../../Loader/MiniLoader';
 
 function Client({selectedclientID, setDetails}) {
   const [client, setClient] = useState(null);
@@ -64,7 +65,7 @@ function Client({selectedclientID, setDetails}) {
   }
 
   if (client === null) {
-    return <div>Loading</div>
+    return <MiniLoader />
   }
 
   return (

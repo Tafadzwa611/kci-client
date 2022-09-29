@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import LoansTable from './LoansTable';
 import Filter from './Filter';
 import { makeRequest } from '../../../utils/utils';
+import MiniLoader from '../../Loader/MiniLoader';
 
 
 const ViewDefaultsAndArrears = () => {
@@ -128,7 +129,7 @@ const ViewDefaultsAndArrears = () => {
     }
     
     if (currencies===null || branches===null) {
-        return <div>Loading</div>
+        return <MiniLoader />
     }
 
     return (

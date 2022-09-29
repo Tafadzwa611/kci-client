@@ -5,6 +5,7 @@ import Header from './Header';
 import Table from './Table';
 import Footer from './Footer';
 import NoData from './NoData';
+import MiniLoader from '../../Loader/MiniLoader';
 
 const ClientsReport = () => {
     const [report, setReport] = useState([]);
@@ -130,7 +131,7 @@ const ClientsReport = () => {
     }
 
     if (currencies===null) {
-        return <div>loading...</div>
+        return <MiniLoader />
     }
 
     return (

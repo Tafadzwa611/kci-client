@@ -3,6 +3,7 @@ import { makeRequest } from '../../../utils/utils';
 import Filter from './Filter';
 import LoansTable from './LoansTable';
 import Error from '../../Accounting/TrialBalance/Error';
+import MiniLoader from '../../Loader/MiniLoader';
 
 
 function LoansList() {
@@ -158,7 +159,7 @@ function LoansList() {
   }
 
   if (currencies===null || branches===null) {
-    return <div>Loading</div>
+    return <MiniLoader />
   }
 
   return (

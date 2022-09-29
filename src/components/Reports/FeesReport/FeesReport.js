@@ -6,7 +6,7 @@ import Footer from './Footer';
 import Summary from './Summary';
 import NoData from '../ClientsReport/NoData';
 import { makeRequest } from '../../../utils/utils';
-import { async } from 'regenerator-runtime';
+import MiniLoader from '../../Loader/MiniLoader';
 
 
 const FeesReport = () => {
@@ -120,7 +120,7 @@ const FeesReport = () => {
     }
   
     if (currencies===null) {
-      return <div>loading...</div>
+      return <MiniLoader />
     }
 
     return (

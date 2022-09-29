@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import { makeRequest } from '../../../../utils/utils';
+import MiniLoader from '../../../Loader/MiniLoader';
 import CreateCurrencyModal from './CreateCurrencyModal';
 
 const Currencies = () => {
@@ -33,7 +34,7 @@ const Currencies = () => {
     }
 
     if (currencies == null) {
-        return <div>Loading ...</div>;
+        return <MiniLoader />;
     } 
 
     return (

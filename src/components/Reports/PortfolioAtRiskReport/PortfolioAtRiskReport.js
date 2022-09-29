@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Tile from './Tile';
 import { makeRequest } from '../../../utils/utils';
 import AddPar from './AddPar';
+import MiniLoader from '../../Loader/MiniLoader';
 
 const PortfolioAtRiskReport = () => {
     const [currencies, setCurrencies] = useState(null);
@@ -51,7 +52,7 @@ const PortfolioAtRiskReport = () => {
   
     if (currencies===null || branches===null) {
         return (
-            <div>Loading...</div>
+            <MiniLoader />
         )
     }
   

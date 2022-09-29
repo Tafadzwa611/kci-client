@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Filter from './Filter';
 import { makeRequest } from '../../../utils/utils';
 import LoansTable from './LoansTable';
+import MiniLoader from '../../Loader/MiniLoader';
 
 
 function DueLoansList() {
@@ -120,7 +121,7 @@ function DueLoansList() {
   }
 
   if (currencies===null || branches===null) {
-    return <div>Loading...</div>
+    return <MiniLoader />
   }
 
   return (

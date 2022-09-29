@@ -6,6 +6,7 @@ import Footer from './Footer';
 import NoData from './NoData';
 import { makeRequest } from '../../../utils/utils';
 import { debounceFunction, useAsyncReference } from './utils';
+import MiniLoader from '../../Loader/MiniLoader';
 
 const Journals = () => {
     const [journals, setJournals] = useState([]);
@@ -123,9 +124,7 @@ const Journals = () => {
   
     if (currencies===null) {
         return (
-            <div>
-                Loading...
-            </div>
+            <MiniLoader />
         )
     }
 

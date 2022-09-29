@@ -5,6 +5,7 @@ import Table from './Table';
 import Footer from './Footer';
 import { makeRequest } from '../../../utils/utils';
 import NoData from '../ClientsReport/NoData';
+import MiniLoader from '../../Loader/MiniLoader';
 
 
 const LoanOfficerReport = () => {
@@ -68,7 +69,7 @@ const LoanOfficerReport = () => {
     }
   
     if (currencies===null) {
-        return <div>loading...</div>
+        return <MiniLoader />
     }
 
     return (

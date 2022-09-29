@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { makeRequest } from '../../utils/utils';
+import MiniLoader from '../Loader/MiniLoader';
 
 const initialState = {name: '', date_of_account: '', currency: ''};
 
@@ -52,7 +53,7 @@ function CreateOtherIncomeTypeModal({open, setOpen, setOtherIncomeTypes}) {
   };
 
   if (currencies===null) {
-    return <div>Loading</div>
+    return <MiniLoader />
   }
 
   const submit = async () => {

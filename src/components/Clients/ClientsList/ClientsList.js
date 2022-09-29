@@ -3,6 +3,7 @@ import { makeRequest } from '../../../utils/utils';
 import ClientsTable from './ClientsTable';
 import Filter from './Filter';
 import Footer from './Footer';
+import MiniLoader from '../../Loader/MiniLoader';
 
 function ClientsList() {
   const [clients, setClients] = useState(null);
@@ -98,7 +99,7 @@ function ClientsList() {
   }
 
   if (clients===null || branches===null) {
-    return <div>Loading</div>
+    return <MiniLoader />
   }
 
   const loadMore = async (evt) => {

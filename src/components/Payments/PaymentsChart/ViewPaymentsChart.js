@@ -3,6 +3,7 @@ import PrincipalPaymentsChart from './PrincipalPaymentsChart';
 import InterestPaymentsChart from './InterestPaymentsChart';
 import PenaltiesPaymentsChart from './PenaltiesPaymentsChart';
 import { makeRequest } from '../../../utils/utils';
+import MiniLoader from '../../Loader/MiniLoader';
 
 const ViewPaymentsChart = () => {
 
@@ -50,9 +51,7 @@ const ViewPaymentsChart = () => {
 
     if (branches === null || currencies === null) {
         return (
-            <div>
-                Loading...
-            </div>
+            <MiniLoader />
         )
     }
 

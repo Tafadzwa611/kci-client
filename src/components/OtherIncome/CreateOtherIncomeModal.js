@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { makeRequest } from '../../utils/utils';
+import MiniLoader from '../Loader/MiniLoader';
 
 const initialState = {income_type: '', otherincome_name: '', income_amount: '', income_date: '', reference: '', description: '', fund_account_id:''};
 
@@ -82,7 +83,7 @@ function CreateOtherincomeModal({open, setOpen, setOtherIncomes}) {
   };
 
   if (otherIncomeTypes===null || fundAccount===null) {
-    return <div>Loading</div>
+    return <MiniLoader />
   }
 
   const submit = async () => {

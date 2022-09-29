@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { makeRequest } from '../../../../utils/utils';
+import MiniLoader from '../../../Loader/MiniLoader';
 import CreateMainAccountModal from './CreateMainAccountModal';
 import DateRange from './DateRange';
 import Footer from './Footer';
@@ -137,7 +138,7 @@ const MainAccounts = () => {
     }
 
     if (mainaccounts === null || branches === null) {
-        return <div>Loading ...</div>
+        return <MiniLoader />
     }
 
     return (

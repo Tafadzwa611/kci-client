@@ -1,11 +1,11 @@
 import React from 'react';
+import MiniLoader from '../../Loader/MiniLoader';
 import Empty from './Empty';
-// import Loader from './Loader';
 import IncomeStatementTable from './IncomeStatementTable';
 
 function Display({report, loading, currencyIso}) {
   if (loading) {
-    return <div>Loading...</div>
+    return <MiniLoader />
   }
 
   if (report===null) {

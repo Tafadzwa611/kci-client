@@ -6,6 +6,7 @@ import Filter from './Filter';
 import { makeRequest } from '../../../utils/utils';
 import NoData from '../ClientsReport/NoData';
 import { debounceFunction, useAsyncReference } from './utils';
+import MiniLoader from '../../Loader/MiniLoader';
 
 const LoansReport = () => {
     const [selectedBranchesIds, setSelectedBranchesIds] = useAsyncReference([]);
@@ -111,7 +112,7 @@ const LoansReport = () => {
     }
   
     if (currencies.current===null) {
-        return <div>loading...</div>
+        return <MiniLoader />
     }
     
     return (

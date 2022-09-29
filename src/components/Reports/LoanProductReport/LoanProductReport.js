@@ -5,6 +5,7 @@ import Table from './Table';
 import Footer from './Footer';
 import { makeRequest } from '../../../utils/utils';
 import NoData from '../ClientsReport/NoData';
+import MiniLoader from '../../Loader/MiniLoader';
 
 const LoanProductReport = () => {
     const [minDate, setMinDate] = useState('');
@@ -77,7 +78,7 @@ const LoanProductReport = () => {
     }
     
     if (currencies===null || products===null) {
-      return <div>loading...</div>
+      return <MiniLoader />
     }
 
     return (

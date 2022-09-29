@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeRequest } from '../../../../utils/utils';
+import MiniLoader from '../../../Loader/MiniLoader';
 import { convertDate } from '../../Journals/utils';
 import CreateSubAccountModal from './CreateSubAccount/CreateSubAccountModal';
 import { AddCashAccountForm, AddAccountForm } from './CreateSubAccount/Forms';
@@ -33,7 +34,7 @@ const SubAccounts = ({selectedMainAccID, setAccDetails, generalLedgerName, gener
     }, []);
 
     if (currencies===null) {
-        return <div>Loading...</div>
+        return <MiniLoader />
     }
 
 

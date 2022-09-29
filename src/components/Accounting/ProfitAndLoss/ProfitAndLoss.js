@@ -4,6 +4,7 @@ import DateRange from './DateRange';
 import NoData from './NoData';
 import Table from './Table';
 import Display from './Display';
+import MiniLoader from '../../Loader/MiniLoader';
 
 const ProfitAndLoss = () => {
     const [minDate, setMinDate] = useState('');
@@ -68,9 +69,7 @@ const ProfitAndLoss = () => {
   
     if (currencies===null) {
       return (
-        <div>
-          Loading
-        </div>
+        <MiniLoader />
       )
     }
     return (

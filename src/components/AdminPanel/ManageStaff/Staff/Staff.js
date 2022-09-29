@@ -1,5 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {makeRequest} from '../../../../utils/utils';
+import MiniLoader from '../../../Loader/MiniLoader';
 
 const Staff = () => {
 
@@ -35,7 +36,7 @@ const Staff = () => {
     }
 
     if (users == null) {
-        return <div>Loading ...</div>;
+        return <MiniLoader />;
     } 
 
     return (

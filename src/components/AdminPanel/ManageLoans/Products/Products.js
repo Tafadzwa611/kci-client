@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { makeRequest } from '../../../../utils/utils';
+import MiniLoader from '../../../Loader/MiniLoader';
 
 
 const Products = () => {
@@ -105,7 +106,7 @@ const Products = () => {
     console.log(products.find(prd => prd.id == selectedPrdctID))
 
     if ( branches === null || products === null ) {
-        return <div>Loading...</div>
+        return <MiniLoader />
     }
     return (
         <>

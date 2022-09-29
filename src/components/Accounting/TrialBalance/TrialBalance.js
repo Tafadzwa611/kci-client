@@ -4,6 +4,7 @@ import Filter from './Filter';
 import Empty from './Empty';
 import TrialBalanceTable from './TrialBalanceTable';
 import Error from './Error';
+import MiniLoader from '../../Loader/MiniLoader';
 // import Loader from './Loader';
 
 const TrialBalance = () => {
@@ -95,7 +96,7 @@ const TrialBalance = () => {
     }
   
     if (branches===null || currencies===null) {
-        return <div>Loading ...</div>
+        return <MiniLoader />
     }
 
     return (

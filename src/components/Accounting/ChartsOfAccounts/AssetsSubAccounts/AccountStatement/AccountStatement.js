@@ -3,6 +3,7 @@ import DateRange from './DateRange';
 import Empty from './Empty';
 import AccountTransactions from './AccountTransactions';
 import { makeRequest, getFormattedDate } from '../../../../../utils/utils';
+import MiniLoader from '../../../../Loader/MiniLoader';
 
 const AccountStatement = (
     {selectedSubAccID, 
@@ -140,7 +141,7 @@ const AccountStatement = (
                         Reset={Reset}
                     />
                     {transactionsLoading ?
-                        <div style={{margin:"0 1.5rem"}}> Loading... </div> :
+                        <div style={{margin:"0 1.5rem"}}><MiniLoader /> </div> :
                         transactions.length === 0 ? 
                             <Empty message={emptyMessage} /> :
                             <AccountTransactions

@@ -1,5 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {makeRequest} from '../../../../utils/utils';
+import MiniLoader from '../../../Loader/MiniLoader';
 import EditStaffRolesPermissions from './EditStaffRolesPermissions';
 
 const StaffRolesAndPermissions = () => {
@@ -39,7 +40,7 @@ const StaffRolesAndPermissions = () => {
     }
 
     if (staffroles == null) {
-        return <div>Loading ...</div>;
+        return <MiniLoader />;
     } 
 
     return (

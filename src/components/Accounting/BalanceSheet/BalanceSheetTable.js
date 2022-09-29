@@ -1,7 +1,7 @@
 
 import React from 'react';
 import Error from './Error';
-// import Loader from './Loader';
+import MiniLoader from '../../Loader/MiniLoader';
 import Empty from './Empty';
 import Export from '../ChartsOfAccounts/SubAccounts/AccountStatement/Export';
 import BalanceSheetAssetsTable from './BalanceSheetAssetsTable';
@@ -87,7 +87,7 @@ const BalanceSheetTable = ({
 
     if (loading) {
         return (
-            <div>Loading...</div>
+            <MiniLoader />
         )
     }
 
