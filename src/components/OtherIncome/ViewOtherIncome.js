@@ -3,7 +3,7 @@ import OtherIncomeList from './OtherIncomeList';
 import Filter from './Filter';
 import { makeRequest } from '../../utils/utils';
 import OtherIncomeFooter from './OtherIncomeFooter';
-import DisbursementReportSkeleton from '../Skeletons/Charts/DisbursementReportSkeleton';
+import Loader from '../Loader/loader';
 
 
 const ViewOtherIncome = () => {
@@ -155,7 +155,11 @@ const ViewOtherIncome = () => {
     }
 
     if (currency === null || branches === null) {
-        return <DisbursementReportSkeleton />
+        return (
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center", minHeight:"100vh"}}>
+                <Loader />
+            </div>
+        )
     }
 
     return (

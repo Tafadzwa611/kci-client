@@ -4,6 +4,7 @@ import PenaltyRow from './PenaltyRow';
 import DisbursementRow from './DisbursementRow';
 import PaymentRow from './PaymentRow';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import MiniLoader from '../../../../Loader/MiniLoader';
 
 function Transactions({clientId}) {
     const [transactions, setTransactions] = useState(null);
@@ -58,7 +59,7 @@ function Transactions({clientId}) {
     }
 
     if (transactions===null || currencies === null) {
-        return <div>Loading</div>
+        return <MiniLoader />
     }
 
   return (

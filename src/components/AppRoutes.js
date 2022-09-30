@@ -4,62 +4,16 @@ import { LoggedInUserProvider } from './Context';
 import ProtectedRoutes from './ProtectedRoutes';
 import Cookies from 'js-cookie';
 
-import SkeletonTable from './Skeletons/Charts/SkeletonTable';
-// import AddClientSkeleton from './Skeletons/Forms/AddClientSkeleton';
-import AddLoanFormSkeleton from './Skeletons/Forms/AddLoanFormSkeleton';
-import AddCurrencyFormSkeleton from './Skeletons/Forms/AddCurrencyFormSkeleton';
-import AddAssetManagementFormSkeleton from './Skeletons/Forms/AddAssetManagementFormSkeleton';
-import BankNamesSkeleton from './Skeletons/Charts/BankNamesSkeleton';
-// import AccountSettingsSkeleton from './Skeletons/Charts/AccountSettingsSkeleton';
-import AddBankNameSkeleton from './Skeletons/Forms/AddBankNameSkeleton';
-import AddStaffSkeleton from './Skeletons/Forms/AddStaffSkeleton';
-import AddLoanFeeSkeleton from './Skeletons/Forms/AddLoanFeeSkeleton';
-import AddLoanProductSkeleton from './Skeletons/Forms/AddLoanProductSkeleton';
-import LoanProductsSkeleton from './Skeletons/Charts/LoanProductsSkeleton';
-import HomeSkeleton from './Skeletons/HomeSkeleton';
-import AddOtherIncomeSkeleton from './Skeletons/Forms/AddOtherIncomeSkeleton';
-import AddAssetSkeleton from './Skeletons/Forms/AddAssetSkeleton';
-import AdminSkeleton from './Skeletons/AdminSkeleton';
-import OnlineApplicationsSkeleton from './Skeletons/Charts/OnlineApplicationsSkeleton';
-// import UploadPaymentsFileSkeleton from './Skeletons/Forms/UploadPaymentsFileSkeleton';
-// import AddPaymentsSkeleton from './Skeletons/Forms/AddPaymentsSkeleton';
-import AddAssetFormSkeleton from './Skeletons/Forms/AddAssetFormSkeleton';
-import ClientsReportSkeleton from './Skeletons/Charts/ClientsReportSkeleton';
-// import MonthlyReportSkeleton from './Skeletons/Charts/MonthlyReportSkeleton';
-// import TopBorrowersSkeleton from './Skeletons/Charts/TopBorrowersSkeleton';
-import DisbursementReportSkeleton from './Skeletons/Charts/DisbursementReportSkeleton';
-// import LoanProductReportSkeleton from './Skeletons/Charts/LoanProductReportSkeleton';
-// import FeesReportSkeleton from './Skeletons/Charts/FeesReportSkeleton';
-// import LoanOfficerReportSkeleton from './Skeletons/Charts/LoanOfficerReportSkeleton';
-// import DailyReportSkeleton from './Skeletons/Charts/DailyReportSkeleton';
-// import PortfolioAtRiskSkeleton from './Skeletons/Charts/PortfolioAtRiskSkeleton';
-// import AgingReportSkeleton from './Skeletons/Charts/AgingReportSkeleton';
-import CashflowSkeleton from './Skeletons/Charts/CashflowSkeleton';
-// import TrialBalanceSkeleton from './Skeletons/Charts/TrialBalanceSkeleton';
-// import BalanceSheetSkeleton from './Skeletons/Charts/BalanceSheetSkeleton';
-import AddMainAccountSkeleton from './Skeletons/Forms/AddMainAccountSkeleton';
-// import SkeletonJournals from './Skeletons/Charts/SkeletonJournals';
-import ClientDetailsSkeleton from './Skeletons/Charts/ClientDetailsSkeleton';
-import LoanDetailSkeleton from './Skeletons/Charts/LoanDetailSkeleton';
-import NotificationSkeleton from './Skeletons/Charts/NotificationSkeleton';
-import UserProfileSkeleton from './Skeletons/Charts/UserProfileSkeleton';
-import OtherIncomeDetailsSkeleton from './Skeletons/Charts/OtherIncomeDetailsSkeleton';
 import AdminPanel from './AdminPanel/AdminPanel';
 
 const Home = lazy(() => import('./Home/Home'));
 const Dashboard = lazy(() => import('./Dashboard/Dashboard'));
-// const Admin = lazy(() => import('./Admin'));
-// Clients 
-// const AddClient = lazy(() => import('./Clients/add_client/AddClient'));
 const ViewClients = lazy(() => import('./Clients/ViewClients/ViewClients'));
 const ClientDetail = lazy(() => import('./Clients/ClientDetail'));
 const TransferClient = lazy(() => import('./Clients/TransferClient'));
-// const ViewOnlineApplications = lazy(() => import('./Clients/ViewOnlineApplications'));
 // Loans 
 const AddLoan = lazy(() => import('./Loans/AddLoan'));
 const ViewLoans = lazy(() => import('./Loans/ViewLoans/ViewLoans'));
-// const ViewDueLoans = lazy(() => import('./Loans/DueLoans/ViewDueLoans'));
-// const ViewDefaultsAndArrears = lazy(() => import('./Loans/DefaultedAndArrearsLoans/ViewDefaultsAndArrears'));
 const ViewRefunds = lazy(() => import('./Loans/Refunds/ViewRefunds'));
 const LoanDetail = lazy(() => import('./Loans/LoanDetails/LoanDetail'));
 const AddLoanPayment = lazy(() => import('./Loans/LoanDetails/AddLoanPayment'));
@@ -76,12 +30,8 @@ const ViewGuarantors = lazy(() => import('./Loans/Guarantors/ViewGuarantors'));
 const AddGuarantor = lazy(() => import('./Loans/Guarantors/AddGuarantor'));
 // Payments 
 const ViewPayments = lazy(() => import('./Payments/ViewPayments/ViewPayments'));
-// const AddPayments = lazy(() => import('./Payments/AddPayments'));
-// const UploadPaymentsFile = lazy(() => import('./Payments/UploadPaymentsFile'));
-// const PaymentsChart = lazy(() => import('./Payments/PaymentsChart'));
 // Users 
 const Notifications = lazy(() => import('./Users/Notifications'));
-// const AccountSettings = lazy(() => import('./Users/AccountSettings'));
 const BankNames = lazy(() => import('./Users/BankNames'));
 const Staff = lazy(() => import('./Users/Staff'));
 const AddBankName = lazy(() => import('./Users/AddBankName'));
@@ -92,8 +42,6 @@ const StaffRoles = lazy(() => import('./Users/StaffRoles'));
 const AddBranch = lazy(() => import('./Users/AddBranch'));
 const AddStaffRole = lazy(() => import('./Users/AddStaffRole'));
 const BranchDetails = lazy(() => import('./Users/BranchDetails'));
-// const Currencies = lazy(() => import('./Users/Currencies'));
-// const AddCurrency = lazy(() => import('./Users/AddCurrency'));
 // // Other Income 
 const OtherIncomeTypes = lazy(() => import('./OtherIncome/OtherIncomeTypes'));
 const AddOtherIncomeType = lazy(() => import('./OtherIncome/AddOtherIncomeType'));
@@ -115,29 +63,10 @@ const ViewExpenses = lazy(() => import('./Expenses/ViewExpenses'));
 const ExpenseDetails = lazy(() => import('./Expenses/ExpenseDetails'));
 const AddExpense = lazy(() => import('./Expenses/AddExpense'));
 // Repots 
-// const ClientsReport = lazy(() => import('./Reports/ClientsReport/ClientsReport'));
 const ViewReports = lazy(() => import('./Reports/ViewReports/ViewReports'));
-// const LoansReport = lazy(() => import('./Reports/LoansReport/LoansReport'));
-// const MonthlyReport = lazy(() => import('./Reports/MonthlyReport/MonthlyReport'));
-// const TopBorrowers = lazy(() => import('./Reports/TopBorrowers/TopBorrowers'));
-// const DisbursementReport = lazy(() => import('./Reports/DisbursementReport/DisbursementReport'));
-// const LoanProductReport = lazy(() => import('./Reports/LoanProductReport/LoanProductReport'));
-// const FeesReport = lazy(() => import('./Reports/FeesReport/FeesReport'));
-// const LoanOfficerReport = lazy(() => import('./Reports/LoanOfficerReport/LoanOfficerReport'));
-// const DailyReport = lazy(() => import('./Reports/DailyReport/DailyReport'));
-// const AgingReport = lazy(() => import('./Reports/AgingReport/AgingReport'));
-// const PortfolioAtRiskReport = lazy(() => import('./Reports/PortfolioAtRiskReport/PortfolioAtRiskReport'));
 // Accounting 
 const ViewAccounting = lazy(() => import('./Accounting/ViewAccounting/ViewAccounting'));
-// const Cashflow = lazy(() => import('./Accounting/Cashflow/Cashflow'));
-// const ProfitAndLoss = lazy(() => import('./Accounting/ProfitAndLoss/ProfitAndLoss'));
-// const TrialBalance = lazy(() => import('./Accounting/TrialBalance/TrialBalance'));
-// const BalanceSheet = lazy(() => import('./Accounting/BalanceSheet/BalanceSheet'));
-// const CashflowProjections = lazy(() => import('./Accounting/CashflowProjections/CashflowProjections'));
-// const ChartsOfAccounts = lazy(() => import('./Accounting/ChartsOfAccounts/ChartsOfAccounts'));
 const AddMainAccount = lazy(() => import('./Accounting/AddMainAccount/AddMainAccount'));
-// const Journals = lazy(() => import('./Accounting/Journals/Journals'));
-// const AddJournal = lazy(() => import('./Accounting/AddJournal/AddJournal'));
 const Main = lazy(() => import('./Main'));
 
 const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPropagatePayments, setSidebar}) => {
@@ -154,29 +83,12 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
     return (
         <div className="container">
 
-            {/* <Suspense fallback={<AddClientSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
-                    <Route exact path='/app/clients/viewclients' element={<AddClient/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense> */}
-
-            <Suspense fallback={<OnlineApplicationsSkeleton />}>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    {/* <Route exact path='/app/clients/viewonlineapplications' element={<ViewOnlineApplications/>}/> */}
-                    {/* <Route exact path='/app/loans/viewdueloans' element={<ViewDueLoans/>}/> */}
-                    {/* <Route exact path='/app/loans/viewdefaultsandarrears' element={<ViewDefaultsAndArrears/>}/> */}
                     <Route exact path='/app/loans/viewrefunds' element={<ViewRefunds/>}/>
                     <Route exact path='/app/otherincome/viewotherincome' element={<ViewOtherIncome/>}/>
                     <Route exact path='/app/payments/viewpayments' element={<ViewPayments/>}/>
@@ -188,7 +100,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<AddAssetFormSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -203,13 +115,12 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<AddCurrencyFormSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
-                    {/* <Route exact path='/app/users/addcurrency' element={<AddCurrency/>}/> */}
                     <Route exact path='/app/expenses/addexpensetype' element={<AddExpenseType/>}/>
                     <Route exact path='/app/otherincome/addotherincometype' element={<AddOtherIncomeType/>}/>
                     </Route>
@@ -219,7 +130,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<AddAssetManagementFormSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -234,14 +145,13 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<BankNamesSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
                     <Route exact path='/app/users/banknames' element={<BankNames/>}/>
-                    {/* <Route exact path='/app/users/currencies' element={<Currencies/>}/> */}
                     <Route exact path='/app/users/branches' element={<Branches/>}/>
                     <Route exact path='/app/expenses/expensetypes' element={<ExpenseTypes/>}/>
                     <Route exact path='/app/assets/assettypes' element={<AssetTypes/>}/>
@@ -257,30 +167,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            {/* <Suspense fallback={<AccountSettingsSkeleton />}>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route 
-                        exact 
-                        path='/app/users/accountsettings' 
-                        element={
-                            <AccountSettings 
-                                isAccountinOn={isAccountinOn}
-                                showIsAccountinOn={showIsAccountinOn}
-                                propagatePayments={propagatePayments}
-                                showPropagatePayments={showPropagatePayments}
-                        />}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense> */}
-
-            <Suspense fallback={<AddBankNameSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -297,7 +184,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<AddStaffSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -311,7 +198,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<AddLoanFeeSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -325,7 +212,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<AddLoanProductSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -339,7 +226,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<LoanProductsSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -354,7 +241,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<HomeSkeleton />}>
+            <Suspense fallback='Loading...'>
                 <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                     <Routes>
@@ -368,7 +255,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<AddOtherIncomeSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -383,7 +270,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<AddAssetSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -397,13 +284,12 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<AdminSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
-                    {/* <Route exact path='/app/users/admin' element={<Admin/>}/> */}
                     <Route 
                         exact 
                         path='/app/users/admin' 
@@ -423,35 +309,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            {/* <Suspense fallback={<UploadPaymentsFileSkeleton />}>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/payments/uploadpaymentsfile' element={<UploadPaymentsFile/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense> */}
-
-            {/* <Suspense fallback={<AddPaymentsSkeleton />}>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/payments/addpayments' element={<AddPayments/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense> */}
-
-            <Suspense fallback={<SkeletonTable />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -466,7 +324,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<AddLoanFormSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -485,15 +343,13 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<ClientsReportSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
-                    {/* <Route exact path='/app/reports/clientsreport' element={<ClientsReport/>}/> */}
                     <Route exact path='/app/reports/viewreports' element={<ViewReports/>}/>
-                    {/* <Route exact path='/app/reports/loansreport' element={<LoansReport/>}/> */}
                     </Route>
                 </Route>
                 </Routes>
@@ -501,41 +357,12 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            {/* <Suspense fallback={<MonthlyReportSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
-                    <Route exact path='/app/reports/monthlyreport' element={<MonthlyReport/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense> */}
-
-            {/* <Suspense fallback={<TopBorrowersSkeleton />}>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/reports/topborrowers' element={<TopBorrowers/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense> */}
-
-            <Suspense fallback={<DisbursementReportSkeleton />}>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    {/* <Route exact path='/app/reports/disbursementreport' element={<DisbursementReport/>}/> */}
                     <Route exact path='/app/expenses/viewexpenses' element={<ViewExpenses/>}/>
                     </Route>
                 </Route>
@@ -544,99 +371,13 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            {/* <Suspense fallback={<LoanProductReportSkeleton />}>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/reports/loanproductreport' element={<LoanProductReport/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback={<FeesReportSkeleton />}>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                <Route path='app' element={<Main />}>
-                <Route exact path='/app/reports/feesreport' element={<FeesReport/>}/>
-                </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback={<LoanOfficerReportSkeleton />}>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/reports/loanofficerreport' element={<LoanOfficerReport/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback={<DailyReportSkeleton />}>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/reports/dailyreport' element={<DailyReport/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense> */}
-
-            {/* <Suspense fallback={<PortfolioAtRiskSkeleton />}>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/reports/portfolioatriskreport' element={<PortfolioAtRiskReport/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense> */}
-
-            {/* <Suspense fallback={<AgingReportSkeleton />}>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/reports/agingreport' element={<AgingReport/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense> */}
-
-            <Suspense fallback={<CashflowSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
                     <Route exact path='/app/accounting/viewaccounting' element={<ViewAccounting/>}/>
-                    {/* <Route exact path='/app/accounting/cashflow' element={<Cashflow/>}/>
-                    <Route exact path='/app/accounting/profitandloss' element={<ProfitAndLoss/>}/> */}
                     </Route>
                 </Route>
                 </Routes>
@@ -644,35 +385,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            {/* <Suspense fallback={<TrialBalanceSkeleton />}>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/accounting/trialbalance' element={<TrialBalance/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense> */}
-
-            {/* <Suspense fallback={<BalanceSheetSkeleton />}>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/accounting/balancesheet' element={<BalanceSheet/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense> */}
-
-            <Suspense fallback={<AddMainAccountSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -686,21 +399,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            {/* <Suspense fallback={<SkeletonJournals />}>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/accounting/journals' element={<Journals/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense> */}
-
-            <Suspense fallback={<ClientDetailsSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -714,7 +413,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<LoanDetailSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -728,7 +427,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<NotificationSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -742,7 +441,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<UserProfileSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -756,7 +455,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback={<OtherIncomeDetailsSkeleton />}>
+            <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -779,11 +478,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
                     <Route exact path='/app/dashboard' element={<Dashboard/>}/>
-                    {/* <Route exact path='/app/payments/paymentschart' element={<PaymentsChart/>}/> */}
                     <Route exact path='/app/users/branchdetails' element={<BranchDetails/>}/>
-                    {/* <Route exact path='/app/accounting/cashflowprojections' element={<CashflowProjections/>}/>
-                    <Route exact path='/app/accounting/chartsofaccounts' element={<ChartsOfAccounts/>}/>
-                    <Route exact path='/app/accounting/addjournal' element={<AddJournal/>}/> */}
                     </Route>
                 </Route>
                 </Routes>

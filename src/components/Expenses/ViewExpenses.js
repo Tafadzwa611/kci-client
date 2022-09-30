@@ -3,7 +3,7 @@ import ExpenseList from './ExpenseList';
 import Filter from './Filter';
 import ExpenseFooter from './ExpenseFooter';
 import { makeRequest } from '../../utils/utils';
-import DisbursementReportSkeleton from '../Skeletons/Charts/DisbursementReportSkeleton';
+import Loader from '../Loader/loader';
 
 
 const ViewExpenses = () => {
@@ -155,7 +155,11 @@ const ViewExpenses = () => {
     }
 
     if (currency === null || branches === null) {
-        return <DisbursementReportSkeleton />
+        return (
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center", minHeight:"100vh"}}>
+                <Loader />
+            </div>
+        )
     }
 
     return (
