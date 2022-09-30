@@ -36,6 +36,7 @@ function Details({client, setClient, clientId, branches}) {
               <li>Gender: {client.gender}</li>
               <li>Date of Birth: {convertDate(client.date_of_birth)}</li>
               <li>ID Number: {client.identification_number}</li>
+              <li>Client State: {client.status}</li>
             </ul>
           </div>
 

@@ -1214,13 +1214,18 @@ tr .edit {
   padding: 2rem 2rem 0;
 }
 
-.modalBackground .modalContainer .modal_circle {
+.modalBackground .modalContainer .modal_circle,
+.modalBackground .modalContainer .modal_circle_approve {
   font-size: 100px;
   color: var(--danger);
   margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.modalBackground .modalContainer .modal_circle_approve {
+  color: var(--success);
 }
 
 .modalBackground .modalContainer .title {

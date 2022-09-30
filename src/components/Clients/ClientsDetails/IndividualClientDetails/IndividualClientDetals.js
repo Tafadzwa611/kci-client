@@ -7,9 +7,11 @@ import Files from './Files/Files';
 import EmploymentDetails from './Employment/EmploymentDetails';
 import BankingDetails from './BankingDetails/BankingDetails';
 import Transactions from './Transactions/Transactions';
+import ApproveClient from './ChangeClientState/ApproveClient';
 
-function IndividualClientDetails({client, setClient, addresses, setAddresses, nokList, setNokList, clientId, files, branches, setFiles, setOpen, setDetails}) {
+function IndividualClientDetails({client, setClient, addresses, setAddresses, nokList, setNokList, clientId, files, branches, setFiles, setDetails}) {
   const [tab, setTab] = useState('details');
+  const [openApproveClient, setOpenApproveClient] = useState(false);
 
   const handleClose = () => {
     setDetails(false);
@@ -17,8 +19,15 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
 
   return (
     <>
-        <div style={{marginBottom:"1.5rem", display:"flex", justifyContent:"end"}}>
+        {openApproveClient &&<ApproveClient clientId={clientId} setClient={setClient} setOpenApproveClient={setOpenApproveClient} openApproveClient={openApproveClient}/>}
+        <div style={{marginBottom:"1.5rem", display:"flex", justifyContent:"space-between"}}>
           <button className="btn btn-default client__details" onClick={handleClose}>Close</button>
+          {client.status == 'Pending Approval' && 
+            <div className="client-state-btns" style={{display:"flex", columnGap:"3px"}}>
+              <button className="btn btn-olive" onClick={(e) => setOpenApproveClient(curr => !curr)}>Approve Client</button>
+              <button className="btn btn-olive">Reject Client</button>
+            </div>
+          }
         </div>
         <div className="bloc-tabs">
             <button className={tab === "details" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("details")}> Personal Info </button>
@@ -31,7 +40,7 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
         </div>
         <div className='tab-content font-12' style={{marginTop:"3rem"}}>
             {{
-                'details': <Details clientId={clientId} setClient={setClient} client={client} branches={branches} setOpen={setOpen}/>,
+                'details': <Details clientId={clientId} setClient={setClient} client={client} branches={branches}/>,
                 'addresses': <ClientAddresses clientId={clientId} addresses={addresses} setAddresses={setAddresses} />,
                 'emp': <EmploymentDetails clientId={clientId} setClient={setClient} client={client} />,
                 'bnk': <BankingDetails clientId={clientId} setClient={setClient} client={client} />,
