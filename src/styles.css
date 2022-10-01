@@ -1215,7 +1215,9 @@ tr .edit {
 }
 
 .modalBackground .modalContainer .modal_circle,
-.modalBackground .modalContainer .modal_circle_approve {
+.modalBackground .modalContainer .modal_circle_approve,
+.modalBackground .modalContainer .modal_circle_reject,
+.modalBackground .modalContainer .modal_circle_undo_client_rejection {
   font-size: 100px;
   color: var(--danger);
   margin-bottom: 1.5rem;
@@ -1224,8 +1226,13 @@ tr .edit {
   align-items: center;
 }
 
-.modalBackground .modalContainer .modal_circle_approve {
+.modalBackground .modalContainer .modal_circle_approve,
+.modalBackground .modalContainer .modal_circle_undo_client_rejection {
   color: var(--success);
+}
+
+.modalBackground .modalContainer .modal_circle_reject {
+  color: var(--danger);
 }
 
 .modalBackground .modalContainer .title {

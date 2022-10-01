@@ -19,10 +19,12 @@ function Details({client, setClient, clientId, branches}) {
         </div>
 
         <div style={{display:'flex', justifyContent:"space-between", marginTop:"1.5rem"}}>
-          <div style={{display:'flex', columnGap:"10px"}}>
-              <button className="btn btn-default client__details">Add loan</button>
-              <button className="btn btn-default client__details">Transfer Client</button>
-          </div>
+          {client.status == 'Inactive' &&
+            <div style={{display:'flex', columnGap:"10px"}}>
+                <button className="btn btn-default client__details">Add loan</button>
+                <button className="btn btn-default client__details">Transfer Client</button>
+            </div>
+          }
           <div>
               <button className="btn btn-success" onClick={(e) => setOpen(curr => !curr)}>Update Personal Details</button>
           </div>

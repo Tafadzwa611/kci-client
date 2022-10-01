@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeRequest } from '../../../../../utils/utils';
 
 
-function ApproveClient({openApproveClient, setOpenApproveClient, setClient, clientId}) {
+function ApproveClient({setOpenApproveClient, setClient, clientId}) {
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -16,6 +16,7 @@ function ApproveClient({openApproveClient, setOpenApproveClient, setClient, clie
         const response = await makeRequest.patch(`/clientsapi/approve_client/${clientId}/`, {}, {timeout: 8000});
         if (response.ok) {
             setClient(curr => ({...curr, approved: true}));
+            setClient(curr => ({...curr, status: 'Inactive'}));
             setOpenApproveClient(false);
         }else {
             const error = await response.json();

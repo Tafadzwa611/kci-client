@@ -12,6 +12,7 @@ function Client({selectedclientID, setDetails}) {
   const [branches, setBranches] = useState([]);
   const [business, setBusiness] = useState([]);
   const [directors, setDirectors] = useState([]);
+  const [userperms, setUserPerms] = useState(null);
 
   useEffect(() => {
     getClient(selectedclientID);
@@ -35,6 +36,7 @@ function Client({selectedclientID, setDetails}) {
         setAddresses(json_res.address_list);
         setFiles(json_res.file_list);
         setNokList(json_res.next_of_kin_list);
+        setUserPerms(json_res.user_permissions);
         if (json_res.client.type_of_client==='Company') {
           setBusiness(json_res.business);
           setDirectors(json_res.business.businessdirector_set);
@@ -79,6 +81,7 @@ function Client({selectedclientID, setDetails}) {
       setNokList={setNokList}
       files={files}
       setFiles={setFiles}
+      userperms={userperms}
       branches={branches}
       clientId={selectedclientID}
       setDetails={setDetails}
@@ -93,6 +96,7 @@ function Client({selectedclientID, setDetails}) {
       setBusiness={setBusiness}
       files={files}
       setFiles={setFiles}
+      userperms={userperms}
       clientId={selectedclientID}
       setDetails={setDetails}
     />

@@ -8,10 +8,16 @@ import EmploymentDetails from './Employment/EmploymentDetails';
 import BankingDetails from './BankingDetails/BankingDetails';
 import Transactions from './Transactions/Transactions';
 import ApproveClient from './ChangeClientState/ApproveClient';
+import RejectClient from './ChangeClientState/RejectClient';
+import UndoClientRejection from './ChangeClientState/UndoClientRejection';
+import RequestUndoClientRejection from './ChangeClientState/RequestChangeClientState/RequestUndoClientRejection';
 
-function IndividualClientDetails({client, setClient, addresses, setAddresses, nokList, setNokList, clientId, files, branches, setFiles, setDetails}) {
+function IndividualClientDetails({client, setClient, addresses, setAddresses, nokList, setNokList, clientId, files, userperms, branches, setFiles, setDetails}) {
   const [tab, setTab] = useState('details');
   const [openApproveClient, setOpenApproveClient] = useState(false);
+  const [rejectClient, setRejectClient] = useState(false);
+  const [undoClientRejection, setUndoClientRejection] = useState(false);
+  const [requestundoClientRejection, setRequestUndoClientRejection] = useState(false);
 
   const handleClose = () => {
     setDetails(false);
@@ -19,13 +25,51 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
 
   return (
     <>
-        {openApproveClient &&<ApproveClient clientId={clientId} setClient={setClient} setOpenApproveClient={setOpenApproveClient} openApproveClient={openApproveClient}/>}
+        {openApproveClient &&
+          <ApproveClient 
+            clientId={clientId} 
+            setClient={setClient} 
+            setOpenApproveClient={setOpenApproveClient} 
+            openApproveClient={openApproveClient}
+          />
+        }
+
+        {rejectClient &&
+          <RejectClient 
+            clientId={clientId} 
+            setClient={setClient} 
+            setRejectClient={setRejectClient} 
+          />
+        }
+
+        {undoClientRejection &&
+          <UndoClientRejection 
+            clientId={clientId} 
+            setClient={setClient} 
+            setUndoClientRejection={setUndoClientRejection} 
+          />
+        }
+
+        <RequestUndoClientRejection 
+          clientId={clientId} 
+          requestundoClientRejection={requestundoClientRejection} 
+          setRequestUndoClientRejection={setRequestUndoClientRejection} 
+        />
+
         <div style={{marginBottom:"1.5rem", display:"flex", justifyContent:"space-between"}}>
           <button className="btn btn-default client__details" onClick={handleClose}>Close</button>
           {client.status == 'Pending Approval' && 
             <div className="client-state-btns" style={{display:"flex", columnGap:"3px"}}>
               <button className="btn btn-olive" onClick={(e) => setOpenApproveClient(curr => !curr)}>Approve Client</button>
-              <button className="btn btn-olive">Reject Client</button>
+              <button className="btn btn-olive" onClick={(e) => setRejectClient(curr => !curr)}>Reject Client</button>
+            </div>
+          }
+          {client.status == 'Rejected' && 
+            <div className="client-state-btns" style={{display:"flex", columnGap:"3px"}}>
+              {userperms.undo_client_rejection ?
+                <button className="btn btn-olive" onClick={(e) => setUndoClientRejection(curr => !curr)}>Undo Client Rejection</button>:
+                <button className="btn btn-olive" onClick={(e) => setRequestUndoClientRejection(curr => !curr)}>Request Undo Client Rejection</button>
+              }
             </div>
           }
         </div>
