@@ -932,6 +932,16 @@ span {
   color: var(--white);
 }
 
+.btn-dark {
+  background: var(--dark);
+  border-color: var(--dark);
+  color: var(--white);
+}
+
+#dark .btn-dark {
+  color: var(--color);
+}
+
 .btn-success {
   background: var(--success);
   border-color: var(--success);
@@ -1217,7 +1227,8 @@ tr .edit {
 .modalBackground .modalContainer .modal_circle,
 .modalBackground .modalContainer .modal_circle_approve,
 .modalBackground .modalContainer .modal_circle_reject,
-.modalBackground .modalContainer .modal_circle_undo_client_rejection {
+.modalBackground .modalContainer .modal_circle_undo_client_rejection,
+.modalBackground .modalContainer .modal_circle_left {
   font-size: 100px;
   color: var(--danger);
   margin-bottom: 1.5rem;
@@ -1233,6 +1244,10 @@ tr .edit {
 
 .modalBackground .modalContainer .modal_circle_reject {
   color: var(--danger);
+}
+
+.modalBackground .modalContainer .modal_circle_left {
+  color: var(--dark);
 }
 
 .modalBackground .modalContainer .title {
