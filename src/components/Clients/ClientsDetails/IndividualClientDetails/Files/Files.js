@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import SingleFile from './SingleFile';
 
-function Files({files, setFiles, clientId}) {
+function Files({files, setFiles, clientId, client}) {
 
     const changeHandler = (event) => {
         let newFiles = [];
@@ -24,10 +24,16 @@ function Files({files, setFiles, clientId}) {
             <div>
                 <input type='file' name='file' id="selectedFile" onChange={changeHandler} multiple style={{display: 'none'}}/>
                 <div style={{marginBottom:"1.5rem"}}>
+                    {client.status == 'Blacklisted' ?
+                    <button type='button' style={{pointerEvents: 'none', opacity: '0.7'}} className='btn btn-success' onClick={e => document.getElementById('selectedFile').click()}>
+                        <i className='fas fa-folder-open'/>
+                        Browse...
+                    </button>:
                     <button type='button' className='btn btn-success' onClick={e => document.getElementById('selectedFile').click()}>
                         <i className='fas fa-folder-open'/>
                         Browse...
                     </button>
+                    }
                 </div>
                 <table className="table">
                     <thead>

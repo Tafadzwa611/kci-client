@@ -38,8 +38,8 @@ function ApproveClient({setOpenApproveClient, setClient, clientId}) {
                     Approve Client 
                 </div>
                 <div className="modal-footer">
-                    <button className="btn btn-success" onClick={handleSubmit}>Continue</button>
                     <button className="btn btn-default"onClick={() => setOpenApproveClient(false)}>Cancel</button>
+                    <button className="btn btn-success" onClick={handleSubmit}>Continue</button>
                 </div>
             </div>
         </div>

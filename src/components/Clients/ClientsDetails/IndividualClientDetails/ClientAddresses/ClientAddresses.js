@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import AddAddress from './AddAddress';
 import { makeRequest } from '../../../../../utils/utils';
 
-function ClientAddresses({addresses, setAddresses, clientId}) {
+function ClientAddresses({client, addresses, setAddresses, clientId}) {
     const [open, setOpen] = useState(false);
 
     const deleteAddress = async (evt) => {
@@ -20,9 +20,14 @@ function ClientAddresses({addresses, setAddresses, clientId}) {
         <>
             <AddAddress open={open} setOpen={setOpen} clientId={clientId} setAddresses={setAddresses}/>
             <div style={{marginBottom:"1.5rem"}}>
-                <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)} 
-                    >Add Address
-                </button>
+                {client.status == 'Blacklisted' ?
+                    <button type='button' style={{pointerEvents: 'none', opacity: '0.7'}} className='btn btn-success' onClick={(e) => setOpen(curr => !curr)} 
+                        >Add Address
+                    </button>:
+                    <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)} 
+                        >Add Address
+                    </button>
+                }
             </div>
 
             <table className='table'>

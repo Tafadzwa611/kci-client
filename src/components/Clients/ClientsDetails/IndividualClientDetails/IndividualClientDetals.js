@@ -15,6 +15,14 @@ import UndoClientLeft from './ChangeClientState/UndoClientLeft';
 import ClientLeft from './ChangeClientState/ClientLeft';
 import BlacklistClient from './ChangeClientState/BlackListClient';
 import UndoClientBlackList from './ChangeClientState/UndoClientBlackList';
+import UndoClientApproval from './ChangeClientState/UndoClientApproval';
+import RequestClientRejection from './ChangeClientState/RequestChangeClientState/RequestClientRejection';
+import RequestClientApproval from './ChangeClientState/RequestChangeClientState/RequestClientApproval';
+import RequestUndoClientApproval from './ChangeClientState/RequestChangeClientState/RequestUndoClientApproval';
+import RequestUndoClientBlackList from './ChangeClientState/RequestChangeClientState/RequestUndoClientBlacklist';
+import RequestClientBlackList from './ChangeClientState/RequestChangeClientState/RequestClientBlackList';
+import RequestClientLeft from './ChangeClientState/RequestChangeClientState/RequestClientLeft';
+import RequestUndoClientLeft from './ChangeClientState/RequestChangeClientState/RequestUndoClientLeft';
 
 function IndividualClientDetails({client, setClient, addresses, setAddresses, nokList, setNokList, clientId, files, userperms, branches, setFiles, setDetails}) {
   const [tab, setTab] = useState('details');
@@ -22,10 +30,19 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
   const [rejectClient, setRejectClient] = useState(false);
   const [undoClientRejection, setUndoClientRejection] = useState(false);
   const [requestundoClientRejection, setRequestUndoClientRejection] = useState(false);
+  const [requestClientRejection, setRequestClientRejection] = useState(false);
   const [undoclientleft, setUndoClientLeft] = useState(false);
   const [clientleft, setClientLeft] = useState(false);
   const [clientblacklist, setClientBlacklist] = useState(false);
   const [undoclientblacklist, setUndoClientBlacklist] = useState(false);
+  const [undoclientapproval, setUndoClientApproval] = useState(false);
+  const [requestClientApproval, setRequestClientApproval] = useState(false);
+  const [requestUndoClientApproval, setRequestUndoClientApproval] = useState(false);
+  const [requestClientBlacklist, setRequestClientBlackList] = useState(false);
+  const [requestUndoClientBlacklist, setRequestUndoClientBlackList] = useState(false);
+  const [requestClientLeft, setRequestClientLeft] = useState(false);
+  const [requestUndoClientLeft, setRequestUndoClientLeft] = useState(false);
+
 
   const handleClose = () => {
     setDetails(false);
@@ -33,6 +50,14 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
 
   return (
     <>  
+
+        {undoclientapproval &&
+          <UndoClientApproval 
+            clientId={clientId}
+            setClient={setClient}
+            setUndoClientApproval={setUndoClientApproval}
+          />
+        }
 
         {undoclientblacklist &&
           <UndoClientBlackList 
@@ -97,35 +122,104 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
           setRequestUndoClientRejection={setRequestUndoClientRejection} 
         />
 
+        <RequestClientRejection 
+          clientId={clientId} 
+          requestClientRejection={requestClientRejection} 
+          setRequestClientRejection={setRequestClientRejection} 
+        />
+
+        <RequestClientApproval 
+          clientId={clientId} 
+          requestClientApproval={requestClientApproval} 
+          setRequestClientApproval={setRequestClientApproval} 
+        />
+
+        <RequestUndoClientApproval 
+          clientId={clientId} 
+          requestUndoClientApproval={requestUndoClientApproval} 
+          setRequestUndoClientApproval={setRequestUndoClientApproval} 
+        />
+
+        <RequestClientBlackList 
+          clientId={clientId} 
+          requestClientBlacklist={requestClientBlacklist} 
+          setRequestClientBlackList={setRequestClientBlackList} 
+        />
+
+        <RequestUndoClientBlackList 
+          clientId={clientId} 
+          requestUndoClientBlacklist={requestUndoClientBlacklist} 
+          setRequestUndoClientBlackList={setRequestUndoClientBlackList} 
+        />
+
+        <RequestClientLeft 
+          clientId={clientId} 
+          requestClientLeft={requestClientLeft} 
+          setRequestClientLeft={setRequestClientLeft} 
+        />
+
+        <RequestUndoClientLeft 
+          clientId={clientId} 
+          requestUndoClientLeft={requestUndoClientLeft} 
+          setRequestUndoClientLeft={setRequestUndoClientLeft} 
+        />
+
         <div style={{marginBottom:"1.5rem", display:"flex", justifyContent:"space-between"}}>
           <button className="btn btn-default client__details" onClick={handleClose}>Close</button>
           {client.status == 'Blacklisted' && 
             <div className="client-state-btns" style={{display:"flex", columnGap:"3px"}}>
-              <button className="btn btn-olive" onClick={(e) => setUndoClientBlacklist(curr => !curr)}>Undo Blacklist</button>
+              {userperms.blacklist_client ?
+                <button className="btn btn-olive" onClick={(e) => setUndoClientBlacklist(curr => !curr)}>Undo Blacklist</button>:
+                <button className="btn btn-olive" onClick={(e) => setRequestUndoClientBlackList(curr => !curr)}>Request Undo Blacklist</button>
+              }
             </div>
           }
           {client.status == 'Left' && 
             <div className="client-state-btns" style={{display:"flex", columnGap:"3px"}}>
-              <button className="btn btn-olive" onClick={(e) => setUndoClientLeft(curr => !curr)}>Undo Left</button>
+              {userperms.undo_mark_as_left ?
+                <button className="btn btn-olive" onClick={(e) => setUndoClientLeft(curr => !curr)}>Undo Left</button>:
+                <button className="btn btn-olive" onClick={(e) => setRequestUndoClientLeft(curr => !curr)}>Request Undo Left</button>
+              }
             </div>
           }
           {client.status == 'Active' && 
             <div className="client-state-btns" style={{display:"flex", columnGap:"3px"}}>
-              <button className="btn btn-olive" onClick={(e) => setClientBlacklist(curr => !curr)}>Blacklist</button>
+              {userperms.blacklist_client ?
+                <button className="btn btn-olive" onClick={(e) => setClientBlacklist(curr => !curr)}>Blacklist</button>:
+                <button className="btn btn-olive" onClick={(e) => setRequestClientBlackList(curr => !curr)}>Request Blacklist</button>
+              }
             </div>
           }
           {client.status == 'Inactive' && 
             <div className="client-state-btns" style={{display:"flex", columnGap:"3px"}}>
-              <button className="btn btn-olive" onClick={(e) => setOpenApproveClient(curr => !curr)}>Undo Approve</button>
-              <button className="btn btn-olive" onClick={(e) => setClientBlacklist(curr => !curr)}>Blacklist</button>
-              <button className="btn btn-olive" onClick={(e) => setClientLeft(curr => !curr)}>Left</button>
+              {userperms.approve_client ?
+                <button className="btn btn-olive" onClick={(e) => setUndoClientApproval(curr => !curr)}>Undo Approve</button>:
+                <button className="btn btn-olive" onClick={(e) => setRequestUndoClientApproval(curr => !curr)}>Request Undo Approve</button>
+              }
+              {userperms.blacklist_client ?
+                <button className="btn btn-olive" onClick={(e) => setClientBlacklist(curr => !curr)}>Blacklist</button>:
+                <button className="btn btn-olive" onClick={(e) => setRequestClientBlackList(curr => !curr)}>Request Blacklist</button>
+              }
+              {userperms.mark_client_as_left ?
+                <button className="btn btn-olive" onClick={(e) => setClientLeft(curr => !curr)}>Left</button>:
+                <button className="btn btn-olive" onClick={(e) => setRequestClientLeft(curr => !curr)}>Request Left</button>
+              }
             </div>
           }
           {client.status == 'Pending Approval' && 
             <div className="client-state-btns" style={{display:"flex", columnGap:"3px"}}>
-              <button className="btn btn-olive" onClick={(e) => setOpenApproveClient(curr => !curr)}>Approve</button>
-              <button className="btn btn-olive" onClick={(e) => setRejectClient(curr => !curr)}>Reject</button>
-              <button className="btn btn-olive" onClick={(e) => setClientBlacklist(curr => !curr)}>Blacklist</button>
+              {userperms.approve_client ?
+                <button className="btn btn-olive" onClick={(e) => setOpenApproveClient(curr => !curr)}>Approve</button>:
+                <button className="btn btn-olive" onClick={(e) => setRequestClientApproval(curr => !curr)}>Request Approve</button>
+              }
+              {userperms.reject_client ?
+                <button className="btn btn-olive" onClick={(e) => setRejectClient(curr => !curr)}>Reject</button>:
+                <button className="btn btn-olive" onClick={(e) => setRequestClientRejection(curr => !curr)}>Request Reject</button>
+              }
+              {userperms.blacklist_client ?
+                <button className="btn btn-olive" onClick={(e) => setClientBlacklist(curr => !curr)}>Blacklist</button>:
+                <button className="btn btn-olive" onClick={(e) => setRequestClientBlackList(curr => !curr)}>Request Blacklist</button>
+              }
             </div>
           }
           {client.status == 'Rejected' && 
@@ -149,11 +243,11 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
         <div className='tab-content font-12' style={{marginTop:"3rem"}}>
             {{
                 'details': <Details clientId={clientId} setClient={setClient} client={client} branches={branches}/>,
-                'addresses': <ClientAddresses clientId={clientId} addresses={addresses} setAddresses={setAddresses} />,
+                'addresses': <ClientAddresses clientId={clientId} addresses={addresses} setAddresses={setAddresses} client={client} />,
                 'emp': <EmploymentDetails clientId={clientId} setClient={setClient} client={client} />,
                 'bnk': <BankingDetails clientId={clientId} setClient={setClient} client={client} />,
-                'nok': <NextOfKin clientId={clientId} nokList={nokList} setNokList={setNokList} />,
-                'files': <Files clientId={clientId} files={files} setFiles={setFiles} />,
+                'nok': <NextOfKin clientId={clientId} nokList={nokList} setNokList={setNokList} client={client}/>,
+                'files': <Files clientId={clientId} files={files} setFiles={setFiles} client={client}/>,
                 'txns': <Transactions clientId={clientId} />,
             }[tab]}
         </div>

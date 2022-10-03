@@ -13,9 +13,14 @@ function BankingDetails({client, setClient, clientId}) {
     <div className='active tab-pane'>
         <div className='post'>
             <div style={{marginBottom:"1.5rem"}}>
-                <button type='button' className='btn btn-success' onClick={toggleModal}
-                    >Update Banking Details
-                </button>
+                {client.status == 'Blacklisted' ?
+                    <button type='button' style={{pointerEvents: 'none', opacity: '0.7'}} className='btn btn-success' onClick={toggleModal}
+                        >Update Banking Details
+                    </button>:
+                    <button type='button' className='btn btn-success' onClick={toggleModal}
+                        >Update Banking Details
+                    </button>
+                }
             </div>
             <UpdateBankingDetails details={client} setClient={setClient} open={openModal} setOpen={setOpenModal} clientId={clientId}/>
             <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", marginTop:"1.5rem"}}>

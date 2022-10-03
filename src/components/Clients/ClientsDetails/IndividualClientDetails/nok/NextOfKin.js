@@ -4,16 +4,21 @@ import NokRow from './NokRow';
 
 const initialState = {first_name: '', last_name: '', relationship: '', phone_number: '', address: '', ownership: '', city: '', country: '', gender: ''};
 
-function NextOfKin({nokList, setNokList, clientId}) {
+function NextOfKin({nokList, setNokList, clientId, client}) {
     const [open, setOpen] = useState(false);
 
     return (
         <>
             <AddNextOfKin open={open} setOpen={setOpen} clientId={clientId} setNokList={setNokList}/>
             <div style={{marginBottom:"1.5rem"}}>
-                <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)} 
-                    >Add Next of Kin
-                </button>
+                {client.status == 'Blacklisted' ?
+                    <button type='button' style={{pointerEvents: 'none', opacity: '0.7'}} className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}
+                        >Add Next of Kin
+                    </button>:
+                    <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)} 
+                        >Add Next of Kin
+                    </button>
+                }
             </div>
             <table className='table'>
                 <thead>

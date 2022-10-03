@@ -26,7 +26,10 @@ function Details({client, setClient, clientId, branches}) {
             </div>
           }
           <div>
-              <button className="btn btn-success" onClick={(e) => setOpen(curr => !curr)}>Update Personal Details</button>
+              {client.status == 'Blacklisted' ?
+                <button className="btn btn-success" style={{pointerEvents: 'none', opacity: '0.7'}} onClick={(e) => setOpen(curr => !curr)}>Update Personal Details</button>:
+                <button className="btn btn-success" onClick={(e) => setOpen(curr => !curr)}>Update Personal Details</button>
+              }
           </div>
         </div>
 
