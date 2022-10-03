@@ -16,9 +16,11 @@ function BlacklistClient({setClientBlacklist, setClient, clientId}) {
             const response = await makeRequest.patch(`/clientsapi/blacklist_client/${clientId}/`, {}, {timeout: 8000});
             if (response.ok) {
                 const json_res = await response.json();
-                if (json_res.client_has_loans){
+                if (json_res.old_status == 'Active' || json_res.old_status == 'Inactive'){
                     setClient(curr => ({...curr, approved: true}));
-                }else{
+                }
+                else
+                {
                     setClient(curr => ({...curr, approved: false}));
                 }
                 setClient(curr => ({...curr, status: 'Blacklisted'}));

@@ -17,10 +17,16 @@ function UndoClientBlackList({setUndoClientBlacklist, setClient, clientId}) {
             const response = await makeRequest.patch(`/clientsapi/undo_client_blacklist/${clientId}/`, {}, {timeout: 8000});
             if (response.ok) {
                 const json_res = await response.json();
-                if (json_res.client_has_loans){
+                if (json_res.new_status == 'Active'){
                     setClient(curr => ({...curr, approved: true}));
                     setClient(curr => ({...curr, status: 'Active'}));
-                }else{
+                }
+                else if (json_res.new_status == 'Inactive'){
+                    setClient(curr => ({...curr, approved: true}));
+                    setClient(curr => ({...curr, status: 'Inactive'}));
+                }
+                else
+                {
                     setClient(curr => ({...curr, approved: false}));
                     setClient(curr => ({...curr, status: 'Pending Approval'}));
                 }

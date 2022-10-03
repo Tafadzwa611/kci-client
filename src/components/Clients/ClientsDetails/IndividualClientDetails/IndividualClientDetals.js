@@ -168,7 +168,7 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
           <button className="btn btn-default client__details" onClick={handleClose}>Close</button>
           {client.status == 'Blacklisted' && 
             <div className="client-state-btns" style={{display:"flex", columnGap:"3px"}}>
-              {userperms.blacklist_client ?
+              {userperms.undo_client_blacklist ?
                 <button className="btn btn-olive" onClick={(e) => setUndoClientBlacklist(curr => !curr)}>Undo Blacklist</button>:
                 <button className="btn btn-olive" onClick={(e) => setRequestUndoClientBlackList(curr => !curr)}>Request Undo Blacklist</button>
               }
