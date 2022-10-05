@@ -23,6 +23,7 @@ import RequestUndoClientBlackList from './ChangeClientState/RequestChangeClientS
 import RequestClientBlackList from './ChangeClientState/RequestChangeClientState/RequestClientBlackList';
 import RequestClientLeft from './ChangeClientState/RequestChangeClientState/RequestClientLeft';
 import RequestUndoClientLeft from './ChangeClientState/RequestChangeClientState/RequestUndoClientLeft';
+import MoreIndividualClientDetails from './Details/MoreIndividualClientDetails';
 
 function IndividualClientDetails({client, setClient, addresses, setAddresses, nokList, setNokList, clientId, files, userperms, branches, setFiles, setDetails}) {
   const [tab, setTab] = useState('details');
@@ -42,6 +43,7 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
   const [requestUndoClientBlacklist, setRequestUndoClientBlackList] = useState(false);
   const [requestClientLeft, setRequestClientLeft] = useState(false);
   const [requestUndoClientLeft, setRequestUndoClientLeft] = useState(false);
+  const [openmore, setOpenMore] = useState(false);
 
 
   const handleClose = () => {
@@ -164,8 +166,26 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
           setRequestUndoClientLeft={setRequestUndoClientLeft} 
         />
 
+        <MoreIndividualClientDetails 
+          openmore={openmore} 
+          setOpenMore={setOpenMore} 
+          clientId={clientId}
+          setClient={setClient}
+          client={client}
+          branches={branches}
+          addresses={addresses}
+          setAddresses={setAddresses}
+          nokList={nokList}
+          setNokList={setNokList}
+          files={files}
+          setFiles={setFiles}
+        />
+
         <div style={{marginBottom:"1.5rem", display:"flex", justifyContent:"space-between"}}>
-          <button className="btn btn-default client__details" onClick={handleClose}>Close</button>
+          <div style={{display:"flex", columnGap:"3px"}}>
+            <button className="btn btn-default client__details" onClick={handleClose}>Close</button>
+            <button className="btn btn-default client__details" onClick={(e) => setOpenMore(curr => !curr)}>Expand</button>
+          </div>
           {client.status == 'Blacklisted' && 
             <div className="client-state-btns" style={{display:"flex", columnGap:"3px"}}>
               {userperms.undo_client_blacklist ?

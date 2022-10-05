@@ -1454,6 +1454,41 @@ button.close, button.mailbox-attachment-close {
   color: var(--white);
 }
 
+.active-tabs-default {
+  background: var(--home-section-color);
+  border-color: var(--home-section-color);
+  color: var(--color);
+}
+
+.client-activity-container {
+  border-left: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  max-height: 500px;
+  /* padding: 0 1rem 1rem; */
+  overflow-x: auto;
+}
+
+.modal-content.client-details-bg {
+  background: #f2f8ff;
+}
+
+#dark .modal-content.client-details-bg {
+  background: #383838;
+}
+
+.lastest-activity-heading {
+  background: var(--white);
+  color: var(--color);
+  text-align: center;
+  padding: 0.75rem;
+  width: 100%;
+}
+
+#dark .lastest-activity-heading {
+  background: var(--white);
+  color: var(--color);
+}
+
 .tabs-loans {
   padding: 10px;
   text-align: center;
@@ -3102,4 +3137,17 @@ input:checked + .slider:before {
 
 #dark .age-report-select-disabled .css-1insrsq-control {
   background: #383838;
+}
+
+#dark .modal-header.activities {
+  border-bottom: 1px solid var(--white);
+}
+
+#dark .modal-footer.activities {
+  border-top: 1px solid var(--white);
+}
+
+#dark .client-activity-container {
+  border-left: 1px solid var(--white);
+  border-right: 1px solid var(--white);
 }
