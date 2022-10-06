@@ -30,32 +30,34 @@ function ClientAddresses({client, addresses, setAddresses, clientId}) {
                 }
             </div>
 
-            <table className='table'>
-                <thead>
-                    <tr className="client__address__table">
-                        <th className="table-head-dark-color" style={{width:"30%"}}>Address</th>
-                        <th className="table-head-dark-color">City/Town</th>
-                        <th className="table-head-dark-color">Country</th>
-                        <th className="table-head-dark-color">Ownership</th>
-                        <th className="table-head-dark-color">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {addresses.length > 0 ? addresses.map(addr => {
-                    return (
-                    <tr key={addr.id}>
-                        <td>{addr.address}</td>
-                        <td>{addr.city}</td>
-                        <td>{addr.country}</td>
-                        <td>{addr.ownership}</td>
-                        <td>
-                        <input id={addr.id} type='button' value='Delete...' onClick={deleteAddress}/>
-                        </td>
-                    </tr>
-                    )
-                }): <tr><td colSpan={5} style={{textAlign: 'center'}}>No addresses could be found.</td></tr>}
-                </tbody>
-            </table>
+            <div style={{width:"100%", overflowX:"auto"}}>
+                <table className='table'>
+                    <thead>
+                        <tr className="client__address__table">
+                            <th className="table-head-dark-color" style={{width:"30%"}}>Address</th>
+                            <th className="table-head-dark-color">City/Town</th>
+                            <th className="table-head-dark-color">Country</th>
+                            <th className="table-head-dark-color">Ownership</th>
+                            <th className="table-head-dark-color">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {addresses.length > 0 ? addresses.map(addr => {
+                        return (
+                        <tr key={addr.id}>
+                            <td>{addr.address}</td>
+                            <td>{addr.city}</td>
+                            <td>{addr.country}</td>
+                            <td>{addr.ownership}</td>
+                            <td>
+                            <input id={addr.id} type='button' value='Delete...' onClick={deleteAddress}/>
+                            </td>
+                        </tr>
+                        )
+                    }): <tr><td colSpan={5} style={{textAlign: 'center'}}>No addresses could be found.</td></tr>}
+                    </tbody>
+                </table>
+            </div>
         </>
     )
 }

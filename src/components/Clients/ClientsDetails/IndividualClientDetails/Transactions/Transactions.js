@@ -74,28 +74,30 @@ function Transactions({clientId}) {
                 buttonText='Download as XLS'/>
                 <CurrencySelector currencies={currencies} currencyId={currencyId} setCurrencyId={setCurrencyId}/>
             </div>
-            <table id='transactions' className='table'>
-                <thead>
-                    <tr className="client__address__table">
-                        <th className="table-head-dark-color">Date_Posted</th>
-                        <th className="table-head-dark-color">Reference</th>
-                        <th className="table-head-dark-color">Loan_Description</th>
-                        <th className="table-head-dark-color">Repayments</th>
-                        <th className="table-head-dark-color">Disbursements</th>
-                        <th className="table-head-dark-color">Principal Due</th>
-                        <th className="table-head-dark-color">Interest Due</th>
-                        <th className="table-head-dark-color">Penalty Due</th>
-                        <th className="table-head-dark-color">Balance<em className='currency'></em></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {transactions.length > 0 ? transactions.map((transaction, idx) => ({
-                        'disbursement': <DisbursementRow key={idx} transaction={transaction}/>,
-                        'payment': <PaymentRow key={idx} transaction={transaction}/>,
-                        'penalty': <PenaltyRow key={idx} transaction={transaction}/>
-                    }[transaction.txn_type])): <tr><td colSpan={10} style={{textAlign: 'center'}}>No transactions could be found.</td></tr>}
-                </tbody>
-            </table>
+            <div style={{width:"100%", overflowX:"auto", maxHeight:"600px"}}>
+                <table id='transactions' className='table'>
+                    <thead style={{position:"sticky", top:"0"}}>
+                        <tr className="client__address__table">
+                            <th className="table-head-dark-color">Date_Posted</th>
+                            <th className="table-head-dark-color">Reference</th>
+                            <th className="table-head-dark-color">Loan_Description</th>
+                            <th className="table-head-dark-color">Repayments</th>
+                            <th className="table-head-dark-color">Disbursements</th>
+                            <th className="table-head-dark-color">Principal Due</th>
+                            <th className="table-head-dark-color">Interest Due</th>
+                            <th className="table-head-dark-color">Penalty Due</th>
+                            <th className="table-head-dark-color">Balance<em className='currency'></em></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {transactions.length > 0 ? transactions.map((transaction, idx) => ({
+                            'disbursement': <DisbursementRow key={idx} transaction={transaction}/>,
+                            'payment': <PaymentRow key={idx} transaction={transaction}/>,
+                            'penalty': <PenaltyRow key={idx} transaction={transaction}/>
+                        }[transaction.txn_type])): <tr><td colSpan={10} style={{textAlign: 'center'}}>No transactions could be found.</td></tr>}
+                    </tbody>
+                </table>
+            </div>
         </>
     )
 }

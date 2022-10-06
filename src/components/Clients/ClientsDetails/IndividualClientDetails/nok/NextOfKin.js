@@ -20,26 +20,28 @@ function NextOfKin({nokList, setNokList, clientId, client}) {
                     </button>
                 }
             </div>
-            <table className='table'>
-                <thead>
-                <tr className="client__address__table">
-                    <th className="table-head-dark-color">First Name</th>
-                    <th className="table-head-dark-color">Last Name</th>
-                    <th className="table-head-dark-color">Gender</th>
-                    <th className="table-head-dark-color">Relationship to Applicant</th>
-                    <th className="table-head-dark-color">Phone Number</th>
-                    <th className="table-head-dark-color">Physical Address</th>
-                    <th className="table-head-dark-color">City/Town</th>
-                    <th className="table-head-dark-color">Country</th>
-                    <th className="table-head-dark-color">Ownership</th>
-                    <th className="table-head-dark-color">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                {nokList.length > 0 ? nokList.map((nok, idx) => <NokRow key={idx} nok={nok} setNokList={setNokList}/>):
-                <tr><td colSpan={10} style={{textAlign: 'center'}}>No data in table.</td></tr>}
-                </tbody>
-            </table>
+            <div style={{width:"100%", overflowX:"auto"}}>
+                <table className='table'>
+                    <thead>
+                    <tr className="client__address__table">
+                        <th className="table-head-dark-color">First Name</th>
+                        <th className="table-head-dark-color">Last Name</th>
+                        <th className="table-head-dark-color">Gender</th>
+                        <th className="table-head-dark-color">Relationship to Applicant</th>
+                        <th className="table-head-dark-color">Phone Number</th>
+                        <th className="table-head-dark-color">Physical Address</th>
+                        <th className="table-head-dark-color">City/Town</th>
+                        <th className="table-head-dark-color">Country</th>
+                        <th className="table-head-dark-color">Ownership</th>
+                        <th className="table-head-dark-color">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {nokList.length > 0 ? nokList.map((nok, idx) => <NokRow key={idx} nok={nok} setNokList={setNokList}/>):
+                    <tr><td colSpan={10} style={{textAlign: 'center'}}>No data in table.</td></tr>}
+                    </tbody>
+                </table>
+            </div>
 
         </>
     )
