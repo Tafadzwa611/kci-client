@@ -6,13 +6,13 @@ const Table = ({report, currencyIso}) => {
         <div className="table-container" style={{padding:"0", paddingTop:"1.5rem", border:"none"}}>
             <div class="table-responsive font-12" style={{maxHeight:"600px"}}>
                 <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th style={{textAlign:"right"}} className="text-light">Client</th>
-                            <th style={{textAlign:"right"}} className="text-light">Loan</th>
-                            <th style={{textAlign:"right"}} className="text-light">Branch</th>
-                            <th style={{textAlign:"right"}} className="text-light">Fee Name</th>
-                            <th style={{textAlign:"right"}} className="text-light">Amount</th>
+                    <thead className="clients-report-table">
+                        <tr className="journal-details fees__report_thead">
+                            <th style={{textAlign:"right"}}>Client</th>
+                            <th style={{textAlign:"right"}}>Loan</th>
+                            <th style={{textAlign:"right"}}>Branch</th>
+                            <th style={{textAlign:"right"}}>Fee Name</th>
+                            <th style={{textAlign:"right"}}>Amount</th>
                         </tr>
                     </thead>
                     <tbody>

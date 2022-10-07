@@ -220,6 +220,10 @@ body {
   background-color: #383838;
 }
 
+#dark .journal-details.fees__report_thead {
+  background-color: var(--info);
+}
+
 #dark .table-heading {
   color: hsl(0, 0%, 87%);
 }
@@ -1721,6 +1725,11 @@ small {
   margin-top: 25px;
 }
 
+.journal-details.fees__report_thead {
+  background-color: var(--info);
+  color: var(--white);
+}
+
 .par-card {
   background-color: #f2f8ff;
 }
@@ -2059,7 +2068,7 @@ small {
   display: flex;
   column-gap: 5px;
   align-items: center;
-  padding: 20px;
+  padding: 20px 0;
   border: 1px solid var(--border-color);
   border-top: 0;
   justify-content:right;
@@ -3150,4 +3159,10 @@ input:checked + .slider:before {
 #dark .client-activity-container {
   border-left: 1px solid var(--white);
   border-right: 1px solid var(--white);
+}
+
+.clients-report-table {
+  position: sticky;
+  top: 0;
+  background: var(--white);
 }

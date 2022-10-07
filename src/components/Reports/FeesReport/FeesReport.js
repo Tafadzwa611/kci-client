@@ -123,6 +123,8 @@ const FeesReport = () => {
       return <MiniLoader />
     }
 
+    console.log(report)
+
     return (
             <>
                 <DateRange 

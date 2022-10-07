@@ -5,17 +5,17 @@ const Table = ({report, currencyIso}) => {
     return (
         <div className="table-container" style={{padding:"0", paddingTop:"1.5rem", border:"none"}}>
             <div className="table-responsive font-12" style={{maxHeight:"600px"}}>
-                <table className="table table-hover">
-                    <thead>
-                        <tr>
-                            <th style={{textAlign:"right"}} className="text-light">Client</th>
-                            <th style={{textAlign:"right"}} className="text-light">Loan</th>
-                            <th style={{textAlign:"right"}} className="text-light">Branch</th>
-                            <th style={{textAlign:"right"}} className="text-light">Principal Released</th>
-                            <th style={{textAlign:"right"}} className="text-light">Interest</th>
-                            <th style={{textAlign:"right"}} className="text-light">Total Due</th>
-                            <th style={{textAlign:"right"}} className="text-light">Total Amount Paid</th>
-                            <th style={{textAlign:"right"}} className="text-light">Balance</th>
+                <table className="table">
+                    <thead className="clients-report-table">
+                        <tr className="journal-details fees__report_thead">
+                            <th style={{textAlign:"right"}}>Client</th>
+                            <th style={{textAlign:"right"}}>Loan</th>
+                            <th style={{textAlign:"right"}}>Branch</th>
+                            <th style={{textAlign:"right"}}>Principal Released</th>
+                            <th style={{textAlign:"right"}}>Interest</th>
+                            <th style={{textAlign:"right"}}>Total Due</th>
+                            <th style={{textAlign:"right"}}>Total Amount Paid</th>
+                            <th style={{textAlign:"right"}}>Balance</th>
                         </tr>
                     </thead>
                     <tbody>

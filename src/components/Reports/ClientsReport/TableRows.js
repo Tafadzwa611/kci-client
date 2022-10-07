@@ -19,7 +19,7 @@ const FirstRow = ({client}) => {
 const SecondRow = ({client, currencyIso}) => {
   return (
     <tr>
-      <td style={{textAlign: 'right'}} className="reports-table-border-left">{client.loan_count}</td>
+      <td style={{textAlign: 'right'}}>{client.loan_count}</td>
       <td style={{textAlign: 'right'}}>{`${currencyIso} ${client.sum_principal}`}</td>
       <td style={{textAlign: 'right'}}>{`${currencyIso} ${client.sum_principal_due}`}</td>
       <td className='text-bold text-red text-right'>Amount:</td>
@@ -27,7 +27,7 @@ const SecondRow = ({client, currencyIso}) => {
       <td className='text-bold text-red text-right'>{`${currencyIso} ${client.sum_interest}`}</td>
       <td className='text-bold text-red text-right'>{`${currencyIso} ${client.sum_fees}`}</td>
       <td className='text-bold text-red text-right'>{`${currencyIso} ${client.sum_penalty}`}</td>
-      <td className='text-bold text-red text-right reports-table-border-right'>{`${currencyIso} ${client.total_amount}`}</td>
+      <td className='text-bold text-red text-right'>{`${currencyIso} ${client.total_amount}`}</td>
     </tr>
   )
 }
@@ -35,7 +35,7 @@ const SecondRow = ({client, currencyIso}) => {
 const ThirdRow = ({client, currencyIso}) => {
   return (
     <tr>
-      <td className="reports-table-border-left"></td>
+      <td></td>
       <td></td>
       <td></td>
       <td className='text-bold text-green' style={{textAlign: 'right'}}>Total Payments:</td>
@@ -43,7 +43,7 @@ const ThirdRow = ({client, currencyIso}) => {
       <td className='text-bold text-green' style={{textAlign: 'right'}}>{`${currencyIso} ${client.sum_interest_paid}`}</td>
       <td className='text-bold text-green' style={{textAlign: 'right'}}>{`${currencyIso} ${client.sum_fees_paid}`}</td>
       <td className='text-bold text-green' style={{textAlign: 'right'}}>{`${currencyIso} ${client.sum_penalty_paid}`}</td>
-      <td className='text-bold text-green reports-table-border-right' style={{textAlign: 'right'}}>{`${currencyIso} ${client.total_paid}`}</td>
+      <td className='text-bold text-green' style={{textAlign: 'right'}}>{`${currencyIso} ${client.total_paid}`}</td>
     </tr>
   )
 }
@@ -51,7 +51,7 @@ const ThirdRow = ({client, currencyIso}) => {
 const FourthRow = ({client, currencyIso}) => {
   return (
     <tr>
-      <td style={{textAlign:"right"}} className="reports-table-border-left last__row__border"></td>
+      <td style={{textAlign:"right"}} className="last__row__border"></td>
       <td style={{textAlign:"right"}} className="last__row__border"></td>
       <td style={{textAlign:"right"}} className="last__row__border"></td>
       <td className="text-bold last__row__border" style={{textAlign:"right", width:"9%"}}>Net Due:</td>
@@ -59,7 +59,7 @@ const FourthRow = ({client, currencyIso}) => {
       <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${client.sum_interest_amount_due}`}</td>
       <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${client.sum_fees_due}`}</td>
       <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${client.sum_penalty_due}`}</td>
-      <td className="text-bold last__row__border reports-table-border-right" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${client.total_due}`}</td>
+      <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${client.total_due}`}</td>
     </tr>
   )
 }

@@ -2,9 +2,9 @@ import React, { Fragment } from 'react';
 
 function Summary({summary, currencyIso}) {
     return (
-        <div className='table-responsive' style={{maxHeight: '600px'}}>
+        <div className='table-responsive' style={{maxHeight: '600px', marginTop:"1.5rem"}}>
             <table className='table'>
-                <thead>
+                <thead className="journal-details fees__report_thead">
                     <tr>
                         <th>Fee Name</th>
                         <th>Total Fees Recorded</th>

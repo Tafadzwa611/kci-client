@@ -27,7 +27,7 @@ const DateRange = (props) => {
     return (
         <div className="font-13 text-light">
 
-            <div className="disbursement_date_range">
+            <div className="disbursement_date_range" style={{padding:"0", border:"none"}}>
                 <form onSubmit={onSubmit}>
                     <div className="disbursement-report-fields">
                         <div style={{width:"100%"}}>

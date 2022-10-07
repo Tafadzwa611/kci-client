@@ -6,17 +6,17 @@ const Table = ({ clients, currencyIso }) => {
         <div className="table-container" style={{padding:"0", paddingTop:"1.5rem", border:"none"}}>
             <div className="table-responsive font-12" style={{maxHeight:"600px"}}>
                 <table className="table" style={{width:"100%"}}>
-                    <thead>
-                        <tr>
-                            <th style={{textAlign:"right"}} className="reports-table-border-left text-light">Total_Loans_Released</th>
-                            <th style={{textAlign:"right"}} className="text-light">Total_Principal_Released</th>
-                            <th style={{textAlign:"right"}} className="text-light">Current_Principal_At_Risk</th>
+                    <thead className="clients-report-table">
+                        <tr className="journal-details fees__report_thead"> 
+                            <th style={{textAlign:"right"}}>Total_Loans_Released</th>
+                            <th style={{textAlign:"right"}}>Total_Principal_Released</th>
+                            <th style={{textAlign:"right"}}>Current_Principal_At_Risk</th>
                             <th></th>
-                            <th style={{textAlign:"right"}} className="text-light">Principal</th>
-                            <th style={{textAlign:"right"}} className="text-light">Interest</th>
-                            <th style={{textAlign:"right"}} className="text-light">Fees</th>
-                            <th style={{textAlign:"right"}} className="text-light">Penalty</th>
-                            <th style={{textAlign:"right"}} className="reports-table-border-right text-light">Total</th>
+                            <th style={{textAlign:"right"}}>Principal</th>
+                            <th style={{textAlign:"right"}}>Interest</th>
+                            <th style={{textAlign:"right"}}>Fees</th>
+                            <th style={{textAlign:"right"}}>Penalty</th>
+                            <th style={{textAlign:"right"}}>Total</th>
                         </tr>
                     </thead>
                     <tbody>
