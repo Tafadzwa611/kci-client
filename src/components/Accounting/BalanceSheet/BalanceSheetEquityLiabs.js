@@ -21,7 +21,7 @@ const BalanceSheetEquityLiabs = ({
         <div style={{width:"48%"}}>
             <table className="table table-bordered table-condensed table-hover">
                 <tbody>
-                    <tr style={{backgroundColor: '#F2F8FF'}}>
+                    <tr className="journal-details">
                         <td colSpan="3" className="text-center"><b>LIABILITY AND EQUITY</b></td>
                     </tr>
                     <tr>

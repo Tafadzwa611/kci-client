@@ -40,8 +40,8 @@ const TrialBalanceTable = ({trialBalance, currencyIso, loading}) => {
                 </div>
                 <div className="table-responsive" style={{maxHeight:"1000px"}}>
                     <table className="table" style={{width:"100%"}} id='trial-balance'>
-                        <thead>
-                            <tr>
+                        <thead className="clients-report-table">
+                            <tr className="journal-details fees__report_thead">
                                 <th>Account</th>
                                 <th>Branch</th>
                                 <th>Account Type</th>

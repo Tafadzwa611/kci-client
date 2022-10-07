@@ -7,7 +7,7 @@ function DateRange(props) {
     <div className="col-12 font-12 balance_sheet_date_range text-light" style={{border:"none", padding:"0"}}>
       <form onSubmit={props.onSubmit}>
         <div className="row" style={{display:"flex", columnGap:"1px", alignItems:"center", marginTop:"0"}}>
-          <div className="input-group">
+          <div className="input-group" style={{margin:"0"}}>
               <i className="uil uil-calendar-alt"></i>
               <input
                 type='date'
@@ -16,7 +16,7 @@ function DateRange(props) {
                 value={props.rDate}
                 onKeyDown={(e) => e.preventDefault()}
                 onChange={(e) => props.setRDate(e.target.value)}
-                style={{width:"400px"}}
+                style={{width:"400px", height:"auto"}}
               />
           </div>
           <div style={{width:"400px", margin:"10px"}}>

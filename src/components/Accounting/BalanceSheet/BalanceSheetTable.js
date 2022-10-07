@@ -234,6 +234,7 @@ const BalanceSheetTable = ({
                 modalHeader={modalHeader} 
                 modalAccounts={modalAccounts} 
                 loadingModalAccounts={loadingModalAccounts}
+                setModalAccounts={setModalAccounts}
                 open={open}
                 setOpen={setOpen}
             />
