@@ -2,6 +2,7 @@ import React from 'react';
 import PrincipalPaymentsChart from './PrincipalPaymentsChart';
 import InterestPaymentsChart from './InterestPaymentsChart';
 import PenaltiesPaymentsChart from './PenaltiesPaymentsChart';
+import AllPaymentsChart from './AllPaymentsChart';
 import { makeRequest } from '../../../utils/utils';
 import MiniLoader from '../../Loader/MiniLoader';
 
@@ -57,6 +58,7 @@ const ViewPaymentsChart = () => {
 
     return (
         <>
+            <AllPaymentsChart branches={branches} currencies={currencies} />
             <PrincipalPaymentsChart branches={branches} currencies={currencies} />
             <InterestPaymentsChart branches={branches} currencies={currencies} />
             <PenaltiesPaymentsChart branches={branches} currencies={currencies} />
