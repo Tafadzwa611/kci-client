@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-// import { NavLink } from 'react-router-dom';
 import { makeRequest } from '../../utils/utils';
 import MiniLoader from '../Loader/MiniLoader';
-import BankNamesSkeleton from '../Skeletons/Charts/BankNamesSkeleton';
 import CreateExpenseTypeModal from './CreateExpenseTypeModal';
 
 const ExpenseTypes = () => {

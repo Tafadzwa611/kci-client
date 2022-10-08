@@ -64,9 +64,7 @@ const StaffRolesAndPermissions = () => {
                                     <button type='button' className="btn btn-info" id={role.id} onClick={handleClick}>Set Permissions</button>
                                 </td>
                                 <td>
-                                    <div className="action-btns">
-                                        <span>Edit</span>
-                                    </div>
+                                    <button className="btn btn-default">Edit</button>
                                 </td>
                             </tr>
                         ))}
