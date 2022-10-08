@@ -77,6 +77,9 @@ const PaymentsReport = () => {
                     key={idx}
                     total_payments_count={paymentrpt.total_payments_count}
                     total_amount_paid={paymentrpt.total_amount_paid}
+                    total_princpal_amnt_paid={paymentrpt.total_princpal_amnt_paid}
+                    total_interest_amnt_paid={paymentrpt.total_interest_amnt_paid}
+                    total_penalty_amnt_paid={paymentrpt.total_penalty_amnt_paid}
                     payment_name={paymentrpt.payment_name}
                     currencyIso={paymentrpt.currencyIso}
                     currencyId={paymentrpt.currencyId}

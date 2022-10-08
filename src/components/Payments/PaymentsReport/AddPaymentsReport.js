@@ -144,7 +144,7 @@ const ModalBody = ({
         }
         
         if (newLimits.upperLimit != '') {
-            return `1 to ${newLimits.upperLimit}`
+            return `Last ${newLimits.upperLimit} days payments`
         }
         
     }
