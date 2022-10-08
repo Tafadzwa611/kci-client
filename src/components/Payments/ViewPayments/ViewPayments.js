@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Payments from '../Payments/Payments';
 import ViewPaymentsChart from '../PaymentsChart/ViewPaymentsChart';
+import PaymentsReport from '../PaymentsReport/PaymentsReport';
 
 const ViewPayments = () => {
 
@@ -20,11 +21,14 @@ const ViewPayments = () => {
                         <button className={tab === "addpayments" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("addpayments")}> Add Payments </button>
                         <button className={tab === "uploadfile" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("uploadfile")}> Upload File </button>
                         <button className={tab === "paymentcharts" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("paymentcharts")}> Payments Chart </button>
+                        <button className={tab === "paymentrpts" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("paymentrpts")}> Payments Report </button>
+
                     </div>
                     <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                         {{
                             'payments': <Payments setMainTab={setTab}/>,
                             'paymentcharts': <ViewPaymentsChart setMainTab={setTab}/>,
+                            'paymentrpts': <PaymentsReport setMainTab={setTab}/>,
                         }[tab]}
                     </div>
                 </>
