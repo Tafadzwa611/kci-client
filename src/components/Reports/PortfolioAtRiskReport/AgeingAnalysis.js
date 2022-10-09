@@ -73,7 +73,7 @@ function AgeingAnalysis({
 
   return (
     <div className={open ? 'modal fade show' : 'modal fade'} style={{display: open ? 'block' : 'none'}}>
-      <div className='modal-dialog modal-xl modal-dialog-scrollable' style={{maxWidth:"calc(100% - 3rem)"}}>
+      <div className='modal-dialog modal-xl modal-dialog-scrollable' style={{maxWidth:"calc(100% - 3rem)", height:"calc(100% - 7rem)", top:"3.8rem"}}>
         <div className='modal-content'>
           <div className='modal-header'>
             <span style={{fontWeight:"600"}}>Aging Report {par_name}</span>

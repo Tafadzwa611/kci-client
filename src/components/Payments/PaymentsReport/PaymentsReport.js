@@ -80,6 +80,9 @@ const PaymentsReport = () => {
                     total_princpal_amnt_paid={paymentrpt.total_princpal_amnt_paid}
                     total_interest_amnt_paid={paymentrpt.total_interest_amnt_paid}
                     total_penalty_amnt_paid={paymentrpt.total_penalty_amnt_paid}
+                    principal_per_of_total_paid={paymentrpt.principal_per_of_total_paid}
+                    interest_per_of_total_paid={paymentrpt.interest_per_of_total_paid}
+                    penalty_per_of_total_paid={paymentrpt.penalty_per_of_total_paid}
                     payment_name={paymentrpt.payment_name}
                     currencyIso={paymentrpt.currencyIso}
                     currencyId={paymentrpt.currencyId}

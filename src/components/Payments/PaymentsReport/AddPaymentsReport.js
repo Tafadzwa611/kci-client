@@ -56,7 +56,7 @@ function AddPaymentsReport({open, setOpen, setPaymentsR, branches, currencies}) 
             <div className='modal-dialog modal-lg' style={{maxWidth:"calc(100% - 3rem)"}}>
                 <div className='modal-content'>
                     <div className='modal-header'>
-                        <span style={{fontWeight:"600"}}>PAR {paymentsrname}</span>
+                        <span style={{fontWeight:"600"}}>{paymentsrname}</span>
                         <button type='button' className='close' onClick={e => setOpen(false)}><span aria-hidden='true'>&times;</span></button>
                     </div>
                     <ModalBody
