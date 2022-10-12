@@ -91,14 +91,10 @@ const UpdateClientControls = ({
                     </div>
                     <div className='modal-body text-light'>
 
-                        {/* {serverError.map((error, index) => (
-                            <div className='row custom-background' style={{marginTop: '15px'}}>
-                                <label className='form-label'></label>
-                                <div className='col-9'>
-                                    <div style={{fontSize: 12, color: 'red'}} key={index}>{error}</div>
-                                </div>
-                            </div>
-                        ))} */}
+                        {serverError && <div className='alert alert-danger alert-dismissible'>
+                            <h4><i className='icon fa fa-ban'></i> Alert!</h4>
+                            An error occured while updating client controls information, please try again later.
+                        </div>}
 
                         <div className='row custom-background'>
                             <label className='form-label'>Client Initial Status<span style={{color: 'red'}}>*</span></label>
