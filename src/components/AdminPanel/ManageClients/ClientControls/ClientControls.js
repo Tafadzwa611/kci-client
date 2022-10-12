@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { makeRequest } from '../../../../utils/utils';
 import MiniLoader from '../../../Loader/MiniLoader';
-// import CreateExpenseTypeModal from './CreateExpenseTypeModal';\
-// import UpdateClientControls from './UpdateClientControls';
+import UpdateClientControls from './UpdateClientControls';
 
 const ClientControls = () => {
 
     const [clientcontrol, setClientContol] = useState([])
     const [open, setOpen] = useState(false);
     const [openupdate, setOpenUpdate] = useState(false);
-    const [control, setControl] = useState(null);
-    const [controldetail, setControlDetail] = useState(null);
-    const [clientControlId, setClientControlId] = useState(null)
+    const [selectedClientControlId, setSelectedClientControlID] = useState(null);
+
 
     useEffect(() => {
         getClientControl();
@@ -28,7 +26,7 @@ const ClientControls = () => {
             const response = await makeRequest.get(`/clientsapi/client_controls/`, {timeout: 8000});
             if (response.ok) {
                 const controls = await response.json();
-                setClientControlId(controls.map(control => control.id)[0])
+                setSelectedClientControlID(controls.map(control => control.id)[0])
                 return controls;
             }else {
                 const error = await response.json();
@@ -39,22 +37,24 @@ const ClientControls = () => {
         }
     }
 
+    const openUpdateClick = (e) => {
+        setOpenUpdate(curr => !curr);
+    }
+
     if (clientcontrol == null) {
         return <MiniLoader />;
     } 
     else {
         return (
             <>
-                {/* <CreateExpenseTypeModal open={open} setOpen={setOpen} setClientContol={setClientContol} /> */}
-                {/* <UpdateClientControls 
-                    openupdate={openupdate} 
-                    setOpenUpdate={setOpenUpdate} 
-                    clientControlId={clientControlId} 
-                    setControl={setControl}
-                    control={control}
-                    setControlDetail={setControlDetail}
-                    controldetail={controldetail}
-                /> */}
+                {openupdate &&
+                    <UpdateClientControls 
+                        openupdate={openupdate}
+                        setOpenUpdate={setOpenUpdate}
+                        selectedClientControlId={selectedClientControlId}
+                        setClientContol={setClientContol}
+                    />
+                }
                 {clientcontrol == "" && 
                     <div style={{margin:"20px 0"}}>
                         <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Client Controls</button>
@@ -70,7 +70,7 @@ const ClientControls = () => {
                             {clientcontrol.map((control) => (
                                 <tr className="table-row" key={control.id}>
                                     <td>{control.client_initial_status}</td>
-                                    <td><button className="btn btn-default">Edit</button></td>
+                                    <td><button className="btn btn-default" onClick={openUpdateClick} id={control.id}>Edit</button></td>
                                 </tr>
                             ))}
                             {clientcontrol == "" && 
