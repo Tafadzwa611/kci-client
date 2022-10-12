@@ -75,10 +75,10 @@ function PrincipalPaymentsChart({branches, currencies}) {
     });
     if (extendReport) {
       setLabels(curr => [...newLabels, ...curr]);
-      setDataSets(curr => [{data: [...newData, ...curr[0].data], borderColor: '#ADF1BC', cubicInterpolationMode: 'monotone'}]);
+      setDataSets(curr => [{data: [...newData, ...curr[0].data], borderColor: '#ADF1BC', backgroundColor: '#ADF1BC', cubicInterpolationMode: 'monotone'}]);
     }else {
       setLabels(newLabels);
-      setDataSets([{data: newData, borderColor: '#ADF1BC', cubicInterpolationMode: 'monotone'}]);
+      setDataSets([{data: newData, borderColor: '#ADF1BC', backgroundColor: '#ADF1BC', cubicInterpolationMode: 'monotone'}]);
     }
   }
 

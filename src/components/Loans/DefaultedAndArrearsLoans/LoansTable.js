@@ -15,19 +15,19 @@ function LoansTable({loans, nextPageNumber, loadMoreLoans, totalCount, loadingMo
         <div>
             <div className='table-responsive' style={{maxHeight: '600px'}}>
                 <table className='table' width='100%'>
-                    <thead className="journal-details header">
-                        <tr>
-                        <th>Client</th>
-                        <th>Loan Number</th>
-                        <th>Branch</th>
-                        <th>Disbursement Date</th>
-                        <th>Last Payment Date</th>
-                        <th>Days Past Due</th>
-                        <th>Installment Due</th>
-                        <th>Principal Due</th>
-                        <th>Pending Due</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                    <thead>
+                        <tr className="journal-details header" style={{position:"sticky", top:"0", zIndex:"1"}}>
+                            <th>Client</th>
+                            <th>Loan Number</th>
+                            <th>Branch</th>
+                            <th>Disbursement Date</th>
+                            <th>Last Payment Date</th>
+                            <th>Days Past Due</th>
+                            <th>Installment Due</th>
+                            <th>Principal Due</th>
+                            <th>Pending Due</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>

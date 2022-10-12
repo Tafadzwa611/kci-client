@@ -200,7 +200,7 @@ const ModalBody = ({
                 </div>
 
                 <div className='row custom-background' style={{marginTop: '15px'}}>
-                    <label className='form-label'>Upper Limit</label>
+                    <label className='form-label'>Days Ago</label>
                     <div className='col-9'>
                         <input name='upperLimit' value={limits.upperLimit} min={1} type='number' className='custom-select-form' style={{width:"100%"}} onChange={handleLimits}/>
                     </div>
