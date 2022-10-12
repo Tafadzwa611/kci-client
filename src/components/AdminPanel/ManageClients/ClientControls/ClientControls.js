@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { makeRequest } from '../../../../utils/utils';
 import MiniLoader from '../../../Loader/MiniLoader';
 import UpdateClientControls from './UpdateClientControls';
+import AddClientControl from './AddClientControl';
 
 const ClientControls = () => {
 
@@ -52,6 +53,13 @@ const ClientControls = () => {
                         openupdate={openupdate}
                         setOpenUpdate={setOpenUpdate}
                         selectedClientControlId={selectedClientControlId}
+                        setClientContol={setClientContol}
+                    />
+                }
+                {open &&
+                    <AddClientControl 
+                        open={open}
+                        setOpen={setOpen}
                         setClientContol={setClientContol}
                     />
                 }
