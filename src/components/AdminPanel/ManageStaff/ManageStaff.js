@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Staff from './Staff/Staff';
 import StaffRolesAndPermissions from './StaffRolesAndPermissions/StaffRolesAndPermissions'
 
 const ManageStaff = () => {
 
     const [tab, setTab] = useState('staff');
+
+    useEffect(() => {
+        document.title = 'Manage Staff';
+    }, [])
     
     return (
         <>

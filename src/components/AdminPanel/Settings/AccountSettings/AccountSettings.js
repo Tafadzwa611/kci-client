@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import SwitchAccounting from '../../../../components/SwitchAccounting';
 import SwitchPropagatePayments from '../../../../components/SwitchPropagatePayments';
 
@@ -7,6 +7,10 @@ const AccountSettings = ({isAccountinOn,propagatePayments,showIsAccountinOn,show
     const td_style = {
         padding: "1rem 0"
     }
+
+    useEffect(() => {
+        document.title = 'Account Settings';
+    }, [])
 
     return (
         <>

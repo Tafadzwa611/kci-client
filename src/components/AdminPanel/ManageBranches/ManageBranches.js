@@ -13,6 +13,7 @@ const ManageBranches = () => {
     }, []);
 
     const getBranchList = async () => {
+        document.title = 'Manage Branches';
         const data = await fetchBranchList();
         setBranches(data);
     };
