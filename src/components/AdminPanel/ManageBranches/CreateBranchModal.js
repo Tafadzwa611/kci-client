@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import { makeRequest } from '../../../utils/utils';
-import MiniLoader from '../../Loader/MiniLoader';
 
 const initialState = {name: '', geographical_location: '', branch_code: '', date_of_opening: ''};
 
