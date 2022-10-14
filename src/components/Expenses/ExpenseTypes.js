@@ -13,7 +13,6 @@ const ExpenseTypes = () => {
     }, []);
 
     const getExpenseTypes = async () => {
-        document.title = 'Manage Expenses';
         const data = await fetchExpenseTypes();
         setExpenseTypes(data);
     };

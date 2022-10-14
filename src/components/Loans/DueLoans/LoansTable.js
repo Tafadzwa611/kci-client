@@ -25,12 +25,12 @@ function LoansTable({loans, nextPageNumber, loadMoreLoans, totalCount, loadingMo
                     <table className='table'>
                         <thead className="journal-details header">
                             <tr>
-                            <th>Client</th>
-                            <th>Loan Number</th>
-                            <th>Payment Date</th>
-                            <th>Installment Due</th>
-                            <th>Pending Due</th>
-                            <th>Status</th>
+                                <th>Client</th>
+                                <th>Loan Number</th>
+                                <th>Payment Date</th>
+                                <th>Installment Due</th>
+                                <th>Pending Due</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>

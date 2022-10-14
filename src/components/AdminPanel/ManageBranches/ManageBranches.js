@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { makeRequest } from '../../../utils/utils';
 import MiniLoader from '../../Loader/MiniLoader';
-// import CreateCurrencyModal from './CreateCurrencyModal';
+import CreateBranchModal from './CreateBranchModal';
 
 const ManageBranches = () => {
 
@@ -13,7 +13,6 @@ const ManageBranches = () => {
     }, []);
 
     const getBranchList = async () => {
-        document.title = 'Manage Branches';
         const data = await fetchBranchList();
         setBranches(data);
     };
@@ -39,7 +38,7 @@ const ManageBranches = () => {
 
     return (
         <>
-            {/* <CreateCurrencyModal open={open} setOpen={setOpen} setBranches={setBranches} /> */}
+            <CreateBranchModal open={open} setOpen={setOpen} setBranches={setBranches} />
             <div style={{margin:"20px 0"}}>
                 <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Branch</button>
             </div>

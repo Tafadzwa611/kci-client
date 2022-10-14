@@ -17,7 +17,6 @@ const ClientControls = () => {
     }, []);
 
     const getClientControl = async () => {
-        document.title = 'Manage Clients';
         const data = await fetchClientControl();
         setClientContol(data);
     };

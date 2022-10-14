@@ -16,8 +16,6 @@ const OtherIncomeTypes = () => {
     }, []);
 
     const getOtherIncomeTypes = async () => {
-        window.scrollTo(0, 0);
-        document.title = 'Manage Other Income';
         const data = await fetchOtherIncomeTypes();
         setOtherIncomeTypes(data);
     };

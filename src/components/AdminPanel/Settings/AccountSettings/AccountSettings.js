@@ -8,10 +8,6 @@ const AccountSettings = ({isAccountinOn,propagatePayments,showIsAccountinOn,show
         padding: "1rem 0"
     }
 
-    useEffect(() => {
-        document.title = 'Account Settings';
-    }, [])
-
     return (
         <>
             <div className="table-responsive font-12">

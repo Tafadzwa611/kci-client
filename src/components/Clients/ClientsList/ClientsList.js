@@ -137,6 +137,7 @@ function ClientsList() {
             gender={gender}
             setGender={setGender}
             onSubmit={onSubmit}
+            details={details}
         />
         <div style={{paddingTop: '1.5rem'}}></div>
         <ClientsTable 

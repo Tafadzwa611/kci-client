@@ -40,7 +40,7 @@ const Filter = (props) => {
     };
 
     return (
-        <div>
+        <div style={{position:"relative", zIndex:"2"}}>
             <form onSubmit={onSubmit}>
 
                 <div className="view_search_container online__applications" style={{borderBottom:"none", paddingBottom:"0"}}>

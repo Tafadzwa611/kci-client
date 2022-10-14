@@ -1,13 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Products from './Products/Products';
 
 const ManageLoans = () => {
 
     const [tab, setTab] = useState('products');
-
-    useEffect(() => {
-        document.title = 'Manage Loans';
-    }, [])
     
     return (
         <>
