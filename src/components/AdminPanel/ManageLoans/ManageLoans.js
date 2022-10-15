@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Products from './Products/Products';
+import LoanFees from './LoanFees/LoanFees';
 
 const ManageLoans = () => {
 
@@ -14,7 +15,7 @@ const ManageLoans = () => {
             <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                 {{
                     'products': <Products setMainTab={setTab}/>,
-                    // 'rolesndperm': <StaffRolesAndPermissions setMainTab={setTab}/>,
+                    'fees': <LoanFees setMainTab={setTab}/>,
                 }[tab]}
             </div>
         </>
