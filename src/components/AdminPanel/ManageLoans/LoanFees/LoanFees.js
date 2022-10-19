@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { makeRequest } from '../../../../utils/utils';
 import MiniLoader from '../../../Loader/MiniLoader';
-// import CreateBranchModal from './CreateBranchModal';
+import CreateLoanFee from './CreateLoanFee';
 
 const LoanFees = () => {
 
@@ -38,9 +38,9 @@ const LoanFees = () => {
 
     return (
         <>
-            {/* <CreateBranchModal open={open} setOpen={setOpen} setFees={setFees} /> */}
+            <CreateLoanFee open={open} setOpen={setOpen} setFees={setFees} />
             <div style={{margin:"20px 0"}}>
-                <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Branch</button>
+                <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Loan Fee</button>
             </div>
             <div className="table-responsive font-12">
                 <table className="table">

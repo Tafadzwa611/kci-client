@@ -3166,3 +3166,7 @@ input:checked + .slider:before {
   top: 0;
   background: var(--white);
 }
+
+.radio-span {
+  margin-left: 5px;
+}
