@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateExpenseModal from './CreateExpenseModal';
+import CreateExpenseModal from '../CreateExpenseModal';
 import Select from 'react-select';
 
 
@@ -44,7 +44,7 @@ const Filter = (props) => {
     }
 
     return (
-        <div className="card-body">
+        <div>
             <CreateExpenseModal open={open} setOpen={setOpen} setExpenses={setExpenses} />
             <div style={{marginBottom:"1.5rem"}}>
                 <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Expense</button>

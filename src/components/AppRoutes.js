@@ -58,10 +58,7 @@ const ViewAssets = lazy(() => import('./AssetManagement/ViewAssets'));
 const AssetDetails = lazy(() => import('./AssetManagement/AssetDetails'));
 // Expenses 
 const ExpenseTypes = lazy(() => import('./Expenses/ExpenseTypes'));
-const AddExpenseType = lazy(() => import('./Expenses/AddExpenseType'));
-const ViewExpenses = lazy(() => import('./Expenses/ViewExpenses'));
-const ExpenseDetails = lazy(() => import('./Expenses/ExpenseDetails'));
-const AddExpense = lazy(() => import('./Expenses/AddExpense'));
+const Expenses = lazy(() => import('./Expenses/Expenses'));
 // Repots 
 const ViewReports = lazy(() => import('./Reports/ViewReports/ViewReports'));
 // Accounting 
@@ -121,7 +118,6 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
-                    <Route exact path='/app/expenses/addexpensetype' element={<AddExpenseType/>}/>
                     <Route exact path='/app/otherincome/addotherincometype' element={<AddOtherIncomeType/>}/>
                     </Route>
                 </Route>
@@ -262,7 +258,6 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
                     <Route exact path='/app/otherincome/addotherincome' element={<AddOtherIncome/>}/>
-                    <Route exact path='/app/expenses/addexpense' element={<AddExpense/>}/>
                     </Route>
                 </Route>
                 </Routes>
@@ -363,7 +358,8 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
-                    <Route exact path='/app/expenses/viewexpenses' element={<ViewExpenses/>}/>
+                    {/* <Route exact path='/app/expenses/viewexpenses' element={<ViewExpenses/>}/> */}
+                    <Route exact path='/app/expenses/expenses' element={<Expenses/>}/>
                     </Route>
                 </Route>
                 </Routes>
@@ -462,7 +458,6 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
                     <Route exact path='/app/otherincome/otherincomedetails' element={<OtherIncomeDetails/>}/>
-                    <Route exact path="/app/expenses/expensedetails/:expenseId" element={<ExpenseDetails/>}/>
                     <Route exact path='/app/assets/assetdetails' element={<AssetDetails/>}/>
                     </Route>
                 </Route>

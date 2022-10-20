@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ExpenseList from './ExpenseList';
-import Filter from './Filter';
-import ExpenseFooter from './ExpenseFooter';
+import ExpenseList from './ViewExpenses/ExpenseList';
+import Filter from './ViewExpenses/Filter';
+import ExpenseFooter from './ViewExpenses/ExpenseFooter';
 import { makeRequest } from '../../utils/utils';
-import Loader from '../Loader/loader';
+import MiniLoader from '../Loader/MiniLoader';
 
 
 const ViewExpenses = () => {
@@ -154,17 +154,21 @@ const ViewExpenses = () => {
         setExpenses(data.expenses);
     }
 
-    if (currency === null || branches === null) {
-        return (
-            <div style={{display:"flex", justifyContent:"center", alignItems:"center", minHeight:"100vh"}}>
-                <Loader />
-            </div>
-        )
+    // if (currency === null || branches === null) {
+    //     return (
+    //         <div style={{display:"flex", justifyContent:"center", alignItems:"center", minHeight:"100vh"}}>
+    //             <Loader />
+    //         </div>
+    //     )
+    // }
+
+    if (currency===null || branches===null) {
+        return <MiniLoader />
     }
 
     return (
         <div className="font-12">
-            <div className="card">
+            <>
                 <Filter
                     expName={expName}
                     setExpName={setExpName}
@@ -185,9 +189,10 @@ const ViewExpenses = () => {
                     branches={branches}
                     setBranchIds={setBranchIds}
                 />
-            </div>
+            </>
             {expenses != "" &&
-                <div className="card">
+                <>
+                    <div style={{marginTop:"1.5rem"}}></div>
                     <ExpenseList 
                         expenses={expenses} 
                         setExpenses={setExpenses}
@@ -204,10 +209,10 @@ const ViewExpenses = () => {
                         loadMoreClients={loadMore}
                         loadingMore={loadingMore}
                     />
-                </div>
+                </>
             }
             {expenses == "" &&
-                <div className="card">
+                <div>
                     <div className="table-footer-container card-body clients_table">
 
                         <div className="all-data-loaded">

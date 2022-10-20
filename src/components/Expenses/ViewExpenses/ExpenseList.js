@@ -1,6 +1,6 @@
 import React from 'react';
 import DeleteModal from './DeleteModal';
-import { makeRequest } from '../../utils/utils';
+import { makeRequest } from '../../../utils/utils';
 
 const ExpenseList = ({
     expenses,
