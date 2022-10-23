@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ViewExpenses from './ViewExpenses';
-// import AddClient from '../add_client/AddClient';
+import ExpensesReport from './ExpensesReport/ExpensesReport';
 
 
 const Expenses = () => {
@@ -23,7 +23,7 @@ const Expenses = () => {
                     <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                         {{
                             'expenses': <ViewExpenses setMainTab={setTab}/>,
-                            // 'cshmngmnt': <AddClient setMainTab={setTab}/>,
+                            'expensesreport': <ExpensesReport setMainTab={setTab}/>,
                         }[tab]}
                     </div>
                 </>
