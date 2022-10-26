@@ -8,7 +8,7 @@ const OtherIncome = () => {
     const [tab, setTab] = useState('otherincome');
 
     useEffect(() => {
-        document.title = 'View Otherincome';
+        document.title = 'View Other Income';
     }, []);
     
     return (
@@ -17,8 +17,8 @@ const OtherIncome = () => {
                 <h5 className="table-heading" style={{marginBottom:"20px"}}>View Other Income</h5>
                 <>
                     <div className="bloc-tabs">
-                            <button className={tab === "otherincome" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("otherincome")}> OtherIncome </button>
-                            <button className={tab === "otherincomereport" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("otherincomereport")}> OtherIncome Report </button>
+                            <button className={tab === "otherincome" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("otherincome")}> Other Income </button>
+                            <button className={tab === "otherincomereport" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("otherincomereport")}> Other Income Report </button>
                     </div>
                     <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                         {{
