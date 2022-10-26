@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateOtherIncomeModal from './CreateOtherIncomeModal';
+import CreateOtherIncomeModal from '../CreateOtherIncomeModal';
 import Select from 'react-select';
 
 const Filter = (props) => {
@@ -43,7 +43,7 @@ const Filter = (props) => {
         }
 
         return (
-            <div className="card-body">
+            <div>
                 <CreateOtherIncomeModal open={open} setOpen={setOpen} setOtherIncomes={setOtherIncomes} />
                 <div style={{marginBottom:"1.5rem"}}>
                     <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Other Income</button>
