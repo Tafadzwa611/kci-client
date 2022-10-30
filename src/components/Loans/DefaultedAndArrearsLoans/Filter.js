@@ -74,7 +74,7 @@ const Filter = (props) => {
                         </select>
                     </div>
                 </div>
-                <div className="view_search_container online__applications bck" style={{border:"none"}}>
+                <div className="view_search_container online__applications bck" style={{border:"none", paddingTop:"1rem"}}>
                     <div className="row-payments-container" style={{width:"85%"}}>
                         {/* <label className="form-label row-label">Select Branch</label> */}
                         <div>

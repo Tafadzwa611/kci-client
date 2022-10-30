@@ -91,7 +91,7 @@ const Filter = (props) => {
                             </div>
                         </div>
 
-                        <div style={{marginTop:"20px"}}>
+                        <div style={{marginTop:"1rem"}}>
                             <div className="disbursement-report-fields">
                                 <div className="row-payments-container" style={{width:"75%"}}>
                                     <Select
