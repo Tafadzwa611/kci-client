@@ -21,6 +21,7 @@ function ClientsList() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [details, setDetails] = useState(false)
   const [selectedclientID, setSelectedClientID] = useState(null)
+  const [approved, setApproved] = useState('');
   
   const pageNum = useRef(1);
 
@@ -95,6 +96,9 @@ function ClientsList() {
     if (gender !== '') {
       url += `&gender=${gender}`;
     }
+    if (approved !== '') {
+      url += `&approved=${approved}`;
+    }
     return url
   }
 
@@ -138,8 +142,10 @@ function ClientsList() {
             setGender={setGender}
             onSubmit={onSubmit}
             details={details}
+            approved={approved}
+            setApproved={setApproved}
         />
-        <div style={{paddingTop: '1.5rem'}}></div>
+        <div style={{paddingTop: '2rem'}}></div>
         <ClientsTable 
           clients={clients} 
           totalCount={totalCount} 

@@ -220,6 +220,10 @@ body {
   background-color: #383838;
 }
 
+#dark .search_background {
+  background-color: #383838;
+}
+
 #dark .journal-details.fees__report_thead {
   background-color: var(--info);
 }
@@ -1725,6 +1729,10 @@ small {
   margin-top: 25px;
 }
 
+.search_background {
+  background-color: #f2f8ff;
+}
+
 .journal-details.fees__report_thead {
   background-color: var(--info);
   color: var(--white);
@@ -2504,48 +2512,13 @@ small {
   background-color: #343A40;
 }
 
-/* .spinner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 90vh;
-}
-
-.spinner h2 {
-  position: relative;
-  font-size: 3vw;
-  color: var(--white);
-  -webkit-text-stroke: 0.05vw #e6e3e3;
-}
-
-.spinner h2::before {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
-  color: var(--info);
-  -webkit-text-stroke: 0vw #e6e3e3;
-  border-right: 2px solid var(--info);
-  overflow: hidden;
-  animation: animate 6s linear infinite;
-}
-
-@keyframes animate {
-  0%, 10%, 100% {
-      width:  0;
-  }
-  70%, 90% {
-      width: 100%;
-  }
-} */
-
 .row.custom-background .custom-select-form, .row-payments-container.custom-background .custom-select-form {
   background: var(--white);
 }
 
-.custom-select-form.row-form.input-background, .form-control.input-background {
+.custom-select-form.row-form.input-background, 
+.form-control.input-background,
+.input-group.search_input {
   background: var(--white);
 }
 
@@ -2557,8 +2530,6 @@ select option {
 .table-head-row {
   background: var(--home-section-color);
 }
-
-
 
 /* skeleton loading  */
 
