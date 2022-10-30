@@ -2998,12 +2998,14 @@ input:checked + .slider:before {
 }
 
 #dark .j-details-container,
-#dark .view_search_container.online__applications.acc__statement-search{
+#dark .view_search_container.online__applications.acc__statement-search,
+#dark .view_search_container.online__applications.bck{
   background-color: #383838;
 }
 
 .j-details-container,
-.view_search_container.online__applications.acc__statement-search{
+.view_search_container.online__applications.acc__statement-search,
+.view_search_container.online__applications.bck{
   background-color: #f2f8ff;
 }
 

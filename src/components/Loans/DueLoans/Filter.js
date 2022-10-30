@@ -34,8 +34,8 @@ const Filter = (props) => {
         <div>
             <form onSubmit={onSubmit}>
 
-                <div className="due-loans-border">
-                    <div className="view_search_container online__applications" style={{border:"none"}}>
+                <div>
+                    <div className="view_search_container online__applications bck" style={{border:"none"}}>
                         <div className="row-payments-container" style={{width:"49%"}}>
                             <label className="form-label row-label">Enter</label>
                             <div className="input-group" style={{margin:"10px 0 0"}}>
@@ -57,7 +57,7 @@ const Filter = (props) => {
                             </select>
                         </div>
                     </div>
-                    <div className="view_search_container online__applications" style={{border:"none", paddingTop:"0"}}>
+                    <div className="view_search_container online__applications bck" style={{border:"none", paddingTop:"0"}}>
                         <div className="row-payments-container" style={{width:"85%"}}>
                             <Select
                                 isMulti

@@ -23,7 +23,7 @@ function LoansTable({loans, nextPageNumber, loadMoreLoans, totalCount, loadingMo
             <div className='table-responsive'>
                 <div className="table__height">
                     <table className='table'>
-                        <thead className="journal-details header">
+                        <thead className="journal-details header" style={{position:"sticky", top:"0"}}>
                             <tr>
                                 <th>Client</th>
                                 <th>Loan Number</th>

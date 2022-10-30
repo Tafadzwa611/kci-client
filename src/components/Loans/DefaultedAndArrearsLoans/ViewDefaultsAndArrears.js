@@ -145,7 +145,7 @@ const ViewDefaultsAndArrears = () => {
                 onSubmit={onSubmit}
             />
             <>
-                <div style={{paddingTop: '17px'}}></div>
+                <div style={{paddingTop: '2rem'}}></div>
                 <LoansTable loans={loans} totalCount={totalCount} nextPageNumber={nextPageNumber} loadMoreLoans={loadMore} loadingMore={loadingMore}/>        
             </>
         </>

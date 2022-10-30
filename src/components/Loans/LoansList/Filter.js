@@ -54,13 +54,13 @@ const Filter = (props) => {
     };
     
     return (
-        <div className="loans-filter">
+        <div className="loans-filter search_background">
             <form onSubmit={onSubmit}>
-                <div className="row-containers">
+                <div className="row-containers" style={{border:"none"}}>
                     <div className="row row-payments">
                         <div className="row-payments-container">
                             <label className="form-label row-label">Min Disbursement Date</label>
-                            <div className="input-group" style={{margin:"10px 0"}}>
+                            <div className="input-group search_input" style={{margin:"10px 0 0"}}>
                                 <i className="uil uil-calendar-alt"></i>
                                 <input 
                                     className="custom-select-form row-form input-background" 
@@ -73,7 +73,7 @@ const Filter = (props) => {
                         </div>
                         <div className="row-payments-container">
                             <label className="form-label row-label">Max Disbursement Date</label>
-                            <div className="input-group" style={{margin:"10px 0"}}>
+                            <div className="input-group search_input" style={{margin:"10px 0 0"}}>
                                 <i className="uil uil-calendar-alt"></i>
                                 <input 
                                     className="custom-select-form row-form input-background" 
@@ -86,7 +86,7 @@ const Filter = (props) => {
                         </div>
                         <div className="row-payments-container">
                             <label className="form-label row-label">Min Principal Outstanding</label>
-                            <div className="input-group" style={{margin:"10px 0"}}>
+                            <div className="input-group" style={{margin:"10px 0 0"}}>
                                 <input 
                                     className="custom-select-form row-form input-background" 
                                     placeholder="Min Principal Outstanding" 
@@ -99,7 +99,7 @@ const Filter = (props) => {
                         </div>
                         <div className="row-payments-container">
                             <label className="form-label row-label">Max Principal Outstanding</label>
-                            <div className="input-group" style={{margin:"10px 0"}}>
+                            <div className="input-group" style={{margin:"10px 0 0"}}>
                                 <input 
                                     className="custom-select-form row-form input-background" 
                                     placeholder="Max Principal Outstanding" 
@@ -112,7 +112,7 @@ const Filter = (props) => {
                         </div>
                         <div className="row-payments-container">
                             <label className="form-label row-label">Min Amount Paid</label>
-                            <div className="input-group" style={{margin:"10px 0"}}>
+                            <div className="input-group" style={{margin:"10px 0 0"}}>
                                 <input 
                                     className="custom-select-form row-form input-background" 
                                     placeholder="Min Amount Paid" 
@@ -125,7 +125,7 @@ const Filter = (props) => {
                         </div>
                         <div className="row-payments-container">
                             <label className="form-label row-label">Max Amount Paid</label>
-                            <div className="input-group" style={{margin:"10px 0"}}>
+                            <div className="input-group" style={{margin:"10px 0 0"}}>
                                 <input 
                                     className="custom-select-form row-form input-background" 
                                     placeholder="Max Amount Paid" 
