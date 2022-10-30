@@ -51,14 +51,14 @@ const Filter = (props) => {
             </div>
             <form onSubmit={onSubmit}>
 
-                <div className="text-light">
+                <div className="text-light search_background">
 
-                    <div className="disbursement_date_range">
+                    <div className="disbursement_date_range" style={{border:"none"}}>
 
                         <div className="disbursement-report-fields">
                             <div style={{width:"100%"}}>
                                 <label className="form-label">Min Date Created</label>
-                                <div className="reports-input-group" style={{margin:"10px 0 0"}}>
+                                <div className="reports-input-group search_input" style={{margin:"10px 0 0"}}>
                                     <i className="uil uil-calendar-alt"></i>
                                     <input 
                                         className="reports-form-control" 
@@ -71,7 +71,7 @@ const Filter = (props) => {
                             </div>
                             <div style={{width:"100%"}}>
                                 <label className="form-label">Max Date Created</label>
-                                <div className="reports-input-group" style={{margin:"10px 0 0"}}>
+                                <div className="reports-input-group search_input" style={{margin:"10px 0 0"}}>
                                     <i className="uil uil-calendar-alt"></i>
                                     <input 
                                         className="reports-form-control" 
@@ -84,7 +84,7 @@ const Filter = (props) => {
                             </div>
                             <div style={{width:"100%"}}>
                                 <label className="form-label">Search</label>
-                                <div className="reports-input-group" style={{margin:"10px 0 0"}}>
+                                <div className="reports-input-group search_input" style={{margin:"10px 0 0"}}>
                                     <input 
                                         className="reports-form-control" 
                                         placeholder="Enter Expense Name..."

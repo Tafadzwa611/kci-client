@@ -3,7 +3,7 @@ import React from 'react';
 const PaymentList = ({payments}) => {
 
     return (
-        <div style={{paddingTop:"1.5rem"}}>
+        <div style={{paddingTop:"2rem"}}>
             <div className='table-responsive font-12'>
                 <div style={{width:"100%", overflowX:"auto"}}>
                     <div className="table__height">

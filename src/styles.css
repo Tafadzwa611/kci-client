@@ -2518,7 +2518,8 @@ small {
 
 .custom-select-form.row-form.input-background, 
 .form-control.input-background,
-.input-group.search_input {
+.input-group.search_input,
+.reports-input-group.search_input {
   background: var(--white);
 }
 
