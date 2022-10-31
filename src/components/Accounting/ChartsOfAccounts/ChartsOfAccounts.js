@@ -12,13 +12,13 @@ const ChartsOfAccounts = () => {
     return (
         <>
             <div className="bloc-tabs">
-                    <button className={tab === "mainaccs" ? "tabs-client active-tabs-accs" : "tabs-client"} onClick={e=> setTab("mainaccs")}> Main Accounts </button>
-                    <button className={tab === "subaccs" ? "tabs-client active-tabs-accs" : "tabs-client"} onClick={e=> setTab("subaccs")}> Sub Accounts </button>
-                    <button className={tab === "assetssubaccs" ? "tabs-client active-tabs-accs" : "tabs-client"} onClick={e=> setTab("assetssubaccs")}> Assets </button>
-                    <button className={tab === "liabilitiessubaccs" ? "tabs-client active-tabs-accs" : "tabs-client"} onClick={e=> setTab("liabilitiessubaccs")}> Liabilities </button>
-                    <button className={tab === "equitysubaccs" ? "tabs-client active-tabs-accs" : "tabs-client"} onClick={e=> setTab("equitysubaccs")}> Equity </button>
-                    <button className={tab === "incomesubaccs" ? "tabs-client active-tabs-accs" : "tabs-client"} onClick={e=> setTab("incomesubaccs")}> Income </button>
-                    <button className={tab === "expensessubaccs" ? "tabs-client active-tabs-accs" : "tabs-client"} onClick={e=> setTab("expensessubaccs")}> Expenses </button>
+                    <button className={tab === "mainaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("mainaccs")}> Main Accounts </button>
+                    <button className={tab === "subaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("subaccs")}> Sub Accounts </button>
+                    <button className={tab === "assetssubaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("assetssubaccs")}> Assets </button>
+                    <button className={tab === "liabilitiessubaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("liabilitiessubaccs")}> Liabilities </button>
+                    <button className={tab === "equitysubaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("equitysubaccs")}> Equity </button>
+                    <button className={tab === "incomesubaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("incomesubaccs")}> Income </button>
+                    <button className={tab === "expensessubaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("expensessubaccs")}> Expenses </button>
             </div>
             <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                 {{

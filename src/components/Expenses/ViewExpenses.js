@@ -192,7 +192,7 @@ const ViewExpenses = () => {
             </>
             {expenses != "" &&
                 <>
-                    <div style={{marginTop:"1.5rem"}}></div>
+                    <div style={{marginTop:"2rem"}}></div>
                     <ExpenseList 
                         expenses={expenses} 
                         setExpenses={setExpenses}

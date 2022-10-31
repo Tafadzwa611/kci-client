@@ -40,7 +40,7 @@ const OtherIncomeList = (
 	}
 
     return (
-        <div style={details ? {display:"grid", gridTemplateColumns:"1fr 2fr", columnGap:"1rem", marginTop:"1.5rem"} : {display:"block", marginTop:"1.5rem"}}>
+        <div style={details ? {display:"grid", gridTemplateColumns:"1fr 2fr", columnGap:"1rem", marginTop:"2rem"} : {display:"block", marginTop:"2rem"}}>
             <div style={{padding:"0", border:"none"}}>
                 <div style={{width:"100%", overflowX:"auto"}}>
                     <div className="table__height">

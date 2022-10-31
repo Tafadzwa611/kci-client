@@ -38,8 +38,8 @@ const DateRange = (props) => {
         <div className="font-13 text-light">
 
             <form onSubmit={onSubmit}>
-                <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0", marginBottom:'1.5rem'}}>
-                    <div className="row-payments-container" style={{width:"45%"}}>
+                <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0", marginBottom:'1rem'}}>
+                    <div className="row-payments-container" style={{width:"48%"}}>
                         {/* <label className="form-label row-label">Account Type</label> */}
                         <select className='custom-select-form row-form' style={{margin:"0"}} onChange={(e) => setAccType(e.target.value)} value={acctype}>
                             <option value={'ASSET'}>ASSET</option>
@@ -49,7 +49,7 @@ const DateRange = (props) => {
                             <option value={'EXPENSE'}>EXPENSE</option>
                         </select>
                     </div>
-                    <div className="row-payments-container" style={{width:"45%"}}>
+                    <div className="row-payments-container" style={{width:"48%"}}>
                         {/* <label className="form-label row-label">Account Type</label> */}
                         <select className='custom-select-form row-form' style={{margin:"0"}} value={currencyId} onChange={changeCurrency}>
                             {currency.map(crncy => {

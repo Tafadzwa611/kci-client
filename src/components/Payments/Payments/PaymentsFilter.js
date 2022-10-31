@@ -117,8 +117,8 @@ const Filter = (props) => {
                                     })}
                                 </select>
                                 {searching ?
-                                    <button type="submit" className="btn btn-info" style={{opacity:"0.7", cursor:"none"}}>Searching</button>:
-                                    <button type="submit" className="btn btn-info" >Search</button>
+                                    <button type="submit" className="btn btn-olive" style={{opacity:"0.7", cursor:"none"}}>Searching</button>:
+                                    <button type="submit" className="btn btn-olive" >Search</button>
                                 }
                             </div>
                         </div>

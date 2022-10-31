@@ -2178,7 +2178,7 @@ small {
 .disbursement-report-fields {
   display: flex;
   justify-content: space-between;
-  column-gap: 2rem;
+  column-gap: 4rem;
   font-size: 0.8125rem;
 }
 
