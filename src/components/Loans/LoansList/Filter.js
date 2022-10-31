@@ -185,10 +185,10 @@ const Filter = (props) => {
                         </div>
                         <span>
                             {loading ?
-                            <button type='submit' className='btn btn-info'>
+                            <button type='submit' className='btn btn-olive'>
                             <i className="fa fa-spinner fa-spin"></i> Please wait..
                             </button>:
-                            <button type='submit' className='btn btn-info'>Apply filters!</button>}
+                            <button type='submit' className='btn btn-olive'>Apply filters!</button>}
                         </span>
                     </div>
                 </div>

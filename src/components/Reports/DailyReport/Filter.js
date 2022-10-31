@@ -70,7 +70,7 @@ const Filter = (props) => {
                     </select>
                 </div>
             </div>
-            <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0", marginTop:"1.5rem"}}>
+            <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0", marginTop:"1rem"}}>
                 <div className="row-payments-container" style={{width:"85%"}}>
                     <Select
                         isMulti

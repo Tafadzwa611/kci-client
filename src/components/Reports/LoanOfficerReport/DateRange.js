@@ -85,7 +85,7 @@ const DateRange = (props) => {
             </div>
 
             <div className="view_search_container online__applications font-13" style={{padding:"0", border:"none", marginTop:"1rem"}}>
-                <div className="row-payments-container" style={{margin:"10px 0", width:"85%"}}>
+                <div className="row-payments-container" style={{width:"85%"}}>
                     <Select
                         isMulti
                         name='colors'
@@ -103,7 +103,7 @@ const DateRange = (props) => {
                         styles={style}
                     />
                 </div>
-                <div style={{display:"flex", flexDirection:"column", margin:"10px 0"}}>
+                <div style={{display:"flex", flexDirection:"column"}}>
                     <button className="btn btn-olive" style={{margin:"10px 0 0"}} style={fetchStyles} disabled={disableFetch}>Apply_filters_!</button>
                 </div>
             </div>

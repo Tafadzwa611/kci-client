@@ -2185,9 +2185,9 @@ small {
 .reports-form-control {
   width: 100%;
   display: block;
-  height: calc(2.25rem + 2px);
-  padding: .45rem .9rem;
-  font-size: .9rem;
+  /* height: calc(2.25rem + 2px); */
+  padding: 0.45rem 1.9rem .45rem .9rem;
+  font-size: .8125rem;
   font-weight: 400;
   line-height: 1.5;
   color: var(--color);
@@ -3143,4 +3143,8 @@ input:checked + .slider:before {
 
 .radio-span {
   margin-left: 5px;
+}
+
+.css-6j8wv5-Input {
+  height: 1rem;
 }

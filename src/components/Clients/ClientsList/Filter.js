@@ -158,7 +158,7 @@ const Filter = (props) => {
                                 styles={style}
                             />
                         </div>
-                        <button type='submit' className='btn btn-info' style={details ? {pointerEvents: 'none', opacity: '0.7'}: {}}>Search</button>
+                        <button type='submit' className='btn btn-olive' style={details ? {pointerEvents: 'none', opacity: '0.7'}: {}}>Search</button>
                     </div>
 
                 </div>
