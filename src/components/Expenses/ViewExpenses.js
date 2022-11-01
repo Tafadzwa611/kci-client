@@ -188,6 +188,7 @@ const ViewExpenses = () => {
                     setSearching={setSearching}
                     branches={branches}
                     setBranchIds={setBranchIds}
+                    details={details}
                 />
             </>
             {expenses != "" &&

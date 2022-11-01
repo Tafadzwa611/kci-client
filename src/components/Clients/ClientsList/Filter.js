@@ -58,6 +58,7 @@ const Filter = (props) => {
                                     onKeyDown={(e) => e.preventDefault()}
                                     onChange={(e) => setMinRegDate(e.target.value)}
                                     className='custom-select-form row-form input-background'
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
@@ -71,6 +72,7 @@ const Filter = (props) => {
                                     onKeyDown={(e) => e.preventDefault()}
                                     onChange={(e) => setMaxRegDate(e.target.value)}
                                     className='custom-select-form row-form input-background'
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
@@ -84,6 +86,7 @@ const Filter = (props) => {
                                     onKeyDown={(e) => e.preventDefault()}
                                     onChange={(e) => setMinDob(e.target.value)}
                                     className='custom-select-form row-form input-background'
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
@@ -97,6 +100,7 @@ const Filter = (props) => {
                                     onKeyDown={(e) => e.preventDefault()}
                                     onChange={(e) => setMaxDob(e.target.value)}
                                     className='custom-select-form row-form input-background'
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
@@ -113,25 +117,26 @@ const Filter = (props) => {
                                     placeholder='Search client...'
                                     value={searchStr}
                                     onChange={(e) => setSearchStr(e.target.value)}
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
                         <div className="row-payments-container" style={{width:"22%"}}>
-                            <select className='custom-select-form row-form' onChange={(e) => setTypeOfClient(e.target.value)} value={typeOfClient}>
+                            <select className='custom-select-form row-form' onChange={(e) => setTypeOfClient(e.target.value)} value={typeOfClient} disabled={details ? "disabled": ""}>
                                 <option value={''}>Select Client Type</option>
                                 <option value={'Individual'}>Individual</option>
                                 <option value={'Company'}>Company</option>
                             </select>
                         </div>
                         <div className="row-payments-container" style={{width:"22%"}}>
-                            <select className='custom-select-form row-form' onChange={(e) => setGender(e.target.value)} value={gender}>
+                            <select className='custom-select-form row-form' onChange={(e) => setGender(e.target.value)} value={gender} disabled={details ? "disabled": ""}>
                                 <option value={''}>Select Gender</option>
                                 <option value={'MALE'}>Male</option>
                                 <option value={'FEMALE'}>Female</option>
                             </select>
                         </div>
                         <div className="row-payments-container" style={{width:"22%"}}>
-                            <select className='custom-select-form row-form' onChange={(e) => setApproved(e.target.value)} value={approved}>
+                            <select className='custom-select-form row-form' onChange={(e) => setApproved(e.target.value)} value={approved} disabled={details ? "disabled": ""}>
                                 <option value={''}>Approval Status</option>
                                 <option value={'1'}>Approved</option>
                                 <option value={'0'}>Pending Approval</option>
@@ -156,6 +161,7 @@ const Filter = (props) => {
                                     handleMultiSelect(selected);
                                 }}
                                 styles={style}
+                                isDisabled={details ? true: false}
                             />
                         </div>
                         <button type='submit' className='btn btn-olive' style={details ? {pointerEvents: 'none', opacity: '0.7'}: {}}>Search</button>

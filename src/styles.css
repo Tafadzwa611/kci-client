@@ -3148,3 +3148,12 @@ input:checked + .slider:before {
 .css-6j8wv5-Input {
   height: 1rem;
 }
+
+.css-18c7wyx-control.select__control--is-disabled{
+  background: var(--white);
+}
+
+#dark .css-18c7wyx-control.select__control--is-disabled{
+  border: none;
+}
+

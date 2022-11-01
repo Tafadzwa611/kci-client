@@ -22,7 +22,8 @@ const Filter = (props) => {
         setMinAmountPaid,
         maxAmountPaid,
         setMaxAmountPaid,
-        onSubmit
+        onSubmit,
+        details
     } = props;
     const [optionSelected, setOptionSelected] = useState([]);
     const [selectedStatus, setSelectedStatus] = useState([]);
@@ -68,6 +69,7 @@ const Filter = (props) => {
                                     value={minLoanAddedOn}
                                     onKeyDown={(e) => e.preventDefault()}
                                     onChange={(e) => setMinLoanAddedOn(e.target.value)}
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
@@ -81,6 +83,7 @@ const Filter = (props) => {
                                     value={maxLoanAddedOn}
                                     onKeyDown={(e) => e.preventDefault()}
                                     onChange={(e) => setMaxLoanAddedOn(e.target.value)}
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
@@ -94,6 +97,7 @@ const Filter = (props) => {
                                     value={minPrincipalAmountDue}
                                     placeholder='Min Principal Outstanding'
                                     onChange={(e) => setMinPrincipalAmountDue(e.target.value)}
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
@@ -107,6 +111,7 @@ const Filter = (props) => {
                                     value={maxPrincipalAmountDue}
                                     placeholder='Max Principal Outstanding'
                                     onChange={(e) => setMaxPrincipalAmountDue(e.target.value)}
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
@@ -120,6 +125,7 @@ const Filter = (props) => {
                                     value={minAmountPaid}
                                     placeholder='Min Amount Paid'
                                     onChange={(e) => setMinAmountPaid(e.target.value)}
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
@@ -133,6 +139,7 @@ const Filter = (props) => {
                                     value={maxAmountPaid}
                                     placeholder='Max Amount Paid'
                                     onChange={(e) => setMaxAmountPaid(e.target.value)}
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
@@ -154,10 +161,11 @@ const Filter = (props) => {
                                     handleStatusSelect(selected);
                                 }}
                                 styles={style}
+                                isDisabled={details ? true: false}
                             />
                         </div>
                         <div className="row-payments-container" style={{width:"28%"}}>
-                            <select className='custom-select-form row-form' value={currencyId} onChange={changeCurrency} style={{width:"100%"}}>
+                            <select className='custom-select-form row-form' value={currencyId} onChange={changeCurrency} style={{width:"100%"}} disabled={details ? "disabled": ""}>
                                 {currencies.map(currency => {
                                     return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
                                 })}
@@ -181,6 +189,7 @@ const Filter = (props) => {
                                     handleMultiSelect(selected);
                                 }}
                                 styles={style}
+                                isDisabled={details ? true: false}
                             />
                         </div>
                         <span>
@@ -188,7 +197,7 @@ const Filter = (props) => {
                             <button type='submit' className='btn btn-olive'>
                             <i className="fa fa-spinner fa-spin"></i> Please wait..
                             </button>:
-                            <button type='submit' className='btn btn-olive'>Apply filters!</button>}
+                            <button type='submit' className='btn btn-olive' disabled={details ? "disabled": ""}>Apply filters!</button>}
                         </span>
                     </div>
                 </div>

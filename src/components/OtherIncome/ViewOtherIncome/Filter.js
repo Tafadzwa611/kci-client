@@ -23,6 +23,7 @@ const Filter = (props) => {
             setSearching,
             branches,
             setBranchIds,
+            details
         } = props;    
 
         const style = {
@@ -65,6 +66,7 @@ const Filter = (props) => {
                                             value={minDateCreated}
                                             onKeyDown={(e) => e.preventDefault()}
                                             onChange={(e) => setMinDateCreated(e.target.value)}
+                                            disabled={details ? "disabled": ""}
                                         />
                                     </div>
                                 </div>
@@ -78,6 +80,7 @@ const Filter = (props) => {
                                             value={maxDateCreated}
                                             onKeyDown={(e) => e.preventDefault()}
                                             onChange={(e) => setMaxDateCreated(e.target.value)}
+                                            disabled={details ? "disabled": ""}
                                         />
                                     </div>
                                 </div>
@@ -92,6 +95,7 @@ const Filter = (props) => {
                                             value={othInName}
                                             onChange={(e) => setOthInName(e.target.value)}
                                             style={{width:"100%"}}
+                                            disabled={details ? "disabled": ""}
                                         />
                                     </div>
                                 </div>
@@ -115,16 +119,17 @@ const Filter = (props) => {
                                                 handleMultiSelect(selected);
                                             }}
                                             styles={style}
+                                            isDisabled={details ? true: false}
                                         />
                                     </div>
-                                    <select className="report-custom-form-control currency" value={currencyId} onChange={changeCurrency} style={{width:"15%"}}>
+                                    <select className="report-custom-form-control currency" value={currencyId} onChange={changeCurrency} style={{width:"15%"}} disabled={details ? "disabled": ""}>
                                         {currency.map(cur => {
                                             return <option key={cur.id} value={cur.id}>{cur.shortname}</option>
                                         })}
                                     </select>
                                     {searching ?
                                         <button type="submit" className="btn btn-olive" style={{opacity:"0.7", cursor:"none"}}>Searching</button>:
-                                        <button type="submit" className="btn btn-olive" >Search</button>
+                                        <button type="submit" className="btn btn-olive" disabled={details ? "disabled": ""}>Search</button>
                                     }
                                 </div>
                             </div>

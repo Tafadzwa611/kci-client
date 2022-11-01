@@ -184,6 +184,7 @@ const ViewOtherIncome = () => {
                     setSearching={setSearching}
                     branches={branches}
                     setBranchIds={setBranchIds}
+                    details={details}
                 />
             </>
             {otherincomes != "" &&
