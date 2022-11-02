@@ -3170,3 +3170,9 @@ input:checked + .slider:before {
 .radio-span {
   margin-left: 5px;
 }
+
+.invalid {
+  background-color: ivory;
+  border: none;
+  outline: 2px solid red;
+}

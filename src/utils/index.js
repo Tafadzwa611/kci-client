@@ -1,3 +1,3 @@
-import {makeRequest, makeRequestWrapper, getFormattedDate} from './utils';
+import {makeRequest, makeRequestWrapper, getFormattedDate, uuidv4, isDate} from './utils';
 
-export {makeRequest, makeRequestWrapper, getFormattedDate};
+export {makeRequest, makeRequestWrapper, getFormattedDate, uuidv4, isDate};
