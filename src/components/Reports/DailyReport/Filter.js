@@ -48,7 +48,7 @@ const Filter = (props) => {
     return (
         <form onSubmit={onSubmit}>
             <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0"}}>
-                <div className="row-payments-container" style={{width:"45%"}}>
+                <div className="row-payments-container" style={{width:"48%"}}>
                     <label className="form-label row-label">Enter Date</label>
                     <div className="input-group" style={{margin:"10px 0 0"}}>
                         <i className="uil uil-calendar-alt"></i>
@@ -61,7 +61,7 @@ const Filter = (props) => {
                         />
                     </div>
                 </div>
-                <div className="row-payments-container" style={{width:"45%"}}>
+                <div className="row-payments-container" style={{width:"48%"}}>
                     <label className="form-label row-label">Select Currency</label>
                     <select className='custom-select-form row-form' value={currencyId} onChange={changeCurrency} style={{margin:"10px 0 0"}}>
                         {currencies.map(currency => {
@@ -70,7 +70,7 @@ const Filter = (props) => {
                     </select>
                 </div>
             </div>
-            <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0", marginTop:"1.5rem"}}>
+            <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0", marginTop:"1rem"}}>
                 <div className="row-payments-container" style={{width:"85%"}}>
                     <Select
                         isMulti

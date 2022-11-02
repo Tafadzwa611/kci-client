@@ -43,7 +43,7 @@ const Filter = (props) => {
         <div style={{position:"relative", zIndex:"2"}}>
             <form onSubmit={onSubmit}>
 
-                <div className="view_search_container online__applications" style={{borderBottom:"none", paddingBottom:"0"}}>
+                <div className="view_search_container online__applications bck" style={{border:"none", paddingBottom:"0"}}>
                     <div className="row-payments-container" style={{width:"49%"}}>
                         <label className="form-label row-label">Select Status</label>
                         <div>
@@ -74,7 +74,7 @@ const Filter = (props) => {
                         </select>
                     </div>
                 </div>
-                <div className="view_search_container online__applications" style={{borderTop:"none"}}>
+                <div className="view_search_container online__applications bck" style={{border:"none", paddingTop:"1rem"}}>
                     <div className="row-payments-container" style={{width:"85%"}}>
                         {/* <label className="form-label row-label">Select Branch</label> */}
                         <div>

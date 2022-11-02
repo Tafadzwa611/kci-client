@@ -59,7 +59,7 @@ const DateRange = (props) => {
                         <div style={{width:"100%"}}>
                             <label className="form-label">Max Date</label>
                             <div className="reports-input-group" style={{margin:"10px 0 0", border:"none"}}>
-                                <select className='report-custom-form-control currency' style={{width:"100%", padding:'0.55rem'}} value={currencyId} onChange={changeCurrency}>
+                                <select className='report-custom-form-control currency' style={{width:"100%"}} value={currencyId} onChange={changeCurrency}>
                                     {currencies.map(currency => {
                                         return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
                                     })}
@@ -68,7 +68,7 @@ const DateRange = (props) => {
                         </div>
                     </div>
 
-                    <div style={{marginTop:"20px"}}>
+                    <div style={{marginTop:"1rem"}}>
                         <div className="disbursement-report-fields">
                             <div style={{width:"85%"}}>
                             <Select

@@ -118,7 +118,7 @@ function App() {
                     <NavLink to="app/payments/viewpayments" className="btn btn-default dashboard">
                       <span>View Payments</span>
                     </NavLink>
-                    <NavLink to="app/otherincome/viewotherincome" className="btn btn-default dashboard">
+                    <NavLink to="app/otherincome/otherincmoe" className="btn btn-default dashboard">
                       <span>View Other Income</span>
                     </NavLink>
                     <NavLink to="app/expenses/expenses" className="btn btn-default dashboard">

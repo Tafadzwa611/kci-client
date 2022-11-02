@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
-import OtherIncomeList from './OtherIncomeList';
-import Filter from './Filter';
+import OtherIncomeList from './ViewOtherIncome/OtherIncomeList';
+import Filter from './ViewOtherIncome/Filter';
 import { makeRequest } from '../../utils/utils';
-import OtherIncomeFooter from './OtherIncomeFooter';
-import Loader from '../Loader/loader';
+import OtherIncomeFooter from './ViewOtherIncome/OtherIncomeFooter';
+import MiniLoader from '../Loader/MiniLoader';
 
 
 const ViewOtherIncome = () => {
@@ -156,15 +156,15 @@ const ViewOtherIncome = () => {
 
     if (currency === null || branches === null) {
         return (
-            <div style={{display:"flex", justifyContent:"center", alignItems:"center", minHeight:"100vh"}}>
-                <Loader />
+            <div>
+                <MiniLoader />
             </div>
         )
     }
 
     return (
         <div className="font-12">
-            <div className="card">
+            <>
                 <Filter
                     othInName={othInName}
                     setOthInName={setOthInName}
@@ -184,10 +184,11 @@ const ViewOtherIncome = () => {
                     setSearching={setSearching}
                     branches={branches}
                     setBranchIds={setBranchIds}
+                    details={details}
                 />
-            </div>
+            </>
             {otherincomes != "" &&
-                <div className="card">
+                <>
                     <OtherIncomeList 
                         otherincomes={otherincomes} 
                         setOtherIncomes={setOtherIncomes}
@@ -205,11 +206,11 @@ const ViewOtherIncome = () => {
                         loadMoreClients={loadMore}
                         loadingMore={loadingMore}
                     />
-                </div>
+                </>
             }
             {otherincomes == "" &&
-                <div className="card">
-                    <div className="table-footer-container card-body clients_table">
+                <div style={{marginTop:"1.5rem"}}>
+                    <div className="table-footer-container clients_table" style={{borderTop:"none"}}>
 
                         <div className="all-data-loaded">
                             <i className="uil uil-exclamation-triangle"></i> 

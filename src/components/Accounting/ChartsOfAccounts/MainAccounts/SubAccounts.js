@@ -49,7 +49,7 @@ const SubAccounts = ({selectedMainAccID, setAccDetails, generalLedgerName, gener
                     <div style={{padding:"1.5rem", display:"flex", justifyContent:"space-between"}}>
                         <div>
                             <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)} 
-                                style={{backgroundColor:"#3d9970", borderColor: "#3d9970"}} id="add-sub-account">Add Sub Account
+                                id="add-sub-account">Add Sub Account
                             </button>
                         </div>
                         <div >

@@ -220,6 +220,10 @@ body {
   background-color: #383838;
 }
 
+#dark .search_background {
+  background-color: #383838;
+}
+
 #dark .journal-details.fees__report_thead {
   background-color: var(--info);
 }
@@ -1725,6 +1729,10 @@ small {
   margin-top: 25px;
 }
 
+.search_background {
+  background-color: #f2f8ff;
+}
+
 .journal-details.fees__report_thead {
   background-color: var(--info);
   color: var(--white);
@@ -2170,16 +2178,16 @@ small {
 .disbursement-report-fields {
   display: flex;
   justify-content: space-between;
-  column-gap: 2rem;
+  column-gap: 4rem;
   font-size: 0.8125rem;
 }
 
 .reports-form-control {
   width: 100%;
   display: block;
-  height: calc(2.25rem + 2px);
-  padding: .45rem .9rem;
-  font-size: .9rem;
+  /* height: calc(2.25rem + 2px); */
+  padding: 0.45rem 1.9rem .45rem .9rem;
+  font-size: .8125rem;
   font-weight: 400;
   line-height: 1.5;
   color: var(--color);
@@ -2504,48 +2512,14 @@ small {
   background-color: #343A40;
 }
 
-/* .spinner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 90vh;
-}
-
-.spinner h2 {
-  position: relative;
-  font-size: 3vw;
-  color: var(--white);
-  -webkit-text-stroke: 0.05vw #e6e3e3;
-}
-
-.spinner h2::before {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
-  color: var(--info);
-  -webkit-text-stroke: 0vw #e6e3e3;
-  border-right: 2px solid var(--info);
-  overflow: hidden;
-  animation: animate 6s linear infinite;
-}
-
-@keyframes animate {
-  0%, 10%, 100% {
-      width:  0;
-  }
-  70%, 90% {
-      width: 100%;
-  }
-} */
-
 .row.custom-background .custom-select-form, .row-payments-container.custom-background .custom-select-form {
   background: var(--white);
 }
 
-.custom-select-form.row-form.input-background, .form-control.input-background {
+.custom-select-form.row-form.input-background, 
+.form-control.input-background,
+.input-group.search_input,
+.reports-input-group.search_input {
   background: var(--white);
 }
 
@@ -2557,8 +2531,6 @@ select option {
 .table-head-row {
   background: var(--home-section-color);
 }
-
-
 
 /* skeleton loading  */
 
@@ -3027,12 +2999,14 @@ input:checked + .slider:before {
 }
 
 #dark .j-details-container,
-#dark .view_search_container.online__applications.acc__statement-search{
+#dark .view_search_container.online__applications.acc__statement-search,
+#dark .view_search_container.online__applications.bck{
   background-color: #383838;
 }
 
 .j-details-container,
-.view_search_container.online__applications.acc__statement-search{
+.view_search_container.online__applications.acc__statement-search,
+.view_search_container.online__applications.bck{
   background-color: #f2f8ff;
 }
 
@@ -3176,3 +3150,15 @@ input:checked + .slider:before {
   border: none;
   outline: 2px solid red;
 }
+.css-6j8wv5-Input {
+  height: 1rem;
+}
+
+.css-18c7wyx-control.select__control--is-disabled{
+  background: var(--white);
+}
+
+#dark .css-18c7wyx-control.select__control--is-disabled{
+  border: none;
+}
+

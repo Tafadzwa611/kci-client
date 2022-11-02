@@ -43,11 +43,13 @@ const AddBranch = lazy(() => import('./Users/AddBranch'));
 const AddStaffRole = lazy(() => import('./Users/AddStaffRole'));
 const BranchDetails = lazy(() => import('./Users/BranchDetails'));
 // // Other Income 
+// import OtherIncome from './OtherIncome/OtherIncome';
+const OtherIncome = lazy(() => import('./OtherIncome/OtherIncome'))
 const OtherIncomeTypes = lazy(() => import('./OtherIncome/OtherIncomeTypes'));
-const AddOtherIncomeType = lazy(() => import('./OtherIncome/AddOtherIncomeType'));
-const ViewOtherIncome = lazy(() => import('./OtherIncome/ViewOtherIncome'));
-const OtherIncomeDetails = lazy(() => import('./OtherIncome/OtherIncomeDetails'));
-const AddOtherIncome = lazy(() => import('./OtherIncome/AddOtherIncome'));
+// const AddOtherIncomeType = lazy(() => import('./OtherIncome/AddOtherIncomeType'));
+// const ViewOtherIncome = lazy(() => import('./OtherIncome/ViewOtherIncome'));
+// const OtherIncomeDetails = lazy(() => import('./OtherIncome/OtherIncomeDetails'));
+// const AddOtherIncome = lazy(() => import('./OtherIncome/AddOtherIncome'));
 // Asset Managemnt 
 const AssetTypes = lazy(() => import('./AssetManagement/AssetTypes'));
 const AddAssetType = lazy(() => import('./AssetManagement/AddAssetType'));
@@ -87,7 +89,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
                     <Route exact path='/app/loans/viewrefunds' element={<ViewRefunds/>}/>
-                    <Route exact path='/app/otherincome/viewotherincome' element={<ViewOtherIncome/>}/>
+                    <Route exact path='/app/otherincome/otherincmoe' element={<OtherIncome/>}/>
                     <Route exact path='/app/payments/viewpayments' element={<ViewPayments/>}/>
                     <Route exact path='/app/assets/viewassets' element={<ViewAssets/>}/>
                     </Route>
@@ -112,7 +114,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
             </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback='Loading...'>
+            {/* <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -124,7 +126,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 </Routes>
 
             </LoggedInUserProvider>
-            </Suspense>
+            </Suspense> */}
 
             <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
@@ -251,7 +253,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 </LoggedInUserProvider>
             </Suspense>
 
-            <Suspense fallback='Loading...'>
+            {/* <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
 
                 <Routes>
@@ -263,7 +265,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 </Routes>
 
             </LoggedInUserProvider>
-            </Suspense>
+            </Suspense> */}
 
             <Suspense fallback='Loading...'>
             <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
@@ -457,7 +459,7 @@ const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPro
                 <Routes>
                 <Route path='/' element={<ProtectedRoutes />}>
                     <Route path='app' element={<Main />}>
-                    <Route exact path='/app/otherincome/otherincomedetails' element={<OtherIncomeDetails/>}/>
+                    {/* <Route exact path='/app/otherincome/otherincomedetails' element={<OtherIncomeDetails/>}/> */}
                     <Route exact path='/app/assets/assetdetails' element={<AssetDetails/>}/>
                     </Route>
                 </Route>

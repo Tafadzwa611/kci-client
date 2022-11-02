@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateOtherIncomeModal from './CreateOtherIncomeModal';
+import CreateOtherIncomeModal from '../CreateOtherIncomeModal';
 import Select from 'react-select';
 
 const Filter = (props) => {
@@ -23,6 +23,7 @@ const Filter = (props) => {
             setSearching,
             branches,
             setBranchIds,
+            details
         } = props;    
 
         const style = {
@@ -43,21 +44,21 @@ const Filter = (props) => {
         }
 
         return (
-            <div className="card-body">
+            <div>
                 <CreateOtherIncomeModal open={open} setOpen={setOpen} setOtherIncomes={setOtherIncomes} />
                 <div style={{marginBottom:"1.5rem"}}>
                     <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Other Income</button>
                 </div>
                 <form onSubmit={onSubmit}>
 
-                    <div className="text-light">
+                    <div className="text-light search_background">
 
-                        <div className="disbursement_date_range">
+                        <div className="disbursement_date_range" style={{border:"none"}}>
 
                             <div className="disbursement-report-fields">
                                 <div style={{width:"100%"}}>
                                     <label className="form-label">Min Date Created</label>
-                                    <div className="reports-input-group" style={{margin:"10px 0 0"}}>
+                                    <div className="reports-input-group search_input" style={{margin:"10px 0 0"}}>
                                         <i className="uil uil-calendar-alt"></i>
                                         <input 
                                             className="reports-form-control" 
@@ -65,12 +66,13 @@ const Filter = (props) => {
                                             value={minDateCreated}
                                             onKeyDown={(e) => e.preventDefault()}
                                             onChange={(e) => setMinDateCreated(e.target.value)}
+                                            disabled={details ? "disabled": ""}
                                         />
                                     </div>
                                 </div>
                                 <div style={{width:"100%"}}>
                                     <label className="form-label">Max Date Created</label>
-                                    <div className="reports-input-group" style={{margin:"10px 0 0"}}>
+                                    <div className="reports-input-group search_input" style={{margin:"10px 0 0"}}>
                                         <i className="uil uil-calendar-alt"></i>
                                         <input 
                                             className="reports-form-control" 
@@ -78,12 +80,13 @@ const Filter = (props) => {
                                             value={maxDateCreated}
                                             onKeyDown={(e) => e.preventDefault()}
                                             onChange={(e) => setMaxDateCreated(e.target.value)}
+                                            disabled={details ? "disabled": ""}
                                         />
                                     </div>
                                 </div>
                                 <div style={{width:"100%"}}>
                                     <label className="form-label">Search</label>
-                                    <div className="reports-input-group" style={{margin:"10px 0 0", border:"none"}}>
+                                    <div className="reports-input-group search_input" style={{margin:"10px 0 0", border:"none"}}>
                                         <input 
                                             className="report-custom-form-control normal-input" 
                                             placeholder="Enter Expense Name..."
@@ -92,12 +95,13 @@ const Filter = (props) => {
                                             value={othInName}
                                             onChange={(e) => setOthInName(e.target.value)}
                                             style={{width:"100%"}}
+                                            disabled={details ? "disabled": ""}
                                         />
                                     </div>
                                 </div>
                             </div>
 
-                            <div style={{marginTop:"20px"}}>
+                            <div style={{marginTop:"1rem"}}>
                                 <div className="disbursement-report-fields">
                                     <div className="row-payments-container" style={{width:"75%"}}>
                                         <Select
@@ -115,16 +119,17 @@ const Filter = (props) => {
                                                 handleMultiSelect(selected);
                                             }}
                                             styles={style}
+                                            isDisabled={details ? true: false}
                                         />
                                     </div>
-                                    <select className="report-custom-form-control currency" value={currencyId} onChange={changeCurrency} style={{width:"15%"}}>
+                                    <select className="report-custom-form-control currency" value={currencyId} onChange={changeCurrency} style={{width:"15%"}} disabled={details ? "disabled": ""}>
                                         {currency.map(cur => {
                                             return <option key={cur.id} value={cur.id}>{cur.shortname}</option>
                                         })}
                                     </select>
                                     {searching ?
-                                        <button type="submit" className="btn btn-info" style={{opacity:"0.7", cursor:"none"}}>Searching</button>:
-                                        <button type="submit" className="btn btn-info" >Search</button>
+                                        <button type="submit" className="btn btn-olive" style={{opacity:"0.7", cursor:"none"}}>Searching</button>:
+                                        <button type="submit" className="btn btn-olive" disabled={details ? "disabled": ""}>Search</button>
                                     }
                                 </div>
                             </div>

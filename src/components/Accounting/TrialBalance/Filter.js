@@ -43,7 +43,7 @@ const Filter = (props) => {
 
             <form onSubmit={onSubmit}>
                 <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0"}}>
-                    <div className="row-payments-container" style={{width:"45%"}}>
+                    <div className="row-payments-container" style={{width:"48%"}}>
                         <label className="form-label row-label">To</label>
                         <div className="input-group" style={{margin:"0"}}>
                             <i className="uil uil-calendar-alt"></i>
@@ -51,7 +51,7 @@ const Filter = (props) => {
                         </div>
                     </div>
 
-                    <div className="row-payments-container" style={{width:"45%"}}>
+                    <div className="row-payments-container" style={{width:"48%"}}>
                         <label className="form-label row-label">Currency</label>
                         <select className='custom-select-form row-form' style={{margin:"0"}} value={currencyId} onChange={changeCurrency}>
                             {currencies.map(currency => {

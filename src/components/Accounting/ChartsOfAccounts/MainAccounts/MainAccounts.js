@@ -145,7 +145,7 @@ const MainAccounts = () => {
         <>
             <div style={{marginBottom:"1.5rem"}}>
                 <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)} 
-                    style={{backgroundColor:"#3d9970", borderColor: "#3d9970"}}>Add Main Account
+                    >Add Main Account
                 </button>
             </div>
             <CreateMainAccountModal open={open} setOpen={setOpen} setMainAccounts={setMainAccounts} />

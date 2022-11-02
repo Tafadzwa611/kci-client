@@ -21,9 +21,11 @@ function ClientsList() {
   const [searchType, setSearchType] = useState('basic');
   const [gender, setGender] = useState('');
   const [loadingMore, setLoadingMore] = useState(false);
-  const [details, setDetails] = useState(false);
   const [advOpts, setAdvOpts] = useState({});
-  const [selectedclientID, setSelectedClientID] = useState(null);
+  const [details, setDetails] = useState(false)
+  const [selectedclientID, setSelectedClientID] = useState(null)
+  const [approved, setApproved] = useState('');
+  
   const pageNum = useRef(1);
 
   useEffect(() => {
@@ -101,6 +103,9 @@ function ClientsList() {
     if (gender !== '') {
       url += `&gender=${gender}`;
     }
+    if (approved !== '') {
+      url += `&approved=${approved}`;
+    }
     return url
   }
 
@@ -125,6 +130,7 @@ function ClientsList() {
 
   return (
     <>
+<<<<<<< HEAD
       <div className='row-payments-container' style={{width: '10%', margin: '10px 0'}}>
         <select className='custom-select-form row-form' onChange={(e) => setSearchType(e.target.value)} value={searchType}>
           <option value='basic'>Basic Search</option>
@@ -167,6 +173,45 @@ function ClientsList() {
         loadMoreClients={loadMore} 
         loadingMore={loadingMore}
       />
+=======
+        <Filter
+            minRegDate={minRegDate}
+            setMinRegDate={setMinRegDate}
+            maxRegDate={maxRegDate}
+            minDob={minDob}
+            setMinDob={setMinDob}
+            maxDob={maxDob}
+            setMaxDob={setMaxDob}
+            setMaxRegDate={setMaxRegDate}
+            searchStr={searchStr}
+            setSearchStr={setSearchStr}
+            branches={branches}
+            setBranchIds={setBranchIds}
+            typeOfClient={typeOfClient}
+            setTypeOfClient={setTypeOfClient}
+            gender={gender}
+            setGender={setGender}
+            onSubmit={onSubmit}
+            details={details}
+            approved={approved}
+            setApproved={setApproved}
+        />
+        <div style={{paddingTop: '2rem'}}></div>
+        <ClientsTable 
+          clients={clients} 
+          totalCount={totalCount} 
+          setDetails={setDetails} 
+          details={details} 
+          setSelectedClientID={setSelectedClientID} 
+          selectedclientID={selectedclientID}
+          selectedclient={clients.find(clnt => clnt.id == selectedclientID)}
+        />
+        <Footer 
+          nextPageNumber={nextPageNumber} 
+          loadMoreClients={loadMore} 
+          loadingMore={loadingMore}
+        />
+>>>>>>> 5f08ae71106b2e5f00cd5f2b1cf5d44ad3d95656
     </>
   )
 }

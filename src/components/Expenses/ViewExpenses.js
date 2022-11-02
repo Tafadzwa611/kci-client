@@ -188,11 +188,12 @@ const ViewExpenses = () => {
                     setSearching={setSearching}
                     branches={branches}
                     setBranchIds={setBranchIds}
+                    details={details}
                 />
             </>
             {expenses != "" &&
                 <>
-                    <div style={{marginTop:"1.5rem"}}></div>
+                    <div style={{marginTop:"2rem"}}></div>
                     <ExpenseList 
                         expenses={expenses} 
                         setExpenses={setExpenses}

@@ -53,7 +53,7 @@ const Filter = (props) => {
                         <div className="row row-payments">
                             <div className="row-payments-container">
                                 <label className="form-label row-label">Min Loan Release Date</label>
-                                <div className="input-group" style={{margin:"10px 0"}}>
+                                <div className="input-group" style={{margin:"10px 0 0"}}>
                                     <i className="uil uil-calendar-alt"></i>
                                     <input
                                         type='date'
@@ -66,7 +66,7 @@ const Filter = (props) => {
                             </div>
                             <div className="row-payments-container">
                                 <label className="form-label row-label">Max Loan Release Date</label>
-                                <div className="input-group" style={{margin:"10px 0"}}>
+                                <div className="input-group" style={{margin:"10px 0 0"}}>
                                     <i className="uil uil-calendar-alt"></i>
                                     <input
                                         type='date'
@@ -79,7 +79,7 @@ const Filter = (props) => {
                             </div>
                             <div className="row-payments-container">
                                 <label className="form-label row-label">Search Client</label>
-                                <div className="input-group" style={{margin:"10px 0"}}>
+                                <div className="input-group" style={{margin:"10px 0 0"}}>
                                     <input
                                         type='text'
                                         name='search'
@@ -93,7 +93,7 @@ const Filter = (props) => {
                             </div>
                             <div className="row-payments-container">
                                 <label className="form-label row-label">Select Currency</label>
-                                <select className='custom-select-form row-form' value={currencyId} onChange={changeCurrency} style={{margin:"10px 0"}}>
+                                <select className='custom-select-form row-form' value={currencyId} onChange={changeCurrency} style={{margin:"10px 0 0"}}>
                                     {currencies.map(currency => {
                                         return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
                                     })}
@@ -120,7 +120,7 @@ const Filter = (props) => {
                                     styles={style}
                                 />
                             </div>
-                            <button type='submit' className='btn btn-info' style={fetchStyles} disabled={disableFetch}>Apply_filters!</button>
+                            <button type='submit' className='btn btn-olive' style={fetchStyles} disabled={disableFetch}>Apply_filters!</button>
                         </div>
 
                     </div>

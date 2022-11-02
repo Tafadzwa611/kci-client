@@ -20,6 +20,8 @@ const Filter = (props) => {
         setTypeOfClient,
         gender,
         setGender,
+        approved,
+        setApproved,
         onSubmit,
         details
     } = props;
@@ -42,13 +44,13 @@ const Filter = (props) => {
     }
 
     return (
-        <div>
+        <div className="search_background">
             <form onSubmit={onSubmit}>
-                <div className="row-containers">
+                <div className="row-containers" style={{border:"none"}}>
                     <div className="row row-payments">
                         <div className="row-payments-container">
                             <label className="form-label row-label">Min Reg Date</label>
-                            <div className="input-group" style={{margin:"10px 0"}}>
+                            <div className="input-group search_input" style={{margin:"10px 0 0"}}>
                                 <i className="uil uil-calendar-alt"></i>
                                 <input
                                     type='date'
@@ -56,12 +58,13 @@ const Filter = (props) => {
                                     onKeyDown={(e) => e.preventDefault()}
                                     onChange={(e) => setMinRegDate(e.target.value)}
                                     className='custom-select-form row-form input-background'
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
                         <div className="row-payments-container">
                             <label className="form-label row-label">Max Reg Date</label>
-                            <div className="input-group" style={{margin:"10px 0"}}>
+                            <div className="input-group search_input" style={{margin:"10px 0 0"}}>
                                 <i className="uil uil-calendar-alt"></i>
                                 <input
                                     type='date'
@@ -69,12 +72,13 @@ const Filter = (props) => {
                                     onKeyDown={(e) => e.preventDefault()}
                                     onChange={(e) => setMaxRegDate(e.target.value)}
                                     className='custom-select-form row-form input-background'
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
                         <div className="row-payments-container">
                             <label className="form-label row-label">Min Date Of Birth</label>
-                            <div className="input-group" style={{margin:"10px 0"}}>
+                            <div className="input-group search_input" style={{margin:"10px 0 0"}}>
                                 <i className="uil uil-calendar-alt"></i>
                                 <input
                                     type='date'
@@ -82,12 +86,13 @@ const Filter = (props) => {
                                     onKeyDown={(e) => e.preventDefault()}
                                     onChange={(e) => setMinDob(e.target.value)}
                                     className='custom-select-form row-form input-background'
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
                         <div className="row-payments-container">
                             <label className="form-label row-label">Max Date Of Birth</label>
-                            <div className="input-group" style={{margin:"10px 0"}}>
+                            <div className="input-group search_input" style={{margin:"10px 0 0"}}>
                                 <i className="uil uil-calendar-alt"></i>
                                 <input
                                     type='date'
@@ -95,13 +100,14 @@ const Filter = (props) => {
                                     onKeyDown={(e) => e.preventDefault()}
                                     onChange={(e) => setMaxDob(e.target.value)}
                                     className='custom-select-form row-form input-background'
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
                     </div>
 
                     <div className="row row-payments" style={{marginTop:"1rem"}}>
-                        <div className="row-payments-container" style={{width:"30%"}}>
+                        <div className="row-payments-container" style={{width:"22%"}}>
                             <div className="input-group" style={{margin:"0"}}>
                                 <input
                                     type='text'
@@ -111,21 +117,29 @@ const Filter = (props) => {
                                     placeholder='Search client...'
                                     value={searchStr}
                                     onChange={(e) => setSearchStr(e.target.value)}
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
-                        <div className="row-payments-container" style={{width:"30%"}}>
-                            <select className='custom-select-form row-form' onChange={(e) => setTypeOfClient(e.target.value)} value={typeOfClient}>
+                        <div className="row-payments-container" style={{width:"22%"}}>
+                            <select className='custom-select-form row-form' onChange={(e) => setTypeOfClient(e.target.value)} value={typeOfClient} disabled={details ? "disabled": ""}>
                                 <option value={''}>Select Client Type</option>
                                 <option value={'Individual'}>Individual</option>
                                 <option value={'Company'}>Company</option>
                             </select>
                         </div>
-                        <div className="row-payments-container" style={{width:"30%"}}>
-                            <select className='custom-select-form row-form' onChange={(e) => setGender(e.target.value)} value={gender}>
+                        <div className="row-payments-container" style={{width:"22%"}}>
+                            <select className='custom-select-form row-form' onChange={(e) => setGender(e.target.value)} value={gender} disabled={details ? "disabled": ""}>
                                 <option value={''}>Select Gender</option>
                                 <option value={'MALE'}>Male</option>
                                 <option value={'FEMALE'}>Female</option>
+                            </select>
+                        </div>
+                        <div className="row-payments-container" style={{width:"22%"}}>
+                            <select className='custom-select-form row-form' onChange={(e) => setApproved(e.target.value)} value={approved} disabled={details ? "disabled": ""}>
+                                <option value={''}>Approval Status</option>
+                                <option value={'1'}>Approved</option>
+                                <option value={'0'}>Pending Approval</option>
                             </select>
                         </div>
                     </div>
@@ -147,9 +161,10 @@ const Filter = (props) => {
                                     handleMultiSelect(selected);
                                 }}
                                 styles={style}
+                                isDisabled={details ? true: false}
                             />
                         </div>
-                        <button type='submit' className='btn btn-info' style={details ? {pointerEvents: 'none', opacity: '0.7'}: {}}>Search</button>
+                        <button type='submit' className='btn btn-olive' style={details ? {pointerEvents: 'none', opacity: '0.7'}: {}}>Search</button>
                     </div>
 
                 </div>

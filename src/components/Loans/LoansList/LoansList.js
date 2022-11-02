@@ -187,8 +187,9 @@ function LoansList() {
             maxAmountPaid={maxAmountPaid}
             setMaxAmountPaid={setMaxAmountPaid}
             onSubmit={onSubmit}
+            details={details} 
         />
-        <div style={{paddingTop: '17px'}}></div>
+        <div style={{paddingTop: '2rem'}}></div>
         <LoansTable
             loans={loans}
             totalCount={totalCount}

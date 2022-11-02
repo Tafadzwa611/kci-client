@@ -14,8 +14,8 @@ const DeleteModal = ({closeModal, deleteExpense, expense}) => {
                     You want to delete {expense} expense.
                 </div>
                 <div className="modal-footer">
-                    <button className="btn btn-info" onClick={deleteExpense}>Continue</button>
                     <button className="btn btn-danger"onClick={() => closeModal(false)}>Cancel</button>
+                    <button className="btn btn-info" onClick={deleteExpense}>Continue</button>
                 </div>
             </div>
         </div>

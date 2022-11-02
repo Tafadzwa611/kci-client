@@ -22,7 +22,8 @@ const Filter = (props) => {
         setMinAmountPaid,
         maxAmountPaid,
         setMaxAmountPaid,
-        onSubmit
+        onSubmit,
+        details
     } = props;
     const [optionSelected, setOptionSelected] = useState([]);
     const [selectedStatus, setSelectedStatus] = useState([]);
@@ -54,13 +55,13 @@ const Filter = (props) => {
     };
     
     return (
-        <div className="loans-filter">
+        <div className="loans-filter search_background">
             <form onSubmit={onSubmit}>
-                <div className="row-containers">
+                <div className="row-containers" style={{border:"none"}}>
                     <div className="row row-payments">
                         <div className="row-payments-container">
                             <label className="form-label row-label">Min Disbursement Date</label>
-                            <div className="input-group" style={{margin:"10px 0"}}>
+                            <div className="input-group search_input" style={{margin:"10px 0 0"}}>
                                 <i className="uil uil-calendar-alt"></i>
                                 <input 
                                     className="custom-select-form row-form input-background" 
@@ -68,12 +69,13 @@ const Filter = (props) => {
                                     value={minLoanAddedOn}
                                     onKeyDown={(e) => e.preventDefault()}
                                     onChange={(e) => setMinLoanAddedOn(e.target.value)}
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
                         <div className="row-payments-container">
                             <label className="form-label row-label">Max Disbursement Date</label>
-                            <div className="input-group" style={{margin:"10px 0"}}>
+                            <div className="input-group search_input" style={{margin:"10px 0 0"}}>
                                 <i className="uil uil-calendar-alt"></i>
                                 <input 
                                     className="custom-select-form row-form input-background" 
@@ -81,12 +83,13 @@ const Filter = (props) => {
                                     value={maxLoanAddedOn}
                                     onKeyDown={(e) => e.preventDefault()}
                                     onChange={(e) => setMaxLoanAddedOn(e.target.value)}
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
                         <div className="row-payments-container">
                             <label className="form-label row-label">Min Principal Outstanding</label>
-                            <div className="input-group" style={{margin:"10px 0"}}>
+                            <div className="input-group" style={{margin:"10px 0 0"}}>
                                 <input 
                                     className="custom-select-form row-form input-background" 
                                     placeholder="Min Principal Outstanding" 
@@ -94,12 +97,13 @@ const Filter = (props) => {
                                     value={minPrincipalAmountDue}
                                     placeholder='Min Principal Outstanding'
                                     onChange={(e) => setMinPrincipalAmountDue(e.target.value)}
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
                         <div className="row-payments-container">
                             <label className="form-label row-label">Max Principal Outstanding</label>
-                            <div className="input-group" style={{margin:"10px 0"}}>
+                            <div className="input-group" style={{margin:"10px 0 0"}}>
                                 <input 
                                     className="custom-select-form row-form input-background" 
                                     placeholder="Max Principal Outstanding" 
@@ -107,12 +111,13 @@ const Filter = (props) => {
                                     value={maxPrincipalAmountDue}
                                     placeholder='Max Principal Outstanding'
                                     onChange={(e) => setMaxPrincipalAmountDue(e.target.value)}
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
                         <div className="row-payments-container">
                             <label className="form-label row-label">Min Amount Paid</label>
-                            <div className="input-group" style={{margin:"10px 0"}}>
+                            <div className="input-group" style={{margin:"10px 0 0"}}>
                                 <input 
                                     className="custom-select-form row-form input-background" 
                                     placeholder="Min Amount Paid" 
@@ -120,12 +125,13 @@ const Filter = (props) => {
                                     value={minAmountPaid}
                                     placeholder='Min Amount Paid'
                                     onChange={(e) => setMinAmountPaid(e.target.value)}
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
                         <div className="row-payments-container">
                             <label className="form-label row-label">Max Amount Paid</label>
-                            <div className="input-group" style={{margin:"10px 0"}}>
+                            <div className="input-group" style={{margin:"10px 0 0"}}>
                                 <input 
                                     className="custom-select-form row-form input-background" 
                                     placeholder="Max Amount Paid" 
@@ -133,6 +139,7 @@ const Filter = (props) => {
                                     value={maxAmountPaid}
                                     placeholder='Max Amount Paid'
                                     onChange={(e) => setMaxAmountPaid(e.target.value)}
+                                    disabled={details ? "disabled": ""}
                                 />
                             </div>
                         </div>
@@ -154,10 +161,11 @@ const Filter = (props) => {
                                     handleStatusSelect(selected);
                                 }}
                                 styles={style}
+                                isDisabled={details ? true: false}
                             />
                         </div>
                         <div className="row-payments-container" style={{width:"28%"}}>
-                            <select className='custom-select-form row-form' value={currencyId} onChange={changeCurrency} style={{width:"100%"}}>
+                            <select className='custom-select-form row-form' value={currencyId} onChange={changeCurrency} style={{width:"100%"}} disabled={details ? "disabled": ""}>
                                 {currencies.map(currency => {
                                     return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
                                 })}
@@ -181,14 +189,15 @@ const Filter = (props) => {
                                     handleMultiSelect(selected);
                                 }}
                                 styles={style}
+                                isDisabled={details ? true: false}
                             />
                         </div>
                         <span>
                             {loading ?
-                            <button type='submit' className='btn btn-info'>
+                            <button type='submit' className='btn btn-olive'>
                             <i className="fa fa-spinner fa-spin"></i> Please wait..
                             </button>:
-                            <button type='submit' className='btn btn-info'>Apply filters!</button>}
+                            <button type='submit' className='btn btn-olive' disabled={details ? "disabled": ""}>Apply filters!</button>}
                         </span>
                     </div>
                 </div>
