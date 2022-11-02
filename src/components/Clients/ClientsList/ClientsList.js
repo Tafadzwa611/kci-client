@@ -4,6 +4,7 @@ import ClientsTable from './ClientsTable';
 import Filter from './Filter';
 import Footer from './Footer';
 import MiniLoader from '../../Loader/MiniLoader';
+import AdvancedSearch from './AdvancedSearch/AdvancedSearch';
 
 function ClientsList() {
   const [clients, setClients] = useState(null);
@@ -17,8 +18,10 @@ function ClientsList() {
   const [minDob, setMinDob] = useState('');
   const [maxDob, setMaxDob] = useState('');
   const [typeOfClient, setTypeOfClient] = useState('');
+  const [searchType, setSearchType] = useState('basic');
   const [gender, setGender] = useState('');
   const [loadingMore, setLoadingMore] = useState(false);
+  const [advOpts, setAdvOpts] = useState({});
   const [details, setDetails] = useState(false)
   const [selectedclientID, setSelectedClientID] = useState(null)
   const [approved, setApproved] = useState('');
@@ -41,7 +44,7 @@ function ClientsList() {
   async function fetchClients() {
     try {
       const url = getUrl();
-      const response = await makeRequest.get(url, {timeout: 8000});
+      const response = searchType === 'basic' ? await makeRequest.get(url, {timeout: 8000}) : await makeRequest.post(url, {...advOpts, page_num: pageNum.current}, {timeout: 8000});
       if (response.ok) {
         const json_res = await response.json();
         setNextPageNumber(json_res.next_page_num);
@@ -71,6 +74,10 @@ function ClientsList() {
   }
 
   function getUrl() {
+    if (searchType === 'advanced') {
+      return '/clientsapi/advanced_search/'
+    }
+  
     let url = `/clientsapi/clients/?page_num=${pageNum.current}`;
     if (branchIds !== null) {
       branchIds.forEach(id => (url += `&branch_ids=${id}`));
@@ -123,43 +130,51 @@ function ClientsList() {
 
   return (
     <>
+      <div className='row-payments-container' style={{width: '10%', margin: '10px 0'}}>
+        <select className='custom-select-form row-form' onChange={(e) => setSearchType(e.target.value)} value={searchType}>
+          <option value='basic'>Basic Search</option>
+          <option value='advanced'>Advanced Search</option>
+        </select>
+      </div>
+      {searchType === 'advanced' ? <AdvancedSearch branches={branches} setAdvOpts={setAdvOpts} onSubmit={onSubmit} /> :
         <Filter
-            minRegDate={minRegDate}
-            setMinRegDate={setMinRegDate}
-            maxRegDate={maxRegDate}
-            minDob={minDob}
-            setMinDob={setMinDob}
-            maxDob={maxDob}
-            setMaxDob={setMaxDob}
-            setMaxRegDate={setMaxRegDate}
-            searchStr={searchStr}
-            setSearchStr={setSearchStr}
-            branches={branches}
-            setBranchIds={setBranchIds}
-            typeOfClient={typeOfClient}
-            setTypeOfClient={setTypeOfClient}
-            gender={gender}
-            setGender={setGender}
-            onSubmit={onSubmit}
-            details={details}
-            approved={approved}
-            setApproved={setApproved}
+          minRegDate={minRegDate}
+          setMinRegDate={setMinRegDate}
+          maxRegDate={maxRegDate}
+          minDob={minDob}
+          setMinDob={setMinDob}
+          maxDob={maxDob}
+          setMaxDob={setMaxDob}
+          setMaxRegDate={setMaxRegDate}
+          searchStr={searchStr}
+          setSearchStr={setSearchStr}
+          branches={branches}
+          setBranchIds={setBranchIds}
+          typeOfClient={typeOfClient}
+          setTypeOfClient={setTypeOfClient}
+          gender={gender}
+          setGender={setGender}
+          onSubmit={onSubmit}
+          details={details}
+          approved={approved}
+          setApproved={setApproved}
         />
-        <div style={{paddingTop: '2rem'}}></div>
-        <ClientsTable 
-          clients={clients} 
-          totalCount={totalCount} 
-          setDetails={setDetails} 
-          details={details} 
-          setSelectedClientID={setSelectedClientID} 
-          selectedclientID={selectedclientID}
-          selectedclient={clients.find(clnt => clnt.id == selectedclientID)}
-        />
-        <Footer 
-          nextPageNumber={nextPageNumber} 
-          loadMoreClients={loadMore} 
-          loadingMore={loadingMore}
-        />
+      }
+      <div style={{paddingTop: '2rem'}}></div>
+      <ClientsTable 
+        clients={clients} 
+        totalCount={totalCount} 
+        setDetails={setDetails} 
+        details={details} 
+        setSelectedClientID={setSelectedClientID} 
+        selectedclientID={selectedclientID}
+        selectedclient={clients.find(clnt => clnt.id == selectedclientID)}
+      />
+      <Footer 
+        nextPageNumber={nextPageNumber} 
+        loadMoreClients={loadMore} 
+        loadingMore={loadingMore}
+      />
     </>
   )
 }

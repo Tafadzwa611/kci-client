@@ -104,24 +104,12 @@ const makeRequestWrapper = async (resource, method, setLoggedInUser, data={}) =>
 }
 
 const getFormattedDate = (date, format) => {
-
-  // let dd = date.getDate();
-  // let mm = date.getMonth() + 1;
-  // const yyyy = date.getFullYear();
-
   const [year, month, day] = date.split('-');
 
   let dd = day;
   let mm = month;
   const yyyy =year;
 
-  // if (dd < 10) {
-  //     dd = '0' + dd;
-  // }
-
-  // if (mm < 10) {
-  //     mm = '0' + mm;
-  // }
   if (format === 'dd/mm/yyyy') {
       return dd + '/' + mm + '/' + yyyy;
   }
@@ -135,4 +123,14 @@ const getFormattedDate = (date, format) => {
   }
 }
 
-export { makeRequest, useAuth, makeRequestWrapper, getFormattedDate };
+function uuidv4() {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
+
+const isDate = date => {
+  return !isNaN(Date.parse(date));
+}
+
+export { makeRequest, useAuth, makeRequestWrapper, getFormattedDate, uuidv4, isDate };
