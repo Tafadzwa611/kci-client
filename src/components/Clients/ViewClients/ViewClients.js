@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ClientsList from '../ClientsList/ClientsList'
 import AddClient from '../add_client/AddClient';
 import PendingApprovalList from '../PendingApprovalList/PendingApprovalList';
+import InactiveList from '../InactiveList/InactiveList';
 
 
 const ViewClients = () => {
@@ -32,6 +33,7 @@ const ViewClients = () => {
                             'clients': <ClientsList setMainTab={setTab}/>,
                             'addclient': <AddClient setMainTab={setTab}/>,
                             'pendingapproval': <PendingApprovalList setMainTab={setTab}/>,
+                            'inactive': <InactiveList setMainTab={setTab}/>,
                         }[tab]}
                     </div>
                 </>
