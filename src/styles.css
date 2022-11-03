@@ -3184,6 +3184,10 @@ input:checked + .slider:before {
   column-gap: 10px;
 }
 
+.ruleGroup-combinators label {
+  margin-bottom: 0;
+}
+
 .queryBuilder-dragHandle {
   display: none;
 }
