@@ -4,7 +4,7 @@ export default function CombinatorSelector({className, handleOnChange, options, 
   const combinatorLabels = {'AND': 'Match All', 'OR': 'Match Any'};
 
   return (
-    <form className={className} style={{display: 'inline-block'}} title={title}>
+    <form className={className} title={title}>
       {options.map(option => {
         const key = option.id ? `key-${option.id}` : `key-${option.name}`;
         return (

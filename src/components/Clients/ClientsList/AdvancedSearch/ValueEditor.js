@@ -28,7 +28,7 @@ function ValueEditor(props) {
 
 function Select({value, handleOnChange, values}) {
   return (
-    <select onChange={(e) => handleOnChange(e.target.value)} value={value}>
+    <select onChange={(e) => handleOnChange(e.target.value)} value={value} className="custom-select-form row-form">
       {values.map(val => <option key={val.name} value={val.name}>{val.label}</option>)}
     </select>
   )
@@ -41,6 +41,7 @@ function Text({value, handleOnChange}) {
       type='text'
       value={value}
       onChange={(e) => handleOnChange(e.target.value)}
+      className='custom-select-form row-form input-background'
     />
   )
 }
@@ -51,7 +52,7 @@ function DatePicker({value, handleOnChange}) {
     <input
       type='date'
       value={value}
-      className={`${!isDate(value) ? 'invalid' : ''}`}
+      className={`${!isDate(value) ? 'invalid custom-select-form row-form input-background' : 'custom-select-form row-form input-background'}`}
       onKeyDown={(e) => e.preventDefault()}
       onChange={(e) => handleOnChange(e.target.value)}
     />
@@ -77,7 +78,7 @@ function DateRangePicker({handleOnChange}) {
         name='start'
         type='date'
         value={minDate}
-        className={`${(!isDate(minDate) || rangeError) ? 'invalid' : ''}`}
+        className={`${(!isDate(minDate) || rangeError) ? 'invalid custom-select-form row-form input-background' : 'custom-select-form row-form input-background'}`}
         onKeyDown={(e) => e.preventDefault()}
         onChange={(e) => setMinDate(e.target.value)}
       />
@@ -85,7 +86,7 @@ function DateRangePicker({handleOnChange}) {
         name='end'
         type='date'
         value={maxDate}
-        className={`${(!isDate(maxDate) || rangeError) ? 'invalid' : ''}`}
+        className={`${(!isDate(maxDate) || rangeError) ? 'invalid custom-select-form row-form input-background' : 'custom-select-form row-form input-background'}`}
         onKeyDown={(e) => e.preventDefault()}
         onChange={(e) => setMaxDate(e.target.value)}
       />

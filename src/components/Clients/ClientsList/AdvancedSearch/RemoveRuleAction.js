@@ -4,7 +4,7 @@ function RemoveRuleAction(props) {
   const {handleOnClick} = props;
 
   return (
-    <button type='submit' className='btn btn-info' onClick={e => handleOnClick(e)} >X</button>
+    <button type='submit' className='btn btn-danger' onClick={e => handleOnClick(e)} >X</button>
   )
 }
 

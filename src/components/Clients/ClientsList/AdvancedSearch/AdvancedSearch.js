@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { QueryBuilder } from 'react-querybuilder';
-import 'react-querybuilder/dist/query-builder.css';
+// import 'react-querybuilder/dist/query-builder.css';
 import CombinatorSelector from './CombinatorSelector';
 import fields from './Fields';
 import getOperators from './getOperators';
@@ -49,8 +49,8 @@ function AdvancedSearch({setAdvOpts, onSubmit, branches}) {
         }}
       />
       <form onSubmit={onSubmit}>
-        {allRulesValid ? <button type='submit' className='btn btn-info'>Search</button> :
-        <button type='submit' className='btn btn-info' style={{pointerEvents: 'none', opacity: '0.7'}} disabled={!allRulesValid}>Search</button>}
+        {allRulesValid ? <button type='submit' className='btn btn-olive'>Search</button> :
+        <button type='submit' className='btn btn-olive' style={{pointerEvents: 'none', opacity: '0.7'}} disabled={!allRulesValid}>Search</button>}
       </form>
     </>
   )

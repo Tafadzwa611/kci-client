@@ -34,11 +34,8 @@ function ClientsList() {
 
   const getClients = async () => {
     window.scrollTo(0, 0);
-    const data = await fetchClients();
     const branches = await fetchBranches();
-    setClients(data.clients);
     setBranches(branches);
-    setTotalCount(data.count);
   }
 
   async function fetchClients() {
@@ -109,7 +106,7 @@ function ClientsList() {
     return url
   }
 
-  if (clients===null || branches===null) {
+  if (branches===null) {
     return <MiniLoader />
   }
 
@@ -130,7 +127,7 @@ function ClientsList() {
 
   return (
     <>
-      <div className='row-payments-container' style={{width: '10%', margin: '10px 0'}}>
+      <div className='row-payments-container' style={{width: '200px', margin: '10px 0'}}>
         <select className='custom-select-form row-form' onChange={(e) => setSearchType(e.target.value)} value={searchType}>
           <option value='basic'>Basic Search</option>
           <option value='advanced'>Advanced Search</option>
@@ -160,21 +157,25 @@ function ClientsList() {
           setApproved={setApproved}
         />
       }
-      <div style={{paddingTop: '2rem'}}></div>
-      <ClientsTable 
-        clients={clients} 
-        totalCount={totalCount} 
-        setDetails={setDetails} 
-        details={details} 
-        setSelectedClientID={setSelectedClientID} 
-        selectedclientID={selectedclientID}
-        selectedclient={clients.find(clnt => clnt.id == selectedclientID)}
-      />
-      <Footer 
-        nextPageNumber={nextPageNumber} 
-        loadMoreClients={loadMore} 
-        loadingMore={loadingMore}
-      />
+      {clients &&
+        <>
+          <div style={{paddingTop: '2rem'}}></div>
+          <ClientsTable 
+            clients={clients} 
+            totalCount={totalCount} 
+            setDetails={setDetails} 
+            details={details} 
+            setSelectedClientID={setSelectedClientID} 
+            selectedclientID={selectedclientID}
+            selectedclient={clients.find(clnt => clnt.id == selectedclientID)}
+          />
+          <Footer 
+            nextPageNumber={nextPageNumber} 
+            loadMoreClients={loadMore} 
+            loadingMore={loadingMore}
+          />
+        </>
+      }
     </>
   )
 }
