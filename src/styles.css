@@ -3198,3 +3198,10 @@ input:checked + .slider:before {
   column-gap: 2rem;
   margin-top: 10px;
 }
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
