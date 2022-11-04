@@ -4,6 +4,8 @@ import Filter from './ViewOtherIncome/Filter';
 import { makeRequest } from '../../utils/utils';
 import OtherIncomeFooter from './ViewOtherIncome/OtherIncomeFooter';
 import MiniLoader from '../Loader/MiniLoader';
+import CreateOtherIncomeModal from './CreateOtherIncomeModal';
+import AdvancedSearchOtherIncome from './ViewOtherIncome/AdvancedSearchOtherIncome/AdvancedSearchOtherIncome';
 
 
 const ViewOtherIncome = () => {
@@ -23,6 +25,8 @@ const ViewOtherIncome = () => {
     const [selectedIncID, setSelectedIncID] = useState(null)
     const [branches, setBranches] = useState(null);
     const [branchIds, setBranchIds] = useState(null);
+    const [searchType, setSearchType] = useState('basic');
+    const [advOpts, setAdvOpts] = useState({});
 
 
     const pageNum = useRef(1);
@@ -44,15 +48,15 @@ const ViewOtherIncome = () => {
     const getOtherIncomes = async () => {
         window.scrollTo(0, 0);
         document.title = 'Other Income';
-        const data = await fetchOtherIncome();
-        setOtherIncomes(data.otherincomes);
-        setTotalCount(data.count);
+        // const data = await fetchOtherIncome();
+        // setOtherIncomes(data.otherincomes);
+        // setTotalCount(data.count);
     };
 
     async function fetchOtherIncome() {
         try {
             const url = getUrl();
-            const response = await makeRequest.get(url, {timeout: 8000});
+            const response = searchType === 'basic' ? await makeRequest.get(url, {timeout: 8000}) : await makeRequest.post(url, {...advOpts, page_num: pageNum.current}, {timeout: 8000});
             if (response.ok) {
                 const json_res = await response.json();
                 setNextPageNumber(json_res.next_page_num);
@@ -119,6 +123,10 @@ const ViewOtherIncome = () => {
 
     function getUrl() {
 
+        if (searchType === 'advanced') {
+            return '/otherincomeapi/advanced_search_otherincomes/'
+        }
+
         let url = `/otherincomeapi/otherincomelist/?page_num=${pageNum.current}&currency_id=${currencyId}`;
         if (branchIds !== null) {
             branchIds.forEach(id => (url += `&branch_ids=${id}`));
@@ -165,27 +173,39 @@ const ViewOtherIncome = () => {
     return (
         <div className="font-12">
             <>
-                <Filter
-                    othInName={othInName}
-                    setOthInName={setOthInName}
-                    currency={currency}
-                    currencyId={currencyId}
-                    setCurrencyId={setCurrencyId}
-                    minDateCreated={minDateCreated}
-                    setMinDateCreated={setMinDateCreated}
-                    maxDateCreated={maxDateCreated}
-                    setMaxDateCreated={setMaxDateCreated}
-                    onSubmit={onSubmit}
-                    open ={open}
-                    setOpen={setOpen}
-                    setOtherIncomes={setOtherIncomes}
-                    changeCurrency={changeCurrency}
-                    searching={searching}
-                    setSearching={setSearching}
-                    branches={branches}
-                    setBranchIds={setBranchIds}
-                    details={details}
-                />
+                <CreateOtherIncomeModal open={open} setOpen={setOpen} setOtherIncomes={setOtherIncomes} />
+                <div style={{marginBottom:"1.5rem"}}>
+                    <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Other Income</button>
+                </div>
+                <div className='row-payments-container' style={{width: '200px', margin: '10px 0'}}>
+                    <select className='custom-select-form row-form' onChange={(e) => setSearchType(e.target.value)} value={searchType}>
+                        <option value='basic'>Basic Search</option>
+                        <option value='advanced'>Advanced Search</option>
+                    </select>
+                </div>
+                {searchType === 'advanced' ? <AdvancedSearchOtherIncome details={details} branches={branches} setAdvOpts={setAdvOpts} onSubmit={onSubmit} /> :
+                    <Filter
+                        othInName={othInName}
+                        setOthInName={setOthInName}
+                        currency={currency}
+                        currencyId={currencyId}
+                        setCurrencyId={setCurrencyId}
+                        minDateCreated={minDateCreated}
+                        setMinDateCreated={setMinDateCreated}
+                        maxDateCreated={maxDateCreated}
+                        setMaxDateCreated={setMaxDateCreated}
+                        onSubmit={onSubmit}
+                        open ={open}
+                        setOpen={setOpen}
+                        setOtherIncomes={setOtherIncomes}
+                        changeCurrency={changeCurrency}
+                        searching={searching}
+                        setSearching={setSearching}
+                        branches={branches}
+                        setBranchIds={setBranchIds}
+                        details={details}
+                    />
+                }
             </>
             {otherincomes != "" &&
                 <>
