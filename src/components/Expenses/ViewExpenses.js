@@ -179,7 +179,7 @@ const ViewExpenses = () => {
                         <option value='advanced'>Advanced Search</option>
                     </select>
                 </div>
-                {searchType === 'advanced' ? <AdvancedSearchExpenses branches={branches} setAdvOpts={setAdvOpts} onSubmit={onSubmit} /> :
+                {searchType === 'advanced' ? <AdvancedSearchExpenses details={details} branches={branches} setAdvOpts={setAdvOpts} onSubmit={onSubmit} /> :
                     <Filter
                         expName={expName}
                         setExpName={setExpName}

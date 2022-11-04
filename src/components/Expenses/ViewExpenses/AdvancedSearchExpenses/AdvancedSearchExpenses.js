@@ -11,7 +11,7 @@ import {isQueryInvalid} from '../../../Clients/ClientsList/AdvancedSearch/valida
 import FieldSelector from '../../../Clients/ClientsList/AdvancedSearch/FieldSelector';
 import OperatorSelector from '../../../Clients/ClientsList/AdvancedSearch/OperatorSelector';
 
-function AdvancedSearchExpenses({setAdvOpts, onSubmit, branches}) {
+function AdvancedSearchExpenses({setAdvOpts, onSubmit, branches, details}) {
   const [query, setQuery] =  useState({id: 'root', combinator: 'and', rules: []});
   const [allRulesValid, setAllRulesValid] =  useState(true);
 
@@ -47,10 +47,15 @@ function AdvancedSearchExpenses({setAdvOpts, onSubmit, branches}) {
           operatorSelector: OperatorSelector
         }}
       />
-      <form onSubmit={onSubmit}>
-        {allRulesValid ? <button type='submit' className='btn btn-olive'>Search</button> :
-        <button type='submit' className='btn btn-olive' style={{pointerEvents: 'none', opacity: '0.7'}} disabled={!allRulesValid}>Search</button>}
-      </form>
+      {details ?
+        <form onSubmit={onSubmit}>
+          <button type='submit' className='btn btn-olive' style={{pointerEvents: 'none', opacity: '0.7'}} disabled='disabled'>Search</button>
+        </form>:
+        <form onSubmit={onSubmit}>
+          {allRulesValid ? <button type='submit' className='btn btn-olive'>Search</button> :
+          <button type='submit' className='btn btn-olive' style={{pointerEvents: 'none', opacity: '0.7'}} disabled={!allRulesValid}>Search</button>}
+        </form>
+      }
     </>
   )
 }
