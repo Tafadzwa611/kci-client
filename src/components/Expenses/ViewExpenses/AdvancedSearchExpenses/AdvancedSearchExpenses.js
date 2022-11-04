@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { QueryBuilder } from 'react-querybuilder';
-import CombinatorSelector from './CombinatorSelector';
+import CombinatorSelector from '../../../Clients/ClientsList/AdvancedSearch/CombinatorSelector';
 import fields from './Fields';
 import getOperators from './getOperators';
-import ValueEditor from './ValueEditor';
-import AddRuleAction from './AddRuleAction';
-import RemoveRuleAction from './RemoveRuleAction';
+import ValueEditor from '../../../Clients/ClientsList/AdvancedSearch/ValueEditor';
+import AddRuleAction from '../../../Clients/ClientsList/AdvancedSearch/AddRuleAction';
+import RemoveRuleAction from '../../../Clients/ClientsList/AdvancedSearch/RemoveRuleAction';
 import {getAdvOpts} from './utils';
-import {isQueryInvalid} from './validations';
-import FieldSelector from './FieldSelector';
-import OperatorSelector from './OperatorSelector';
+import {isQueryInvalid} from '../../../Clients/ClientsList/AdvancedSearch/validations';
+import FieldSelector from '../../../Clients/ClientsList/AdvancedSearch/FieldSelector';
+import OperatorSelector from '../../../Clients/ClientsList/AdvancedSearch/OperatorSelector';
 
-function AdvancedSearch({setAdvOpts, onSubmit, branches}) {
+function AdvancedSearchExpenses({setAdvOpts, onSubmit, branches}) {
   const [query, setQuery] =  useState({id: 'root', combinator: 'and', rules: []});
   const [allRulesValid, setAllRulesValid] =  useState(true);
 
@@ -24,7 +24,7 @@ function AdvancedSearch({setAdvOpts, onSubmit, branches}) {
 
   useEffect(() => {
     const advOpts = getAdvOpts(query);
-    const dates = advOpts.reg_date.concat(advOpts.date_of_birth);
+    const dates = advOpts.date_created.concat(advOpts.expense_date);
     const inValid = isQueryInvalid(dates);
     setAllRulesValid(!inValid);
     setAdvOpts(advOpts);
@@ -55,4 +55,4 @@ function AdvancedSearch({setAdvOpts, onSubmit, branches}) {
   )
 }
 
-export default AdvancedSearch;
+export default AdvancedSearchExpenses;
