@@ -13,8 +13,6 @@ const MainAccounts = () => {
     const [nextPageNumber, setNextPageNumber] = useState(null);
     const [totalCount, setTotalCount] = useState(0);
     const [accType, setAccType] = useState('');
-    // const [currency, setCurrency] = useState(null);
-    // const [currencyId, setCurrencyId] = useState(null);
     const [searching, setSearching] = useState(false);
     const [loadingMore, setLoadingMore] = useState(false);
     const [selectedMainAccID, setSelectedMainAccID] = useState(null)
@@ -63,34 +61,6 @@ const MainAccounts = () => {
         }
     }
     
-    // async function fetchCurrency() {
-    //     try {
-    //       const response = await makeRequest.get('/usersapi/currencieslist/', {timeout: 8000});
-    //       if (response.ok) {
-    //         const data = await response.json();
-    //         if (currencyId===null) {
-    //           const zwlId = data.filter(currency => currency.shortname === 'ZWL')[0].id;
-    //           setCurrencyId(zwlId);
-    //         }
-    //         return setCurrency([...data.map(result => ({...result, label: result.shortname, value:result.id}))]);
-    //       }else {
-    //         const error = await response.json();
-    //         console.log(error);
-    //       }
-    //     }catch(error) {
-    //       console.log(error);
-    //     }
-    //   }
-    
-    // const getCurrency = async () => {
-    //     await fetchCurrency();
-    // };
-
-    // const changeCurrency = (evt) => {
-    //     setCurrencyId(evt.target.value);
-    //     pageNum.current = 1;
-    // }
-
     async function fetchBranches() {
         try {
           const response = await makeRequest.get('/usersapi/get-branches/', {timeout: 6000});
@@ -132,7 +102,6 @@ const MainAccounts = () => {
         setSearching(true);
         pageNum.current = 1;
         const data = await fetchMainAccounts();
-        // console.log(data)
         setTotalCount(data.count);
         setMainAccounts(data.mainaccounts);
     }
@@ -153,9 +122,7 @@ const MainAccounts = () => {
                 accType={accType}
                 setAccType={setAccType}
                 onSubmit={onSubmit}
-                // changeCurrency={changeCurrency}
                 searching={searching}
-                // setMainAccounts={setMainAccounts}
                 branches={branches}
                 setBranchIds={setBranchIds}
             />
