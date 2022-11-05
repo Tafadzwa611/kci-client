@@ -73,62 +73,67 @@ function Table(props) {
                   buttonText='Download as XLS'
                 />
               </div>
-            <div className="btn btn-default csh-btn">
-            <select value={props.order} onChange={evt => props.setOrder(evt.target.value)} className="cashreport-select">
-              <option value='ReceiptsFirst'>Show Receipts First</option>
-              <option value='PaymentsFirst'>Show Payments First</option>
-              <option value='Chronologically'>List Chronologically</option>
-            </select>
+              <div className="btn btn-default csh-btn">
+                <select value={props.order} onChange={evt => props.setOrder(evt.target.value)} className="cashreport-select">
+                  <option value='ReceiptsFirst'>Show Receipts First</option>
+                  <option value='PaymentsFirst'>Show Payments First</option>
+                  <option value='Chronologically'>List Chronologically</option>
+                </select>
+              </div>
+              {props.reconciled ?
+                <button className='btn btn-success'>Reconciled</button> :
+                <button type='submit' onClick={reconcile} className="btn btn-default">Mark As Reconciled</button>
+              }
             </div>
-            {props.reconciled ?
-              <button className='btn btn-success'>Reconciled</button> :
-              <button type='submit' onClick={reconcile} className="btn btn-default">Mark As Reconciled</button>}
-          </div>
-            <table id='cash-balance' className='table table-bordered table-condensed table-hover'>
-              <thead>
-                <tr className="journal-details header">
-                  <th>Date</th>
-                  <th>Narration</th>
-                  <th>Reference</th>
-                  <th>Dr</th>
-                  <th>Cr</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style={{background: Number(props.statement.balance_bd) >= 0 ? '#7FFF00' : '#FFB6C1'}} className="cashreport-balance">
-                  <td>{props.statement.report_date}</td>
-                  <td>Balance b/d</td>
-                  <td></td>
-                  <td>{Number(props.statement.balance_bd) >= 0 && props.statement.balance_bd}</td>
-                  <td>{Number(props.statement.balance_bd) < 0 && Math.abs(props.statement.balance_bd)}</td>
-                </tr>
-                {transactions.map(txn => {
-                  return (
-                    <tr key={txn.id} className={txn.id == selectedrowId ? "cashreport-table selected": "cashreport-table"}>
-                      <td></td>
-                      <td>{txn.description}</td>
-                      <td><a id={txn.id} href='#' onClick={goToJournalDetails}>{txn.reference}</a></td>
-                      <td>{txn.type === 'receipt' && txn.amount}</td>
-                      <td>{txn.type === 'payment' && txn.amount}</td>
+            <div style={{width:"100%", overflowX:"auto"}}>
+              <div className="table__height">
+                <table id='cash-balance' className='table table-bordered table-condensed table-hover'>
+                  <thead>
+                    <tr className="journal-details header">
+                      <th>Date</th>
+                      <th>Narration</th>
+                      <th>Reference</th>
+                      <th>Dr</th>
+                      <th>Cr</th>
                     </tr>
-                  )
-                })}
-                <tr style={{background: Number(props.statement.balance_cd) >= 0 ? '#7FFF00' : '#FFB6C1'}} className="cashreport-balance">
-                  <td></td>
-                  <td>Balance c/d</td>
-                  <td></td>
-                  <td>{Number(props.statement.balance_cd) < 0 && Math.abs(props.statement.balance_cd)}</td>
-                  <td>{Number(props.statement.balance_cd) >= 0 && props.statement.balance_cd}</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>{props.statement.total_receipts}</td>
-                  <td>{props.statement.total_payments}</td>
-                </tr>
-              </tbody>
-            </table>
+                  </thead>
+                  <tbody>
+                    <tr style={{background: Number(props.statement.balance_bd) >= 0 ? '#7FFF00' : '#FFB6C1', position:'sticky', top:'0'}} className="cashreport-balance">
+                      <td>{props.statement.report_date}</td>
+                      <td>Balance b/d</td>
+                      <td></td>
+                      <td>{Number(props.statement.balance_bd) >= 0 && props.statement.balance_bd}</td>
+                      <td>{Number(props.statement.balance_bd) < 0 && Math.abs(props.statement.balance_bd)}</td>
+                    </tr>
+                    {transactions.map(txn => {
+                      return (
+                        <tr key={txn.id} className={txn.id == selectedrowId ? "cashreport-table selected": "cashreport-table"}>
+                          <td></td>
+                          <td>{txn.description}</td>
+                          <td><a id={txn.id} href='#' onClick={goToJournalDetails}>{txn.reference}</a></td>
+                          <td>{txn.type === 'receipt' && txn.amount}</td>
+                          <td>{txn.type === 'payment' && txn.amount}</td>
+                        </tr>
+                      )
+                    })}
+                    <tr style={{background: Number(props.statement.balance_cd) >= 0 ? '#7FFF00' : '#FFB6C1', position:'sticky', insetBlockEnd:'0'}} className="cashreport-balance">
+                      <td></td>
+                      <td>Balance c/d</td>
+                      <td></td>
+                      <td>{Number(props.statement.balance_cd) < 0 && Math.abs(props.statement.balance_cd)}</td>
+                      <td>{Number(props.statement.balance_cd) >= 0 && props.statement.balance_cd}</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>{props.statement.total_receipts}</td>
+                      <td>{props.statement.total_payments}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
           {showJournal && <Journal journal={journal} setShowJournal={setShowJournal} setSelectedrowId={setSelectedrowId}/>}
         </div>
