@@ -48,9 +48,6 @@ const ViewOtherIncome = () => {
     const getOtherIncomes = async () => {
         window.scrollTo(0, 0);
         document.title = 'Other Income';
-        // const data = await fetchOtherIncome();
-        // setOtherIncomes(data.otherincomes);
-        // setTotalCount(data.count);
     };
 
     async function fetchOtherIncome() {
