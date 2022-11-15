@@ -176,11 +176,10 @@ const Filter = (props) => {
                             <div className="input-group" style={{margin:"0"}}>
                                 <input 
                                     className="custom-select-form row-form input-background" 
-                                    placeholder="Min Amount Paid" 
-                                    type='number'
-                                    value={minAmountPaid}
-                                    placeholder='Min Amount Paid'
-                                    onChange={(e) => setMinAmountPaid(e.target.value)}
+                                    type='text'
+                                    value={client}
+                                    placeholder='Client Name'
+                                    onChange={(e) => setClient(e.target.value)}
                                     disabled={details ? "disabled": ""}
                                 />
                             </div>
