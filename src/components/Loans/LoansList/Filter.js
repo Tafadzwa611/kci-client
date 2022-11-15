@@ -23,7 +23,9 @@ const Filter = (props) => {
         maxAmountPaid,
         setMaxAmountPaid,
         onSubmit,
-        details
+        details,
+        client,
+        setClient
     } = props;
     const [optionSelected, setOptionSelected] = useState([]);
     const [selectedStatus, setSelectedStatus] = useState([]);
@@ -55,97 +57,103 @@ const Filter = (props) => {
     };
     
     return (
-        <div className="loans-filter search_background">
+        <div className="search_background">
             <form onSubmit={onSubmit}>
                 <div className="row-containers" style={{border:"none"}}>
-                    <div className="row row-payments">
-                        <div className="row-payments-container">
-                            <label className="form-label row-label">Min Disbursement Date</label>
-                            <div className="input-group search_input" style={{margin:"10px 0 0"}}>
-                                <i className="uil uil-calendar-alt"></i>
-                                <input 
-                                    className="custom-select-form row-form input-background" 
-                                    type='date'
-                                    value={minLoanAddedOn}
-                                    onKeyDown={(e) => e.preventDefault()}
-                                    onChange={(e) => setMinLoanAddedOn(e.target.value)}
-                                    disabled={details ? "disabled": ""}
-                                />
+                    <div style={{display:"flex", justifyContent:"space-between"}}>
+                        <div style={{display:"flex", justifyContent:"space-between", width:"32%", columnGap:"1rem"}}>
+                            <div style={{width:"50%"}}>
+                                <label className="form-label row-label">Min Disbursement Date</label>
+                                <div className="input-group search_input" style={{margin:"10px 0 0"}}>
+                                    <i className="uil uil-calendar-alt"></i>
+                                    <input 
+                                        className="custom-select-form row-form input-background" 
+                                        type='date'
+                                        value={minLoanAddedOn}
+                                        onKeyDown={(e) => e.preventDefault()}
+                                        onChange={(e) => setMinLoanAddedOn(e.target.value)}
+                                        disabled={details ? "disabled": ""}
+                                    />
+                                </div>
+                            </div>
+                            <div style={{width:"50%"}}>
+                                <label className="form-label row-label">Max Disbursement Date</label>
+                                <div className="input-group search_input" style={{margin:"10px 0 0"}}>
+                                    <i className="uil uil-calendar-alt"></i>
+                                    <input 
+                                        className="custom-select-form row-form input-background" 
+                                        type='date'
+                                        value={maxLoanAddedOn}
+                                        onKeyDown={(e) => e.preventDefault()}
+                                        onChange={(e) => setMaxLoanAddedOn(e.target.value)}
+                                        disabled={details ? "disabled": ""}
+                                    />
+                                </div>
                             </div>
                         </div>
-                        <div className="row-payments-container">
-                            <label className="form-label row-label">Max Disbursement Date</label>
-                            <div className="input-group search_input" style={{margin:"10px 0 0"}}>
-                                <i className="uil uil-calendar-alt"></i>
-                                <input 
-                                    className="custom-select-form row-form input-background" 
-                                    type='date'
-                                    value={maxLoanAddedOn}
-                                    onKeyDown={(e) => e.preventDefault()}
-                                    onChange={(e) => setMaxLoanAddedOn(e.target.value)}
-                                    disabled={details ? "disabled": ""}
-                                />
+                        <div style={{display:"flex", justifyContent:"space-between", width:"32%", columnGap:"1rem"}}>
+                            <div>
+                                <label className="form-label row-label">Min Principal Outstanding</label>
+                                <div className="input-group" style={{margin:"10px 0 0"}}>
+                                    <input 
+                                        className="custom-select-form row-form input-background" 
+                                        placeholder="Min Principal Outstanding" 
+                                        type='number'
+                                        value={minPrincipalAmountDue}
+                                        placeholder='Min Principal Outstanding'
+                                        onChange={(e) => setMinPrincipalAmountDue(e.target.value)}
+                                        disabled={details ? "disabled": ""}
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="form-label row-label">Max Principal Outstanding</label>
+                                <div className="input-group" style={{margin:"10px 0 0"}}>
+                                    <input 
+                                        className="custom-select-form row-form input-background" 
+                                        placeholder="Max Principal Outstanding" 
+                                        type='number'
+                                        value={maxPrincipalAmountDue}
+                                        placeholder='Max Principal Outstanding'
+                                        onChange={(e) => setMaxPrincipalAmountDue(e.target.value)}
+                                        disabled={details ? "disabled": ""}
+                                    />
+                                </div>
                             </div>
                         </div>
-                        <div className="row-payments-container">
-                            <label className="form-label row-label">Min Principal Outstanding</label>
-                            <div className="input-group" style={{margin:"10px 0 0"}}>
-                                <input 
-                                    className="custom-select-form row-form input-background" 
-                                    placeholder="Min Principal Outstanding" 
-                                    type='number'
-                                    value={minPrincipalAmountDue}
-                                    placeholder='Min Principal Outstanding'
-                                    onChange={(e) => setMinPrincipalAmountDue(e.target.value)}
-                                    disabled={details ? "disabled": ""}
-                                />
+                        <div style={{display:"flex", justifyContent:"space-between", width:"32%", columnGap:"1rem"}}>
+                            <div>
+                                <label className="form-label row-label">Min Amount Paid</label>
+                                <div className="input-group" style={{margin:"10px 0 0"}}>
+                                    <input 
+                                        className="custom-select-form row-form input-background" 
+                                        placeholder="Min Amount Paid" 
+                                        type='number'
+                                        value={minAmountPaid}
+                                        placeholder='Min Amount Paid'
+                                        onChange={(e) => setMinAmountPaid(e.target.value)}
+                                        disabled={details ? "disabled": ""}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <div className="row-payments-container">
-                            <label className="form-label row-label">Max Principal Outstanding</label>
-                            <div className="input-group" style={{margin:"10px 0 0"}}>
-                                <input 
-                                    className="custom-select-form row-form input-background" 
-                                    placeholder="Max Principal Outstanding" 
-                                    type='number'
-                                    value={maxPrincipalAmountDue}
-                                    placeholder='Max Principal Outstanding'
-                                    onChange={(e) => setMaxPrincipalAmountDue(e.target.value)}
-                                    disabled={details ? "disabled": ""}
-                                />
-                            </div>
-                        </div>
-                        <div className="row-payments-container">
-                            <label className="form-label row-label">Min Amount Paid</label>
-                            <div className="input-group" style={{margin:"10px 0 0"}}>
-                                <input 
-                                    className="custom-select-form row-form input-background" 
-                                    placeholder="Min Amount Paid" 
-                                    type='number'
-                                    value={minAmountPaid}
-                                    placeholder='Min Amount Paid'
-                                    onChange={(e) => setMinAmountPaid(e.target.value)}
-                                    disabled={details ? "disabled": ""}
-                                />
-                            </div>
-                        </div>
-                        <div className="row-payments-container">
-                            <label className="form-label row-label">Max Amount Paid</label>
-                            <div className="input-group" style={{margin:"10px 0 0"}}>
-                                <input 
-                                    className="custom-select-form row-form input-background" 
-                                    placeholder="Max Amount Paid" 
-                                    type='number'
-                                    value={maxAmountPaid}
-                                    placeholder='Max Amount Paid'
-                                    onChange={(e) => setMaxAmountPaid(e.target.value)}
-                                    disabled={details ? "disabled": ""}
-                                />
+                            <div>
+                                <label className="form-label row-label">Max Amount Paid</label>
+                                <div className="input-group" style={{margin:"10px 0 0"}}>
+                                    <input 
+                                        className="custom-select-form row-form input-background" 
+                                        placeholder="Max Amount Paid" 
+                                        type='number'
+                                        value={maxAmountPaid}
+                                        placeholder='Max Amount Paid'
+                                        onChange={(e) => setMaxAmountPaid(e.target.value)}
+                                        disabled={details ? "disabled": ""}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div className="row row-payments row-loans" style={{marginTop:"1rem"}}>
-                        <div className="row-payments-container" style={{width:"70%"}}>
+                        <div className="row-payments-container" style={{width:"32%"}}>
                             <Select
                                 isMulti
                                 name='status'
@@ -164,7 +172,20 @@ const Filter = (props) => {
                                 isDisabled={details ? true: false}
                             />
                         </div>
-                        <div className="row-payments-container" style={{width:"28%"}}>
+                        <div className="row-payments-container" style={{width:"32%"}}>
+                            <div className="input-group" style={{margin:"0"}}>
+                                <input 
+                                    className="custom-select-form row-form input-background" 
+                                    placeholder="Min Amount Paid" 
+                                    type='number'
+                                    value={minAmountPaid}
+                                    placeholder='Min Amount Paid'
+                                    onChange={(e) => setMinAmountPaid(e.target.value)}
+                                    disabled={details ? "disabled": ""}
+                                />
+                            </div>
+                        </div>
+                        <div className="row-payments-container" style={{width:"32%"}}>
                             <select className='custom-select-form row-form' value={currencyId} onChange={changeCurrency} style={{width:"100%"}} disabled={details ? "disabled": ""}>
                                 {currencies.map(currency => {
                                     return <option key={currency.id} value={currency.id}>{currency.shortname}</option>

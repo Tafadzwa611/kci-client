@@ -32,9 +32,6 @@ const ViewDefaultsAndArrears = () => {
     const getLoans = async () => {
         if (currencyId != null && isFirstRun.current) {
             isFirstRun.current = false;
-            const data = await fetchLoans();
-            setLoans(data.loans);
-            setTotalCount(data.count);
         }
     }
     
@@ -42,10 +39,6 @@ const ViewDefaultsAndArrears = () => {
         getLoans();
         setLoans([]);
     }, [currencyId, branchIds, status]);
-    
-    // useEffect(async () => {
-    //     setLoans([]);
-    // }, [currencyId, branchIds, status]);
     
     async function fetchLoans() {
         try {
@@ -144,10 +137,23 @@ const ViewDefaultsAndArrears = () => {
                 setCurrencyId={setCurrencyId}
                 onSubmit={onSubmit}
             />
-            <>
-                <div style={{paddingTop: '2rem'}}></div>
-                <LoansTable loans={loans} totalCount={totalCount} nextPageNumber={nextPageNumber} loadMoreLoans={loadMore} loadingMore={loadingMore}/>        
-            </>
+            {loans.length != 0 &&
+                <>
+                    <div style={{paddingTop: '2rem'}}></div>
+                    <LoansTable loans={loans} totalCount={totalCount} nextPageNumber={nextPageNumber} loadMoreLoans={loadMore} loadingMore={loadingMore}/>        
+                </>
+            }
+            {loans.length == 0 &&
+                <div>
+                    <div className="table-footer-container card-body clients_table" style={{borderTop:"none"}}>
+
+                        <div className="all-data-loaded">
+                            <i className="uil uil-exclamation-triangle"></i> 
+                            <span>No loans at the moment</span>
+                        </div>
+                    </div>
+                </div>
+            }
         </>
     );
 }
