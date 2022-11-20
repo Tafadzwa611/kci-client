@@ -8,9 +8,10 @@ function Display({report, loading, currencyIso}) {
     return <MiniLoader />
   }
 
-  if (report===null) {
-    return <Empty />
+  if (report===null || report.rtype != 'cash') {
+    return <Empty message='Select Start Date, End Date and at least one branch to run income statement.'/>
   }
+
   return <IncomeStatementTable currencyIso={currencyIso} report={report}/>
 }
 
