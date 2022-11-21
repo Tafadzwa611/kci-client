@@ -1,9 +1,13 @@
 import Cookies from 'js-cookie';
 import { async } from 'regenerator-runtime';
 
+const REQUEST_OPTIONS = {
+  credentials: 'same-origin',
+  headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}
+};
 const makeRequest = {
   get: async function(resource, options = {}) {
-    const { timeout = 8000 } = options;
+    const { timeout = 30000 } = options;
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
     const response = await fetch(resource, {...options, signal: controller.signal});
@@ -11,65 +15,38 @@ const makeRequest = {
     return response;
   },
   post: async function(resource, body, options={}) {
-    const { timeout = 8000 } = options;
-    options['method'] = 'POST';
-    options['credentials'] = 'same-origin';
-    options['headers'] = {
-        "X-CSRFToken": Cookies.get('csrftoken'),
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-    }
-    options['body'] = JSON.stringify(body);
+    const { timeout = 30000 } = options;
+    const opts = {...REQUEST_OPTIONS, body: JSON.stringify(body), method: 'POST'};
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
-    const response = await fetch(resource, {...options, signal: controller.signal});
+    const response = await fetch(resource, {...opts, signal: controller.signal});
     clearTimeout(id);
     return response;
   },
   patch: async function(resource, body, options={}) {
-    const { timeout = 8000 } = options;
-    options['method'] = 'PATCH';
-    options['credentials'] = 'same-origin';
-    options['headers'] = {
-        "X-CSRFToken": Cookies.get('csrftoken'),
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-    }
-    options['body'] = JSON.stringify(body);
+    const { timeout = 30000 } = options;
+    const opts = {...REQUEST_OPTIONS, body: JSON.stringify(body), method: 'PATCH'};
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
-    const response = await fetch(resource, {...options, signal: controller.signal});
+    const response = await fetch(resource, {...opts, signal: controller.signal});
     clearTimeout(id);
     return response;
   },
   put: async function(resource, body, options={}) {
-    const { timeout = 8000 } = options;
-    options['method'] = 'PUT';
-    options['credentials'] = 'same-origin';
-    options['headers'] = {
-        "X-CSRFToken": Cookies.get('csrftoken'),
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-    }
-    options['body'] = JSON.stringify(body);
+    const { timeout = 30000 } = options;
+    const opts = {...REQUEST_OPTIONS, body: JSON.stringify(body), method: 'PUT'};
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
-    const response = await fetch(resource, {...options, signal: controller.signal});
+    const response = await fetch(resource, {...opts, signal: controller.signal});
     clearTimeout(id);
     return response;
   },
   delete: async function(resource, options={}) {
-    const { timeout = 8000 } = options;
-    options['method'] = 'DELETE';
-    options['credentials'] = 'same-origin';
-    options['headers'] = {
-        "X-CSRFToken": Cookies.get('csrftoken'),
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-    }
+    const { timeout = 30000 } = options;
+    const opts = {...REQUEST_OPTIONS, method: 'DELETE'};
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
-    const response = await fetch(resource, {...options, signal: controller.signal});
+    const response = await fetch(resource, {...opts, signal: controller.signal});
     clearTimeout(id);
     return response;
   }

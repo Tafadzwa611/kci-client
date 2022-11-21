@@ -2,7 +2,6 @@ import React, { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { LoggedInUserProvider } from './Context';
 import ProtectedRoutes from './ProtectedRoutes';
-import Cookies from 'js-cookie';
 
 import AdminPanel from './AdminPanel/AdminPanel';
 
@@ -70,421 +69,277 @@ const Main = lazy(() => import('./Main'));
 
 const AppRoutes = ({isAccountinOn, showIsAccountinOn, propagatePayments, showPropagatePayments, setSidebar}) => {
 
-    const [loggedInUser, setLoggedInUser] = React.useState(null);
-
-    useEffect(() => {
-        const user = Cookies.get('user');
-        if (user) {
-          setLoggedInUser(JSON.parse(user));
-        }
-      }, []);
-
-    return (
-        <div className="container">
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/loans/viewrefunds' element={<ViewRefunds/>}/>
-                    <Route exact path='/app/otherincome/otherincmoe' element={<OtherIncome/>}/>
-                    <Route exact path='/app/payments/viewpayments' element={<ViewPayments/>}/>
-                    <Route exact path='/app/assets/viewassets' element={<ViewAssets/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/assets/addnewasset' element={<AddNewAsset/>}/>
-                    <Route exact path='/app/assets/addoldasset' element={<AddOldAsset/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            {/* <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/otherincome/addotherincometype' element={<AddOtherIncomeType/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense> */}
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/assets/addassettype' element={<AddAssetType/>}/>
-                    <Route exact path='/app/users/addbranch' element={<AddBranch/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/users/banknames' element={<BankNames/>}/>
-                    <Route exact path='/app/users/branches' element={<Branches/>}/>
-                    <Route exact path='/app/expenses/expensetypes' element={<ExpenseTypes/>}/>
-                    <Route exact path='/app/assets/assettypes' element={<AssetTypes/>}/>
-                    <Route exact path='/app/otherincome/otherincometypes' element={<OtherIncomeTypes/>}/>
-                    <Route exact path='/app/loans/collateraltypes' element={<CollateralTypes/>}/>
-                    <Route exact path='/app/loans/loanfees' element={<LoanFees/>}/>
-                    <Route exact path='/app/users/staff' element={<Staff/>}/>
-                    <Route exact path='/app/users/staffroles' element={<StaffRoles/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/users/addbankname' element={<AddBankName/>}/>
-                    <Route exact path='/app/users/addstaffrole' element={<AddStaffRole/>}/>
-                    <Route exact path='/app/loans/addcollateraltype' element={<AddCollateralType/>}/>
-                    <Route exact path='/app/clients/transferclient' element={<TransferClient/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/users/addstaff' element={<AddStaff/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/loans/addloanfee' element={<AddLoanFee/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/loans/addloanproduct' element={<AddLoanProduct/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/loans/loanproducts' element={<LoanProducts/>}/>
-                    <Route exact path='/app/loans/viewguarantors' element={<ViewGuarantors/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-                <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                    <Routes>
-                        <Route path='/' element={<ProtectedRoutes />}>
-                            <Route path='app' element={<Main />}>
-                                <Route exact path='/app/home' element={<Home/>} />
-                            </Route>
-                        </Route>
-                    </Routes>
-
-                </LoggedInUserProvider>
-            </Suspense>
-
-            {/* <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/otherincome/addotherincome' element={<AddOtherIncome/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense> */}
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/asset/addasset' element={<AddAsset/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route 
-                        exact 
-                        path='/app/users/admin' 
-                        element={
-                            <AdminPanel
-                                isAccountinOn={isAccountinOn}
-                                showIsAccountinOn={showIsAccountinOn}
-                                propagatePayments={propagatePayments}
-                                showPropagatePayments={showPropagatePayments}
-                            />
-                        }
-                    />
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/clients/viewclients' element={<ViewClients setSidebar={setSidebar} />}/>
-                    <Route exact path='/app/loans/viewloans' element={<ViewLoans/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/loans/addloan' element={<AddLoan/>}/>
-                    <Route exact path='/app/loans/addloanpayment' element={<AddLoanPayment/>}/>
-                    <Route exact path='/app/loans/addloancollateral' element={<AddCollateral/>}/>
-                    <Route exact path='/app/loans/addloancomments' element={<AddComments/>}/>
-                    <Route exact path='/app/loans/addloanpenalty' element={<AddLoanPenalty/>}/>
-                    <Route exact path='/app/loans/addguarantor' element={<AddGuarantor/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/reports/viewreports' element={<ViewReports/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    {/* <Route exact path='/app/expenses/viewexpenses' element={<ViewExpenses/>}/> */}
-                    <Route exact path='/app/expenses/expenses' element={<Expenses/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/accounting/viewaccounting' element={<ViewAccounting/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/accounting/addmainaccount' element={<AddMainAccount/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/clients/clientdetail' element={<ClientDetail/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/loans/loandetail' element={<LoanDetail/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/users/notifications' element={<Notifications/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/users/userprofile' element={<UserProfile/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    {/* <Route exact path='/app/otherincome/otherincomedetails' element={<OtherIncomeDetails/>}/> */}
-                    <Route exact path='/app/assets/assetdetails' element={<AssetDetails/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-            <Suspense fallback='Loading...'>
-            <LoggedInUserProvider value={{loggedInUser, setLoggedInUser}}>
-
-                <Routes>
-                <Route path='/' element={<ProtectedRoutes />}>
-                    <Route path='app' element={<Main />}>
-                    <Route exact path='/app/dashboard' element={<Dashboard/>}/>
-                    <Route exact path='/app/users/branchdetails' element={<BranchDetails/>}/>
-                    </Route>
-                </Route>
-                </Routes>
-
-            </LoggedInUserProvider>
-            </Suspense>
-
-        </div>
-    );
+  return (
+    <div className='container'>
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/loans/viewrefunds' element={<ViewRefunds/>}/>
+              <Route exact path='/app/otherincome/otherincmoe' element={<OtherIncome/>}/>
+              <Route exact path='/app/payments/viewpayments' element={<ViewPayments/>}/>
+              <Route exact path='/app/assets/viewassets' element={<ViewAssets/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/assets/addnewasset' element={<AddNewAsset/>}/>
+              <Route exact path='/app/assets/addoldasset' element={<AddOldAsset/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/assets/addassettype' element={<AddAssetType/>}/>
+              <Route exact path='/app/users/addbranch' element={<AddBranch/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/users/banknames' element={<BankNames/>}/>
+              <Route exact path='/app/users/branches' element={<Branches/>}/>
+              <Route exact path='/app/expenses/expensetypes' element={<ExpenseTypes/>}/>
+              <Route exact path='/app/assets/assettypes' element={<AssetTypes/>}/>
+              <Route exact path='/app/otherincome/otherincometypes' element={<OtherIncomeTypes/>}/>
+              <Route exact path='/app/loans/collateraltypes' element={<CollateralTypes/>}/>
+              <Route exact path='/app/loans/loanfees' element={<LoanFees/>}/>
+              <Route exact path='/app/users/staff' element={<Staff/>}/>
+              <Route exact path='/app/users/staffroles' element={<StaffRoles/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/users/addbankname' element={<AddBankName/>}/>
+              <Route exact path='/app/users/addstaffrole' element={<AddStaffRole/>}/>
+              <Route exact path='/app/loans/addcollateraltype' element={<AddCollateralType/>}/>
+              <Route exact path='/app/clients/transferclient' element={<TransferClient/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/users/addstaff' element={<AddStaff/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/loans/addloanfee' element={<AddLoanFee/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/loans/addloanproduct' element={<AddLoanProduct/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/loans/loanproducts' element={<LoanProducts/>}/>
+              <Route exact path='/app/loans/viewguarantors' element={<ViewGuarantors/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading Home...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route exact path='/home' element={<Home/>} />
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/asset/addasset' element={<AddAsset/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route 
+                exact 
+                path='/app/users/admin' 
+                element={<AdminPanel 
+                  isAccountinOn={isAccountinOn} showIsAccountinOn={showIsAccountinOn} propagatePayments={propagatePayments} showPropagatePayments={showPropagatePayments}/>
+                }
+              />
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/clients/viewclients' element={<ViewClients setSidebar={setSidebar} />}/>
+              <Route exact path='/app/loans/viewloans' element={<ViewLoans/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/loans/addloan' element={<AddLoan/>}/>
+              <Route exact path='/app/loans/addloanpayment' element={<AddLoanPayment/>}/>
+              <Route exact path='/app/loans/addloancollateral' element={<AddCollateral/>}/>
+              <Route exact path='/app/loans/addloancomments' element={<AddComments/>}/>
+              <Route exact path='/app/loans/addloanpenalty' element={<AddLoanPenalty/>}/>
+              <Route exact path='/app/loans/addguarantor' element={<AddGuarantor/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/reports/viewreports' element={<ViewReports/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/expenses/expenses' element={<Expenses/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/accounting/viewaccounting' element={<ViewAccounting/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/accounting/addmainaccount' element={<AddMainAccount/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/clients/clientdetail' element={<ClientDetail/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/loans/loandetail' element={<LoanDetail/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/users/notifications' element={<Notifications/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/users/userprofile' element={<UserProfile/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/assets/assetdetails' element={<AssetDetails/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+
+      <Suspense fallback='Loading...'>
+        <Routes>
+          <Route path='/' element={<ProtectedRoutes />}>
+            <Route path='app' element={<Main />}>
+              <Route exact path='/app/dashboard' element={<Dashboard/>}/>
+              <Route exact path='/app/users/branchdetails' element={<BranchDetails/>}/>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+    </div>
+  );
 }
 
 export default AppRoutes;
