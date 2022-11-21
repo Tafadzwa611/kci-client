@@ -2,6 +2,7 @@ import React from 'react';
 import { convertDate, getAge } from '../../Accounting/Journals/utils';
 import Footer from './Footer';
 import Loan from '../LoansDetails/Loan';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 
 function LoansTable({loans, nextPageNumber, loadMoreLoans, totalCount, loadingMore, currencies, currencyId, setDetails, details, selectedLoanID, setSelectedLoanID, selectedloan}) {
@@ -48,15 +49,27 @@ function LoansTable({loans, nextPageNumber, loadMoreLoans, totalCount, loadingMo
  
   return (
       <div>
-        <div style={{margin:"10px 0", display:"flex", justifyContent:"end"}}>
-            <div className='col-sm-3'>Showing {loans.length} of {totalCount} loans.</div>
-        </div>
+          <div className="table-header">
+            <div>
+              Showing {loans.length} of {totalCount} loans.
+            </div>
+            <div>
+              <ReactHTMLTableToExcel
+                id='test-table-xls-button'
+                className='btn btn-default'
+                table='loans'
+                filename='loans'
+                sheet='tablexls'
+                buttonText='Download as XLS'
+              />
+            </div>
+          </div>
           <div style={details ? {display:"grid", gridTemplateColumns:"1fr 4fr", columnGap:"1rem"} : {display:"block"}}>
             <div style={{padding:"0", border:"none"}}>
               <div style={{width:"100%", overflowX:"auto"}}>
 
                 <div className="table__height">
-                  <table className='table'>
+                  <table className='table' id='loans'>
                     <thead>
                       {details ?
                         <tr className="journal-details header" style={{position:"sticky", top:"0"}}>

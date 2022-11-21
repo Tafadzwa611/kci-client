@@ -4,6 +4,8 @@ import Filter from './ViewExpenses/Filter';
 import ExpenseFooter from './ViewExpenses/ExpenseFooter';
 import { makeRequest } from '../../utils/utils';
 import MiniLoader from '../Loader/MiniLoader';
+import AdvancedSearchExpenses from './ViewExpenses/AdvancedSearchExpenses/AdvancedSearchExpenses';
+import CreateExpenseModal from './CreateExpenseModal';
 
 
 const ViewExpenses = () => {
@@ -23,6 +25,8 @@ const ViewExpenses = () => {
     const [selectedExpID, setSelectedExpID] = useState(null)
     const [branches, setBranches] = useState(null);
     const [branchIds, setBranchIds] = useState(null);
+    const [searchType, setSearchType] = useState('basic');
+    const [advOpts, setAdvOpts] = useState({});
 
 
     const pageNum = useRef(1);
@@ -44,15 +48,15 @@ const ViewExpenses = () => {
     const getExpenses = async () => {
         window.scrollTo(0, 0);
         document.title = 'Expenses';
-        const data = await fetchExpenses();
-        setExpenses(data.expenses);
-        setTotalCount(data.count);
+        // const data = await fetchExpenses();
+        // setExpenses(data.expenses);
+        // setTotalCount(data.count);
     };
 
     async function fetchExpenses() {
         try {
             const url = getUrl();
-            const response = await makeRequest.get(url, {timeout: 8000});
+            const response = searchType === 'basic' ? await makeRequest.get(url, {timeout: 8000}) : await makeRequest.post(url, {...advOpts, page_num: pageNum.current}, {timeout: 8000});
             if (response.ok) {
                 const json_res = await response.json();
                 setNextPageNumber(json_res.next_page_num);
@@ -118,6 +122,10 @@ const ViewExpenses = () => {
     }
 
     function getUrl() {
+        
+        if (searchType === 'advanced') {
+            return '/expensesapi/advanced_search_expenses/'
+        }
 
         let url = `/expensesapi/expenseslist/?page_num=${pageNum.current}&currency_id=${currencyId}`;
         if (branchIds !== null) {
@@ -154,42 +162,46 @@ const ViewExpenses = () => {
         setExpenses(data.expenses);
     }
 
-    // if (currency === null || branches === null) {
-    //     return (
-    //         <div style={{display:"flex", justifyContent:"center", alignItems:"center", minHeight:"100vh"}}>
-    //             <Loader />
-    //         </div>
-    //     )
-    // }
-
     if (currency===null || branches===null) {
         return <MiniLoader />
     }
 
     return (
         <div className="font-12">
-            <>
-                <Filter
-                    expName={expName}
-                    setExpName={setExpName}
-                    currency={currency}
-                    currencyId={currencyId}
-                    setCurrencyId={setCurrencyId}
-                    minDateCreated={minDateCreated}
-                    setMinDateCreated={setMinDateCreated}
-                    maxDateCreated={maxDateCreated}
-                    setMaxDateCreated={setMaxDateCreated}
-                    onSubmit={onSubmit}
-                    open ={open}
-                    setOpen={setOpen}
-                    setExpenses={setExpenses}
-                    changeCurrency={changeCurrency}
-                    searching={searching}
-                    setSearching={setSearching}
-                    branches={branches}
-                    setBranchIds={setBranchIds}
-                    details={details}
-                />
+            <>      
+                <CreateExpenseModal open={open} setOpen={setOpen} setExpenses={setExpenses} />
+                <div style={{marginBottom:"1.5rem"}}>
+                    <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Expense</button>
+                </div>
+                <div className='row-payments-container' style={{width: '200px', margin: '10px 0'}}>
+                    <select className='custom-select-form row-form' onChange={(e) => setSearchType(e.target.value)} value={searchType}>
+                        <option value='basic'>Basic Search</option>
+                        <option value='advanced'>Advanced Search</option>
+                    </select>
+                </div>
+                {searchType === 'advanced' ? <AdvancedSearchExpenses details={details} branches={branches} setAdvOpts={setAdvOpts} onSubmit={onSubmit} /> :
+                    <Filter
+                        expName={expName}
+                        setExpName={setExpName}
+                        currency={currency}
+                        currencyId={currencyId}
+                        setCurrencyId={setCurrencyId}
+                        minDateCreated={minDateCreated}
+                        setMinDateCreated={setMinDateCreated}
+                        maxDateCreated={maxDateCreated}
+                        setMaxDateCreated={setMaxDateCreated}
+                        onSubmit={onSubmit}
+                        open ={open}
+                        setOpen={setOpen}
+                        setExpenses={setExpenses}
+                        changeCurrency={changeCurrency}
+                        searching={searching}
+                        setSearching={setSearching}
+                        branches={branches}
+                        setBranchIds={setBranchIds}
+                        details={details}
+                    />
+                }
             </>
             {expenses != "" &&
                 <>
@@ -214,7 +226,7 @@ const ViewExpenses = () => {
             }
             {expenses == "" &&
                 <div>
-                    <div className="table-footer-container card-body clients_table">
+                    <div className="table-footer-container card-body clients_table" style={{borderTop:"none"}}>
 
                         <div className="all-data-loaded">
                             <i className="uil uil-exclamation-triangle"></i> 

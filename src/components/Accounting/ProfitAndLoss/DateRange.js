@@ -51,27 +51,33 @@ const DateRange = (props) => {
 
             <form onSubmit={onSubmit}>
                 <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0"}}>
-                    <div className="row-payments-container" style={{width:"30%"}}>
+                    <div className="row-payments-container" style={{width:"22%"}}>
                         <label className="form-label row-label">From</label>
                         <div className="input-group" style={{margin:"0"}}>
                             <i className="uil uil-calendar-alt"></i>
                             <input type='date' value={minDate} onKeyDown={(e) => e.preventDefault()} onChange={(e) => setMinDate(e.target.value)} className='custom-select-form row-form input-background' />
                         </div>
                     </div>
-                    <div className="row-payments-container" style={{width:"30%"}}>
+                    <div className="row-payments-container" style={{width:"22%"}}>
                         <label className="form-label row-label">To</label>
                         <div className="input-group" style={{margin:"0"}}>
                             <i className="uil uil-calendar-alt"></i>
                             <input type='date' value={maxDate} onKeyDown={(e) => e.preventDefault()} onChange={(e) => setMaxDate(e.target.value)} className='custom-select-form row-form input-background' />
                         </div>
                     </div>
-
-                    <div className="row-payments-container" style={{width:"30%"}}>
+                    <div className="row-payments-container" style={{width:"22%"}}>
                         <label className="form-label row-label">Currency</label>
                         <select className='custom-select-form row-form' style={{margin:"0"}} value={currencyId} onChange={changeCurrency}>
                             {currencies.map(currency => {
                                 return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
                             })}
+                        </select>
+                    </div>
+                    <div className="row-payments-container" style={{width:"22%"}}>
+                        <label className="form-label row-label">Type</label>
+                        <select className='custom-select-form row-form' style={{margin:"0"}} value={props.v} onChange={e => props.setV(e.target.value)}>
+                            <option value={'o'}>Cash</option>
+                            <option value={'n'}>Accrual</option>
                         </select>
                     </div>
                 </div>

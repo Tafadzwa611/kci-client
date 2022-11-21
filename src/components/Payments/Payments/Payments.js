@@ -4,6 +4,7 @@ import PaymentsFilter from './PaymentsFilter';
 import PaymentsFooter from './PaymentsFooter';
 import { makeRequest } from '../../../utils/utils';
 import MiniLoader from '../../Loader/MiniLoader';
+import AdvancedSearchPayments from '../AdvancedSearchPayments/AdvancedSearchPayments';
 
 
 const Payments = () => {
@@ -23,6 +24,8 @@ const Payments = () => {
     const [selectedExpID, setSelectedExpID] = useState(null)
     const [branches, setBranches] = useState(null);
     const [branchIds, setBranchIds] = useState(null);
+    const [searchType, setSearchType] = useState('basic');
+    const [advOpts, setAdvOpts] = useState({});
 
 
     const pageNum = useRef(1);
@@ -44,15 +47,12 @@ const Payments = () => {
     const getPayments = async () => {
         window.scrollTo(0, 0);
         document.title = 'Payments';
-        const data = await fetchPayments();
-        setPayments(data.payments);
-        setTotalCount(data.count);
     };
 
     async function fetchPayments() {
         try {
             const url = getUrl();
-            const response = await makeRequest.get(url, {timeout: 8000});
+            const response = searchType === 'basic' ? await makeRequest.get(url, {timeout: 8000}) : await makeRequest.post(url, {...advOpts, page_num: pageNum.current}, {timeout: 8000});
             if (response.ok) {
                 const json_res = await response.json();
                 setNextPageNumber(json_res.next_page_num);
@@ -119,6 +119,10 @@ const Payments = () => {
 
     function getUrl() {
 
+        if (searchType === 'advanced') {
+            return '/loansapi/advanced_search_payments/';
+        }
+
         let url = `/loansapi/payments_list/?page_num=${pageNum.current}&currency_id=${currencyId}`;
         console.log(branchIds)
         if (branchIds !== null) {
@@ -161,26 +165,34 @@ const Payments = () => {
 
     return (
         <>
-            <PaymentsFilter
-                clientName={clientName}
-                setClientName={setClientName}
-                currency={currency}
-                currencyId={currencyId}
-                setCurrencyId={setCurrencyId}
-                minDateCreated={minDateCreated}
-                setMinDateCreated={setMinDateCreated}
-                maxDateCreated={maxDateCreated}
-                setMaxDateCreated={setMaxDateCreated}
-                onSubmit={onSubmit}
-                open ={open}
-                setOpen={setOpen}
-                setPayments={setPayments}
-                changeCurrency={changeCurrency}
-                searching={searching}
-                setSearching={setSearching}
-                branches={branches}
-                setBranchIds={setBranchIds}
-            />
+            {/* <div className='row-payments-container' style={{width: '200px', margin: '10px 0'}}>
+                <select className='custom-select-form row-form' onChange={(e) => setSearchType(e.target.value)} value={searchType}>
+                    <option value='basic'>Basic Search</option>
+                    <option value='advanced'>Advanced Search</option>
+                </select>
+            </div> */}
+            {searchType === 'advanced' ? <AdvancedSearchPayments details={details} branches={branches} setAdvOpts={setAdvOpts} onSubmit={onSubmit} /> :
+                <PaymentsFilter
+                    clientName={clientName}
+                    setClientName={setClientName}
+                    currency={currency}
+                    currencyId={currencyId}
+                    setCurrencyId={setCurrencyId}
+                    minDateCreated={minDateCreated}
+                    setMinDateCreated={setMinDateCreated}
+                    maxDateCreated={maxDateCreated}
+                    setMaxDateCreated={setMaxDateCreated}
+                    onSubmit={onSubmit}
+                    open ={open}
+                    setOpen={setOpen}
+                    setPayments={setPayments}
+                    changeCurrency={changeCurrency}
+                    searching={searching}
+                    setSearching={setSearching}
+                    branches={branches}
+                    setBranchIds={setBranchIds}
+                />
+            }
             {payments != "" &&
                 <>
                     <PaymentsList 

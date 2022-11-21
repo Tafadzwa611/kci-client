@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { QueryBuilder } from 'react-querybuilder';
-// import 'react-querybuilder/dist/query-builder.css';
 import CombinatorSelector from './CombinatorSelector';
 import fields from './Fields';
 import getOperators from './getOperators';

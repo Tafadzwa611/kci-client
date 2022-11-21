@@ -18,14 +18,14 @@ function LoansTable({loans, nextPageNumber, loadMoreLoans, totalCount, loadingMo
                     <thead>
                         <tr className="journal-details header" style={{position:"sticky", top:"0", zIndex:"1"}}>
                             <th>Client</th>
-                            <th>Loan Number</th>
+                            <th>Loan_Number</th>
                             <th>Branch</th>
-                            <th>Disbursement Date</th>
-                            <th>Last Payment Date</th>
-                            <th>Days Past Due</th>
-                            <th>Installment Due</th>
-                            <th>Principal Due</th>
-                            <th>Pending Due</th>
+                            <th>Disbursement_Date</th>
+                            <th>Last_Payment_Date</th>
+                            <th>Days_Past_Due</th>
+                            <th>Installment_Due</th>
+                            <th>Principal_Due</th>
+                            <th>Pending_Due</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -48,7 +48,7 @@ function LoansTable({loans, nextPageNumber, loadMoreLoans, totalCount, loadingMo
                                         <div className='btn-group-vertical'>
                                         <a type='button' className='btn btn-xs btn-default btn-block' href={`/loans/update_loan_status/${loan.id}`}>Write-off</a>
                                         <a type='button' className='btn btn-xs btn-default btn-block' href={`/loans/edit_schedule/${loan.id}`}>Re-open</a>
-                                        <a type='button' className='btn btn-xs btn-default btn-block' href={`/loans/change_loan_status/${loan.id}`}>Change Status</a>
+                                        <a type='button' className='btn btn-xs btn-default btn-block' href={`/loans/change_loan_status/${loan.id}`}>Change_Status</a>
                                         </div>
                                     </td>
                                 </tr>

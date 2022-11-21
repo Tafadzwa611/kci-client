@@ -46,10 +46,10 @@ const Filter = (props) => {
 
     return (
         <div>
-            <CreateExpenseModal open={open} setOpen={setOpen} setExpenses={setExpenses} />
+            {/* <CreateExpenseModal open={open} setOpen={setOpen} setExpenses={setExpenses} />
             <div style={{marginBottom:"1.5rem"}}>
                 <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Expense</button>
-            </div>
+            </div> */}
             <form onSubmit={onSubmit}>
 
                 <div className="text-light search_background">

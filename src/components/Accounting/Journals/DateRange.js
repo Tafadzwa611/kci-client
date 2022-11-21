@@ -5,7 +5,7 @@ import { makeRequest } from '../../../utils/utils';
 const DateRange = (props) => {
     const [optionSelected, setOptionSelected] = useState([]);
     const [branches, setBranches] = useState([]);
-    const {currencies, currencyId, setCurrencyId, minDate, maxDate, setMinDate, setMaxDate, onSubmit, disableFetch, searchString, setJournals, searchAccount, updateSelectedBranchesId} = props;
+    const {currencies, currencyId, setCurrencyId, minDate, maxDate, setMinDate, setMaxDate, onSubmit, disableFetch, searchString, setJournals, searchAccount, updateSelectedBranchesId, details} = props;
     const fetchStyles = disableFetch ? {pointerEvents: 'none', opacity: '0.7', margin:'0'} : {margin:'0', cursor:'pointer'};
 
     const style = {
@@ -64,6 +64,7 @@ const DateRange = (props) => {
                                     setJournals([]);
                                 }}
                                 className='custom-select-form row-form input-background'
+                                disabled={details ? "disabled": ""}
                             />
                         </div>
                     </div>
@@ -80,13 +81,14 @@ const DateRange = (props) => {
                                     setJournals([]);
                                 }}
                                 className='custom-select-form row-form input-background'
+                                disabled={details ? "disabled": ""}
                             />
                         </div>
                     </div>
 
                     <div className="row-payments-container" style={{width:"22%"}}>
                         <label className="form-label row-label">Currency</label>
-                        <select className='custom-select-form row-form' style={{margin:"0"}} value={currencyId} onChange={changeCurrency}>
+                        <select className='custom-select-form row-form' style={{margin:"0"}} value={currencyId} onChange={changeCurrency} disabled={details ? "disabled": ""}>
                             {currencies.map(currency => {
                                 return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
                             })}
@@ -96,7 +98,7 @@ const DateRange = (props) => {
                         <label className="form-label row-label">Search Account</label>
                         <div className="input-group" style={{margin:"0"}}>
                             <i className="uil uil-search"></i>
-                            <input type='text' name='search' autoComplete='off' className='custom-select-form row-form input-background' placeholder='Search account...' value={searchString} onChange={searchAccount}/>
+                            <input type='text' name='search' autoComplete='off' className='custom-select-form row-form input-background' placeholder='Search account...' value={searchString} onChange={searchAccount} disabled={details ? "disabled": ""}/>
                         </div>
                     </div>
                 </div>
@@ -118,10 +120,14 @@ const DateRange = (props) => {
                                 handleMultiSelect(selected);
                             }}
                             styles={style}
+                            isDisabled={details ? true: false}
                             />
                     </div>
                     <div style={{display:"flex", flexDirection:"column"}}>
-                        <button type="submit" className="btn btn-olive" style={fetchStyles} disabled={disableFetch}>Apply_filter_!</button>
+                        {details ? 
+                            <button type="submit" className="btn btn-olive" style={{pointerEvents: 'none', opacity: '0.7', margin:'0'}} disabled="disabled">Apply_filter_!</button>:
+                            <button type="submit" className="btn btn-olive" style={fetchStyles} disabled={disableFetch}>Apply_filter_!</button>
+                        }
                     </div>
                 </div>
             </form>

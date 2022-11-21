@@ -1,0 +1,84 @@
+import React from 'react';
+import Empty from './Empty';
+import MiniLoader from '../../Loader/MiniLoader';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+
+function New({report, loading}) {
+  if (loading) {
+    return <MiniLoader />
+  }
+
+  if (report===null || report.rtype != 'accrual') {
+    return <Empty message='Select Start Date, End Date and at least one branch to run income statement.'/>
+  }
+
+  const incomeAccs = report.income_statement.filter(acc => acc.type === 'INCOME');
+  const expenseAccs = report.income_statement.filter(acc => acc.type === 'EXPENSE');
+
+  return (
+    <div style={{marginTop:"2rem"}}>
+      <div>
+        <ReactHTMLTableToExcel
+          id='test-table-xls-button'
+          className='download-table-xls-button btn btn-default'
+          table='new-income-statement'
+          filename='Income Statement'
+          sheet='tablexls'
+          buttonText='Download as XLS'
+        />
+      </div>
+      <table id='new-income-statement' className='table' style={{marginTop:"10px"}}>
+        <thead className="journal-details header">
+          <tr>
+            <th>Account Branch</th>
+            <th>GL Code</th>
+            <th>Account Name</th>
+            <th>Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          {incomeAccs.map((acc, idx) => {
+            return (
+              <tr key={idx}>
+                <td>{acc.branch_name}</td>
+                <td>{acc.code}</td>
+                <td>{acc.name}</td>
+                <td>{acc.amount}</td>
+              </tr>
+            )
+          })}
+          <tr className="journal-details header">
+            <td></td>
+            <td></td>
+            <td><b>TOTAL INCOME</b></td>
+            <td><b>{report.total_income}</b></td>
+          </tr>
+          {expenseAccs.map((acc, idx) => {
+            return (
+              <tr key={idx}>
+                <td>{acc.branch_name}</td>
+                <td>{acc.code}</td>
+                <td>{acc.name}</td>
+                <td>{acc.amount}</td>
+              </tr>
+            )
+          })}
+          <tr className="journal-details header">
+            <td></td>
+            <td></td>
+            <td><b>TOTAL EXPENSES</b></td>
+            <td><b>{report.total_expenses}</b></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td><b>NET INCOME</b></td>
+            <td><b>{report.net_income}</b></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+export default New;

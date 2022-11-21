@@ -8,6 +8,14 @@
   --purple: hsl(261, 51%, 51%);
   --info-light: hsl(240, 70%, 77%);
   --dark: hsl(0, 0%, 0%);
+  --small-font-size: 0.75rem;
+  --medium-font-size: 0.8125rem;
+  --normal-font-size: 1rem;
+  --p-1: 1rem;
+  --p-1-5: 1.5rem;
+  --m-1: 1rem;
+  --m-1-5: 1.5rem;
+  --line-height: 1.5;
 }
 
 * {
@@ -21,7 +29,7 @@
 body {
   font-family: "proxima-nova", "proxima nova", "helvetica neue", "helvetica", "arial", sans-serif;
   font-size: 1rem;
-  line-height: 1.5;
+  line-height: var(--line-height);
 }
 
 #light {
@@ -31,6 +39,7 @@ body {
   --white: hsl(0, 0%, 100%);
   color: var(--color);
   --border-color: #dee2e6;
+  --card-secondary:#f2f8ff;
 }
 
 #light * {
@@ -39,14 +48,15 @@ body {
 
 /* -------------------dark mode---------------------  */
 #dark {
-  --home-section-color: hsl(0, 0%, 7%);
+  --home-section-color: #1b1b1d;
   --modal-background: hsla(0, 0%, 0%, 0.7);
   --color:hsl(0, 0%, 87%);
-  --white: hsl(0, 0%, 12%);
+  --white: #20232a;
   color: var(--color);
   --info: hsl(267, 95%, 76%);
   --light-color:hsl(0, 0%, 60%);
   --border-color: rgb(52, 54, 56);
+  --card-secondary: #2b3137;
 }
 
 #dark * {
@@ -55,7 +65,7 @@ body {
 
 #dark .app, 
 #dark .home-section {
-  --white: hsl(0, 0%, 12%);
+  --white: #20232a;
 }
 
 #dark .info-box {
@@ -217,12 +227,12 @@ body {
 
 #dark .journal-details,
 #dark .par-card {
-  background-color: #383838;
+  background-color: var(--card-secondary);
 }
 
 #dark .search_background,
 #dark .ruleGroup {
-  background-color: #383838;
+  background-color: var(--card-secondary);
 }
 
 #dark .journal-details.fees__report_thead {
@@ -230,7 +240,7 @@ body {
 }
 
 #dark .table-heading {
-  color: hsl(0, 0%, 87%);
+  color: var(--color);
 }
 
 #dark .table.table-hover .table-row:hover td{
@@ -323,7 +333,7 @@ body {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   min-height: 1px;
-  padding: 1.5rem;
+  padding: var(--p-1-5);
 }
 
 .m-auto-login {
@@ -357,7 +367,7 @@ h4 {
 }
 
 .mb-3-login, .my-3-login {
-  margin-bottom: 1.5rem !important;
+  margin-bottom: var(--m-1-5) !important;
 }
 
 p {
@@ -382,7 +392,7 @@ label {
   padding: .45rem .9rem;
   font-size: .9rem;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: var(--line-height);
   color: #6c757d;
   background-color: #fff;
   background-clip: padding-box;
@@ -444,7 +454,7 @@ a {
   border: 1px solid transparent;
   padding: .45rem .9rem;
   font-size: .9rem;
-  line-height: 1.5;
+  line-height: var(--line-height);
   border-radius: .15rem;
 }
 
@@ -574,7 +584,7 @@ h6 {
 }
 
 span {
-  font-size: 0.8125rem;
+  font-size: var(--medium-font-size);
   font-weight: 400;
 }
 
@@ -589,14 +599,14 @@ span {
 
 .card {
   background: var(--white);
-  margin: 1.5rem 1.5rem 0;
+  margin: var(--m-1-5) var(--m-1-5) 0;
   max-width: 100%;
   min-height: 20px;
   box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
 }
 
 .card-body {
-  padding: 1.5rem;
+  padding: var(--p-1-5);
 }
 
 .hide_text {
@@ -619,7 +629,7 @@ span {
   padding: .45rem .9rem;
   font-size: .9rem;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: var(--line-height);
   color: var(--color);
   background-color: var(--white);
   background-clip: padding-box;
@@ -648,7 +658,7 @@ span {
   padding: .30rem .9rem;
   font-size: .85rem;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: var(--line-height);
   color: var(--color);
   background-color: var(--white);
   background-clip: padding-box;
@@ -756,7 +766,7 @@ span {
 }
 
 .home-section .home-content .home-content-header-right-list {
-  margin: 0 1.5rem;
+  margin: 0 var(--m-1-5);
 }
 
 .home-section .home-content .home-content-header-right {
@@ -854,7 +864,7 @@ span {
 }
 
 .view_search_container input::placeholder {
-  font-size: 	0.8125rem;
+  font-size: 	var(--medium-font-size);
 }
 
 .input-group {
@@ -908,8 +918,8 @@ span {
   background-color: transparent;
   border: 1px solid transparent;
   padding: .45rem .9rem;
-  font-size: 0.8125rem;
-  line-height: 1.5;
+  font-size: var(--medium-font-size);
+  line-height: var(--line-height);
   border-radius: .15rem;
   -webkit-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
@@ -967,13 +977,13 @@ span {
 }
 
 #dark .btn-default.client__details {
-  border-color: #1F1F1F;
-  background-color: #1F1F1F;
+  border-color: #20232a;
+  background-color: #20232a;
 }
 
 .cash-management-table .btn-default {
   border-color: var(--home-section-color);
-  background-color: #f2f8ff;
+  background-color: var(--card-secondary);
 }
 
 .btn-secondary {
@@ -1005,7 +1015,7 @@ span {
   display: inline-block;
   width: 100px;
   padding: .45rem 1.9rem .45rem .9rem;
-  font-size: 0.8125rem;
+  font-size: var(--medium-font-size);
   font-weight: 400;
   line-height: 1.5;
   color: var(--color);
@@ -1027,9 +1037,9 @@ span {
   display: inline-block;
   width: 50%;
   padding: .45rem 1.9rem .45rem .9rem;
-  font-size: 0.8125rem;
+  font-size: var(--medium-font-size);
   font-weight: 400;
-  line-height: 1.5;
+  line-height: var(--line-height);
   color: var(--color);
   vertical-align: middle;
   background: var(--white) url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px;
@@ -1064,7 +1074,7 @@ span {
 }
 
 .font-13 {
-  font-size: 0.8125rem!important;
+  font-size: var(--medium-font-size)!important;
 }
 
 .table-responsive {
@@ -1098,7 +1108,7 @@ table {
 }
 
 .table td, .table th {
-  padding: 1rem 1.5rem;
+  padding: var(--p-1) var(--p-1-5);
   vertical-align: top;
   border-top: 1px solid #eef2f7;
 }
@@ -1139,7 +1149,7 @@ table {
 .loan_products_table_container,
 .balance_sheet_date_range {
   width: 100%; 
-  padding: 1.5rem; 
+  padding: var(--p-1-5); 
   border: 1px solid var(--border-color);
 }
 
@@ -1189,7 +1199,7 @@ tr .edit {
 }
 
 .load-more-container-left {
-  font-size: 00.8125rem;
+  font-size: var(--medium-font-size);
 }
 
 .load-more-container, .table-footer-up {
@@ -1240,7 +1250,7 @@ tr .edit {
 .modalBackground .modalContainer .modal_circle_left {
   font-size: 100px;
   color: var(--danger);
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--m-1-5);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1478,11 +1488,11 @@ button.close, button.mailbox-attachment-close {
 }
 
 .modal-content.client-details-bg {
-  background: #f2f8ff;
+  background: var(--card-secondary);
 }
 
 #dark .modal-content.client-details-bg {
-  background: #383838;
+  background: var(--card-secondary);
 }
 
 .lastest-activity-heading {
@@ -1601,8 +1611,8 @@ button {
 
 .client-details-table {
   width: 100%;
-  font-size: 0.8125rem;
-  line-height: 1.5rem;
+  font-size: var(--medium-font-size);
+  line-height: var(--line-height);
 }
 
 .details-container .client-details-table tr td {
@@ -1614,7 +1624,7 @@ button {
 .row, .form-submit-btn {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 1.5rem;
+  margin-top: var(--m-1-5);
 }
 
 form .row:first-child {
@@ -1623,7 +1633,7 @@ form .row:first-child {
 
 .row .form-label, .form-submit-btn .form-label {
   width: 25%;
-  font-size: 0.8125rem;
+  font-size: var(--medium-font-size);
 }
 
 .form-title {
@@ -1635,7 +1645,7 @@ form .row:first-child {
   .row {
       display: flex;
       flex-direction: column;
-      margin-top: 1.5rem;
+      margin-top: var(--m-1-5);
       width: 100%;
   }
 
@@ -1679,8 +1689,8 @@ small {
 }
 
 .loan-details-client-info-section {
-  font-size: 0.8125rem;
-  line-height: 1.5rem;
+  font-size: var(--medium-font-size);
+  line-height: var(--line-height);
   display: block;
 }
 
@@ -1724,15 +1734,15 @@ small {
 }
 
 .journal-details {
-  background-color: #f2f8ff;
-  padding: 1.5rem;
+  background-color: var(--card-secondary);
+  padding: var(--p-1-5);
   width: 100%;
   margin-top: 25px;
 }
 
 .search_background,
 .ruleGroup {
-  background-color: #f2f8ff;
+  background-color: var(--card-secondary);
 }
 
 .journal-details.fees__report_thead {
@@ -1741,7 +1751,7 @@ small {
 }
 
 .par-card {
-  background-color: #f2f8ff;
+  background-color: var(--card-secondary);
 }
 
 .journal-details.header {
@@ -1750,14 +1760,14 @@ small {
 
 .client__address__table {
   background-color: #fff;
-  padding: 1.5rem;
+  padding: var(--p-1-5);
   width: 100%;
   margin-top: 25px;
   color: var(--color);
 }
 
 #dark .client__address__table {
-  background-color: #1F1F1F;
+  background-color: #20232a;
   color: var(--light-color);
 }
 
@@ -1832,9 +1842,9 @@ small {
 .callout {
   background-color: var(--white);
   border-left: 5px solid #e9ecef;
-  padding: 1.5rem;
+  padding: var(--p-1-5);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24) !important;
-  margin-bottom: 1.5rem !important;
+  margin-bottom: var(--m-1-5) !important;
 }
 
 .callout.callout-info {
@@ -1926,8 +1936,8 @@ small {
 
 .user-profile {
   text-align: center;
-  font-size: 0.8125rem;
-  line-height: 1.5rem;
+  font-size: var(--medium-font-size);
+  line-height: var(--line-height);
   display: block;
   width: 100%;
 }
@@ -2002,7 +2012,7 @@ small {
 
 .row .radio {
   width: 25%;
-  font-size: 0.8125rem;
+  font-size: var(--medium-font-size);
 }
 
 .radio-container {
@@ -2092,7 +2102,7 @@ small {
 }
 
 .table-container {
-  padding: 1.5rem;
+  padding: var(--p-1-5);
   border: 1px solid var(--border-color);
   border-top: 0;
 }
@@ -2136,9 +2146,9 @@ small {
   width: 100%;
   height: calc(2.25rem + 2px);
   padding: 0.375rem 0.75rem;
-  font-size: 0.8125rem;
+  font-size: var(--medium-font-size);
   font-weight: 400;
-  line-height: 1.5;
+  line-height: var(--line-height);
   color: #495057;
   background-color: var(--white);
   background-clip: padding-box;
@@ -2181,7 +2191,7 @@ small {
   display: flex;
   justify-content: space-between;
   column-gap: 4rem;
-  font-size: 0.8125rem;
+  font-size: var(--medium-font-size);
 }
 
 .reports-form-control {
@@ -2189,9 +2199,9 @@ small {
   display: block;
   /* height: calc(2.25rem + 2px); */
   padding: 0.45rem 1.9rem .45rem .9rem;
-  font-size: .8125rem;
+  font-size: var(--medium-font-size);
   font-weight: 400;
-  line-height: 1.5;
+  line-height: var(--line-height);
   color: var(--color);
   background-color: var(--white);
   background-clip: padding-box;
@@ -2226,9 +2236,9 @@ small {
   display: inline-block;
   width: 40%;
   padding: .45rem 1.9rem .45rem .9rem;
-  font-size: 0.8125rem;
+  font-size: var(--medium-font-size);
   font-weight: 400;
-  line-height: 1.5;
+  line-height: var(--line-height);
   background: var(--white) url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px;
   color: var(--color);
   vertical-align: middle;
@@ -2370,7 +2380,7 @@ small {
 }
 
 .dashboard-section-sub-title {
-  font-size: 0.8125rem;
+  font-size: var(--medium-font-size);
   font-weight: 500;
 }
 
@@ -2420,7 +2430,7 @@ small {
 .loans_clients_summary_container, 
 .guarantor_border {
   border: 1px solid var(--border-color);
-  padding: 1.5rem;
+  padding: var(--p-1-5);
   width: 100%;
 }
 
@@ -2431,7 +2441,7 @@ small {
 .loans_clients_summary_container-header {
   display: flex;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--m-1-5);
   cursor: pointer;
 }
 
@@ -2468,7 +2478,7 @@ small {
 }
 
 .loan_client_item_name {
-  font-size: 0.8125rem;
+  font-size: var(--medium-font-size);
   font-weight: 500;
 }
 
@@ -2749,7 +2759,7 @@ select option {
 
 .skeleton-table-row {
   /* min-height: 2rem; */
-  padding: 1rem 1.5rem;
+  padding: var(--p-1) var(--p-1-5);
   display: flex;
   align-items: center;
   border-top: 1px solid var(--border-color);
@@ -2764,15 +2774,15 @@ select option {
 }
 
 .filter-container.skeleton-table-footer {
-  padding: 1.5rem;
+  padding: var(--p-1-5);
 }
 
 .skeleton-table-thead {
   height:3rem;
   display:flex;
   align-items:center;
-  padding-left:1.5rem;
-  padding-right:1.5rem;
+  padding-left: var(--p-1-5);
+  padding-right: var(--p-1-5);
   background-color: hsl(225, 20%, 96%);
 }
 
@@ -2888,7 +2898,7 @@ input:checked + .slider:before {
 }
 
 #dark .cashreport-select {
-  background-color: #383838;
+  background-color: var(--card-secondary);
 }
 
 #dark .cashreport-table {
@@ -2900,7 +2910,7 @@ input:checked + .slider:before {
 }
 
 #dark .table .income__statement-header {
-  background-color: #383838;
+  background-color: var(--card-secondary);
   color: var(--color);
 }
 
@@ -2909,11 +2919,11 @@ input:checked + .slider:before {
 }
 
 .table .income__statement-header {
-  background-color: #F2F8FF;
+  background-color: var(--card-secondary);
 }
 
 #dark .cashreport-table.selected {
-  background-color: #383838;
+  background-color: var(--card-secondary);
 }
 
 .cashreport-table {
@@ -2921,7 +2931,7 @@ input:checked + .slider:before {
 }
 
 .cashreport-table.selected {
-  background-color: #f2f8ff;
+  background-color: var(--card-secondary);
 }
 
 #dark .cashreport-balance {
@@ -2934,11 +2944,11 @@ input:checked + .slider:before {
 
 #dark .cash-management-table .btn-default {
   border-color: var(--home-section-color);
-  background-color: #383838;
+  background-color: var(--card-secondary);
 }
 
 #dark .css-1rhbuit-multiValue {
-  background-color: #383838;
+  background-color: var(--card-secondary);
 }
 
 #dark .css-12jo7m5 {
@@ -2946,7 +2956,7 @@ input:checked + .slider:before {
 }
 
 #dark .select__menu {
-  background-color: #383838;
+  background-color: var(--card-secondary);
 }
 
 #dark .active-tabs-accs {
@@ -3003,13 +3013,13 @@ input:checked + .slider:before {
 #dark .j-details-container,
 #dark .view_search_container.online__applications.acc__statement-search,
 #dark .view_search_container.online__applications.bck{
-  background-color: #383838;
+  background-color: var(--card-secondary);
 }
 
 .j-details-container,
 .view_search_container.online__applications.acc__statement-search,
 .view_search_container.online__applications.bck{
-  background-color: #f2f8ff;
+  background-color: var(--card-secondary);
 }
 
 
@@ -3095,7 +3105,7 @@ input:checked + .slider:before {
 
 .action-btns span {
   width: 100px;
-  background-color: #f2f8ff;
+  background-color: var(--card-secondary);
   text-align: center;
   padding: 0.125rem 0.25rem;
   font-size: 0.75rem;
@@ -3103,7 +3113,7 @@ input:checked + .slider:before {
 }
 
 #dark .action-btns span  {
-  background: #383838;
+  background: var(--card-secondary);
 }
 
 .par-info-part-sect {
@@ -3116,12 +3126,12 @@ input:checked + .slider:before {
 }
 
 .age-report-select-disabled .css-1insrsq-control {
-  background: #f2f8ff;
+  background: var(--card-secondary);
   border-style: none;
 }
 
 #dark .age-report-select-disabled .css-1insrsq-control {
-  background: #383838;
+  background: var(--card-secondary);
 }
 
 #dark .modal-header.activities {
@@ -3198,3 +3208,26 @@ input:checked + .slider:before {
   column-gap: 2rem;
   margin-top: 10px;
 }
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* ================= hide number icon on input field ================== */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* ===================================================================== */

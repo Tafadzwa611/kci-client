@@ -146,6 +146,7 @@ const Journals = () => {
                 setMinDate={setMinDate}
                 setJournals={setJournals}
                 updateSelectedBranchesId={setSelectedBranchesIds}
+                details={details}
             />
             <Header changeOrder={changeOrder} order={order.current} disableSelect={journals.length === 0} journalCount={journalCount} numberOfJournalsLoaded={journals.length}/>
             {journals.length > 0 ?

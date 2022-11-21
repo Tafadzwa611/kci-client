@@ -45,10 +45,6 @@ const Filter = (props) => {
 
         return (
             <div>
-                <CreateOtherIncomeModal open={open} setOpen={setOpen} setOtherIncomes={setOtherIncomes} />
-                <div style={{marginBottom:"1.5rem"}}>
-                    <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Other Income</button>
-                </div>
                 <form onSubmit={onSubmit}>
 
                     <div className="text-light search_background">

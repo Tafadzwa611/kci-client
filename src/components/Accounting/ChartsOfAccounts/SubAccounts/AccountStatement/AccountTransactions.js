@@ -37,17 +37,17 @@ const AccountTransactions = ({
     return (
         <>
             <div className="card" style={{boxShadow:"none", marginBottom:"1.5rem"}}>
-                <div className="card-header border-0" style={{padding:"1.5rem 1.5rem 0 1.5rem", display:"grid", gridTemplateColumns:"1fr auto", alignItems:"center"}}>
+                <div className="card-header border-0" style={{padding:"1.5rem", display:"grid", gridTemplateColumns:"1fr auto", alignItems:"center"}}>
                     <span>Account Transactions</span>
                     <div style={{float:"right"}}>
                         <Export csvData={getExportData()} fileName={general_ledger_name} />
                     </div><br></br>
                 </div>
 
-                <div className="card-body table-responsive p-0" style={{overflow: "auto", maxHeight: "400px"}}>
+                <div className="card-body table-responsive p-0" style={{overflow: "auto", maxHeight: "400px", paddingTop:"0"}}>
                     <table className="table table-head-fixed text-nowrap">
                         <thead>
-                            <tr className="journal-details header">
+                            <tr className="journal-details header" style={{position:"sticky", top:"0"}}>
                                 <th>Date Posted</th>
                                 <th>Reference</th>
                                 <th>Description</th>
