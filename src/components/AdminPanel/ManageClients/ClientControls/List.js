@@ -10,7 +10,8 @@ const CONTROL_NAMES = {
   email_duplicate_level_type: 'Email Duplicate Check Level',
   fullname_duplicate_level_type: 'Fullname Duplicate Check Level',
   home_phone_duplicate_level_type: 'Home Phone Duplicate Check Level',
-  min_client_age: 'Minimum Client Age'
+  min_client_age: 'Minimum Client Age',
+  allow_clients_without_id: 'Allow Clients Without Identification'
 };
 
 const List = ({initControls}) => {
@@ -41,9 +42,9 @@ const getTableRows = (clientControls) => {
       <tr key={key}>
         <td>{CONTROL_NAMES[key]}</td>
         <td>
-          {clientControls[key] === null || clientControls[key] ===  ''
-          ? 'Do Not Check' :
-          clientControls[key]}{(key === 'min_client_age' && clientControls[key] != null) && ' years'}
+          {clientControls[key] === null || clientControls[key] ===  '' ? 'Do Not Check' : clientControls[key]}
+          {(key === 'min_client_age' && clientControls[key] != null) && ' years'}
+          {key === 'allow_clients_without_id' &&  (clientControls[key] ? 'Yes' : 'No')}
         </td>
       </tr>
     )

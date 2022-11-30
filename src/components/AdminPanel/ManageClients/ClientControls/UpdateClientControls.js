@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
-import { Modal, CustomInput, CustomSelect, SubmitButton, NonFieldErrors } from '../../../../common';
+import { Modal, CustomInput, CustomCheckbox, CustomSelect, SubmitButton, NonFieldErrors } from '../../../../common';
 import {controlSchema} from './schemas';
 import {onModalSubmit} from './utils';
 
@@ -15,7 +15,8 @@ const getPayload = (values) => {
     home_phone_duplicate_level_type: values.home_phone_duplicate_level_type == '' ? null : values.home_phone_duplicate_level_type,
     email_duplicate_level_type: values.email_duplicate_level_type == '' ? null : values.email_duplicate_level_type,
     fullname_duplicate_level_type: values.fullname_duplicate_level_type == '' ? null : values.fullname_duplicate_level_type,
-    min_client_age: values.min_client_age == '' ? null : values.min_client_age
+    min_client_age: values.min_client_age == '' ? null : values.min_client_age,
+    allow_clients_without_id: values.allow_clients_without_id
   };
 }
 
@@ -28,7 +29,8 @@ const UpdateClientControls = ({open, setOpen, clientControls, setClientControls}
     home_phone_duplicate_level_type: clientControls.home_phone_duplicate_level_type ?? '',
     email_duplicate_level_type: clientControls.email_duplicate_level_type ?? '',
     fullname_duplicate_level_type: clientControls.fullname_duplicate_level_type ?? '',
-    min_client_age: clientControls.min_client_age ?? ''
+    min_client_age: clientControls.min_client_age ?? '',
+    allow_clients_without_id: clientControls.allow_clients_without_id
   };
 
   const onSubmit = async (values, actions) => {
@@ -67,6 +69,7 @@ const UpdateClientControls = ({open, setOpen, clientControls, setClientControls}
                 {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
               </CustomSelect>
               <CustomInput label='Minimum Client Age In Years' name='min_client_age' step='1' type='number'/>
+              <CustomCheckbox label='Allow Clients Without Identification' name='allow_clients_without_id'/>
               <SubmitButton isSubmitting={isSubmitting}/>
             </NonFieldErrors>
           </Form>
