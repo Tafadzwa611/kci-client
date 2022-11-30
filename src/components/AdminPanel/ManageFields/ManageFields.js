@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Fetcher} from '../../../common';
 import FieldSets from './FieldSets';
+import {entityTypes} from './data';
 
 function ManageFields() {
   const [entityType, setEntityType] = useState('CLIENT');
@@ -8,11 +9,16 @@ function ManageFields() {
   return (
     <>
       <div className='bloc-tabs'>
-        <button className={entityType === 'CLIENT' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setEntityType('CLIENT')}>Clients</button>
-        <button className={entityType === 'LOAN' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setEntityType('LOAN')}>Loans</button>
+        {entityTypes.map(et => {
+          return (
+            <button key={et} className={entityType === et ? 'tabs-client active-tabs' : 'tabs-client'} onClick={_ => setEntityType(et)}>
+              {et}S
+            </button>
+          )
+        })}
       </div>
-      <Fetcher url={`/usersapi/list_field_sets/?entity_type=${entityType}`} method={'get'}>
-        {({data}) => <FieldSets data={data}/>}
+      <Fetcher urls={[`/usersapi/list_field_sets/?entity_type=${entityType}`]}>
+        {({data}) => <FieldSets data={data[0]} entityType={entityType}/>}
       </Fetcher>
     </>
   )

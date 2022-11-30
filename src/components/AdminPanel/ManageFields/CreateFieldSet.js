@@ -1,51 +1,41 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Form, Formik } from 'formik';
-import { makeRequest } from '../../../utils/utils';
+import { onModalSubmit } from './utils';
 import { createFieldSetSchema } from './schemas';
-import {
-  Modal,
-  CustomInput,
-  CustomSelect,
-  CustomTextField,
-  SubmitButton,
-  NonFieldErrors
-} from '../../../common';
+import {Modal, CustomInput, CustomSelect, CustomTextField, SubmitButton, NonFieldErrors} from '../../../common';
 
-const initialValues = {name: '', entity_type: '', field_set_type: '', description: ''};
-function CreateFieldSet({open, setOpen, setFieldSets}) {
-  const [responseStatus, setResponseStatus] = useState();
-  const [clientError, setClientError] = useState();
+function CreateFieldSet({open, setOpen, setFieldSets, entityType}) {
+  const initialValues = {name: '', entity_type: entityType, field_set_type: '', description: ''};
+
+  const getPayload = (values) => {
+    return {
+      name: values.name,
+      entity_type: values.entity_type,
+      field_set_type: values.field_set_type,
+      ...(values.description != '') && {description: values.description}
+    };
+  }
 
   const onSubmit = async (values, actions) => {
-    try {
-      const data = Object.fromEntries(Object.entries(values).filter(([_, v]) => v != ''));
-      const response = await makeRequest.post('/usersapi/create_field_set/', data, {timeout: 8000});
-      setResponseStatus(response.status);
-      const jsonResp = await response.json();
-      if (response.ok) {
-        setFieldSets(curr => [jsonResp, ...curr]);
-        actions.resetForm();
-        setOpen(false);
-      }else {
-        actions.setErrors(jsonResp);
-      }
-    }catch(error) {
-      setClientError(error);
-    }
+    const sideEffect = (jsonResp) => setFieldSets(curr => [jsonResp, ...curr]);
+    const data = getPayload(values);
+    const url = '/usersapi/create_field_set/';
+    onModalSubmit(data, 'post', url, actions.resetForm, setOpen, actions.setErrors, sideEffect);
   }
 
   return (
     <Modal open={open} setOpen={setOpen} title={'Create Custom Form '}>
       <Formik initialValues={initialValues} validationSchema={createFieldSetSchema} onSubmit={onSubmit}>
-        {({ isSubmitting }) => (
+        {({ isSubmitting, errors }) => (
           <Form>
-            <NonFieldErrors clientError={clientError} responseStatus={responseStatus}>
-              <CustomInput label='Name' name='name' type='text'/>
-              <CustomSelect label='Associated with' name='entity_type'>
+            <NonFieldErrors errors={errors}>
+              <CustomSelect label='Associated with' name='entity_type' disabled={true}>
                 <option value=''>------</option>
-                <option value='CLIENT'>Client</option>
+                <option value='CLIENT'>Clients</option>
+                <option value='LOAN'>Loans</option>
               </CustomSelect>
-              <CustomSelect label='Type' name='field_set_type'>
+              <CustomInput label='Form Name' name='name' type='text'/>
+              <CustomSelect label='Form Type' name='field_set_type'>
                 <option value=''>------</option>
                 <option value='SINGLE'>Single</option>
                 <option value='MULTIPLE'>Multiple</option>

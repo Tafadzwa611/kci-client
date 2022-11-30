@@ -1,125 +1,79 @@
-import React, { useState, useEffect } from 'react';
-import { makeRequest } from '../../../../utils/utils';
-import MiniLoader from '../../../Loader/MiniLoader';
+import React from 'react';
+import { Form, Formik } from 'formik';
+import { Modal, CustomInput, CustomSelect, SubmitButton, NonFieldErrors } from '../../../../common';
+import {controlSchema} from './schemas';
+import {onModalSubmit} from './utils';
 
-const UpdateClientControls = ({
-    openupdate,
-    setOpenUpdate,
-    selectedClientControlId,
-    setClientContol
-}) => {
+const DUPLICATE_CHECKS = {'Do Not Check': '', 'Warning': 'Warning', 'Reject': 'Reject'};
 
-    const [serverError, setServerError] = useState(false);
-    const [errors, setErrors] = useState({});
+const getPayload = (values) => {
+  return {
+    client_initial_status: values.client_initial_status,
+    id_duplicate_level_type: values.id_duplicate_level_type == '' ? null : values.id_duplicate_level_type,
+    pry_phone_duplicate_level_type: values.pry_phone_duplicate_level_type == '' ? null : values.pry_phone_duplicate_level_type,
+    sec_phone_duplicate_level_type: values.sec_phone_duplicate_level_type == '' ? null : values.sec_phone_duplicate_level_type,
+    home_phone_duplicate_level_type: values.home_phone_duplicate_level_type == '' ? null : values.home_phone_duplicate_level_type,
+    email_duplicate_level_type: values.email_duplicate_level_type == '' ? null : values.email_duplicate_level_type,
+    fullname_duplicate_level_type: values.fullname_duplicate_level_type == '' ? null : values.fullname_duplicate_level_type,
+    min_client_age: values.min_client_age == '' ? null : values.min_client_age
+  };
+}
 
-    const [clientcontrol, setClientControl] = useState(null);
-    const [newDetails, setNewDetails] = useState(null);
+const UpdateClientControls = ({open, setOpen, clientControls, setClientControls}) => {
+  const initialValues = {
+    client_initial_status: clientControls.client_initial_status,
+    id_duplicate_level_type: clientControls.id_duplicate_level_type ?? '',
+    pry_phone_duplicate_level_type: clientControls.pry_phone_duplicate_level_type ?? '',
+    sec_phone_duplicate_level_type: clientControls.sec_phone_duplicate_level_type ?? '',
+    home_phone_duplicate_level_type: clientControls.home_phone_duplicate_level_type ?? '',
+    email_duplicate_level_type: clientControls.email_duplicate_level_type ?? '',
+    fullname_duplicate_level_type: clientControls.fullname_duplicate_level_type ?? '',
+    min_client_age: clientControls.min_client_age ?? ''
+  };
 
-    useEffect(() => {
-        getClientControl();
-      }, []);
-    
-    const getClientControl = async () => {
-        await fetchClientControl();
-    }
+  const onSubmit = async (values, actions) => {
+    const sideEffect = () => setClientControls(values);
+    const data = getPayload(values);
+    const url = '/clientsapi/update_client_control/';
+    onModalSubmit(data, 'put', url, actions.resetForm, setOpen, actions.setErrors, sideEffect);
+  }
 
-    async function fetchClientControl() {
-        try {
-            const response = await makeRequest.get(`/clientsapi/get_client_control/${selectedClientControlId}/`, {timeout: 8000});
-            if (response.ok) {
-                const json_res = await response.json();
-                setNewDetails({client_initial_status: json_res.client_initial_status})
-                return setClientControl(json_res)
-            }else {
-                const error = await response.json();
-                console.log(error);
-            }
-        }catch(error) {
-            console.log(error);
-        }
-    }
-
-    const handleChange = (evt) => {
-        setNewDetails(curr => {
-            return {...curr, [evt.target.name]: evt.target.value}
-        })
-    }
-
-    const handleSubmit = () => {
-        patchClientControl();
-    }
-
-    console.log(newDetails)
-
-    async function patchClientControl() {
-        try {
-            const response = await makeRequest.patch(`/clientsapi/update_client_control/${selectedClientControlId}/`, newDetails, {timeout: 8000});
-            console.log(newDetails);
-            console.log(response);
-            if (response.ok) {
-                setClientContol(curr => {
-                    const updatedClientControls = [...curr];
-                    updatedClientControls[0].client_initial_status = newDetails.client_initial_status;
-                    return updatedClientControls;
-                })
-                setOpenUpdate(false);
-                setServerError(false);
-            }else {
-                console.log('else');
-                const error = await response.text();
-                console.log(error);
-                setServerError(true);
-            }
-        }catch(error) {
-            console.log('catch');
-            console.log(error);
-            setServerError(true);
-        }
-    }
-
-    if (clientcontrol == null) {
-        return <MiniLoader />;
-    } 
-    
-    return (
-        <div className={openupdate ? 'modal fade show' : 'modal fade'} style={{display: openupdate ? 'block' : 'none'}}>
-            <div className='modal-dialog modal-lg modal-dialog-scrollable'>
-                <div className='modal-content'>
-                    <div className='modal-header'>
-                        <label className="form-title">[ Update Client Controls ]</label>
-                        <button type='button' className='close' onClick={(e) => setOpenUpdate(curr => !curr)} style={{cursor:"pointer"}}><span aria-hidden='true'>&times;</span></button>
-                    </div>
-                    <div className='modal-body text-light'>
-
-                        {serverError && <div className='alert alert-danger alert-dismissible'>
-                            <h4><i className='icon fa fa-ban'></i> Alert!</h4>
-                            An error occured while updating client controls information, please try again later.
-                        </div>}
-
-                        <div className='row custom-background'>
-                            <label className='form-label'>Client Initial Status<span style={{color: 'red'}}>*</span></label>
-                            <div className='col-9'>
-                                <select name='client_initial_status' className='custom-select-form' onChange={handleChange} value={newDetails.client_initial_status||''} required>
-                                    <option value=''></option>
-                                    <option value='Pending Approval'>Pending Approval</option>
-                                    <option value='Inactive'>Inactive</option>
-                                </select>
-                                <p style={{color: 'red'}}>{errors['client_initial_status']}</p>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div className='modal-footer justify-content-between'>
-                        <button type='button' className='btn btn-default' onClick={(e) => setOpenUpdate(curr => !curr)}>Close</button>
-                        <button type='submit' className='btn btn-info' onClick={handleSubmit}>
-                            Update Client Control
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
+  return (
+    <Modal open={open} setOpen={setOpen} title={'Update Client Controls'}>
+      <Formik initialValues={initialValues} validationSchema={controlSchema} onSubmit={onSubmit}>
+        {({ isSubmitting, errors }) => (
+          <Form>
+            <NonFieldErrors errors={errors}>
+              <CustomSelect label='New Client Initial Status' name='client_initial_status'>
+                <option value='Pending Approval'>Pending Approval</option>
+                <option value='Inactive'>Inactive</option>
+              </CustomSelect>
+              <CustomSelect label='Id Duplicate Check Level' name='id_duplicate_level_type'>
+                {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
+              </CustomSelect>
+              <CustomSelect label='Primary Phone Duplicate Check Level' name='pry_phone_duplicate_level_type'>
+                {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
+              </CustomSelect>
+              <CustomSelect label='Secondary Phone Duplicate Check Level' name='sec_phone_duplicate_level_type'>
+                {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
+              </CustomSelect>
+              <CustomSelect label='Home Phone Duplicate Check Level' name='home_phone_duplicate_level_type'>
+                {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
+              </CustomSelect>
+              <CustomSelect label='Email Duplicate Check Level' name='email_duplicate_level_type'>
+                {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
+              </CustomSelect>
+              <CustomSelect label='Fullname Duplicate Check Level' name='fullname_duplicate_level_type'>
+                {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
+              </CustomSelect>
+              <CustomInput label='Minimum Client Age In Years' name='min_client_age' step='1' type='number'/>
+              <SubmitButton isSubmitting={isSubmitting}/>
+            </NonFieldErrors>
+          </Form>
+        )}
+      </Formik>
+    </Modal>
+  )
 }
 
 export default UpdateClientControls;

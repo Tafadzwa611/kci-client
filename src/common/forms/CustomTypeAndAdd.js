@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
+import { useField } from 'formik';
 
-const CustomTypeAndAdd = ({values, field, setFieldValue}) => {
+const CustomTypeAndAdd = ({values, setFieldValue, ...props}) => {
   const [text, setText] = useState('');
+  const [field, meta] = useField(props);
 
   const addText = (evt) => {
     evt.preventDefault();
     if (!values.includes(text)) {
-      setFieldValue(field, [text, ...values]);
+      setFieldValue(field.name, [text, ...values]);
       setText('');
     }
   }
 
   const removeText = (evt) => {
     const newVals = values.filter(val => val != evt.target.attributes.name.value);
-    setFieldValue(field, newVals);
+    setFieldValue(field.name, newVals);
   }
 
   return (
@@ -30,6 +32,7 @@ const CustomTypeAndAdd = ({values, field, setFieldValue}) => {
           </div>
         )
       })}
+      {meta.error && <div className='error'>{meta.error}</div>}
     </>
   )
 }

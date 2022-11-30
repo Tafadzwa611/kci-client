@@ -23,15 +23,17 @@ function App() {
 
   return (
     <>
-      <Fetcher url={'/usersapi/logged_in_user/'} method={'get'}>
+      <Fetcher urls={['/usersapi/logged_in_user/']}>
         {({data}) => {
           return (
             <ThemeContext.Provider value={{theme, toggleTheme}}>
               <Router>
                 <div id={theme}>
                   <section className='home-section'>
-                    <Navbar theme={theme} loggedInUser={data} toggleTheme={toggleTheme} />
-                    <div className='app'><Routes /></div>
+                    <Navbar theme={theme} loggedInUser={data[0]} toggleTheme={toggleTheme} />
+                    <div className='app'>
+                      <Routes />
+                    </div>
                   </section>
                 </div>
               </Router>

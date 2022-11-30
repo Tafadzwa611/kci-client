@@ -1,8 +1,8 @@
 import React from 'react';
 
-const EditBtn = ({handler}) => {
+const EditBtn = ({handler, id}) => {
   return (
-    <i style={{fontSize: '20px'}} className='fa fa-pencil-square-o' onClick={handler}></i>
+    <button id={id} onClick={handler}>Edit</button>
   )
 }
 

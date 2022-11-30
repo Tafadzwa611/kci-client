@@ -1,50 +1,48 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
-import { dataTypes } from './data';
-import { createFieldSchema } from './schemas';
+import { updateFieldSchema } from './schemas';
 import { onModalSubmit } from './utils';
 import {
   Modal,
   CustomInput,
   CustomCheckbox,
-  CustomSelect,
+  CustomTypeAndAdd,
   SubmitButton,
-  NonFieldErrors,
-  CustomTypeAndAdd
+  NonFieldErrors
 } from '../../../common';
 
-const CreateField = ({open, setOpen, setFields, fieldSetId}) => {
-  const initialValues = {name: '', data_type: '', text_format: '', select_opts: [], is_required: false};
+const EditField = ({open, setOpen, field, setFields}) => {
+  const initialValues = {
+    name: field.name,
+    data_type: field.data_type,
+    text_format: field.text_format ?? '',
+    select_opts: field.select_opts ?? [],
+    is_required: field.is_required
+  };
 
   const getPayload = (values) => {
     return {
       name: values.name,
-      data_type: values.data_type,
       is_required: values.is_required,
-      field_set_id: fieldSetId,
       ...(values.text_format != '') && {text_format: values.text_format},
       ...(values.select_opts.length > 0) && {select_opts: values.select_opts}
     };
   }
 
   const onSubmit = async (values, actions) => {
-    const sideEffect = (jsonResp) => setFields(curr => [jsonResp, ...curr]);
+    const sideEffect = (jsonResp) => setFields(curr => [jsonResp, ...curr.filter(f => f.id != jsonResp.id)]);
     const data = getPayload(values);
-    const url = '/usersapi/create_field/';
-    onModalSubmit(data, 'post', url, actions.resetForm, setOpen, actions.setErrors, sideEffect);
+    const url = `/usersapi/update_field/${field.id}/`;
+    onModalSubmit(data, 'patch', url, actions.resetForm, setOpen, actions.setErrors, sideEffect);
   }
 
   return (
-    <Modal open={open} setOpen={setOpen} title={'Create Custom Field'}>
-      <Formik initialValues={initialValues} validationSchema={createFieldSchema} onSubmit={onSubmit}>
-        {({ isSubmitting, errors, values, setFieldValue }) => (
+    <Modal open={open} setOpen={setOpen} title={'Update Custom Field'}>
+      <Formik initialValues={initialValues} validationSchema={updateFieldSchema} onSubmit={onSubmit}>
+        {({ errors, values, isSubmitting, setFieldValue }) => (
           <Form>
             <NonFieldErrors errors={errors}>
               <CustomInput label='Name' name='name' type='text'/>
-              <CustomSelect label='Data Type' name='data_type'>
-                <option value=''>------</option>
-                {Object.keys(dataTypes).map(key => <option key={key} value={key}>{dataTypes[key]}</option>)}
-              </CustomSelect>
               <CustomCheckbox label='Is Mandatory' name='is_required'/>
               {values.data_type === 'free_text' && <CustomInput label='Text Format' name='text_format' type='text'/>}
               {values.data_type === 'select' &&
@@ -62,4 +60,4 @@ const CreateField = ({open, setOpen, setFields, fieldSetId}) => {
   )
 }
 
-export default CreateField;
+export default EditField;

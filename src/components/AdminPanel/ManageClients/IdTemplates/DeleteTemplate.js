@@ -1,18 +1,14 @@
 import React from 'react';
-import { makeRequest } from '../../../utils/utils';
 import { Form, Formik } from 'formik';
-import {
-  Modal,
-  DeleteDialog,
-  NonFieldErrors
-} from '../../../common';
+import { makeRequest } from '../../../../utils';
+import { Modal, NonFieldErrors, DeleteDialog } from '../../../../common';
 
-function DeleteFieldSet({open, setOpen, fieldSetId, setFieldSets}) {
+const DeleteTemplate = ({open, setOpen, template, setTemplates}) => {
   const onSubmit = async (_, actions) => {
     try {
-      const response = await makeRequest.delete(`/usersapi/delete_field_set/${fieldSetId}/`, {timeout: 8000});
+      const response = await makeRequest.delete(`/clientsapi/delete_client_id_template/${template.id}/`);
       if (response.ok) {
-        setFieldSets(curr => curr.filter(fs => fs.id != fieldSetId));
+        setTemplates(curr => curr.filter(t => t.id != template.id));
         setOpen(false);
       }else {
         const jsonResp = await response.json();
@@ -24,12 +20,12 @@ function DeleteFieldSet({open, setOpen, fieldSetId, setFieldSets}) {
   }
 
   return (
-    <Modal open={open} setOpen={setOpen} title={'Delete Custom Form '}>
+    <Modal open={open} setOpen={setOpen} title={'Delete Template'}>
       <Formik initialValues={{}} onSubmit={onSubmit}>
         {({isSubmitting, errors}) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <DeleteDialog isSubmitting={isSubmitting} msg='Form'/>
+              <DeleteDialog isSubmitting={isSubmitting} msg={`Delete ${template.id_type}.`}/>
             </NonFieldErrors>
           </Form>
         )}
@@ -38,4 +34,4 @@ function DeleteFieldSet({open, setOpen, fieldSetId, setFieldSets}) {
   )
 }
 
-export default DeleteFieldSet;
+export default DeleteTemplate;
