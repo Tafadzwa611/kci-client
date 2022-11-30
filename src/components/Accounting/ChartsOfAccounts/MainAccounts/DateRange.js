@@ -92,6 +92,7 @@ const DateRange = (props) => {
                             <option value={'EQUITY'}>EQUITY</option>
                             <option value={'INCOME'}>INCOME</option>
                             <option value={'EXPENSE'}>EXPENSE</option>
+                            <option value={'CONTRA ASSET'}>CONTRA ASSET</option>
                         </select>
                     </div>
                     <div style={{display:"flex", flexDirection:"column", width:"10%"}}>
