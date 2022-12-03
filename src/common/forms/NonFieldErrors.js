@@ -2,15 +2,6 @@ import React from 'react';
 import ClientError from './ClientError';
 
 const NonFieldErrors = ({children, errors}) => {
-  if (errors.clientError != undefined) {
-    return (
-      <>
-        <ClientError error={errors.clientError}/>
-        {children}
-      </>
-    )
-  }
-
   if (errors.responseStatus >= 500) {
     return (
       <>
@@ -32,6 +23,15 @@ const NonFieldErrors = ({children, errors}) => {
             <div style={{fontSize: 12, color: 'red'}}>{errors.detail}</div>
           </div>
         </div>
+        {children}
+      </>
+    )
+  }
+
+  if (errors.clientError != undefined) {
+    return (
+      <>
+        <ClientError error={errors.clientError}/>
         {children}
       </>
     )
