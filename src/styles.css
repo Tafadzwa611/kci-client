@@ -598,11 +598,13 @@ span {
 }
 
 .card {
+  position: relative;
   background: var(--white);
-  margin: var(--m-1-5) var(--m-1-5) 0;
+  margin: 3rem var(--m-1-5) 0;
   max-width: 100%;
   min-height: 20px;
   box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
+  bottom: 1.5rem;
 }
 
 .card-body {

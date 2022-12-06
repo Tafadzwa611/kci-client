@@ -6,7 +6,6 @@ import LiabilitiesSubAccounts from './LiabilitiesSubAccounts/LiabilitiesSubAccou
 import EquitySubAccounts from './EquitySubAccounts/EquitySubAccounts';
 import IncomeSubAccounts from './IncomeSubAccounts/IncomeSubAccounts';
 import ExpensesSubAccounts from './ExpensesSubAccounts/ExpensesSubAccounts';
-import ContraAssetsSubAccounts from './ContraAssetsSubAccounts/ContraAssetsSubAccounts';
 
 const ChartsOfAccounts = () => {
     const [tab, setTab] = useState('mainaccs');
@@ -16,7 +15,6 @@ const ChartsOfAccounts = () => {
                     <button className={tab === "mainaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("mainaccs")}> Main Accounts </button>
                     <button className={tab === "subaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("subaccs")}> Sub Accounts </button>
                     <button className={tab === "assetssubaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("assetssubaccs")}> Assets </button>
-                    <button className={tab === "contraassetssubaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("contraassetssubaccs")}> Contra Assets </button>
                     <button className={tab === "liabilitiessubaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("liabilitiessubaccs")}> Liabilities </button>
                     <button className={tab === "equitysubaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("equitysubaccs")}> Equity </button>
                     <button className={tab === "incomesubaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("incomesubaccs")}> Income </button>
@@ -27,7 +25,6 @@ const ChartsOfAccounts = () => {
                     'mainaccs': <MainAccounts setTab={setTab}/>,
                     'subaccs': <SubAccounts setTab={setTab}/>,
                     'assetssubaccs': <AssetsSubAccounts setTab={setTab}/>,
-                    'contraassetssubaccs': <ContraAssetsSubAccounts setTab={setTab}/>,
                     'liabilitiessubaccs': <LiabilitiesSubAccounts setTab={setTab}/>,
                     'equitysubaccs': <EquitySubAccounts setTab={setTab}/>,
                     'incomesubaccs': <IncomeSubAccounts setTab={setTab}/>,
