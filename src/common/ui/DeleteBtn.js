@@ -1,8 +1,8 @@
 import React from 'react';
 
-const DeleteBtn = ({handler}) => {
+const DeleteBtn = ({id, handler}) => {
   return (
-    <i style={{fontSize: '20px'}} className='fa fa-trash' onClick={handler}></i>
+    <button id={id} onClick={handler}>Delete</button>
   )
 }
 
