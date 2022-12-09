@@ -20,7 +20,7 @@ const FieldSets = ({data, entityType}) => {
         <option value=''>------</option>
         {fieldSets.map(fieldSet => <option key={fieldSet.id} value={fieldSet.id}>{fieldSet.name}</option>)}
       </Select>
-      {fieldSetId != '' &&
+      {fieldSets.some(fs => fs.id == fieldSetId) != '' &&
         <>
           <EditBtn handler={(evt) => setOpenEditFieldSetModal(true)}/>
           <DeleteBtn handler={(evt) => setOpenDeleteFieldSetModal(true)}/>
