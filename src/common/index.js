@@ -7,7 +7,10 @@ export {
   CustomTypeAndAdd,
   NonFieldErrors,
   SubmitButton,
-  DeleteDialog
+  ModalSubmit,
+  DeleteDialog,
+  DeleteModalDialog,
+  ModalDeleteSubmit
 } from './forms';
 export {
   DeleteBtn,
@@ -15,5 +18,6 @@ export {
   Modal,
   SuccessBtn,
   Table,
-  Select
+  Select,
+  DeleteModal
 } from './ui'

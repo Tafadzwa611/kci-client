@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 import { createTemplateSchema } from './schemas';
-import { Modal, CustomInput, SubmitButton, NonFieldErrors } from '../../../../common';
+import { Modal, CustomInput, NonFieldErrors, ModalSubmit } from '../../../../common';
 import { onModalSubmit } from './utils';
 
 const CreateTemplate = ({open, setOpen, setTemplates}) => {
@@ -22,7 +22,7 @@ const CreateTemplate = ({open, setOpen, setTemplates}) => {
               <CustomInput label='Name' name='id_type' type='text'/>
               <CustomInput label='Issuer' name='issuer' type='text'/>
               <CustomInput label='Format' name='template' type='text'/>
-              <SubmitButton isSubmitting={isSubmitting}/>
+              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
             </NonFieldErrors>
           </Form>
         )}

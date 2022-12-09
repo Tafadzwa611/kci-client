@@ -1407,6 +1407,11 @@ button.close, button.mailbox-attachment-close {
   opacity: .5;
 }
 
+.close__times {
+  font-size: 1.5rem;
+  color: var(--color);
+}
+
 .modal-dialog-scrollable .modal-body {
   overflow-y: auto;
 }
