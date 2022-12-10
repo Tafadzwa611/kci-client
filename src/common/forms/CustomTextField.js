@@ -12,7 +12,7 @@ const CustomTextField = ({ label, ...props }) => {
       <div className='row custom-background'>
         <label className='form-label'>{label}</label>
         <div className='col-9'>
-          <textarea {...props} {...field}></textarea>
+          <textarea {...props} {...field} className='custom-select-form'></textarea>
           {meta.touched && meta.error && <div className='error'>{meta.error}</div>}
         </div>
       </div>

@@ -2,12 +2,12 @@ import React from 'react';
 import { makeRequest } from '../../../utils/utils';
 import { Form, Formik } from 'formik';
 import {
-  Modal,
-  DeleteDialog,
+  DeleteModal,
+  DeleteModalDialog,
   NonFieldErrors
 } from '../../../common';
 
-function DeleteFieldSet({open, setOpen, fieldSetId, setFieldSets}) {
+function DeleteFieldSet({setOpen, fieldSetId, setFieldSets}) {
   const onSubmit = async (_, actions) => {
     try {
       const response = await makeRequest.delete(`/usersapi/delete_field_set/${fieldSetId}/`, {timeout: 8000});
@@ -24,17 +24,17 @@ function DeleteFieldSet({open, setOpen, fieldSetId, setFieldSets}) {
   }
 
   return (
-    <Modal open={open} setOpen={setOpen} title={'Delete Custom Form '}>
+    <DeleteModal>
       <Formik initialValues={{}} onSubmit={onSubmit}>
         {({isSubmitting, errors}) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <DeleteDialog isSubmitting={isSubmitting} msg='Form'/>
+              <DeleteModalDialog isSubmitting={isSubmitting} msg='Delete Form' setOpen={setOpen}/>
             </NonFieldErrors>
           </Form>
         )}
       </Formik>
-    </Modal>
+    </DeleteModal>
   )
 }
 

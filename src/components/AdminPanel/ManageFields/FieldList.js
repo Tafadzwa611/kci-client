@@ -39,13 +39,15 @@ function FieldList({data, fieldSetId}) {
             setFields={setFields}
             setOpen={setOpenUpdateFieldModal}
           />
-          <DeleteField
-            key={fieldId}
-            open={openDeleteFieldModal}
-            setOpen={setOpenDeleteFieldModal}
-            field={fields.find(f => f.id==fieldId)}
-            setFields={setFields}
-          />
+          {openDeleteFieldModal &&
+            <DeleteField
+              key={fieldId}
+              open={openDeleteFieldModal}
+              setOpen={setOpenDeleteFieldModal}
+              field={fields.find(f => f.id==fieldId)}
+              setFields={setFields}
+            />
+          }
         </>
       }
     </>

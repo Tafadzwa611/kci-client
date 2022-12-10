@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import { onModalSubmit } from './utils';
 import { createFieldSetSchema } from './schemas';
-import {Modal, CustomInput, CustomSelect, CustomTextField, SubmitButton, NonFieldErrors} from '../../../common';
+import {Modal, CustomInput, CustomSelect, CustomTextField, ModalSubmit, NonFieldErrors} from '../../../common';
 
 function CreateFieldSet({open, setOpen, setFieldSets, entityType}) {
   const initialValues = {name: '', entity_type: entityType, field_set_type: '', description: ''};
@@ -41,7 +41,7 @@ function CreateFieldSet({open, setOpen, setFieldSets, entityType}) {
                 <option value='MULTIPLE'>Multiple</option>
               </CustomSelect>
               <CustomTextField label='Description' name='description'/>
-              <SubmitButton isSubmitting={isSubmitting}/>
+              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
             </NonFieldErrors>
           </Form>
         )}

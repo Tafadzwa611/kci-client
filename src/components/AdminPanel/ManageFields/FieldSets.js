@@ -22,8 +22,10 @@ const FieldSets = ({data, entityType}) => {
       </Select>
       {fieldSets.some(fs => fs.id == fieldSetId) != '' &&
         <>
-          <EditBtn handler={(evt) => setOpenEditFieldSetModal(true)}/>
-          <DeleteBtn handler={(evt) => setOpenDeleteFieldSetModal(true)}/>
+          <div style={{marginTop:"20px"}}>
+            <EditBtn handler={(evt) => setOpenEditFieldSetModal(true)}/>
+            <DeleteBtn handler={(evt) => setOpenDeleteFieldSetModal(true)}/>
+          </div>
           <EditFieldSet
             key={JSON.stringify(fieldSets.find(fs => fs.id == fieldSetId))}
             open={openEditFieldSetModal}
@@ -31,13 +33,13 @@ const FieldSets = ({data, entityType}) => {
             fieldSet={fieldSets.find(fs => fs.id == fieldSetId)}
             setFieldSets={setFieldSets}
           />
-          <DeleteFieldSet
+          {openDeleteFieldSetModal && <DeleteFieldSet
             key={fieldSetId}
-            open={openDeleteFieldSetModal}
             setOpen={setOpenDeleteFieldSetModal}
             fieldSetId={fieldSetId}
             setFieldSets={setFieldSets}
           />
+          }
           <Fetcher urls={[`/usersapi/list_fields/?field_set_id=${fieldSetId}`]}>
             {({data}) => <FieldList data={data[0]} fieldSetId={fieldSetId}/>}
           </Fetcher>

@@ -1,9 +1,9 @@
 import React from 'react';
 import { makeRequest } from '../../../utils/utils';
 import { Form, Formik } from 'formik';
-import {Modal, DeleteDialog, NonFieldErrors} from '../../../common';
+import {DeleteModal, DeleteModalDialog, NonFieldErrors} from '../../../common';
 
-const DeleteField = ({open, setOpen, field, setFields}) => {
+const DeleteField = ({setOpen, field, setFields}) => {
   const onSubmit = async (_, actions) => {
     try {
       const response = await makeRequest.delete(`/usersapi/delete_field/${field.id}/`, {timeout: 8000});
@@ -20,17 +20,17 @@ const DeleteField = ({open, setOpen, field, setFields}) => {
   }
 
   return (
-    <Modal open={open} setOpen={setOpen} title={'Delete Custom Field'}>
+    <DeleteModal>
       <Formik initialValues={{}} onSubmit={onSubmit}>
         {({isSubmitting, errors}) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <DeleteDialog isSubmitting={isSubmitting} msg={`Delete ${field.name} field.`}/>
+              <DeleteModalDialog isSubmitting={isSubmitting} msg={`Delete ${field.name} field.`} setOpen={setOpen}/>
             </NonFieldErrors>
           </Form>
         )}
       </Formik>
-    </Modal>
+    </DeleteModal>
   )
 }
 

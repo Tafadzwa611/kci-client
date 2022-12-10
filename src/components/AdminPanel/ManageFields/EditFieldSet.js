@@ -2,7 +2,7 @@ import React from 'react';
 import { onModalSubmit } from './utils';
 import { Form, Formik } from 'formik';
 import { updateFieldSetSchema } from './schemas';
-import { Modal, CustomInput, CustomCheckbox, CustomTextField, SubmitButton, NonFieldErrors} from '../../../common';
+import { Modal, CustomInput, CustomCheckbox, CustomTextField, ModalSubmit, NonFieldErrors} from '../../../common';
 
 function EditFieldSet({open, setOpen, fieldSet, setFieldSets}) {
   const initialValues = {name: fieldSet.name, active: fieldSet.active, description: fieldSet.description ?? ''};
@@ -27,7 +27,7 @@ function EditFieldSet({open, setOpen, fieldSet, setFieldSets}) {
               <CustomInput label='Name' name='name' type='text'/>
               <CustomTextField label='Description' name='description'/>
               <CustomCheckbox label='Active' name='active'/>
-              <SubmitButton isSubmitting={isSubmitting}/>
+              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
             </NonFieldErrors>
           </Form>
         )}
