@@ -1,9 +1,9 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 import { makeRequest } from '../../../../utils';
-import { Modal, NonFieldErrors, DeleteDialog } from '../../../../common';
+import { DeleteModal, NonFieldErrors, DeleteModalDialog } from '../../../../common';
 
-const DeleteType = ({open, setOpen, type, setTypes}) => {
+const DeleteType = ({setOpen, type, setTypes}) => {
   const onSubmit = async (_, actions) => {
     try {
       const response = await makeRequest.delete(`/clientsapi/delete_client_type/${type.id}/`);
@@ -24,17 +24,17 @@ const DeleteType = ({open, setOpen, type, setTypes}) => {
   }
 
   return (
-    <Modal open={open} setOpen={setOpen} title={'Delete Client Type'}>
+    <DeleteModal>
       <Formik initialValues={{}} onSubmit={onSubmit}>
         {({isSubmitting, errors}) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <DeleteDialog isSubmitting={isSubmitting} msg={`Delete ${type.name}.`}/>
+              <DeleteModalDialog isSubmitting={isSubmitting} msg={`Delete ${type.name}.`} setOpen={setOpen}/>
             </NonFieldErrors>
           </Form>
         )}
       </Formik>
-    </Modal>
+    </DeleteModal>
   )
 }
 
