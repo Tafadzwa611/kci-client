@@ -7,6 +7,7 @@ const Filter = (props) => {
         maxLoanAddedOn,
         setMinLoanAddedOn,
         setMaxLoanAddedOn,
+        setSelectedBranches,
         branches,
         currencies,
         setBranchIds,
@@ -38,6 +39,7 @@ const Filter = (props) => {
 
     const handleMultiSelect = selected => {
         setOptionSelected(selected);
+        setSelectedBranches(selected);
         setBranchIds(selected.map(branch => branch.id));
     }
     

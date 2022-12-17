@@ -29,6 +29,7 @@ function LoansList() {
   const [details, setDetails] = useState(false)
   const [selectedLoanID, setSelectedLoanID] = useState(null)
   const [client, setClient] = useState('');
+  const [selectedBranches, setSelectedBranches] = useState([]);
   const pageNum = useRef(1);
   const isFirstRun = useRef(true);
 
@@ -55,6 +56,7 @@ function LoansList() {
 
   useEffect(() => {
     setLoans([]);
+    setTotalCount(0);
   }, [productId, currencyId, branchIds, status, minLoanAddedOn, maxLoanAddedOn, minPrincipalAmountDue, maxPrincipalAmountDue, minAmountPaid, maxAmountPaid]);
 
   async function fetchLoans() {
@@ -193,6 +195,7 @@ function LoansList() {
             maxLoanAddedOn={maxLoanAddedOn}
             setMinLoanAddedOn={setMinLoanAddedOn}
             setMaxLoanAddedOn={setMaxLoanAddedOn}
+            setSelectedBranches={setSelectedBranches}
             products={products}
             productId={productId}
             setProductId={setProductId}
@@ -222,6 +225,9 @@ function LoansList() {
             <div style={{paddingTop: '2rem'}}></div>
             <LoansTable
                 loans={loans}
+                minDate={minLoanAddedOn}
+                maxDate={maxLoanAddedOn}
+                selectedBranches={selectedBranches}
                 totalCount={totalCount}
                 nextPageNumber={nextPageNumber}
                 loadMoreLoans={loadMore}
