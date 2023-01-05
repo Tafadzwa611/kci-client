@@ -18,7 +18,8 @@ const AddLoanFee = lazy(() => import('../Loans/LoanFees/AddLoanFee'));
 const ViewGuarantors = lazy(() => import('../Loans/Guarantors/ViewGuarantors'));
 const AddGuarantor = lazy(() => import('../Loans/Guarantors/AddGuarantor'));
 
-const LoanRoutes = (
+const LoanRoutes = 
+(
   <>
     <Route exact path='/loans/viewrefunds' element={<ViewRefunds/>}/>
     <Route exact path='/loans/collateraltypes' element={<CollateralTypes/>}/>

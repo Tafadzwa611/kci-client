@@ -1,41 +1,113 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import { makeRequest } from '../../../utils/utils';
+import Select from 'react-select';
 
-const Filter = () => {
-    return (
-        <div className="col-12 font-12 balance_sheet_date_range text-light">
-            <div className="row" style={{display:"flex", columnGap:"1px", alignItems:"center", marginTop:"0"}}>
-                <div className="input-group">
-                    <i class="uil uil-calendar-alt"></i>
-                    <input type="date" className="form-control input-background" style={{width:"400px"}}/>
-                </div>
-                <div style={{width:"400px", margin:"10px"}}>
-                    <select className="report-custom-form-control currency" style={{width:"100%"}}>
-                        <option style={{display:"none"}} selected>Select Currency </option>
-                        <option>USD</option>
-                        <option>USD</option>
-                    </select>
-                </div>
-                <div style={{display:"flex", columnGap:"10px", margin:"10px"}}>
-                    <button className="btn btn-olive">Apply_Filters_!</button>
-                    <button className="btn btn-purple">Reset</button>
-                </div>
-            </div>
-            <div className="row row-balance-sheet">
-                <div className="row-balance-sheet-items">
-                    <input type="checkbox"/>
-                    <label>All Branches</label>
-                </div>
-                <div className="row-balance-sheet-items">
-                    <input type="checkbox"/>
-                    <label>Masvingo</label>
-                </div>
-                <div className="row-balance-sheet-items">
-                    <input type="checkbox"/>
-                    <label>Gweru</label>
-                </div>
+const Filter = (props) => {
+    const [optionSelected, setOptionSelected] = useState([]);
+    const [branches, setBranches] = useState([]);
+    const {reportDate, currencies, currencyId, setCurrencyId, setReportDate, onSubmit, disableFetch, updateSelectedBranchesId} = props;
+    const fetchStyles = disableFetch ? {pointerEvents: 'none', opacity: '0.7'} : {};
+
+    const style = {
+        control: base => ({
+            ...base,
+            border: '1px solid #dee2e6',
+            boxShadow: "none",
+            '&:hover':'1px solid #dee2e6',
+        })
+    };
+
+    const handleMultiSelect = selected => {
+        setOptionSelected(selected);
+        updateSelectedBranchesId(selected.map(branch => branch.id));
+    }
+
+    const changeCurrency = (evt) => {
+        setCurrencyId(evt.target.value);
+    }
+
+    useEffect(() => {
+        fetchBranches();
+    }, []);
+
+    async function fetchBranches() {
+        try {
+            const response = await makeRequest.get('/usersapi/get-branches/', {timeout: 8000});
+            if (response.ok) {
+                const data = await response.json();
+                return setBranches([...data.results.map(result => ({...result, label: result.name, value:result.id}))]);
+            }else {
+                const error = await response.json();
+                console.log(error);
+            }
+        }catch(error) {
+            console.log(error);
+        }
+    }
+
+  return (
+<div className="font-13 text-light">
+
+<form onSubmit={onSubmit}>
+    <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0"}}>
+        <div className="row-payments-container" style={{width:"48%"}}>
+            <label className="form-label row-label">To</label>
+            <div className="input-group" style={{margin:"0"}}>
+                <i className="uil uil-calendar-alt"></i>
+                <input
+                    type='date'
+                    value={reportDate}
+                    onKeyDown={(e) => e.preventDefault()}
+                    onChange={(e) => setReportDate(e.target.value)}
+                    className='custom-select-form row-form input-background'
+                />
             </div>
         </div>
-    )
+
+        <div className="row-payments-container" style={{width:"48%"}}>
+            <label className="form-label row-label">Currency</label>
+            <select className='custom-select-form row-form' style={{margin:"0"}} value={currencyId} onChange={changeCurrency}>
+                {currencies.map(currency => {
+                    return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
+                })}
+            </select>
+        </div>
+    </div>
+
+    <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0", marginTop:"1rem"}}>
+        <div className="row-payments-container" style={{width:"80%"}}>
+            <Select
+                isMulti
+                name='colors'
+                options={[props.allOption, ...branches]}
+                value={optionSelected}
+                classNamePrefix='select'
+                className='basic-multi-select'
+                placeholder='Select Branches'
+                onChange={selected => {
+                    if (selected !== null && selected.length > 0 && selected[selected.length - 1].value === props.allOption.value) {
+                    return handleMultiSelect(branches);
+                    }
+                    handleMultiSelect(selected);
+                }}
+                styles={style}
+            />
+        </div>
+        <div style={{display:"flex", flexDirection:"column"}}>
+            <button type='submit' className='btn btn-olive' style={fetchStyles} disabled={disableFetch}>Run Report!</button>
+        </div>
+    </div>
+</form>
+
+</div>
+  )
 }
+
+Filter.defaultProps = {
+  allOption: {
+    label: 'Select all',
+    value: '*'
+  }
+};
 
 export default Filter;
