@@ -5,7 +5,8 @@ import { makeRequest } from '../../../utils/utils';
 const DateRange = (props) => {
     const [optionSelected, setOptionSelected] = useState([]);
     const [branches, setBranches] = useState([]);
-    const {currencies, currencyId, setCurrencyId, minDate, maxDate, setMinDate, setMaxDate, onSubmit, disableFetch, searchString, setJournals, searchAccount, updateSelectedBranchesId, details} = props;
+    const {currencies, currencyId, setCurrencyId, minDate, maxDate, setMinDate, loading, accounts, accountId, setAccountId, 
+        setMaxDate, onSubmit, disableFetch, setJournals, staff, staffId, setStaffId, updateSelectedBranchesId, details} = props;
     const fetchStyles = disableFetch ? {pointerEvents: 'none', opacity: '0.7', margin:'0'} : {margin:'0', cursor:'pointer'};
 
     const style = {
@@ -30,6 +31,15 @@ const DateRange = (props) => {
     const changeCurrency = (evt) => {
         setCurrencyId(evt.target.value);
     }
+
+    const changeStaff = (evt) => {
+        setStaffId(evt.target.value);
+    }
+
+    const changeAccount = (evt) => {
+        setAccountId(evt.target.value);
+    }
+    
   
     async function fetchBranches() {
         try {
@@ -85,21 +95,33 @@ const DateRange = (props) => {
                             />
                         </div>
                     </div>
+                    <div className="row-payments-container" style={{width:"22%"}}>
+                        <label className="form-label row-label">Select Account</label>
+                        <Select
+                            name='accounts'
+                            options={accounts.filter(acc => acc.currency == currencyId && optionSelected.some(br => br.name == acc.branch))}
+                            classNamePrefix='select'
+                            className='basic-single'
+                            isClearable={true}
+                            placeholder='Select Account'
+                            onChange={selected => {
+                                if (selected == null) {
+                                    setAccountId('');
+                                }else {
+                                    setAccountId(selected.value);
+                                }
+                            }}
+                        />
+                    </div>
 
                     <div className="row-payments-container" style={{width:"22%"}}>
-                        <label className="form-label row-label">Currency</label>
-                        <select className='custom-select-form row-form' style={{margin:"0"}} value={currencyId} onChange={changeCurrency} disabled={details ? "disabled": ""}>
-                            {currencies.map(currency => {
-                                return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
+                        <label className="form-label row-label">Select User</label>
+                        <select className='custom-select-form row-form' style={{margin:"0"}} value={staffId} onChange={changeStaff}>
+                            <option value=''>Select User</option>
+                            {staff.map(s => {
+                                return <option key={s.id} value={s.id}>{`${s.first_name} ${s.last_name}`}</option>
                             })}
                         </select>
-                    </div>
-                    <div className="row-payments-container" style={{width:"22%"}}>
-                        <label className="form-label row-label">Search Account</label>
-                        <div className="input-group" style={{margin:"0"}}>
-                            <i className="uil uil-search"></i>
-                            <input type='text' name='search' autoComplete='off' className='custom-select-form row-form input-background' placeholder='Search account...' value={searchString} onChange={searchAccount} disabled={details ? "disabled": ""}/>
-                        </div>
                     </div>
                 </div>
 
@@ -122,6 +144,13 @@ const DateRange = (props) => {
                             styles={style}
                             isDisabled={details ? true: false}
                             />
+                    </div>
+                    <div className="row-payments-container" style={{width:"10%"}}>
+                        <select className='custom-select-form row-form' style={{margin:"0"}} value={currencyId} onChange={changeCurrency} disabled={details ? "disabled": ""}>
+                            {currencies.map(currency => {
+                                return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
+                            })}
+                        </select>
                     </div>
                     <div style={{display:"flex", flexDirection:"column"}}>
                         {details ? 
