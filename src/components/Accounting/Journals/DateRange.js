@@ -96,7 +96,7 @@ const DateRange = (props) => {
                         </div>
                     </div>
                     <div className="row-payments-container" style={{width:"22%"}}>
-                        <label className="form-label row-label">Select Account</label>
+                        <label className="row-payments-container">Select Account</label>
                         <Select
                             name='accounts'
                             options={accounts.filter(acc => acc.currency == currencyId && optionSelected.some(br => br.name == acc.branch))}
@@ -111,6 +111,8 @@ const DateRange = (props) => {
                                     setAccountId(selected.value);
                                 }
                             }}
+                            styles={style}
+                            isDisabled={details ? true: false}
                         />
                     </div>
 
@@ -143,7 +145,7 @@ const DateRange = (props) => {
                             }}
                             styles={style}
                             isDisabled={details ? true: false}
-                            />
+                        />
                     </div>
                     <div className="row-payments-container" style={{width:"10%"}}>
                         <select className='custom-select-form row-form' style={{margin:"0"}} value={currencyId} onChange={changeCurrency} disabled={details ? "disabled": ""}>
