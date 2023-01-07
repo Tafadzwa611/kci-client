@@ -5,7 +5,7 @@ import DeleteFieldSet from './DeleteFieldSet';
 import FieldList from './FieldList';
 import { Fetcher, SuccessBtn, DeleteBtn, EditBtn, Select } from '../../../common';
 
-const FieldSets = ({data, entityType}) => {
+const FieldSets = ({data, entityType, clientTypes}) => {
   const [fieldSets, setFieldSets] = useState(data);
   const [fieldSetId, setFieldSetId] = useState('');
   const [openCreateFieldSetModal, setOpenCreateFieldSetModal] = useState(false);
@@ -15,7 +15,7 @@ const FieldSets = ({data, entityType}) => {
   return (
     <>
       <SuccessBtn handler={(evt) => setOpenCreateFieldSetModal(true)} value={'Add Form'}/>
-      <CreateFieldSet open={openCreateFieldSetModal} setOpen={setOpenCreateFieldSetModal} setFieldSets={setFieldSets} entityType={entityType}/>
+      <CreateFieldSet open={openCreateFieldSetModal} setOpen={setOpenCreateFieldSetModal} setFieldSets={setFieldSets} entityType={entityType} clientTypes={clientTypes}/>
       <Select value={fieldSetId} onChange={(evt) => setFieldSetId(evt.target.value)}>
         <option value=''>------</option>
         {fieldSets.map(fieldSet => <option key={fieldSet.id} value={fieldSet.id}>{fieldSet.name}</option>)}

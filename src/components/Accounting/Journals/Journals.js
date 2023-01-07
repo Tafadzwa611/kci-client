@@ -27,6 +27,8 @@ const Journals = () => {
     const [staffId, setStaffId] = useState('');
     const [currencyId, setCurrencyId] = useState(null);
     const [currencyIso, setCurrencyIso] = useState(null);
+    const [selectedjrnlID, setSelectedJrnlID] = useState(null)
+    const [details, setDetails] = useState(false)
     const pageNum = useRef(1);
 
     useEffect(() => {
@@ -214,6 +216,11 @@ const Journals = () => {
                 nextPageNumber={pageNum.current}
                 loadMoreJournals={loadMore}
                 loadingMore={loadingMore}
+                setSelectedJrnlID={setSelectedJrnlID} 
+                selectedjrnlID={selectedjrnlID}
+                selectedjrnl={journals.find(jrnl => jrnl.id == selectedjrnlID)}
+                details={details}
+                setDetails={setDetails}
             />
         </>
     );

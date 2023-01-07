@@ -5,7 +5,11 @@ import { entityTypes } from '../data';
 export const createFieldSetSchema = yup.object().shape({
   name: yup.string().required('Required'),
   entity_type: yup.string().oneOf(entityTypes, 'Invalid').required('Required'),
-  field_set_type: yup.string().oneOf(['SINGLE', 'MULTIPLE'], 'Invalid').required('Required')
+  field_set_type: yup.string().oneOf(['SINGLE', 'MULTIPLE'], 'Invalid').required('Required'),
+  client_type_id: yup.number().integer().when("entity_type", {
+    is: 'CLIENT',
+    then: yup.number().integer().required("You must select client type")
+  })
 });
 
 export const updateFieldSetSchema = yup.object().shape({
