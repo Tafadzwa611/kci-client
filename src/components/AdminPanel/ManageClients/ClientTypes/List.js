@@ -38,13 +38,14 @@ const List = ({data}) => {
             setOpen={setOpenUpdateFieldModal}
             setTypes={setTypes}
           />
-          <DeleteType
-            key={typeId}
-            open={openDeleteFieldModal}
-            setOpen={setOpenDeleteFieldModal}
-            type={types.find(t => t.id==typeId)}
-            setTypes={setTypes}
-          />
+          {openDeleteFieldModal &&
+            <DeleteType
+              key={typeId}
+              setOpen={setOpenDeleteFieldModal}
+              type={types.find(t => t.id==typeId)}
+              setTypes={setTypes}
+            />
+          }
         </>
       }
     </>

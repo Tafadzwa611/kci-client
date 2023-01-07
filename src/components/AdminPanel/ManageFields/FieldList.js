@@ -39,13 +39,15 @@ function FieldList({data, fieldSetId}) {
             setFields={setFields}
             setOpen={setOpenUpdateFieldModal}
           />
-          <DeleteField
-            key={fieldId}
-            open={openDeleteFieldModal}
-            setOpen={setOpenDeleteFieldModal}
-            field={fields.find(f => f.id==fieldId)}
-            setFields={setFields}
-          />
+          {openDeleteFieldModal &&
+            <DeleteField
+              key={fieldId}
+              open={openDeleteFieldModal}
+              setOpen={setOpenDeleteFieldModal}
+              field={fields.find(f => f.id==fieldId)}
+              setFields={setFields}
+            />
+          }
         </>
       }
     </>
@@ -54,8 +56,7 @@ function FieldList({data, fieldSetId}) {
 
 const getTableRows = (fields, openEditModal, openDeleteModal) => {
   const sortedFields = fields.sort((a, b) => a.listing_position_id - b.listing_position_id);
-  return sortedFields.map(field => {
-    return (
+  return sortedFields.map((field) => (
       <tr key={field.id}>
         <td>{field.name}</td>
         <td>{dataTypes[field.data_type]}</td>
@@ -66,7 +67,7 @@ const getTableRows = (fields, openEditModal, openDeleteModal) => {
         </td>
       </tr>
     )
-  })
+  )
 }
 
 export default FieldList;

@@ -24,9 +24,12 @@ function LoansList() {
   const [currencyId, setCurrencyId] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [products, setProducts] = useState(null);
+  const [productId, setProductId] = useState('');
   const [details, setDetails] = useState(false)
   const [selectedLoanID, setSelectedLoanID] = useState(null)
   const [client, setClient] = useState('');
+  const [selectedBranches, setSelectedBranches] = useState([]);
   const pageNum = useRef(1);
   const isFirstRun = useRef(true);
 
@@ -36,6 +39,7 @@ function LoansList() {
 
   const getBranches = async () => {
     await fetchCurrencies();
+    await fetchProducts();
     const branches = await fetchBranches();
     setBranches(branches);
   }
@@ -52,12 +56,13 @@ function LoansList() {
 
   useEffect(() => {
     setLoans([]);
-  }, [currencyId, branchIds, status, minLoanAddedOn, maxLoanAddedOn, minPrincipalAmountDue, maxPrincipalAmountDue, minAmountPaid, maxAmountPaid]);
+    setTotalCount(0);
+  }, [productId, currencyId, branchIds, status, minLoanAddedOn, maxLoanAddedOn, minPrincipalAmountDue, maxPrincipalAmountDue, minAmountPaid, maxAmountPaid]);
 
   async function fetchLoans() {
     try {
       const url = getUrl();
-      const response = await makeRequest.get(url, {timeout: 6000});
+      const response = await makeRequest.get(url, {timeout: 8000});
       setLoading(false);
       if (response.ok) {
         setErrorMessage(null);
@@ -78,7 +83,7 @@ function LoansList() {
 
   async function fetchCurrencies() {
     try {
-      const response = await makeRequest.get('/usersapi/list_currencies/', {timeout: 6000});
+      const response = await makeRequest.get('/usersapi/list_currencies/', {timeout: 8000});
       if (response.ok) {
         const data = await response.json();
         if (currencyId===null) {
@@ -97,7 +102,7 @@ function LoansList() {
 
   async function fetchBranches() {
     try {
-      const response = await makeRequest.get('/usersapi/get-branches/', {timeout: 6000});
+      const response = await makeRequest.get('/usersapi/get-branches/', {timeout: 8000});
       if (response.ok) {
         const json_res = await response.json();
         return json_res.results;
@@ -109,6 +114,22 @@ function LoansList() {
       console.log(error);
     }
   }
+
+  async function fetchProducts() {
+    try {
+      const response = await makeRequest.get('/loansapi/loan_products/', {timeout: 8000});
+      if (response.ok) {
+        const data = await response.json();
+        return setProducts([...data.loan_products.map(result => ({...result, label: result.name, value: result.id}))]);
+      }else {
+        const error = await response.json();
+        console.log(error);
+      }
+    }catch(error) {
+      console.log(error);
+    }
+  }
+
 
   function getUrl() {
     let url = `/loansapi/loan_list/?page_num=${pageNum.current}&currency_id=${currencyId}`;
@@ -139,6 +160,9 @@ function LoansList() {
     if (client !== '') {
       url += `&client=${client}`;
     }
+    if (productId !== '') {
+      url += `&loan_product_id=${productId}`;
+    }
     return url
   }
 
@@ -159,7 +183,7 @@ function LoansList() {
     setTotalCount(data.count);
   }
 
-  if (currencies===null || branches===null) {
+  if (currencies===null || branches===null || products===null) {
     return <MiniLoader />
   }
 
@@ -171,6 +195,10 @@ function LoansList() {
             maxLoanAddedOn={maxLoanAddedOn}
             setMinLoanAddedOn={setMinLoanAddedOn}
             setMaxLoanAddedOn={setMaxLoanAddedOn}
+            setSelectedBranches={setSelectedBranches}
+            products={products}
+            productId={productId}
+            setProductId={setProductId}
             branches={branches}
             currencies={currencies}
             setBranchIds={setBranchIds}
@@ -197,6 +225,9 @@ function LoansList() {
             <div style={{paddingTop: '2rem'}}></div>
             <LoansTable
                 loans={loans}
+                minDate={minLoanAddedOn}
+                maxDate={maxLoanAddedOn}
+                selectedBranches={selectedBranches}
                 totalCount={totalCount}
                 nextPageNumber={nextPageNumber}
                 loadMoreLoans={loadMore}

@@ -7,7 +7,7 @@ import {
   CustomInput,
   CustomCheckbox,
   CustomTypeAndAdd,
-  SubmitButton,
+  ModalSubmit,
   NonFieldErrors
 } from '../../../common';
 
@@ -51,7 +51,7 @@ const EditField = ({open, setOpen, field, setFields}) => {
                   values={values.select_opts}
                   setFieldValue={setFieldValue}
                   label='Select Options'/>}
-              <SubmitButton isSubmitting={isSubmitting}/>
+              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
             </NonFieldErrors>
           </Form>
         )}

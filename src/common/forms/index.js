@@ -7,5 +7,21 @@ import NonFieldErrors from './NonFieldErrors';
 import SubmitButton from './SubmitButton';
 import DeleteDialog from './DeleteDialog';
 import CustomRadio from './CustomRadio';
+import ModalSubmit from './ModalSubmit';
+import DeleteModalDialog from './DeleteModalDialog';
+import ModalDeleteSubmit from './ModalDeleteSubmit';
 
-export {DeleteDialog, CustomCheckbox, CustomInput, CustomSelect, CustomTextField, CustomTypeAndAdd, NonFieldErrors, SubmitButton, CustomRadio};
+export {
+    CustomRadio,
+    DeleteDialog,
+    CustomCheckbox,
+    CustomInput,
+    CustomSelect,
+    CustomTextField,
+    CustomTypeAndAdd,
+    NonFieldErrors,
+    SubmitButton,
+    ModalSubmit,
+    DeleteModalDialog,
+    ModalDeleteSubmit
+};

@@ -13,7 +13,7 @@ import { Routes as ReactRoutes, Route } from 'react-router-dom';
 const Home = lazy(() => import('../Home/Home'));
 const Dashboard = lazy(() => import('../Dashboard/Dashboard'));
 
-const Routes = () => {
+const Routes = (loggedInUser) => {
   return (
     <Suspense fallback='Loading...'>
       <ReactRoutes>

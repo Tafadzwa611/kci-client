@@ -17,8 +17,8 @@ function ManageFields() {
           )
         })}
       </div>
-      <Fetcher urls={[`/usersapi/list_field_sets/?entity_type=${entityType}`]}>
-        {({data}) => <FieldSets data={data[0]} entityType={entityType}/>}
+      <Fetcher urls={[`/usersapi/list_field_sets/?entity_type=${entityType}`, '/clientsapi/client_types/']}>
+        {({data}) => <FieldSets data={data[0]} clientTypes={data[1]} entityType={entityType}/>}
       </Fetcher>
     </>
   )

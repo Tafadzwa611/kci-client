@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import { onModalSubmit } from './utils';
 import { editTemplateSchema } from './schemas';
-import { Modal, CustomInput, CustomCheckbox, SubmitButton, NonFieldErrors } from '../../../../common';
+import { Modal, CustomInput, CustomCheckbox, ModalSubmit, NonFieldErrors } from '../../../../common';
 
 const EditTemplate = ({open, setOpen, template, setTemplates}) => {
   const onSubmit = async (values, actions) => {
@@ -20,7 +20,7 @@ const EditTemplate = ({open, setOpen, template, setTemplates}) => {
               <CustomInput label='Name' name='id_type' type='text'/>
               <CustomInput label='Issuer' name='issuer' type='text'/>
               <CustomCheckbox label='Is Active' name='is_active'/>
-              <SubmitButton isSubmitting={isSubmitting}/>
+              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
             </NonFieldErrors>
           </Form>
         )}

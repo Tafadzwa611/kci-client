@@ -5,7 +5,7 @@ import DeleteFieldSet from './DeleteFieldSet';
 import FieldList from './FieldList';
 import { Fetcher, SuccessBtn, DeleteBtn, EditBtn, Select } from '../../../common';
 
-const FieldSets = ({data, entityType}) => {
+const FieldSets = ({data, entityType, clientTypes}) => {
   const [fieldSets, setFieldSets] = useState(data);
   const [fieldSetId, setFieldSetId] = useState('');
   const [openCreateFieldSetModal, setOpenCreateFieldSetModal] = useState(false);
@@ -15,15 +15,17 @@ const FieldSets = ({data, entityType}) => {
   return (
     <>
       <SuccessBtn handler={(evt) => setOpenCreateFieldSetModal(true)} value={'Add Form'}/>
-      <CreateFieldSet open={openCreateFieldSetModal} setOpen={setOpenCreateFieldSetModal} setFieldSets={setFieldSets} entityType={entityType}/>
+      <CreateFieldSet open={openCreateFieldSetModal} setOpen={setOpenCreateFieldSetModal} setFieldSets={setFieldSets} entityType={entityType} clientTypes={clientTypes}/>
       <Select value={fieldSetId} onChange={(evt) => setFieldSetId(evt.target.value)}>
         <option value=''>------</option>
         {fieldSets.map(fieldSet => <option key={fieldSet.id} value={fieldSet.id}>{fieldSet.name}</option>)}
       </Select>
-      {fieldSetId != '' &&
+      {fieldSets.some(fs => fs.id == fieldSetId) != '' &&
         <>
-          <EditBtn handler={(evt) => setOpenEditFieldSetModal(true)}/>
-          <DeleteBtn handler={(evt) => setOpenDeleteFieldSetModal(true)}/>
+          <div style={{marginTop:"20px"}}>
+            <EditBtn handler={(evt) => setOpenEditFieldSetModal(true)}/>
+            <DeleteBtn handler={(evt) => setOpenDeleteFieldSetModal(true)}/>
+          </div>
           <EditFieldSet
             key={JSON.stringify(fieldSets.find(fs => fs.id == fieldSetId))}
             open={openEditFieldSetModal}
@@ -31,13 +33,13 @@ const FieldSets = ({data, entityType}) => {
             fieldSet={fieldSets.find(fs => fs.id == fieldSetId)}
             setFieldSets={setFieldSets}
           />
-          <DeleteFieldSet
+          {openDeleteFieldSetModal && <DeleteFieldSet
             key={fieldSetId}
-            open={openDeleteFieldSetModal}
             setOpen={setOpenDeleteFieldSetModal}
             fieldSetId={fieldSetId}
             setFieldSets={setFieldSets}
           />
+          }
           <Fetcher urls={[`/usersapi/list_fields/?field_set_id=${fieldSetId}`]}>
             {({data}) => <FieldList data={data[0]} fieldSetId={fieldSetId}/>}
           </Fetcher>

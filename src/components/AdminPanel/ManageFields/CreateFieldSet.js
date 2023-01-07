@@ -2,17 +2,18 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import { onModalSubmit } from './utils';
 import { createFieldSetSchema } from './schemas';
-import {Modal, CustomInput, CustomSelect, CustomTextField, SubmitButton, NonFieldErrors} from '../../../common';
+import {Modal, CustomInput, CustomSelect, CustomTextField, ModalSubmit, NonFieldErrors} from '../../../common';
 
-function CreateFieldSet({open, setOpen, setFieldSets, entityType}) {
-  const initialValues = {name: '', entity_type: entityType, field_set_type: '', description: ''};
+function CreateFieldSet({open, setOpen, setFieldSets, entityType, clientTypes}) {
+  const initialValues = {name: '', entity_type: entityType, field_set_type: '', description: '', client_type_id: ''};
 
   const getPayload = (values) => {
     return {
       name: values.name,
       entity_type: values.entity_type,
       field_set_type: values.field_set_type,
-      ...(values.description != '') && {description: values.description}
+      ...(values.description != '') && {description: values.description},
+      ...(values.entity_type === 'CLIENT') && {client_type_id: values.client_type_id}
     };
   }
 
@@ -26,7 +27,7 @@ function CreateFieldSet({open, setOpen, setFieldSets, entityType}) {
   return (
     <Modal open={open} setOpen={setOpen} title={'Create Custom Form '}>
       <Formik initialValues={initialValues} validationSchema={createFieldSetSchema} onSubmit={onSubmit}>
-        {({ isSubmitting, errors }) => (
+        {({ isSubmitting, errors, values }) => (
           <Form>
             <NonFieldErrors errors={errors}>
               <CustomSelect label='Associated with' name='entity_type' disabled={true}>
@@ -34,6 +35,10 @@ function CreateFieldSet({open, setOpen, setFieldSets, entityType}) {
                 <option value='CLIENT'>Clients</option>
                 <option value='LOAN'>Loans</option>
               </CustomSelect>
+              {values.entity_type === 'CLIENT' && <CustomSelect label='Client type' name='client_type_id'>
+                <option value=''>------</option>
+                {clientTypes.map(type => <option key={type.id} value={type.id}>{type.name}</option>)}
+              </CustomSelect>}
               <CustomInput label='Form Name' name='name' type='text'/>
               <CustomSelect label='Form Type' name='field_set_type'>
                 <option value=''>------</option>
@@ -41,7 +46,7 @@ function CreateFieldSet({open, setOpen, setFieldSets, entityType}) {
                 <option value='MULTIPLE'>Multiple</option>
               </CustomSelect>
               <CustomTextField label='Description' name='description'/>
-              <SubmitButton isSubmitting={isSubmitting}/>
+              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
             </NonFieldErrors>
           </Form>
         )}

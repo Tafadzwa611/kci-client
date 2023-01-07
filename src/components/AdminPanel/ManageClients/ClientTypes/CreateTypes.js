@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import { onModalSubmit } from './utils';
 import { addTypeSchema } from './schemas';
-import { Modal, NonFieldErrors, CustomInput, CustomCheckbox, SubmitButton } from '../../../../common';
+import { Modal, NonFieldErrors, CustomInput, CustomCheckbox, ModalSubmit } from '../../../../common';
 
 const CreateTypes = ({open, setOpen, setTypes}) => {
   const initialValues = {name: '', allow_opening_loan_accounts: false, allow_as_guarantor: false};
@@ -14,7 +14,7 @@ const CreateTypes = ({open, setOpen, setTypes}) => {
   }
 
   return (
-    <Modal open={open} setOpen={setOpen} title={'Create ID Template'}>
+    <Modal open={open} setOpen={setOpen} title={'Create Client Type'}>
       <Formik initialValues={initialValues} validationSchema={addTypeSchema} onSubmit={onSubmit}>
         {({ isSubmitting, errors }) => (
           <Form>
@@ -22,7 +22,7 @@ const CreateTypes = ({open, setOpen, setTypes}) => {
               <CustomInput label='Name' name='name' type='text'/>
               <CustomCheckbox label='Allow opening accounts' name='allow_opening_loan_accounts'/>
               <CustomCheckbox label='Allow as guarantor' name='allow_as_guarantor'/>
-              <SubmitButton isSubmitting={isSubmitting}/>
+              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
             </NonFieldErrors>
           </Form>
         )}

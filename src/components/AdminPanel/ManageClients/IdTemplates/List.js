@@ -38,13 +38,14 @@ const List = ({data}) => {
             setTemplates={setTemplates}
             setOpen={setOpenUpdateFieldModal}
           />
-          <DeleteTemplate
-            key={templateId}
-            open={openDeleteFieldModal}
-            setOpen={setOpenDeleteFieldModal}
-            template={templates.find(tmp => tmp.id==templateId)}
-            setTemplates={setTemplates}
-          />
+          {openDeleteFieldModal && 
+            <DeleteTemplate
+              key={templateId}
+              setOpen={setOpenDeleteFieldModal}
+              template={templates.find(tmp => tmp.id==templateId)}
+              setTemplates={setTemplates}
+            />
+          }
         </>
       }
     </>

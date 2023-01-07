@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
-import { Modal, CustomInput, CustomCheckbox, CustomSelect, SubmitButton, NonFieldErrors } from '../../../../common';
+import { Modal, CustomInput, CustomCheckbox, CustomSelect, NonFieldErrors, ModalSubmit } from '../../../../common';
 import {controlSchema} from './schemas';
 import {onModalSubmit} from './utils';
 
@@ -70,7 +70,7 @@ const UpdateClientControls = ({open, setOpen, clientControls, setClientControls}
               </CustomSelect>
               <CustomInput label='Minimum Client Age In Years' name='min_client_age' step='1' type='number'/>
               <CustomCheckbox label='Allow Clients Without Identification' name='allow_clients_without_id'/>
-              <SubmitButton isSubmitting={isSubmitting}/>
+              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
             </NonFieldErrors>
           </Form>
         )}

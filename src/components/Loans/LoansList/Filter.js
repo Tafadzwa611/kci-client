@@ -7,6 +7,7 @@ const Filter = (props) => {
         maxLoanAddedOn,
         setMinLoanAddedOn,
         setMaxLoanAddedOn,
+        setSelectedBranches,
         branches,
         currencies,
         setBranchIds,
@@ -14,6 +15,9 @@ const Filter = (props) => {
         setCurrencyId,
         setStatus,
         loading,
+        products,
+        productId,
+        setProductId,
         minPrincipalAmountDue,
         setMinPrincipalAmountDue,
         maxPrincipalAmountDue,
@@ -35,6 +39,7 @@ const Filter = (props) => {
 
     const handleMultiSelect = selected => {
         setOptionSelected(selected);
+        setSelectedBranches(selected);
         setBranchIds(selected.map(branch => branch.id));
     }
     
@@ -55,6 +60,10 @@ const Filter = (props) => {
             '&:hover':'1px solid #dee2e6',
         })
     };
+
+    const changeProduct = (evt) => {
+        setProductId(evt.target.value);
+    }
     
     return (
         <div className="search_background">
@@ -193,7 +202,7 @@ const Filter = (props) => {
                         </div>
                     </div>
                     <div className="row row-payments row-loans" style={{marginTop:"1rem"}}>
-                        <div className="row-payments-container" style={{width:"85%"}}> 
+                        <div className="row-payments-container" style={{width:"75%"}}> 
                             <Select
                                 isMulti
                                 name='branches'
@@ -211,6 +220,14 @@ const Filter = (props) => {
                                 styles={style}
                                 isDisabled={details ? true: false}
                             />
+                        </div>
+                        <div className='row-payments-container' style={{width:"15%"}}>
+                            <select className='custom-select-form row-form' value={productId} onChange={changeProduct} disabled={details ? "disabled": ""}>
+                                <option value=''>Select Loan Product</option>
+                                {products.map(product => {
+                                    return <option key={product.id} value={product.id}>{product.name}</option>
+                                })}
+                            </select>
                         </div>
                         <span>
                             {loading ?

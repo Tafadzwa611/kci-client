@@ -5,7 +5,45 @@ import Loan from '../LoansDetails/Loan';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 
-function LoansTable({loans, nextPageNumber, loadMoreLoans, totalCount, loadingMore, currencies, currencyId, setDetails, details, selectedLoanID, setSelectedLoanID, selectedloan}) {
+function LoansTable(
+  {
+    loans, 
+    nextPageNumber, 
+    loadMoreLoans, 
+    totalCount, 
+    loadingMore, 
+    currencies, 
+    currencyId, 
+    setDetails, 
+    details, 
+    selectedLoanID, 
+    setSelectedLoanID, 
+    selectedloan,
+    minDate,
+    maxDate,
+    selectedBranches,
+  }) {
+
+  console.log(loans)
+
+  const getStrDate = (date) => {
+    const mydate = new Date(date);
+    const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
+    return `${month} ${mydate.getDate()}, ${mydate.getFullYear()}`;
+  }
+
+  const getFileName = () => {
+    if (minDate != '' && maxDate != '') {
+      return `Loans List  for from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`
+    }
+    if (minDate == '' && maxDate != '') {
+      return `Loans List  for upto ${getStrDate(maxDate)}`
+    }
+    if (minDate != '' && maxDate == '') {
+      return `Loans List  for from ${getStrDate(minDate)}`
+    }
+    return `Loans List  for all time.`
+  }
   
   const handleClick = (e) => {
     setSelectedLoanID(e.target.id)
@@ -22,8 +60,24 @@ function LoansTable({loans, nextPageNumber, loadMoreLoans, totalCount, loadingMo
     return parseFloat(accumulator) + parseFloat(loan.principal);
   }, 0);
 
+  const totalInterest = loans.reduce((accumulator, loan) => {
+    return parseFloat(accumulator) + parseFloat(loan.interest);
+  }, 0);
+
+  const totalPenalty = loans.reduce((accumulator, loan) => {
+    return parseFloat(accumulator) + parseFloat(loan.penalty_reference);
+  }, 0);
+
   const totalPrincipalAmountDue = loans.reduce((accumulator, loan) => {
     return parseFloat(accumulator) + parseFloat(loan.principal_amount_due);
+  }, 0);
+
+  const totalInterestAmountDue = loans.reduce((accumulator, loan) => {
+    return parseFloat(accumulator) + parseFloat(loan.interest_amount_due);
+  }, 0);
+
+  const totalPenaltyAmountDue = loans.reduce((accumulator, loan) => {
+    return parseFloat(accumulator) + parseFloat(loan.penalty);
   }, 0);
 
   const totalPrincipalAmountDueAtMaturity = loans.reduce((accumulator, loan) => {
@@ -84,7 +138,11 @@ function LoansTable({loans, nextPageNumber, loadMoreLoans, totalCount, loadingMo
                           <th>Repayment_Cycle</th>
                           <th>Loan_Duration</th>
                           <th>Principal</th>
+                          <th>Interest</th>
+                          <th>Penalty</th>
                           <th>Principal_Amount_Due</th>
+                          <th>Interest_Amount_Due</th>
+                          <th>Penalty_Amount_Due</th>
                           <th>Amount_Due_At_Maturity</th>
                           <th>Amount_Paid</th>
                           <th>Status</th>
@@ -138,14 +196,45 @@ function LoansTable({loans, nextPageNumber, loadMoreLoans, totalCount, loadingMo
                             <td>{loan.interest_rate}%</td>
                             <td>{loan.repayment_cycle}</td>
                             <td>{getDuration(loan.repayment_cycle, loan.number_of_repayments)}</td>
-                            <td><span style={{display:"flex"}}><span>{loan.currency} </span><span>{parseFloat(loan.principal).toFixed(2)}</span></span></td>
-                            <td><span style={{display:"flex"}}><span>{loan.currency} </span><span>{parseFloat(loan.principal_amount_due).toFixed(2)}</span></span></td>
-                            <td><span style={{display:"flex"}}><span>{loan.currency} </span><span>{parseFloat(loan.amount_due_at_maturity).toFixed(2)}</span></span></td>
-                            <td><span style={{display:"flex"}}><span>{loan.currency} </span><span>{parseFloat(loan.total_amount_paid).toFixed(2)}</span></span></td>
+                            <td>{parseFloat(loan.principal).toFixed(2)}</td>
+                            <td>{parseFloat(loan.interest).toFixed(2)}</td>
+                            <td>{parseFloat(loan.penalty_reference).toFixed(2)}</td>
+                            <td>{parseFloat(loan.principal_amount_due).toFixed(2)}</td>
+                            <td>{parseFloat(loan.interest_amount_due).toFixed(2)}</td>
+                            <td>{parseFloat(loan.penalty).toFixed(2)}</td>
+                            <td>{parseFloat(loan.amount_due_at_maturity).toFixed(2)}</td>
+                            <td>{parseFloat(loan.total_amount_paid).toFixed(2)}</td>
                             <td><span className={statusClasses[loan.status]} style={{marginBottom:"3px"}}>{loan.status}</span></td>
                           </tr>
                         )
-                      }}) : <tr><td colSpan={10} style={{textAlign: 'center'}}>No loans could be found.</td></tr>}
+                      }}) : <tr><td colSpan={15} style={{textAlign: 'center'}}>No loans could be found.</td></tr>}
+                      {
+                        loans.length > 0 && 
+                        <>
+                          <tr>
+                            <td className='text-bold text-left' colSpan={15}>Loans List</td>
+                          </tr>
+                          <tr>
+                            <td title={getFileName()} className='text-bold text-left' colSpan={15} style={{whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden'}}>
+                            {getFileName()}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                            title={selectedBranches.length == 0 ? 'User Branch' : selectedBranches.map(branch => ` ${branch.name}`)}
+                            className='text-bold text-left'
+                            colSpan={15}
+                            style={{whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden'}}
+                            >Branches: {selectedBranches.length == 0 ? 'User Branch' : selectedBranches.map(branch => ` ${branch.name}`)}</td>
+                          </tr>
+                          <tr>
+                            <td className='text-bold text-left' colSpan={15}>{`Extracted On: ${new Date()}`}</td>
+                          </tr>
+                          <tr>
+                            <td className='text-bold text-left' colSpan={15}>Currency: {currency.shortname}</td>
+                          </tr>
+                        </>
+                      }
                     </tbody>
                     {!details &&
                     <tfoot style={{insetBlockEnd: 0, position: 'sticky'}} className="journal-details header">
@@ -156,10 +245,14 @@ function LoansTable({loans, nextPageNumber, loadMoreLoans, totalCount, loadingMo
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th>{currency.shortname} {parseFloat(totalPrincipal).toFixed(2)}</th>
-                        <th>{currency.shortname} {parseFloat(totalPrincipalAmountDue).toFixed(2)}</th>
-                        <th>{currency.shortname} {parseFloat(totalPrincipalAmountDueAtMaturity).toFixed(2)}</th>
-                        <th>{currency.shortname} {parseFloat(totalAmountPaid).toFixed(2)}</th>
+                        <th>{parseFloat(totalPrincipal).toFixed(2)}</th>
+                        <th>{parseFloat(totalInterest).toFixed(2)}</th>
+                        <th>{parseFloat(totalPenalty).toFixed(2)}</th>
+                        <th>{parseFloat(totalPrincipalAmountDue).toFixed(2)}</th>
+                        <th>{parseFloat(totalInterestAmountDue).toFixed(2)}</th>
+                        <th>{parseFloat(totalPenaltyAmountDue).toFixed(2)}</th>
+                        <th>{parseFloat(totalPrincipalAmountDueAtMaturity).toFixed(2)}</th>
+                        <th>{parseFloat(totalAmountPaid).toFixed(2)}</th>
                         <th></th>
                       </tr>
                     </tfoot>

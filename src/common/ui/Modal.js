@@ -8,7 +8,7 @@ const Modal = ({open, setOpen, children, title}) => {
           <div className='modal-header'>
             <label className='form-title'>[ {title} ]</label>
             <button type='button' className='close' onClick={(e) => setOpen(false)} style={{cursor:'pointer'}}>
-              <span aria-hidden='true'>&times;</span>
+              <span aria-hidden='true' className="close__times">&times;</span>
             </button>
           </div>
           <div className='modal-body text-light'>{children}</div>

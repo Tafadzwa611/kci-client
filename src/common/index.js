@@ -8,7 +8,11 @@ export {
   NonFieldErrors,
   SubmitButton,
   DeleteDialog,
-  CustomRadio
+  CustomRadio,
+  ModalSubmit,
+  DeleteDialog,
+  DeleteModalDialog,
+  ModalDeleteSubmit
 } from './forms';
 export {
   DeleteBtn,
@@ -16,5 +20,6 @@ export {
   Modal,
   SuccessBtn,
   Table,
-  Select
+  Select,
+  DeleteModal
 } from './ui'
