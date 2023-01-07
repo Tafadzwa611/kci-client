@@ -6,5 +6,6 @@ import CustomTypeAndAdd from './CustomTypeAndAdd';
 import NonFieldErrors from './NonFieldErrors';
 import SubmitButton from './SubmitButton';
 import DeleteDialog from './DeleteDialog';
+import CustomRadio from './CustomRadio';
 
-export {DeleteDialog, CustomCheckbox, CustomInput, CustomSelect, CustomTextField, CustomTypeAndAdd, NonFieldErrors, SubmitButton};
+export {DeleteDialog, CustomCheckbox, CustomInput, CustomSelect, CustomTextField, CustomTypeAndAdd, NonFieldErrors, SubmitButton, CustomRadio};

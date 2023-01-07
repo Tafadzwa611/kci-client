@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import ClientsList from '../ClientsList/ClientsList'
 import AddClient from '../add_client/AddClient';
+import NewAddClient from '../add_client/NewAddClient';
 
 const ViewClients = () => {
   const [tab, setTab] = useState('clients');
@@ -18,7 +19,8 @@ const ViewClients = () => {
           <button className={tab === 'addclient' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setTab('addclient')}>Add Client</button>
         </div>
         <div className='tab-content font-12' style={{marginTop:'3rem'}}>
-          {{'clients': <ClientsList setMainTab={setTab}/>, 'addclient': <AddClient setMainTab={setTab}/>}[tab]}
+          {/* {{'clients': <ClientsList setMainTab={setTab}/>, 'addclient': <AddClient setMainTab={setTab}/>}[tab]} */}
+          {{'clients': <ClientsList setMainTab={setTab}/>, 'addclient': <NewAddClient/>}[tab]}
         </div>
       </div>
     </div>
