@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import ClientsList from '../ClientsList/ClientsList';
-import AddClient from '../add_client/AddClient';
 import NewAddClient from '../add_client/NewAddClient';
 import SmsList from '../Sms/SmsList';
 
@@ -23,7 +22,6 @@ const ViewClients = () => {
         <div className='tab-content font-12' style={{marginTop:'3rem'}}>
           {{
             'clients': <ClientsList setMainTab={setTab}/>, 
-            // 'addclient': <AddClient setMainTab={setTab}/>,
             'addclient': <NewAddClient setMainTab={setTab}/>,
             'sms': <SmsList setMainTab={setTab}/>
           }[tab]}

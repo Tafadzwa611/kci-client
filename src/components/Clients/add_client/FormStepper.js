@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Form } from 'formik';
 import { NonFieldErrors, SubmitButton } from '../../../common';
 
-const FormStepper = ({ children, errors, isSubmitting, customForms }) => {
+const FormStepper = ({ children, errors, isSubmitting, customForms, client_type_id }) => {
   const stepsArray = React.Children.toArray(children);
   const [step, setStep] = useState(0);
   const currentStep = stepsArray[step];
   const nativeForms = ['New Client', 'Client Information', 'Client Address', 'Next of Kin', 'Client Files'];
+  const applicableForms = customForms.filter(form => form.client_type_id == client_type_id);
   const numberOfSteps = nativeForms.length + customForms.length;
 
   return (
@@ -14,7 +15,7 @@ const FormStepper = ({ children, errors, isSubmitting, customForms }) => {
       <NonFieldErrors errors={errors}>
         <div className='bloc-tabs'>
           {nativeForms.map((form, index) => <button key={index} className={step === index ? 'tabs-client active-tabs' : 'tabs-client'} onClick={_=>setStep(index)}>{form}</button>)}
-          {customForms.map((form, index) => (
+          {applicableForms.map((form, index) => (
             <button key={index} className={step === index + nativeForms.length ? 'tabs-client active-tabs' : 'tabs-client'} onClick={_=>setStep(index + nativeForms.length)}>
               {form.name}
             </button>

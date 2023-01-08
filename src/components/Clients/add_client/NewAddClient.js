@@ -3,7 +3,6 @@ import { Formik } from 'formik';
 import FormStepper from './FormStepper';
 import { createClientSchema } from './schemas';
 import { Fetcher } from '../../../common';
-import NewClient from './NewClient';
 import ClientInformation from './ClientInformation';
 
 const initialValues = {
@@ -28,14 +27,14 @@ const NewAddClient = () => {
     <Fetcher urls={['/usersapi/list_field_sets/?entity_type=CLIENT', '/clientsapi/client_types/']}>
       {({data}) => (
         <Formik initialValues={initialValues} validationSchema={createClientSchema} onSubmit={onSubmit}>
-          {({ isSubmitting, errors }) => (
-            <FormStepper isSubmitting={isSubmitting} errors={errors} customForms={data[0]}>
+          {({ isSubmitting, errors, values }) => (
+            <FormStepper isSubmitting={isSubmitting} errors={errors} customForms={data[0]} client_type_id={values.client_type_id}>
               <ClientInformation clientTypes={data[1]}/>
               <div>2</div>
               <div>3</div>
               <div>4</div>
-              {/* {data[0].map(form => <div key={form.id}>{form.name}</div>)} */}
               <div>5</div>
+              {data[0].map(form => <div key={form.id}>{form.name}</div>)}
             </FormStepper>
           )}
         </Formik>
