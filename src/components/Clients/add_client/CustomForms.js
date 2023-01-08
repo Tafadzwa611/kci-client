@@ -9,7 +9,7 @@ function CustomForms({client_type_id, customForms}) {
   )
 }
 
-function  CustomForm(customForms) {
+function  CustomForm(customForm) {
   
 }
 

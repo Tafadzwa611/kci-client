@@ -360,6 +360,12 @@ export default function Table(
         {details && (
           <div style={{position:"sticky", top:"0", width:"100%"}}>
               <div style={{display:"flex", flexDirection:"column", padding:"1.5rem"}} className="j-details-container">
+
+                  <div className="row" style={{margin:"0 0 1.5rem"}}>
+                    <div className="col-12" style={{display:"flex", justifyContent:"flex-end"}}>
+                        <button><a onClick={e => setDetails(false)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
+                    </div>
+                  </div>
                   <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
                       <div>
                           <ul>
@@ -396,11 +402,6 @@ export default function Table(
                               <li>Date Logged: {convertDate(selectedjrnl.date_logged)}</li>
                               <li>Created By: {selectedjrnl.created_by_name}</li>
                           </ul>
-                      </div>
-                  </div>
-                  <div className="row">
-                      <div className="col-12" style={{display:"flex", justifyContent:"flex-end"}}>
-                          <button><a onClick={e => setDetails(false)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
                       </div>
                   </div>
 
