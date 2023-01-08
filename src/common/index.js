@@ -7,7 +7,6 @@ export {
   CustomTypeAndAdd,
   NonFieldErrors,
   SubmitButton,
-  DeleteDialog,
   CustomRadio,
   ModalSubmit,
   DeleteDialog,
