@@ -7,7 +7,7 @@ import NewClient from './NewClient';
 import ClientInformation from './ClientInformation';
 
 const initialValues = {
-  client_type: 'individual',
+  client_type_id: '',
   first_name: '',
   last_name: '',
   gender: '',
@@ -30,12 +30,11 @@ const NewAddClient = () => {
         <Formik initialValues={initialValues} validationSchema={createClientSchema} onSubmit={onSubmit}>
           {({ isSubmitting, errors }) => (
             <FormStepper isSubmitting={isSubmitting} errors={errors} customForms={data[0]}>
-              <NewClient />
               <ClientInformation clientTypes={data[1]}/>
               <div>2</div>
               <div>3</div>
               <div>4</div>
-              {data[0].map(form => <div key={form.id}>{form.name}</div>)}
+              {/* {data[0].map(form => <div key={form.id}>{form.name}</div>)} */}
               <div>5</div>
             </FormStepper>
           )}
