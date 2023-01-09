@@ -6,6 +6,7 @@ import TrialBalance from '../TrialBalance/TrialBalance';
 import Journals from '../Journals/Journals';
 import ChartsOfAccounts from '../ChartsOfAccounts/ChartsOfAccounts';
 import BalanceSheet from '../BalanceSheet/BalanceSheet';
+import Ledger from '../Ledger/Ledger';
 
 const ViewAccounting = () => {
     const [tab, setTab] = useState('cshflw');
@@ -27,6 +28,7 @@ const ViewAccounting = () => {
                             <button className={tab === "blncesht" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("blncesht")}> Balance Sheet </button>
                             <button className={tab === "jrnls" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("jrnls")}> Journal Entries </button>
                             <button className={tab === "chtsoaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("chtsoaccs")}> Charts of Accounts </button>
+                            <button className={tab === "ledger" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("ledger")}> Ledger </button>
                     </div>
                     <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                         {{
@@ -36,7 +38,8 @@ const ViewAccounting = () => {
                             'trlbnce': <TrialBalance setTab={setTab}/>,
                             'blncesht': <BalanceSheet setTab={setTab}/>,
                             'jrnls': <Journals setTab={setTab}/>,
-                            'chtsoaccs': <ChartsOfAccounts setTab={setTab}/>
+                            'chtsoaccs': <ChartsOfAccounts setTab={setTab}/>,
+                            'ledger': <Ledger setTab={setTab}/>
                         }[tab]}
                     </div>
                 </>

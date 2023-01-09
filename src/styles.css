@@ -110,6 +110,7 @@ body {
 #dark .due_loans, 
 #dark .defaults_arrears_loans,
 #dark .refunds,
+#dark .div__border,
 #dark .table td,
 #dark .table th,
 #dark .details-container .client-details-table tr td,
@@ -1119,7 +1120,8 @@ table {
 .clients_table, 
 .due_loans, 
 .defaults_arrears_loans, 
-.refunds
+.refunds,
+.div__border,
 .clientloans,
 .onlineapplications,
 .view_payments,
