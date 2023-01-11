@@ -118,7 +118,7 @@ function LoansTable(
               />
             </div>
           </div>
-          <div style={details ? {display:"grid", gridTemplateColumns:"1fr 4fr", columnGap:"1rem"} : {display:"block"}}>
+          <div style={details ? {display:"grid", gridTemplateColumns:"25% 74%", columnGap:"1%"} : {display:"block"}}>
             <div style={{padding:"0", border:"none"}}>
               <div style={{width:"100%", overflowX:"auto"}}>
 
@@ -266,7 +266,7 @@ function LoansTable(
                 <div style={{position:"sticky", top:"0", width:"100%"}}>
                     <div className="j-details-container" style={{padding:"1.5rem"}}>
 
-                      <Loan selectedLoanID={selectedLoanID} setDetails={setDetails} />
+                      <Loan selectedLoanID={selectedLoanID} setDetails={setDetails} selectedloan={selectedloan} />
 
                     </div>
                 </div>

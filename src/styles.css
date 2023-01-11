@@ -907,7 +907,8 @@ span {
 
 }
 
-.btn {
+.btn,
+.badge-bg {
   display: inline-block;
   font-weight: 400;
   color: var(--color);
@@ -928,6 +929,11 @@ span {
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+}
+
+.badge-bg {
+  border-radius: 2rem;
+  cursor: none;
 }
 
 .btn-info-search {
@@ -1796,37 +1802,44 @@ small {
   border-radius:7px;
 }
 
-.badge-success {
+.badge-success,
+.badge-bg-success {
   background-color: var(--success);
   color: var(--white);
 }
 
-.badge-danger {
+.badge-danger,
+.badge-bg-danger {
   background-color: var(--danger);
   color: var(--white);
 }
 
-.badge-info {
+.badge-info,
+.badge-bg-info {
   background-color: var(--info);
   color: var(--white);
 }
 
-.badge-warning {
+.badge-warning,
+.badge-bg-warning {
   background-color: var(--warning);
   color: var(--white);
 }
 
-.badge-info-lighter {
+.badge-info-lighter,
+.badge-bg-info-lighter {
   background-color: #c4c4f5;
   color: var(--white);
 }
 
-.badge-info-light {
+.badge-info-light,
+.badge-bg-info-light {
   background-color: #9a9aed;
   color: var(--white);
 }
 
-.badge-dark {
+.badge-dark,
+.badge-bg-dark {
   background-color:var(--dark);
   color: var(--white);
 }

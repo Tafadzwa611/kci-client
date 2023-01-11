@@ -78,7 +78,7 @@ function Filter({
         </div>
 
         <div className='row-payments-container'>
-          <div className='input-group' style={{margin:"0px"}}>
+          <div className='input-group' style={{margin:"0px", border:"none"}}>
             <select className='custom-select-form row-form' value={mode} onChange={e => setMode(e.target.value)}>
               <option value='ledger'>Screen (HTML)</option>
               <option value='ledger_excel'>Excel</option>
