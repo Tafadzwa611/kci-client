@@ -239,6 +239,7 @@ function LoansList() {
                 selectedLoanID={selectedLoanID}
                 setSelectedLoanID={setSelectedLoanID}
                 selectedloan={loans.find(loan => loan.id == selectedLoanID)}
+                loanId={selectedLoanID}
             />
           </>
         }

@@ -1,12 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { convertDate } from '../../Accounting/Journals/utils';
+import ApproveLoan from './LoanStates/ApproveLoan/ApproveLoan';
 
 
 const Loan = ({
     setDetails,
     selectedloan,
+    selectedLoanID,
 
 }) => {
+
+    // const [loan, setLoan] = useState(null);
+    const [openApproveLoan, setOpenApproveLoan] = useState(false);
+
+
+    console.log(selectedloan)
+
 
     const handleClose = () => {
         setDetails(false);
@@ -23,6 +32,7 @@ const Loan = ({
         'Defaulted': 'badge-bg badge-bg-danger',
         'Rejected': 'badge-bg badge-bg-danger',
         'Written-Off': 'badge-bg badge-bg-dark',
+        'Approved': 'badge-bg badge-bg-info-light',
     }
 
     return (
@@ -34,6 +44,42 @@ const Loan = ({
                 </div>
                 <button className="btn btn-default client__details" onClick={handleClose}>Close</button>
             </div>
+            {/* {selectedloan.status == 'Open' && 
+            <div className="client-state-btns" style={{display:"flex", columnGap:"3px"}}>
+              {userperms.undo_client_blacklist ?
+                <button className="btn btn-olive" onClick={(e) => setUndoClientBlacklist(curr => !curr)}>Undo Blacklist</button>:
+                <button className="btn btn-olive" onClick={(e) => setRequestUndoClientBlackList(curr => !curr)}>Request Undo Blacklist</button>
+              }
+            </div>
+            } */}
+
+            {openApproveLoan &&
+                <ApproveLoan 
+                    selectedLoanID={selectedLoanID}
+                    // setLoan={setLoan}
+                    setOpenApproveLoan={setOpenApproveLoan}
+                />
+            }
+
+            {selectedloan.status == 'Open' && 
+                <div className="client-state-btns" style={{display:"flex", columnGap:"3px", marginTop:"1rem", justifyContent:"flex-end"}}>
+                    <button className="btn btn-olive" >Undo Disburse</button>
+                </div>
+            }
+            {selectedloan.status == 'Approved' && 
+                <div className="client-state-btns" style={{display:"flex", columnGap:"3px", marginTop:"1rem", justifyContent:"flex-end"}}>
+                    <button className="btn btn-olive" >Undo Approve</button>
+                    <button className="btn btn-olive" >Disburse</button>
+                </div>
+            }
+            {selectedloan.status == 'Processing' && 
+                <div className="client-state-btns" style={{display:"flex", columnGap:"3px", marginTop:"1rem", justifyContent:"flex-end"}}>
+                    <button className="btn btn-olive" onClick={(e) => setOpenApproveLoan(curr => !curr)}>Approve</button>
+                    <button className="btn btn-olive" >Reject</button>
+                    <button className="btn btn-olive" >Edit</button>
+                    <button className="btn btn-olive" >Delete</button>
+                </div>
+            }
             <div style={{overflowY:"auto", maxWidth:"fit-content", margin:"1rem 0"}}>
                 <div>
                     <table className="table">

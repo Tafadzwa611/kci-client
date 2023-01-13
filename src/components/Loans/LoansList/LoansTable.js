@@ -22,6 +22,7 @@ function LoansTable(
     minDate,
     maxDate,
     selectedBranches,
+    loanId,
   }) {
 
   console.log(loans)
