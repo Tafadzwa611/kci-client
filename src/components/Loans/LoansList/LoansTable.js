@@ -25,8 +25,6 @@ function LoansTable(
     loanId,
   }) {
 
-  console.log(loans)
-
   const getStrDate = (date) => {
     const mydate = new Date(date);
     const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
