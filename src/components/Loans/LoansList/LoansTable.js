@@ -23,6 +23,7 @@ function LoansTable(
     maxDate,
     selectedBranches,
     loanId,
+    setLoans,
   }) {
 
   const getStrDate = (date) => {
@@ -265,7 +266,7 @@ function LoansTable(
                 <div style={{position:"sticky", top:"0", width:"100%"}}>
                     <div className="j-details-container" style={{padding:"1.5rem"}}>
 
-                      <Loan selectedLoanID={selectedLoanID} setDetails={setDetails} selectedloan={selectedloan} />
+                      <Loan selectedLoanID={selectedLoanID} setDetails={setDetails} selectedloan={selectedloan} setLoans={setLoans} />
 
                     </div>
                 </div>

@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { convertDate } from '../../Accounting/Journals/utils';
 import ApproveLoan from './LoanStates/ApproveLoan/ApproveLoan';
 import RejectLoan from './LoanStates/RejectLoan/RejectLoan';
+import DeleteLoan from './LoanStates/DeleteLoan/DeleteLoan';
+import UndoLoanDisbursement from './LoanStates/UndoLoanDisbursement/UndoLoanDisbursement';
 import MiniLoader  from '../../Loader/MiniLoader';
 import { makeRequest } from '../../../utils/utils';
 
@@ -10,14 +12,15 @@ const Loan = ({
     setDetails,
     selectedloan,
     selectedLoanID,
-
+    setLoans,
 }) => {
 
     const [loan, setLoan] = useState(null);
     const [openApproveLoan, setOpenApproveLoan] = useState(false);
     const [openRejectLoan, setOpenRejectLoan] = useState(false);
+    const [openDeleteLoan, setOpenDeleteLoan] = useState(false);
+    const [openUndoDisbursement, setOpenUndoDisbursement] = useState(false);
     
-
     const handleClose = () => {
         setDetails(false);
     }
@@ -74,14 +77,6 @@ const Loan = ({
                 </div>
                 <button className="btn btn-default client__details" onClick={handleClose}>Close</button>
             </div>
-            {/* {selectedloan.status == 'Open' && 
-            <div className="client-state-btns" style={{display:"flex", columnGap:"3px"}}>
-              {userperms.undo_client_blacklist ?
-                <button className="btn btn-olive" onClick={(e) => setUndoClientBlacklist(curr => !curr)}>Undo Blacklist</button>:
-                <button className="btn btn-olive" onClick={(e) => setRequestUndoClientBlackList(curr => !curr)}>Request Undo Blacklist</button>
-              }
-            </div>
-            } */}
 
             {openApproveLoan &&
                 <ApproveLoan 
@@ -102,9 +97,29 @@ const Loan = ({
                 />
             }
 
+            {openDeleteLoan &&
+                <DeleteLoan 
+                    selectedLoanID={selectedLoanID}
+                    setLoan={setLoan}
+                    open={openDeleteLoan}
+                    setOpen={setOpenDeleteLoan}
+                    loan={loan}
+                    setDetails={setDetails}
+                    setLoans={setLoans}
+                />
+            }
+
+            {openUndoDisbursement &&
+                <UndoLoanDisbursement 
+                    selectedLoanID={selectedLoanID}
+                    setLoan={setLoan}
+                    setOpen={setOpenUndoDisbursement}
+                />
+            }
+
             {loan.status == 'Open' && 
                 <div className="client-state-btns" style={{display:"flex", columnGap:"3px", marginTop:"1rem", justifyContent:"flex-end"}}>
-                    <button className="btn btn-olive" >Undo Disburse</button>
+                    <button className="btn btn-olive" onClick={(e) => setOpenUndoDisbursement(curr => !curr)}>Undo Disburse</button>
                 </div>
             }
             {loan.status == 'Approved' && 
@@ -118,7 +133,7 @@ const Loan = ({
                     <button className="btn btn-olive" onClick={(e) => setOpenApproveLoan(curr => !curr)}>Approve</button>
                     <button className="btn btn-olive" onClick={(e) => setOpenRejectLoan(curr => !curr)}>Reject</button>
                     <button className="btn btn-olive" >Edit</button>
-                    <button className="btn btn-olive" >Delete</button>
+                    <button className="btn btn-olive" onClick={(e) => setOpenDeleteLoan(curr => !curr)}>Delete</button>
                 </div>
             }
             <div style={{overflowY:"auto", maxWidth:"fit-content", margin:"1rem 0"}}>

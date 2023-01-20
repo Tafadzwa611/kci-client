@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeRequest } from '../../../../../utils/utils';
 
 
-function RejectLoan({setOpen, selectedLoanID, setLoan, loan}) {
+function UndoLoanDisbursement({setOpen, selectedLoanID, setLoan}) {
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -13,10 +13,9 @@ function RejectLoan({setOpen, selectedLoanID, setLoan, loan}) {
 
     async function patchClient() {
         try {
-            const response = await makeRequest.patch(`/loansapi/reject_loan/${selectedLoanID}/`, {}, {timeout: 8000});
+            const response = await makeRequest.patch(`/loansapi/undo_loan_disbursements/${selectedLoanID}/`, {}, {timeout: 8000});
             if (response.ok) {
-                // setClient(curr => ({...curr, approved: true}));
-                setLoan(curr => ({...curr, status: 'Rejected'}));
+                setLoan(curr => ({...curr, status: 'Approved'}));
                 setOpen(false);
             }else {
                 const error = await response.json();
@@ -35,7 +34,7 @@ function RejectLoan({setOpen, selectedLoanID, setLoan, loan}) {
                     <i className="uil uil-check-circle modal_circle_approve"></i>
                 </div>
                 <div className="title">
-                    Reject Loan 
+                    Undo Disbursement 
                 </div>
                 <div className="modal-footer">
                     <button className="btn btn-default"onClick={() => setOpen(false)}>Cancel</button>
@@ -46,4 +45,4 @@ function RejectLoan({setOpen, selectedLoanID, setLoan, loan}) {
     )
 }
 
-export default RejectLoan;
+export default UndoLoanDisbursement;
