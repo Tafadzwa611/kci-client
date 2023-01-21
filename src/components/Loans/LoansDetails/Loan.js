@@ -4,6 +4,7 @@ import ApproveLoan from './LoanStates/ApproveLoan/ApproveLoan';
 import RejectLoan from './LoanStates/RejectLoan/RejectLoan';
 import DeleteLoan from './LoanStates/DeleteLoan/DeleteLoan';
 import UndoLoanDisbursement from './LoanStates/UndoLoanDisbursement/UndoLoanDisbursement';
+import UndoLoanApproval from './LoanStates/UndoLoanApproval/UndoLoanApproval';
 import MiniLoader  from '../../Loader/MiniLoader';
 import { makeRequest } from '../../../utils/utils';
 
@@ -20,6 +21,8 @@ const Loan = ({
     const [openRejectLoan, setOpenRejectLoan] = useState(false);
     const [openDeleteLoan, setOpenDeleteLoan] = useState(false);
     const [openUndoDisbursement, setOpenUndoDisbursement] = useState(false);
+    const [openLoanApproval, setOpenLoanApproval] = useState(false);
+    const [openUndoLoanApproval, setOpenUndoLoanApproval] = useState(false);
     
     const handleClose = () => {
         setDetails(false);
@@ -117,6 +120,15 @@ const Loan = ({
                 />
             }
 
+            {openUndoLoanApproval &&
+                <UndoLoanApproval 
+                    selectedLoanID={selectedLoanID}
+                    setLoan={setLoan}
+                    setOpen={setOpenUndoLoanApproval}
+                />
+            }
+
+
             {loan.status == 'Open' && 
                 <div className="client-state-btns" style={{display:"flex", columnGap:"3px", marginTop:"1rem", justifyContent:"flex-end"}}>
                     <button className="btn btn-olive" onClick={(e) => setOpenUndoDisbursement(curr => !curr)}>Undo Disburse</button>
@@ -124,7 +136,7 @@ const Loan = ({
             }
             {loan.status == 'Approved' && 
                 <div className="client-state-btns" style={{display:"flex", columnGap:"3px", marginTop:"1rem", justifyContent:"flex-end"}}>
-                    <button className="btn btn-olive" >Undo Approve</button>
+                    <button className="btn btn-olive" onClick={(e) => setOpenUndoLoanApproval(curr => !curr)}>Undo Approve</button>
                     <button className="btn btn-olive" >Disburse</button>
                 </div>
             }
