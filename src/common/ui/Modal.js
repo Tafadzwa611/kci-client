@@ -2,7 +2,7 @@ import React from 'react';
 
 const Modal = ({open, setOpen, children, title}) => {
   return (
-    <div className={open ? 'modal fade show' : 'modal fade'} style={{display: open ? 'block' : 'none'}}>
+    <div className={open ? 'modal fade show' : 'modal fade'} style={{top: '4rem', display: open ? 'block' : 'none'}}>
       <div className='modal-dialog modal-lg modal-dialog-scrollable'>
         <div className='modal-content'>
           <div className='modal-header'>

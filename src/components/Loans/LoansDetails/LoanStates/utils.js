@@ -9,13 +9,13 @@ export const onModalSubmit = async (data, method, url, resetForm, setOpen, setEr
     }else {
       response = await fetcher(url, data);
     }
-    const jsonResp = await response.json();
     if (response.ok) {
-      sideEffect(jsonResp);
+      sideEffect();
       resetForm();
       setOpen(false);
     }else {
-      setErrors({responseStatus: response.status, ...jsonResp});
+      const jsonResp = await response.json();
+      setErrors({responseStatus: response.status, ...jsonResp[0]});
     }
   }catch(error) {
     setErrors({clientError: error});

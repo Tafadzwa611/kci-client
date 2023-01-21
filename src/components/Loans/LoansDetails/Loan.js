@@ -84,7 +84,7 @@ const Loan = ({
             {openApproveLoan &&
                 <ApproveLoan 
                     selectedLoanID={selectedLoanID}
-                    // setLoan={setLoan}
+                    setLoan={setLoan}
                     open={openApproveLoan}
                     setOpen={setOpenApproveLoan}
                 />
