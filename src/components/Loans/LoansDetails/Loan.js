@@ -94,7 +94,6 @@ const Loan = ({
                 <RejectLoan 
                     selectedLoanID={selectedLoanID}
                     setLoan={setLoan}
-                    open={openRejectLoan}
                     setOpen={setOpenRejectLoan}
                     loan={loan}
                 />
@@ -103,10 +102,7 @@ const Loan = ({
             {openDeleteLoan &&
                 <DeleteLoan 
                     selectedLoanID={selectedLoanID}
-                    setLoan={setLoan}
-                    open={openDeleteLoan}
                     setOpen={setOpenDeleteLoan}
-                    loan={loan}
                     setDetails={setDetails}
                     setLoans={setLoans}
                 />
@@ -131,7 +127,7 @@ const Loan = ({
 
             {loan.status == 'Open' && 
                 <div className="client-state-btns" style={{display:"flex", columnGap:"3px", marginTop:"1rem", justifyContent:"flex-end"}}>
-                    <button className="btn btn-olive" onClick={(e) => setOpenUndoDisbursement(curr => !curr)}>Undo Disburse</button>
+                    <button className="btn btn-olive" onClick={(e) => setOpenUndoDisbursement(curr => !curr)}>Undo Disbursement</button>
                 </div>
             }
             {loan.status == 'Approved' && 
@@ -153,7 +149,11 @@ const Loan = ({
                     <table className="table">
                         <thead>
                             <tr className="client__address__table">
-                                <th className="table-head-dark-color">Released</th>
+                                {
+                                    (loan.status == 'Rejected' || loan.status == 'Approved' || loan.status == 'Processing' ) ?
+                                        <th className="table-head-dark-color">Application Date</th>:
+                                        <th className="table-head-dark-color">Released</th>
+                                }   
                                 <th className="table-head-dark-color">First Repayment Date</th>
                                 <th className="table-head-dark-color">Maturity</th>
                                 <th className="table-head-dark-color">Principal</th>
@@ -167,7 +167,11 @@ const Loan = ({
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{loan.loan_added_on}</td>
+                                {
+                                    (loan.status == 'Rejected' || loan.status == 'Approved' || loan.status == 'Processing' ) ?
+                                        <td>{loan.application_date}</td>:
+                                        <td>{loan.loan_added_on}</td>
+                                }
                                 <td>{loan.first_repayment_date}</td>
                                 <td>{loan.maturity_date}</td>
                                 <td>{loan.principal}</td>
