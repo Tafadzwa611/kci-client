@@ -41,7 +41,6 @@ function AddClientForm({customForms, clientTypes}) {
           <div>2</div>
           <div>3</div>
           <div>4</div>
-          <div>5</div>
           {customForms.map(form => {
             if (form.client_type_id == values.client_type_id) {
               return (

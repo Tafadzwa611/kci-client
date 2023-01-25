@@ -6,7 +6,7 @@ const FormStepper = ({ children, errors, isSubmitting, customForms, client_type_
   const stepsArray = React.Children.toArray(children);
   const [step, setStep] = useState(0);
   const currentStep = stepsArray[step];
-  const nativeForms = ['New Client', 'Client Information', 'Client Address', 'Next of Kin', 'Client Files'];
+  const nativeForms = ['Client Information', 'Client Address', 'Next of Kin', 'Client Files'];
   const applicableForms = customForms.filter(form => form.client_type_id == client_type_id);
   const numberOfSteps = nativeForms.length + customForms.length;
 

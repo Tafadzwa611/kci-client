@@ -5,12 +5,12 @@ import { countryPhoneCodes } from './data';
 const ClientInformation = ({clientTypes}) => {
   return (
     <>
-      <CustomInput label='Forenames' name='first_name' type='text'/>
-      <CustomInput label='Lastnames' name='last_name' type='text'/>
       <CustomSelect label='Client Type' name='client_type_id'>
         <option value=''>------</option>
         {clientTypes.map(ct => <option key={ct.id} value={ct.id}>{ct.name}</option>)}
       </CustomSelect>
+      <CustomInput label='Forenames' name='first_name' type='text'/>
+      <CustomInput label='Lastnames' name='last_name' type='text'/>
       <CustomSelect label='Gender' name='gender'>
         <option value=''>------</option>
         <option value='MALE'>Male</option>
