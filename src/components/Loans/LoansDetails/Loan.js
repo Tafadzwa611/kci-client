@@ -165,7 +165,7 @@ const Loan = ({
                                 <th className="table-head-dark-color">Paid</th>
                                 <th className="table-head-dark-color">Balance</th>
                                 {loan.status == 'Arrears' && 
-                                    <th>Days in Arrears</th>
+                                    <th className="table-head-dark-color">Days in Arrears</th>
                                 }
                             </tr>
                         </thead>
@@ -194,39 +194,47 @@ const Loan = ({
                                                 <>
                                                     <del>
                                                         {
-                                                            parseFloat(parseFloat(loan.principal).toFixed(2)) + 
-                                                            parseFloat(parseFloat(loan.interest).toFixed(2)) +
-                                                            parseFloat(parseFloat(loan.penalty_reference).toFixed(2)) +
-                                                            parseFloat(parseFloat(loan.non_deductable_fees_reference).toFixed(2))
+                                                            (
+                                                                parseFloat(loan.principal) + 
+                                                                parseFloat(loan.interest) + 
+                                                                parseFloat(loan.penalty_reference) + 
+                                                                parseFloat(loan.non_deductable_fees_reference)
+                                                            ).toFixed(2)
                                                         }
                                                     </del>
                                                 </>
                                                 <br />
                                                 <>
                                                     {
-                                                        parseFloat(parseFloat(loan.principal).toFixed(2)) + 
-                                                        parseFloat(parseFloat(loan.interest_settlement).toFixed(2)) +
-                                                        parseFloat(parseFloat(loan.penalty_reference_settlement).toFixed(2)) +
-                                                        parseFloat(parseFloat(loan.non_deductable_fees_reference_settlement).toFixed(2))
+                                                        (
+                                                            parseFloat(loan.principal) + 
+                                                            parseFloat(loan.interest_settlement) +
+                                                            parseFloat(loan.penalty_reference_settlement) +
+                                                            parseFloat(loan.non_deductable_fees_reference_settlement)
+                                                        ).toFixed(2)
                                                     }
                                                 </>
                                             </>
                                             :
                                             <>
                                                 {
-                                                    parseFloat(parseFloat(loan.principal).toFixed(2)) + 
-                                                    parseFloat(parseFloat(loan.interest).toFixed(2)) +
-                                                    parseFloat(parseFloat(loan.penalty_reference).toFixed(2)) +
-                                                    parseFloat(parseFloat(loan.non_deductable_fees_reference).toFixed(2))
+                                                    (
+                                                        parseFloat(loan.principal) + 
+                                                        parseFloat(loan.interest) +
+                                                        parseFloat(loan.penalty_reference) +
+                                                        parseFloat(loan.non_deductable_fees_reference)
+                                                    ).toFixed(2)
                                                 }
                                             </>
                                         :
                                         <>
                                             {
-                                                parseFloat(parseFloat(loan.principal).toFixed(2)) + 
-                                                parseFloat(parseFloat(loan.interest).toFixed(2)) +
-                                                parseFloat(parseFloat(loan.penalty_reference).toFixed(2)) +
-                                                parseFloat(parseFloat(loan.non_deductable_fees_reference).toFixed(2))
+                                                (
+                                                    parseFloat(loan.principal) + 
+                                                    parseFloat(loan.interest) +
+                                                    parseFloat(loan.penalty_reference) +
+                                                    parseFloat(loan.non_deductable_fees_reference)
+                                                ).toFixed(2)
                                             }
                                         </>
                                     }
@@ -234,10 +242,12 @@ const Loan = ({
                                 <td>{loan.total_amount_paid}</td>
                                 <td>
                                     {
-                                        parseFloat(parseFloat(loan.principal_amount_due).toFixed(2)) + 
-                                        parseFloat(parseFloat(loan.interest_amount_due).toFixed(2)) +
-                                        parseFloat(parseFloat(loan.penalty).toFixed(2)) +
-                                        parseFloat(parseFloat(loan.non_deductable_fees).toFixed(2))
+                                        (
+                                            parseFloat(loan.principal_amount_due) + 
+                                            parseFloat(loan.interest_amount_due) +
+                                            parseFloat(loan.penalty) +
+                                            parseFloat(loan.non_deductable_fees)
+                                        ).toFixed(2)
                                     }
                                 </td>
                                 { loan.status == 'Arrears' &&
