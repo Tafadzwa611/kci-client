@@ -6,6 +6,7 @@ import DeleteLoan from './LoanStates/DeleteLoan/DeleteLoan';
 import UndoLoanDisbursement from './LoanStates/UndoLoanDisbursement/UndoLoanDisbursement';
 import UndoLoanApproval from './LoanStates/UndoLoanApproval/UndoLoanApproval';
 import MiniLoader  from '../../Loader/MiniLoader';
+import MoreLoanDetails from './MoreLoanDetails/MoreLoanDetails';
 import { makeRequest } from '../../../utils/utils';
 
 
@@ -24,6 +25,8 @@ const Loan = ({
     const [openUndoDisbursement, setOpenUndoDisbursement] = useState(false);
     const [openLoanApproval, setOpenLoanApproval] = useState(false);
     const [openUndoLoanApproval, setOpenUndoLoanApproval] = useState(false);
+    const [openMoreLoanDetails, setOpenMoreLoanDetails] = useState(false);
+
     
     const handleClose = () => {
         setDetails(false);
@@ -79,8 +82,19 @@ const Loan = ({
                     <button className={statusClasses[loan.status]}>{loan.status}</button>
                     <span><b>{loan.client}'s</b> Loan Details</span>
                 </div>
-                <button className="btn btn-default client__details" onClick={handleClose}>Close</button>
+                <div style={{display:"flex", columnGap:"3px", justifyContent:"flex-end"}}>
+                    <button className="btn btn-default client__details" onClick={(e) => setOpenMoreLoanDetails(curr => !curr)}>Expand</button>
+                    <button className="btn btn-default client__details" onClick={handleClose}>Close</button>
+                </div>
             </div>
+
+            {openMoreLoanDetails &&
+                <MoreLoanDetails 
+                    openMoreLoanDetails={openMoreLoanDetails}
+                    setOpenMoreLoanDetails={setOpenMoreLoanDetails}
+                    loan={loan}
+                />
+            }
 
             {openApproveLoan &&
                 <ApproveLoan 
