@@ -1,11 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import LoanInfo from './LoanInfo/LoanInfo';
+import LoanRepayments from './LoanRepayments/LoanRepayments';
 
 const MoreLoanDetails = (
     {  
         openMoreLoanDetails, 
         setOpenMoreLoanDetails,
         loan,
+        setOpenUndoDisbursement,
+        setOpenUndoLoanApproval,
+        setOpenApproveLoan,
+        setOpenRejectLoan,
+        setOpenDeleteLoan
     }) => {
 
     const [tab, setTab] = useState('loan-details');
@@ -28,12 +34,33 @@ const MoreLoanDetails = (
         <div className={openMoreLoanDetails ? 'modal fade show' : 'modal fade'} style={{display: openMoreLoanDetails ? 'block' : 'none'}}>
             <div className='modal-dialog modal-xl modal-dialog-scrollable' style={{maxWidth:"calc(100% - 3rem)", height:"calc(100% - 7rem)", top:"4rem"}}>
                 <div className='modal-content client-details-bg'>
-                    <div className='modal-header activities'>
+                    <div className='modal-header activities' style={{alignItems:"center"}}>
                         <div style={{display:"flex", alignItems:"center", columnGap:"1rem"}}>
                             <button className={statusClasses[loan.status]}>{loan.status}</button>
                             <span><b>{loan.client}'s</b> Loan Details</span>
                         </div>
-                        <button type='button' className='close' onClick={e => setOpenMoreLoanDetails(false)}><span aria-hidden='true'>&times;</span></button>
+                        <div style={{display:"flex", columnGap:"3px"}}>
+                            {loan.status == 'Open' && 
+                                <div className="client-state-btns" style={{display:"flex", columnGap:"3px", justifyContent:"flex-end"}}>
+                                    <button className="btn btn-olive" onClick={(e) => setOpenUndoDisbursement(curr => !curr)}>Undo Disbursement</button>
+                                </div>
+                            }
+                            {loan.status == 'Approved' && 
+                                <div className="client-state-btns" style={{display:"flex", columnGap:"3px", justifyContent:"flex-end"}}>
+                                    <button className="btn btn-olive" onClick={(e) => setOpenUndoLoanApproval(curr => !curr)}>Undo Approve</button>
+                                    <button className="btn btn-olive" >Disburse</button>
+                                </div>
+                            }
+                            {loan.status == 'Processing' && 
+                                <div className="client-state-btns" style={{display:"flex", columnGap:"3px", justifyContent:"flex-end"}}>
+                                    <button className="btn btn-olive" onClick={(e) => setOpenApproveLoan(curr => !curr)}>Approve</button>
+                                    <button className="btn btn-olive" onClick={(e) => setOpenRejectLoan(curr => !curr)}>Reject</button>
+                                    <button className="btn btn-olive" >Edit</button>
+                                    <button className="btn btn-olive" onClick={(e) => setOpenDeleteLoan(curr => !curr)}>Delete</button>
+                                </div>
+                            }
+                            <button type='button' className='close' onClick={e => setOpenMoreLoanDetails(false)}><span aria-hidden='true'>&times;</span></button>
+                        </div>
                     </div>
                     <div className='modal-body'>
                         <div>
@@ -153,86 +180,15 @@ const MoreLoanDetails = (
                                 </div>
                                 <div className="bloc-tabs">
                                     <button className={tab === "loan-details" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("loan-details")}> Loan Info </button>
+                                    <button className={tab === "loan-repayments" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("loan-repayments")}> Loan Repayments </button>
                                 </div>
                                 <div className='tab-content font-12 text-light' style={{marginTop:"3rem"}}>
                                     {{
                                         'loan-details': <LoanInfo loan={loan} />,
+                                        'loan-repayments': <LoanRepayments loan={loan} />,
                                     }[tab]}
                                 </div>
                             </div>
-                            {/* <div className="client-activity-container text-light">
-                                <div style={{position:"sticky", top:"0"}}>
-                                    <div className="lastest-activity-heading">
-                                        <span>Latest Activity</span>
-                                    </div>
-                                </div>
-                                <div style={{marginTop:"3rem", display:"flex", flexDirection:"column", rowGap:"1rem", padding:"0 1rem"}}>
-                                    <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
-                                        <span className="activity-title">Created Account</span>
-                                        <span className="activity-details">11 mins ago - Tafadzwa Kuno</span>
-                                    </div>
-                                    <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
-                                        <span className="activity-title">Created Account</span>
-                                        <span className="activity-details">11 mins ago - Tafadzwa Kuno</span>
-                                    </div>
-                                    <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
-                                        <span className="activity-title">Created Account</span>
-                                        <span className="activity-details">11 mins ago - Tafadzwa Kuno</span>
-                                    </div>
-                                    <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
-                                        <span className="activity-title">Created Account</span>
-                                        <span className="activity-details">11 mins ago - Tafadzwa Kuno</span>
-                                    </div>
-                                    <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
-                                        <span className="activity-title">Created Account</span>
-                                        <span className="activity-details">11 mins ago - Tafadzwa Kuno</span>
-                                    </div>
-                                    <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
-                                        <span className="activity-title">Created Account</span>
-                                        <span className="activity-details">11 mins ago - Tafadzwa Kuno</span>
-                                    </div>
-                                    <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
-                                        <span className="activity-title">Created Account</span>
-                                        <span className="activity-details">11 mins ago - Tafadzwa Kuno</span>
-                                    </div>
-                                    <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
-                                        <span className="activity-title">Created Account</span>
-                                        <span className="activity-details">11 mins ago - Tafadzwa Kuno</span>
-                                    </div>
-                                    <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
-                                        <span className="activity-title">Created Account</span>
-                                        <span className="activity-details">11 mins ago - Tafadzwa Kuno</span>
-                                    </div>
-                                    <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
-                                        <span className="activity-title">Created Account</span>
-                                        <span className="activity-details">11 mins ago - Tafadzwa Kuno</span>
-                                    </div>
-                                    <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
-                                        <span className="activity-title">Created Account</span>
-                                        <span className="activity-details">11 mins ago - Tafadzwa Kuno</span>
-                                    </div>
-                                    <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
-                                        <span className="activity-title">Created Account</span>
-                                        <span className="activity-details">11 mins ago - Tafadzwa Kuno</span>
-                                    </div>
-                                    <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
-                                        <span className="activity-title">Created Account</span>
-                                        <span className="activity-details">11 mins ago - Tafadzwa Kuno</span>
-                                    </div>
-                                    <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
-                                        <span className="activity-title">Created Account</span>
-                                        <span className="activity-details">11 mins ago - Tafadzwa Kuno</span>
-                                    </div>
-                                    <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
-                                        <span className="activity-title">Created Account</span>
-                                        <span className="activity-details">11 mins ago - Tafadzwa Kuno</span>
-                                    </div>
-                                    <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
-                                        <span className="activity-title">Created Account</span>
-                                        <span className="activity-details">11 mins ago - Tafadzwa Kuno</span>
-                                    </div>
-                                </div>
-                            </div> */}
                         </div>
                     </div>
                     <div className='modal-footer justify-content-between activities'>

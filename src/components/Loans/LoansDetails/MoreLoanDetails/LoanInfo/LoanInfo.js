@@ -4,7 +4,6 @@ const LoanInfo = (
   {
     loan,
   }) => {
-    console.log(loan)
     return (
         <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", marginTop:"1.5rem"}}>
 

@@ -93,6 +93,11 @@ const Loan = ({
                     openMoreLoanDetails={openMoreLoanDetails}
                     setOpenMoreLoanDetails={setOpenMoreLoanDetails}
                     loan={loan}
+                    setOpenUndoDisbursement={setOpenUndoDisbursement}
+                    setOpenUndoLoanApproval={setOpenUndoLoanApproval}
+                    setOpenApproveLoan={setOpenApproveLoan}
+                    setOpenRejectLoan={setOpenRejectLoan}
+                    setOpenDeleteLoan={setOpenDeleteLoan}
                 />
             }
 
