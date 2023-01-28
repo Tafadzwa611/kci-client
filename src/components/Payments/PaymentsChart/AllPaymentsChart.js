@@ -47,7 +47,7 @@ function PrincipalPaymentsChart({branches, currencies}) {
 
   async function fetchData() {
     try {
-      let url = `/loansapi/all_payments_chart/?currency_id=${currencyId}&page_num=${pageNum.current}&components=Principal&components=Interest&components=Penalties&components=Fees`;
+      let url = `/loansapi/all_payments_chart/?currency_id=${currencyId}&page_num=${pageNum.current}&component=All`;
       selectedBranchesIds.forEach(id => (url += `&branch_ids=${id}`));
       const response = await makeRequest.get(url, {timeout: 8000});
       if (response.ok) {

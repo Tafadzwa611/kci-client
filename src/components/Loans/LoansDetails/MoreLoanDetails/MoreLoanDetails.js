@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import LoanInfo from './LoanInfo/LoanInfo';
 import LoanRepayments from './LoanRepayments/LoanRepayments';
+import LoanTerms from './LoanTerms/LoanTerms';
+import LoanSchedule from './LoanSchedule/LoanSchedule';
+import LoanPenalties from './LoanPenalties/LoanPenalties';
+import LoanStatement from './LoanStatement/LoanStatement';
 
 const MoreLoanDetails = (
     {  
@@ -181,11 +185,19 @@ const MoreLoanDetails = (
                                 <div className="bloc-tabs">
                                     <button className={tab === "loan-details" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("loan-details")}> Loan Info </button>
                                     <button className={tab === "loan-repayments" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("loan-repayments")}> Loan Repayments </button>
+                                    <button className={tab === "loan-terms" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("loan-terms")}> Loan Terms </button>
+                                    <button className={tab === "loan-schedule" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("loan-schedule")}> Loan Schedule </button>
+                                    <button className={tab === "loan-penalties" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("loan-penalties")}> Loan Penalties </button>
+                                    <button className={tab === "loan-statement" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("loan-statement")}> Loan Statement </button>
                                 </div>
                                 <div className='tab-content font-12 text-light' style={{marginTop:"3rem"}}>
                                     {{
                                         'loan-details': <LoanInfo loan={loan} />,
                                         'loan-repayments': <LoanRepayments loan={loan} />,
+                                        'loan-terms': <LoanTerms loan={loan} />,
+                                        'loan-schedule': <LoanSchedule loan={loan} />,
+                                        'loan-penalties': <LoanPenalties loan={loan} />,
+                                        'loan-statement': <LoanStatement loan={loan} />,
                                     }[tab]}
                                 </div>
                             </div>
