@@ -85,7 +85,7 @@ const Filter = (props) => {
                                     <div className="reports-input-group search_input" style={{margin:"10px 0 0", border:"none"}}>
                                         <input 
                                             className="report-custom-form-control normal-input" 
-                                            placeholder="Enter Expense Name..."
+                                            placeholder="Enter Other Income Name..."
                                             autoComplete='off'
                                             type="text"
                                             value={othInName}

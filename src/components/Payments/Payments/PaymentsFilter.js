@@ -81,7 +81,7 @@ const Filter = (props) => {
                                 <div className="reports-input-group" style={{margin:"10px 0 0"}}>
                                     <input 
                                         className="reports-form-control" 
-                                        placeholder="Enter Expense Name..."
+                                        placeholder="Enter Client Name..."
                                         autoComplete='off'
                                         type="text"
                                         value={clientName}
