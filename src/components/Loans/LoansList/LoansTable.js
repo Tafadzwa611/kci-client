@@ -34,15 +34,15 @@ function LoansTable(
 
   const getFileName = () => {
     if (minDate != '' && maxDate != '') {
-      return `Loans List  for from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`
+      return `Loans List  for ${loans[0].tenant} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`
     }
     if (minDate == '' && maxDate != '') {
-      return `Loans List  for upto ${getStrDate(maxDate)}`
+      return `Loans List  for ${loans[0].tenant} upto ${getStrDate(maxDate)}`
     }
     if (minDate != '' && maxDate == '') {
-      return `Loans List  for from ${getStrDate(minDate)}`
+      return `Loans List  for ${loans[0].tenant} from ${getStrDate(minDate)}`
     }
-    return `Loans List  for all time.`
+    return `Loans List  for ${loans[0].tenant} all time.`
   }
   
   const handleClick = (e) => {

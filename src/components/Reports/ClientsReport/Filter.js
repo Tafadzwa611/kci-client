@@ -5,7 +5,7 @@ import { makeRequest } from '../../../utils/utils';
 const Filter = (props) => {
     const [optionSelected, setOptionSelected] = useState([]);
     const [branches, setBranches] = useState([]);
-    const {currencies, currencyId, setCurrencyId, minDate, maxDate, setMinDate, setMaxDate, onSubmit, disableFetch, searchClient, searchString, updateSelectedBranchesId} = props;
+    const {currencies, currencyId, setCurrencyId, minDate, maxDate, setMinDate, setMaxDate, onSubmit, disableFetch, searchClient, searchString, updateSelectedBranchesId, setSelectedBranches} = props;
     const fetchStyles = disableFetch ? {pointerEvents: 'none', opacity: '0.7'} : {};
   
     useEffect(() => {
@@ -15,6 +15,7 @@ const Filter = (props) => {
     const handleMultiSelect = selected => {
         setOptionSelected(selected);
         updateSelectedBranchesId(selected.map(branch => branch.id));
+        setSelectedBranches(selected);
     }
   
     const changeCurrency = (evt) => {

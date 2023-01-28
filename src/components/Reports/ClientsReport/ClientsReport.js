@@ -17,6 +17,7 @@ const ClientsReport = () => {
     const [loadingMore, setLoadingMore] = useState(false);
     const [reportLoaded, setReportLoaded] = useState(false);
     const [selectedBranchesIds, setSelectedBranchesIds] = useState([]);
+    const [selectedBranches, setSelectedBranches] = useState([]);
     const [currencies, setCurrencies] = useState(null);
     const [currencyId, setCurrencyId] = useState(null);
     const [currencyIso, setCurrencyIso] = useState(null);
@@ -149,6 +150,7 @@ const ClientsReport = () => {
                     setMinDate={setMinDate}
                     searchClient={searchClient}
                     updateSelectedBranchesId={setSelectedBranchesIds}
+                    setSelectedBranches={setSelectedBranches}
                 />
                 <Header 
                     changeOrder={changeOrder} 
@@ -162,6 +164,9 @@ const ClientsReport = () => {
                     <Table 
                         clients={report} 
                         currencyIso={currencyIso}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                        selectedBranches={selectedBranches}
                     />
                     <Footer 
                         nextPageNumber={pageNum} 

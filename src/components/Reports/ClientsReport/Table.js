@@ -1,7 +1,26 @@
 import React, {Fragment} from 'react';
 import { FirstRow, SecondRow, ThirdRow, FourthRow } from './TableRows';
 
-const Table = ({ clients, currencyIso }) => {
+const Table = ({ clients, currencyIso, minDate, maxDate, selectedBranches }) => {
+    const getStrDate = (date) => {
+        const mydate = new Date(date);
+        const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
+        return `${month} ${mydate.getDate()}, ${mydate.getFullYear()}`;
+    }
+    
+    const getFileName = () => {
+        if (minDate != '' && maxDate != '') {
+            return `${currencyIso} Clients report for ${clients[0].tenant} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`
+        }
+        if (minDate == '' && maxDate != '') {
+            return `${currencyIso} Clients report for ${clients[0].tenant} upto ${getStrDate(maxDate)}`
+        }
+        if (minDate != '' && maxDate == '') {
+            return `${currencyIso} Clients report for ${clients[0].tenant} from ${getStrDate(minDate)}`
+        }
+        return `${currencyIso} Clients report for ${clients[0].tenant} all time.`
+    }
+
     return (
         <div className="table-container" style={{padding:"0", paddingTop:"1.5rem", border:"none"}}>
             <div className="table-responsive font-12" style={{maxHeight:"600px"}}>
@@ -20,16 +39,33 @@ const Table = ({ clients, currencyIso }) => {
                         </tr>
                     </thead>
                     <tbody>
-                    {clients.map(client => {
-                        return (
-                        <Fragment key={client.id}>
-                            <FirstRow client={client}/>
-                            <SecondRow client={client} currencyIso={currencyIso}/>
-                            <ThirdRow client={client} currencyIso={currencyIso}/>
-                            <FourthRow client={client} currencyIso={currencyIso}/>
-                        </Fragment>
-                        )
-                    })}
+                        <tr>
+                            <td className='text-bold text-left' colSpan={9}>Clients Report</td>
+                        </tr>
+                        <tr>
+                            <td className='text-bold text-left' colSpan={9}>{getFileName()}</td>
+                        </tr>
+                        <tr>
+                            <td className='text-bold text-left' colSpan={9}>
+                                Branches: {selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className='text-bold text-left' colSpan={9}>Currency: {currencyIso}</td>
+                        </tr>
+                        <tr>
+                            <td className='text-bold text-left' colSpan={9}>{`Extracted On: ${new Date()}`}</td>
+                        </tr>
+                        {clients.map(client => {
+                            return (
+                            <Fragment key={client.id}>
+                                <FirstRow client={client}/>
+                                <SecondRow client={client} currencyIso={currencyIso}/>
+                                <ThirdRow client={client} currencyIso={currencyIso}/>
+                                <FourthRow client={client} currencyIso={currencyIso}/>
+                            </Fragment>
+                            )
+                        })}
                     </tbody>
                 </table>
             </div>
