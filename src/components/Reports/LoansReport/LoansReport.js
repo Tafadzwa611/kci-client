@@ -21,6 +21,7 @@ const LoansReport = () => {
     const [currencies, setCurrencies] = useAsyncReference(null);
     const [currencyId, setCurrencyId] = useAsyncReference(null);
     const [currencyIso, setCurrencyIso] = useAsyncReference(null);
+    const [selectedBranches, setSelectedBranches] = useState([]);
     const [msg, setMsg] = useState('Select date range and at least one branch, then click search to view report.');
     const pageNum = useRef(1);
     const disableFetch = minDate.current === '' || maxDate.current === '' || selectedBranchesIds.current.length === 0;
@@ -130,6 +131,7 @@ const LoansReport = () => {
                 setMinDate={setMinDate}
                 searchClient={searchClient}
                 updateSelectedBranchesId={setSelectedBranchesIds}
+                setSelectedBranches={setSelectedBranches}
             />
             <LoansReportHeader 
                 changeOrder={changeOrder} 
@@ -146,6 +148,9 @@ const LoansReport = () => {
                         pageNum={pageNum} 
                         loadMore={loadMore} 
                         loadingMore={loadingMore} 
+                        minDate={minDate}
+                        maxDate={maxDate}
+                        selectedBranches={selectedBranches}
                     />
                     <LoansReportFooter 
                         nextPageNumber={pageNum} 
