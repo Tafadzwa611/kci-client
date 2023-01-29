@@ -2,6 +2,7 @@ import React, {useState, useRef, useCallback, useEffect} from 'react';
 import LoansReportHeader from './LoansReportHeader';
 import LoansReportTable from './LoansReportTable';
 import LoansReportFooter from './LoansReportFooter';
+import Summary from './Summary';
 import Filter from './Filter';
 import { makeRequest } from '../../../utils/utils';
 import NoData from '../ClientsReport/NoData';
@@ -11,6 +12,7 @@ import MiniLoader from '../../Loader/MiniLoader';
 const LoansReport = () => {
     const [selectedBranchesIds, setSelectedBranchesIds] = useAsyncReference([]);
     const [loans, setLoans] = useState([]);
+    const [report, setReport] = useState(null);
     const [loaded, setLoaded] = useState(false);
     const [loanCount, setLoanCount] = useState(0);
     const [order, setOrder] = useAsyncReference('-id');
@@ -36,6 +38,7 @@ const LoansReport = () => {
         if (response.ok) {
             const data = await response.json();
             pageNum.current = data.next_page_num;
+            setReport(data);
             setLoadingMore(false);
             setLoaded(true);
             setLoanCount(data.count);
@@ -133,6 +136,20 @@ const LoansReport = () => {
                 updateSelectedBranchesId={setSelectedBranchesIds}
                 setSelectedBranches={setSelectedBranches}
             />
+
+            {report != null &&
+                <div>
+                    <Summary 
+                        report={report} 
+                        currencyIso={currencyIso.current} 
+                        minDate={minDate.current} 
+                        maxDate={maxDate.current} 
+                        selectedBranches={selectedBranches}
+                        loans={loans}
+                    />
+                </div>
+            }
+
             <LoansReportHeader 
                 changeOrder={changeOrder} 
                 order={order.current} 
@@ -148,8 +165,8 @@ const LoansReport = () => {
                         pageNum={pageNum} 
                         loadMore={loadMore} 
                         loadingMore={loadingMore} 
-                        minDate={minDate}
-                        maxDate={maxDate}
+                        minDate={minDate.current}
+                        maxDate={maxDate.current}
                         selectedBranches={selectedBranches}
                     />
                     <LoansReportFooter 

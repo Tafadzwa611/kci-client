@@ -2,16 +2,21 @@ import React, {Fragment} from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 const LoansReportTable = ({loans, currencyIso, selectedBranches, minDate, maxDate}) => {
+    const getStrDate = (date) => {
+        const mydate = new Date(date);
+        const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
+        return `${month} ${mydate.getDate()}, ${mydate.getFullYear()}`;
+    }
 
     const getFileName = () => {
         if (minDate != '' && maxDate != '') {
-            return `${currencyIso} loans report for ${loans[0].tenant} from ${minDate} to ${maxDate}`
+            return `${currencyIso} loans report for ${loans[0].tenant} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`
         }
         if (minDate == '' && maxDate != '') {
-            return `${currencyIso} loans report for ${loans[0].tenant} upto ${maxDate}`
+            return `${currencyIso} loans report for ${loans[0].tenant} upto ${getStrDate(maxDate)}`
         }
         if (minDate != '' && maxDate == '') {
-            return `${currencyIso} loans report for ${loans[0].tenant} from ${minDate}`
+            return `${currencyIso} loans report for ${loans[0].tenant} from ${getStrDate(minDate)}`
         }
         return `${currencyIso} loans report for ${loans[0].tenant} all time.`
     }
@@ -23,12 +28,12 @@ const LoansReportTable = ({loans, currencyIso, selectedBranches, minDate, maxDat
                     id='test-table-xls-button'
                     className='download-table-xls-button btn btn-default'
                     table='loans-report'
-                    filename={`${currencyIso} Loans Report for ${loans[0].tenant} from ${minDate} to ${maxDate}`}
+                    filename={`${currencyIso} Loans Report for ${loans[0].tenant} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`}
                     sheet='tablexls'
                     buttonText='Download as XLS'
                 />
             </div>
-            <div className="table-container" style={{padding:"0", paddingTop:"1.5rem", border:"none"}}>
+            <div className="table-container" style={{padding:"0", border:"none"}}>
                 <div className="table-responsive font-12" style={{maxHeight:"600px"}}>
                     <table className="table" style={{width:"100%"}} id="loans-report">
                         <thead className="clients-report-table">
