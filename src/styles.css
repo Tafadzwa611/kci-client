@@ -3254,10 +3254,19 @@ input[type=number] {
 
 /* ===================================================================== */
 
-/* .css-1s2u09g-control {
-  max-height:  100px;
+.react-virtualized-table:first-child {
+  height: 700px;
 }
 
-.css-g1d714-ValueContainer {
-  z-index: ;
+.ReactVirtualized__Grid__innerScrollContainer > div {
+  border-left: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 4px;
+  padding-right: 0px;
+}
+
+/* .ReactVirtualized__Grid__innerScrollContainer:first-child {
+  background-color: red;
 } */

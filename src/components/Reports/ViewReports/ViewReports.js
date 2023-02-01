@@ -8,7 +8,7 @@ import LoanProductReport from '../LoanProductReport/LoanProductReport';
 import FeesReport from '../FeesReport/FeesReport';
 import LoanOfficerReport from '../LoanOfficerReport/LoanOfficerReport';
 import DailyReport from '../DailyReport/DailyReport';
-// import AgingReport from '../AgingReport/AgingReport';
+import PaymentsReport from '../PaymentsReport/PaymentsReport';
 import PortfolioAtRiskReport from '../PortfolioAtRiskReport/PortfolioAtRiskReport'
 
 const ViewReports = () => {
@@ -27,6 +27,7 @@ const ViewReports = () => {
                     <div className="bloc-tabs">
                             <button className={tab === "clientsreport" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("clientsreport")}> Clients Report </button>
                             <button className={tab === "loansreport" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("loansreport")}> Loans Report </button>
+                            <button className={tab === "paymentsreport" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("paymentsreport")}> Payments Report </button>
                             <button className={tab === "monthlyreport" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("monthlyreport")}> Monthly Report </button>
                             <button className={tab === "topbrrwers" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("topbrrwers")}> Top Borrowers </button>
                             <button className={tab === "disbursmntreport" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("disbursmntreport")}> Disbursement Report </button>
@@ -41,6 +42,7 @@ const ViewReports = () => {
                         {{
                             'clientsreport': <ClientsReport />,
                             'loansreport': <LoansReport />,
+                            'paymentsreport': <PaymentsReport />,
                             'monthlyreport': <MonthlyReport />,
                             'topbrrwers': <TopBorrowers />,
                             'disbursmntreport': <DisbursementReport />,
