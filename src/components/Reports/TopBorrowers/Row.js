@@ -14,12 +14,11 @@ const statusClasses = {
     'Written-Off': 'badge badge-dark',
 };
 
-function Row({client, idx, currencyIso}) {
-  const [showLoans, setShowLoans] = useState(false);
+function Row({client, idx, currencyIso, showLoans}) {
 
   return (
     <>
-      <tr key={client.id} onClick={e => setShowLoans(!showLoans)} style={{cursor: 'grab'}} className="journal-details">
+      <tr key={client.id} className="journal-details">
         <td style={{textAlign: 'left'}}><p style={{fontWeight: "bold"}}>{idx+1}</p></td>
         <td style={{textAlign: 'left'}}>{client.fullname}</td>
         <td style={{textAlign: 'right'}}>{client.branch}</td>

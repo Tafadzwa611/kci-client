@@ -15,7 +15,8 @@ const Filter = (props) => {
         setMaxDate,
         onSubmit,
         disableFetch,
-        updateSelectedBranchesId
+        updateSelectedBranchesId,
+        setSelectedBranches
     } = props;
     const fetchStyles = disableFetch ? {pointerEvents: 'none', opacity: '0.7'} : {};
   
@@ -25,6 +26,7 @@ const Filter = (props) => {
   
     const handleMultiSelect = selected => {
         setOptionSelected(selected);
+        setSelectedBranches(selected);
         updateSelectedBranchesId(selected.map(branch => branch.id));
     }
   

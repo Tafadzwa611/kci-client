@@ -3,7 +3,7 @@ import React from 'react';
 const Footer = ({ nextPageNumber, loadMoreAccounts, loadingMore }) => {
     return (
         <div className="footer-container font-12 text-light">
-            {nextPageNumber.current === null ?
+            {nextPageNumber === null ?
             <div className="text" style={{border:"none"}}>
                 <i className="uil uil-exclamation-triangle"></i> 
                 <span>All borrowers have been loaded.</span>

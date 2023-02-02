@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Header from './Header';
+// import Header from './Header';
 import Table from './Table';
 import Footer from './Footer';
 import Filter from './Filter';
@@ -20,6 +20,7 @@ const TopBorrowers = () => {
     const [currencies, setCurrencies] = useState(null);
     const [currencyId, setCurrencyId] = useState(null);
     const [currencyIso, setCurrencyIso] = useState(null);
+    const [selectedBranches, setSelectedBranches] = useState([]);
     const [msg, setMsg] = useState('Select date range and at least one branch, then click search to view the report.');
   
     useEffect(() => {
@@ -128,12 +129,22 @@ const TopBorrowers = () => {
                 disableFetch={selectedBranchesIds.length === 0}
                 onSubmit={onSubmit}
                 updateSelectedBranchesId={setSelectedBranchesIds}
+                setSelectedBranches={setSelectedBranches}
             />
-            <Header changeOrder={changeOrder} order={order} disableSelect={report.length === 0} />
+            {/* <Header changeOrder={changeOrder} order={order} disableSelect={report.length === 0} /> */}
             {report.length > 0 ?
                 <>
-                    <Table report={report} currencyIso={currencyIso} />
-                    <Footer nextPageNumber={pageNum} loadMoreAccounts={loadMore} loadingMore={loading} />
+                    <Table 
+                        report={report} 
+                        currencyIso={currencyIso} 
+                        minDate={minDate} 
+                        maxDate={maxDate} 
+                        selectedBranches={selectedBranches}
+                        changeOrder={changeOrder}
+                        order={order}
+                        disableSelect={report.length === 0}
+                    />
+                    <Footer nextPageNumber={pageNum.current} loadMoreAccounts={loadMore} loadingMore={loading} />
                 </>:
                 <NoData msg={msg} />
             }
