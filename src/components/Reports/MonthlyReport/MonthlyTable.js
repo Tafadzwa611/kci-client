@@ -1,42 +1,66 @@
 import React, { Fragment } from 'react';
-import { FirstRow, SecondRow, ThirdRow } from './TableRows';
+import { SecondRow } from './TableRows';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-const MonthlyTable = ({report, currencyIso}) => {
-    return (
-        <div className="table-container" style={{padding:"0", paddingTop:"1.5rem", border:"none"}}>
-            <div className="table-responsive font-12" style={{maxHeight:"600px"}}>
-                <table className="table" style={{width:"100%"}}>
-                    <thead className="clients-report-table">
-                        <tr className="journal-details fees__report_thead">
-                            <th className="text-right">Month</th>
-                            <th className="text-right">New_Loans</th>
-                            <th className="text-right">Active_Clients</th>
-                            <th className="text-right">Number_of_Repayments</th>
-                            <th className="text-right">Total_Principal_Released</th>
-                            <th className="text-right">Current_Principal_At_Risk</th>
-                            <th></th>
-                            <th className="text-right">Principal_Disbursed</th>
-                            <th className="text-right">Interest_Expected</th>
-                            <th className="text-right">Fees_Expected</th>
-                            <th className="text-right">Penalty</th>
-                            <th className="text-right">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {report.map((monthlyReport, index) => {
-                        return (
-                            <Fragment key={index}>
-                                <FirstRow monthlyReport={monthlyReport}/>
-                                <SecondRow monthlyReport={monthlyReport} currencyIso={currencyIso}/>
-                                <ThirdRow monthlyReport={monthlyReport} currencyIso={currencyIso}/>
-                            </Fragment>
-                        )
-                    })}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    );
+
+const MonthlyTable = ({report, currencyIso, selectedBranches}) => {
+  return (
+    <>
+      <div style={{display:"flex", justifyContent:"flex-end", margin:"1rem 0"}}>
+        <ReactHTMLTableToExcel
+          id='test-table-xls-button'
+          className='btn btn-default'
+          table='monthly-report'
+          filename={`${currencyIso} Monthly Report for Theocash extracted on ${new Date()}`}
+          sheet='tablexls'
+          buttonText='Download as XLS'
+        />
+      </div>
+      <div style={{maxHeight: '600px', overflowX:"auto"}}>
+        <table className='table' id='monthly-report' width='100%'>
+          <thead>
+            <tr className="journal-details fees__report_thead" style={{position:"sticky", top:"0"}}>
+              <th className='text-right'>Month</th>
+              <th className='text-right'>Loan_Count</th>
+              <th className='text-right'>Principal_Disbursed</th>
+              <th className='text-right'>Total_Interest_Expected</th>
+              <th className='text-right'>Payment_Count</th>
+              <th className='text-right'>Total_Payments</th>
+              <th className='text-right'>Principal_Paid</th>
+              <th className='text-right'>Interest_Paid</th>
+              <th className='text-right'>Penalty_Paid</th>
+              <th className='text-right'>Overpayment</th>
+              <th className='text-right'>Accrued_Penalty_Count</th>
+              <th className='text-right'>Accrued_Penalty_Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className='text-bold text-left' colSpan={12}>Loans Report</td>
+            </tr>
+            <tr>
+              <td colSpan={12} title={`${currencyIso} Monthly Report for Theocash extracted on ${new Date()}`} className='text-bold text-left' style={{whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: '5px'}}>
+                {`${currencyIso} Monthly Report for Theocash extracted on ${new Date()}`}
+              </td>
+            </tr>
+            <tr>
+              <td colSpan={12} title={selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)} className='text-bold text-left' style={{whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: '5px'}}>
+                Branches: {selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)}
+              </td>
+            </tr>
+            <tr>
+              <td className='text-bold text-left' colSpan={12}>Currency: {currencyIso}</td>
+            </tr>
+            {report.map((monthlyReport, index) => {
+              return (
+                <SecondRow key={index} monthlyReport={monthlyReport}/>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+    </>
+  )
 }
 
 export default MonthlyTable;

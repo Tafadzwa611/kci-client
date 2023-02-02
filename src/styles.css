@@ -3267,6 +3267,14 @@ input[type=number] {
   padding-right: 0px;
 }
 
-/* .ReactVirtualized__Grid__innerScrollContainer:first-child {
-  background-color: red;
+/* .ReactVirtualized__Grid__innerScrollContainer:first-of-type {
+  background: red;
+} */
+
+/* .react-virtualized-table > .ReactVirtualized__Grid__innerScrollContainer ~ .ReactVirtualized__Grid__innerScrollContainer {
+  background: none;
+} */
+
+/* .ReactVirtualized__Grid__innerScrollContainer:not(.ReactVirtualized__Grid__innerScrollContainer ~ .ReactVirtualized__Grid__innerScrollContainer) {
+  background: red;
 } */

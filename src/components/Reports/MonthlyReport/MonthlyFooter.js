@@ -5,7 +5,7 @@ const MonthlyFooter = () => {
         <div className="footer-container font-12">
 
             <div className="text" style={{border:"none"}}>
-                <i class="uil uil-exclamation-triangle"></i> 
+                <i className="uil uil-exclamation-triangle"></i> 
                 <span>All data has been loaded.</span>
             </div>
             
