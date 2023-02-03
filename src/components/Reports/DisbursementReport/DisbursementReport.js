@@ -7,7 +7,7 @@ import NoData from '../ClientsReport/NoData';
 import { makeRequest } from '../../../utils/utils';
 import MiniLoader from '../../Loader/MiniLoader';
 
-const DisbursementReport = () => {
+const DisbursementReport = ({loggedInUser}) => {
     const [report, setReport] = useState([]);
     const [order, setOrder] = useState('-id');
     const [minDate, setMinDate] = useState('');
@@ -20,6 +20,7 @@ const DisbursementReport = () => {
     const [currencyId, setCurrencyId] = useState(null);
     const [currencyIso, setCurrencyIso] = useState(null);
     const [msg, setMsg] = useState('Select date range and at least one branch, then click search to view report.');
+    const [selectedBranches, setSelectedBranches] = useState([]);
     const isFirstRun = useRef(true);
     const pageNum = useRef(1);
   
@@ -133,17 +134,23 @@ const DisbursementReport = () => {
                 setMaxDate={setMaxDate}
                 setMinDate={setMinDate}
                 updateSelectedBranchesId={setSelectedBranchesIds}
-            />
-            <Header 
-                changeOrder={changeOrder} 
-                order={order} 
-                disableSelect={report.length === 0} 
-                loanCount={loanCount} 
-                numberOfLoansLoaded={report.length} 
+                setSelectedBranches={setSelectedBranches}
             />
             {reportLoaded && report.length > 0 ?
             <>
-                <Table report={report} currencyIso={currencyIso} />
+                <Table 
+                    report={report} 
+                    currencyIso={currencyIso} 
+                    selectedBranches={selectedBranches} 
+                    minDate={minDate} 
+                    maxDate={maxDate} 
+                    loggedInUser={loggedInUser}
+                    changeOrder={changeOrder} 
+                    order={order} 
+                    disableSelect={report.length === 0} 
+                    loanCount={loanCount} 
+                    numberOfLoansLoaded={report.length} 
+                />
                 <Footer nextPageNumber={pageNum} loadMoreLoans={loadMore} loadingMore={loadingMore} />
             </> :
             <NoData msg={msg} />}
