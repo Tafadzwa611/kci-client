@@ -3,6 +3,7 @@ import { HashRouter as Router } from 'react-router-dom';
 import { Fetcher } from '../common';
 import Navbar from './NavBar';
 import Routes from './Routes';
+import {LoggedInUserProvider} from '../contexts/LoggedInUserContext';
  
 export const ThemeContext = createContext(null);
 function App() {
@@ -27,16 +28,18 @@ function App() {
         {({data}) => {
           return (
             <ThemeContext.Provider value={{theme, toggleTheme}}>
-              <Router>
-                <div id={theme}>
-                  <section className='home-section'>
-                    <Navbar theme={theme} loggedInUser={data[0]} toggleTheme={toggleTheme} />
-                    <div className='app'>
-                      <Routes />
-                    </div>
-                  </section>
-                </div>
-              </Router>
+              <LoggedInUserProvider>
+                <Router>
+                  <div id={theme}>
+                    <section className='home-section'>
+                      <Navbar theme={theme} loggedInUser={data[0]} toggleTheme={toggleTheme} />
+                      <div className='app'>
+                        <Routes loggedInUser={data[0]}/>
+                      </div>
+                    </section>
+                  </div>
+                </Router>
+              </LoggedInUserProvider>
             </ThemeContext.Provider>
           )
         }}

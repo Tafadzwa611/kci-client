@@ -7,7 +7,7 @@ import NoData from '../ClientsReport/NoData';
 import { makeRequest } from '../../../utils/utils';
 import MiniLoader from '../../Loader/MiniLoader';
 
-const TopBorrowers = () => {
+const TopBorrowers = ({loggedInUser}) => {
     const [month, setMonth] = useState('');
     const [minDate, setMinDate] = useState('');
     const [maxDate, setMaxDate] = useState('');
@@ -143,6 +143,7 @@ const TopBorrowers = () => {
                         changeOrder={changeOrder}
                         order={order}
                         disableSelect={report.length === 0}
+                        loggedInUser={loggedInUser}
                     />
                     <Footer nextPageNumber={pageNum.current} loadMoreAccounts={loadMore} loadingMore={loading} />
                 </>:

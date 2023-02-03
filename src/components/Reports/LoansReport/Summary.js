@@ -3,7 +3,7 @@ import React from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 
-function Summary({report, currencyIso, minDate, maxDate, selectedBranches, loans}) {
+function Summary({report, currencyIso, minDate, maxDate, selectedBranches, loggedInUser}) {
   const getStrDate = (date) => {
     const mydate = new Date(date);
     const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
@@ -17,7 +17,7 @@ function Summary({report, currencyIso, minDate, maxDate, selectedBranches, loans
           id='test-table-xls-button'
           className='download-table-xls-button btn btn-default'
           table='summary'
-          filename={`${currencyIso} Loan report summary for ${loans[0].tenant} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`}
+          filename={`${currencyIso} Loan report summary for ${loggedInUser.company_name} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`}
           sheet='tablexls'
           buttonText='Download as XLS'
         />
@@ -36,7 +36,7 @@ function Summary({report, currencyIso, minDate, maxDate, selectedBranches, loans
           </tr>
           <tr>
             <td>
-              {`${currencyIso} Loan report summary for ${loans[0].tenant} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`}
+              {`${currencyIso} Loan report summary for ${loggedInUser.company_name} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`}
             </td>
             <td></td>
           </tr>

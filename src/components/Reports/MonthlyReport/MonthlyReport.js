@@ -7,7 +7,7 @@ import MiniLoader from '../../Loader/MiniLoader';
 import MonthlyFooter from './MonthlyFooter';
 
 
-function MonthlyReport() {
+function MonthlyReport({loggedInUser}) {
   const [month, setMonth] = useState('');
   const [selectedBranchesIds, setSelectedBranchesIds] = useState([]);
   const [order, setOrder] = useState('-id');
@@ -103,7 +103,7 @@ function MonthlyReport() {
         {
           report.length > 0 ?
           <>
-            <MonthlyTable report={report} currencyIso={currencyIso} selectedBranches={selectedBranches}/>
+            <MonthlyTable report={report} currencyIso={currencyIso} selectedBranches={selectedBranches} loggedInUser={loggedInUser}/>
             <MonthlyFooter />
           </> :
           <NoData msg={msg} />

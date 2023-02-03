@@ -3,7 +3,7 @@ import Row from './Row';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Header from './Header';
 
-const Table = ({report, currencyIso, minDate, maxDate, selectedBranches, changeOrder, order, disableSelect}) => {
+const Table = ({report, currencyIso, minDate, maxDate, selectedBranches, changeOrder, order, disableSelect, loggedInUser}) => {
     const [showLoans, setShowLoans] = useState(false);
 
     const getStrDate = (date) => {
@@ -14,15 +14,15 @@ const Table = ({report, currencyIso, minDate, maxDate, selectedBranches, changeO
   
     const getFileName = () => {
       if (minDate != '' && maxDate != '') {
-        return `${currencyIso} Borrowers Report for Theocash from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`
+        return `${currencyIso} Borrowers Report for ${loggedInUser.company_name} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`
       }
       if (minDate == '' && maxDate != '') {
-        return `${currencyIso} Borrowers Report for Theocash upto ${getStrDate(maxDate)}`
+        return `${currencyIso} Borrowers Report for ${loggedInUser.company_name} upto ${getStrDate(maxDate)}`
       }
       if (minDate != '' && maxDate == '') {
-        return `${currencyIso} Borrowers Report for Theocash from ${getStrDate(minDate)}`
+        return `${currencyIso} Borrowers Report for ${loggedInUser.company_name} from ${getStrDate(minDate)}`
       }
-      return `${currencyIso} Borrowers Report for Theocash all time.`
+      return `${currencyIso} Borrowers Report for ${loggedInUser.company_name} all time.`
     }
 
     return (

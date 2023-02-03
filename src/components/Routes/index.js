@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import AccountingRoutes from './AccountingRoutes';
 import AssetRoutes from './AssetRoutes';
 import ClientRoutes from './ClientRoutes';
@@ -8,15 +8,23 @@ import OtherIncomeRoutes from './OtherIncomeRoutes';
 import PaymentRoutes from './PaymentRoutes';
 import ReportRoutes from './ReportRoutes';
 import UserRoutes from './UserRoutes';
+import {useLoggedInUser} from '../../contexts/LoggedInUserContext';
 import { Routes as ReactRoutes, Route } from 'react-router-dom';
 
 const Home = lazy(() => import('../Home/Home'));
 const Dashboard = lazy(() => import('../Dashboard/Dashboard'));
 
-const Routes = (loggedInUser) => {
+
+const Routes = ({loggedInUser}) => {
+  const {setLoggedInUser} = useLoggedInUser();
+
+  useEffect(() => {
+    setLoggedInUser(loggedInUser);
+  }, []);
+
   return (
     <Suspense fallback='Loading...'>
-      <ReactRoutes>
+      <ReactRoutes >
         <Route exact path='/home' element={<Home/>} />
         <Route exact path='/dashboard' element={<Dashboard/>}/>
         {AccountingRoutes}

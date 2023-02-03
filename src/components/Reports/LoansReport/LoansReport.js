@@ -9,7 +9,7 @@ import NoData from '../ClientsReport/NoData';
 import { debounceFunction, useAsyncReference } from './utils';
 import MiniLoader from '../../Loader/MiniLoader';
 
-const LoansReport = () => {
+const LoansReport = ({loggedInUser}) => {
     const [selectedBranchesIds, setSelectedBranchesIds] = useAsyncReference([]);
     const [loans, setLoans] = useState([]);
     const [report, setReport] = useState(null);
@@ -145,7 +145,7 @@ const LoansReport = () => {
                         minDate={minDate.current} 
                         maxDate={maxDate.current} 
                         selectedBranches={selectedBranches}
-                        loans={loans}
+                        loggedInUser={loggedInUser}
                     />
                 </div>
             }
@@ -168,6 +168,7 @@ const LoansReport = () => {
                         minDate={minDate.current}
                         maxDate={maxDate.current}
                         selectedBranches={selectedBranches}
+                        loggedInUser={loggedInUser}
                     />
                     <LoansReportFooter 
                         nextPageNumber={pageNum} 

@@ -2,9 +2,13 @@ import React, {useEffect, useState} from 'react';
 import ClientsList from '../ClientsList/ClientsList';
 import NewAddClient from '../add_client/NewAddClient';
 import SmsList from '../Sms/SmsList';
+import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
 
 const ViewClients = () => {
   const [tab, setTab] = useState('clients');
+
+  const {loggedInUser} = useLoggedInUser()
+  console.log(loggedInUser)
 
   useEffect(() => {
     document.title = 'View Clients';

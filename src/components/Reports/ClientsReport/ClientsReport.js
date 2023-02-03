@@ -7,7 +7,7 @@ import Footer from './Footer';
 import NoData from './NoData';
 import MiniLoader from '../../Loader/MiniLoader';
 
-const ClientsReport = () => {
+const ClientsReport = ({loggedInUser}) => {
     const [report, setReport] = useState([]);
     const [order, setOrder] = useState('-id');
     const [minDate, setMinDate] = useState('');
@@ -167,6 +167,7 @@ const ClientsReport = () => {
                         minDate={minDate}
                         maxDate={maxDate}
                         selectedBranches={selectedBranches}
+                        loggedInUser={loggedInUser}
                     />
                     <Footer 
                         nextPageNumber={pageNum} 

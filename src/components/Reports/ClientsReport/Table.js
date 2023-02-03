@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import { FirstRow, SecondRow, ThirdRow, FourthRow } from './TableRows';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-const Table = ({ clients, currencyIso, minDate, maxDate, selectedBranches }) => {
+const Table = ({ clients, currencyIso, minDate, maxDate, selectedBranches, loggedInUser }) => {
     const getStrDate = (date) => {
         const mydate = new Date(date);
         const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
@@ -11,15 +11,15 @@ const Table = ({ clients, currencyIso, minDate, maxDate, selectedBranches }) => 
     
     const getFileName = () => {
         if (minDate != '' && maxDate != '') {
-            return `${currencyIso} Clients report for ${clients[0].tenant} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`
+            return `${currencyIso} Clients report for ${loggedInUser.company_name} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`
         }
         if (minDate == '' && maxDate != '') {
-            return `${currencyIso} Clients report for ${clients[0].tenant} upto ${getStrDate(maxDate)}`
+            return `${currencyIso} Clients report for ${loggedInUser.company_name} upto ${getStrDate(maxDate)}`
         }
         if (minDate != '' && maxDate == '') {
-            return `${currencyIso} Clients report for ${clients[0].tenant} from ${getStrDate(minDate)}`
+            return `${currencyIso} Clients report for ${loggedInUser.company_name} from ${getStrDate(minDate)}`
         }
-        return `${currencyIso} Clients report for ${clients[0].tenant} all time.`
+        return `${currencyIso} Clients report for ${loggedInUser.company_name} all time.`
     }
 
     return (

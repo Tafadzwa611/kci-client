@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-const LoansReportTable = ({loans, currencyIso, selectedBranches, minDate, maxDate}) => {
+const LoansReportTable = ({loans, currencyIso, selectedBranches, minDate, maxDate, loggedInUser}) => {
     const getStrDate = (date) => {
         const mydate = new Date(date);
         const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
@@ -10,15 +10,15 @@ const LoansReportTable = ({loans, currencyIso, selectedBranches, minDate, maxDat
 
     const getFileName = () => {
         if (minDate != '' && maxDate != '') {
-            return `${currencyIso} loans report for ${loans[0].tenant} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`
+            return `${currencyIso} loans report for ${loggedInUser.company_name} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`
         }
         if (minDate == '' && maxDate != '') {
-            return `${currencyIso} loans report for ${loans[0].tenant} upto ${getStrDate(maxDate)}`
+            return `${currencyIso} loans report for ${loggedInUser.company_name} upto ${getStrDate(maxDate)}`
         }
         if (minDate != '' && maxDate == '') {
-            return `${currencyIso} loans report for ${loans[0].tenant} from ${getStrDate(minDate)}`
+            return `${currencyIso} loans report for ${loggedInUser.company_name} from ${getStrDate(minDate)}`
         }
-        return `${currencyIso} loans report for ${loans[0].tenant} all time.`
+        return `${currencyIso} loans report for ${loggedInUser.company_name} all time.`
     }
 
     return (
@@ -28,7 +28,7 @@ const LoansReportTable = ({loans, currencyIso, selectedBranches, minDate, maxDat
                     id='test-table-xls-button'
                     className='download-table-xls-button btn btn-default'
                     table='loans-report'
-                    filename={`${currencyIso} Loans Report for ${loans[0].tenant} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`}
+                    filename={`${currencyIso} Loans Report for ${loggedInUser.company_name} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`}
                     sheet='tablexls'
                     buttonText='Download as XLS'
                 />

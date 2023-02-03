@@ -10,10 +10,13 @@ import LoanOfficerReport from '../LoanOfficerReport/LoanOfficerReport';
 import DailyReport from '../DailyReport/DailyReport';
 import PaymentsReport from '../PaymentsReport/PaymentsReport';
 import PortfolioAtRiskReport from '../PortfolioAtRiskReport/PortfolioAtRiskReport'
+import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
 
 const ViewReports = () => {
 
     const [tab, setTab] = useState('clientsreport');
+
+    const {loggedInUser} = useLoggedInUser()
 
     useEffect(() => {
         document.title = 'View Reports';
@@ -40,11 +43,11 @@ const ViewReports = () => {
                     </div>
                     <div className='tab-content font-12' style={{marginTop:"3rem"}}>
                         {{
-                            'clientsreport': <ClientsReport />,
-                            'loansreport': <LoansReport />,
+                            'clientsreport': <ClientsReport loggedInUser={loggedInUser} />,
+                            'loansreport': <LoansReport loggedInUser={loggedInUser} />,
                             'paymentsreport': <PaymentsReport />,
-                            'monthlyreport': <MonthlyReport />,
-                            'topbrrwers': <TopBorrowers />,
+                            'monthlyreport': <MonthlyReport loggedInUser={loggedInUser} />,
+                            'topbrrwers': <TopBorrowers loggedInUser={loggedInUser} />,
                             'disbursmntreport': <DisbursementReport />,
                             'loanpdtrpt': <LoanProductReport />,
                             'feesrpt': <FeesReport />,
