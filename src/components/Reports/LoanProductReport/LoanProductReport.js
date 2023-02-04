@@ -7,7 +7,7 @@ import { makeRequest } from '../../../utils/utils';
 import NoData from '../ClientsReport/NoData';
 import MiniLoader from '../../Loader/MiniLoader';
 
-const LoanProductReport = () => {
+const LoanProductReport = ({loggedInUser}) => {
     const [minDate, setMinDate] = useState('');
     const [maxDate, setMaxDate] = useState('');
     const [report, setReport] = useState([]);
@@ -16,6 +16,7 @@ const LoanProductReport = () => {
     const [currencies, setCurrencies] = useState(null);
     const [currencyId, setCurrencyId] = useState(null);
     const [currencyIso, setCurrencyIso] = useState(null);
+    const [selectedBranches, setSelectedBranches] = useState([]);
     const [msg, setMsg] = useState('Select date range and at least one product, then click search to views loan products report.');
     const disableFetch = minDate === '' || maxDate === '' || selected.length === 0 || minDate > maxDate;
   
@@ -23,6 +24,10 @@ const LoanProductReport = () => {
         evt.preventDefault();
         fetchLoanProductReport();
     }
+
+    useEffect(() => {
+      setReport([]);
+    }, [minDate, maxDate, selected]);
 
     useEffect(() => {
         fetchProducts();
@@ -95,10 +100,18 @@ const LoanProductReport = () => {
               setMaxDate={setMaxDate}
               setMinDate={setMinDate}
               updateSelected={setSelected}
+              setSelectedBranches={setSelectedBranches}
             />
             {report.length > 0 ?
               <>
-                <Table report={report} currencyIso={currencyIso} />
+                <Table 
+                  report={report} 
+                  currencyIso={currencyIso}
+                  minDate={minDate}
+                  maxDate={maxDate}
+                  selectedBranches={selectedBranches}
+                  loggedInUser={loggedInUser}
+                />
                 <Footer minDate={minDate} maxDate={maxDate} />
               </>:
               <NoData msg={msg} />

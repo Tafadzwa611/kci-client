@@ -49,7 +49,7 @@ const ViewReports = () => {
                             'monthlyreport': <MonthlyReport loggedInUser={loggedInUser} />,
                             'topbrrwers': <TopBorrowers loggedInUser={loggedInUser} />,
                             'disbursmntreport': <DisbursementReport loggedInUser={loggedInUser} />,
-                            'loanpdtrpt': <LoanProductReport />,
+                            'loanpdtrpt': <LoanProductReport loggedInUser={loggedInUser} />,
                             'feesrpt': <FeesReport />,
                             'loanoffrreport': <LoanOfficerReport />,
                             'dailyrpt': <DailyReport />,

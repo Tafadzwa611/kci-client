@@ -3,11 +3,12 @@ import Select from 'react-select';
 
 const DateRange = (props) => {
     const [optionSelected, setOptionSelected] = React.useState([]);
-    const {currencies, currencyId, setCurrencyId, minDate, maxDate, setMinDate, options, setMaxDate, onSubmit, disableFetch, updateSelected} = props;
+    const {currencies, currencyId, setCurrencyId, minDate, maxDate, setMinDate, options, setMaxDate, onSubmit, disableFetch, updateSelected, setSelectedBranches} = props;
     const fetchStyles = disableFetch ? {pointerEvents: 'none', opacity: '0.7'} : {};
   
     const handleSelect = selected => {
       setOptionSelected(selected);
+      setSelectedBranches(selected);
       updateSelected(selected.map(branch => branch.id));
     }
   
@@ -56,7 +57,7 @@ const DateRange = (props) => {
                                 />
                             </div>
                         </div>
-                        <div style={{width:"100%"}}>
+                        {/* <div style={{width:"100%"}}>
                             <label className="form-label">Max Date</label>
                             <div className="reports-input-group" style={{margin:"10px 0 0", border:"none"}}>
                                 <select className='report-custom-form-control currency' style={{width:"100%"}} value={currencyId} onChange={changeCurrency}>
@@ -65,7 +66,7 @@ const DateRange = (props) => {
                                     })}
                                 </select>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div style={{marginTop:"1rem"}}>
