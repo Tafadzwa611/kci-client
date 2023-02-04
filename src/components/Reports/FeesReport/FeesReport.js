@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import DateRange from './DateRange';
-import Header from './Header';
 import Table from './Table';
 import Footer from './Footer';
 import Summary from './Summary';
@@ -9,7 +8,7 @@ import { makeRequest } from '../../../utils/utils';
 import MiniLoader from '../../Loader/MiniLoader';
 
 
-const FeesReport = () => {
+const FeesReport = ({loggedInUser}) => {
     const [report, setReport] = useState([]);
     const [summary, setSummary] = useState([]);
     const [order, setOrder] = useState('-id');
@@ -21,6 +20,7 @@ const FeesReport = () => {
     const [currencies, setCurrencies] = useState(null);
     const [currencyId, setCurrencyId] = useState(null);
     const [currencyIso, setCurrencyIso] = useState(null);
+    const [selectedBranches, setSelectedBranches] = useState([]);
     const [msg, setMsg] = useState('Select date range and at least one branch, then click Apply Filters to view report.');
     const isFirstRun = useRef(true);
     const pageNum = useRef(1);
@@ -28,7 +28,7 @@ const FeesReport = () => {
     useEffect(() => {
         pageNum.current = 1;
         setReport([]);
-    }, [minDate, maxDate, selectedBranchesIds]);
+    }, [currencyId, minDate, maxDate, selectedBranchesIds]);
   
     useEffect(() => {
         getReportData();
@@ -138,14 +138,24 @@ const FeesReport = () => {
                     setMaxDate={setMaxDate}
                     setMinDate={setMinDate}
                     updateSelectedBranchesId={setSelectedBranchesIds}
+                    setSelectedBranches={setSelectedBranches}
                 />
                 {(reportLoaded && report.length > 0) &&
-                    <Summary summary={summary} currencyIso={currencyIso}/>
+                    <Summary summary={summary} currencyIso={currencyIso} minDate={minDate} maxDate={maxDate} selectedBranches={selectedBranches} loggedInUser={loggedInUser} />
                 }
-                <Header changeOrder={changeOrder} order={order} disableSelect={report.length === 0} />
                 {reportLoaded && report.length > 0 ?
                     <>
-                        <Table report={report} currencyIso={currencyIso} />
+                        <Table 
+                            report={report} 
+                            currencyIso={currencyIso} 
+                            minDate={minDate} 
+                            maxDate={maxDate} 
+                            selectedBranches={selectedBranches} 
+                            loggedInUser={loggedInUser}
+                            changeOrder={changeOrder} 
+                            order={order} 
+                            disableSelect={report.length === 0} 
+                        />
                         <Footer nextPageNumber={pageNum} loadMoreLoans={loadMore} loadingMore={loadingMore} />
                     </> :
                     <NoData msg={msg} />
