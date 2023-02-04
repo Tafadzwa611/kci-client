@@ -6,7 +6,7 @@ const Footer = ({ nextPageNumber, loadMoreLoans, loadingMore }) => {
             {nextPageNumber.current === null ?
             <div className="text" style={{border:"none"}}>
                 <i className="uil uil-exclamation-triangle"></i> 
-                <span>All loans have been loaded.</span>
+                <span>All fees have been loaded.</span>
             </div>:
             <LoadMoreButton loadMoreLoans={loadMoreLoans} loadingMore={loadingMore} />
             }
