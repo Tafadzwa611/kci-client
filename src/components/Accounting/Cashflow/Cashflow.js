@@ -6,7 +6,6 @@ import { makeRequest } from '../../../utils/utils';
 import MiniLoader from '../../Loader/MiniLoader';
 
 const Cashflow = () => {
-
     const [minDate, setMinDate] = useState('');
     const [maxDate, setMaxDate] = useState('');
     const [selectedBranchesIds, setSelectedBranchesIds] = useState([]);
