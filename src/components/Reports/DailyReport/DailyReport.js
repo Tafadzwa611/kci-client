@@ -7,7 +7,7 @@ import NoData from '../ClientsReport/NoData';
 import { makeRequest } from '../../../utils/utils';
 import MiniLoader from '../../Loader/MiniLoader';
 
-const DailyReport = () => {
+const DailyReport = ({loggedInUser}) => {
     const [dateOfReport, setDateOfReport] = useState('');
     const [selectedBranchesIds, setSelectedBranchesIds] = useState([]);
     const [report, setReport] = useState(null);
@@ -15,6 +15,7 @@ const DailyReport = () => {
     const [currencies, setCurrencies] = useState(null);
     const [currencyId, setCurrencyId] = useState(null);
     const [currencyIso, setCurrencyIso] = useState(null);
+    const [selectedBranches, setSelectedBranches] = useState([]);
   
     useEffect(() => {
         fetchCurrencies()
@@ -22,7 +23,7 @@ const DailyReport = () => {
   
     useEffect(() => {
         setReport(null);
-    }, [dateOfReport, selectedBranchesIds]);
+    }, [currencyId, dateOfReport, selectedBranchesIds]);
   
     const onSubmit = async (evt) => {
         evt.preventDefault();
@@ -84,11 +85,12 @@ const DailyReport = () => {
                 disableFetch={selectedBranchesIds.length === 0}
                 onSubmit={onSubmit}
                 updateSelectedBranchesId={setSelectedBranchesIds}
+                setSelectedBranches={setSelectedBranches}
             />
             <Header dateOfReport={dateOfReport} />
             {report != null ?
                 <>
-                    <Table report={report} currencyIso={currencyIso} dateOfReport={dateOfReport} />
+                    <Table report={report} currencyIso={currencyIso} dateOfReport={dateOfReport} date={dateOfReport} selectedBranches={selectedBranches} loggedInUser={loggedInUser}/>
                     <Footer />
                 </> :
                   <NoData msg={msg} />

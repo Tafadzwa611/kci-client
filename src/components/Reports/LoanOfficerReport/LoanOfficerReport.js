@@ -8,7 +8,7 @@ import NoData from '../ClientsReport/NoData';
 import MiniLoader from '../../Loader/MiniLoader';
 
 
-const LoanOfficerReport = () => {
+const LoanOfficerReport = ({loggedInUser}) => {
     const [report, setReport] = useState([]);
     const [minDate, setMinDate] = useState('');
     const [maxDate, setMaxDate] = useState('');
@@ -16,7 +16,12 @@ const LoanOfficerReport = () => {
     const [currencies, setCurrencies] = useState(null);
     const [currencyId, setCurrencyId] = useState(null);
     const [currencyIso, setCurrencyIso] = useState(null);
+    const [selectedBranches, setSelectedBranches] = useState([]);
     const [msg, setMsg] = useState('Select date range and at least one branch, then click Apply Filters to view report.');
+
+    useEffect(() => {
+        setReport([]);
+    }, [currencyId, minDate, maxDate, selectedBranchesIds]);    
   
     useEffect(() => {
         fetchCurrencies()
@@ -85,10 +90,11 @@ const LoanOfficerReport = () => {
                 setMinDate={setMinDate}
                 setMaxDate={setMaxDate}
                 updateSelectedBranchesId={setSelectedBranchesIds}
+                setSelectedBranches={setSelectedBranches}
             />
             {report.length > 0 ?
                 <>
-                    <Table report={report} currencyIso={currencyIso} />
+                    <Table report={report} currencyIso={currencyIso} minDate={minDate} maxDate={maxDate} selectedBranches={selectedBranches} loggedInUser={loggedInUser}/>
                     <Footer />
                 </> :
             <NoData msg={msg} />
