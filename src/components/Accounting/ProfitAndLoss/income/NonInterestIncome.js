@@ -12,13 +12,14 @@ function NonInterestIncome({totalNonInterestIncome, nonInterestIncome, currencyI
         <td className='text-bold bg-green'>Non-Interest Income</td>
         <td className='text-bold bg-green'></td>
         <td align='right' style={{fontWeight: 'bold'}}>
-        <input
+        {/* <input
           name='loansAndAdvances'
           type='text'
           className='custom-select-form row-form input-background'
           value={`${currencyIso} ${totalNonInterestIncome}`}
           readOnly
-        />
+        /> */}
+        {`${currencyIso} ${totalNonInterestIncome}`}
         </td>
       </tr>
       {(nonInterestIncome.length > 0) ? nonInterestIncome.map((nii, idx) => {
@@ -26,14 +27,16 @@ function NonInterestIncome({totalNonInterestIncome, nonInterestIncome, currencyI
           <tr key={idx}>
             <td><Link to='#' style={{cursor: 'pointer'}} onClick={handleClick} name={nii.name} data-type={nii.name}>{nii.name}</Link></td>
             <td align='right'>
-              <input type='text' name={nii.name} autoComplete='off' value={`${currencyIso} ${nii.amount}`} readOnly={true} className='custom-select-form row-form input-background'/>
+              {/* <input type='text' name={nii.name} autoComplete='off' value={`${currencyIso} ${nii.amount}`} readOnly={true} className='custom-select-form row-form input-background'/> */}
+              {`${currencyIso} ${nii.amount}`}
             </td>
           </tr>
         )
       }) :
       <tr>
         <td><h6>No Non-Interest Income was received in the selected branches within the selected date range.</h6></td>
-        <td align='right'><input type='text' autoComplete='off' value={`${currencyIso} 0.00`} readOnly={true} className='custom-select-form row-form input-background'/></td>
+        {/* <td align='right'><input type='text' autoComplete='off' value={`${currencyIso} 0.00`} readOnly={true} className='custom-select-form row-form input-background'/></td> */}
+        {`${currencyIso} 0.00`}
       </tr>}
     </>
   )

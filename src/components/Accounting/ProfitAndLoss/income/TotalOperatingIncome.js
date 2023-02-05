@@ -6,7 +6,8 @@ function TotalOperatingIncome({totalOperatingIncome, currencyIso}) {
       <td className='text-bold bg-gray'>Total Operating Income</td>
       <td className='text-bold bg-gray'></td>
       <td align='right' style={{fontWeight: 'bold'}}>
-        <input type='text' className='custom-select-form row-form input-background' value={`${currencyIso} ${totalOperatingIncome}`} readOnly/>
+        {/* <input type='text' className='custom-select-form row-form input-background' value={`${currencyIso} ${totalOperatingIncome}`} readOnly/> */}
+        {`${currencyIso} ${totalOperatingIncome}`}
       </td>
     </tr>
   )

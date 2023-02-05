@@ -12,13 +12,14 @@ function LoansAndAdvances({totalAmount, loansAndAdvances, currencyIso}) {
         <td className='text-bold bg-green'>Interest Income from Loans and Advances</td>
         <td className='text-bold bg-green'></td>
         <td align='right' style={{fontWeight: 'bold'}}>
-          <input
+          {/* <input
             name='loansAndAdvances'
             type='text'
             className='custom-select-form row-form input-background'
             value={`${currencyIso} ${totalAmount}`}
             readOnly
-          />
+          /> */}
+          {`${currencyIso} ${totalAmount}`}
         </td>
       </tr>
       {(loansAndAdvances.length>0) ? loansAndAdvances.map((la, idx) => {
@@ -28,27 +29,29 @@ function LoansAndAdvances({totalAmount, loansAndAdvances, currencyIso}) {
               <Link to='#' style={{cursor: 'pointer'}} onClick={handleClick} name={la.name} data-type={la.name}>{la.name}</Link>
             </td>
             <td align='right'>
-              <input
+              {/* <input
                 type='text'
                 name={la.name}
                 autoComplete='off'
                 value={`${currencyIso} ${la.amount}`}
                 readOnly={true}
                 className='custom-select-form row-form input-background'
-              />
+              /> */}
+              {`${currencyIso} ${la.amount}`}
             </td>
           </tr>
         )
       }) : <tr>
             <td><h6>No Interest Income from Loans and Advances was received in the selected branches within the selected date range.</h6></td>
             <td align='right'>
-              <input
+              {/* <input
                 type='text'
                 autoComplete='off'
                 value={`${currencyIso} 0.00`}
                 readOnly={true}
                 className='custom-select-form row-form input-background'
-              />
+              /> */}
+              {`${currencyIso} 0.00`}
             </td>
           </tr>}
     </>

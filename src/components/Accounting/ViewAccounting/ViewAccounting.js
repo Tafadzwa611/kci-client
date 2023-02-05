@@ -7,6 +7,7 @@ import Journals from '../Journals/Journals';
 import ChartsOfAccounts from '../ChartsOfAccounts/ChartsOfAccounts';
 import BalanceSheet from '../BalanceSheet/BalanceSheet';
 import Ledger from '../Ledger/Ledger';
+import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
 
 const ViewAccounting = () => {
     const [tab, setTab] = useState('cshflw');
@@ -15,6 +16,8 @@ const ViewAccounting = () => {
         document.title = 'View Accounting';
     }, []);
     
+    const {loggedInUser} = useLoggedInUser()
+
     return (
         <div className="card">
             <div className="card-body">
@@ -34,7 +37,7 @@ const ViewAccounting = () => {
                         {{
                             'cshflw': <Cashflow setTab={setTab}/>,
                             'cshmngmnt': <CashReport setTab={setTab}/>,
-                            'prftnls': <ProfitAndLoss setTab={setTab}/>,
+                            'prftnls': <ProfitAndLoss loggedInUser={loggedInUser} />,
                             'trlbnce': <TrialBalance setTab={setTab}/>,
                             'blncesht': <BalanceSheet setTab={setTab}/>,
                             'jrnls': <Journals setTab={setTab}/>,

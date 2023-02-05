@@ -3,13 +3,19 @@ import Empty from './Empty';
 import MiniLoader from '../../Loader/MiniLoader';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-function New({report, loading}) {
+function New({report, loading, minDate, maxDate, currencyIso, loggedInUser}) {
   if (loading) {
     return <MiniLoader />
   }
 
   if (report===null || report.rtype != 'accrual') {
     return <Empty message='Select Start Date, End Date and at least one branch to run income statement.'/>
+  }
+
+  const getStrDate = (date) => {
+    const mydate = new Date(date);
+    const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
+    return `${month} ${mydate.getDate()}, ${mydate.getFullYear()}`;
   }
 
   const incomeAccs = report.income_statement.filter(acc => acc.type === 'INCOME');
@@ -20,9 +26,9 @@ function New({report, loading}) {
       <div>
         <ReactHTMLTableToExcel
           id='test-table-xls-button'
-          className='download-table-xls-button btn btn-default'
+          className='btn btn-default'
           table='new-income-statement'
-          filename='Income Statement'
+          filename={`${currencyIso} Income Statement for ${loggedInUser.company_name} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`}
           sheet='tablexls'
           buttonText='Download as XLS'
         />
@@ -37,6 +43,18 @@ function New({report, loading}) {
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td><b>{currencyIso} Income Statement</b></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><b>{loggedInUser.company_name} From {getStrDate(minDate)} to {getStrDate(maxDate)}</b></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
           {incomeAccs.map((acc, idx) => {
             return (
               <tr key={idx}>
@@ -47,7 +65,7 @@ function New({report, loading}) {
               </tr>
             )
           })}
-          <tr className="journal-details header">
+          <tr>
             <td></td>
             <td></td>
             <td><b>TOTAL INCOME</b></td>
@@ -63,7 +81,7 @@ function New({report, loading}) {
               </tr>
             )
           })}
-          <tr className="journal-details header">
+          <tr>
             <td></td>
             <td></td>
             <td><b>TOTAL EXPENSES</b></td>

@@ -38,7 +38,7 @@ function IncomeStatementTable({ report, currencyIso }) {
         />
       </div>
       <div>
-        <table id='income-statement' className='table table-bordered table-condensed table-hover income__statement'>
+        <table className='table income__statement' id='income-statement'>
           <thead>
             <tr className="income__statement-header">
               <td style={{fontWeight: 'bold'}}>Income Statement</td>

@@ -6,12 +6,13 @@ function TotalInterestIncome({totalInterestIncome, currencyIso}) {
       <td className='text-bold bg-green'>Total Interest Income</td>
       <td className='text-bold bg-green'></td>
       <td align='right' style={{fontWeight: 'bold'}}>
-        <input
+        {/* <input
           type='text'
           className='custom-select-form row-form input-background'
           value={`${currencyIso} ${totalInterestIncome}`}
           readOnly
-        />
+        /> */}
+        {`${currencyIso} ${totalInterestIncome}`}
       </td>
     </tr>
   )

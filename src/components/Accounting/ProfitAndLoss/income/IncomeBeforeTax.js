@@ -6,7 +6,10 @@ function IncomeBeforeTax({totalIncomeBeforeTax, currencyIso}) {
       <tr>
         <td className='text-bold bg-gray'>Total Income before Tax</td>
         <td className='text-bold bg-gray'></td>
-        <td align='right' style={{fontWeight: 'bold'}}><input type='text' className='custom-select-form row-form input-background' value={`${currencyIso} ${totalIncomeBeforeTax}`} readOnly/></td>
+        <td align='right' style={{fontWeight: 'bold'}}>
+          {/* <input type='text' className='custom-select-form row-form input-background' value={`${currencyIso} ${totalIncomeBeforeTax}`} readOnly/> */}
+          {`${currencyIso} ${totalIncomeBeforeTax}`}
+          </td>
       </tr>
     </>
   )

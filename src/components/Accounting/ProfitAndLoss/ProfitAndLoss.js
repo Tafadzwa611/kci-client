@@ -5,7 +5,7 @@ import Display from './Display';
 import MiniLoader from '../../Loader/MiniLoader';
 import New from './New';
 
-function ProfitAndLoss() {
+function ProfitAndLoss({loggedInUser}) {
   const [minDate, setMinDate] = useState('');
   const [maxDate, setMaxDate] = useState('');
   const [selectedBranchesIds, setSelectedBranchesIds] = useState([]);
@@ -27,7 +27,7 @@ function ProfitAndLoss() {
 
   useEffect(() => {
     setReport(null);
-  }, [v]);
+  }, [v, minDate, maxDate, selectedBranchesIds, currencyId]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -95,7 +95,8 @@ function ProfitAndLoss() {
             v={v}
             setV={setV}
           />
-          {v === 'o' ? <Display report={report} loading={loading} currencyIso={currencyIso} /> : <New loading={loading} report={report}/>}
+          {v === 'o' ? <Display report={report} loading={loading} currencyIso={currencyIso} /> : 
+          <New minDate={minDate} maxDate={maxDate} currencyIso={currencyIso} loading={loading} report={report} loggedInUser={loggedInUser} />}
         </div>
       </div>
     </>
