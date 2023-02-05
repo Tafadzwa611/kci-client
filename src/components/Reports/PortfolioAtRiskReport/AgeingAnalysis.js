@@ -21,7 +21,8 @@ function AgeingAnalysis({
   loans_in_arrears_count,
   total_loan_count,
   principal_at_risk,
-  total_loan_portfolio
+  total_loan_portfolio,
+  loggedInUser
 }) {
   const [loans, setLoans] = useState([]);
 
@@ -90,6 +91,7 @@ function AgeingAnalysis({
             total_loan_count={total_loan_count}
             principal_at_risk={principal_at_risk}
             total_loan_portfolio={total_loan_portfolio}
+            loggedInUser={loggedInUser}
           />
           <div className='modal-footer justify-content-between'>
             <button type='button' className='btn btn-default' onClick={e => setOpen(false)}>Close</button>
@@ -112,7 +114,8 @@ const ModalBody = ({
   par_value,
   total_loan_count,
   principal_at_risk,
-  total_loan_portfolio
+  total_loan_portfolio,
+  loggedInUser
 }) => {
     return (
         <>
@@ -151,7 +154,7 @@ const ModalBody = ({
                         </div>
                     </div>
                 </div>
-                <LoansTable currencyIso={currencyIso} loans={loans}/>
+                <LoansTable currencyIso={currencyIso} loans={loans} par_name={par_name} loggedInUser={loggedInUser} />
             </div>
         </>
     )

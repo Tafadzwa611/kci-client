@@ -4,7 +4,7 @@ import { makeRequest } from '../../../utils/utils';
 import AddPar from './AddPar';
 import MiniLoader from '../../Loader/MiniLoader';
 
-const PortfolioAtRiskReport = () => {
+const PortfolioAtRiskReport = ({loggedInUser}) => {
     const [currencies, setCurrencies] = useState(null);
     const [pars, setPars] = useState([]);
     const [branches, setBranches] = useState(null);
@@ -85,6 +85,7 @@ const PortfolioAtRiskReport = () => {
                     currencyId={par.currencyId}
                     branches={branches.filter(branch => par.selectedBranchesIds.includes(branch.id))}
                     limits={par.limits}
+                    loggedInUser={loggedInUser}
                     />)}
                 </div>
             </>

@@ -13,7 +13,8 @@ function Tile({
   currencyIso,
   currencyId,
   branches,
-  limits
+  limits,
+  loggedInUser
 }) {
   const [openModal, setOpenModal] = useState(false);
 
@@ -36,6 +37,7 @@ function Tile({
                 total_loan_count={total_loan_count}
                 principal_at_risk={principal_at_risk}
                 total_loan_portfolio={total_loan_portfolio}
+                loggedInUser={loggedInUser}
             />
             <div onClick={handleClick} style={{width:"100%", marginBottom:"1.5rem", cursor: 'grab'}}>
                 <div style={{display:"flex", flexDirection:"column", rowGap:"1rem", padding:"1.5rem"}} className="par-card">

@@ -54,7 +54,7 @@ const ViewReports = () => {
                             'loanoffrreport': <LoanOfficerReport loggedInUser={loggedInUser} />,
                             'dailyrpt': <DailyReport loggedInUser={loggedInUser}  />,
                             // 'agingrpt': <AgingReport />,
-                            'parreport': <PortfolioAtRiskReport />,
+                            'parreport': <PortfolioAtRiskReport loggedInUser={loggedInUser} />,
                         }[tab]}
                     </div>
                 </>

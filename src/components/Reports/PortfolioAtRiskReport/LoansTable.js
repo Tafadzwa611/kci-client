@@ -1,13 +1,23 @@
 import React from 'react';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-function LoansTable({loans, currencyIso}) {
+function LoansTable({loans, currencyIso, loggedInUser, par_name}) {
   return (
     <div className='row'>
       <div className='col-12'>
         <div>
-              <span>Loans List</span>
-          <div className='table-responsive p-0' style={{maxHeight: '600px'}}>
-            <table className='table'>
+          <div style={{display:"flex", justifyContent:"flex-end", marginTop:"1.5rem"}}>
+            <ReactHTMLTableToExcel
+              id='test-table-xls-button'
+              className='btn btn-default'
+              table={`${currencyIso}${par_name}`}
+              filename={`${currencyIso} Par ${par_name} for ${loggedInUser.company_name}`}
+              sheet='tablexls'
+              buttonText='Download as XLS'
+            />
+          </div>
+          <div className='table-responsive p-0' style={{maxHeight: '600px', marginTop:"1rem"}}>
+            <table className='table' id={`${currencyIso}${par_name}`}>
               <thead>
                 <tr className="journal-details header">
                   <th>Loan #</th>
