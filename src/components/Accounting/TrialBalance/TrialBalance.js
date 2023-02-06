@@ -7,7 +7,7 @@ import Error from './Error';
 import MiniLoader from '../../Loader/MiniLoader';
 // import Loader from './Loader';
 
-const TrialBalance = () => {
+const TrialBalance = ({loggedInUser}) => {
     const [maxDate, setMaxDate] = useState('');
     const [branches, setBranches] = useState(null);
     const [branchIds, setBranchIds] = useState(null);
@@ -115,7 +115,7 @@ const TrialBalance = () => {
             <div style={{paddingTop: '17px'}}></div>
             {trialBalance===null && !loading ?
                 <Empty message='Select Start Date, End Date and at least one branch to run income statement.'/> :
-                <TrialBalanceTable currencyIso={currencyIso} trialBalance={trialBalance} loading={loading}/>
+                <TrialBalanceTable currencyIso={currencyIso} trialBalance={trialBalance} loading={loading} loggedInUser={loggedInUser} maxDate={maxDate} />
             }
         </>
     );

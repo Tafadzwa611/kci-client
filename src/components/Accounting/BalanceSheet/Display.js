@@ -3,7 +3,7 @@ import MiniLoader from '../../Loader/MiniLoader';
 import Empty from './Empty';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-const Display = ({report, loading, currencyIso, reportDate}) => {
+const Display = ({report, loading, currencyIso, reportDate, loggedInUser}) => {
     if (loading) {
         return <MiniLoader />
     }
@@ -32,7 +32,7 @@ const Display = ({report, loading, currencyIso, reportDate}) => {
                                 id='test-table-xls-button'
                                 className='download-table-xls-button btn btn-default'
                                 table='balance-sheet'
-                                filename={`${currencyIso} Balance Sheet for ${document.title} as on ${getStrDate()}`}
+                                filename={`${currencyIso} Balance Sheet for ${loggedInUser.company_name} as on ${getStrDate()}`}
                                 sheet='tablexls'
                                 buttonText='Download as XLS'
                             />
@@ -54,7 +54,7 @@ const Display = ({report, loading, currencyIso, reportDate}) => {
                                 <td></td>
                                 </tr>
                                 <tr>
-                                <td><b>{document.title} as on {getStrDate()}</b></td>
+                                <td><b>{loggedInUser.company_name} as on {getStrDate()}</b></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

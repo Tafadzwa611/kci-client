@@ -6,7 +6,10 @@ function Dividend({totalDividend, currencyIso}) {
       <tr>
         <td className='text-bold'>Dividend</td>
         <td className='text-bold'></td>
-        <td align='right' style={{fontWeight: 'bold'}}><input type='text' className='custom-select-form row-form input-background' value={`${currencyIso} ${totalDividend}`} readOnly/></td>
+        <td align='right' style={{fontWeight: 'bold'}}>
+          {/* <input type='text' className='custom-select-form row-form input-background' value={`${currencyIso} ${totalDividend}`} readOnly/> */}
+          {`${currencyIso} ${totalDividend}`}
+        </td>
       </tr>
     </>
   )

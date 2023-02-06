@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import MiniLoader from '../../Loader/MiniLoader';
 
-const TrialBalanceTable = ({trialBalance, currencyIso, loading}) => {
+const TrialBalanceTable = ({trialBalance, currencyIso, loading, loggedInUser, maxDate}) => {
 
     if (loading) {
         return <MiniLoader />
@@ -16,8 +16,14 @@ const TrialBalanceTable = ({trialBalance, currencyIso, loading}) => {
             setAccounts(trialBalance.accounts.filter(account => Number(account.balance) != 0));
         }else {
             setAccounts(trialBalance.accounts);
-        }
+        };
     }, [omitZeroBalances]);
+
+    const getStrDate = (maxDate) => {
+        const mydate = new Date(maxDate);
+        const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
+        return `${month} ${mydate.getDate()}, ${mydate.getFullYear()}`;
+    }
 
     return (
         <div className="col-12 font-12">
@@ -28,7 +34,7 @@ const TrialBalanceTable = ({trialBalance, currencyIso, loading}) => {
                             id='test-table-xls-button'
                             className='download-table-xls-button btn btn-default'
                             table='trial-balance'
-                            filename='Trial Balance'
+                            filename={`${currencyIso} Trial Balance for ${loggedInUser.company_name} as on ${getStrDate(maxDate)}`}
                             sheet='tablexls'
                             buttonText='Download as XLS'
                         />
@@ -50,6 +56,22 @@ const TrialBalanceTable = ({trialBalance, currencyIso, loading}) => {
                             </tr>
                         </thead>
                         <tbody>
+                            <tr>
+                                <td><b>{currencyIso} Trial Balance</b></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><b>{loggedInUser.company_name} as on {getStrDate(maxDate)}</b></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                             {accounts.length > 0 ? accounts.map(account => {
                                 return (
                                     <tr key={account.id}>
@@ -62,13 +84,8 @@ const TrialBalanceTable = ({trialBalance, currencyIso, loading}) => {
                                         <td className="trial-balance-text-color" style={{background: 'rgb(255, 182, 193) none repeat scroll 0% 0%', textAlign: 'center'}}>{account.balance}</td> : <td></td>}
                                     </tr>
                                     )
-                                }) : <tr><td colSpan={5} style={{textAlign: 'center'}}>No accounts could be found.</td></tr>}
-                            {/* <tr>
-                                <td>Interest Receivable</td>
-                                <td>Main Branch</td>
-                                <td className="trial-balance-text-color" style={{background:"rgb(127, 255, 0) none repeat scroll 0% 0%", textAlign:"center"}}>ZWL 900.00</td>
-                                <td></td>
-                            </tr> */}
+                                }) : <tr><td colSpan={5} style={{textAlign: 'center'}}>No accounts could be found.</td></tr>
+                            }
                         </tbody>
                     </table>
                 </div>

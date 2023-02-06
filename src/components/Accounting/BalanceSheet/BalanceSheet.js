@@ -3,7 +3,7 @@ import Filter from './Filter';
 import Display from './Display';
 import { makeRequest } from '../../../utils/utils';
 
-const BalanceSheet = () => {
+const BalanceSheet = ({loggedInUser}) => {
     const [reportDate, setReportDate] = useState('');
     const [currencies, setCurrencies] = useState(null);
     const [currencyId, setCurrencyId] = useState(null);
@@ -88,7 +88,7 @@ const BalanceSheet = () => {
                     setReportDate={setReportDate}
                     updateSelectedBranchesId={setSelectedBranchesIds}
                 />
-                <Display report={report} loading={loading} currencyIso={currencyIso} reportDate={reportDate} />
+                <Display report={report} loading={loading} currencyIso={currencyIso} reportDate={reportDate} loggedInUser={loggedInUser} />
             </div>
         </>
     )

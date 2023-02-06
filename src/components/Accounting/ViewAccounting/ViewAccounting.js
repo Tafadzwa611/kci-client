@@ -38,8 +38,8 @@ const ViewAccounting = () => {
                             'cshflw': <Cashflow setTab={setTab}/>,
                             'cshmngmnt': <CashReport setTab={setTab}/>,
                             'prftnls': <ProfitAndLoss loggedInUser={loggedInUser} />,
-                            'trlbnce': <TrialBalance setTab={setTab}/>,
-                            'blncesht': <BalanceSheet setTab={setTab}/>,
+                            'trlbnce': <TrialBalance loggedInUser={loggedInUser}/>,
+                            'blncesht': <BalanceSheet loggedInUser={loggedInUser} />,
                             'jrnls': <Journals setTab={setTab}/>,
                             'chtsoaccs': <ChartsOfAccounts setTab={setTab}/>,
                             'ledger': <Ledger setTab={setTab}/>
