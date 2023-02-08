@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Payments from '../Payments/Payments';
 import ViewPaymentsChart from '../PaymentsChart/ViewPaymentsChart';
 import PaymentsReport from '../PaymentsReport/PaymentsReport';
+import ExcelPayments from '../ExcelPayments/ExcelPayments';
 
 const ViewPayments = () => {
 
@@ -28,6 +29,7 @@ const ViewPayments = () => {
                         {{
                             'payments': <Payments setMainTab={setTab}/>,
                             'paymentcharts': <ViewPaymentsChart setMainTab={setTab}/>,
+                            'uploadfile': <ExcelPayments setMainTab={setTab}/>,
                             'paymentrpts': <PaymentsReport setMainTab={setTab}/>,
                         }[tab]}
                     </div>
