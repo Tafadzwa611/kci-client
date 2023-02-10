@@ -26,11 +26,8 @@ const PaymentsTable = ({payments}) => {
         itemCount: payments.length
     });
 
-    console.log(payments)
-
     const getRowData = i => {
       const payment = payments[i];
-      console.log(payment)
       return {
         "Client_Name": payment.client_name,
         "Phone_Number": payment.phone_number,
