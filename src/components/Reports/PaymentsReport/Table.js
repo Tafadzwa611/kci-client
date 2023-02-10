@@ -2,23 +2,23 @@ import React from 'react';
 import { useVirtual, Table } from "@af-utils/react-table";
 
 const columns = [
-  {key: "Client_Name", width: "100" },
-  {key: "Phone_Number", width: "100"},
-  {key: "Account_No", width: "100"},
-  {key: "Payment_Branch", width: "100"},
-  {key: "Loan_Branch", width: "100"},
-  {key: "Collected_By", width: "100"},
-  {key: "Product_Name", width: "100"},
-  {key: "Principal", width: "100"},
+  {key: "Client_Name"},
+  {key: "Phone_Number"},
+  {key: "Account_No"},
+  {key: "Payment_Branch"},
+  {key: "Loan_Branch"},
+  {key: "Collected_By"},
+  {key: "Product_Name"},
+  {key: "Principal"},
   {key: "Interest",width: "100"},
-  {key: "Penalty", width: "100"},
-  {key: "Overpayment", width: "100"},
-  {key: "Total_Paid", width: "100"},
-  {key: "Value_Date", width: "100"},
-  {key: "Entry_Date", width: "100" },
-  {key: "Receipt_Number", width: "100"},
-  {key: "Payment_Channel", width: "100"},
-  {key: "Disbursement_Channel", width: "100"}
+  {key: "Penalty"},
+  {key: "Overpayment"},
+  {key: "Total_Paid"},
+  {key: "Value_Date"},
+  {key: "Entry_Date"},
+  {key: "Receipt_Number"},
+  {key: "Payment_Channel"},
+  {key: "Disbursement_Channel"}
 ];
 
 const PaymentsTable = ({payments}) => {
@@ -26,8 +26,11 @@ const PaymentsTable = ({payments}) => {
         itemCount: payments.length
     });
 
+    console.log(payments)
+
     const getRowData = i => {
       const payment = payments[i];
+      console.log(payment)
       return {
         "Client_Name": payment.client_name,
         "Phone_Number": payment.phone_number,

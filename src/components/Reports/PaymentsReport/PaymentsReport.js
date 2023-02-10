@@ -45,7 +45,7 @@ function PaymentsReport() {
     const onSubmit = async (evt) => {
         evt.preventDefault();
         pageNum.current = 1;
-        setPayments([]);
+        // setPayments([]);
         setLoading(true);
         const url = getUrl();
         await getPayments(url);
