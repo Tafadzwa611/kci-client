@@ -3278,3 +3278,23 @@ input[type=number] {
 /* .ReactVirtualized__Grid__innerScrollContainer:not(.ReactVirtualized__Grid__innerScrollContainer ~ .ReactVirtualized__Grid__innerScrollContainer) {
   background: red;
 } */
+
+/* react-table-af-utils */
+
+.af-styled_position_sticky.af-styled_top_0 {
+  background: var(--info);
+  color: var(--white)
+}
+
+.af-styled_overflow_auto.af-styled_position_relative {
+  height: 800px;
+}
+
+.af-styled_text_align_left_important_ {
+  padding: var(--p-1) var(--p-1-5);
+  border-top: 1px solid #eef2f7;
+}
+
+#dark .af-styled_text_align_left_important_  {
+  border-top:  1px solid var(--border-color);
+}

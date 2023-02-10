@@ -1,65 +1,66 @@
-
 import React from 'react';
-import { FixedSizeList as List } from 'react-window';
-import {AutoSizer, MultiGrid} from 'react-virtualized';
-import 'react-virtualized/styles.css';
+import { useVirtual, Table } from "@af-utils/react-table";
 
-
-const headercolumns = [
-  {name: "client_name", displayName: "Client Name", width: 200},
-  { name: "phone_number", displayName: "Phone Number", width: 120 },
-  { name: "loan_account", displayName: "Account No", width: 120 },
-  { name: "payment_branch", displayName: "Payment Branch", width: 120 },
-  { name: "loan_branch", displayName: "Loan Branch", width: 120 },
-  { name: "collected_by_name", displayName: "Collected By", width: 200 },
-  { name: "product_name", displayName: "Product Name", width: 200 },
-  { name: "principal", displayName: "Principal", width: 85 },
-  { name: "interest", displayName: "Interest", width: 85 },
-  { name: "penalty", displayName: "Penalty", width: 85 },
-  { name: "overpayment", displayName: "Overpayment", width: 100 },
-  { name: "total_paid", displayName: "Total Paid", width: 85 },
-  { name: "value_date", displayName: "Value Date", width: 85 },
-  { name: "entry_date", displayName: "Entry Date", width: 85 },
-  { name: "receipt_number", displayName: "Receipt Number", width: 120 },
-  { name: "payment_channel", displayName: "Payment Channel", width: 150 },
-  { name: "loan_fund_account", displayName: "Disbursement Channel", width: 150}
+const columns = [
+  {key: "Client_Name", width: "100" },
+  {key: "Phone_Number", width: "100"},
+  {key: "Account_No", width: "100"},
+  {key: "Payment_Branch", width: "100"},
+  {key: "Loan_Branch", width: "100"},
+  {key: "Collected_By", width: "100"},
+  {key: "Product_Name", width: "100"},
+  {key: "Principal", width: "100"},
+  {key: "Interest",width: "100"},
+  {key: "Penalty", width: "100"},
+  {key: "Overpayment", width: "100"},
+  {key: "Total_Paid", width: "100"},
+  {key: "Value_Date", width: "100"},
+  {key: "Entry_Date", width: "100" },
+  {key: "Receipt_Number", width: "100"},
+  {key: "Payment_Channel", width: "100"},
+  {key: "Disbursement_Channel", width: "100"}
 ];
 
-function PaymentsTable({payments}) {
-  const heightcount = payments.length + 1;
+const PaymentsTable = ({payments}) => {
+    const model = useVirtual({
+        itemCount: payments.length
+    });
 
-  const renderHeaderColumns = columnIndex => {
-    const addone = headercolumns[columnIndex];
-    return <div key={addone.name}>{addone.displayName}</div>;
-  };
-
-  const cellRenderer = ({ columnIndex, key, rowIndex, style }) => {
-    if (rowIndex === 0) {
-      return <div key={key} style={style}>{renderHeaderColumns(columnIndex)}</div>
-    } else {
-      const columnName = headercolumns[columnIndex].name;
-      return <div key={key} style={style}>{payments[rowIndex-1][columnName]}</div>
+    const getRowData = i => {
+      const payment = payments[i];
+      return {
+        "Client_Name": payment.client_name,
+        "Phone_Number": payment.phone_number,
+        "Account_No": payment.loan_account,
+        "Payment_Branch": payment.payment_branch,
+        "Loan_Branch": payment.loan_branch,
+        "Collected_By": payment.collected_by_name,
+        "Product_Name": payment.product_name,
+        "Principal": payment.principal,
+        "Interest": payment.interest,
+        "Penalty": payment.penalty,
+        "Overpayment": payment.overpayment,
+        "Total_Paid": payment.total_paid,
+        "Value_Date": payment.value_date,
+        "Entry_Date": payment.entry_date,
+        "Receipt_Number": payment.receipt_number,
+        "Payment_Channel": payment.payment_channel,
+        "Disbursement_Channel": payment.loan_fund_account,
+      }
     }
-  };
 
-  return (
-    <div className='react-virtualized-table text-light' style={{height:"700px", marginTop:"2rem"}}>
-      <AutoSizer>
-        {({ width }) => (
-          <MultiGrid
-            cellRenderer={cellRenderer}
-            fixedRowCount={1}
-            height={690}
-            width={width}
-            columnCount={headercolumns.length}
-            columnWidth={({ index }) => headercolumns[index].width}
-            rowCount={heightcount}
-            rowHeight={50}
-          />
-        )}
-      </AutoSizer>
-    </div>
-  )
-}
+    return (
+      <div className="text-light">
+        <Table
+            model={model}
+            className="h-full basic-table-container"
+            getRowData={getRowData}
+            columns={columns}
+        />
+      </div>
+    );
+};
 
 export default PaymentsTable;
+
+
