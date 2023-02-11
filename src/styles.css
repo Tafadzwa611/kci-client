@@ -3286,6 +3286,11 @@ input[type=number] {
   color: var(--white)
 }
 
+.view__payments .af-styled_position_sticky.af-styled_top_0 {
+  background: var(--card-secondary);
+  color: var(--color);
+}
+
 .af-styled_overflow_auto.af-styled_position_relative {
   max-height: 800px;
 }
@@ -3298,3 +3303,4 @@ input[type=number] {
 #dark .af-styled_text_align_left_important_  {
   border-top:  1px solid var(--border-color);
 }
+

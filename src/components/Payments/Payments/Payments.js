@@ -41,6 +41,10 @@ const Payments = () => {
     }, [])
 
     useEffect(() => {
+        setPayments([]);
+    }, [clientName, minDateCreated, maxDateCreated]);
+
+    useEffect(() => {
         getBranches();
     }, []);
 
@@ -106,8 +110,7 @@ const Payments = () => {
             const response = await makeRequest.get('/usersapi/get-branches/', {timeout: 8000});
             if (response.ok) {
                 const json_res = await response.json();
-                console.log('json_res')
-            return json_res.results;
+                return json_res.results;
             }else {
                 const error = await response.json();
                 console.log(error);
@@ -124,7 +127,6 @@ const Payments = () => {
         }
 
         let url = `/loansapi/payments_list/?page_num=${pageNum.current}&currency_id=${currencyId}`;
-        console.log(branchIds)
         if (branchIds !== null) {
             branchIds.forEach(id => (url += `&branch_ids=${id}`));
         }
@@ -154,7 +156,6 @@ const Payments = () => {
         setSearching(true);
         pageNum.current = 1;
         const data = await fetchPayments();
-        console.log(data)
         setTotalCount(data.count);
         setPayments(data.payments);
     }
@@ -193,7 +194,7 @@ const Payments = () => {
                     setBranchIds={setBranchIds}
                 />
             }
-            {payments != "" &&
+            {payments.length > 0 ?
                 <>
                     <PaymentsList 
                         payments={payments} 
@@ -211,9 +212,7 @@ const Payments = () => {
                         loadMoreClients={loadMore}
                         loadingMore={loadingMore}
                     />
-                </>
-            }
-            {payments == "" &&
+                </>:
                 <div>
                     <div className="table-footer-container clients_table">
 
