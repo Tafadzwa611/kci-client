@@ -7,8 +7,7 @@ import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
 const ViewClients = () => {
   const [tab, setTab] = useState('clients');
 
-  const {loggedInUser} = useLoggedInUser()
-  console.log(loggedInUser)
+  const {loggedInUser} = useLoggedInUser();
 
   useEffect(() => {
     document.title = 'View Clients';

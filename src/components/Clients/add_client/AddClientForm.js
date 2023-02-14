@@ -35,9 +35,9 @@ function AddClientForm({customForms, clientTypes}) {
 
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ isSubmitting, errors, values }) => (
+      {({ isSubmitting, errors, values, setFieldValue }) => (
         <FormStepper isSubmitting={isSubmitting} errors={errors} customForms={customForms} client_type_id={values.client_type_id}>
-          <ClientInformation clientTypes={clientTypes}/>
+          <ClientInformation clientTypes={clientTypes} setFieldValue={setFieldValue}/>
           <div>2</div>
           <div>3</div>
           <div>4</div>

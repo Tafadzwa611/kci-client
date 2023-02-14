@@ -1,8 +1,8 @@
 import React from 'react';
-import { CustomInput, CustomSelect } from '../../../common';
+import { CustomInput, CustomSelect, CustomDatePicker } from '../../../common';
 import { countryPhoneCodes } from './data';
 
-const ClientInformation = ({clientTypes}) => {
+const ClientInformation = ({clientTypes, setFieldValue}) => {
   return (
     <>
       <CustomSelect label='Client Type' name='client_type_id'>
@@ -16,7 +16,7 @@ const ClientInformation = ({clientTypes}) => {
         <option value='MALE'>Male</option>
         <option value='FEMALE'>Female</option>
       </CustomSelect>
-      <CustomInput label='Date Of Birth' name='date_of_birth' type='date'/>
+      <CustomDatePicker label='Date Of Birth' setFieldValue={setFieldValue} name='date_of_birth' type='date'/>
       <CustomInput label='Registration Date' name='registration_date' type='date'/>
       <CustomSelect label='' name='mobile_number_code'>
         {countryPhoneCodes.map((code, index) => <option key={index} value={code.code}>{`+${code.code}-${code.country}`}</option>)}

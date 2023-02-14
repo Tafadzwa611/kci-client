@@ -3304,3 +3304,7 @@ input[type=number] {
   border-top:  1px solid var(--border-color);
 }
 
+.rmdp-container {
+  display: block;
+} 
+

@@ -11,7 +11,8 @@ export {
   ModalSubmit,
   DeleteDialog,
   DeleteModalDialog,
-  ModalDeleteSubmit
+  ModalDeleteSubmit,
+  CustomDatePicker
 } from './forms';
 export {
   DeleteBtn,

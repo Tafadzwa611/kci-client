@@ -10,6 +10,7 @@ import CustomRadio from './CustomRadio';
 import ModalSubmit from './ModalSubmit';
 import DeleteModalDialog from './DeleteModalDialog';
 import ModalDeleteSubmit from './ModalDeleteSubmit';
+import CustomDatePicker from './CustomDatePicker';
 
 export {
     CustomRadio,
@@ -23,5 +24,6 @@ export {
     SubmitButton,
     ModalSubmit,
     DeleteModalDialog,
-    ModalDeleteSubmit
+    ModalDeleteSubmit,
+    CustomDatePicker
 };
