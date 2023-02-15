@@ -24,10 +24,14 @@ function EditFieldSet({open, setOpen, fieldSet, setFieldSets}) {
         {({ isSubmitting, errors }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <CustomInput label='Name' name='name' type='text'/>
-              <CustomTextField label='Description' name='description'/>
-              <CustomCheckbox label='Active' name='active'/>
-              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              <div className="create_modal_container">
+                <div>
+                  <CustomInput label='Name' name='name' type='text'/>
+                  <CustomTextField label='Description' name='description'/>
+                  <CustomCheckbox label='Active' name='active'/>
+                </div>
+                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              </div>
             </NonFieldErrors>
           </Form>
         )}

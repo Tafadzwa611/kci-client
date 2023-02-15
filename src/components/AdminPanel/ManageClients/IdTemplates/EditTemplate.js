@@ -17,10 +17,14 @@ const EditTemplate = ({open, setOpen, template, setTemplates}) => {
         {({ errors, isSubmitting }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <CustomInput label='Name' name='id_type' type='text'/>
-              <CustomInput label='Issuer' name='issuer' type='text'/>
-              <CustomCheckbox label='Is Active' name='is_active'/>
-              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              <div className="create_modal_container">
+                <div>
+                  <CustomInput label='Name' name='id_type' type='text'/>
+                  <CustomInput label='Issuer' name='issuer' type='text'/>
+                  <CustomCheckbox label='Is Active' name='is_active'/>
+                </div>
+                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              </div>
             </NonFieldErrors>
           </Form>
         )}

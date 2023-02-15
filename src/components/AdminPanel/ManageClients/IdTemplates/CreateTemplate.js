@@ -19,10 +19,14 @@ const CreateTemplate = ({open, setOpen, setTemplates}) => {
         {({ isSubmitting, errors }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <CustomInput label='Name' name='id_type' type='text'/>
-              <CustomInput label='Issuer' name='issuer' type='text'/>
-              <CustomInput label='Format' name='template' type='text'/>
-              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              <div className="create_modal_container">
+                <div>
+                  <CustomInput label='Name' name='id_type' type='text'/>
+                  <CustomInput label='Issuer' name='issuer' type='text'/>
+                  <CustomInput label='Format' name='template' type='text'/>
+                </div>
+                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              </div>
             </NonFieldErrors>
           </Form>
         )}

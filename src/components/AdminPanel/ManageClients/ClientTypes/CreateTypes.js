@@ -19,10 +19,14 @@ const CreateTypes = ({open, setOpen, setTypes}) => {
         {({ isSubmitting, errors }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <CustomInput label='Name' name='name' type='text'/>
-              <CustomCheckbox label='Allow opening accounts' name='allow_opening_loan_accounts'/>
-              <CustomCheckbox label='Allow as guarantor' name='allow_as_guarantor'/>
-              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              <div className="create_modal_container">
+                <div>
+                  <CustomInput label='Name' name='name' type='text'/>
+                  <CustomCheckbox label='Allow opening accounts' name='allow_opening_loan_accounts'/>
+                  <CustomCheckbox label='Allow as guarantor' name='allow_as_guarantor'/>
+                </div>
+                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              </div>
             </NonFieldErrors>
           </Form>
         )}

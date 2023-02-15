@@ -46,31 +46,35 @@ const UpdateClientControls = ({open, setOpen, clientControls, setClientControls}
         {({ isSubmitting, errors }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <CustomSelect label='New Client Initial Status' name='client_initial_status'>
-                <option value='Pending Approval'>Pending Approval</option>
-                <option value='Inactive'>Inactive</option>
-              </CustomSelect>
-              <CustomSelect label='Id Duplicate Check Level' name='id_duplicate_level_type'>
-                {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
-              </CustomSelect>
-              <CustomSelect label='Primary Phone Duplicate Check Level' name='pry_phone_duplicate_level_type'>
-                {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
-              </CustomSelect>
-              <CustomSelect label='Secondary Phone Duplicate Check Level' name='sec_phone_duplicate_level_type'>
-                {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
-              </CustomSelect>
-              <CustomSelect label='Home Phone Duplicate Check Level' name='home_phone_duplicate_level_type'>
-                {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
-              </CustomSelect>
-              <CustomSelect label='Email Duplicate Check Level' name='email_duplicate_level_type'>
-                {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
-              </CustomSelect>
-              <CustomSelect label='Fullname Duplicate Check Level' name='fullname_duplicate_level_type'>
-                {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
-              </CustomSelect>
-              <CustomInput label='Minimum Client Age In Years' name='min_client_age' step='1' type='number'/>
-              <CustomCheckbox label='Allow Clients Without Identification' name='allow_clients_without_id'/>
+              <div className="create_modal_container">
+                <div>
+                  <CustomSelect label='New Client Initial Status' name='client_initial_status'>
+                    <option value='Pending Approval'>Pending Approval</option>
+                    <option value='Inactive'>Inactive</option>
+                  </CustomSelect>
+                  <CustomSelect label='Id Duplicate Check Level' name='id_duplicate_level_type'>
+                    {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
+                  </CustomSelect>
+                  <CustomSelect label='Primary Phone Duplicate Check Level' name='pry_phone_duplicate_level_type'>
+                    {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
+                  </CustomSelect>
+                  <CustomSelect label='Secondary Phone Duplicate Check Level' name='sec_phone_duplicate_level_type'>
+                    {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
+                  </CustomSelect>
+                  <CustomSelect label='Home Phone Duplicate Check Level' name='home_phone_duplicate_level_type'>
+                    {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
+                  </CustomSelect>
+                  <CustomSelect label='Email Duplicate Check Level' name='email_duplicate_level_type'>
+                    {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
+                  </CustomSelect>
+                  <CustomSelect label='Fullname Duplicate Check Level' name='fullname_duplicate_level_type'>
+                    {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
+                  </CustomSelect>
+                  <CustomInput label='Minimum Client Age In Years' name='min_client_age' step='1' type='number'/>
+                  <CustomCheckbox label='Allow Clients Without Identification' name='allow_clients_without_id'/>
+                </div>
               <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              </div>
             </NonFieldErrors>
           </Form>
         )}

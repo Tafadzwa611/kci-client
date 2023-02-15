@@ -136,6 +136,7 @@ body {
 #dark .modal-header, 
 #dark .user-profile .company-name-container,
 #dark .balance_sheet_btn_container,
+#dark .modal-dialog .modal-footer,
 #dark .skeleton-table-bottom{
   border-bottom: 1px solid var(--border-color);
 }
@@ -1445,6 +1446,7 @@ button.close, button.mailbox-attachment-close {
   justify-content: flex-end;
   padding: 1rem;
   border-top: 1px solid #e9ecef;
+  border-bottom: 1px solid #e9ecef;
   border-bottom-right-radius: 0.3rem;
   border-bottom-left-radius: 0.3rem;
 }
@@ -1459,6 +1461,13 @@ button.close, button.mailbox-attachment-close {
   position: relative;
   width: auto;
   pointer-events: none;
+}
+
+.create_modal_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 /* tabs  */
 
@@ -1644,6 +1653,10 @@ button {
 
 form .row:first-child {
   margin-top: 0;
+}
+
+form {
+  height: 100%;
 }
 
 .row .form-label, .form-submit-btn .form-label {
@@ -3304,7 +3317,7 @@ input[type=number] {
   border-top:  1px solid var(--border-color);
 }
 
-.rmdp-container {
-  display: block;
+.col-9 .rmdp-container {
+  display: block !important;
 } 
 

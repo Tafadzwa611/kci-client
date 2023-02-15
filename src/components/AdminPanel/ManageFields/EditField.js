@@ -42,16 +42,20 @@ const EditField = ({open, setOpen, field, setFields}) => {
         {({ errors, values, isSubmitting, setFieldValue }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <CustomInput label='Name' name='name' type='text'/>
-              <CustomCheckbox label='Is Mandatory' name='is_required'/>
-              {values.data_type === 'free_text' && <CustomInput label='Text Format' name='text_format' type='text'/>}
-              {values.data_type === 'select' &&
-                <CustomTypeAndAdd
-                  name='select_opts'
-                  values={values.select_opts}
-                  setFieldValue={setFieldValue}
-                  label='Select Options'/>}
-              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              <div className="create_modal_container">
+                <div>
+                  <CustomInput label='Name' name='name' type='text'/>
+                  <CustomCheckbox label='Is Mandatory' name='is_required'/>
+                  {values.data_type === 'free_text' && <CustomInput label='Text Format' name='text_format' type='text'/>}
+                  {values.data_type === 'select' &&
+                    <CustomTypeAndAdd
+                      name='select_opts'
+                      values={values.select_opts}
+                      setFieldValue={setFieldValue}
+                      label='Select Options'/>}
+                </div>
+                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              </div>
             </NonFieldErrors>
           </Form>
         )}

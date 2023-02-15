@@ -30,23 +30,27 @@ function CreateFieldSet({open, setOpen, setFieldSets, entityType, clientTypes}) 
         {({ isSubmitting, errors, values }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <CustomSelect label='Associated with' name='entity_type' disabled={true}>
-                <option value=''>------</option>
-                <option value='CLIENT'>Clients</option>
-                <option value='LOAN'>Loans</option>
-              </CustomSelect>
-              {values.entity_type === 'CLIENT' && <CustomSelect label='Client type' name='client_type_id'>
-                <option value=''>------</option>
-                {clientTypes.map(type => <option key={type.id} value={type.id}>{type.name}</option>)}
-              </CustomSelect>}
-              <CustomInput label='Form Name' name='name' type='text'/>
-              <CustomSelect label='Form Type' name='field_set_type'>
-                <option value=''>------</option>
-                <option value='SINGLE'>Single</option>
-                <option value='MULTIPLE'>Multiple</option>
-              </CustomSelect>
-              <CustomTextField label='Description' name='description'/>
-              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              <div className="create_modal_container">
+                <div>
+                  <CustomSelect label='Associated with' name='entity_type' disabled={true}>
+                    <option value=''>------</option>
+                    <option value='CLIENT'>Clients</option>
+                    <option value='LOAN'>Loans</option>
+                  </CustomSelect>
+                  {values.entity_type === 'CLIENT' && <CustomSelect label='Client type' name='client_type_id'>
+                    <option value=''>------</option>
+                    {clientTypes.map(type => <option key={type.id} value={type.id}>{type.name}</option>)}
+                  </CustomSelect>}
+                  <CustomInput label='Form Name' name='name' type='text'/>
+                  <CustomSelect label='Form Type' name='field_set_type'>
+                    <option value=''>------</option>
+                    <option value='SINGLE'>Single</option>
+                    <option value='MULTIPLE'>Multiple</option>
+                  </CustomSelect>
+                  <CustomTextField label='Description' name='description'/>
+                </div>
+                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              </div>
             </NonFieldErrors>
           </Form>
         )}
