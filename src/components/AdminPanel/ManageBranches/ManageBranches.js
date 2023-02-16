@@ -1,41 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import { makeRequest } from '../../../utils/utils';
-import MiniLoader from '../../Loader/MiniLoader';
+import React, { useState } from 'react';
+import { Fetcher } from '../../../common';
 import CreateBranchModal from './CreateBranchModal';
 
 const ManageBranches = () => {
+    return (
+        <Fetcher urls={['/usersapi/branch-list/']}>
+            {({data}) => <List data={data[0]} />}
+        </Fetcher>
+    );
+}
 
-    const [branches, setBranches] = useState([])
+export default ManageBranches;
+
+function List({data, currencies}) {
     const [open, setOpen] = useState(false);
-
-    useEffect(() => {
-        getBranchList()
-    }, []);
-
-    const getBranchList = async () => {
-        const data = await fetchBranchList();
-        setBranches(data);
-    };
-
-    async function fetchBranchList() {
-        try {
-            const response = await makeRequest.get(`/usersapi/branch-list/`, {timeout: 8000});
-            if (response.ok) {
-                const data = await response.json();
-                return data;
-            }else {
-                const error = await response.json();
-                console.log(error);
-            }
-        }catch(error) {
-            console.log(error);
-        }
-    }
-
-    if (branches == null) {
-        return <MiniLoader />;
-    } 
-
+    const [branches, setBranches] = useState(data)
     return (
         <>
             <CreateBranchModal open={open} setOpen={setOpen} setBranches={setBranches} />
@@ -46,7 +25,7 @@ const ManageBranches = () => {
                 <table className="table">
                     <tbody>
                         <tr className="journal-details header">
-                            <th>Branch Full_Name</th>
+                            <th>Branch Full Name</th>
                         </tr>  
                         {branches.map((branch) => (
                             <tr className="table-row" key={branch.id}>
@@ -60,4 +39,5 @@ const ManageBranches = () => {
     )
 }
 
-export default ManageBranches;
+
+
