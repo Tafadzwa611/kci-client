@@ -1,71 +1,46 @@
-import React, {useState, useEffect} from 'react';
-import { makeRequest } from '../../utils/utils';
-import MiniLoader from '../Loader/MiniLoader';
+import React, { useState } from 'react';
+import { Fetcher } from '../../common';
 import CreateOtherIncomeTypeModal from './CreateOtherIncomeTypeModal';
 
-
 const OtherIncomeTypes = () => {
-
-    const [otherincomeTypes, setOtherIncomeTypes] = useState([])
-    const [open, setOpen] = useState(false);
-
-    useEffect(() => {
-        getOtherIncomeTypes()
-    }, []);
-
-    const getOtherIncomeTypes = async () => {
-        const data = await fetchOtherIncomeTypes();
-        setOtherIncomeTypes(data);
-    };
-
-    async function fetchOtherIncomeTypes() {
-        try {
-            const response = await makeRequest.get(`/otherincomeapi/otherincometypeslist/`, {timeout: 8000});
-            if (response.ok) {
-                const otherincome_types = await response.json();
-                return otherincome_types;
-            }else {
-                const error = await response.json();
-                console.log(error);
-            }
-        }catch(error) {
-            console.log(error);
-        }
-    }
-
-    if (otherincomeTypes == null) {
-        return <MiniLoader />;
-    } 
-    else {
-        return (
-                <>
-                <CreateOtherIncomeTypeModal open={open} setOpen={setOpen} setOtherIncomeTypes={setOtherIncomeTypes} />
-                <div style={{margin:"20px 0"}}>
-                    <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Other Income Type</button>
-                </div>
-                <div className="table-responsive font-12">
-                    <table className="table">
-                        <tbody>
-                            <tr className="journal-details header">
-                                <th>Name</th>
-                            </tr>                      
-                            {otherincomeTypes.map((otherincome_type) => (
-                                <tr className="table-row" key={otherincome_type.id}>
-                                    <td>{otherincome_type.name}</td>
-                                </tr>
-                            ))}
-                            {otherincomeTypes == "" && 
-                                <tr style={{display:"flex", justifyContent:"center"}}>
-                                    <td>No data available.</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-
-            </>
-        );
-    }
+    return (
+        <Fetcher urls={['/otherincomeapi/otherincometypeslist/', '/usersapi/currencieslist/']}>
+            {({data}) => <List data={data[0]} currencies={data[1]}/>}
+        </Fetcher>
+    );
 }
 
 export default OtherIncomeTypes;
+
+function List({data, currencies}) {
+    const [open, setOpen] = useState(false);
+    const [otherincomeTypes, setOtherIncomeTypes] = useState(data);
+    return (
+        <>
+            <CreateOtherIncomeTypeModal open={open} setOpen={setOpen} setOtherIncomeTypes={setOtherIncomeTypes} currencies={currencies} />
+            <div style={{margin:"20px 0"}}>
+                <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Other Income Type</button>
+            </div>
+            <div className="table-responsive font-12">
+                <table className="table">
+                    <tbody>
+                        <tr className="journal-details header">
+                            <th>Name</th>
+                        </tr>                      
+                        {otherincomeTypes.map((otherincome_type) => (
+                            <tr className="table-row" key={otherincome_type.id}>
+                                <td>{otherincome_type.name}</td>
+                            </tr>
+                        ))}
+                        {otherincomeTypes == "" && 
+                            <tr style={{display:"flex", justifyContent:"center"}}>
+                                <td>No data available.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </>
+    );
+}

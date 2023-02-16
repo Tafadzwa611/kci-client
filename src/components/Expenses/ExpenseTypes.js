@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Fetcher } from '../../common';
-import { makeRequest } from '../../utils/utils';
-import MiniLoader from '../Loader/MiniLoader';
 import CreateExpenseTypeModal from './CreateExpenseTypeModal';
 
 const ExpenseTypes = () => {
@@ -13,7 +11,6 @@ const ExpenseTypes = () => {
 }
 
 export default ExpenseTypes;
-
 
 function List({data, currencies}) {
     const [open, setOpen] = useState(false);
