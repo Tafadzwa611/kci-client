@@ -6,7 +6,7 @@ function CurrencySelector({currencies, currencyId, setCurrencyId}) {
     }
 
     return (
-        <select value={currencyId} onChange={changeCurrency}>
+        <select value={currencyId} onChange={changeCurrency} className="btn btn-default client__details">
             {currencies.map(currency => {
                 return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
             })}

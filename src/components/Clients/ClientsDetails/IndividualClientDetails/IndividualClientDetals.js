@@ -24,6 +24,7 @@ import RequestClientBlackList from './ChangeClientState/RequestChangeClientState
 import RequestClientLeft from './ChangeClientState/RequestChangeClientState/RequestClientLeft';
 import RequestUndoClientLeft from './ChangeClientState/RequestChangeClientState/RequestUndoClientLeft';
 import MoreIndividualClientDetails from './Details/MoreIndividualClientDetails';
+import ClientLoans from './ClientLoans/ClientLoans';
 
 function IndividualClientDetails({client, setClient, addresses, setAddresses, nokList, setNokList, clientId, files, userperms, branches, setFiles, setDetails}) {
   const [tab, setTab] = useState('details');
@@ -259,6 +260,7 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
             <button className={tab === "nok" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("nok")}> Next Of Kin List </button>
             <button className={tab === "files" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("files")}> Files </button>
             <button className={tab === "txns" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("txns")}> Transactions </button>
+            <button className={tab === "loans" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("loans")}> Loans </button>
         </div>
         <div className='tab-content font-12' style={{marginTop:"3rem"}}>
             {{
@@ -269,6 +271,7 @@ function IndividualClientDetails({client, setClient, addresses, setAddresses, no
                 'nok': <NextOfKin clientId={clientId} nokList={nokList} setNokList={setNokList} client={client}/>,
                 'files': <Files clientId={clientId} files={files} setFiles={setFiles} client={client}/>,
                 'txns': <Transactions clientId={clientId} />,
+                'loans': <ClientLoans clientId={clientId} />,
             }[tab]}
         </div>
     </>
