@@ -15,7 +15,8 @@ const MoreLoanDetails = (
         setOpenUndoLoanApproval,
         setOpenApproveLoan,
         setOpenRejectLoan,
-        setOpenDeleteLoan
+        setOpenDeleteLoan,
+        setOpenDisburseLoan
     }) => {
 
     const [tab, setTab] = useState('loan-details');
@@ -52,7 +53,7 @@ const MoreLoanDetails = (
                             {loan.status == 'Approved' && 
                                 <div className="client-state-btns" style={{display:"flex", columnGap:"3px", justifyContent:"flex-end"}}>
                                     <button className="btn btn-olive" onClick={(e) => setOpenUndoLoanApproval(curr => !curr)}>Undo Approve</button>
-                                    <button className="btn btn-olive" >Disburse</button>
+                                    <button className="btn btn-olive" onClick={(e) => setOpenDisburseLoan(curr => !curr)}>Disburse</button>
                                 </div>
                             }
                             {loan.status == 'Processing' && 

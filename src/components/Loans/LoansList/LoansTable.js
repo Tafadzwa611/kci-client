@@ -3,6 +3,7 @@ import { convertDate, getAge } from '../../Accounting/Journals/utils';
 import Footer from './Footer';
 import Loan from '../LoansDetails/Loan';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import { Fetcher } from '../../../common';
 
 
 function LoansTable(
@@ -266,7 +267,10 @@ function LoansTable(
                 <div style={{position:"sticky", top:"0", width:"100%"}}>
                     <div className="j-details-container" style={{padding:"1.5rem"}}>
 
-                      <Loan selectedLoanID={selectedLoanID} setDetails={setDetails} selectedloan={selectedloan} setLoans={setLoans} />
+                      {/* <Loan selectedLoanID={selectedLoanID} setDetails={setDetails} selectedloan={selectedloan} setLoans={setLoans} /> */}
+                      <Fetcher urls={['/usersapi/currencieslist/', `/loansapi/get_loan/${selectedLoanID}/`]}>
+                        {({data}) => <Loan currencies={data[0]} loan2={data[1]} selectedLoanID={selectedLoanID} setDetails={setDetails} selectedloan={selectedloan} setLoans={setLoans}/>}
+                      </Fetcher>
 
                     </div>
                 </div>

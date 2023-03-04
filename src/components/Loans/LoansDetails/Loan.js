@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { convertDate } from '../../Accounting/Journals/utils';
 import ApproveLoan from './LoanStates/ApproveLoan/ApproveLoan';
+import DisburseLoan from './LoanStates/DisburseLoan/DisburseLoan';
 import RejectLoan from './LoanStates/RejectLoan/RejectLoan';
 import DeleteLoan from './LoanStates/DeleteLoan/DeleteLoan';
 import UndoLoanDisbursement from './LoanStates/UndoLoanDisbursement/UndoLoanDisbursement';
@@ -9,12 +10,13 @@ import MiniLoader  from '../../Loader/MiniLoader';
 import MoreLoanDetails from './MoreLoanDetails/MoreLoanDetails';
 import { makeRequest } from '../../../utils/utils';
 
-
 const Loan = ({
     setDetails,
     selectedloan,
     selectedLoanID,
     setLoans,
+    currencies,
+    loan2,
 }) => {
 
     const [loan, setLoan] = useState(null);
@@ -26,8 +28,11 @@ const Loan = ({
     const [openLoanApproval, setOpenLoanApproval] = useState(false);
     const [openUndoLoanApproval, setOpenUndoLoanApproval] = useState(false);
     const [openMoreLoanDetails, setOpenMoreLoanDetails] = useState(false);
+    const [openDisburseLoan, setOpenDisburseLoan] = useState(false);
+    const [scheduleStrategies, setScheduleStrategies] = useState(null);
+    const [defaultScheduleStrategy, setDefaultScheduleStrategies] = useState(null);
+    const [firstRepaymentDate, setFirstRepaymentDate] = useState(null);
 
-    
     const handleClose = () => {
         setDetails(false);
     }
@@ -40,7 +45,9 @@ const Loan = ({
         await fetchLoan();
     }
 
-    if (loan === null || daysInArrears === null) {
+    console.log(loan2)
+
+    if (loan === null || daysInArrears === null || scheduleStrategies === null) {
         return <MiniLoader />
     }
 
@@ -50,6 +57,9 @@ const Loan = ({
             if (response.ok) {
                 const json_res = await response.json();
                 setDaysInArrears(json_res.days_in_arrears)
+                setScheduleStrategies(json_res.loan.schedule_strategies)
+                setDefaultScheduleStrategies(json_res.loan.default_schedule_strategy)
+                setFirstRepaymentDate(json_res.loan.first_repayment_date)
                 setLoan(json_res.loan);
                 return 
             }else {
@@ -74,13 +84,13 @@ const Loan = ({
         'Written-Off': 'badge-bg badge-bg-dark',
         'Approved': 'badge-bg badge-bg-info-light',
     }
-
+    
     return (
         <div>
             <div style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
                 <div style={{display:"flex", alignItems:"center", columnGap:"1rem"}}>
                     <button className={statusClasses[loan.status]}>{loan.status}</button>
-                    <span><b>{loan.client}'s</b> Loan Details</span>
+                    <span><b>{loan.client_fullname}'s</b> Loan Details</span>
                 </div>
                 <div style={{display:"flex", columnGap:"3px", justifyContent:"flex-end"}}>
                     <button className="btn btn-default client__details" onClick={(e) => setOpenMoreLoanDetails(curr => !curr)}>Expand</button>
@@ -98,6 +108,7 @@ const Loan = ({
                     setOpenApproveLoan={setOpenApproveLoan}
                     setOpenRejectLoan={setOpenRejectLoan}
                     setOpenDeleteLoan={setOpenDeleteLoan}
+                    setOpenDisburseLoan={setOpenDisburseLoan}
                 />
             }
 
@@ -107,6 +118,19 @@ const Loan = ({
                     setLoan={setLoan}
                     open={openApproveLoan}
                     setOpen={setOpenApproveLoan}
+                />
+            }
+
+            {openDisburseLoan &&
+                <DisburseLoan 
+                    selectedLoanID={selectedLoanID}
+                    setLoan={setLoan}
+                    open={openDisburseLoan}
+                    setOpen={setOpenDisburseLoan}
+                    scheduleStrategies={scheduleStrategies}
+                    defaultScheduleStrategy={defaultScheduleStrategy}
+                    firstRepaymentDate={firstRepaymentDate}
+                    currencies={currencies}
                 />
             }
 
@@ -153,7 +177,7 @@ const Loan = ({
             {loan.status == 'Approved' && 
                 <div className="client-state-btns" style={{display:"flex", columnGap:"3px", marginTop:"1rem", justifyContent:"flex-end"}}>
                     <button className="btn btn-olive" onClick={(e) => setOpenUndoLoanApproval(curr => !curr)}>Undo Approve</button>
-                    <button className="btn btn-olive" >Disburse</button>
+                    <button className="btn btn-olive" onClick={(e) => setOpenDisburseLoan(curr => !curr)}>Disburse</button>
                 </div>
             }
             {loan.status == 'Processing' && 
@@ -282,3 +306,4 @@ const Loan = ({
 }
 
 export default Loan;
+

@@ -17,8 +17,12 @@ const ApproveLoan = ({open, setOpen, selectedLoanID, setLoan}) => {
         {({ errors, isSubmitting }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <CustomInput label='Expected Disbursement Date' name='expected_disbursement_date' type='date'/>
-              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              <div className="create_modal_container">
+                <div>
+                  <CustomInput label='Expected Disbursement Date' name='expected_disbursement_date' type='date'/>
+                </div>
+                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              </div>
             </NonFieldErrors>
           </Form>
         )}
