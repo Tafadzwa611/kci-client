@@ -266,10 +266,18 @@ function LoansTable(
               {details && (
                 <div style={{position:"sticky", top:"0", width:"100%"}}>
                     <div className="j-details-container" style={{padding:"1.5rem"}}>
-
-                      {/* <Loan selectedLoanID={selectedLoanID} setDetails={setDetails} selectedloan={selectedloan} setLoans={setLoans} /> */}
-                      <Fetcher urls={['/usersapi/currencieslist/', `/loansapi/get_loan/${selectedLoanID}/`]}>
-                        {({data}) => <Loan currencies={data[0]} loan2={data[1]} selectedLoanID={selectedLoanID} setDetails={setDetails} selectedloan={selectedloan} setLoans={setLoans}/>}
+                      <Fetcher urls={['/acc-api/cash-and-cash-equivalents-sub-accs/', `/loansapi/get_loan/${selectedLoanID}/`, '/usersapi/staff/']}>
+                        {({data}) => <Loan 
+                                        fund_accounts={data[0]} 
+                                        loan_info={data[1].loan} 
+                                        days_in_arrears={data[1].days_in_arrears} 
+                                        user_permissions={data[1].user_permissions} 
+                                        loan_officers={data[2]} 
+                                        selectedLoanID={selectedLoanID} 
+                                        setDetails={setDetails} 
+                                        selectedloan={selectedloan} 
+                                        setLoans={setLoans}
+                                    />}
                       </Fetcher>
 
                     </div>

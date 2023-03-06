@@ -15,12 +15,15 @@ const Loan = ({
     selectedloan,
     selectedLoanID,
     setLoans,
-    currencies,
-    loan2,
+    fund_accounts,
+    loan_officers,
+    loan_info,
+    days_in_arrears,
+    user_permissions
 }) => {
 
-    const [loan, setLoan] = useState(null);
-    const [daysInArrears, setDaysInArrears] = useState(0)
+    const [loan, setLoan] = useState(loan_info);
+    const [daysInArrears, setDaysInArrears] = useState(days_in_arrears)
     const [openApproveLoan, setOpenApproveLoan] = useState(false);
     const [openRejectLoan, setOpenRejectLoan] = useState(false);
     const [openDeleteLoan, setOpenDeleteLoan] = useState(false);
@@ -29,48 +32,12 @@ const Loan = ({
     const [openUndoLoanApproval, setOpenUndoLoanApproval] = useState(false);
     const [openMoreLoanDetails, setOpenMoreLoanDetails] = useState(false);
     const [openDisburseLoan, setOpenDisburseLoan] = useState(false);
-    const [scheduleStrategies, setScheduleStrategies] = useState(null);
-    const [defaultScheduleStrategy, setDefaultScheduleStrategies] = useState(null);
-    const [firstRepaymentDate, setFirstRepaymentDate] = useState(null);
+    const [scheduleStrategies, setScheduleStrategies] = useState(loan_info.schedule_strategies);
+    const [defaultScheduleStrategy, setDefaultScheduleStrategies] = useState(loan_info.default_schedule_strategy);
+    const [firstRepaymentDate, setFirstRepaymentDate] = useState(loan_info.first_repayment_date);
 
     const handleClose = () => {
         setDetails(false);
-    }
-
-    useEffect(() => {
-        getLoan(selectedLoanID);
-    }, [selectedLoanID]);
-
-    const getLoan = async () => {
-        await fetchLoan();
-    }
-
-    console.log(loan2)
-    console.log('------------------------')
-    console.log(loan2.days_in_arrears)
-
-    if (loan === null || daysInArrears === null || scheduleStrategies === null) {
-        return <MiniLoader />
-    }
-
-    async function fetchLoan() {
-        try {
-            const response = await makeRequest.get(`/loansapi/get_loan/${selectedLoanID}/`, {timeout: 8000});
-            if (response.ok) {
-                const json_res = await response.json();
-                setDaysInArrears(json_res.days_in_arrears)
-                setScheduleStrategies(json_res.loan.schedule_strategies)
-                setDefaultScheduleStrategies(json_res.loan.default_schedule_strategy)
-                setFirstRepaymentDate(json_res.loan.first_repayment_date)
-                setLoan(json_res.loan);
-                return 
-            }else {
-                const error = await response.json();
-                console.log(error);
-            }
-        }catch(error) {
-            console.log(error);
-        }
     }
 
     const statusClasses = {
@@ -132,7 +99,8 @@ const Loan = ({
                     scheduleStrategies={scheduleStrategies}
                     defaultScheduleStrategy={defaultScheduleStrategy}
                     firstRepaymentDate={firstRepaymentDate}
-                    currencies={currencies}
+                    fund_accounts={fund_accounts}
+                    loan_officers={loan_officers}
                 />
             }
 
