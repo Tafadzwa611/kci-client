@@ -46,6 +46,8 @@ const Loan = ({
     }
 
     console.log(loan2)
+    console.log('------------------------')
+    console.log(loan2.days_in_arrears)
 
     if (loan === null || daysInArrears === null || scheduleStrategies === null) {
         return <MiniLoader />

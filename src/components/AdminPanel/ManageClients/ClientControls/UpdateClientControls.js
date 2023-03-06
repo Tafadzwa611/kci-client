@@ -16,7 +16,12 @@ const getPayload = (values) => {
     email_duplicate_level_type: values.email_duplicate_level_type == '' ? null : values.email_duplicate_level_type,
     fullname_duplicate_level_type: values.fullname_duplicate_level_type == '' ? null : values.fullname_duplicate_level_type,
     min_client_age: values.min_client_age == '' ? null : values.min_client_age,
-    allow_clients_without_id: values.allow_clients_without_id
+    maximum_group_size: values.maximum_group_size == '' ? null : values.maximum_group_size,
+    minimum_group_size: values.minimum_group_size == '' ? null : values.minimum_group_size,
+    allow_clients_without_id: values.allow_clients_without_id,
+    client_officer_required: values.client_officer_required,
+    group_officer_required: values.group_officer_required,
+    allow_multi_groups_per_client: values.allow_multi_groups_per_client,
   };
 }
 
@@ -30,7 +35,12 @@ const UpdateClientControls = ({open, setOpen, clientControls, setClientControls}
     email_duplicate_level_type: clientControls.email_duplicate_level_type ?? '',
     fullname_duplicate_level_type: clientControls.fullname_duplicate_level_type ?? '',
     min_client_age: clientControls.min_client_age ?? '',
-    allow_clients_without_id: clientControls.allow_clients_without_id
+    maximum_group_size: clientControls.maximum_group_size ?? '',
+    minimum_group_size: clientControls.minimum_group_size ?? '',
+    allow_clients_without_id: clientControls.allow_clients_without_id,
+    client_officer_required: clientControls.client_officer_required,
+    group_officer_required: clientControls.group_officer_required,
+    allow_multi_groups_per_client: clientControls.allow_multi_groups_per_client,
   };
 
   const onSubmit = async (values, actions) => {
@@ -71,7 +81,12 @@ const UpdateClientControls = ({open, setOpen, clientControls, setClientControls}
                     {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
                   </CustomSelect>
                   <CustomInput label='Minimum Client Age In Years' name='min_client_age' step='1' type='number'/>
+                  <CustomInput label='Maximum group size' name='maximum_group_size' step='1' type='number'/>
+                  <CustomInput label='Minimum group size' name='minimum_group_size' step='1' type='number'/>
                   <CustomCheckbox label='Allow Clients Without Identification' name='allow_clients_without_id'/>
+                  <CustomCheckbox label='Client Officer Required' name='client_officer_required'/>
+                  <CustomCheckbox label='Group Officer Required' name='group_officer_required'/>
+                  <CustomCheckbox label='Allow multi groups per client' name='allow_multi_groups_per_client'/>
                 </div>
               <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
               </div>

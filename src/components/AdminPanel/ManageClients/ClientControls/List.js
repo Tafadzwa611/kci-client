@@ -11,7 +11,12 @@ const CONTROL_NAMES = {
   fullname_duplicate_level_type: 'Fullname Duplicate Check Level',
   home_phone_duplicate_level_type: 'Home Phone Duplicate Check Level',
   min_client_age: 'Minimum Client Age',
-  allow_clients_without_id: 'Allow Clients Without Identification'
+  maximum_group_size: 'Maximum group size',
+  minimum_group_size: 'Minimum group size',
+  allow_clients_without_id: 'Allow Clients Without Identification',
+  client_officer_required: 'Client Officer Required',
+  group_officer_required: 'Group Officer Required',
+  allow_multi_groups_per_client: 'Allow multi groups per client'
 };
 
 const List = ({initControls}) => {
@@ -44,7 +49,12 @@ const getTableRows = (clientControls) => {
         <td>
           {clientControls[key] === null || clientControls[key] ===  '' ? 'Do Not Check' : clientControls[key]}
           {(key === 'min_client_age' && clientControls[key] != null) && ' years'}
+          {(key === 'maximum_group_size' && clientControls[key] != null) && ' members'}
+          {(key === 'minimum_group_size' && clientControls[key] != null) && ' members'}
           {key === 'allow_clients_without_id' &&  (clientControls[key] ? 'Yes' : 'No')}
+          {key === 'client_officer_required' &&  (clientControls[key] ? 'Yes' : 'No')}
+          {key === 'group_officer_required' &&  (clientControls[key] ? 'Yes' : 'No')}
+          {key === 'allow_multi_groups_per_client' &&  (clientControls[key] ? 'Yes' : 'No')}
         </td>
       </tr>
     )
