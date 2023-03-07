@@ -171,7 +171,7 @@ function PaymentsReport() {
                 loanBranchId={loanBranchId}
                 setLoanBranchId={setLoanBranchId}
             />
-            <div style={{paddingTop: '17px'}}></div>
+            <div style={{paddingTop: '1.5rem'}}></div>
             {
                 loaded && <div>
                     <TableHeader 

@@ -3321,3 +3321,29 @@ input[type=number] {
   display: block !important;
 } 
 
+
+/* ============================================================================== */
+
+.header-padding-container {
+  display: flex;
+  justify-content: space-between;
+  border-top:  1px solid #eef2f7;
+}
+.header-padding-container-bottom {
+  display: flex;
+  justify-content: space-between;
+  border-top:  1px solid #eef2f7;
+  border-bottom:  1px solid #eef2f7;
+}
+.header-padding {
+  padding: var(--p-1) var(--p-1-5);
+}
+
+#dark .header-padding-container {
+  border-top:  1px solid var(--border-color);
+}
+
+#dark .header-padding-container-bottom {
+  border-top:  1px solid var(--border-color);
+  border-bottom:  1px solid var(--border-color);
+}
