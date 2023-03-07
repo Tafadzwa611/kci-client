@@ -15,6 +15,8 @@ function CustomDatePicker({ setFieldValue, label, ...props }) {
     }
   }
 
+  console.log(field)
+
   return (
     <>
       <div className='row custom-background'>
