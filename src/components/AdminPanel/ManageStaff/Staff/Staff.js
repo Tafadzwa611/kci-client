@@ -6,8 +6,6 @@ const Staff = () => {
 
     const [users, setUsers] = useState([]);
     const [open, setOpen] = useState(false);
-    const pageNum = useRef(1);
-    const [nextPageNumber, setNextPageNumber] = useState(null);
 
     useEffect(() => {
         getUsers()
@@ -15,16 +13,15 @@ const Staff = () => {
 
     const getUsers = async () => {
         const data = await fetchUsers();
-        setUsers(data.staff);
+        setUsers(data);
     };
 
     async function fetchUsers() {
         try {
-            let url = `/usersapi/staff/?page_num=${pageNum.current}`;
+            let url = `/usersapi/staff/`;
             const response = await makeRequest.get(url, {timeout: 8000});
             if (response.ok) {
                 const json_res = await response.json();
-                setNextPageNumber(json_res.next_page_num);
                 return json_res;
             }else {
                 const error = await response.json();
