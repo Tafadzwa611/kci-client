@@ -26,10 +26,12 @@ function List({data, currencies}) {
                     <tbody>
                         <tr className="journal-details header">
                             <th>Name</th>
+                            <th>Currency</th>
                         </tr>                      
                         {otherincomeTypes.map((otherincome_type) => (
                             <tr className="table-row" key={otherincome_type.id}>
                                 <td>{otherincome_type.name}</td>
+                                <td>{otherincome_type.currency}</td>
                             </tr>
                         ))}
                         {otherincomeTypes == "" && 

@@ -15,6 +15,7 @@ export default ExpenseTypes;
 function List({data, currencies}) {
     const [open, setOpen] = useState(false);
     const [expenseTypes, setExpenseTypes] = useState(data);
+    
     return (
         <>
             <CreateExpenseTypeModal open={open} setOpen={setOpen} setExpenseTypes={setExpenseTypes} currencies={currencies} />
@@ -26,10 +27,12 @@ function List({data, currencies}) {
                     <tbody>
                         <tr className="journal-details header">
                             <th>Name</th>
+                            <th>Currency</th>
                         </tr>    
                         {expenseTypes.map((expense_type) => (
                             <tr className="table-row" key={expense_type.id}>
                                 <td>{expense_type.name}</td>
+                                <td>{expense_type.currency}</td>
                             </tr>
                         ))}
                         {expenseTypes == "" && 
