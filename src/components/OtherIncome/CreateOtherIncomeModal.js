@@ -114,7 +114,7 @@ function CreateOtherincomeModal({open, setOpen, setOtherIncomes}) {
   const inc_type = otherIncomeTypes.filter((value) => value.id == oth.income_type);
   let other_inc_type_currency_id
   if (inc_type != ""){
-    other_inc_type_currency_id = inc_type[0].currency.id
+    other_inc_type_currency_id = inc_type[0].currency_id
   }
 
   const newFundAccountArray = fundAccount.filter((value) => value.currency ==  other_inc_type_currency_id);

@@ -114,7 +114,7 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
   const exp_type = expenseTypes.filter((value) => value.id == exp.expense_type);
   let exp_type_currency_id
   if (exp_type != ""){
-    exp_type_currency_id = exp_type[0].currency.id
+    exp_type_currency_id = exp_type[0].currency_id
   }
 
   const newFundAccountArray = fundAccount.filter((value) => value.currency ==  exp_type_currency_id);
