@@ -2,6 +2,7 @@ import React, { Suspense, lazy, useEffect } from 'react';
 import AccountingRoutes from './AccountingRoutes';
 import AssetRoutes from './AssetRoutes';
 import ClientRoutes from './ClientRoutes';
+import GroupRoutes from './GroupRoutes';
 import ExpenseRoutes from './ExpenseRoutes';
 import LoanRoutes from './LoanRoutes';
 import OtherIncomeRoutes from './OtherIncomeRoutes';
@@ -30,6 +31,7 @@ const Routes = ({loggedInUser}) => {
         {AccountingRoutes}
         {AssetRoutes}
         {ClientRoutes}
+        {GroupRoutes}
         {ExpenseRoutes}
         {LoanRoutes}
         {OtherIncomeRoutes}
