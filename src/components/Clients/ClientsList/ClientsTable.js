@@ -31,7 +31,7 @@ function ClientsTable({clients, totalCount, setDetails, details, setSelectedClie
           />
         </div>
       </div>
-      <div style={details ? {display:"grid", gridTemplateColumns:"1fr 3fr", columnGap:"1rem"} : {display:"block"}}>
+      <div style={details ? {display:"grid", gridTemplateColumns:"1fr 4fr", columnGap:"1rem"} : {display:"block"}}>
         <div style={{padding:"0", border:"none"}}>
           <div style={{width:"100%", overflowX:"auto"}}>
             <div className="table__height">

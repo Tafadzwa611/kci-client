@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import GroupsList from '../GroupsList/GroupsList';
-// import NewAddClient from '../add_client/NewAddClient';
+import CreateGroup from '../add_group/CreateGroup';
 // import SmsList from '../Sms/SmsList';
 import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
 
@@ -24,9 +24,9 @@ const ViewClients = () => {
         </div>
         <div className='tab-content font-12' style={{marginTop:'3rem'}}>
           {{
-            'groups': <GroupsList setMainTab={setTab}/>, 
-            // 'addclient': <NewAddClient setMainTab={setTab}/>,
-            // 'sms': <SmsList setMainTab={setTab}/>
+            'groups': <GroupsList/>, 
+            'addgroup': <CreateGroup/>,
+            // 'sms': <SmsList/>
           }[tab]}
         </div>
       </div>
