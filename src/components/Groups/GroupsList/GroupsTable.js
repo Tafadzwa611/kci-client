@@ -3,11 +3,11 @@ import Group from '../GroupssDetails/Group';
 import { convertDate, getAge } from '../../Accounting/Journals/utils';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-function GroupsTable({groups, totalCount, setDetails, details, setSelectedGroupID, selecteGroupID, selectedgroup}) {
+function GroupsTable({groups, totalCount, setDetails, details, setSelectedGroupID, selectedGroupID, selectedgroup}) {
 
   const handleClick = (e) => {
     setSelectedGroupID(e.target.id)
-    if (e.target.id != selecteGroupID){
+    if (e.target.id != selectedGroupID){
       setDetails(true);
     }else{
       setDetails(curr => !curr)
@@ -90,7 +90,7 @@ function GroupsTable({groups, totalCount, setDetails, details, setSelectedGroupI
               <div style={{position:"sticky", top:"0", width:"100%"}}>
                   <div className="j-details-container" style={{padding:"1.5rem"}}>
 
-                    <Group selecteGroupID={selecteGroupID} setDetails={setDetails} />
+                    <Group selectedGroupID={selectedGroupID} setDetails={setDetails} />
 
                   </div>
               </div>

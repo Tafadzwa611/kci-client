@@ -21,7 +21,7 @@ function GroupsList() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [advOpts, setAdvOpts] = useState({});
   const [details, setDetails] = useState(false)
-  const [selecteGroupID, setSelectedGroupID] = useState(null)
+  const [selectedGroupID, setSelectedGroupID] = useState(null)
   const [approved, setApproved] = useState('');
   
   const pageNum = useRef(1);
@@ -155,8 +155,8 @@ function GroupsList() {
             setDetails={setDetails} 
             details={details} 
             setSelectedGroupID={setSelectedGroupID} 
-            selecteGroupID={selecteGroupID}
-            selectedgroup={groups.find(clnt => clnt.id == selecteGroupID)}
+            selectedGroupID={selectedGroupID}
+            selectedgroup={groups.find(clnt => clnt.id == selectedGroupID)}
           />
           <Footer 
             nextPageNumber={nextPageNumber} 
