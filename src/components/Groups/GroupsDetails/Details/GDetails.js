@@ -7,7 +7,7 @@ import RejectGroup from './ChangeGroupState/RejectGroup';
 import UndoGroupRejection from './ChangeGroupState/UndoGroupRejection';
 // import RequestUndoClientRejection from './ChangeClientState/RequestChangeClientState/RequestUndoClientRejection';
 // import UndoClientLeft from './ChangeClientState/UndoClientLeft';
-// import ClientLeft from './ChangeClientState/ClientLeft';
+import GroupLeft from './ChangeGroupState/GroupLeft';
 // import BlacklistClient from './ChangeClientState/BlackListClient';
 // import UndoClientBlackList from './ChangeClientState/UndoClientBlackList';
 import UndoGroupApproval from './ChangeGroupState/UndoGroupApproval';
@@ -30,7 +30,7 @@ function GDetails({group, setGroup, members, setMembers, groupId, userperms, set
 //   const [requestundoClientRejection, setRequestUndoClientRejection] = useState(false);
 //   const [requestClientRejection, setRequestClientRejection] = useState(false);
 //   const [undoclientleft, setUndoClientLeft] = useState(false);
-//   const [clientleft, setClientLeft] = useState(false);
+  const [groupleft, setGroupLeft] = useState(false);
 //   const [clientblacklist, setClientBlacklist] = useState(false);
 //   const [undoclientblacklist, setUndoClientBlacklist] = useState(false);
   const [undogroupapproval, setUndoGroupApproval] = useState(false);
@@ -78,6 +78,14 @@ function GDetails({group, setGroup, members, setMembers, groupId, userperms, set
           groupId={groupId} 
           setGroup={setGroup} 
           setUndoGroupRejection={setUndoGroupRejection} 
+        />
+      }
+
+      {groupleft &&
+        <GroupLeft 
+          groupId={groupId}
+          setGroup={setGroup}
+          setGroupLeft={setGroupLeft}
         />
       }
 
@@ -217,11 +225,12 @@ function GDetails({group, setGroup, members, setMembers, groupId, userperms, set
               {/* {userperms.blacklist_client ?
                 <button className="btn btn-olive" onClick={(e) => setClientBlacklist(curr => !curr)}>Blacklist</button>:
                 <button className="btn btn-olive" onClick={(e) => setRequestClientBlackList(curr => !curr)}>Request Blacklist</button>
-              }
-              {userperms.mark_client_as_left ?
-                <button className="btn btn-olive" onClick={(e) => setClientLeft(curr => !curr)}>Left</button>:
-                <button className="btn btn-olive" onClick={(e) => setRequestClientLeft(curr => !curr)}>Request Left</button>
               } */}
+              {userperms.mark_client_as_left ?
+                <button className="btn btn-olive" onClick={(e) => setGroupLeft(curr => !curr)}>Left</button>:
+                <button className="btn btn-olive">Request Left</button>
+                // <button className="btn btn-olive" onClick={(e) => setRequestClientLeft(curr => !curr)}>Request Left</button>
+              }
             </div>
           }
 
