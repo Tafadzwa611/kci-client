@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { makeRequest } from '../../../utils/utils';
 import MiniLoader from '../../Loader/MiniLoader';
+import GDetails from './Details/GDetails';
 
 function Group({selectedGroupID, setDetails}) {
     const [group, setGroup] = useState(null);
@@ -21,6 +22,7 @@ function Group({selectedGroupID, setDetails}) {
             if (response.ok) {
                 const json_res = await response.json();
                 setMembers(json_res.members)
+                setUserPerms(json_res.user_permissions);
                 return setGroup(json_res);
             }else {
                 const error = await response.json();
@@ -35,17 +37,17 @@ function Group({selectedGroupID, setDetails}) {
         return <MiniLoader />
     }
 
-    console.log(members)
-
     return (
         <>
-            {members.map(member => {
-                return (
-                    <div key={member.id}>
-                        <div>{member.fullname}</div>
-                    </div>
-                )
-            })}
+            <GDetails
+                group={group.group}
+                setGroup={setGroup}
+                members={members}
+                setMembers={setMembers}
+                groupId={selectedGroupID}
+                userperms={userperms}
+                setDetails={setDetails}
+            />
         </>
     )
 }
