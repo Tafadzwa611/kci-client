@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeRequest } from '../../../../../utils/utils';
 
 
-function UndoGroupApproval({setUndoGroupApproval, setGroup, groupId}) {
+function UndoGroupRejection({setUndoGroupRejection, setGroup, groupId}) {
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -14,11 +14,11 @@ function UndoGroupApproval({setUndoGroupApproval, setGroup, groupId}) {
 
     async function patchGroup() {
         try {
-            const response = await makeRequest.patch(`/clientsapi/undo_group_approval/${groupId}/`, {}, {timeout: 8000});
+            const response = await makeRequest.patch(`/clientsapi/undo_group_rejection/${groupId}/`, {}, {timeout: 8000});
             if (response.ok) {
                 setGroup(curr => ({...curr, approved: false}));
                 setGroup(curr => ({...curr, status: 'Pending Approval'}));
-                setUndoGroupApproval(false);
+                setUndoGroupRejection(false);
             }else {
                 const error = await response.json();
                 setErrorMsg(Object.values(error)[0]);
@@ -34,18 +34,18 @@ function UndoGroupApproval({setUndoGroupApproval, setGroup, groupId}) {
         <div className="modalBackground">
             <div className="modalContainer">
                 <div>
-                    <i className="uil uil-history-alt modal_circle_left"></i>
+                    <i className="uil uil-sync modal_circle_undo_client_rejection"></i>
                 </div>
                 <div className="title">
-                    Undo Approve Group 
+                    Undo Group Rejection 
                 </div>
                 <div className="modal-footer">
-                    <button className="btn btn-default"onClick={() => setUndoGroupApproval(false)}>Cancel</button>
-                    <button className="btn btn-dark" onClick={handleSubmit}>Continue</button>
+                    <button className="btn btn-default"onClick={() => setUndoGroupRejection(false)}>Cancel</button>
+                    <button className="btn btn-success" onClick={handleSubmit}>Continue</button>
                 </div>
             </div>
         </div>
     )
 }
 
-export default UndoGroupApproval;
+export default UndoGroupRejection;

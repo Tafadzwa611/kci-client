@@ -23,7 +23,7 @@ function Group({selectedGroupID, setDetails}) {
                 const json_res = await response.json();
                 setMembers(json_res.members)
                 setUserPerms(json_res.user_permissions);
-                return setGroup(json_res);
+                return setGroup(json_res.group);
             }else {
                 const error = await response.json();
                 console.log(error);
@@ -40,7 +40,7 @@ function Group({selectedGroupID, setDetails}) {
     return (
         <>
             <GDetails
-                group={group.group}
+                group={group}
                 setGroup={setGroup}
                 members={members}
                 setMembers={setMembers}

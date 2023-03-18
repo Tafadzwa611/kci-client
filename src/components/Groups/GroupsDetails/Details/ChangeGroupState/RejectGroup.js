@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { makeRequest } from '../../../../../utils/utils';
 
 
-function UndoGroupApproval({setUndoGroupApproval, setGroup, groupId}) {
+function RejectGroup({setRejectGroup, setGroup, groupId}) {
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
-
 
     const handleSubmit = async () => {
         setLoading(true);
@@ -14,11 +13,11 @@ function UndoGroupApproval({setUndoGroupApproval, setGroup, groupId}) {
 
     async function patchGroup() {
         try {
-            const response = await makeRequest.patch(`/clientsapi/undo_group_approval/${groupId}/`, {}, {timeout: 8000});
+            const response = await makeRequest.patch(`/clientsapi/reject_group/${groupId}/`, {}, {timeout: 8000});
             if (response.ok) {
                 setGroup(curr => ({...curr, approved: false}));
-                setGroup(curr => ({...curr, status: 'Pending Approval'}));
-                setUndoGroupApproval(false);
+                setGroup(curr => ({...curr, status: 'Rejected'}));
+                setRejectGroup(false);
             }else {
                 const error = await response.json();
                 setErrorMsg(Object.values(error)[0]);
@@ -29,23 +28,22 @@ function UndoGroupApproval({setUndoGroupApproval, setGroup, groupId}) {
         }
     }
 
-
     return (
         <div className="modalBackground">
             <div className="modalContainer">
                 <div>
-                    <i className="uil uil-history-alt modal_circle_left"></i>
+                    <i className="uil uil-times-circle modal_circle_reject"></i>
                 </div>
                 <div className="title">
-                    Undo Approve Group 
+                    Reject Group 
                 </div>
                 <div className="modal-footer">
-                    <button className="btn btn-default"onClick={() => setUndoGroupApproval(false)}>Cancel</button>
-                    <button className="btn btn-dark" onClick={handleSubmit}>Continue</button>
+                    <button className="btn btn-default"onClick={() => setRejectGroup(false)}>Cancel</button>
+                    <button className="btn btn-danger" onClick={handleSubmit}>Continue</button>
                 </div>
             </div>
         </div>
     )
 }
 
-export default UndoGroupApproval;
+export default RejectGroup;

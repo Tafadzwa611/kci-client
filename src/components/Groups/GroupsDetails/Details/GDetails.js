@@ -3,8 +3,8 @@ import Details from './Details/Details';
 // import Files from './Files/Files';
 // import Transactions from './Transactions/Transactions';
 import ApproveGroup from './ChangeGroupState/ApproveGroup';
-// import RejectClient from './ChangeClientState/RejectClient';
-// import UndoClientRejection from './ChangeClientState/UndoClientRejection';
+import RejectGroup from './ChangeGroupState/RejectGroup';
+import UndoGroupRejection from './ChangeGroupState/UndoGroupRejection';
 // import RequestUndoClientRejection from './ChangeClientState/RequestChangeClientState/RequestUndoClientRejection';
 // import UndoClientLeft from './ChangeClientState/UndoClientLeft';
 // import ClientLeft from './ChangeClientState/ClientLeft';
@@ -25,8 +25,8 @@ import UndoGroupApproval from './ChangeGroupState/UndoGroupApproval';
 function GDetails({group, setGroup, members, setMembers, groupId, userperms, setDetails}) {
   const [tab, setTab] = useState('gdetails');
   const [openApproveGroup, setOpenApproveGroup] = useState(false);
-//   const [rejectClient, setRejectClient] = useState(false);
-//   const [undoClientRejection, setUndoClientRejection] = useState(false);
+  const [rejectGroup, setRejectGroup] = useState(false);
+  const [undoGroupRejection, setUndoGroupRejection] = useState(false);
 //   const [requestundoClientRejection, setRequestUndoClientRejection] = useState(false);
 //   const [requestClientRejection, setRequestClientRejection] = useState(false);
 //   const [undoclientleft, setUndoClientLeft] = useState(false);
@@ -47,8 +47,6 @@ function GDetails({group, setGroup, members, setMembers, groupId, userperms, set
     setDetails(false);
   }
 
-  console.log(group.status)
-
   return (
     <>  
       {openApproveGroup &&
@@ -64,6 +62,22 @@ function GDetails({group, setGroup, members, setMembers, groupId, userperms, set
           groupId={groupId}
           setGroup={setGroup}
           setUndoGroupApproval={setUndoGroupApproval}
+        />
+      }
+
+      {rejectGroup &&
+        <RejectGroup
+          groupId={groupId} 
+          setGroup={setGroup} 
+          setRejectGroup={setRejectGroup} 
+        />
+      }
+
+      {undoGroupRejection &&
+        <UndoGroupRejection 
+          groupId={groupId} 
+          setGroup={setGroup} 
+          setUndoGroupRejection={setUndoGroupRejection} 
         />
       }
 
@@ -104,31 +118,6 @@ function GDetails({group, setGroup, members, setMembers, groupId, userperms, set
             clientId={clientId}
             setClient={setClient}
             setUndoClientLeft={setUndoClientLeft}
-          />
-        }
-
-        {openApproveClient &&
-          <ApproveClient 
-            clientId={clientId} 
-            setClient={setClient} 
-            setOpenApproveClient={setOpenApproveClient} 
-            openApproveClient={openApproveClient}
-          />
-        }
-
-        {rejectClient &&
-          <RejectClient 
-            clientId={clientId} 
-            setClient={setClient} 
-            setRejectClient={setRejectClient} 
-          />
-        }
-
-        {undoClientRejection &&
-          <UndoClientRejection 
-            clientId={clientId} 
-            setClient={setClient} 
-            setUndoClientRejection={setUndoClientRejection} 
           />
         }
 
@@ -207,11 +196,12 @@ function GDetails({group, setGroup, members, setMembers, groupId, userperms, set
                 <button className="btn btn-olive">Request Approval</button>
                 // <button className="btn btn-olive" onClick={(e) => setRequestClientApproval(curr => !curr)}>Request Approve</button>
               }
-              {/* {userperms.reject_client ?
-                <button className="btn btn-olive" onClick={(e) => setRejectClient(curr => !curr)}>Reject</button>:
-                <button className="btn btn-olive" onClick={(e) => setRequestClientRejection(curr => !curr)}>Request Reject</button>
+              {userperms.reject_client ?
+                <button className="btn btn-olive" onClick={(e) => setRejectGroup(curr => !curr)}>Reject</button>:
+                <button className="btn btn-olive">Request Reject</button>
+                // <button className="btn btn-olive" onClick={(e) => setRequestClientRejection(curr => !curr)}>Request Reject</button>
               }
-              {userperms.blacklist_client ?
+              {/* {userperms.blacklist_client ?
                 <button className="btn btn-olive" onClick={(e) => setClientBlacklist(curr => !curr)}>Blacklist</button>:
                 <button className="btn btn-olive" onClick={(e) => setRequestClientBlackList(curr => !curr)}>Request Blacklist</button>
               } */}
@@ -232,6 +222,16 @@ function GDetails({group, setGroup, members, setMembers, groupId, userperms, set
                 <button className="btn btn-olive" onClick={(e) => setClientLeft(curr => !curr)}>Left</button>:
                 <button className="btn btn-olive" onClick={(e) => setRequestClientLeft(curr => !curr)}>Request Left</button>
               } */}
+            </div>
+          }
+
+          {group.status == 'Rejected' && 
+            <div className="client-state-btns" style={{display:"flex", columnGap:"3px"}}>
+              {userperms.undo_client_rejection ?
+                <button className="btn btn-olive" onClick={(e) => setUndoGroupRejection(curr => !curr)}>Undo Rejection</button>:
+                <button className="btn btn-olive">Request Undo Rejection</button>
+                // <button className="btn btn-olive" onClick={(e) => setRequestUndoClientRejection(curr => !curr)}>Request Undo Rejection</button>
+              }
             </div>
           }
           {/* {client.status == 'Blacklisted' && 
@@ -255,46 +255,6 @@ function GDetails({group, setGroup, members, setMembers, groupId, userperms, set
               {userperms.blacklist_client ?
                 <button className="btn btn-olive" onClick={(e) => setClientBlacklist(curr => !curr)}>Blacklist</button>:
                 <button className="btn btn-olive" onClick={(e) => setRequestClientBlackList(curr => !curr)}>Request Blacklist</button>
-              }
-            </div>
-          }
-          {client.status == 'Inactive' && 
-            <div className="client-state-btns" style={{display:"flex", columnGap:"3px"}}>
-              {userperms.approve_client ?
-                <button className="btn btn-olive" onClick={(e) => setUndoClientApproval(curr => !curr)}>Undo Approve</button>:
-                <button className="btn btn-olive" onClick={(e) => setRequestUndoClientApproval(curr => !curr)}>Request Undo Approve</button>
-              }
-              {userperms.blacklist_client ?
-                <button className="btn btn-olive" onClick={(e) => setClientBlacklist(curr => !curr)}>Blacklist</button>:
-                <button className="btn btn-olive" onClick={(e) => setRequestClientBlackList(curr => !curr)}>Request Blacklist</button>
-              }
-              {userperms.mark_client_as_left ?
-                <button className="btn btn-olive" onClick={(e) => setClientLeft(curr => !curr)}>Left</button>:
-                <button className="btn btn-olive" onClick={(e) => setRequestClientLeft(curr => !curr)}>Request Left</button>
-              }
-            </div>
-          }
-          {client.status == 'Pending Approval' && 
-            <div className="client-state-btns" style={{display:"flex", columnGap:"3px"}}>
-              {userperms.approve_client ?
-                <button className="btn btn-olive" onClick={(e) => setOpenApproveClient(curr => !curr)}>Approve</button>:
-                <button className="btn btn-olive" onClick={(e) => setRequestClientApproval(curr => !curr)}>Request Approve</button>
-              }
-              {userperms.reject_client ?
-                <button className="btn btn-olive" onClick={(e) => setRejectClient(curr => !curr)}>Reject</button>:
-                <button className="btn btn-olive" onClick={(e) => setRequestClientRejection(curr => !curr)}>Request Reject</button>
-              }
-              {userperms.blacklist_client ?
-                <button className="btn btn-olive" onClick={(e) => setClientBlacklist(curr => !curr)}>Blacklist</button>:
-                <button className="btn btn-olive" onClick={(e) => setRequestClientBlackList(curr => !curr)}>Request Blacklist</button>
-              }
-            </div>
-          }
-          {client.status == 'Rejected' && 
-            <div className="client-state-btns" style={{display:"flex", columnGap:"3px"}}>
-              {userperms.undo_client_rejection ?
-                <button className="btn btn-olive" onClick={(e) => setUndoClientRejection(curr => !curr)}>Undo Rejection</button>:
-                <button className="btn btn-olive" onClick={(e) => setRequestUndoClientRejection(curr => !curr)}>Request Undo Rejection</button>
               }
             </div>
           }*/}
