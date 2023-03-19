@@ -21,4 +21,5 @@ const CustomCheckbox = ({ label, ...props }) => {
     </>
   );
 };
+
 export default CustomCheckbox;

@@ -11,6 +11,8 @@ import ModalSubmit from './ModalSubmit';
 import DeleteModalDialog from './DeleteModalDialog';
 import ModalDeleteSubmit from './ModalDeleteSubmit';
 import CustomDatePicker from './CustomDatePicker';
+import CustomMultiSelect from './CustomMultiSelect';
+import CustomSortableSelect from './CustomSortableSelect';
 
 export {
     CustomRadio,
@@ -25,5 +27,7 @@ export {
     ModalSubmit,
     DeleteModalDialog,
     ModalDeleteSubmit,
-    CustomDatePicker
+    CustomDatePicker,
+    CustomMultiSelect,
+    CustomSortableSelect
 };

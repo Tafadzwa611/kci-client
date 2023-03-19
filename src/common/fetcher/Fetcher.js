@@ -3,7 +3,7 @@ import NetworkError from './NetworkError';
 import useFetch from './useFetch';
 import MiniLoader from '../../components/Loader/MiniLoader';
 
-const Fetcher = ({urls, children}) => {
+const Fetcher = ({urls, children, extra}) => {
   const {data, error, loading} = useFetch(urls);
 
   if (loading) {
@@ -15,7 +15,7 @@ const Fetcher = ({urls, children}) => {
     return <NetworkError />
   }
 
-  return children({data})
+  return children({data, extra})
 }
 
 export default Fetcher;

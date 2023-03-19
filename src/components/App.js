@@ -4,6 +4,8 @@ import { Fetcher } from '../common';
 import Navbar from './NavBar';
 import Routes from './Routes';
 import {LoggedInUserProvider} from '../contexts/LoggedInUserContext';
+import { BranchesProvider } from '../contexts/BranchesContext';
+import { CurrenciesProvider } from '../contexts/CurrenciesContext';
  
 export const ThemeContext = createContext(null);
 function App() {
@@ -24,21 +26,25 @@ function App() {
 
   return (
     <>
-      <Fetcher urls={['/usersapi/logged_in_user/']}>
+      <Fetcher urls={['/usersapi/logged_in_user/', '/usersapi/get-branches/', '/usersapi/list_currencies/']}>
         {({data}) => {
           return (
             <ThemeContext.Provider value={{theme, toggleTheme}}>
               <LoggedInUserProvider>
-                <Router>
-                  <div id={theme}>
-                    <section className='home-section'>
-                      <Navbar theme={theme} loggedInUser={data[0]} toggleTheme={toggleTheme} />
-                      <div className='app'>
-                        <Routes loggedInUser={data[0]}/>
+                <CurrenciesProvider>
+                  <BranchesProvider>
+                    <Router>
+                      <div id={theme}>
+                        <section className='home-section'>
+                          <Navbar theme={theme} loggedInUser={data[0]} toggleTheme={toggleTheme} />
+                          <div className='app'>
+                            <Routes loggedInUser={data[0]} branches={data[1]} currencies={data[2]}/>
+                          </div>
+                        </section>
                       </div>
-                    </section>
-                  </div>
-                </Router>
+                    </Router>
+                  </BranchesProvider>
+                </CurrenciesProvider>
               </LoggedInUserProvider>
             </ThemeContext.Provider>
           )

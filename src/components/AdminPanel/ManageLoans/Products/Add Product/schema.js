@@ -1,0 +1,79 @@
+import * as yup from 'yup';
+import { scheduleStrategies } from './data';
+
+const minAmount = 0.0000000001;
+const minMsg = 'Minimum allowed value is 0.0000000001.'
+const minInt = 1;
+const minIntMsg = 'Minimum allowed value is 1.';
+
+export const feeSchema = yup.object().shape({
+  fee_name: yup.string().required('Required'),
+  fee_type: yup.string().oneOf(['Deducted', 'Capitalized', 'Upfront Disbursement', 'Payment due', 'Manual fees'], 'Invalid').required('Required'),
+  fee_payment: yup.string().oneOf(['Flat', 'Flat/Installments', '% Of DB Amount', '% Of DB Amount/Installments'], 'Invalid').required('Required'),
+  is_mandatory: yup.boolean().required('Required'),
+  value: yup.number().min(minAmount, minMsg).required('Required'),
+});
+
+export const createLoanProductSchema = yup.object().shape({
+  name: yup.string().required('Required'),
+  description: yup.string(),
+  loan_product_id: yup.string(),
+  product_category_id: yup.number().integer().required('Required'),
+  product_type: yup.string().oneOf(['Fixed Term Loan', 'Interest-Free Loan'], 'Invalid').required('Required'),
+  minimum_principal_amount: yup.number().min(minAmount, minMsg).required('Required'),
+  default_principal_amount: yup.number().min(minAmount, minMsg).required('Required'),
+  maximum_principal_amount: yup.number().min(minAmount, minMsg).required('Required'),
+  currency_id: yup.number().integer().required('Required'),
+  minimum_interest_rate: yup.number().min(minAmount, minMsg).required('Required'),
+  default_interest_rate: yup.number().min(minAmount, minMsg).required('Required'),
+  maximum_interest_rate: yup.number().min(minAmount, minMsg).required('Required'),
+  interest_method: yup.string().oneOf(['Flat Rate', 'Reducing Balance - Equal Installments', 'Reducing Balance - Equal Principal'], 'Invalid').required('Required'),
+  interest_interval: yup.string().oneOf(['/Day', '/Week', '/Month', '/Year'], 'Invalid').required('Required'),
+  loan_duration_time_unit: yup.string().oneOf(['Days', 'Weeks', '2 Weeks', 'Months', '2 Months', '3 Months', '4 Months', '6 Months', 'Years'], 'Invalid').required('Required'),
+  schedule_strategy: yup.string().oneOf(scheduleStrategies, 'Invalid').required('Required'),
+  action_on_holiday: yup.string().oneOf(['NXT', 'PREV', 'EXT'], 'Invalid'),
+  minimum_loan_duration: yup.number().min(minInt, minIntMsg).integer().required('Required'),
+  default_loan_duration: yup.number().min(minInt, minIntMsg).integer().required('Required'),
+  maximum_loan_duration: yup.number().min(minInt, minIntMsg).integer().required('Required'),
+  number_of_decimal_places: yup.string().oneOf(['0.01', '0.1', '1'], 'Invalid').required('Required'),
+  rounding_scheme: yup.string().oneOf(['ROUND_HALF_UP', 'ROUND_UP', 'ROUND_DOWN'], 'Invalid').required('Required'),
+  allow_early_settlement_on_penalties: yup.boolean().required('Required'),
+  client_type: yup.string().oneOf(['Clients', 'Groups', 'Groups (solidarity)'], 'Invalid').required('Required'),
+  allowed_branches: yup.array().of(yup.number().integer()),
+  repayment_order: yup.object(),
+  fees: yup.array().of(feeSchema),
+  action_on_loan_default: yup.string().oneOf(['Do Nothing', 'Add Penalty'], 'Invalid').required('Required'),
+  apply_late_repayment_penalty_on: yup
+    .string()
+    .oneOf(['Principal', 'Principal + Interest'], 'Invalid')
+    .when(
+      'action_on_loan_default', {
+        is: 'Add Penalty',
+        then: yup.string().required('Required')
+    }),
+  penalty_charged_per: yup
+    .string()
+    .oneOf(['/Day', '/Week', '/Month', '/Year'], 'Invalid')
+    .when(
+    'action_on_loan_default', {
+      is: 'Add Penalty',
+      then: yup.string().required('Required')
+    }),
+  late_repayment_penalty_percentage: yup
+    .number()
+    .min(minAmount, minMsg)
+    .when(
+    'action_on_loan_default', {
+      is: 'Add Penalty',
+      then: yup.number().required('Required')
+    }),
+  grace_period: yup
+    .number()
+    .min(0, 'Minimum allowed value is 0.')
+    .integer()
+    .when(
+    'action_on_loan_default', {
+      is: 'Add Penalty',
+      then: yup.number().required('Required')
+    }),
+});

@@ -10,17 +10,22 @@ import PaymentRoutes from './PaymentRoutes';
 import ReportRoutes from './ReportRoutes';
 import UserRoutes from './UserRoutes';
 import {useLoggedInUser} from '../../contexts/LoggedInUserContext';
+import { useBranches } from '../../contexts/BranchesContext';
+import { useCurrencies } from '../../contexts/CurrenciesContext';
 import { Routes as ReactRoutes, Route } from 'react-router-dom';
 
 const Home = lazy(() => import('../Home/Home'));
 const Dashboard = lazy(() => import('../Dashboard/Dashboard'));
 
-
-const Routes = ({loggedInUser}) => {
+const Routes = ({loggedInUser, branches, currencies}) => {
   const {setLoggedInUser} = useLoggedInUser();
+  const {setBranches} = useBranches();
+  const {setCurrencies} = useCurrencies();
 
   useEffect(() => {
     setLoggedInUser(loggedInUser);
+    setBranches(branches.results);
+    setCurrencies(currencies);
   }, []);
 
   return (

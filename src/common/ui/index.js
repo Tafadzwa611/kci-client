@@ -5,5 +5,6 @@ import SuccessBtn from './SuccessBtn';
 import Table from './Table';
 import Select from './Select';
 import DeleteModal from './DeleteModal';
+import Button from './Button';
 
-export {DeleteBtn, EditBtn, Modal, SuccessBtn, Table, Select, DeleteModal};
+export {DeleteBtn, EditBtn, Modal, SuccessBtn, Table, Select, DeleteModal, Button};
