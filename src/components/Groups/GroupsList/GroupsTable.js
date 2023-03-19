@@ -1,5 +1,5 @@
 import React from 'react';
-import Group from '../GroupssDetails/Group';
+import Group from '../GroupsDetails/Group';
 import { convertDate, getAge } from '../../Accounting/Journals/utils';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
