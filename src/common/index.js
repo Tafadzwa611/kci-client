@@ -24,5 +24,7 @@ export {
   Table,
   Select,
   DeleteModal,
-  Button
+  Button,
+  ButtonDefault,
+  ButtonSuccess
 } from './ui'

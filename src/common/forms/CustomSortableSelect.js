@@ -35,12 +35,14 @@ function CustomSortableSelect({options, label, setFieldValue, ...props}) {
     <div className='row custom-background'>
       <label className='form-label'>{label}</label>
       <div className='col-9'>
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-          <SortableContext items={items} strategy={verticalListSortingStrategy}>
-            {items.map(id => <SortableItem key={id} id={id} />)}
-          </SortableContext>
-        </DndContext>
-        {meta.error && <div className='error'>{meta.error}</div>}
+        <div className='sortable-select-container'>
+          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <SortableContext items={items} strategy={verticalListSortingStrategy}>
+              {items.map(id => <SortableItem key={id} id={id} />)}
+            </SortableContext>
+          </DndContext>
+          {meta.error && <div className='error'>{meta.error}</div>}
+        </div>
       </div>
     </div>
   );

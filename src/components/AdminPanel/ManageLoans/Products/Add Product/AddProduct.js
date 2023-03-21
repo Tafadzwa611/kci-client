@@ -5,6 +5,7 @@ import {
   NonFieldErrors,
   SubmitButton,
   Button,
+  ButtonDefault,
   CustomTextField,
   CustomSelect,
   CustomCheckbox,
@@ -65,11 +66,14 @@ function AddProduct({productGrps, setView}) {
 
   return (
     <>
-      <Button value={'Back'} handler={() => setView('list')} />
+      <ButtonDefault value={'Back'} handler={() => setView('list')} />
       <Formik initialValues={initialValues} validationSchema={createLoanProductSchema} onSubmit={onSubmit}>
         {({ isSubmitting, errors, setFieldValue, values }) => (
           <Form>
             <NonFieldErrors errors={errors}>
+              <div className="divider divider-info">
+                <span>Name & Description</span>
+              </div>
               <CustomInput label='Name' name='name' type='text'/>
               <CustomInput label='Product ID' name='loan_product_id' type='text'/>
               <CustomTextField label='Description' name='description'/>
@@ -82,6 +86,9 @@ function AddProduct({productGrps, setView}) {
                 <option value='Fixed Term Loan'>Fixed Term Loan</option>
                 <option value='Interest-Free Loan'>Interest-Free Loan</option>
               </CustomSelect>
+              <div className="divider divider-info">
+                <span>Principal Settings</span>
+              </div>
               <CustomSelect label='Currency' name='currency_id'>
                 <option value=''>------</option>
                 {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
@@ -89,6 +96,9 @@ function AddProduct({productGrps, setView}) {
               <CustomInput label='Minimum Principal Amount' name='minimum_principal_amount' type='number'/>
               <CustomInput label='Default Principal Amount' name='default_principal_amount' type='number'/>
               <CustomInput label='Maximum Principal Amount' name='maximum_principal_amount' type='number'/>
+              <div className="divider divider-info">
+                <span>Interest Settings</span>
+              </div>
               <CustomSelect label='Interest Method' name='interest_method'>
                 <option value=''>------</option>
                 <option value='Flat Rate'>Flat Rate</option>
@@ -105,6 +115,9 @@ function AddProduct({productGrps, setView}) {
               <CustomInput label='Minimum Loan Interest' name='minimum_interest_rate' type='number'/>
               <CustomInput label='Default Loan Interest' name='default_interest_rate' type='number'/>
               <CustomInput label='Maximum Loan Interest' name='maximum_interest_rate' type='number'/>
+              <div className="divider divider-info">
+                <span>Tenure Settings</span>
+              </div>
               <CustomSelect label='Repayment Cycle' name='loan_duration_time_unit'>
                 <option value=''>------</option>
                 <option value='Days'>Daily</option>
@@ -130,6 +143,9 @@ function AddProduct({productGrps, setView}) {
               <CustomInput label='Minimum Number of Repayments' name='minimum_loan_duration' type='number'/>
               <CustomInput label='Default Number of Repayments' name='default_loan_duration' type='number'/>
               <CustomInput label='Maximum Number of Repayments' name='maximum_loan_duration' type='number'/>
+              <div className="divider divider-info">
+                <span>Decimal Places, Rounding Off and Repayment Order</span>
+              </div>
               <CustomSelect label='Decimal Places' name='number_of_decimal_places'>
                 <option value=''>------</option>
                 <option value='0.01'>Round Off to Two Decimal Places</option>
@@ -142,7 +158,10 @@ function AddProduct({productGrps, setView}) {
                 <option value='ROUND_UP'>Round Up</option>
                 <option value='ROUND_DOWN'>Round Down</option>
               </CustomSelect>
-              <CustomCheckbox label='Allow Early Settlement On Loans With Unpaid Penalties' name='allow_early_settlement_on_penalties'/>
+              <CustomSortableSelect label='Repayment Order' setFieldValue={setFieldValue} name='repayment_order' options={['Penalty', 'Fees', 'Interest', 'Principal']}/>
+              <div className="divider divider-info">
+                <span>Client Type & Branches</span>
+              </div>
               <CustomSelect label='Client Type' name='client_type'>
                 <option value=''>------</option>
                 <option value='Clients'>Clients</option>
@@ -150,7 +169,9 @@ function AddProduct({productGrps, setView}) {
                 <option value='Groups (solidarity)'>Groups (solidarity)</option>
               </CustomSelect>
               <CustomMultiSelect label='Branches' options={branches.map(br => ({label: br.name, value:br.id}))} setFieldValue={setFieldValue} name='allowed_branches'/>
-              <CustomSortableSelect label='Repayment Order' setFieldValue={setFieldValue} name='repayment_order' options={['Penalty', 'Fees', 'Interest', 'Principal']}/>
+              <div className="divider divider-info">
+                <span>Fees</span>
+              </div>
               {values.fees.map((fee, index) => {
                 return(
                   <React.Fragment key={fee.id}>
@@ -159,6 +180,10 @@ function AddProduct({productGrps, setView}) {
                 )
               })}
               <AddFee fees={values.fees} setFieldValue={setFieldValue} />
+              <div className="divider divider-info">
+                <span>Defaults & Penalties</span>
+              </div>
+              <CustomCheckbox label='Allow Early Settlement On Loans With Unpaid Penalties' name='allow_early_settlement_on_penalties'/>
               <CustomSelect label='Action On Default' name='action_on_loan_default'>
                 <option value='Do Nothing'>Do Nothing</option>
                 <option value='Add Penalty'>Add Penalty</option>
@@ -181,7 +206,11 @@ function AddProduct({productGrps, setView}) {
                   <CustomInput label='Penalty Tolerance Period In Days' name='grace_period' type='number'/>
                 </>
               }
+              <div className="divider divider-default" style={{padding: "1.25rem"}}>
+              </div>
+              <div style={{display:"flex", justifyContent: "flex-end"}}>
               <SubmitButton isSubmitting={isSubmitting}/>
+              </div>
             </NonFieldErrors>
           </Form>
         )}
