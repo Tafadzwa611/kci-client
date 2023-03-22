@@ -21,7 +21,7 @@ import RequestUndoGroupLeft from './ChangeGroupState/RequestChangeGroupState/Req
 import MoreGroupDetails from './Details/MoreGroupDetails';
 // import ClientLoans from './ClientLoans/ClientLoans';
 
-function GDetails({group, setGroup, members, setMembers, groupId, userperms, setDetails}) {
+function GDetails({group, setGroup, members, setMembers, groupId, userperms, setDetails, branches}) {
   const [tab, setTab] = useState('gdetails');
   const [openApproveGroup, setOpenApproveGroup] = useState(false);
   const [rejectGroup, setRejectGroup] = useState(false);
@@ -158,6 +158,7 @@ function GDetails({group, setGroup, members, setMembers, groupId, userperms, set
         groupId={groupId}
         setGroup={setGroup}
         group={group}
+        branches={branches}
       />
 
         <div style={{marginBottom:"1.5rem", display:"flex", justifyContent:"space-between"}}>
@@ -242,7 +243,7 @@ function GDetails({group, setGroup, members, setMembers, groupId, userperms, set
         </div>
         <div className='tab-content font-12' style={{marginTop:"3rem"}}>
             {{
-                'gdetails': <Details setGroup={setGroup} group={group}/>,
+                'gdetails': <Details setGroup={setGroup} group={group} groupId={groupId} branches={branches} />,
                 // 'gdetails': <Details groudId={groudId} setGroup={setGroup} group={group} branches={branches}/>,
                 // 'gfiles': <Files clientId={clientId} files={files} setFiles={setFiles} client={client}/>,
                 // 'gtxns': <Transactions clientId={clientId} />,
