@@ -85,20 +85,20 @@ function ClientLoans({clientId}) {
                 buttonText='Download as XLS'/>
                 <CurrencySelector currencies={currencies} currencyId={currencyId} setCurrencyId={setCurrencyId}/>
             </div>
-            <div>
+            <div style={{width:"100%", overflowX:"auto", maxHeight:"600px"}}>
                 <table id='loans' className='table'>
-                    <thead>
+                    <thead style={{position:"sticky", top:"0"}}>
                         <tr className="client__address__table">
-                            <th>Account</th>
-                            <th>Loan_Product</th>
-                            <th>Disbursement Date</th>
-                            <th>Maturity Date</th>
-                            <th>Principal</th>
-                            <th>Principal Balance</th>
-                            <th>Interest Rate</th>
-                            <th>Total Interest</th>
-                            <th>Interest Balance</th>
-                            <th>Status</th>
+                            <th className="table-head-dark-color">Account</th>
+                            <th className="table-head-dark-color">Loan_Product</th>
+                            <th className="table-head-dark-color">Disbursement Date</th>
+                            <th className="table-head-dark-color">Maturity Date</th>
+                            <th className="table-head-dark-color">Principal</th>
+                            <th className="table-head-dark-color">Principal Balance</th>
+                            <th className="table-head-dark-color">Interest Rate</th>
+                            <th className="table-head-dark-color">Total Interest</th>
+                            <th className="table-head-dark-color">Interest Balance</th>
+                            <th className="table-head-dark-color">Status</th>
                         </tr>
                         </thead>
                     <tbody>

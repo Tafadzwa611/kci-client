@@ -132,7 +132,7 @@ function CreateExpenseModal({open, setOpen, setExpenses}) {
             <div className='row' style={{marginTop: '15px'}}>
               <label className='form-label'>Expense Type<span style={{color: 'red'}}>*</span></label>
               <div className='col-9'>
-                <select name='expense_type' className='custom-select-form' onFocus={validate} onChange={handleExpenseChange} value={exp.expense_type} required>
+                <select name='expense_type' className='custom-select-form sample' onFocus={validate} onChange={handleExpenseChange} value={exp.expense_type} required>
                   <option></option>
                   {expenseTypes.map((expense_type) => (
                     <option key={expense_type.id} value={expense_type.id}>{expense_type.name}</option>

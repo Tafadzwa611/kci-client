@@ -25,14 +25,16 @@ const MoreGroupDetails = (
                             <div>
                                 <div className="bloc-tabs">
                                     <button className={tab === "gdetails" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("gdetails")}> Group Info </button>
-                                    <button className={tab === "files" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("files")}> Files </button>
-                                    <button className={tab === "txns" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("txns")}> Transactions </button>
+                                    <button className={tab === "gfiles" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("gfiles")}> Files </button>
+                                    <button className={tab === "gtxns" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("gtxns")}> Transactions </button>
+                                    <button className={tab === "gloans" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("gloans")}> Loans </button>
                                 </div>
                                 <div className='tab-content font-12 text-light' style={{marginTop:"3rem"}}>
                                     {{
                                         'gdetails': <Details groupId={groupId} setGroup={setGroup} group={group} />,
-                                        // 'files': <Files clientId={clientId} files={files} setFiles={setFiles} client={client}/>,
-                                        // 'txns': <Transactions clientId={clientId} />,
+                                        // 'gfiles': <Files clientId={clientId} files={files} setFiles={setFiles} client={client}/>,
+                                        // 'gtxns': <Transactions clientId={clientId} />,
+                                        // 'gloans': <Transactions clientId={clientId} />,
                                     }[tab]}
                                 </div>
                             </div>
