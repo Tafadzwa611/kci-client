@@ -10,6 +10,7 @@ function Table({
   selectedPrdct,
   handleClick,
   setSelectedPrdct,
+  setProducts
 }) {
   const close = () => setSelectedPrdct(null);
   const showDetails = selectedPrdct !== null;
@@ -21,7 +22,7 @@ function Table({
           <div className="table__height">
             {showDetails ? <MiniTable products={products} handleClick={handleClick} selectedPrdct={selectedPrdct}/> : <MainTable products={products} handleClick={handleClick}/>}
           </div>
-          {showDetails && <ProductDetails product={selectedPrdct} close={close} setView={setView}/>}
+          {showDetails && <ProductDetails product={selectedPrdct} close={close} setProducts={setProducts} setView={setView}/>}
         </div>
       </div>
     </>

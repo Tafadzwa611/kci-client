@@ -13,16 +13,16 @@ function Fee({id, index, setFieldValue, fees}) {
 
   return (
     <>
-      <CustomInput label='Fee Name' name={`fees[${index}].fee_name`} type='text'/>
-      <CustomSelect label='Type' name={`fees[${index}].fee_type`}>
+      <CustomInput label='Fee Name' name={`fees[${index}].fee_name`} type='text' required/>
+      <CustomSelect label='Type' name={`fees[${index}].fee_type`} required>
         <option value=''>------</option>
         {feeTypes.map(feeType => <option key={feeType} value={feeType}>{feeType}</option>)}
       </CustomSelect>
-      <CustomSelect label='Type' name={`fees[${index}].fee_payment`}>
+      <CustomSelect label='Type' name={`fees[${index}].fee_payment`} required>
         <option value=''>------</option>
         {feePayments.map(feePayment => <option key={feePayment} value={feePayment}>{feePayment}</option>)}
       </CustomSelect>
-      <CustomInput label='Amount' name={`fees[${index}].value`} type='number'/>
+      <CustomInput label='Amount' name={`fees[${index}].value`} type='number' required/>
       <CustomCheckbox label='Is Mandatory' name={`fees[${index}].is_mandatory`}/>
       <Button value={'Remove Fee'} handler={() => remove()} />
     </>

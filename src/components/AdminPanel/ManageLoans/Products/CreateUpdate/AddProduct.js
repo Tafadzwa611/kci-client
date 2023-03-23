@@ -28,6 +28,7 @@ function AddProduct({productGrps, setView, setProductId}) {
     number_of_decimal_places: '',
     rounding_scheme: '',
     allow_early_settlement_on_penalties: false,
+    is_active: false,
     client_type: '',
     allowed_branches_ids: [],
     repayment_order: {first: 'penalty', second: 'fees', third: 'interest', fourth: 'principal'},

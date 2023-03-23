@@ -10,8 +10,13 @@ const post = async (values, setErrors, setProductId, setView) => {
     setProductId(response.data.id);
     setView('list');
   } catch (error) {
-    console.log(error);
-    setErrors(error.response.data);
+    if (error.message === "Network Error") {
+      setErrors({responseStatus: "Network Error"});
+    } else if (error.response.status === 400) {
+      setErrors({responseStatus: error.response.status, ...error.response.data});
+    } else {
+      setErrors({responseStatus: error.response.status});
+    }
   }
 };
 
@@ -22,8 +27,13 @@ const put = async (values, setErrors, setSelectedPrdct, setView) => {
     setSelectedPrdct(values);
     setView('list');
   } catch (error) {
-    console.log(error);
-    setErrors(error.response.data);
+    if (error.message === "Network Error") {
+      setErrors({responseStatus: "Network Error"});
+    } else if (error.response.status === 400) {
+      setErrors({responseStatus: error.response.status, ...error.response.data});
+    } else {
+      setErrors({responseStatus: error.response.status});
+    }
   }
 };
 

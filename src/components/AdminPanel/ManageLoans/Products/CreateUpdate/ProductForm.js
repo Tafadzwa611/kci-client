@@ -28,42 +28,43 @@ function ProductForm({productGrps, initialValues, validationSchema, onSubmit, ba
         {({ isSubmitting, errors, setFieldValue, values }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <CustomInput label='Name' name='name' type='text'/>
+              <CustomInput label='Name' name='name' type='text' required/>
               <CustomInput label='Product ID' name='loan_product_id' type='text'/>
               <CustomTextField label='Description' name='description'/>
-              <CustomSelect label='Product Category' name='product_category_id'>
+              <CustomSelect label='Product Category' name='product_category_id' required>
                 <option value=''>------</option>
                 {productGrps.map(grp => <option key={grp.id} value={grp.id}>{grp.name}</option>)}
               </CustomSelect>
-              <CustomSelect label='Product Type' name='product_type'>
+              <CustomSelect label='Product Type' name='product_type' required>
                 <option value=''>------</option>
                 <option value='Fixed Term Loan'>Fixed Term Loan</option>
                 <option value='Interest-Free Loan'>Interest-Free Loan</option>
               </CustomSelect>
-              <CustomSelect label='Currency' name='currency_id'>
+              <CustomCheckbox label='Is Active' name='is_active'/>
+              <CustomSelect label='Currency' name='currency_id' required>
                 <option value=''>------</option>
                 {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
               </CustomSelect>
-              <CustomInput label='Minimum Principal Amount' name='minimum_principal_amount' type='number'/>
-              <CustomInput label='Default Principal Amount' name='default_principal_amount' type='number'/>
-              <CustomInput label='Maximum Principal Amount' name='maximum_principal_amount' type='number'/>
-              <CustomSelect label='Interest Method' name='interest_method'>
+              <CustomInput label='Minimum Principal Amount' name='minimum_principal_amount' type='number' required/>
+              <CustomInput label='Default Principal Amount' name='default_principal_amount' type='number' required/>
+              <CustomInput label='Maximum Principal Amount' name='maximum_principal_amount' type='number' required/>
+              <CustomSelect label='Interest Method' name='interest_method' required>
                 <option value=''>------</option>
                 <option value='Flat Rate'>Flat Rate</option>
                 <option value='Reducing Balance - Equal Installments'>Reducing Balance - Equal Installments</option>
                 <option value='Reducing Balance - Equal Principal'>Reducing Balance - Equal Principal</option>
               </CustomSelect>
-              <CustomSelect label='Interest Interval' name='interest_interval'>
+              <CustomSelect label='Interest Interval' name='interest_interval' required>
                 <option value=''>------</option>
                 <option value='/Day'>Per Day</option>
                 <option value='/Week'>Per Week</option>
                 <option value='/Month'>Per Month</option>
                 <option value='/Year'>Per Year</option>
               </CustomSelect>
-              <CustomInput label='Minimum Loan Interest' name='minimum_interest_rate' type='number'/>
-              <CustomInput label='Default Loan Interest' name='default_interest_rate' type='number'/>
-              <CustomInput label='Maximum Loan Interest' name='maximum_interest_rate' type='number'/>
-              <CustomSelect label='Repayment Cycle' name='loan_duration_time_unit'>
+              <CustomInput label='Minimum Loan Interest' name='minimum_interest_rate' type='number' required/>
+              <CustomInput label='Default Loan Interest' name='default_interest_rate' type='number' required/>
+              <CustomInput label='Maximum Loan Interest' name='maximum_interest_rate' type='number' required/>
+              <CustomSelect label='Repayment Cycle' name='loan_duration_time_unit' required>
                 <option value=''>------</option>
                 <option value='Days'>Daily</option>
                 <option value='Weeks'>Weekly</option>
@@ -75,33 +76,33 @@ function ProductForm({productGrps, initialValues, validationSchema, onSubmit, ba
                 <option value='6 Months'>Semi-annually</option>
                 <option value='Years'>Annually</option>
               </CustomSelect>
-              <CustomSelect label='Default Loan Schedule Strategy' name='schedule_strategy'>
+              <CustomSelect label='Default Loan Schedule Strategy' name='schedule_strategy' required>
                 <option value=''>------</option>
                 {scheduleStrategies.map(strategy => <option key={strategy} value={strategy}>{strategy}</option>)}
               </CustomSelect>
-              <CustomSelect label='Non Working Days Rescheduling' name='action_on_holiday'>
+              <CustomSelect label='Non Working Days Rescheduling' name='action_on_holiday' required>
                 <option value=''>------</option>
                 <option value='NXT'>Move ahead to next working day</option>
                 <option value='PREV'>Move backwards to previous working day</option>
                 <option value='EXT'>Extend Schedule</option>
               </CustomSelect>
-              <CustomInput label='Minimum Number of Repayments' name='minimum_loan_duration' type='number'/>
-              <CustomInput label='Default Number of Repayments' name='default_loan_duration' type='number'/>
-              <CustomInput label='Maximum Number of Repayments' name='maximum_loan_duration' type='number'/>
-              <CustomSelect label='Decimal Places' name='number_of_decimal_places'>
+              <CustomInput label='Minimum Number of Repayments' name='minimum_loan_duration' type='number' required/>
+              <CustomInput label='Default Number of Repayments' name='default_loan_duration' type='number' required/>
+              <CustomInput label='Maximum Number of Repayments' name='maximum_loan_duration' type='number' required/>
+              <CustomSelect label='Decimal Places' name='number_of_decimal_places' required>
                 <option value=''>------</option>
                 <option value='0.01'>Round Off to Two Decimal Places</option>
                 <option value='0.1'>Round Off to One Decimal Place</option>
                 <option value='1'>Round Off to Integer</option>
               </CustomSelect>
-              <CustomSelect label='Rounding Scheme' name='rounding_scheme'>
+              <CustomSelect label='Rounding Scheme' name='rounding_scheme' required>
                 <option value=''>------</option>
                 <option value='ROUND_HALF_UP'>Round Half Up</option>
                 <option value='ROUND_UP'>Round Up</option>
                 <option value='ROUND_DOWN'>Round Down</option>
               </CustomSelect>
               <CustomCheckbox label='Allow Early Settlement On Loans With Unpaid Penalties' name='allow_early_settlement_on_penalties'/>
-              <CustomSelect label='Client Type' name='client_type'>
+              <CustomSelect label='Client Type' name='client_type' required>
                 <option value=''>------</option>
                 <option value='Clients'>Clients</option>
                 <option value='Groups'>Groups</option>
@@ -134,20 +135,20 @@ function ProductForm({productGrps, initialValues, validationSchema, onSubmit, ba
               </CustomSelect>
               {values.action_on_loan_default === 'Add Penalty' &&
                 <>
-                  <CustomSelect label='Apply Penalty On' name='apply_late_repayment_penalty_on'>
+                  <CustomSelect label='Apply Penalty On' name='apply_late_repayment_penalty_on' required>
                     <option value=''>------</option>
                     <option value='Principal'>Principal</option>
                     <option value='Principal + Interest'>Principal + Interest</option>
                   </CustomSelect>
-                  <CustomSelect label='Penalty Rate Interval' name='penalty_charged_per'>
+                  <CustomSelect label='Penalty Rate Interval' name='penalty_charged_per' required>
                     <option value=''>------</option>
                     <option value='/Day'>Per Day</option>
                     <option value='/Week'>Per Week</option>
                     <option value='/Month'>Per Month</option>
                     <option value='/Year'>Per Year</option>
                   </CustomSelect>
-                  <CustomInput label='Penalty Rate' name='late_repayment_penalty_percentage' type='number'/>
-                  <CustomInput label='Penalty Tolerance Period In Days' name='grace_period' type='number'/>
+                  <CustomInput label='Penalty Rate' name='late_repayment_penalty_percentage' type='number' required/>
+                  <CustomInput label='Penalty Tolerance Period In Days' name='grace_period' type='number' required/>
                 </>
               }
               <SubmitButton isSubmitting={isSubmitting}/>

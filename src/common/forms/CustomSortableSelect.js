@@ -33,7 +33,7 @@ function CustomSortableSelect({options, label, setFieldValue, ...props}) {
 
   return (
     <div className='row custom-background'>
-      <label className='form-label'>{label}</label>
+      <label className='form-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
       <div className='col-9'>
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext items={items} strategy={verticalListSortingStrategy}>

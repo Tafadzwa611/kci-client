@@ -5,10 +5,11 @@ import EditProduct from '../CreateUpdate/EditProduct';
 import AddProduct from '../CreateUpdate/AddProduct';
 import { Fetcher, SuccessBtn } from '../../../../../common';
 
-function ProductList({products}) {
+function ProductList({data, extra}) {
+  const {productId, setProductId} = extra;
   const [view, setView] = useState('list');
-  const [productId, setProductId] = useState(null);
   const [selectedPrdct, setSelectedPrdct] = useState(null);
+  const [products, setProducts] = useState(data);
 
   useEffect(() => {
     if (productId !== null) {
@@ -32,6 +33,7 @@ function ProductList({products}) {
           selectedPrdct={selectedPrdct}
           handleClick={handleClick}
           setSelectedPrdct={setSelectedPrdct}
+          setProducts={setProducts}
         />
       </>
     )
@@ -49,7 +51,13 @@ function ProductList({products}) {
   }
   return (
     <Fetcher urls={['/loansapi/product_groups/']} extra={{setView, setProductId}}>
-      {({data, extra}) => <AddProduct productGrps={data[0]} setView={extra.setView} setProductId={extra.setProductId}/>}
+      {({data, extra}) => 
+        <AddProduct
+          productGrps={data[0]}
+          setView={extra.setView}
+          setProductId={extra.setProductId}
+          reRenderProducts={extra.reRenderProducts}
+        />}
     </Fetcher>
   )
 }

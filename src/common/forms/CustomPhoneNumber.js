@@ -11,7 +11,7 @@ const CustomPhoneNumber = ({ label, ...props }) => {
   return (
     <>
       <div className='row custom-background'>
-        <label className='form-label'>{label}</label>
+        <label className='form-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
         <div className='col-9'>
           <Select
             name='codes'
