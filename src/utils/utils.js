@@ -110,4 +110,28 @@ const isDate = date => {
   return !isNaN(Date.parse(date));
 }
 
-export { makeRequest, useAuth, makeRequestWrapper, getFormattedDate, uuidv4, isDate };
+const removeEmptyValues = (object) => {
+  const keys = Object.keys(object);
+  let data = {};
+  for (var i = 0; i < keys.length; ++i) {
+    const key = keys[i];
+    const value = object[key];
+    if (value !== '') {
+      data[key] = value;
+    }
+  }
+  return data;
+};
+
+const removeNull = (object) => {
+  const keys = Object.keys(object);
+  for (var i = 0; i < keys.length; ++i) {
+    const key = keys[i];
+    const value = object[key];
+    if (value === null) {
+      object[key] = '';
+    }
+  }
+};
+
+export { makeRequest, useAuth, makeRequestWrapper, getFormattedDate, uuidv4, isDate, removeEmptyValues, removeNull };

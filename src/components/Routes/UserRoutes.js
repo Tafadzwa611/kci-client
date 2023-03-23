@@ -24,7 +24,7 @@ const UserRoutes = (
     <Route exact path='/users/addbankname' element={<AddBankName/>}/>
     <Route exact path='/users/addstaffrole' element={<AddStaffRole/>}/>
     <Route exact path='/users/addstaff' element={<AddStaff/>}/>
-    <Route exact path='/users/admin' element={<AdminPanel />}/>
+    <Route exact path='/users/admin/*' element={<AdminPanel />}/>
     <Route exact path='/users/notifications' element={<Notifications/>}/>
     <Route exact path='/users/userprofile' element={<UserProfile/>}/>
     <Route exact path='/users/branchdetails' element={<BranchDetails/>}/>

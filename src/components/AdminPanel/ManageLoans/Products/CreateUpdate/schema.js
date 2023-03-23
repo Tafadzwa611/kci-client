@@ -77,3 +77,7 @@ export const createLoanProductSchema = yup.object().shape({
       then: yup.number().required('Required')
     }),
 });
+
+export const editLoanProductSchema = createLoanProductSchema.shape({
+  loan_product_id: yup.string().required('Required'),
+});

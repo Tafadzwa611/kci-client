@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Settings from './Settings/Settings'
 import ManageStaff from './ManageStaff/ManageStaff';
 import OtherIncomeTypes from '../OtherIncome/OtherIncomeTypes';
@@ -7,40 +7,64 @@ import ManageLoans from './ManageLoans/ManageLoans';
 import ManageBranches from './ManageBranches/ManageBranches';
 import ManageClients from './ManageClients/ManageClients';
 import ManageFields from './ManageFields/ManageFields';
+import { Routes, Route, Outlet, Link } from "react-router-dom";
 
 const AdminPanel = () => {
-  const [tab, setTab] = useState('settings');
-
   useEffect(() => {
     document.title = 'View Admin';
   }, []);
 
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Settings />} />
+        <Route path="staff" element={<ManageStaff />} />
+        <Route path="otherincome" element={<OtherIncomeTypes />} />
+        <Route path="expensetypes" element={<ExpenseTypes />} />
+        <Route path="manageloans" element={<ManageLoans />} />
+        <Route path="managebranches" element={<ManageBranches />} />
+        <Route path="manageclients" element={<ManageClients />} />
+        <Route path="managefields" element={<ManageFields />} />
+      </Route>
+    </Routes>
+  )
+}
+
+
+function Layout() {
   return (
     <div className='card'>
       <div className='card-body'>
         <h5 className='table-heading' style={{marginBottom:'20px'}}>View Admin</h5>
         <>
           <div className='bloc-tabs'>
-            <button className={tab === 'settings' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setTab('settings')}> Settings </button>
-            <button className={tab === 'managestf' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setTab('managestf')}> Manage Staff </button>
-            <button className={tab === 'manageclnts' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setTab('manageclnts')}> Manage Clients </button>
-            <button className={tab === 'managelns' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setTab('managelns')}> Manage Loans </button>
-            <button className={tab === 'managebrnchs' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setTab('managebrnchs')}> Manage Branches </button>
-            <button className={tab === 'manageothin' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setTab('manageothin')}> Manage Other Income </button>
-            <button className={tab === 'manageexp' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setTab('manageexp')}> Manage Expenses </button>
-            <button className={tab === 'fields' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setTab('fields')}>Manage Forms</button>
+            <button className='tabs-client'>
+              <Link to="/users/admin/">Settings</Link>
+            </button>
+            <button className='tabs-client'>
+              <Link to="/users/admin/staff">Manage Staff</Link>
+            </button>
+            <button className='tabs-client'>
+              <Link to="/users/admin/manageclients">Manage Clients</Link>
+            </button>
+            <button className='tabs-client'>
+              <Link to="/users/admin/manageloans">Manage Loans</Link>
+            </button>
+            <button className='tabs-client'>
+              <Link to="/users/admin/managebranches">Manage Branches</Link>
+            </button>
+            <button className='tabs-client'>
+              <Link to="/users/admin/otherincome">Manage Other Income</Link>
+            </button>
+            <button className='tabs-client'>
+              <Link to="/users/admin/expensetypes">Manage Expenses</Link>
+            </button>
+            <button className='tabs-client'>
+              <Link to="/users/admin/managefields">Manage Forms</Link>
+            </button>
           </div>
           <div className='tab-content font-12' style={{marginTop:'3rem'}}>
-            {{
-              'settings': <Settings isAccountinOn={false} propagatePayments={false} showIsAccountinOn={() => console.log('log')} showPropagatePayments={() => console.log('log')} setMainTab={setTab}/>,
-              'managestf': <ManageStaff setMainTab={setTab}/>,
-              'manageclnts': <ManageClients setMainTab={setTab}/>,
-              'managelns': <ManageLoans setMainTab={setTab}/>,
-              'managebrnchs': <ManageBranches setMainTab={setTab}/>,
-              'manageothin': <OtherIncomeTypes setMainTab={setTab}/>,
-              'manageexp': <ExpenseTypes setMainTab={setTab}/>,
-              'fields': <ManageFields />,
-            }[tab]}
+            <Outlet />
           </div>
         </>
       </div>
@@ -49,3 +73,4 @@ const AdminPanel = () => {
 }
 
 export default AdminPanel;
+// <button className={tab === 'settings' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('settings')}> Settings </button>

@@ -4,7 +4,7 @@ function MiniTable({products, handleClick, selectedPrdct}) {
   return (
     <table className='table'>
       <tbody>
-        <tr className='journal-details header'>
+        <tr className='journal-details header' style={{position:"sticky", top: 0}}>
           <th>Name</th>
         </tr>
         {products.map(product => {

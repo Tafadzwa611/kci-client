@@ -3027,10 +3027,31 @@ input:checked + .slider:before {
 }
 
 .table-responsive.journal__table-container {
-  /* max-height: 200px; */
   display: grid;
   column-gap: 1rem;
   grid-template-columns: 1fr 2fr;
+}
+
+.table-responsive.journal__table-container-journals {
+  display: grid;
+  column-gap: 1rem;
+  grid-template-columns: 1fr 4fr;
+}
+
+.fees-container {
+  padding: 1rem;
+  height: 100%;
+  background: var(--white);
+  color: var(--color);
+}
+
+.fees-item {
+  padding: 0.6125rem 0;
+  border-bottom: 1px solid #eef2f7;
+}
+
+#dark .fees-item {
+  border-bottom: 1px solid var(--border-color);
 }
 
 .table-responsive.journal__table-container.acc__statement {

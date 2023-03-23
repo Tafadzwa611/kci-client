@@ -1,5 +1,5 @@
 import React from 'react';
-import { convertDate, getAge } from '../../Accounting/Journals/utils';
+import { convertDate } from '../../Accounting/Journals/utils';
 import Footer from './Footer';
 import Loan from '../LoansDetails/Loan';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
@@ -23,7 +23,6 @@ function LoansTable(
     minDate,
     maxDate,
     selectedBranches,
-    loanId,
     setLoans,
   }) {
 

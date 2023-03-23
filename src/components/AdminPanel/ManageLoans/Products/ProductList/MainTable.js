@@ -11,7 +11,6 @@ function MainTable({products, handleClick}) {
           <th>Interest_Method</th>
           <th>Currency</th>
           <th>Date_Created</th>
-          <th>Action</th>
         </tr>
         {products.map(product => {
           return (
@@ -23,10 +22,6 @@ function MainTable({products, handleClick}) {
               <td>{product.currency}</td>
               <td>{product.date_created}</td>
               <td>
-              <div className="action-btns">
-                <span>Suspend</span>
-                <span>Edit</span>
-              </div>
               </td>
             </tr>
           )

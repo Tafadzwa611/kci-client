@@ -21,7 +21,7 @@ function CustomSortableSelect({options, label, setFieldValue, ...props}) {
   const [field, meta] = useField(props);
 
   useEffect(() => {
-    setFieldValue(field.name, {first: items[0], second: items[1], third: items[2], fourth: items[3]});
+    setFieldValue(field.name, items);
   }, [items]);
 
   const sensors = useSensors(

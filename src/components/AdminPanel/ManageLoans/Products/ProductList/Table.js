@@ -6,6 +6,7 @@ import MiniTable from './MiniTable';
 
 function Table({
   products,
+  setView,
   selectedPrdct,
   handleClick,
   setSelectedPrdct,
@@ -16,11 +17,11 @@ function Table({
   return (
     <>
       <div style={{padding:"0", border:"none"}} className={showDetails ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
-        <div className={showDetails ? "table-responsive journal__table-container" : "table-responsive full__table"} >
+        <div className={showDetails ? "table-responsive journal__table-container-journals" : "table-responsive full__table"} >
           <div className="table__height">
             {showDetails ? <MiniTable products={products} handleClick={handleClick} selectedPrdct={selectedPrdct}/> : <MainTable products={products} handleClick={handleClick}/>}
           </div>
-          {showDetails && <ProductDetails product={selectedPrdct} close={close}/>}
+          {showDetails && <ProductDetails product={selectedPrdct} close={close} setView={setView}/>}
         </div>
       </div>
     </>

@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import Select from 'react-select';
 import { useField } from 'formik';
 
-function CustomMultiSelect({label, options, setFieldValue, ...props}) {
-  const [optionSelected, setOptionSelected] = useState([]);
+function CustomMultiSelect({label, options, initVals, setFieldValue, ...props}) {
+  const [optionSelected, setOptionSelected] = useState(initVals);
   const [field, meta] = useField(props);
 
   const handleMultiSelect = selected => {

@@ -11,62 +11,20 @@ import {
   CustomMultiSelect,
   CustomSortableSelect
 } from '../../../../../common';
-import {createLoanProductSchema} from './schema';
+import { useBranches } from '../../../../../contexts/BranchesContext';
 import { useCurrencies } from '../../../../../contexts/CurrenciesContext';
 import { scheduleStrategies } from './data';
-import { useBranches } from '../../../../../contexts/BranchesContext';
 import {Fee, AddFee} from './Fees';
-import { post } from './post';
 
-function AddProduct({productGrps, setView}) {
-  const {currencies} = useCurrencies();
+function ProductForm({productGrps, initialValues, validationSchema, onSubmit, back, repaymentOrder}) {
   const {branches} = useBranches();
-
-  const initialValues = {
-    name: '',
-    description: '',
-    product_category_id: '',
-    product_type: '',
-    loan_product_id: '',
-    minimum_principal_amount: '',
-    default_principal_amount: '',
-    maximum_principal_amount: '',
-    currency_id: '',
-    minimum_interest_rate: '',
-    default_interest_rate: '',
-    maximum_interest_rate: '',
-    interest_method: '',
-    interest_interval: '',
-    loan_duration_time_unit: '',
-    schedule_strategy: '',
-    action_on_holiday: '',
-    minimum_loan_duration: '',
-    default_loan_duration: '',
-    maximum_loan_duration: '',
-    number_of_decimal_places: '',
-    rounding_scheme: '',
-    allow_early_settlement_on_penalties: false,
-    client_type: '',
-    allowed_branches: [],
-    repayment_order: {first: 'penalty', second: 'fees', third: 'interest', fourth: 'principal'},
-    fees: [],
-    action_on_loan_default: 'Do Nothing',
-    apply_late_repayment_penalty_on: '',
-    penalty_charged_per: '',
-    late_repayment_penalty_percentage: '',
-    grace_period: '',
-  };
-
-  const onSubmit = async (values, actions) => {
-    console.log(values);
-    console.log(actions);
-    post(values, actions.setErrors);
-  }
+  const selectBranches = branches.map(br => ({label: br.name, value:br.id}));
+  const {currencies} = useCurrencies();
 
   return (
     <>
-      <Button value={'Back'} handler={() => setView('list')} />
-      <Formik initialValues={initialValues} validationSchema={createLoanProductSchema} onSubmit={onSubmit}>
+      <Button value={'Back'} handler={back} />
+      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
         {({ isSubmitting, errors, setFieldValue, values }) => (
           <Form>
             <NonFieldErrors errors={errors}>
@@ -149,8 +107,19 @@ function AddProduct({productGrps, setView}) {
                 <option value='Groups'>Groups</option>
                 <option value='Groups (solidarity)'>Groups (solidarity)</option>
               </CustomSelect>
-              <CustomMultiSelect label='Branches' options={branches.map(br => ({label: br.name, value:br.id}))} setFieldValue={setFieldValue} name='allowed_branches'/>
-              <CustomSortableSelect label='Repayment Order' setFieldValue={setFieldValue} name='repayment_order' options={['Penalty', 'Fees', 'Interest', 'Principal']}/>
+              <CustomMultiSelect
+                label='Branches'
+                initVals={selectBranches.filter(br => values.allowed_branches_ids.includes(br.value))}
+                options={selectBranches}
+                setFieldValue={setFieldValue}
+                name='allowed_branches_ids'
+              />
+              <CustomSortableSelect
+                label='Repayment Order'
+                setFieldValue={(name, items) => setFieldValue(name, {first: items[0], second: items[1], third: items[2], fourth: items[3]})}
+                name='repayment_order'
+                options={repaymentOrder}
+              />
               {values.fees.map((fee, index) => {
                 return(
                   <React.Fragment key={fee.id}>
@@ -190,4 +159,4 @@ function AddProduct({productGrps, setView}) {
   )
 }
 
-export default AddProduct;
+export default ProductForm;
