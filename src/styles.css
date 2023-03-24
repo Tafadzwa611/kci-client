@@ -2573,6 +2573,7 @@ small {
 /* works in chrome  */
 select option {
   background-color: var(--white) !important;
+  line-height: 2rem !important;
 }
 
 .table-head-row {

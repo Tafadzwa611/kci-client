@@ -6,6 +6,7 @@ import BankingDetails from '../BankingDetails/BankingDetails';
 import NextOfKin from '../nok/NextOfKin';
 import Files from '../Files/Files';
 import Transactions from '../Transactions/Transactions';
+import ClientLoans from '../ClientLoans/ClientLoans';
 
 const MoreIndividualClientDetails = (
     {  
@@ -44,6 +45,7 @@ const MoreIndividualClientDetails = (
                                     <button className={tab === "nok" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("nok")}> Next Of Kin List </button>
                                     <button className={tab === "files" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("files")}> Files </button>
                                     <button className={tab === "txns" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("txns")}> Transactions </button>
+                                    <button className={tab === "loans" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("loans")}> Loans </button>
                                 </div>
                                 <div className='tab-content font-12 text-light' style={{marginTop:"3rem"}}>
                                     {{
@@ -54,6 +56,7 @@ const MoreIndividualClientDetails = (
                                         'nok': <NextOfKin clientId={clientId} nokList={nokList} setNokList={setNokList} client={client}/>,
                                         'files': <Files clientId={clientId} files={files} setFiles={setFiles} client={client}/>,
                                         'txns': <Transactions clientId={clientId} />,
+                                        'loans': <ClientLoans clientId={clientId} />,
                                     }[tab]}
                                 </div>
                             </div>
