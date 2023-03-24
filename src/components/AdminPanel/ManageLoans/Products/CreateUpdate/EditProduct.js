@@ -6,12 +6,6 @@ import { put } from './post';
 
 function EditProduct({productGrps, initialValues, setView, setSelectedPrdct}) {
   removeNull(initialValues);
-  const repaymentOrder = [
-    initialValues.repayment_order.first,
-    initialValues.repayment_order.second,
-    initialValues.repayment_order.third,
-    initialValues.repayment_order.fourth
-  ];
 
   const onSubmit = async (values, actions) => {
     put(values, actions.setErrors, setSelectedPrdct, setView);
@@ -26,7 +20,6 @@ function EditProduct({productGrps, initialValues, setView, setSelectedPrdct}) {
       validationSchema={editLoanProductSchema}
       onSubmit={onSubmit}
       back={back}
-      repaymentOrder={repaymentOrder}
     />
   )
 }

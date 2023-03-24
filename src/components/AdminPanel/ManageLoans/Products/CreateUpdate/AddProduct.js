@@ -1,7 +1,9 @@
 import React from 'react';
 import {createLoanProductSchema} from './schema';
-import { post } from './post';
 import ProductForm from './ProductForm';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { removeEmptyValues } from '../../../../../utils/utils';
 
 function AddProduct({productGrps, setView, setProductId}) {
   const initialValues = {
@@ -40,18 +42,25 @@ function AddProduct({productGrps, setView, setProductId}) {
     grace_period: '',
   };
 
-  const repaymentOrder = [
-    initialValues.repayment_order.first,
-    initialValues.repayment_order.second,
-    initialValues.repayment_order.third,
-    initialValues.repayment_order.fourth
-  ];
+  const back = () => setView('list');
 
   const onSubmit = async (values, actions) => {
-    post(values, actions.setErrors, setProductId, setView);
+    try {
+      const data = removeEmptyValues(values);
+      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+      const response = await axios.post('/loansapi/add_loan_product/', data, CONFIG);
+      setProductId(response.data.id);
+      setView('list');
+    } catch (error) {
+      if (error.message === "Network Error") {
+        actions.setErrors({responseStatus: "Network Error"});
+      } else if (error.response.status === 400) {
+        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+      } else {
+        actions.setErrors({responseStatus: error.response.status});
+      }
+    }
   }
-
-  const back = () => setView('list');
 
   return (
     <ProductForm
@@ -60,7 +69,6 @@ function AddProduct({productGrps, setView, setProductId}) {
       validationSchema={createLoanProductSchema}
       onSubmit={onSubmit}
       back={back}
-      repaymentOrder={repaymentOrder}
     />
   )
 }

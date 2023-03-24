@@ -34,14 +34,15 @@ function Fee({id, index, setFieldValue, fees}) {
 }
 
 function AddFee({setFieldValue, fees}) {
-  const add = () => {
+  const add = (evt) => {
+    evt.preventDefault();
     const feeId = uuidv4();
     setFieldValue('fees', [...fees, {...initialFeeValues, id: feeId}]);
   }
 
   return (
     <div style={{marginTop:'10px'}}>
-      <ButtonSuccess value={'Add Fee'} handler={() => add()} />
+      <ButtonSuccess value={'Add Fee'} handler={(evt) => add(evt)} />
     </div>
   )
 }

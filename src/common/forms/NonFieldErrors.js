@@ -5,12 +5,12 @@ const NonFieldErrors = ({children, errors}) => {
   if (errors.responseStatus >= 500) {
     return (
       <>
+        {children}
         <div className='row custom-background' style={{marginTop: '15px', display:"flex", justifyContent:"center", padding:"0 10px"}}>
           <div className='col-9'>
             <div style={{fontSize: 12, color: 'red'}}>Server Error please try again later. If error persists please contact developer.</div>
           </div>
         </div>
-        {children}
       </>
     )
   }
@@ -18,12 +18,12 @@ const NonFieldErrors = ({children, errors}) => {
   if (errors.responseStatus >= 400) {
     return (
       <>
+        {children}
         <div className='row custom-background' style={{marginTop: '15px', display:"flex", justifyContent:"center", padding:"0 10px"}}>
           <div className='col-9'>
-            <div style={{fontSize: 12, color: 'red'}}>{errors.detail}</div>
+            <div style={{fontSize: 12, color: 'red'}}>Error: {errors.detail}</div>
           </div>
         </div>
-        {children}
       </>
     )
   }
@@ -31,12 +31,12 @@ const NonFieldErrors = ({children, errors}) => {
   if (errors.responseStatus === "Network Error") {
     return (
       <>
+        {children}
         <div className='row custom-background' style={{marginTop: '15px', display:"flex", justifyContent:"center", padding:"0 10px"}}>
           <div className='col-9'>
             <div style={{fontSize: 12, color: 'red'}}>Network Error</div>
           </div>
         </div>
-        {children}
       </>
     )
   }
@@ -44,8 +44,8 @@ const NonFieldErrors = ({children, errors}) => {
   if (errors.clientError != undefined) {
     return (
       <>
-        <ClientError error={errors.clientError}/>
         {children}
+        <ClientError error={errors.clientError}/>
       </>
     )
   }

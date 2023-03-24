@@ -16,7 +16,7 @@ import { useCurrencies } from '../../../../../contexts/CurrenciesContext';
 import { scheduleStrategies } from './data';
 import {Fee, AddFee} from './Fees';
 
-function ProductForm({productGrps, initialValues, validationSchema, onSubmit, back, repaymentOrder}) {
+function ProductForm({productGrps, initialValues, validationSchema, onSubmit, back}) {
   const {branches} = useBranches();
   const selectBranches = branches.map(br => ({label: br.name, value:br.id}));
   const {currencies} = useCurrencies();
@@ -28,7 +28,7 @@ function ProductForm({productGrps, initialValues, validationSchema, onSubmit, ba
         {({ isSubmitting, errors, setFieldValue, values }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <div className="divider divider-info">
+              <div className='divider divider-info'>
                 <span>Name & Description</span>
               </div>
               <CustomInput label='Name' name='name' type='text' required/>
@@ -44,7 +44,7 @@ function ProductForm({productGrps, initialValues, validationSchema, onSubmit, ba
                 <option value='Interest-Free Loan'>Interest-Free Loan</option>
               </CustomSelect>
               <CustomCheckbox label='Is Active' name='is_active'/>
-              <div className="divider divider-info">
+              <div className='divider divider-info'>
                 <span>Principal Settings</span>
               </div>
               <CustomSelect label='Currency' name='currency_id' required>
@@ -54,7 +54,7 @@ function ProductForm({productGrps, initialValues, validationSchema, onSubmit, ba
               <CustomInput label='Minimum Principal Amount' name='minimum_principal_amount' type='number' required/>
               <CustomInput label='Default Principal Amount' name='default_principal_amount' type='number' required/>
               <CustomInput label='Maximum Principal Amount' name='maximum_principal_amount' type='number' required/>
-              <div className="divider divider-info">
+              <div className='divider divider-info'>
                 <span>Interest Settings</span>
               </div>
               <CustomSelect label='Interest Method' name='interest_method' required>
@@ -73,9 +73,15 @@ function ProductForm({productGrps, initialValues, validationSchema, onSubmit, ba
               <CustomInput label='Minimum Loan Interest' name='minimum_interest_rate' type='number' required/>
               <CustomInput label='Default Loan Interest' name='default_interest_rate' type='number' required/>
               <CustomInput label='Maximum Loan Interest' name='maximum_interest_rate' type='number' required/>
-              <div className="divider divider-info">
+              <div className='divider divider-info'>
                 <span>Tenure Settings</span>
               </div>
+              <CustomSelect label='Non Working Days Rescheduling' name='action_on_holiday'>
+                <option value=''>------</option>
+                <option value='NXT'>Move ahead to next working day</option>
+                <option value='PREV'>Move backwards to previous working day</option>
+                <option value='EXT'>Extend Schedule</option>
+              </CustomSelect>
               <CustomSelect label='Repayment Cycle' name='loan_duration_time_unit' required>
                 <option value=''>------</option>
                 <option value='Days'>Daily</option>
@@ -88,20 +94,14 @@ function ProductForm({productGrps, initialValues, validationSchema, onSubmit, ba
                 <option value='6 Months'>Semi-annually</option>
                 <option value='Years'>Annually</option>
               </CustomSelect>
-              <CustomSelect label='Default Loan Schedule Strategy' name='schedule_strategy' required>
-                <option value=''>------</option>
-                {scheduleStrategies.map(strategy => <option key={strategy} value={strategy}>{strategy}</option>)}
-              </CustomSelect>
-              <CustomSelect label='Non Working Days Rescheduling' name='action_on_holiday' required>
-                <option value=''>------</option>
-                <option value='NXT'>Move ahead to next working day</option>
-                <option value='PREV'>Move backwards to previous working day</option>
-                <option value='EXT'>Extend Schedule</option>
-              </CustomSelect>
               <CustomInput label='Minimum Number of Repayments' name='minimum_loan_duration' type='number' required/>
               <CustomInput label='Default Number of Repayments' name='default_loan_duration' type='number' required/>
               <CustomInput label='Maximum Number of Repayments' name='maximum_loan_duration' type='number' required/>
-              <div className="divider divider-info">
+              <CustomSelect label='Default Loan Schedule Strategy' name='schedule_strategy' required>
+                <option value=''>------</option>
+                {scheduleStrategies[values.loan_duration_time_unit].map(strategy => <option key={strategy} value={strategy}>{strategy}</option>)}
+              </CustomSelect>
+              <div className='divider divider-info'>
                 <span>Decimal Places, Rounding Off and Repayment Order</span>
               </div>
               <CustomSelect label='Decimal Places' name='number_of_decimal_places' required>
@@ -117,9 +117,19 @@ function ProductForm({productGrps, initialValues, validationSchema, onSubmit, ba
                 <option value='ROUND_DOWN'>Round Down</option>
               </CustomSelect>
               <CustomCheckbox label='Allow Early Settlement On Loans With Unpaid Penalties' name='allow_early_settlement_on_penalties'/>
-              <CustomSortableSelect label='Repayment Order' setFieldValue={setFieldValue} name='repayment_order' options={['Penalty', 'Fees', 'Interest', 'Principal']}/>
-              <div className="divider divider-info">
-                <span>Client Type & Branches</span>
+              <CustomSortableSelect
+                label='Repayment Order'
+                setFieldValue={(name, items) => setFieldValue(name, {first: items[0], second: items[1], third: items[2], fourth: items[3]})}
+                name='repayment_order'
+                options={[
+                  values.repayment_order.first,
+                  values.repayment_order.second,
+                  values.repayment_order.third,
+                  values.repayment_order.fourth
+                ]}
+              />
+              <div className='divider divider-info'>
+                <span>Product Availability</span>
               </div>
               <CustomSelect label='Client Type' name='client_type' required>
                 <option value=''>------</option>
@@ -134,13 +144,7 @@ function ProductForm({productGrps, initialValues, validationSchema, onSubmit, ba
                 setFieldValue={setFieldValue}
                 name='allowed_branches_ids'
               />
-              <CustomSortableSelect
-                label='Repayment Order'
-                setFieldValue={(name, items) => setFieldValue(name, {first: items[0], second: items[1], third: items[2], fourth: items[3]})}
-                name='repayment_order'
-                options={repaymentOrder}
-              />
-              <div className="divider divider-info">
+              <div className='divider divider-info'>
                 <span>Fees</span>
               </div>
               {values.fees.map((fee, index) => {
@@ -151,7 +155,7 @@ function ProductForm({productGrps, initialValues, validationSchema, onSubmit, ba
                 )
               })}
               <AddFee fees={values.fees} setFieldValue={setFieldValue} />
-              <div className="divider divider-info">
+              <div className='divider divider-info'>
                 <span>Defaults & Penalties</span>
               </div>
               <CustomCheckbox label='Allow Early Settlement On Loans With Unpaid Penalties' name='allow_early_settlement_on_penalties'/>
@@ -177,9 +181,8 @@ function ProductForm({productGrps, initialValues, validationSchema, onSubmit, ba
                   <CustomInput label='Penalty Tolerance Period In Days' name='grace_period' type='number' required/>
                 </>
               }
-              <div className="divider divider-default" style={{padding: "1.25rem"}}>
-              </div>
-              <div style={{display:"flex", justifyContent: "flex-end"}}>
+              <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+              <div style={{display:'flex', justifyContent: 'flex-end'}}> 
               <SubmitButton isSubmitting={isSubmitting}/>
               </div>
             </NonFieldErrors>

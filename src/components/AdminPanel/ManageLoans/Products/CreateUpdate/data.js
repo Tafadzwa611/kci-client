@@ -1,24 +1,15 @@
-export const scheduleStrategies = [
-  'Same Day',
-  'Everyday',
-  'Every Seven Days',
-  'Every Mon',
-  'Every Tue',
-  'Every Wed',
-  'Every Thu',
-  'Every Fri',
-  'Every Sat',
-  'Every Sun',
-  'Biweek Interval',
-  'First Day Of Next Month',
-  'Last Day Of Next Month',
-  'Monthly Interval',
-  'Bimonth Interval',
-  'Quarter Interval',
-  'Quadrimester Interval',
-  'Semi-annual Interval',
-  'Year Interval'
-];
+export const scheduleStrategies = {
+  'Days': ['Everyday'],
+  'Weeks': ['Every Mon', 'Every Tue', 'Every Wed', 'Every Thu', 'Every Fri', 'Every Sat', 'Every Sun', 'Every Seven Days'],
+  '2 Weeks': ['Same Day', 'Biweek Interval'],
+  'Months': ['Same Day', 'First Day Of Next Month', 'Last Day Of Next Month', 'Monthly Interval'],
+  '2 Months': ['Same Day', 'Bimonth Interval'],
+  '3 Months': ['Same Day', 'Quarter Interval'],
+  '4 Months': ['Same Day', 'Quadrimester Interval'],
+  '6 Months': ['Same Day', 'Semi-annual Interval'],
+  'Years': ['Same Day', 'Year Interval'],
+  '': []
+};
 
 export const initialFeeValues = {
   id: null,

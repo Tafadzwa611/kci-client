@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   DndContext, 
   closestCenter,
@@ -19,10 +19,6 @@ import { useField } from 'formik';
 function CustomSortableSelect({options, label, setFieldValue, ...props}) {
   const [items, setItems] = useState(options);
   const [field, meta] = useField(props);
-
-  useEffect(() => {
-    setFieldValue(field.name, items);
-  }, [items]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -46,17 +42,15 @@ function CustomSortableSelect({options, label, setFieldValue, ...props}) {
       </div>
     </div>
   );
-  
+
   function handleDragEnd(event) {
     const {active, over} = event;
-    
     if (active.id !== over.id) {
-      setItems((items) => {
-        const oldIndex = items.indexOf(active.id);
-        const newIndex = items.indexOf(over.id);
-        
-        return arrayMove(items, oldIndex, newIndex);
-      });
+      const oldIndex = items.indexOf(active.id);
+      const newIndex = items.indexOf(over.id);
+      const newItems = arrayMove(items, oldIndex, newIndex);
+      setFieldValue(field.name, newItems);
+      setItems(newItems);
     }
   }
 }
