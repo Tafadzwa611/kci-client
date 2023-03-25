@@ -54,7 +54,7 @@ function AddProduct({productGrps, setView, setProductId}) {
     } catch (error) {
       if (error.message === "Network Error") {
         actions.setErrors({responseStatus: "Network Error"});
-      } else if (error.response.status === 400) {
+      } else if (error.response.status >= 400 && error.response.status < 500) {
         actions.setErrors({responseStatus: error.response.status, ...error.response.data});
       } else {
         actions.setErrors({responseStatus: error.response.status});
