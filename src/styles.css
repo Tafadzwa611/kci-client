@@ -99,6 +99,7 @@ body {
 #dark .filter-container .filter-container-float-right .show,
 #dark .tabs, 
 #dark .tabs-client,
+#dark .tabs-client_a,
 #dark .text-light,
 #dark .reports-form-control,
 #dark .report-custom-form-control {
@@ -1475,7 +1476,9 @@ button.close, button.mailbox-attachment-close {
   display: flex;
 }
 
-.tabs, .tabs-client {
+.tabs, 
+.tabs-client,
+.tabs-client_a{
   padding: 15px;
   text-align: center;
   width: max-content;
@@ -1491,7 +1494,16 @@ button.close, button.mailbox-attachment-close {
   padding: 0.75rem;
 }
 
-.active-tabs  {
+.tabs-client_a {
+  padding: 0.6125rem;
+  font-size: 0.825rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.active-tabs,
+.active-tabs_a {
   background: var(--info);
   border-bottom: 1px solid transparent;
   color: var(--white);
