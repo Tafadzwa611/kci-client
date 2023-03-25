@@ -1,29 +1,22 @@
 import React from 'react';
-import ProductForm from './ProductForm';
-import {editLoanProductSchema} from './schema';
-import { removeNull,removeEmptyValues } from '../../../../../utils/utils';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import CategoryForm from './CategoryForm';
+import { addSchema } from './schema';
 
-function EditProduct({productGrps, initialValues, setView, setSelectedPrdct, setProducts}) {
-  removeNull(initialValues);
+function AddCat({setView, setCategoryId}) {
+  const initialValues = {name: '', is_active: true};
+  const back = () => setView('list');
 
   const onSubmit = async (values, actions) => {
     try {
-      const data = removeEmptyValues(values);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      await axios.put(`/loansapi/edit_loan_product/${data.id}/`, data, CONFIG);
-      setProducts(curr => {
-        return curr.map(prod => {
-          if (prod.id === values.id) {
-            return values
-          }
-          return prod
-        })
-      });
-      setSelectedPrdct(values);
+      const response = await axios.post('/loansapi/add_product_group/', values, CONFIG);
+      console.log(response);
+      setCategoryId(response.data.id);
       setView('list');
     } catch (error) {
+      console.log(error);
       if (error.message === "Network Error") {
         actions.setErrors({responseStatus: "Network Error"});
       } else if (error.response.status === 400) {
@@ -34,17 +27,14 @@ function EditProduct({productGrps, initialValues, setView, setSelectedPrdct, set
     }
   }
 
-  const back = () => setView('list');
-
   return (
-    <ProductForm
-      productGrps={productGrps}
+    <CategoryForm
       initialValues={initialValues}
-      validationSchema={editLoanProductSchema}
+      validationSchema={addSchema}
       onSubmit={onSubmit}
       back={back}
     />
   )
 }
 
-export default EditProduct;
+export default AddCat;

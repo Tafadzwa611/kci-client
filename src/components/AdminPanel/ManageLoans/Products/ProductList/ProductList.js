@@ -45,6 +45,7 @@ function ProductList({data, extra}) {
           initialValues={selectedPrdct}
           setView={extra.setView}
           setSelectedPrdct={setSelectedPrdct}
+          setProducts={setProducts}
         />}
       </Fetcher>
     )
