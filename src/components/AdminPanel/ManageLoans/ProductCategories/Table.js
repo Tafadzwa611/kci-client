@@ -57,21 +57,26 @@ function Table({
             <div style={{position:'sticky', top:'0', width:'100%'}}>
               <div style={{display:'flex', flexDirection:'column', padding:'1.5rem'}} className='j-details-container'>
                 <div className='row' style={{marginBottom:'1.5rem', marginTop:'0'}}>
-                  <div className='col-12' style={{display:'flex', justifyContent:'space-between'}}>
-                    <button className='btn btn-olive' onClick={() => setView('edit')}>Edit</button>
-                    <button className='btn btn-olive' onClick={() => setOpenModal(true)}>Delete</button>
-                    <button><a onClick={close} className='btn btn-default' style={{borderRadius:'0'}}>Close</a></button>
+                  <div className="col-12" style={{display:"flex", justifyContent:"space-between"}}>
+                    <button><a onClick={close} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
+                    <div style={{display:"flex", columnGap: "5px"}}>
+                      <button className="btn btn-olive" onClick={() => setView('edit')}>Edit</button>
+                      <button className="btn btn-olive" onClick={() => setOpenModal(true)}>Delete</button>
+                    </div>
                   </div>
-                  <div style={{display:'flex', columnGap:'1%'}}>
-                    <div style={{width:'100%'}}>
-                      <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom: '2rem'}}>
-                        <div style={{width:'100%'}}>
-                          <ul>
-                            <li style={{marginBottom: '1rem'}}><b>Product Information</b></li>
-                            <li>Product Name: {selectedCat.name}</li>
-                            <li>Status: {selectedCat.is_active ? 'Active' : 'Inactive'}</li>
-                          </ul>
-                        </div>
+                </div>
+                <div style={{display:'flex', columnGap:'1%'}}>
+                  <div style={{width:'100%'}}>
+                    <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom: '2rem'}}>
+                      <div style={{width:'100%'}}>
+                        <ul>
+                          <li style={{marginBottom: '1rem'}}><b>Product Information</b></li>
+                          <li>Product Name: {selectedCat.name}</li>
+                          {selectedCat.is_active ?
+                            <li>Status: <span className="badge badge-success">Active</span></li>:
+                            <li>Status: <span className="badge badge-danger">Inactive</span></li>
+                          }
+                        </ul>
                       </div>
                     </div>
                   </div>

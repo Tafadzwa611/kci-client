@@ -1,7 +1,6 @@
 import React from 'react';
 
 function MainTable({products, handleClick}) {
-  console.log(products)
   return (
     <table className="table">
       <tbody>
