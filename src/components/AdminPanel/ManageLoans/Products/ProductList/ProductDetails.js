@@ -14,29 +14,34 @@ function ProductDetails({product, close, setView, setProducts}) {
         <div style={{display:"flex", flexDirection:"column", padding:"1.5rem"}} className="j-details-container">
           <div className="row" style={{marginBottom:"1.5rem", marginTop:"0"}}>
             <div className="col-12" style={{display:"flex", justifyContent:"space-between"}}>
-              <button className="btn btn-olive" onClick={() => setView('edit')}>Edit</button>
-              <button className="btn btn-olive" onClick={() => setOpenDeleteProduct(true)}>Delete</button>
               <button><a onClick={close} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
+              <div style={{display:"flex", columnGap: "5px"}}>
+                <button className="btn btn-olive" onClick={() => setView('edit')}>Edit</button>
+                <button className="btn btn-olive" onClick={() => setOpenDeleteProduct(true)}>Delete</button>
+              </div>
             </div>
           </div>
           <div style={{display:"flex", columnGap:"1%"}}>
             <div style={{width:"74%"}}>
               <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", marginBottom: '2rem'}}>
                 <div style={{width:"33%"}}>
-                  <ul>
+                  <ul style={{paddingRight:"1rem"}}>
                     <li style={{marginBottom: '1rem'}}><b>Product Information</b></li>
                     <li>Product Name: {product.name}</li>
                     <li>Product ID: {product.loan_product_id}</li>
                     <li>Product Type: {product.product_type}</li>
                     <li>Product Description: {product.description}</li>
                     <li>Product Category: {product.product_category}</li>
-                    <li>Status: {product.is_active ? 'Active' : 'Inactive'}</li>
+                    {product.is_active ?
+                      <li>Status: <span className="badge badge-success">Active</span></li>:
+                      <li>Status: <span className="badge badge-danger">Inactive</span></li>
+                    }
                     <li>Date Created: {product.date_created}</li>
                     <li>Created By: {product.created_by}</li>
                   </ul>
                 </div>
                 <div style={{width:"33%"}}>
-                  <ul>
+                  <ul style={{paddingRight:"1rem"}}>
                     <li style={{marginBottom: '1rem'}}><b>Principal Settings</b></li>
                     <li>Product Currency: {product.currency}</li>
                     <li>Minimum Principal Amount: {product.minimum_principal_amount}</li>
@@ -45,7 +50,7 @@ function ProductDetails({product, close, setView, setProducts}) {
                   </ul>
                 </div>
                 <div style={{width:"33%"}}>
-                  <ul>
+                  <ul style={{paddingRight:"1rem"}}>
                     <li style={{marginBottom: '1rem'}}><b>Interest Settings</b></li>
                     <li>Interest Method: {product.interest_method}</li>
                     <li>Minimum Interest Rate: {product.minimum_interest_rate}%{product.interest_interval}</li>
@@ -56,7 +61,7 @@ function ProductDetails({product, close, setView, setProducts}) {
               </div>
               <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", marginBottom: '2rem'}}>
                 <div style={{width:"33%"}}>
-                  <ul>
+                  <ul style={{paddingRight:"1rem"}}>
                     <li style={{marginBottom: '1rem'}}><b>Tenure Settings</b></li>
                     <li>Minimum Number of Repayments: {getTenure(product.minimum_loan_duration, product.loan_duration_time_unit)}</li>
                     <li>Default Number of Repayments: {getTenure(product.default_loan_duration, product.loan_duration_time_unit)}</li>
@@ -66,24 +71,7 @@ function ProductDetails({product, close, setView, setProducts}) {
                   </ul>
                 </div>
                 <div style={{width:"33%"}}>
-                  <ul>
-                    <li style={{marginBottom: '1rem'}}><b>Decimal Places, Rounding Off and Repayment Order</b></li>
-                    <li>Decimal Places: {getDecimalPlaces(product.number_of_decimal_places)}</li>
-                    <li>Rounding Scheme: {getRoundingScheme(product.rounding_scheme)}</li>
-                    <li>Repayment Order: {product.repayment_order.first}, {product.repayment_order.second}, {product.repayment_order.third}, {product.repayment_order.fourth}</li>
-                  </ul>
-                </div>
-                <div style={{width:"33%"}}>
-                  <ul>
-                    <li style={{marginBottom: '1rem'}}><b>Product availability</b></li>
-                    <li>Client Type: {product.client_type}</li>
-                    <li>Branches:{allowedBranches.map(br => ` ${br.name}`)}</li>
-                  </ul>
-                </div>
-              </div>
-              <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-                <div style={{width:"33%"}}>
-                  <ul>
+                  <ul style={{paddingRight:"1rem"}}>
                     <li style={{marginBottom: '1rem'}}><b>Penalty Settings</b></li>
                     <li>Action On Default: {product.action_on_loan_default}</li>
                     {product.action_on_loan_default === 'Add Penalty' && 
@@ -93,6 +81,23 @@ function ProductDetails({product, close, setView, setProducts}) {
                         <li>Penalty Tolerance Period In Days: {getTenure(product.grace_period, 'Days')}</li>
                       </>
                     }
+                  </ul>
+                </div>
+                <div style={{width:"33%"}}>
+                  <ul style={{paddingRight:"1rem"}}>
+                    <li style={{marginBottom: '1rem'}}><b>Product availability</b></li>
+                    <li>Client Type: {product.client_type}</li>
+                    <li>Branches:{allowedBranches.map(br => ` ${br.name}`)}</li>
+                  </ul>
+                </div>
+              </div>
+              <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+              <div style={{width:"33%"}}>
+                  <ul style={{paddingRight:"1rem"}}>
+                    <li style={{marginBottom: '1rem'}}><b>Decimal Places, Rounding Off and Repayment Order</b></li>
+                    <li>Decimal Places: {getDecimalPlaces(product.number_of_decimal_places)}</li>
+                    <li>Rounding Scheme: {getRoundingScheme(product.rounding_scheme)}</li>
+                    <li>Repayment Order: {product.repayment_order.first}, {product.repayment_order.second}, {product.repayment_order.third}, {product.repayment_order.fourth}</li>
                   </ul>
                 </div>
               </div>

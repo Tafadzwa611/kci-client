@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Settings from './Settings/Settings'
 import ManageStaff from './ManageStaff/ManageStaff';
 import OtherIncomeTypes from '../OtherIncome/OtherIncomeTypes';
@@ -32,36 +32,77 @@ const AdminPanel = () => {
 
 
 function Layout() {
+  const [activeMenu, setActiveMenu] = useState('admin')
   return (
     <div className='card'>
       <div className='card-body'>
         <h5 className='table-heading' style={{marginBottom:'20px'}}>View Admin</h5>
         <>
           <div className='bloc-tabs'>
-            <button className='tabs-client'>
-              <Link to="/users/admin/">Settings</Link>
-            </button>
-            <button className='tabs-client'>
-              <Link to="/users/admin/staff">Manage Staff</Link>
-            </button>
-            <button className='tabs-client'>
-              <Link to="/users/admin/manageclients">Manage Clients</Link>
-            </button>
-            <button className='tabs-client'>
-              <Link to="/users/admin/manageloans">Manage Loans</Link>
-            </button>
-            <button className='tabs-client'>
-              <Link to="/users/admin/managebranches">Manage Branches</Link>
-            </button>
-            <button className='tabs-client'>
-              <Link to="/users/admin/otherincome">Manage Other Income</Link>
-            </button>
-            <button className='tabs-client'>
-              <Link to="/users/admin/expensetypes">Manage Expenses</Link>
-            </button>
-            <button className='tabs-client'>
-              <Link to="/users/admin/managefields">Manage Forms</Link>
-            </button>
+            <Link 
+              to="/users/admin/"
+              id="admin" 
+              className={activeMenu == 'admin' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+              onClick={() => { setActiveMenu('admin') }}
+            >
+              Settings
+            </Link>
+            <Link 
+              to="/users/admin/staff"
+              id="staff" 
+              className={activeMenu == 'staff' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+              onClick={() => { setActiveMenu('staff') }}
+            >
+              Manage Staff
+            </Link>
+            <Link 
+              to="/users/admin/manageclients"
+              id="manageclients" 
+              className={activeMenu == 'manageclients' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+              onClick={() => { setActiveMenu('manageclients') }}
+            >
+              Manage Clients
+            </Link>
+            <Link 
+              to="/users/admin/manageloans"
+              id="manageloans" 
+              className={activeMenu == 'manageloans' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+              onClick={() => { setActiveMenu('manageloans') }}
+            >
+              Manage Loans
+            </Link>
+            <Link 
+              to="/users/admin/managebranches"
+              id="managebranches" 
+              className={activeMenu == 'managebranches' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+              onClick={() => { setActiveMenu('managebranches') }}
+            >
+              Manage Branches
+            </Link>
+            <Link 
+              to="/users/admin/otherincome"
+              id="otherincome" 
+              className={activeMenu == 'otherincome' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+              onClick={() => { setActiveMenu('otherincome') }}
+            >
+              Manage Other Income
+            </Link>
+            <Link 
+              to="/users/admin/expensetypes"
+              id="expensetypes" 
+              className={activeMenu == 'expensetypes' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+              onClick={() => { setActiveMenu('expensetypes') }}  
+            >
+              Manage Expenses
+            </Link>
+            <Link 
+              to="/users/admin/managefields"
+              id="managefields" 
+              className={activeMenu == 'managefields' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+              onClick={() => { setActiveMenu('managefields') }}
+            >
+              Manage Forms
+            </Link>
           </div>
           <div className='tab-content font-12' style={{marginTop:'3rem'}}>
             <Outlet />
