@@ -8,6 +8,16 @@ function Details({client, setClient, clientId, branches}) {
     ([key, value]) => ['first_name', 'last_name', 'fullname', 'gender', 'date_of_birth', 'identification_type', 'identification_number', 'registration_date', 'phone_number', 'email'].includes(key)
   ));
 
+  const statusClasses = {
+    'Active': 'badge badge-success',
+    'Blacklisted': 'badge badge-dark',
+    'Processing': 'badge badge-info-lighter',
+    'Pending Approval': 'badge badge-info-light',
+    'Inactive': 'badge badge-info',
+    'Left': 'badge badge-semi-dark',
+    'Rejected': 'badge badge-danger',
+  }
+
   return (
     <div>
       <UpdatePersonalDetails details={details} setClient={setClient} open={open} setOpen={setOpen} clientId={clientId}/>
@@ -41,7 +51,7 @@ function Details({client, setClient, clientId, branches}) {
               <li>Gender: {client.gender}</li>
               <li>Date of Birth: {convertDate(client.date_of_birth)}</li>
               <li>ID Number: {client.identification_number}</li>
-              <li>Client State: {client.status}</li>
+              <li>Client State: <span className={statusClasses[client.status]}>{client.status}</span></li>
             </ul>
           </div>
 
