@@ -36,7 +36,7 @@ function ProductForm({productGrps, initialValues, validationSchema, onSubmit, ba
               <CustomTextField label='Description' name='description'/>
               <CustomSelect label='Product Category' name='product_category_id' required>
                 <option value=''>------</option>
-                {productGrps.map(grp => <option key={grp.id} value={grp.id}>{grp.name}</option>)}
+                {productGrps.filter(grp => grp.is_active).map(grp => <option key={grp.id} value={grp.id}>{grp.name}</option>)}
               </CustomSelect>
               <CustomSelect label='Product Type' name='product_type' required>
                 <option value=''>------</option>
