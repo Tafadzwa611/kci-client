@@ -2,10 +2,12 @@ import React from 'react';
 import ProductForm from './ProductForm';
 import {editLoanProductSchema} from './schema';
 import { removeNull,removeEmptyValues } from '../../../../../utils/utils';
+import { useCurrencies } from '../../../../../contexts/CurrenciesContext';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
 function EditProduct({productGrps, initialValues, setView, setSelectedPrdct, setProducts}) {
+  const {currencies} = useCurrencies();
   removeNull(initialValues);
 
   const onSubmit = async (values, actions) => {
@@ -16,7 +18,9 @@ function EditProduct({productGrps, initialValues, setView, setSelectedPrdct, set
       setProducts(curr => {
         return curr.map(prod => {
           if (prod.id === values.id) {
+            const currency = currencies.find(currency => currency.id == values.currency_id);
             const group = productGrps.find(group => group.id == values.product_category_id);
+            values.currency = currency.fullname;
             values.product_category = group.name;
             return values
           }
