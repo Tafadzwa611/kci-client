@@ -1,21 +1,18 @@
 import React from 'react';
 
-const DeleteModal = ({closeModal, deleteExpense, expense}) => {
+const DeleteModal = ({closeModal, deleteExpense}) => {
     return (
         <div className="modalBackground">
             <div className="modalContainer">
                 <div>
                     <i className="uil uil-info-circle modal_circle"></i>
                 </div>
-                <div className="title">
-                    Are you sure ? 
-                </div>
-                <div className="para">
-                    You want to delete {expense} expense.
+                <div className="title" style={{fontSize: "0.875rem"}}>
+                    Are you sure you want to delete this expense.
                 </div>
                 <div className="modal-footer">
-                    <button className="btn btn-danger"onClick={() => closeModal(false)}>Cancel</button>
-                    <button className="btn btn-info" onClick={deleteExpense}>Continue</button>
+                    <button className="btn btn-default"onClick={() => closeModal(false)}>Cancel</button>
+                    <button className="btn btn-danger" onClick={deleteExpense}>Continue</button>
                 </div>
             </div>
         </div>

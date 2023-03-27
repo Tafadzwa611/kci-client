@@ -7,15 +7,12 @@ const DeleteModal = ({closeModal, deleteOtherIncome}) => {
                 <div>
                     <i className="uil uil-info-circle modal_circle"></i>
                 </div>
-                <div className="title">
-                    Are you sure ? 
-                </div>
-                <div className="para">
-                    You want to delete income.
+                <div className="title" style={{fontSize: "0.875rem"}}>
+                    Are you sure you want to delete this income.
                 </div>
                 <div className="modal-footer">
-                    <button className="btn btn-danger"onClick={() => closeModal(false)}>Cancel</button>
-                    <button className="btn btn-info" onClick={deleteOtherIncome}>Continue</button>
+                    <button className="btn btn-default"onClick={() => closeModal(false)}>Cancel</button>
+                    <button className="btn btn-danger" onClick={deleteOtherIncome}>Continue</button>
                 </div>
             </div>
         </div>

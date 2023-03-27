@@ -36,6 +36,7 @@ const OtherIncomeList = (
         if (response.ok){
             setOtherIncomes(curr => curr.filter(other => other.id != deleteincome))
             setOpenmodal(false)
+            setDetails(false)
         }
 	}
 
@@ -57,7 +58,6 @@ const OtherIncomeList = (
                                         <th style={{width:"16.6%"}}>Other_Income_Date</th>
                                         <th style={{width:"16.6%"}}>Date_Created</th>
                                         <th style={{width:"16.6%"}}>Other_Income_Amount</th>
-                                        <th style={{width:"10%"}}>Action</th>
                                     </tr>
                                 }
                             </thead>
@@ -87,7 +87,6 @@ const OtherIncomeList = (
                                                 <td style={{verticalAlign:"middle"}}>{other.income_date}</td>
                                                 <td style={{verticalAlign:"middle"}}>{other.date_created}</td>
                                                 <td style={{verticalAlign:"middle"}}>{other.currency} {other.income_amount}</td>
-                                                <td style={{verticalAlign:"middle"}}><span className="delete" id="delete" value={other.id} onClick={handleClick}>delete</span></td>
                                             </tr>
                                         )
                                     }
@@ -104,8 +103,9 @@ const OtherIncomeList = (
                     <div style={{display:"flex", flexDirection:"column", padding:"1.5rem"}} className="j-details-container">
 
                         <div className="row" style={{marginBottom:"1.5rem", marginTop:"0"}}>
-                            <div className="col-12" style={{display:"flex", justifyContent:"flex-end"}}>
+                            <div className="col-12" style={{display:"flex", justifyContent:"space-between"}}>
                                 <button><a onClick={e => setDetails(false)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
+                                <button><a className="btn btn-olive" id="delete" value={selectedinc.id} onClick={handleClick}>Delete</a></button>
                             </div>
                         </div>
                         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>

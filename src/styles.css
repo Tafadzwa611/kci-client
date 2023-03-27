@@ -1284,7 +1284,7 @@ tr .edit {
 .modalBackground .modalContainer .title {
   font-size: 1.5rem;
   font-weight: 500;
-  margin-bottom: 1rem;
+  margin: 32px 0;
 } 
 
 .modalBackground .modalContainer .para {
@@ -1818,7 +1818,7 @@ small {
 .badge {
   display: inline-block;
   padding: 0.35em 0.45em;
-  font-size: 75%;
+  font-size: 0.6125rem;
   font-weight: 700;
   line-height: 1;
   text-align: center;
@@ -1868,6 +1868,13 @@ small {
   background-color:var(--dark);
   color: var(--white);
 }
+
+.badge-semi-dark,
+.badge-bg-semi-dark {
+  background-color:#4d4d4d;
+  color: var(--white);
+}
+
 
 .receipt-btns {
   display: flex;

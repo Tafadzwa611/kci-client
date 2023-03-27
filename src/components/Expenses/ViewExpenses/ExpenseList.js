@@ -34,6 +34,7 @@ const ExpenseList = ({
         if (response.ok){
             setExpenses(curr => curr.filter(expense => expense.id != deleteexpense))
             setOpenmodal(false)
+            setDetails(false)
         }
 	}
 
@@ -55,7 +56,6 @@ const ExpenseList = ({
                                         <th style={{textAlign:"start"}}>Expense_Date</th>
                                         <th style={{textAlign:"start"}}>Date_Created</th>
                                         <th style={{textAlign:"start"}}>Expense_Amount</th>
-                                        <th style={{textAlign:"start"}}>Action</th>
                                     </tr>
                                 }
                             </thead>
@@ -85,7 +85,6 @@ const ExpenseList = ({
                                                 <td style={{verticalAlign:"middle"}}>{expense.expense_date}</td>
                                                 <td style={{verticalAlign:"middle"}}>{expense.date_created}</td>
                                                 <td style={{verticalAlign:"middle"}}>{expense.currency} {expense.expense_amount}</td>
-                                                <td style={{verticalAlign:"middle"}}><span className="delete" id="delete" value={expense.id} onClick={handleClick}>delete</span></td>
                                             </tr>
                                         )
                                     }
@@ -102,8 +101,9 @@ const ExpenseList = ({
                     <div className="j-details-container" style={{padding:"1.5rem"}}>
 
                         <div className="row" style={{marginBottom:"1.5rem", marginTop:"0"}}>
-                            <div className="col-12" style={{display:"flex", justifyContent:"flex-end"}}>
+                            <div className="col-12" style={{display:"flex", justifyContent:"space-between"}}>
                                 <button><a onClick={e => setDetails(false)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
+                                <button><a className="btn btn-olive" id="delete" value={selectedexp.id} onClick={handleClick}>Delete</a></button>
                             </div>
                         </div>
                         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
