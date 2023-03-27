@@ -17,7 +17,7 @@ function MainTable({products, handleClick}) {
             <tr key={product.id}>
               <td>{product.name}</td>
               <td><span onClick={handleClick} id={product.id} style={{fontSize:"0.75rem", cursor:"pointer"}} className="link">{product.loan_product_id}</span></td>
-              <td>{product.default_interest_rate}</td>
+              <td>{product.default_interest_rate}%{product.interest_interval}</td>
               <td>{product.interest_method}</td>
               <td>{product.currency}</td>
               <td>{product.date_created}</td>
