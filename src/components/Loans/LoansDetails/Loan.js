@@ -39,13 +39,13 @@ const Loan = ({
         'Early Settlement': 'badge-bg badge-bg-success',
         'Restructured': 'badge-bg badge-bg-dark',
         'Processing': 'badge-bg badge-bg-info-lighter',
-        'Arrears': 'badge-bg badge-bg-info-light',
+        'Arrears': 'badge-bg badge-bg-danger',
+        'Approved': 'badge-bg badge-bg-info-light',
         'Open': 'badge-bg badge-bg-info',
         'Over Paid': 'badge-bg badge-bg-warning',
         'Defaulted': 'badge-bg badge-bg-danger',
         'Rejected': 'badge-bg badge-bg-danger',
         'Written-Off': 'badge-bg badge-bg-dark',
-        'Approved': 'badge-bg badge-bg-info-light',
     }
     
     return (
