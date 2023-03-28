@@ -13,6 +13,7 @@ import ModalDeleteSubmit from './ModalDeleteSubmit';
 import CustomDatePicker from './CustomDatePicker';
 import CustomMultiSelect from './CustomMultiSelect';
 import CustomSortableSelect from './CustomSortableSelect';
+import CustomSelectRemote from './CustomSelectRemote';
 
 export {
     CustomRadio,
@@ -29,5 +30,6 @@ export {
     ModalDeleteSubmit,
     CustomDatePicker,
     CustomMultiSelect,
-    CustomSortableSelect
+    CustomSortableSelect,
+    CustomSelectRemote
 };

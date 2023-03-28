@@ -14,7 +14,8 @@ export {
   ModalDeleteSubmit,
   CustomDatePicker,
   CustomMultiSelect,
-  CustomSortableSelect
+  CustomSortableSelect,
+  CustomSelectRemote
 } from './forms';
 export {
   DeleteBtn,
