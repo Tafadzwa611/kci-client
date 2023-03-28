@@ -42,7 +42,7 @@ const MoreLoanDetails = (
                     <div className='modal-header activities' style={{alignItems:"center"}}>
                         <div style={{display:"flex", alignItems:"center", columnGap:"1rem"}}>
                             <button className={statusClasses[loan.status]}>{loan.status}</button>
-                            <span><b>{loan.client}'s</b> Loan Details</span>
+                            <span><b>{loan.client_fullname}'s</b> Loan Details</span>
                         </div>
                         <div style={{display:"flex", columnGap:"3px"}}>
                             {loan.status == 'Open' && 

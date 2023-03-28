@@ -8,6 +8,16 @@ function Details({group, setGroup, groupId, branches}) {
 //     ([key, value]) => ['first_name', 'last_name', 'fullname', 'gender', 'date_of_birth', 'identification_type', 'identification_number', 'registration_date', 'phone_number', 'email'].includes(key)
 //   ));
 
+  const statusClasses = {
+    'Active': 'badge badge-success',
+    'Blacklisted': 'badge badge-dark',
+    'Processing': 'badge badge-info-lighter',
+    'Pending Approval': 'badge badge-info-light',
+    'Inactive': 'badge badge-info',
+    'Left': 'badge badge-semi-dark',
+    'Rejected': 'badge badge-danger',
+  }
+
   return (
     <div>
       {/* <UpdatePersonalDetails details={details} setGroup={setGroup} open={open} setOpen={setOpen} groupId={groupId}/> */}
@@ -40,7 +50,7 @@ function Details({group, setGroup, groupId, branches}) {
               <li>Group Date: {convertDate(group.group_date)}</li>
               <li>Group Phone Number: {group.group_phone_number}</li>
               <li>Branch: {group.branch}</li>
-              <li>Group State: {group.status}</li>
+              <li>Group State: <span className={statusClasses[group.status]}>{group.status}</span></li>
             </ul>
           </div>
 

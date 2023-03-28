@@ -93,7 +93,8 @@ function LoansTable(
     'Early Settlement': 'badge badge-success',
     'Restructured': 'badge badge-dark',
     'Processing': 'badge badge-info-lighter',
-    'Arrears': 'badge badge-info-light',
+    'Arrears': 'badge badge-danger',
+    'Approved': 'badge badge-info-light',
     'Open': 'badge badge-info',
     'Over Paid': 'badge badge-warning',
     'Defaulted': 'badge badge-danger',
@@ -145,7 +146,7 @@ function LoansTable(
                           <th>Penalty_Amount_Due</th>
                           <th>Amount_Due_At_Maturity</th>
                           <th>Amount_Paid</th>
-                          <th>Status</th>
+                          {/* <th>Status</th> */}
                         </tr>
                       }
                     </thead>
@@ -162,7 +163,10 @@ function LoansTable(
                                     </span>
                                   </div>
                                 </td>
-                                <td><span onClick={handleClick} id={loan.id} style={{color:"red", fontSize:"0.75rem", cursor:"pointer"}} className="link">{loan.loan_id}</span></td>
+                                <td style={{display: "flex", flexDirection: "row", alignItems: "center", columnGap: "5px"}}>
+                                  <span onClick={handleClick} id={loan.id} style={{color:"red", fontSize:"0.75rem", cursor:"pointer"}} className="link">{loan.loan_id}</span>
+                                  <span className={statusClasses[loan.status]} style={{marginBottom:"3px"}}>{loan.status}</span>
+                                </td>
                               </tr>
                             )
                           }else{
@@ -175,7 +179,10 @@ function LoansTable(
                                     </span>
                                   </div>
                                 </td>
-                                <td><span onClick={handleClick} id={loan.id} style={{fontSize:"0.75rem", cursor:"pointer"}} className="link">{loan.loan_id}</span></td>
+                                <td style={{display: "flex", flexDirection: "row", alignItems: "center", columnGap: "5px"}}>
+                                  <span onClick={handleClick} id={loan.id} style={{fontSize:"0.75rem", cursor:"pointer"}} className="link">{loan.loan_id}</span>
+                                  <span className={statusClasses[loan.status]} style={{marginBottom:"3px"}}>{loan.status}</span>
+                                </td>
                               </tr>
                             )
                           }
@@ -191,7 +198,10 @@ function LoansTable(
                                 </span>
                               </div>
                             </td>
-                            <td><span onClick={handleClick} id={loan.id} style={{fontSize:"0.75rem", cursor:"pointer"}} className="link">{loan.loan_id}</span></td>
+                            <td style={{display: "flex", flexDirection: "row", alignItems: "center", columnGap: "5px"}}>
+                              <span onClick={handleClick} id={loan.id} style={{fontSize:"0.75rem", cursor:"pointer"}} className="link">{loan.loan_id}</span>
+                              <span className={statusClasses[loan.status]} style={{marginBottom:"3px"}}>{loan.status}</span>
+                            </td>
                             <td>{convertDate(loan.loan_added_on)}</td>
                             <td>{loan.interest_rate}%</td>
                             <td>{loan.repayment_cycle}</td>
@@ -204,7 +214,7 @@ function LoansTable(
                             <td>{parseFloat(loan.penalty).toFixed(2)}</td>
                             <td>{parseFloat(loan.amount_due_at_maturity).toFixed(2)}</td>
                             <td>{parseFloat(loan.total_amount_paid).toFixed(2)}</td>
-                            <td><span className={statusClasses[loan.status]} style={{marginBottom:"3px"}}>{loan.status}</span></td>
+                            {/* <td><span className={statusClasses[loan.status]} style={{marginBottom:"3px"}}>{loan.status}</span></td> */}
                           </tr>
                         )
                       }}) : <tr><td colSpan={15} style={{textAlign: 'center'}}>No loans could be found.</td></tr>}
@@ -253,7 +263,6 @@ function LoansTable(
                         <th>{parseFloat(totalPenaltyAmountDue).toFixed(2)}</th>
                         <th>{parseFloat(totalPrincipalAmountDueAtMaturity).toFixed(2)}</th>
                         <th>{parseFloat(totalAmountPaid).toFixed(2)}</th>
-                        <th></th>
                       </tr>
                     </tfoot>
                     }
