@@ -116,7 +116,6 @@ function ProductForm({productGrps, initialValues, validationSchema, onSubmit, ba
                 <option value='ROUND_UP'>Round Up</option>
                 <option value='ROUND_DOWN'>Round Down</option>
               </CustomSelect>
-              <CustomCheckbox label='Allow Early Settlement On Loans With Unpaid Penalties' name='allow_early_settlement_on_penalties'/>
               <CustomSortableSelect
                 label='Repayment Order'
                 setFieldValue={(name, items) => setFieldValue(name, {first: items[0], second: items[1], third: items[2], fourth: items[3]})}
@@ -149,7 +148,7 @@ function ProductForm({productGrps, initialValues, validationSchema, onSubmit, ba
               </div>
               {values.fees.map((fee, index) => {
                 return(
-                  <React.Fragment key={fee.id}>
+                  <React.Fragment key={index}>
                     <Fee id={fee.id} index={index} fees={values.fees} setFieldValue={setFieldValue} />
                   </React.Fragment>
                 )

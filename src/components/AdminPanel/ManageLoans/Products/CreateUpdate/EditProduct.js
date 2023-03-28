@@ -16,6 +16,8 @@ function EditProduct({productGrps, initialValues, setView, setSelectedPrdct, set
       setProducts(curr => {
         return curr.map(prod => {
           if (prod.id === values.id) {
+            const group = productGrps.find(group => group.id == values.product_category_id);
+            values.product_category = group.name;
             return values
           }
           return prod
