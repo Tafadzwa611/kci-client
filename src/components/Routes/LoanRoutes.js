@@ -1,7 +1,6 @@
 import React, { lazy } from 'react';
 import { Route } from 'react-router-dom';
 
-const AddLoan = lazy(() => import('../Loans/AddLoan'));
 const ViewLoans = lazy(() => import('../Loans/ViewLoans/ViewLoans'));
 const ViewRefunds = lazy(() => import('../Loans/Refunds/ViewRefunds'));
 const LoanDetail = lazy(() => import('../Loans/LoanDetails/LoanDetail'));
@@ -30,7 +29,6 @@ const LoanRoutes =
     <Route exact path='/loans/loanproducts' element={<LoanProducts/>}/>
     <Route exact path='/loans/viewguarantors' element={<ViewGuarantors/>}/>
     <Route exact path='/loans/viewloans' element={<ViewLoans/>}/>
-    <Route exact path='/loans/addloan' element={<AddLoan/>}/>
     <Route exact path='/loans/addloanpayment' element={<AddLoanPayment/>}/>
     <Route exact path='/loans/addloancollateral' element={<AddCollateral/>}/>
     <Route exact path='/loans/addloancomments' element={<AddComments/>}/>
