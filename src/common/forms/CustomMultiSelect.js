@@ -15,7 +15,7 @@ function CustomMultiSelect({label, options, initVals, setFieldValue, ...props}) 
   return (
     <div className='row custom-background'>
       <label className='form-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
-      <div className='col-5'>
+      <div className='col-9'>
         <Select
           isMulti
           name='multi-select'

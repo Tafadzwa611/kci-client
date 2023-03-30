@@ -25,11 +25,13 @@ function CustomSelectRemote({url, label, queryParamName, setFieldValue, placehol
   return (
     <div className='row custom-background'>
       <label className='form-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
-      <div className='col-5'>
-        {isMulti ?
-        <AsyncSelect onChange={onChange} value={selected} loadOptions={loadOptions} placeholder={placeholder} isMulti /> :
-        <AsyncSelect onChange={onChange} value={selected} loadOptions={loadOptions} placeholder={placeholder} />}
-        {meta.error && <div className='error'>{meta.error}</div>}
+      <div className='col-9'>
+        <div style={{width:"50%"}}>
+          {isMulti ?
+          <AsyncSelect onChange={onChange} value={selected} loadOptions={loadOptions} placeholder={placeholder} isMulti /> :
+          <AsyncSelect onChange={onChange} value={selected} loadOptions={loadOptions} placeholder={placeholder} />}
+          {meta.error && <div className='error'>{meta.error}</div>}
+        </div>
       </div>
     </div>
   )

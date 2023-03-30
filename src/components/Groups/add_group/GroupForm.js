@@ -4,17 +4,16 @@ import {
   CustomInput,
   NonFieldErrors,
   SubmitButton,
-  ButtonDefault,
-  CustomTextField,
   CustomSelect,
-  CustomCheckbox,
-  CustomMultiSelect,
-  CustomSortableSelect,
   CustomDatePicker,
+  CustomSelectRemote
 } from '../../../common';
 
-function ProductForm({groupTypes, loanOfficers, initialValues, validationSchema, membersList, onSubmit}) {
-  const groupMembers = membersList.map(member => ({label: member.fullname, value:member.id}));
+function GroupForm({groupTypes, loanOfficers, initialValues, validationSchema, onSubmit}) {
+
+  // const onSubmit = (values) => {
+  //   console.log(values);
+  // }
 
   return (
     <>
@@ -25,8 +24,8 @@ function ProductForm({groupTypes, loanOfficers, initialValues, validationSchema,
               <div className='divider divider-info'>
                 <span>Group Information</span>
               </div>
-              <CustomInput label='Group Name' name='group_name' type='text' required/>
-              <CustomDatePicker label='Group Date' name='loan_product_id' type='group_date'/>
+              <CustomInput label='Group Name' name='name' type='text' required/>
+              <CustomDatePicker label='Group Date' name='group_date' setFieldValue={setFieldValue} required/>
               <CustomSelect label='Group Type' name='group_type_id' required>
                 <option value=''>------</option>
                 {groupTypes.map(gtype => <option key={gtype.id} value={gtype.id}>{gtype.name}</option>)}
@@ -35,12 +34,15 @@ function ProductForm({groupTypes, loanOfficers, initialValues, validationSchema,
                 <option value=''>------</option>
                 {loanOfficers.map(officer => <option key={officer.id} value={officer.id}>{officer.first_name} {officer.last_name}</option>)}
               </CustomSelect>
-              <CustomMultiSelect
+              <CustomSelectRemote
                 label='Group Members'
-                initVals={groupMembers}
-                options={groupMembers}
+                url='/clientsapi/search_client/'
                 setFieldValue={setFieldValue}
+                queryParamName='query'
+                placeholder='Search Client'
                 name='members'
+                isMulti
+                required
               />
               <CustomInput label='Group Phone Number' name='group_phone_number' type='text' required/>
               <CustomInput label='Group Address' name='address' type='text' required/>
@@ -58,4 +60,4 @@ function ProductForm({groupTypes, loanOfficers, initialValues, validationSchema,
   )
 }
 
-export default ProductForm;
+export default GroupForm;

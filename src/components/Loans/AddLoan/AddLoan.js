@@ -29,10 +29,14 @@ function AddLoan({products}) {
     <>
       <div className='row custom-background' style={{paddingBottom: '1.25rem'}}>
         <label className='form-label'>Loan Product</label>
-        <Select onChange={onChange}>
-          <option value=''>------</option>
-          {products.map(product => <option key={product.id} value={product.id}>{product.name}</option>)}
-        </Select>
+        <div className="col-9">
+          <div style={{width:"50%"}}>
+            <Select onChange={onChange}>
+              <option value=''>------</option>
+              {products.map(product => <option key={product.id} value={product.id}>{product.name}</option>)}
+            </Select>
+          </div>
+        </div>
       </div>
       {getForm()}
     </>
