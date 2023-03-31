@@ -5,9 +5,11 @@ import { removeNull,removeEmptyValues } from '../../../../../utils/utils';
 import { useCurrencies } from '../../../../../contexts/CurrenciesContext';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { uuidv4 } from '../../../../../utils';
 
 function EditProduct({productGrps, initialValues, setView, setSelectedPrdct, setProducts}) {
   const {currencies} = useCurrencies();
+  initialValues.fees = initialValues.fees.map(fee => ({...fee, id: uuidv4()}));
   removeNull(initialValues);
 
   const onSubmit = async (values, actions) => {
