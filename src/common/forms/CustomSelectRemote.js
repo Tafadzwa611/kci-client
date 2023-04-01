@@ -3,17 +3,12 @@ import AsyncSelect from 'react-select/async';
 import axios from 'axios';
 import { useField } from 'formik';
 
-function CustomSelectRemote({url, label, queryParamName, setFieldValue, placeholder, isMulti, ...props}) {
+function CustomSelectRemote({url, label, selected, queryParamName, setFieldValue, placeholder, isMulti, ...props}) {
   const [field, meta] = useField(props);
-  const [selected, setSelected] = useState('');
+  console.log(selected);
 
   const onChange = selected => {
-    setSelected(selected);
-    if (isMulti) {
-      setFieldValue(field.name, selected.map(opt => opt.value));
-    } else {
-      setFieldValue(field.name, selected.value);
-    }
+    setFieldValue(field.name, selected);
   }
 
   const loadOptions = (inputValue, callback) => {

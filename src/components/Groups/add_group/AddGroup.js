@@ -5,7 +5,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { removeEmptyValues } from '../../../utils/utils';
 
-function AddGroup({groupTypes, loanOfficers}) {
+function AddGroup({groupTypes, loanOfficers, groupRoles}) {
   const initialValues = {
     name: '',
     members: [],
@@ -24,7 +24,6 @@ function AddGroup({groupTypes, loanOfficers}) {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/clientsapi/add_group/', data, CONFIG);
     } catch (error) {
-      console.log(error.response.data)
       if (error.message === "Network Error") {
         actions.setErrors({responseStatus: "Network Error"});
       } else if (error.response.status >= 400 && error.response.status < 500) {
@@ -42,6 +41,7 @@ function AddGroup({groupTypes, loanOfficers}) {
       validationSchema={createGroupSchema}
       onSubmit={onSubmit}
       initialValues={initialValues}
+      groupRoles={groupRoles}
     />
   )
 }

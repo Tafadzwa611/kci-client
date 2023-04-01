@@ -8,13 +8,9 @@ import {
   CustomDatePicker,
   CustomSelectRemote
 } from '../../../common';
+import {Member, AddMember} from './Members';
 
-function GroupForm({groupTypes, loanOfficers, initialValues, validationSchema, onSubmit}) {
-
-  // const onSubmit = (values) => {
-  //   console.log(values);
-  // }
-
+function GroupForm({groupTypes, loanOfficers, groupRoles, initialValues, validationSchema, onSubmit}) {
   return (
     <>
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
@@ -34,20 +30,30 @@ function GroupForm({groupTypes, loanOfficers, initialValues, validationSchema, o
                 <option value=''>------</option>
                 {loanOfficers.map(officer => <option key={officer.id} value={officer.id}>{officer.first_name} {officer.last_name}</option>)}
               </CustomSelect>
-              <CustomSelectRemote
-                label='Group Members'
-                url='/clientsapi/search_client/'
-                setFieldValue={setFieldValue}
-                queryParamName='query'
-                placeholder='Search Client'
-                name='members'
-                isMulti
-                required
-              />
               <CustomInput label='Group Phone Number' name='group_phone_number' type='text' required/>
               <CustomInput label='Group Address' name='address' type='text' required/>
               <CustomInput label='Group Account Number' name='group_account_number' type='text' required/>
               <CustomInput label='Group Bank Name' name='group_bank_name' type='text' required/>
+
+              <div className='divider divider-info'>
+                <span>Members</span>
+              </div>
+              {values.members.map((member, index) => {
+                return(
+                  <React.Fragment key={index}>
+                    <Member
+                      id={member.id}
+                      index={index}
+                      groupRoles={groupRoles}
+                      members={values.members}
+                      setFieldValue={setFieldValue}
+                      selectedMember={member}
+                    />
+                  </React.Fragment>
+                )
+              })}
+
+              <AddMember members={values.members} setFieldValue={setFieldValue} />
               <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
               <div style={{display:'flex', justifyContent: 'flex-end'}}> 
               <SubmitButton isSubmitting={isSubmitting}/>
