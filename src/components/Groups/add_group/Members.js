@@ -8,6 +8,7 @@ function Member({id, index, selectedMember, setFieldValue, members, groupRoles})
         const u = members.map(member => {
             if (member.id === id) {
                 member.client_id = selected.value;
+                member.client_pk = selected.value;
                 member.value = selected.value;
                 member.label = selected.label;
             }

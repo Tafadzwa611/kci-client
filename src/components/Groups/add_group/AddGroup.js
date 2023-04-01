@@ -21,6 +21,7 @@ function AddGroup({groupTypes, loanOfficers, groupRoles}) {
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
+      data.members = data.members.map(member => ({client_id: member.client_pk, role_id: member.role_id}))
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/clientsapi/add_group/', data, CONFIG);
     } catch (error) {

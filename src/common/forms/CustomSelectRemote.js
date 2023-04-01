@@ -5,7 +5,6 @@ import { useField } from 'formik';
 
 function CustomSelectRemote({url, label, selected, queryParamName, setFieldValue, placeholder, isMulti, ...props}) {
   const [field, meta] = useField(props);
-  console.log(selected);
 
   const onChange = selected => {
     setFieldValue(field.name, selected);
