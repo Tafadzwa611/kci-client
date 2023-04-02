@@ -287,7 +287,8 @@ body {
 }
 
 #dark .css-11vje1g-control,
-#dark .css-1ceek9r-control {
+#dark .css-1ceek9r-control,
+#dark .css-1s2u09g-control {
   background-color: var(--white);
   border: 1px solid var(--border-color);
 }
@@ -3414,4 +3415,29 @@ input[type=number] {
   background: var(--home-section-color);
   padding: 1rem;
   width: 100px;
+}
+
+.css-1pahdxg-control, 
+.css-1pahdxg-control:hover {
+  border-color: var(--border-color) !important;
+}
+
+.css-1pahdxg-control {
+  box-shadow: none !important;
+  background-color: var(--white) !important;
+}
+
+.css-qc6sy-singleValue {
+  color: var(--color) !important;
+}
+
+#dark .css-6j8wv5-Input,
+#dark .css-qc6sy-singleValue,
+#dark .css-1pndypt-Input {
+  color: var(--light-color) !important;
+}
+
+.css-26l3qy-menu {
+  background-color: var(--home-section-color) !important;
+  border-color: var(--home-section-color) !important;
 }

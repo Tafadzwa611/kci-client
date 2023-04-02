@@ -16,10 +16,12 @@ const FieldSets = ({data, entityType, clientTypes}) => {
     <>
       <SuccessBtn handler={(evt) => setOpenCreateFieldSetModal(true)} value={'Add Form'}/>
       <CreateFieldSet open={openCreateFieldSetModal} setOpen={setOpenCreateFieldSetModal} setFieldSets={setFieldSets} entityType={entityType} clientTypes={clientTypes}/>
-      <Select value={fieldSetId} onChange={(evt) => setFieldSetId(evt.target.value)}>
-        <option value=''>------</option>
-        {fieldSets.map(fieldSet => <option key={fieldSet.id} value={fieldSet.id}>{fieldSet.name}</option>)}
-      </Select>
+      <div style={{width:"33%"}}>
+        <Select value={fieldSetId} onChange={(evt) => setFieldSetId(evt.target.value)}>
+          <option value=''>------</option>
+          {fieldSets.map(fieldSet => <option key={fieldSet.id} value={fieldSet.id}>{fieldSet.name}</option>)}
+        </Select>
+      </div>
       {fieldSets.some(fs => fs.id == fieldSetId) != '' &&
         <>
           <div style={{marginTop:"20px"}}>
