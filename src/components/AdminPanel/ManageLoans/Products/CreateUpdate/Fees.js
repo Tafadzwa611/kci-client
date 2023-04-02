@@ -7,7 +7,8 @@ function Fee({id, index, setFieldValue, fees}) {
   const feeTypes = ['Deducted', 'Capitalized', 'Upfront Disbursement', 'Payment due', 'Manual fees'];
   const feePayments = ['Flat', 'Flat/Installments', '% Of DB Amount', '% Of DB Amount/Installments'];
 
-  const remove = () => {
+  const remove = (evt) => {
+    evt.preventDefault();
     setFieldValue('fees', fees.filter(fee => fee.id !== id));
   }
 
@@ -25,7 +26,7 @@ function Fee({id, index, setFieldValue, fees}) {
       <CustomInput label='Amount' name={`fees[${index}].value`} type='number' required/>
       <CustomCheckbox label='Is Mandatory' name={`fees[${index}].is_mandatory`}/>
       <div style={{marginTop:'10px'}}>
-        <ButtonDefault value={'Remove Fee'} handler={() => remove()} />
+        <ButtonDefault value={'Remove Fee'} handler={remove} />
       </div>
       <div className="divider divider-default" style={{padding: "1.25rem"}}>
       </div>
