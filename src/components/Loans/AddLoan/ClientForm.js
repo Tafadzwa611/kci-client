@@ -14,7 +14,6 @@ import Fee from './Fee';
 function ClientForm({product}) {
   const initialValues = {
     loan_product_id: product.id,
-    client_id: '',
     principal: '',
     interest_rate: '',
     application_date: '',
@@ -23,10 +22,11 @@ function ClientForm({product}) {
     schedule_strategy: product.schedule_strategy,
     reason_for_loan: '',
     fees: product.fees.map(fee => ({fee_name: fee.fee_name, value: fee.value})),
-    files: []
+    files: [],
+    ...product.client_type === 'Clients' ? {client_id: ''} : {group_id: ''}
   };
 
-  const onSubmit = (values, actions) => {
+  const onSubmit = async (values, actions) => {
     console.log(values);
     console.log(actions);
   }
@@ -39,21 +39,55 @@ function ClientForm({product}) {
             <div className='divider divider-info'>
               <span>Loan Details</span>
             </div>
-            <CustomSelectRemote
-              label='Client'
-              url='/clientsapi/search_client/'
-              setFieldValue={setFieldValue}
-              queryParamName='query'
-              placeholder='Search Client'
-              name='client_id'
+            {product.client_type === 'Clients' ?
+              <CustomSelectRemote
+                label='Client'
+                url='/clientsapi/search_client/'
+                setFieldValue={setFieldValue}
+                queryParamName='query'
+                placeholder='Search Client'
+                name='client_id'
+                required
+              /> :
+              <CustomSelectRemote
+                label='Group'
+                url='/clientsapi/search_group/'
+                setFieldValue={setFieldValue}
+                queryParamName='query'
+                placeholder='Search Group'
+                name='group_id'
+                required
+              />
+            }
+            <CustomInput
+              label='Principal'
+              name='principal'
+              type='number'
+              min={product.minimum_principal_amount}
+              max={product.maximum_principal_amount}
+              step={product.number_of_decimal_places}
               required
             />
-            <CustomInput label='Principal' name='principal' type='number' required/>
             <small><em>Minimum = {product.minimum_principal_amount} Maximum = {product.maximum_principal_amount}</em></small>
-            <CustomInput label='Interest Rate' name='interest_rate' type='number' required/>
+            <CustomInput
+              label='Interest Rate'
+              name='interest_rate'
+              type='number'
+              min={product.minimum_interest_rate}
+              max={product.maximum_interest_rate}
+              step={product.number_of_decimal_places}
+              required
+            />
             <small><em>Minimum = {product.minimum_interest_rate} Maximum = {product.maximum_interest_rate}</em></small>
             <CustomDatePicker label='Application Date' name='application_date' setFieldValue={setFieldValue} required/>
-            <CustomInput label='Number of Repayments' name='number_of_repayments' type='number' required/>
+            <CustomInput
+              label='Number of Repayments'
+              name='number_of_repayments'
+              type='number'
+              min={product.minimum_loan_duration}
+              max={product.maximum_loan_duration}
+              required
+            />
             <small><em>Minimum = {product.minimum_loan_duration} Maximum = {product.maximum_loan_duration}</em></small>
             <CustomDatePicker label='First Repayment Date' name='first_repayment_date' setFieldValue={setFieldValue} required/>
             <CustomSelect label='Default Loan Schedule Strategy' name='schedule_strategy' required>
