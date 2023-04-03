@@ -30,7 +30,7 @@ function AddLoan({products}) {
           <div style={{width:"50%"}}>
             <Select onChange={onChange}>
               <option value=''>------</option>
-              {products.map(product => <option key={product.id} value={product.id}>{product.name}</option>)}
+              {products.map(product => <option key={product.id} value={product.id}>({product.currency})-{product.name}-{product.client_type}</option>)}
             </Select>
           </div>
         </div>

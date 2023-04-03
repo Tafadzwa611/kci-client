@@ -25,7 +25,7 @@ const ViewLoans = () => {
             </div>
             <div className='tab-content font-12' style={{marginTop:'3rem'}}>
               {{
-                'loans': <LoansList setMainTab={setTab}/>,
+                'loans': <LoanListComponent />,
                 'dueloans': <DueLoansList setMainTab={setTab}/>,
                 'arrsloans': <ViewDefaultsAndArrears setMainTab={setTab}/>,
                 'addloan': <AddLoanComponent />,
@@ -41,6 +41,14 @@ const AddLoanComponent = () => {
   return (
     <Fetcher urls={['/loansapi/loan_products_list/']}>
       {({data}) => <AddLoan products={data[0]}/>}
+    </Fetcher>
+  )
+}
+
+const LoanListComponent = () => {
+  return (
+    <Fetcher urls={['/loansapi/loan_products/']}>
+      {({data}) => <LoansList products={data[0].loan_products}/>}
     </Fetcher>
   )
 }
