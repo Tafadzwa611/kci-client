@@ -6,8 +6,8 @@ const NonFieldErrors = ({children, errors}) => {
     return (
       <>
         {children}
-        <div className='row custom-background' style={{marginTop: '15px', display:"flex", justifyContent:"center", padding:"0 10px"}}>
-          <div className='col-9'>
+        <div className='row custom-background' style={{marginTop: '15px', display:"flex", justifyContent:"center"}}>
+          <div className='col-12' style={{color:"red", padding:"1.75rem 1rem", border:"1px solid red", backgroundColor: "#ffe5e5"}}>
             <div style={{fontSize: 12, color: 'red'}}>Server Error please try again later. If error persists please contact developer.</div>
           </div>
         </div>
@@ -19,8 +19,8 @@ const NonFieldErrors = ({children, errors}) => {
     return (
       <>
         {children}
-        <div className='row custom-background' style={{marginTop: '15px', display:"flex", justifyContent:"center", padding:"0 10px"}}>
-          <div className='col-9'>
+        <div className='row custom-background' style={{marginTop: '15px', display:"flex", justifyContent:"center"}}>
+          <div className='col-12' style={{color:"red", padding:"1.75rem 1rem", border:"1px solid red", backgroundColor: "#ffe5e5"}}>
             <div style={{fontSize: 12, color: 'red'}}>Error: {errors.detail}</div>
           </div>
         </div>
@@ -32,8 +32,8 @@ const NonFieldErrors = ({children, errors}) => {
     return (
       <>
         {children}
-        <div className='row custom-background' style={{marginTop: '15px', display:"flex", justifyContent:"center", padding:"0 10px"}}>
-          <div className='col-9'>
+        <div className='row custom-background' style={{marginTop: '15px', display:"flex", justifyContent:"center"}}>
+          <div className='col-12' style={{color:"red", padding:"1.75rem 1rem", border:"1px solid red", backgroundColor: "#ffe5e5"}}>
             <div style={{fontSize: 12, color: 'red'}}>Network Error</div>
           </div>
         </div>
