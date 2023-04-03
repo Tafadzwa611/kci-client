@@ -10,7 +10,7 @@ function Fee({fee, setFieldValue, values}) {
     setValue(evt.target.value);
     setFieldValue('fees', values.fees.map(fee => {
       if (fee.fee_name === evt.target.name) {
-        return {fee_name: fee.fee_name, value: evt.target.value}
+        return {fee_name: fee.fee_name, fee_type: fee.fee_type, fee_payment: fee.fee_payment, value: evt.target.value}
       }
       return fee
     }));

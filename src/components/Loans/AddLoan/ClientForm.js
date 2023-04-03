@@ -10,6 +10,8 @@ import {
 } from '../../../common';
 import { scheduleStrategies } from './data';
 import Fee from './Fee';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 function ClientForm({product}) {
   const initialValues = {
@@ -21,14 +23,25 @@ function ClientForm({product}) {
     first_repayment_date: '',
     schedule_strategy: product.schedule_strategy,
     reason_for_loan: '',
-    fees: product.fees.map(fee => ({fee_name: fee.fee_name, value: fee.value})),
+    fees: product.fees.map(fee => ({fee_name: fee.fee_name, fee_type: fee.fee_type, fee_payment: fee.fee_payment, value: fee.value})),
     files: [],
     ...product.client_type === 'Clients' ? {client_id: ''} : {group_id: ''}
   };
 
   const onSubmit = async (values, actions) => {
-    console.log(values);
-    console.log(actions);
+    try {
+      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+      const response = await axios.post('/loansapi/add_loan_api/', {...values, client_id: values.client_id.value}, CONFIG);
+      console.log(response);
+    } catch (error) {
+      if (error.message === "Network Error") {
+        actions.setErrors({responseStatus: "Network Error"});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+      } else {
+        actions.setErrors({responseStatus: error.response.status});
+      }
+    }
   }
 
   return (
@@ -41,6 +54,7 @@ function ClientForm({product}) {
             </div>
             {product.client_type === 'Clients' ?
               <CustomSelectRemote
+                key={product.client_type}
                 label='Client'
                 url='/clientsapi/search_client/'
                 setFieldValue={setFieldValue}
@@ -50,6 +64,7 @@ function ClientForm({product}) {
                 required
               /> :
               <CustomSelectRemote
+                key={product.client_type}
                 label='Group'
                 url='/clientsapi/search_group/'
                 setFieldValue={setFieldValue}
