@@ -2,11 +2,13 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import {
   NonFieldErrors,
-  CustomDatePicker,
-  CustomInput,
-  CustomSelect,
-  SubmitButton,
-  CustomMultiSelect
+} from '../../../common';
+import {
+    CustomInputFilter,
+    CustomDatePickerFilter,
+    CustomSelectFilter,
+    CustomMultiSelectFilter,
+    SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
 import { useBranches } from '../../../contexts/BranchesContext';
@@ -36,41 +38,64 @@ const Filter = ({products}) => {
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors}) => (
-        <Form>
-          <NonFieldErrors errors={errors}>
-            <CustomSelect label='Currency' name='currency_id' required>
-              <option value=''>------</option>
-              {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-            </CustomSelect>
-            <CustomDatePicker label='Min Disbursement Date' name='min_loan_added_on' setFieldValue={setFieldValue}/>
-            <CustomDatePicker label='Max Disbursement Date' name='max_loan_added_on' setFieldValue={setFieldValue}/>
-            <CustomInput label='Min Principal Outstanding' name='min_principal_amount_due' type='number'/>
-            <CustomInput label='Max Principal Outstanding' name='max_principal_amount_due' type='number'/>
-            <CustomInput label='Min Amount Paid' name='min_total_amount_paid' type='number'/>
-            <CustomInput label='Max Amount Paid' name='max_total_amount_paid' type='number'/>
-            <CustomInput label='Client Name' name='client'/>
-            <CustomSelect label='Loan Product' name='loan_product_id'>
-              <option value=''>------</option>
-              {products.map(product => <option key={product.id} value={product.id}>{product.name}</option>)}
-            </CustomSelect>
-            <CustomMultiSelect
-              label='Status'
-              name='status'
-              options={statusValues.map(val => ({label: val, value: val}))}
-              setFieldValue={setFieldValue}
-            />
-            <CustomMultiSelect
-              label='Branches'
-              name='branch_ids'
-              options={branches.map(br => ({label: br.name, value:br.id}))}
-              setFieldValue={setFieldValue}
-            />
-            <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
-            <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-              <SubmitButton isSubmitting={isSubmitting}/>
+          <div className="search_background">
+            <div className="row-containers" style={{border:"none"}}>
+                <Form>
+                    <NonFieldErrors errors={errors}>
+                        <div style={{display:"flex", justifyContent:"space-between"}}>
+                            <div style={{display:"flex", justifyContent:"space-between", width:"32%", columnGap:"1rem"}}>
+                                <CustomDatePickerFilter label='Min Disbursement Date' name='min_loan_added_on' setFieldValue={setFieldValue}/>
+                                <CustomDatePickerFilter label='Max Disbursement Date' name='max_loan_added_on' setFieldValue={setFieldValue}/>
+                            </div>
+                            <div style={{display:"flex", justifyContent:"space-between", width:"32%", columnGap:"1rem"}}>
+                                <CustomInputFilter label='Min Principal Outstanding' name='min_principal_amount_due' type='number'/>
+                                <CustomInputFilter label='Max Principal Outstanding' name='max_principal_amount_due' type='number'/>
+                            </div>
+                            <div style={{display:"flex", justifyContent:"space-between", width:"32%", columnGap:"1rem"}}>
+                                <CustomInputFilter label='Min Amount Paid' name='min_total_amount_paid' type='number'/>
+                                <CustomInputFilter label='Max Amount Paid' name='max_total_amount_paid' type='number'/>
+                            </div>
+                        </div>
+                        <div className="row row-payments row-loans" style={{marginTop:"1rem"}}>
+                            <div className="row-payments-container" style={{width:"32%"}}>
+                                <CustomSelectFilter label='Loan Product' name='loan_product_id'>
+                                    <option value=''>------</option>
+                                    {products.map(product => <option key={product.id} value={product.id}>{product.name}</option>)}
+                                </CustomSelectFilter>
+                            </div>
+                            <div className="row-payments-container" style={{width:"32%"}}>
+                                <CustomInputFilter label='Client Name' name='client'/>
+                            </div>
+                            <div className="row-payments-container" style={{width:"32%"}}>
+                                <CustomSelectFilter label='Currency' name='currency_id' required>
+                                    <option value=''>------</option>
+                                    {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+                                </CustomSelectFilter>
+                            </div>
+                        </div>
+                        <div style={{marginTop:"1rem"}}>
+                            <CustomMultiSelectFilter
+                                label='Branches'
+                                name='branch_ids'
+                                options={branches.map(br => ({label: br.name, value:br.id}))}
+                                setFieldValue={setFieldValue}
+                            />
+                        </div>
+                        <div style={{marginTop:"1rem", display:"flex", justifyContent:"space-between"}}>
+                            <div style={{width:"85%"}}>
+                                <CustomMultiSelectFilter
+                                    label='Status'
+                                    name='status'
+                                    options={statusValues.map(val => ({label: val, value: val}))}
+                                    setFieldValue={setFieldValue}
+                                />
+                            </div>
+                            <SubmitButtonFilter isSubmitting={isSubmitting}/>
+                        </div>
+                    </NonFieldErrors>
+                </Form>
             </div>
-          </NonFieldErrors>
-        </Form>
+        </div>
       )}
     </Formik>
   );
