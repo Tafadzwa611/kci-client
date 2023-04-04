@@ -44,7 +44,6 @@ function Member({id, index, selectedMember, setFieldValue, members, groupRoles})
             <option value=''>------</option>
             {groupRoles.map(grprle => <option key={grprle.id} value={grprle.id}>{grprle.name}</option>)}
         </CustomSelect>
-        <div>{id}</div>
         <div style={{marginTop:'10px'}}>
             <ButtonDefault value={'Remove Member'} handler={remove} />
         </div>

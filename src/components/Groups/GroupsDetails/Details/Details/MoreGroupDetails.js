@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import Details from '../Details/Details';
+import Details from './Details';
+import GroupMembers from './GroupMembers';
+
 
 const MoreGroupDetails = (
     {  
@@ -25,6 +27,7 @@ const MoreGroupDetails = (
                             <div>
                                 <div className="bloc-tabs">
                                     <button className={tab === "gdetails" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("gdetails")}> Group Info </button>
+                                    <button className={tab === "gmbrs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("gmbrs")}> Group Members </button>
                                     <button className={tab === "gfiles" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("gfiles")}> Files </button>
                                     <button className={tab === "gtxns" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("gtxns")}> Transactions </button>
                                     <button className={tab === "gloans" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("gloans")}> Loans </button>
@@ -32,6 +35,7 @@ const MoreGroupDetails = (
                                 <div className='tab-content font-12 text-light' style={{marginTop:"3rem"}}>
                                     {{
                                         'gdetails': <Details groupId={groupId} setGroup={setGroup} group={group} />,
+                                        'gmbrs': <GroupMembers group={group} />,
                                         // 'gfiles': <Files clientId={clientId} files={files} setFiles={setFiles} client={client}/>,
                                         // 'gtxns': <Transactions clientId={clientId} />,
                                         // 'gloans': <Transactions clientId={clientId} />,
