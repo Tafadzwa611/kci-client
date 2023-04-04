@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import Settings from './Settings/Settings'
 import ManageStaff from './ManageStaff/ManageStaff';
 import OtherIncomeTypes from '../OtherIncome/OtherIncomeTypes';
-import ExpenseTypes from '../Expenses/ExpenseTypes';
+import ExpenseTypes from '../Expenses/ExpenseTypes/ExpenseTypes';
 import ManageLoans from './ManageLoans/ManageLoans';
 import ManageBranches from './ManageBranches/ManageBranches';
 import ManageClients from './ManageClients/ManageClients';
