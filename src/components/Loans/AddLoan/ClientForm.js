@@ -12,8 +12,10 @@ import { scheduleStrategies } from './data';
 import Fee from './Fee';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 function ClientForm({product}) {
+  const navigate = useNavigate();
   const initialValues = {
     loan_product_id: product.id,
     principal: '',
@@ -32,7 +34,10 @@ function ClientForm({product}) {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/loansapi/add_loan_api/', {...values, client_id: values.client_id.value}, CONFIG);
-      console.log(response);
+      navigate({
+        pathname: '/loans/viewloans',
+        search: `?loan_id=${response.data.loan_id}`,
+      });
     } catch (error) {
       if (error.message === "Network Error") {
         actions.setErrors({responseStatus: "Network Error"});

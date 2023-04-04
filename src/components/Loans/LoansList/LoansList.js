@@ -1,41 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Filter from './Filter';
 import LoansTable from './LoansTable';
+import LoanDetails from './LoanDetails';
+import { useSearchParams } from 'react-router-dom';
+import { Fetcher } from '../../../common';
 
 function LoansList({products}) {
+  const [searchParams] = useSearchParams();
+  const [loanData, setLoanData] = useState({count: 0, next_page_num: 0, loans: []});
+
   return (
     <>
-      <Filter products={products}/>
+      <Filter products={products} setLoanData={setLoanData}/>
       <div style={{paddingTop: '2rem'}}></div>
-      <LoansTable />
+      {searchParams.get('loan_id') ?
+        <Fetcher urls={[`/loansapi/get_loan/${searchParams.get('loan_id')}/`]}>
+          {({data}) => <LoanDetails loanData={data[0]}/>}
+        </Fetcher> :
+        <LoansTable loanData={loanData} />
+      }
     </>
   )
 }
 
 export default LoansList;
-
-// {errorMessage != null && <Error errorMessage={errorMessage}/>}
-// const [loans, setLoans] = useState([]);
-//   const {branches} = useBranches();
-//   const [branchIds, setBranchIds] = useState(null);
-//   const [nextPageNumber, setNextPageNumber] = useState(null);
-//   const [totalCount, setTotalCount] = useState(0);
-//   const [minLoanAddedOn, setMinLoanAddedOn] = useState('');
-//   const [maxLoanAddedOn, setMaxLoanAddedOn] = useState('');
-//   const [minPrincipalAmountDue, setMinPrincipalAmountDue] = useState('');
-//   const [maxPrincipalAmountDue, setMaxPrincipalAmountDue] = useState('');
-//   const [minAmountPaid, setMinAmountPaid] = useState('');
-//   const [maxAmountPaid, setMaxAmountPaid] = useState('');
-//   const [status, setStatus] = useState(null);
-//   const [loading, setLoading] = useState(false);
-//   const {currencies} = useCurrencies();
-//   const [currencyId, setCurrencyId] = useState('');
-//   const [errorMessage, setErrorMessage] = useState(null);
-//   const [loadingMore, setLoadingMore] = useState(false);
-//   const [productId, setProductId] = useState('');
-//   const [details, setDetails] = useState(false)
-//   const [selectedLoanID, setSelectedLoanID] = useState(null)
-//   const [client, setClient] = useState('');
-//   const [selectedBranches, setSelectedBranches] = useState([]);
-//   const pageNum = useRef(1);
-//   const isFirstRun = useRef(true);

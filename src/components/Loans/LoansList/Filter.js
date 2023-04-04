@@ -11,11 +11,14 @@ import {
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
 import { useBranches } from '../../../contexts/BranchesContext';
 import { statusValues } from './data';
+import axios from 'axios';
+import { removeEmptyValues } from '../../../utils/utils';
 
-const Filter = ({products}) => {
+const Filter = ({products, setLoanData}) => {
   const initialValues = {
     branch_ids: [],
     status: [],
+    page_num: 1,
     min_loan_added_on: '',
     max_loan_added_on: '',
     min_principal_amount_due: '',
@@ -29,8 +32,19 @@ const Filter = ({products}) => {
   const {branches} = useBranches();
 
   const onSubmit = async (values, actions) => {
-    console.log(values);
-    console.log(actions);
+    try {
+      const data = removeEmptyValues(values);
+      const response = await axios.get('/loansapi/loan_list/', {params: data});
+      setLoanData(response.data);
+    } catch (error) {
+      if (error.message === "Network Error") {
+        actions.setErrors({responseStatus: "Network Error"});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+      } else {
+        actions.setErrors({responseStatus: error.response.status});
+      }
+    }
   }
 
   return (

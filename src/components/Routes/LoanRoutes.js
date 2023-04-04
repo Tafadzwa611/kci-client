@@ -28,7 +28,7 @@ const LoanRoutes =
     <Route exact path='/loans/addloanproduct' element={<AddLoanProduct/>}/>
     <Route exact path='/loans/loanproducts' element={<LoanProducts/>}/>
     <Route exact path='/loans/viewguarantors' element={<ViewGuarantors/>}/>
-    <Route exact path='/loans/viewloans' element={<ViewLoans/>}/>
+    <Route exact path='/loans/viewloans/*' element={<ViewLoans/>}/>
     <Route exact path='/loans/addloanpayment' element={<AddLoanPayment/>}/>
     <Route exact path='/loans/addloancollateral' element={<AddCollateral/>}/>
     <Route exact path='/loans/addloancomments' element={<AddComments/>}/>

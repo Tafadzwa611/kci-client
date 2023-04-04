@@ -2,7 +2,9 @@ import React from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { statusClasses, getDuration } from './data';
 
-function MainTable({loans, totalCount}) {
+function MainTable({loanData}) {
+  const {loans, count} = loanData;
+
   const handleClick = (e) => {
     console.log(e.target.id);
   }
@@ -11,7 +13,7 @@ function MainTable({loans, totalCount}) {
     <div>
       <div className="table-header">
         <div>
-          Showing {loans.length} of {totalCount} loans.
+          Showing {loans.length} of {count} loans.
         </div>
         <div>
           <ReactHTMLTableToExcel

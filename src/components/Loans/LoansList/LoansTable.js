@@ -1,8 +1,9 @@
 import React from 'react';
+import MainTable from './MainTable';
 
-function LoansTable() {
+function LoansTable({loanData}) {
   return (
-    <div>LoansTable</div>
+    <MainTable loanData={loanData} />
   )
 }
 
