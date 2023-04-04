@@ -3053,6 +3053,7 @@ input:checked + .slider:before {
   grid-template-columns: 1fr 2fr;
 }
 
+.journal__table-container-journals,
 .table-responsive.journal__table-container-journals {
   display: grid;
   column-gap: 1rem;

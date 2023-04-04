@@ -2,20 +2,22 @@ import React, {useState} from 'react';
 // import DeleteExpType from './DeleteExpType';
 
 function Table({
-  expTypes,
+  incTypes,
   setView,
-  setSelectedExpType,
+  setSelectedIncType,
   handleClick,
-  selectedExpType,
-  setExpTypes
+  selectedIncType,
+  setIncTypes
 }) {
-  const close = () => setSelectedExpType(null);
-  const showDetails = selectedExpType !== null;
+  const close = () => setSelectedIncType(null);
+  const showDetails = selectedIncType !== null;
   const [openModal, setOpenModal] = useState(false);
+
+  console.log(selectedIncType)
 
   return (
     <>
-      {/* {openModal && <DeleteExpType setOpenModal={setOpenModal} setExpTypes={setExpTypes} close={close} catId={selectedExpType.id} />} */}
+      {/* {openModal && <DeleteExpType setOpenModal={setOpenModal} setIncTypes={setIncTypes} close={close} catId={selectedIncType.id} />} */}
       <div style={{padding:'0', border:'none'}} className={showDetails ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
         <div className={showDetails ? 'journal__table-container-journals' : 'full__table'}>
           <div className="table-responsive">
@@ -28,32 +30,32 @@ function Table({
                       <th>Currency</th>
                     }
                   </tr>
-                  {expTypes.map(exp => {
+                  {incTypes.map(inc => {
                     return (
-                      <tr key={exp.id}>
+                      <tr key={inc.id}>
                         <td>
                           {!showDetails ? 
                           <span
-                            id={exp.id}
+                            id={inc.id}
                             onClick={handleClick}
                             style={{fontSize:'0.75rem', cursor:'pointer'}}
                             className='link'
                           >
-                            {exp.name}
+                            {inc.name}
                           </span> :
                           <span
-                            id={exp.id}
+                            id={inc.id}
                             onClick={handleClick}
-                            style={{fontSize:'0.75rem', cursor:'pointer', ...(selectedExpType.id == exp.id && {color:'red'})}}
+                            style={{fontSize:'0.75rem', cursor:'pointer', ...(selectedIncType.id == inc.id && {color:'red'})}}
                             className='link'
                           >
-                            {exp.name}
+                            {inc.name}
                           </span>
                         }
                         </td>
                         {!showDetails &&
                           <td>
-                            {exp.currency__shortname}
+                            {inc.currency__shortname}
                           </td>
                         }
                       </tr>
@@ -62,7 +64,7 @@ function Table({
                 </tbody>
               </table>
             </div>
-          </div>
+            </div>
           {showDetails && 
             <div style={{position:'sticky', top:'0', width:'100%'}}>
               <div style={{display:'flex', flexDirection:'column', padding:'1.5rem'}} className='j-details-container'>
@@ -81,12 +83,12 @@ function Table({
                     <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom: '2rem'}}>
                       <div style={{width:'100%'}}>
                         <ul>
-                          <li style={{marginBottom: '1rem'}}><b>Expense Type Information</b></li>
-                          <li>Expense Type Name: {selectedExpType.name}</li>
-                          <li>Date of Account: {selectedExpType.date_of_account}</li>
-                          <li>Date Created: {selectedExpType.date_created}</li>
-                          <li>Currency: {selectedExpType.currency__shortname}</li>
-                          {selectedExpType.is_active ?
+                          <li style={{marginBottom: '1rem'}}><b>Other Income Type Information</b></li>
+                          <li>Other Income Type Name: {selectedIncType.name}</li>
+                          <li>Date of Account: {selectedIncType.date_of_account}</li>
+                          <li>Date Created: {selectedIncType.date_created}</li>
+                          <li>Currency: {selectedIncType.currency__shortname}</li>
+                          {selectedIncType.is_active ?
                             <li>Status: <span className="badge badge-success">Active</span></li>:
                             <li>Status: <span className="badge badge-danger">Inactive</span></li>
                           }
