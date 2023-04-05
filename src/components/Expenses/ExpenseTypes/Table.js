@@ -86,6 +86,7 @@ function Table({
                           <li>Date of Account: {selectedExpType.date_of_account}</li>
                           <li>Date Created: {selectedExpType.date_created}</li>
                           <li>Currency: {selectedExpType.currency__shortname}</li>
+                          <li>Created By: {selectedExpType.created_by__first_name} {selectedExpType.created_by__last_name}</li>
                           {selectedExpType.is_active ?
                             <li>Status: <span className="badge badge-success">Active</span></li>:
                             <li>Status: <span className="badge badge-danger">Inactive</span></li>

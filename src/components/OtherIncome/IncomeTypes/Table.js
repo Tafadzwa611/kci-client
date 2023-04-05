@@ -13,8 +13,6 @@ function Table({
   const showDetails = selectedIncType !== null;
   const [openModal, setOpenModal] = useState(false);
 
-  console.log(selectedIncType)
-
   return (
     <>
       {/* {openModal && <DeleteExpType setOpenModal={setOpenModal} setIncTypes={setIncTypes} close={close} catId={selectedIncType.id} />} */}
@@ -88,6 +86,7 @@ function Table({
                           <li>Date of Account: {selectedIncType.date_of_account}</li>
                           <li>Date Created: {selectedIncType.date_created}</li>
                           <li>Currency: {selectedIncType.currency__shortname}</li>
+                          <li>Created By: {selectedIncType.created_by__first_name} {selectedIncType.created_by__last_name}</li>
                           {selectedIncType.is_active ?
                             <li>Status: <span className="badge badge-success">Active</span></li>:
                             <li>Status: <span className="badge badge-danger">Inactive</span></li>
