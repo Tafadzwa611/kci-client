@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-// import DeleteExpType from './DeleteExpType';
+import DeleteExpType from './DeleteExpType';
 
 function Table({
   expTypes,
@@ -15,7 +15,7 @@ function Table({
 
   return (
     <>
-      {/* {openModal && <DeleteExpType setOpenModal={setOpenModal} setExpTypes={setExpTypes} close={close} catId={selectedExpType.id} />} */}
+      {openModal && <DeleteExpType setOpenModal={setOpenModal} setExpTypes={setExpTypes} close={close} expTypeId={selectedExpType.id} />}
       <div style={{padding:'0', border:'none'}} className={showDetails ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
         <div className={showDetails ? 'journal__table-container-journals' : 'full__table'}>
           <div className="table-responsive">
@@ -72,7 +72,7 @@ function Table({
                     <div style={{display:"flex", columnGap: "5px"}}>
                       <button className="btn btn-olive">Edit</button>
                       {/* <button className="btn btn-olive" onClick={() => setView('edit')}>Edit</button> */}
-                      {/* <button className="btn btn-olive" onClick={() => setOpenModal(true)}>Delete</button> */}
+                      <button className="btn btn-olive" onClick={() => setOpenModal(true)}>Delete</button>
                     </div>
                   </div>
                 </div>
