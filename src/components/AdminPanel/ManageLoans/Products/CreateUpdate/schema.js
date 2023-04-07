@@ -57,7 +57,7 @@ export const createLoanProductSchema = yup.object().shape({
   maximum_loan_duration: yup.number().min(minInt, minIntMsg).integer().required('Required'),
   number_of_decimal_places: yup.string().oneOf(['0.01', '0.1', '1'], 'Invalid').required('Required'),
   rounding_scheme: yup.string().oneOf(['ROUND_HALF_UP', 'ROUND_UP', 'ROUND_DOWN'], 'Invalid').required('Required'),
-  allow_early_settlement_on_penalties: yup.boolean().required('Required'),
+  allow_early_settlement_on_penalties: yup.boolean(),
   repayment_order: yup.object(),
   client_type: yup.string().oneOf(['Clients', 'Groups', 'Groups (solidarity)'], 'Invalid').required('Required'),
   allowed_branches: yup.array().of(yup.number().integer()),

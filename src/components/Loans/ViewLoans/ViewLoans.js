@@ -3,6 +3,7 @@ import LoansList from '../LoansList/LoansList';
 // import DueLoansList from '../DueLoans/DueLoansList';
 // import ViewDefaultsAndArrears from '../DefaultedAndArrearsLoans/ViewDefaultsAndArrears';
 import AddLoan from '../AddLoan/AddLoan';
+import EditLoan from '../AddLoan/EditLoan';
 import { Fetcher } from '../../../common';
 import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
 
@@ -16,6 +17,14 @@ const ViewLoans = () => {
       <Route path='/' element={<Layout />}>
         <Route index element={<LoanListComponent />} />
         <Route path='addloan' element={<AddLoanComponent />} />
+        <Route
+          path='editloan/:loanId'
+          element={
+            <Fetcher urls={['/loansapi/loan_products_list/']}>
+              {({data}) => <EditLoan products={data[0]}/>}
+            </Fetcher>
+          } 
+        />
       </Route>
     </Routes>
   )
