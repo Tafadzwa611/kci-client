@@ -70,8 +70,7 @@ function Table({
                   <div className="col-12" style={{display:"flex", justifyContent:"space-between"}}>
                     <button><a onClick={close} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
                     <div style={{display:"flex", columnGap: "5px"}}>
-                      <button className="btn btn-olive">Edit</button>
-                      {/* <button className="btn btn-olive" onClick={() => setView('edit')}>Edit</button> */}
+                      <button className="btn btn-olive" onClick={() => setView('edit')}>Edit</button>
                       <button className="btn btn-olive" onClick={() => setOpenModal(true)}>Delete</button>
                     </div>
                   </div>
@@ -83,7 +82,7 @@ function Table({
                         <ul>
                           <li style={{marginBottom: '1rem'}}><b>Expense Type Information</b></li>
                           <li>Expense Type Name: {selectedExpType.name}</li>
-                          <li>Date of Account: {selectedExpType.date_of_account}</li>
+                          <li>Date of Account: {selectedExpType.account_date}</li>
                           <li>Date Created: {selectedExpType.date_created}</li>
                           <li>Currency: {selectedExpType.currency__shortname}</li>
                           <li>Created By: {selectedExpType.created_by__first_name} {selectedExpType.created_by__last_name}</li>

@@ -6,17 +6,18 @@ import { addSchema } from './schema';
 
 function EditExpType({initialValues, setView, setSelectedExpType, setExpTypes}) {
   const back = () => setView('list');
+  initialValues.date_of_account = initialValues.account_date;
 
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      await axios.put(`/loansapi/edit_product_group/${initialValues.id}/`, values, CONFIG);
+      await axios.put(`/expensesapi/edit_expense_type/${initialValues.id}/`, values, CONFIG);
       setExpTypes(curr => {
-        return curr.map(cat => {
-          if (cat.id === values.id) {
+        return curr.map(exptype => {
+          if (exptype.id === values.id) {
             return values
           }
-          return cat
+          return exptype
         })
       });
       setSelectedExpType(values);
