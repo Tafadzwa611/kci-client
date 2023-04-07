@@ -31,6 +31,7 @@ function MainTable({loanData, handleClick}) {
                   <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
                     <th>Client</th>
                     <th>Loan_Number</th>
+                    <th>Status</th>
                     <th>Date_Disbursed</th>
                     <th>Interest_Rate</th>
                     <th>Repayment_Cycle</th>
@@ -56,9 +57,11 @@ function MainTable({loanData, handleClick}) {
                             </span>
                           </div>
                         </td>
-                        <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', columnGap: '5px'}}>
+                        <td>
                           <span onClick={handleClick} id={loan.id} style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>{loan.loan_id}</span>
-                          <span className={statusClasses[loan.status]} style={{marginBottom:'3px'}}>{loan.status}</span>
+                        </td>
+                        <td>
+                          <span className={statusClasses[loan.status]}>{loan.status}</span>
                         </td>
                         <td>{loan.loan_added_on}</td>
                         <td>{loan.interest_rate}%</td>

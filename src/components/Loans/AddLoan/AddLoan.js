@@ -51,7 +51,7 @@ function AddLoan({products}) {
     try {
       const data = removeEmptyValues(values);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post('/loansapi/add_loan_api/', data, CONFIG);
+      const response = await axios.post('/loansapi/add_loan_api/', {...data, fees: values.fees}, CONFIG);
       navigate({pathname: '/loans/viewloans', search: `?loan_id=${response.data.loan_id}`});
     } catch (error) {
       console.log(error);
