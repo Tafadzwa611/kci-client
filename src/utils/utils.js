@@ -116,9 +116,12 @@ const removeEmptyValues = (object) => {
   for (var i = 0; i < keys.length; ++i) {
     const key = keys[i];
     const value = object[key];
-    if (value !== '') {
-      data[key] = value;
+    if (typeof value === 'string' || Array.isArray(value)) {
+      if (value.length === 0) {
+        continue
+      }
     }
+    data[key] = value;
   }
   return data;
 };

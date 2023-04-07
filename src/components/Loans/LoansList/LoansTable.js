@@ -1,8 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
+import MainTable from './MainTable';
+import MiniTable from './MiniTable';
+import MiniLoanDetails from './MiniLoanDetails';
+import { Fetcher } from '../../../common';
 
-function LoansTable() {
+function LoansTable({loanData, setLoanDetails}) {
+  const [loanId, setLoanId] = useState(null);
+
+  const handleClick = (e) => {
+    setLoanId(e.target.id);
+  }
+
   return (
-    <div>LoansTable</div>
+    <div style={{padding:"0", border:"none"}} className={loanId ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
+      <div className={loanId ? "table-responsive journal__table-container-journals" : "table-responsive full__table"} >
+        <div className="table__height">
+          {loanId ?
+            <MiniTable loanData={loanData} handleClick={handleClick}/> :
+            <MainTable loanData={loanData} handleClick={handleClick}/>
+          }
+        </div>
+        {loanId &&
+        <Fetcher urls={[`/loansapi/get_loan/${loanId}/`]} extra={{setLoanDetails}}>
+          {({data, extra}) => <MiniLoanDetails loanDetails={data[0]} extra={extra}/>}
+        </Fetcher>
+        }
+      </div>
+    </div>
   )
 }
 

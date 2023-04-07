@@ -2,16 +2,14 @@ import React from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { statusClasses, getDuration } from './data';
 
-function MainTable({loans, totalCount}) {
-  const handleClick = (e) => {
-    console.log(e.target.id);
-  }
+function MainTable({loanData, handleClick}) {
+  const {loans, count} = loanData;
 
   return (
-    <div>
-      <div className="table-header">
+    <>
+      <div className='table-header'>
         <div>
-          Showing {loans.length} of {totalCount} loans.
+          Showing {loans.length} of {count} loans.
         </div>
         <div>
           <ReactHTMLTableToExcel
@@ -24,13 +22,13 @@ function MainTable({loans, totalCount}) {
           />
         </div>
       </div>
-      <div style={{display:"block"}}>
-        <div style={{padding:"0", border:"none"}}>
-          <div style={{width:"100%", overflowX:"auto"}}>
-            <div className="table__height">
+      <div style={{display:'block'}}>
+        <div style={{padding:'0', border:'none'}}>
+          <div style={{width:'100%', overflowX:'auto'}}>
+            <div className='table__height'>
               <table className='table' id='loans'>
                 <thead>
-                  <tr className="journal-details header" style={{position:"sticky", top:"0"}}>
+                  <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
                     <th>Client</th>
                     <th>Loan_Number</th>
                     <th>Date_Disbursed</th>
@@ -54,13 +52,13 @@ function MainTable({loans, totalCount}) {
                         <td className='td-class'>
                           <div title={loan.client}>
                             <span id={loan.client_id}>
-                              {loan.client.length >14 ? `${loan.client.slice(0, 15)}...`: loan.client}
+                              {loan.client}
                             </span>
                           </div>
                         </td>
-                        <td style={{display: "flex", flexDirection: "row", alignItems: "center", columnGap: "5px"}}>
-                          <span onClick={handleClick} id={loan.id} style={{fontSize:"0.75rem", cursor:"pointer"}} className="link">{loan.loan_id}</span>
-                          <span className={statusClasses[loan.status]} style={{marginBottom:"3px"}}>{loan.status}</span>
+                        <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', columnGap: '5px'}}>
+                          <span onClick={handleClick} id={loan.id} style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>{loan.loan_id}</span>
+                          <span className={statusClasses[loan.status]} style={{marginBottom:'3px'}}>{loan.status}</span>
                         </td>
                         <td>{loan.loan_added_on}</td>
                         <td>{loan.interest_rate}%</td>
@@ -83,7 +81,7 @@ function MainTable({loans, totalCount}) {
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

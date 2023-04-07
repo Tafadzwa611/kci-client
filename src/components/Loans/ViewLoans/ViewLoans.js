@@ -1,40 +1,33 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import LoansList from '../LoansList/LoansList';
-import DueLoansList from '../DueLoans/DueLoansList';
-import ViewDefaultsAndArrears from '../DefaultedAndArrearsLoans/ViewDefaultsAndArrears';
+// import DueLoansList from '../DueLoans/DueLoansList';
+// import ViewDefaultsAndArrears from '../DefaultedAndArrearsLoans/ViewDefaultsAndArrears';
 import AddLoan from '../AddLoan/AddLoan';
+import EditLoan from '../AddLoan/EditLoan';
 import { Fetcher } from '../../../common';
+import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
 
 const ViewLoans = () => {
-  const [tab, setTab] = useState('loans');
-
   useEffect(() => {
     document.title = 'View Loans';
   }, []);
 
   return (
-    <div className='card'>
-      <div className='card-body'>
-        <h5 className='table-heading' style={{marginBottom:'20px'}}>View Loans</h5>
-        <>
-          <div className='bloc-tabs'>
-            <button className={tab === 'loans' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('loans')}> View Loans </button>
-            <button className={tab === 'addloan' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('addloan')}> Add Loan </button>
-            <button className={tab === 'dueloans' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('dueloans')}> Due Loans </button>
-            <button className={tab === 'arrsloans' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('arrsloans')}> Arrears loans </button>
-            </div>
-            <div className='tab-content font-12' style={{marginTop:'3rem'}}>
-              {{
-                'loans': <LoanListComponent />,
-                'dueloans': <DueLoansList setMainTab={setTab}/>,
-                'arrsloans': <ViewDefaultsAndArrears setMainTab={setTab}/>,
-                'addloan': <AddLoanComponent />,
-              }[tab]}
-          </div>
-        </>
-      </div>
-    </div>
-  );
+    <Routes>
+      <Route path='/' element={<Layout />}>
+        <Route index element={<LoanListComponent />} />
+        <Route path='addloan' element={<AddLoanComponent />} />
+        <Route
+          path='editloan/:loanId'
+          element={
+            <Fetcher urls={['/loansapi/loan_products_list/']}>
+              {({data}) => <EditLoan products={data[0]}/>}
+            </Fetcher>
+          } 
+        />
+      </Route>
+    </Routes>
+  )
 }
 
 const AddLoanComponent = () => {
@@ -50,6 +43,31 @@ const LoanListComponent = () => {
     <Fetcher urls={['/loansapi/loan_products/']}>
       {({data}) => <LoansList products={data[0].loan_products}/>}
     </Fetcher>
+  )
+}
+
+function Layout() {
+  const location = useLocation();
+
+  return (
+    <div className='card'>
+      <div className='card-body'>
+        <h5 className='table-heading' style={{marginBottom:'20px'}}>View Admin</h5>
+        <>
+          <div className='bloc-tabs'>
+            <Link to='/loans/viewloans' id='list' className={location.pathname === '/loans/viewloans' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              View Loans
+            </Link>
+            <Link to='/loans/viewloans/addloan' id='add' className={location.pathname === '/loans/viewloans/addloan' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Add Loan
+            </Link>
+          </div>
+          <div className='tab-content font-12' style={{marginTop:'3rem'}}>
+            <Outlet />
+          </div>
+        </>
+      </div>
+    </div>
   )
 }
 

@@ -107,4 +107,3 @@ function Layout() {
 }
 
 export default AdminPanel;
-// <button className={tab === 'settings' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('settings')}> Settings </button>

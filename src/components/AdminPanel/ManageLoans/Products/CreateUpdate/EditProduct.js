@@ -16,7 +16,7 @@ function EditProduct({productGrps, initialValues, setView, setSelectedPrdct, set
     try {
       const data = removeEmptyValues(values);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      await axios.put(`/loansapi/edit_loan_product/${data.id}/`, data, CONFIG);
+      await axios.put(`/loansapi/edit_loan_product/${data.id}/`, {...data, fees: values.fees}, CONFIG);
       setProducts(curr => {
         return curr.map(prod => {
           if (prod.id === values.id) {
@@ -32,6 +32,7 @@ function EditProduct({productGrps, initialValues, setView, setSelectedPrdct, set
       setSelectedPrdct(values);
       setView('list');
     } catch (error) {
+      console.log(error);
       if (error.message === "Network Error") {
         actions.setErrors({responseStatus: "Network Error"});
       } else if (error.response.status >= 400 && error.response.status < 500) {

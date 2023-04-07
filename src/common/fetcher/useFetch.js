@@ -19,7 +19,7 @@ const useFetch = (urls) => {
       ).catch((e) => setError(e)).finally(() => setLoading(false));
     }
     fetchData();
-  }, [urls]);
+  }, [JSON.stringify(urls)]);
 
   return {data, error, loading}
 }

@@ -21,6 +21,7 @@ function CustomDatePicker({ setFieldValue, label, ...props }) {
         <label className='form-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
         <div className='col-9'>
           <DatePicker
+            value={field.value}
             format={loggedInUser.date_format.toUpperCase()}
             onChange={handleChange}
             render={<CustomInput touched={meta.touched} error={meta.error} />}
