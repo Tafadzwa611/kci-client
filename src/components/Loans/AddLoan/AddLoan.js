@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import SolidarityGroupForm from './SolidarityGroupForm';
+import SolidarityGroupForm from './SolidarityGroupForm';
 import { NonFieldErrors } from '../../../common';
 import { CustomSelect } from '../../../common';
 import { Form, Formik } from 'formik';
@@ -24,6 +24,7 @@ function AddLoan({products}) {
     reason_for_loan: '',
     fees: [],
     files: [],
+    principal_distribution: [],
     client_id: '',
     group_id: ''
   };
@@ -40,6 +41,7 @@ function AddLoan({products}) {
     const prevProduct = products.find(prod => prod.id == prevProductId);
     if (prevProduct) {
       if (prevProduct.client_type !== product.client_type) {
+        console.log(prevProduct.client_type);
         setFieldValue('client_id', '');
         setFieldValue('group_id', '');
       }
@@ -50,9 +52,11 @@ function AddLoan({products}) {
     console.log(values);
     try {
       const data = removeEmptyValues(values);
+      const url = product.client_type === 'Groups (solidarity)' ? '/loansapi/add_soloan_api/' : '/loansapi/add_loan_api/';
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post('/loansapi/add_loan_api/', data, CONFIG);
-      navigate({pathname: '/loans/viewloans', search: `?loan_id=${response.data.loan_id}`});
+      const response = await axios.post(url, data, CONFIG);
+      const search = product.client_type === 'Groups (solidarity)' ? '' : `?loan_id=${response.data.loan_id}`;
+      navigate({pathname: '/loans/viewloans', search: search});
     } catch (error) {
       console.log(error);
       if (error.message === "Network Error") {
@@ -77,7 +81,7 @@ function AddLoan({products}) {
               label='Loan Product'
               name='loan_product_id'
               value={product ? product.id : ''}
-              onChange={(evt) => onChange(evt, setFieldValue)}
+              onChange={(evt) => onChange(evt, setFieldValue, values.loan_product_id)}
               required
             >
               <option value=''>------</option>
@@ -96,6 +100,12 @@ function AddLoan({products}) {
                 values={values}
               />,
               'Clients': <ClientFormFields
+                product={product}
+                isSubmitting={isSubmitting}
+                setFieldValue={setFieldValue}
+                values={values}
+              />,
+              'Groups (solidarity)': <SolidarityGroupForm
                 product={product}
                 isSubmitting={isSubmitting}
                 setFieldValue={setFieldValue}
