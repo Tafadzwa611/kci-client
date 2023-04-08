@@ -3,36 +3,42 @@ import { SuccessBtn } from '../../../common';
 import Table from './Table';
 import AddExpType from './AddExpType';
 import EditExpType from './EditExpType';
+import Filter from './Filter';
 
-function List({data, extra}) {
-  const {expenseTypeId, setExpenseTypeId} = extra;
+function List({expenseTypeData, setExpenseTypeData}) {
+  const [expenseTypeId, setExpenseTypeId] = useState(null);
   const [selectedExpType, setSelectedExpType] = useState(null);
-  const [expTypes, setExpTypes] = useState(data);
   const [view, setView] = useState('list');
+  const [showDetails, setShowDetails] = useState(null);
+
+  const handleClick = (e) => {
+    const expt = expenseTypeData.find(expt => expt.id == e.target.id);
+    setSelectedExpType(expt);
+    setShowDetails(true);
+  }
 
   useEffect(() => {
     if (expenseTypeId !== null) {
-      const cat = expTypes.find(prd => prd.id == expenseTypeId);
-      setSelectedExpType(cat);
+      const exp = expenseTypeData.find(exp => exp.id == expenseTypeId);
+      setSelectedExpType(exp);
     }
   }, []);
-
-  const handleClick = (e) => {
-    const cat = expTypes.find(cat => cat.id == e.target.id);
-    setSelectedExpType(cat);
-  }
 
   if (view === 'list') {
     return (
       <>
         <SuccessBtn handler={() => setView('add')} value={'Add Expense Type'}/>
+        <Filter setExpenseTypeData={setExpenseTypeData}/>
+        <div style={{paddingTop: '2rem'}}></div>
         <Table
           setView={setView}
-          expTypes={expTypes}
+          expTypes={expenseTypeData}
           selectedExpType={selectedExpType}
+          showDetails={showDetails}
           handleClick={handleClick}
           setSelectedExpType={setSelectedExpType}
-          setExpTypes={setExpTypes}
+          setExpTypes={setExpenseTypeData}
+          setShowDetails={setShowDetails}
         />
       </>
     )
@@ -42,7 +48,7 @@ function List({data, extra}) {
         initialValues={selectedExpType}
         setView={setView}
         setSelectedExpType={setSelectedExpType}
-        setExpTypes={setExpTypes}
+        setExpTypes={setExpenseTypeData}
       />
     )
   }
