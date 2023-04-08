@@ -12,8 +12,8 @@ function AddExpType({setView, setExpenseTypeId}) {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/expensesapi/add_expense_type/', values, CONFIG);
-      console.log(response);
-      setExpenseTypeId(response.data.id);
+      // console.log(response);
+      // setExpenseTypeId(response.data.id);
       setView('list');
     } catch (error) {
       console.log(error);

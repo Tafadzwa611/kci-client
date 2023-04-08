@@ -15,6 +15,7 @@ function EditExpType({initialValues, setView, setSelectedExpType, setExpTypes}) 
       setExpTypes(curr => {
         return curr.map(exptype => {
           if (exptype.id === values.id) {
+            values.name = values.name.toUpperCase()
             return values
           }
           return exptype

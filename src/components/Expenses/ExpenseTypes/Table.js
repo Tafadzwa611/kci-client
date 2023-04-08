@@ -11,7 +11,10 @@ function Table({
   showDetails,
   setShowDetails
 }) {
-  const close = () => setSelectedExpType(null);
+  // const close = () => setSelectedExpType(null);
+  const close = () => {
+    setShowDetails(false);
+  }
   const [openModal, setOpenModal] = useState(false);
 
   return (
