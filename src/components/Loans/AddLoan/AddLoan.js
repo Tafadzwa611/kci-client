@@ -54,7 +54,7 @@ function AddLoan({products}) {
       const data = removeEmptyValues(values);
       const url = product.client_type === 'Groups (solidarity)' ? '/loansapi/add_soloan_api/' : '/loansapi/add_loan_api/';
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post(url, data, CONFIG);
+      const response = await axios.post(url, {...data, fees: values.fees}, CONFIG);
       const search = product.client_type === 'Groups (solidarity)' ? '' : `?loan_id=${response.data.loan_id}`;
       navigate({pathname: '/loans/viewloans', search: search});
     } catch (error) {

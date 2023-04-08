@@ -6,9 +6,11 @@ import { Fetcher } from '../../../common';
 
 function LoansTable({loanData, setLoanDetails}) {
   const [loanId, setLoanId] = useState(null);
+  const [selectedLoanId, setSelectedLoanId] = useState(null);
 
   const handleClick = (e) => {
     setLoanId(e.target.id);
+    setSelectedLoanId(e.target.id);
   }
 
   return (
@@ -16,7 +18,7 @@ function LoansTable({loanData, setLoanDetails}) {
       <div className={loanId ? "table-responsive journal__table-container-journals" : "table-responsive full__table"} >
         <div className="table__height">
           {loanId ?
-            <MiniTable loanData={loanData} handleClick={handleClick}/> :
+            <MiniTable loanData={loanData} handleClick={handleClick} selectedLoanId={selectedLoanId}/> :
             <MainTable loanData={loanData} handleClick={handleClick}/>
           }
         </div>
