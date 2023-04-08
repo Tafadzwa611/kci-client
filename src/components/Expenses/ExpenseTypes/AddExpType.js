@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import ExpenseTypeForm from './ExpenseTypeForm';
 import { addSchema } from './schema';
 
-function AddExpType({setView, setExpenseTypeId}) {
+function AddExpType({setView, setExpenseTypeId, setExpenseTypeData}) {
   const initialValues = {name: '', date_of_account: '', currency_id: '', is_active: true};
   const back = () => setView('list');
 
@@ -12,8 +12,8 @@ function AddExpType({setView, setExpenseTypeId}) {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/expensesapi/add_expense_type/', values, CONFIG);
-      // console.log(response);
-      // setExpenseTypeId(response.data.id);
+      console.log(response.data)
+      setExpenseTypeData(curr => [response.data, ...curr])
       setView('list');
     } catch (error) {
       console.log(error);

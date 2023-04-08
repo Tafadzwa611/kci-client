@@ -7,11 +7,10 @@ function Table({
   setSelectedExpType,
   handleClick,
   selectedExpType,
-  setExpTypes,
   showDetails,
-  setShowDetails
+  setShowDetails,
+  setExpenseTypeData
 }) {
-  // const close = () => setSelectedExpType(null);
   const close = () => {
     setShowDetails(false);
   }
@@ -19,7 +18,7 @@ function Table({
 
   return (
     <>
-      {openModal && <DeleteExpType setOpenModal={setOpenModal} setShowDetails={setShowDetails} setExpTypes={setExpTypes} close={close} expTypeId={selectedExpType.id} />}
+      {openModal && <DeleteExpType setOpenModal={setOpenModal} setShowDetails={setShowDetails} expTypeId={selectedExpType.id} setExpenseTypeData={setExpenseTypeData} />}
       <div style={{padding:'0', border:'none'}} className={showDetails ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
         <div className={showDetails ? 'journal__table-container-journals' : 'full__table'}>
           <div className="table-responsive">

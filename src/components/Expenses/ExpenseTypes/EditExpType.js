@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import ExpenseTypeForm from './ExpenseTypeForm';
 import { addSchema } from './schema';
 
-function EditExpType({initialValues, setView, setSelectedExpType, setExpTypes}) {
+function EditExpType({initialValues, setView, setSelectedExpType, setExpenseTypeData}) {
   const back = () => setView('list');
   initialValues.date_of_account = initialValues.account_date;
 
@@ -12,7 +12,7 @@ function EditExpType({initialValues, setView, setSelectedExpType, setExpTypes}) 
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.put(`/expensesapi/edit_expense_type/${initialValues.id}/`, values, CONFIG);
-      setExpTypes(curr => {
+      setExpenseTypeData(curr => {
         return curr.map(exptype => {
           if (exptype.id === values.id) {
             values.name = values.name.toUpperCase()

@@ -37,7 +37,7 @@ function List({expenseTypeData, setExpenseTypeData}) {
           showDetails={showDetails}
           handleClick={handleClick}
           setSelectedExpType={setSelectedExpType}
-          setExpTypes={setExpenseTypeData}
+          setExpenseTypeData={setExpenseTypeData}
           setShowDetails={setShowDetails}
         />
       </>
@@ -48,11 +48,11 @@ function List({expenseTypeData, setExpenseTypeData}) {
         initialValues={selectedExpType}
         setView={setView}
         setSelectedExpType={setSelectedExpType}
-        setExpTypes={setExpenseTypeData}
+        setExpenseTypeData={setExpenseTypeData}
       />
     )
   }
-  return <AddExpType setView={setView} setExpenseTypeId={setExpenseTypeId}/>
+  return <AddExpType setView={setView} setExpenseTypeId={setExpenseTypeId} setExpenseTypeData={setExpenseTypeData}/>
 }
 
 export default List;

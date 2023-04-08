@@ -8,12 +8,13 @@ function DeleteExpType({setOpenModal, setExpenseTypeData, expTypeId, setShowDeta
   const onSubmit = async (_, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      await axios.delete(`/expensesapi/delete_expense_type/${expTypeId}/`, CONFIG);
-      // close();
+      const response = await axios.delete(`/expensesapi/delete_expense_type/${expTypeId}/`, CONFIG);
       setShowDetails(false);
       setOpenModal(false);
-      setExpenseTypeData(curr => curr.filter(exptype => exptype.id !== expTypeId));
+      setExpenseTypeData(curr => curr.filter(exptype => exptype.id != expTypeId));
+
     } catch (error) {
+      console.log(error)
       if (error.message === "Network Error") {
         actions.setErrors({responseStatus: "Network Error"});
       } else if (error.response.status >= 400 && error.response.status < 500) {
