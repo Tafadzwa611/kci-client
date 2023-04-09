@@ -33,7 +33,7 @@ function Table({expenseData, setExpenseDetails}) {
               id='test-table-xls-button'
               className='btn btn-default'
               table='loans'
-              filename='loans'
+              filename='expenses'
               sheet='tablexls'
               buttonText='Download as XLS'
             />
@@ -55,7 +55,7 @@ function Table({expenseData, setExpenseDetails}) {
           }
           {expenseId &&
           <Fetcher urls={[`/expensesapi/get_expense/${expenseId}/`]} extra={{setExpenseDetails}}>
-            {({data, extra}) => <MiniExpenseDetails expenseDetails={data[0]} extra={extra}/>}
+            {({data, extra}) => <MiniExpenseDetails expenseDetails={data[0]} extra={extra} setExpenseId={setExpenseId} />}
           </Fetcher>
           }
         </div>

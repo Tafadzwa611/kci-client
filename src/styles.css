@@ -3364,6 +3364,10 @@ input[type=number] {
   display: block !important;
 } 
 
+.rmdp-container {
+  width: 100%;
+}
+
 
 /* ============================================================================== */
 
@@ -3442,3 +3446,4 @@ input[type=number] {
   background-color: var(--home-section-color) !important;
   border-color: var(--home-section-color) !important;
 }
+
