@@ -5,11 +5,6 @@ function MiniTable({expenseData, handleClick, selectedExpenseId}) {
 
   return (
     <>
-      <div className='table-header'>
-        <div>
-          Showing {expenses.length} of {count} expenses.
-        </div>
-      </div>
       <div style={{display:'block'}}>
         <div style={{padding:'0', border:'none'}}>
           <div style={{width:'100%', overflowX:'auto'}}>

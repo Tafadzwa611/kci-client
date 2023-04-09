@@ -11,7 +11,6 @@ function MiniExpenseDetails({expenseDetails, extra}) {
 
   return (
     <div>
-      {expenseDetails.id}
       <button className='btn btn-olive' onClick={() => navigate({pathname: '/expenses/viewexpenses', search: `?expense_id=${expenseDetails.id}`})}>
         Max
       </button>
