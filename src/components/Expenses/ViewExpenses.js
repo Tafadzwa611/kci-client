@@ -1,243 +1,61 @@
-import React, { useState, useEffect, useRef } from 'react';
-import ExpenseList from './ViewExpenses/ExpenseList';
-import Filter from './ViewExpenses/Filter';
-import ExpenseFooter from './ViewExpenses/ExpenseFooter';
-import { makeRequest } from '../../utils/utils';
-import MiniLoader from '../Loader/MiniLoader';
-import AdvancedSearchExpenses from './ViewExpenses/AdvancedSearchExpenses/AdvancedSearchExpenses';
-import CreateExpenseModal from './CreateExpenseModal';
-
+import React, {useEffect} from 'react';
+import List from './ViewExpenses/List';
+import AddExpense from './ViewExpenses/AddExpense';
+import { Fetcher } from '../../common';
+import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
 
 const ViewExpenses = () => {
+  useEffect(() => {
+    document.title = 'View Expenses';
+  }, []);
 
-    const [expenses, setExpenses] = useState([])
-    const [nextPageNumber, setNextPageNumber] = useState(null);
-    const [totalCount, setTotalCount] = useState(0);
-    const [expName, setExpName] = useState('');
-    const [currency, setCurrency] = useState(null);
-    const [currencyId, setCurrencyId] = useState(null);
-    const [minDateCreated, setMinDateCreated] = useState('');
-    const [maxDateCreated, setMaxDateCreated] = useState('');
-    const [loadingMore, setLoadingMore] = useState(false);
-    const [open, setOpen] = useState(false);
-    const [searching, setSearching] = useState(false);
-    const [details, setDetails] = useState(false)
-    const [selectedExpID, setSelectedExpID] = useState(null)
-    const [branches, setBranches] = useState(null);
-    const [branchIds, setBranchIds] = useState(null);
-    const [searchType, setSearchType] = useState('basic');
-    const [advOpts, setAdvOpts] = useState({});
+  return (
+    <Routes>
+      <Route path='/' element={<Layout />}>
+        <Route index element={<ExpenseListComponent />} />
+        <Route path='addexpense' element={<AddExpenseComponent />} />
+      </Route>
+    </Routes>
+  )
+}
 
+const AddExpenseComponent = () => {
+  return (
+    <Fetcher urls={['/expensesapi/expensetypeslist/', '/acc-api/cash-and-cash-equivalents-sub-accs/']}>
+      {({data}) => <AddExpense expensetypes={data[0]} fundaccounts={data[1]} />}
+    </Fetcher>
+  )
+}
 
-    const pageNum = useRef(1);
+const ExpenseListComponent = () => {
+  return (
+    <List />
+  )
+}
 
-    useEffect(() => {
-        if (currencyId !== null){
-            getExpenses();
-        }
-    }, [currencyId]);
+function Layout() {
+  const location = useLocation();
 
-    useEffect(() => {
-        getCurrency();
-    }, [])
-
-    useEffect(() => {
-        getBranches();
-    }, []);
-
-    const getExpenses = async () => {
-        window.scrollTo(0, 0);
-        document.title = 'Expenses';
-        // const data = await fetchExpenses();
-        // setExpenses(data.expenses);
-        // setTotalCount(data.count);
-    };
-
-    async function fetchExpenses() {
-        try {
-            const url = getUrl();
-            const response = searchType === 'basic' ? await makeRequest.get(url, {timeout: 8000}) : await makeRequest.post(url, {...advOpts, page_num: pageNum.current}, {timeout: 8000});
-            if (response.ok) {
-                const json_res = await response.json();
-                setNextPageNumber(json_res.next_page_num);
-                setLoadingMore(false);
-                setSearching(false);
-                return json_res;
-            }else {
-                const error = await response.json();
-                console.log(error);
-            }
-        }catch(error) {
-            console.log(error);
-        }
-    }
-    
-    async function fetchCurrency() {
-        try {
-          const response = await makeRequest.get('/usersapi/currencieslist/', {timeout: 8000});
-          if (response.ok) {
-            const data = await response.json();
-            if (currencyId===null) {
-              const zwlId = data.filter(currency => currency.shortname === 'ZWL')[0].id;
-              setCurrencyId(zwlId);
-            }
-            return setCurrency([...data.map(result => ({...result, label: result.shortname, value:result.id}))]);
-          }else {
-            const error = await response.json();
-            console.log(error);
-          }
-        }catch(error) {
-          console.log(error);
-        }
-      }
-    
-    const getCurrency = async () => {
-        await fetchCurrency();
-    };
-
-    const changeCurrency = (evt) => {
-        setCurrencyId(evt.target.value);
-        pageNum.current = 1;
-    }
-
-    const getBranches = async () => {
-        window.scrollTo(0, 0);
-        const branches = await fetchBranches();
-        setBranches(branches);
-    };
-
-    async function fetchBranches() {
-        try {
-            const response = await makeRequest.get('/usersapi/get-branches/', {timeout: 6000});
-            if (response.ok) {
-                const json_res = await response.json();
-            return json_res.results;
-            }else {
-                const error = await response.json();
-                console.log(error);
-            }
-        }catch(error) {
-            console.log(error);
-        }
-    }
-
-    function getUrl() {
-        
-        if (searchType === 'advanced') {
-            return '/expensesapi/advanced_search_expenses/'
-        }
-
-        let url = `/expensesapi/expenseslist/?page_num=${pageNum.current}&currency_id=${currencyId}`;
-        if (branchIds !== null) {
-            branchIds.forEach(id => (url += `&branch_ids=${id}`));
-        }
-
-        if (expName !== '') {
-          url += `&exp_name=${expName}`;
-        }
-        if (minDateCreated !== '') {
-          url += `&min_date_created=${minDateCreated}`;
-        }
-        if (maxDateCreated !== '') {
-          url += `&max_date_created=${maxDateCreated}`;
-        }
-        return url
-    }
-
-    const loadMore = async (evt) => {
-        evt.preventDefault();
-        setLoadingMore(true);
-        pageNum.current += 1;
-        const data = await fetchExpenses();
-        setExpenses(curr => [...curr,...data.expenses]);
-    }
-    
-    const onSubmit = async (evt) => {
-        evt.preventDefault();
-        setSearching(true);
-        pageNum.current = 1;
-        const data = await fetchExpenses();
-        console.log(data)
-        setTotalCount(data.count);
-        setExpenses(data.expenses);
-    }
-
-    if (currency===null || branches===null) {
-        return <MiniLoader />
-    }
-
-    return (
-        <div className="font-12">
-            <>      
-                <CreateExpenseModal open={open} setOpen={setOpen} setExpenses={setExpenses} />
-                <div style={{marginBottom:"1.5rem"}}>
-                    <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)}>Add Expense</button>
-                </div>
-                <div className='row-payments-container' style={{width: '200px', margin: '10px 0'}}>
-                    <select className='custom-select-form row-form' onChange={(e) => setSearchType(e.target.value)} value={searchType}>
-                        <option value='basic'>Basic Search</option>
-                        <option value='advanced'>Advanced Search</option>
-                    </select>
-                </div>
-                {searchType === 'advanced' ? <AdvancedSearchExpenses details={details} branches={branches} setAdvOpts={setAdvOpts} onSubmit={onSubmit} /> :
-                    <Filter
-                        expName={expName}
-                        setExpName={setExpName}
-                        currency={currency}
-                        currencyId={currencyId}
-                        setCurrencyId={setCurrencyId}
-                        minDateCreated={minDateCreated}
-                        setMinDateCreated={setMinDateCreated}
-                        maxDateCreated={maxDateCreated}
-                        setMaxDateCreated={setMaxDateCreated}
-                        onSubmit={onSubmit}
-                        open ={open}
-                        setOpen={setOpen}
-                        setExpenses={setExpenses}
-                        changeCurrency={changeCurrency}
-                        searching={searching}
-                        setSearching={setSearching}
-                        branches={branches}
-                        setBranchIds={setBranchIds}
-                        details={details}
-                    />
-                }
-            </>
-            {expenses != "" &&
-                <>
-                    <div style={{marginTop:"2rem"}}></div>
-                    <ExpenseList 
-                        expenses={expenses} 
-                        setExpenses={setExpenses}
-                        details={details}
-                        setDetails={setDetails}
-                        selectedexp={expenses.find(exp => exp.id == selectedExpID)}
-                        setSelectedExpID={setSelectedExpID}
-                        selectedExpID={selectedExpID}
-                    />
-                    <ExpenseFooter 
-                        expenses={expenses} 
-                        totalCount={totalCount} 
-                        nextPageNumber={nextPageNumber}
-                        loadMoreClients={loadMore}
-                        loadingMore={loadingMore}
-                    />
-                </>
-            }
-            {expenses == "" &&
-                <div>
-                    <div className="table-footer-container card-body clients_table" style={{borderTop:"none"}}>
-
-                        <div className="all-data-loaded">
-                            <i className="uil uil-exclamation-triangle"></i> 
-                            <span>No expenses at the moment</span>
-                        </div>
-                    </div>
-                </div>
-            }
-
-        </div>
-    );
+  return (
+    <div className='card'>
+      <div className='card-body'>
+        <h5 className='table-heading' style={{marginBottom:'20px'}}>View Expenses</h5>
+        <>
+          <div className='bloc-tabs'>
+            <Link to='/expenses/viewexpenses' id='list' className={location.pathname === '/expenses/viewexpenses' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              View Expenses
+            </Link>
+            <Link to='/expenses/viewexpenses/addexpense' id='add' className={location.pathname === '/expenses/viewexpenses/addexpense' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Add Expense
+            </Link>
+          </div>
+          <div className='tab-content font-12' style={{marginTop:'3rem'}}>
+            <Outlet />
+          </div>
+        </>
+      </div>
+    </div>
+  )
 }
 
 export default ViewExpenses;

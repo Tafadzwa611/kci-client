@@ -1,0 +1,60 @@
+import React from 'react';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+
+function MainTable({expenseData, handleClick}) {
+  const {expenses, count} = expenseData;
+
+  return (
+    <>
+      <div className='table-header'>
+        <div>
+          Showing {expenses.length} of {count} expenses.
+        </div>
+        <div>
+          <ReactHTMLTableToExcel
+            id='test-table-xls-button'
+            className='btn btn-default'
+            table='loans'
+            filename='loans'
+            sheet='tablexls'
+            buttonText='Download as XLS'
+          />
+        </div>
+      </div>
+      <div style={{display:'block'}}>
+        <div style={{padding:'0', border:'none'}}>
+          <div style={{width:'100%', overflowX:'auto'}}>
+            <div className='table__height'>
+              <table className='table' id='loans'>
+                <thead>
+                  <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
+                    <th style={{textAlign:"start"}}>Expense_Type</th>
+                    <th style={{textAlign:"start"}}>Expense_Name</th>
+                    <th style={{textAlign:"start"}}>Expense_Date</th>
+                    <th style={{textAlign:"start"}}>Date_Created</th>
+                    <th style={{textAlign:"start"}}>Expense_Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {expenses.map(expense => {
+                    return (
+                      <tr className='tr-class' key={expense.id}>
+                        <td style={{verticalAlign:"middle"}}>{expense.expense_type}</td>
+                        <td style={{verticalAlign:"middle"}}><span onClick={handleClick} id={expense.id} style={{fontSize:"0.75rem", cursor:"pointer"}} className="link">{expense.expense_name}</span></td>
+                        <td style={{verticalAlign:"middle"}}>{expense.expense_date}</td>
+                        <td style={{verticalAlign:"middle"}}>{expense.date_created}</td>
+                        <td style={{verticalAlign:"middle"}}>{expense.currency} {expense.expense_amount}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
+
+export default MainTable;

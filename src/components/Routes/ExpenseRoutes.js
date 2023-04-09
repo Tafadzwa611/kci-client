@@ -1,13 +1,12 @@
 import React, { lazy } from 'react';
 import { Route } from 'react-router-dom';
 
-const ExpenseTypes = lazy(() => import('../Expenses/ExpenseTypes'));
-const Expenses = lazy(() => import('../Expenses/Expenses'));
+const Expenses = lazy(() => import('../Expenses/ViewExpenses'));
 
 const ExpenseRoutes = (
   <>
-    <Route exact path='/expenses/expensetypes' element={<ExpenseTypes/>}/>
-    <Route exact path='/expenses/expenses' element={<Expenses/>}/>
+    <Route exact path='/expenses/viewexpenses/*' element={<Expenses/>}/>
+
   </>
 )
 

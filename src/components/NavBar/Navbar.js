@@ -32,7 +32,7 @@ const Navbar = (props) => {
           <NavLink to='/otherincome/otherincmoe' className='btn btn-default dashboard'>
             <span>View Other Income</span>
           </NavLink>
-          <NavLink to='/expenses/expenses' className='btn btn-default dashboard'>
+          <NavLink to='/expenses/viewexpenses' className='btn btn-default dashboard'>
             <span>View Expenses</span>
           </NavLink>
           <NavLink to='/reports/viewreports' className='btn btn-default dashboard'>
