@@ -45,6 +45,32 @@ function ClientFormFields({product, isSubmitting, setFieldValue, values}) {
           required
         />
       }
+      <CustomSelectRemote
+        selected={values.guarantor}
+        label='Client Guarantor'
+        url='/clientsapi/search_client/'
+        setFieldValue={(fieldName, selected) => {
+          setFieldValue('guarantor', selected);
+          setFieldValue(fieldName, selected.value);
+        }}
+        queryParamName='query'
+        params={[{key: 'guarantors_only', value: 1}]}
+        placeholder='Search Client Guarantor'
+        name='guarantor_id'
+      />
+      <CustomSelectRemote
+        selected={values.group_guarantor}
+        label='Group Guarantor'
+        url='/clientsapi/search_group/'
+        setFieldValue={(fieldName, selected) => {
+          setFieldValue('group_guarantor', selected);
+          setFieldValue(fieldName, selected.value);
+        }}
+        queryParamName='query'
+        params={[{key: 'guarantors_only', value: 1}]}
+        placeholder='Search Group Guarantor'
+        name='group_guarantor_id'
+      />
       <CustomInput
         label='Principal'
         name='principal'

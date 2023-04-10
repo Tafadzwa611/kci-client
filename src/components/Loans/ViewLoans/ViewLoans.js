@@ -18,7 +18,7 @@ const ViewLoans = () => {
         <Route index element={<LoanListComponent />} />
         <Route path='addloan' element={<AddLoanComponent />} />
         <Route
-          path='editloan/:loanId'
+          path='editloan/:loanType/:loanId'
           element={
             <Fetcher urls={['/loansapi/loan_products_list/']}>
               {({data}) => <EditLoan products={data[0]}/>}

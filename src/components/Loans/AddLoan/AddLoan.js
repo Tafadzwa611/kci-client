@@ -12,6 +12,7 @@ import { removeEmptyValues } from '../../../utils/utils';
 function AddLoan({products}) {
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
+  products = products.filter(prod => prod.is_active);
 
   const initialValues = {
     loan_product_id: '',
@@ -49,16 +50,16 @@ function AddLoan({products}) {
   }
 
   const onSubmit = async (values, actions) => {
-    console.log(values);
     try {
       const data = removeEmptyValues(values);
       const url = product.client_type === 'Groups (solidarity)' ? '/loansapi/add_soloan_api/' : '/loansapi/add_loan_api/';
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(url, {...data, fees: values.fees}, CONFIG);
-      const search = product.client_type === 'Groups (solidarity)' ? '' : `?loan_id=${response.data.loan_id}`;
+      const search = product.client_type === 'Groups (solidarity)' ?
+      `?loan_id=${response.data.loan_id}&loan_type=sol` :
+      `?loan_id=${response.data.loan_id}&loan_type=cli`;
       navigate({pathname: '/loans/viewloans', search: search});
     } catch (error) {
-      console.log(error);
       if (error.message === "Network Error") {
         actions.setErrors({responseStatus: "Network Error"});
       } else if (error.response.status >= 400 && error.response.status < 500) {

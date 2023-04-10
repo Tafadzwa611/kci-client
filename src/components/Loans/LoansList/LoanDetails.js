@@ -32,7 +32,7 @@ const Actions = ({status, loanDetails}) => {
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={(e) => console.log(e)}>Approve</button>
           <button className='btn btn-olive' onClick={(e) => console.log(e)}>Reject</button>
-          <Link to={`/loans/viewloans/editloan/${loanDetails.loan.id}`}>Edit</Link>
+          <Link to={`/loans/viewloans/editloan/cli/${loanDetails.loan.id}`}>Edit</Link>
           <button className='btn btn-olive' onClick={(e) => console.log(e)}>Delete</button>
         </div>
       </div>

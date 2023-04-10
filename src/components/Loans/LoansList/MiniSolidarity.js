@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function MiniLoanDetails({loanDetails, extra}) {
+function MiniSolidarity({loanDetails, extra}) {
   const {setLoanDetails} = extra;
   const navigate = useNavigate();
 
@@ -11,12 +11,12 @@ function MiniLoanDetails({loanDetails, extra}) {
 
   return (
     <div>
-      {loanDetails.loan.loan_id}
-      <button className='btn btn-olive' onClick={() => navigate({pathname: '/loans/viewloans', search: `?loan_id=${loanDetails.loan.id}&loan_type=cli`})}>
+      {loanDetails.group_name}
+      <button className='btn btn-olive' onClick={() => navigate({pathname: '/loans/viewloans', search: `?loan_id=${loanDetails.id}&loan_type=sol`})}>
         Max
       </button>
     </div>
   )
 }
 
-export default MiniLoanDetails;
+export default MiniSolidarity;

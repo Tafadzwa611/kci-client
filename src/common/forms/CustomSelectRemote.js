@@ -3,7 +3,7 @@ import AsyncSelect from 'react-select/async';
 import axios from 'axios';
 import { useField } from 'formik';
 
-function CustomSelectRemote({url, label, selected, queryParamName, setFieldValue, placeholder, isMulti, ...props}) {
+function CustomSelectRemote({url, label, selected, queryParamName, params, setFieldValue, placeholder, isMulti, ...props}) {
   const [field, meta] = useField(props);
 
   const onChange = selected => {
@@ -11,9 +11,14 @@ function CustomSelectRemote({url, label, selected, queryParamName, setFieldValue
   }
 
   const loadOptions = (inputValue, callback) => {
-    if (inputValue.length > 2) {
-      axios.get(`${url}?${queryParamName}=${inputValue}`).then((response) => callback(response.data))
+    if (inputValue.length <= 2) return
+    let search = '';
+    if (params) {
+      params.forEach(param => {
+        search += `&${param.key}=${param.value}`;
+      });
     }
+    axios.get(`${url}?${queryParamName}=${inputValue}${search}`).then((response) => callback(response.data))
   };
 
   return (
