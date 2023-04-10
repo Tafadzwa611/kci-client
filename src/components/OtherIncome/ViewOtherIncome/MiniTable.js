@@ -1,7 +1,7 @@
 import React from 'react';
 
-function MiniTable({expenseData, handleClick, selectedExpenseId}) {
-  const {expenses, count} = expenseData;
+function MiniTable({otherIncomeData, handleClick, selectedIncomeId}) {
+  const {otherincomes, count} = otherIncomeData;
 
   return (
     <>
@@ -12,21 +12,21 @@ function MiniTable({expenseData, handleClick, selectedExpenseId}) {
               <table className='table' id='loans'>
                 <thead>
                   <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
-                    <th>Expense_Type</th>
-                    <th>Expense_Name</th>
+                    <th>Other_Income_Type</th>
+                    <th>Other_Income_Name</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {expenses.map(expense => {
+                  {otherincomes.map(income => {
                     return (
-                      <tr className='tr-class' key={expense.id}>
+                      <tr className='tr-class' key={income.id}>
                         <td>
-                            {expense.expense_type}
+                            {income.income_type}
                         </td>
                         <td>
-                          {(selectedExpenseId==expense.id) ?
-                            <span onClick={handleClick} id={expense.id} style={{fontSize:'0.75rem', cursor:'pointer', color: 'red'}} className='link'>{expense.expense_name}</span>:
-                            <span onClick={handleClick} id={expense.id} style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>{expense.expense_name}</span>
+                          {(selectedIncomeId==income.id) ?
+                            <span onClick={handleClick} id={income.id} style={{fontSize:'0.75rem', cursor:'pointer', color: 'red'}} className='link'>{income.otherincome_name}</span>:
+                            <span onClick={handleClick} id={income.id} style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>{income.otherincome_name}</span>
                           }
                         </td>
                       </tr>

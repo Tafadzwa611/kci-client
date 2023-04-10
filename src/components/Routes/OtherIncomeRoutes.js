@@ -1,13 +1,11 @@
 import React, { lazy } from 'react';
 import { Route } from 'react-router-dom';
 
-const OtherIncome = lazy(() => import('../OtherIncome/OtherIncome'))
-const OtherIncomeTypes = lazy(() => import('../OtherIncome/OtherIncomeTypes'));
+const OtherIncome = lazy(() => import('../OtherIncome/ViewOtherIncome'))
 
 const OtherIncomeRoutes = (
   <>
-    <Route exact path='/otherincome/otherincmoe' element={<OtherIncome/>}/>
-    <Route exact path='/otherincome/otherincometypes' element={<OtherIncomeTypes/>}/>
+    <Route exact path='/otherincome/viewotherincome/*' element={<OtherIncome/>}/>
   </>
 )
 
