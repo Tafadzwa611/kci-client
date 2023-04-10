@@ -34,7 +34,7 @@ function ExpenseForm({expensetypes, fundaccounts, initialValues, validationSchem
                             required
                         >
                             <option value=''>------</option>
-                            {expensetypes.map(type => <option key={type.id} value={type.id}>{type.name}</option>)}
+                            {expensetypes.filter(type => type.is_active).map(type => <option key={type.id} value={type.id}>{type.name}</option>)}
                         </CustomSelect>
                         <CustomSelect label='Fund Account' name='fund_account_id' required>
                             <option value=''>------</option>
