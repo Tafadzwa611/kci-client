@@ -30,7 +30,6 @@ const Filter = ({setEpenseData}) => {
     try {
       const data = removeEmptyValues(values);
       const response = await axios.get('/expensesapi/expenseslist/', {params: data});
-      console.log(response)
       setEpenseData(response.data);
     } catch (error) {
       if (error.message === "Network Error") {

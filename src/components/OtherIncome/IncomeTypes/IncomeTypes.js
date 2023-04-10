@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { Fetcher } from '../../../common';
 import List from './List';
+import { useSearchParams } from 'react-router-dom';
+import Filter from './Filter';
 
 function IncomeTypes() {
-  const [incomeTypeId, setIncomeTypeId] = useState(null);
+  const [searchParams] = useSearchParams();
+  const [incomeTypeData, setIncomeTypeData] = useState([]);
 
   return (
     <>
-      <Fetcher urls={['/otherincomeapi/otherincometypeslist/']} extra={{incomeTypeId, setIncomeTypeId}}>
-        {({data, extra}) => <List data={data[0]} extra={extra}/>}
-      </Fetcher>
+      <List incomeTypeData={incomeTypeData} setIncomeTypeData={setIncomeTypeData} />
     </>
   )
 }

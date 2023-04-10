@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-// import DeleteExpType from './DeleteExpType';
+import DeleteIncType from './DeleteIncType';
 
 function Table({
   incTypes,
@@ -7,15 +7,18 @@ function Table({
   setSelectedIncType,
   handleClick,
   selectedIncType,
-  setIncTypes
+  showDetails,
+  setShowDetails,
+  setIncomeTypeData
 }) {
-  const close = () => setSelectedIncType(null);
-  const showDetails = selectedIncType !== null;
+  const close = () => {
+    setShowDetails(false);
+  }
   const [openModal, setOpenModal] = useState(false);
 
   return (
     <>
-      {/* {openModal && <DeleteExpType setOpenModal={setOpenModal} setIncTypes={setIncTypes} close={close} catId={selectedIncType.id} />} */}
+      {openModal && <DeleteIncType setOpenModal={setOpenModal} setShowDetails={setShowDetails} incTypeId={selectedIncType.id} setIncomeTypeData={setIncomeTypeData} />}
       <div style={{padding:'0', border:'none'}} className={showDetails ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
         <div className={showDetails ? 'journal__table-container-journals' : 'full__table'}>
           <div className="table-responsive">
@@ -70,9 +73,8 @@ function Table({
                   <div className="col-12" style={{display:"flex", justifyContent:"space-between"}}>
                     <button><a onClick={close} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
                     <div style={{display:"flex", columnGap: "5px"}}>
-                      <button className="btn btn-olive">Edit</button>
-                      {/* <button className="btn btn-olive" onClick={() => setView('edit')}>Edit</button> */}
-                      {/* <button className="btn btn-olive" onClick={() => setOpenModal(true)}>Delete</button> */}
+                      <button className="btn btn-olive" onClick={() => setView('edit')}>Edit</button>
+                      <button className="btn btn-olive" onClick={() => setOpenModal(true)}>Delete</button>
                     </div>
                   </div>
                 </div>

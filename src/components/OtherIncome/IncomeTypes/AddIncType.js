@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import IncomeTypeForm from './IncomeTypeForm';
 import { addSchema } from './schema';
 
-function AddIncType({setView, setIncomeTypeId}) {
+function AddIncType({setView, setIncomeTypeData}) {
   const initialValues = {name: '', date_of_account: '', currency_id: '', is_active: true};
   const back = () => setView('list');
 
@@ -12,8 +12,7 @@ function AddIncType({setView, setIncomeTypeId}) {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/otherincomeapi/add_otherincome_type/', values, CONFIG);
-      console.log(response);
-      setIncomeTypeId(response.data.id);
+      setIncomeTypeData(curr => [response.data, ...curr])
       setView('list');
     } catch (error) {
       console.log(error);
