@@ -4,14 +4,14 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { DeleteModal, DeleteModalDialog, NonFieldErrors } from '../../../common';
 
-function DeleteExpType({setOpenModal, setExpenseTypeData, expTypeId, setShowDetails}) {
+function DeleteIncType({setOpenModal, setIncomeTypeData, incTypeId, setShowDetails}) {
   const onSubmit = async (_, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.delete(`/expensesapi/delete_expense_type/${expTypeId}/`, CONFIG);
+      const response = await axios.delete(`/otherincomeapi/delete_otherincome_type/${incTypeId}/`, CONFIG);
       setShowDetails(false);
       setOpenModal(false);
-      setExpenseTypeData(curr => curr.filter(exptype => exptype.id != expTypeId));
+      setIncomeTypeData(curr => curr.filter(inctype => inctype.id != incTypeId));
 
     } catch (error) {
       console.log(error)
@@ -31,7 +31,7 @@ function DeleteExpType({setOpenModal, setExpenseTypeData, expTypeId, setShowDeta
         {({isSubmitting, errors}) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <DeleteModalDialog isSubmitting={isSubmitting} msg={'Are you sure you want to delete this expense type.'} setOpen={setOpenModal}/>
+              <DeleteModalDialog isSubmitting={isSubmitting} msg={'Are you sure you want to delete this income type.'} setOpen={setOpenModal}/>
             </NonFieldErrors>
           </Form>
         )}
@@ -40,4 +40,4 @@ function DeleteExpType({setOpenModal, setExpenseTypeData, expTypeId, setShowDeta
   )
 }
 
-export default DeleteExpType;
+export default DeleteIncType;

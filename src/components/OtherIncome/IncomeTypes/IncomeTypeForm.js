@@ -25,7 +25,7 @@ function IncomeTypeForm({initialValues, validationSchema, onSubmit, back}) {
                             <span>Name & Currency</span>
                         </div>
                         <CustomInput label='Name' name='name' type='text' required/>
-                            <CustomDatePicker label='Date of Account' name='date_of_account' setFieldValue={setFieldValue} required/>
+                        <CustomDatePicker label='Date of Account' name='date_of_account' setFieldValue={setFieldValue} required/>
                         <CustomSelect label='Currency' name='currency_id' required>
                             <option value=''>------</option>
                             {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}

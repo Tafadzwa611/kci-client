@@ -3,36 +3,42 @@ import { SuccessBtn } from '../../../common';
 import Table from './Table';
 import AddIncType from './AddIncType';
 import EditIncType from './EditIncType';
+import Filter from './Filter';
 
-function List({data, extra}) {
-  const {incomeTypeId, setIncomeTypeId} = extra;
+function List({incomeTypeData, setIncomeTypeData}) {
+  const [incomeTypeId, setIncomeTypeId] = useState(null);
   const [selectedIncType, setSelectedIncType] = useState(null);
-  const [incTypes, setIncTypes] = useState(data);
   const [view, setView] = useState('list');
+  const [showDetails, setShowDetails] = useState(null);
+
+  const handleClick = (e) => {
+    const inct = incomeTypeData.find(inct => inct.id == e.target.id);
+    setSelectedIncType(inct);
+    setShowDetails(true);
+  }
 
   useEffect(() => {
     if (incomeTypeId !== null) {
-      const incm = incTypes.find(inc => inc.id == incomeTypeId);
-      setSelectedIncType(incm);
+      const inc = incomeTypeData.find(inc => inc.id == incomeTypeId);
+      setSelectedIncType(inc);
     }
   }, []);
-
-  const handleClick = (e) => {
-    const incm = incTypes.find(inc => inc.id == e.target.id);
-    setSelectedIncType(incm);
-  }
 
   if (view === 'list') {
     return (
       <>
         <SuccessBtn handler={() => setView('add')} value={'Add Other Income Type'}/>
+        <Filter setIncomeTypeData={setIncomeTypeData}/>
+        <div style={{paddingTop: '2rem'}}></div>
         <Table
           setView={setView}
-          incTypes={incTypes}
+          incTypes={incomeTypeData}
           selectedIncType={selectedIncType}
+          showDetails={showDetails}
           handleClick={handleClick}
           setSelectedIncType={setSelectedIncType}
-          setIncTypes={setIncTypes}
+          setIncomeTypeData={setIncomeTypeData}
+          setShowDetails={setShowDetails}
         />
       </>
     )
@@ -42,11 +48,11 @@ function List({data, extra}) {
         initialValues={selectedIncType}
         setView={setView}
         setSelectedIncType={setSelectedIncType}
-        setIncTypes={setIncTypes}
+        setIncomeTypeData={setIncomeTypeData}
       />
     )
   }
-  return <AddIncType setView={setView} setIncomeTypeId={setIncomeTypeId}/>
+  return <AddIncType setView={setView} setIncomeTypeId={setIncomeTypeId} setIncomeTypeData={setIncomeTypeData}/>
 }
 
 export default List;

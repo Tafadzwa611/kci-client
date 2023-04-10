@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { Fetcher } from '../../../common';
 import List from './List';
+import { useSearchParams } from 'react-router-dom';
+import Filter from './Filter';
 
 function ExpenseTypes() {
-  const [expenseTypeId, setExpenseTypeId] = useState(null);
+  const [searchParams] = useSearchParams();
+  const [expenseTypeData, setExpenseTypeData] = useState([]);
 
   return (
     <>
-      <Fetcher urls={['/expensesapi/expensetypeslist/']} extra={{expenseTypeId, setExpenseTypeId}}>
-        {({data, extra}) => <List data={data[0]} extra={extra}/>}
-      </Fetcher>
+      <List expenseTypeData={expenseTypeData} setExpenseTypeData={setExpenseTypeData} />
     </>
   )
 }
