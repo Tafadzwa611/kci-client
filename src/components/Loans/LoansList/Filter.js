@@ -16,7 +16,7 @@ import { statusValues } from './data';
 import axios from 'axios';
 import { removeEmptyValues } from '../../../utils/utils';
 
-const Filter = ({products, setLoanData, setClientType}) => {
+const Filter = ({products, setLoanData, setClientType, setLoanId}) => {
   const initialValues = {
     branch_ids: [],
     status: [],
@@ -36,9 +36,10 @@ const Filter = ({products, setLoanData, setClientType}) => {
 
   const changeClientType = (evt, setFieldValue) => {
     const {value} = evt.target;
+    setLoanId(null);
+    setLoanData({count: 0, next_page_num: 0, loans: []});
     setFieldValue('client_type', value);
     setClientType(value);
-    setLoanData({count: 0, next_page_num: 0, loans: []});
   }
 
   const onSubmit = async (values, actions) => {

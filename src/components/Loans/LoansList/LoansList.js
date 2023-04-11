@@ -10,30 +10,43 @@ function LoansList({products}) {
   const [searchParams] = useSearchParams();
   const [loanData, setLoanData] = useState({count: 0, next_page_num: 0, loans: []});
   const [loanDetails, setLoanDetails] = useState(null);
+  const [loanId, setLoanId] = useState(null);
   const [clientType, setClientType] = useState('Clients/Pure Groups');
 
   return (
     <>
       {searchParams.get('loan_id') && searchParams.get('loan_type') ?
-        <LoanDetailsView loanId={searchParams.get('loan_id')} loanType={searchParams.get('loan_type')} loanDetails={loanDetails}/> :
+        <LoanDetailView
+          loanId={searchParams.get('loan_id')}
+          loanType={searchParams.get('loan_type')}
+          loanDetails={loanDetails}
+          setLoanDetails={setLoanDetails}
+        /> :
         <>
-          <Filter products={products} setLoanData={setLoanData} setClientType={setClientType} />
+          <Filter products={products} setLoanData={setLoanData} setClientType={setClientType} setLoanId={setLoanId} />
           <div style={{paddingTop: '2rem'}}></div>
-          <LoansTable loanData={loanData} clientType={clientType} setLoanDetails={setLoanDetails} />
+          <LoansTable
+            loanData={loanData}
+            clientType={clientType}
+            loanDetails={loanDetails}
+            setLoanDetails={setLoanDetails}
+            loanId={loanId}
+            setLoanId={setLoanId}
+          />
         </>}
     </>
   )
 }
 
-const LoanDetailsView = ({loanId, loanType, loanDetails}) => {
+const LoanDetailView = ({loanId, loanType, loanDetails, setLoanDetails}) => {
   if (loanDetails) {
     return {
-      cli: <LoanDetails loanDetails={loanDetails}/>,
+      cli: <LoanDetails loanDetails={loanDetails} setLoanDetails={setLoanDetails}/>,
       sol: <SolidarityDetails loan={loanDetails}/>
     }[loanType]
   }
 
-  const solidarity = () => {
+  if (loanType === 'sol') {
     return (
       <Fetcher urls={[`/loansapi/get_sloan/${loanId}/`]}>
         {({data}) => <SolidarityDetails loan={data[0]}/>}
@@ -41,15 +54,13 @@ const LoanDetailsView = ({loanId, loanType, loanDetails}) => {
     )
   }
 
-  const pure = () => {
+  if (loanType === 'cli') {
     return (
       <Fetcher urls={[`/loansapi/get_loan/${loanId}/`]}>
-        {({data}) => <LoanDetails loanDetails={data[0]}/>}
+        {({data}) => <LoanDetails loanData={data[0]} loanDetails={loanDetails} setLoanDetails={setLoanDetails}/>}
       </Fetcher>
     )
   }
-
-  return {cli: pure(), sol: solidarity()}[loanType]
 }
 
 export default LoansList;

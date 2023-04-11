@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import { onModalSubmit } from '../utils';
 import { approveLoanSchema } from '../schemas';
-import { Modal, CustomInput, CustomCheckbox, ModalSubmit, NonFieldErrors } from '../../../../../common';
+import { Modal, CustomInput, ModalSubmit, NonFieldErrors } from '../../../../../common';
 
 const ApproveLoan = ({open, setOpen, selectedLoanID, setLoan}) => {
   const onSubmit = async (values, actions) => {
