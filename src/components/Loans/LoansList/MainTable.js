@@ -30,6 +30,7 @@ function MainTable({loanData, handleClick}) {
                 <thead>
                   <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
                     <th>Client</th>
+                    <th>Group</th>
                     <th>Loan_Number</th>
                     <th>Status</th>
                     <th>Date_Disbursed</th>
@@ -54,6 +55,13 @@ function MainTable({loanData, handleClick}) {
                           <div title={loan.client}>
                             <span id={loan.client_id}>
                               {loan.client}
+                            </span>
+                          </div>
+                        </td>
+                        <td className='td-class'>
+                          <div title={loan.group}>
+                            <span id={loan.group_id}>
+                              {loan.group}
                             </span>
                           </div>
                         </td>

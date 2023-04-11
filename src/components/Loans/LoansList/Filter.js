@@ -81,20 +81,22 @@ const Filter = ({products, setLoanData, setClientType}) => {
                   </div>
                 </div>
                 <div className="row row-payments row-loans" style={{marginTop:"1rem"}}>
-                  <div className="row-payments-container" style={{width:"32%"}}>
+                  <div className="row-payments-container" style={{width:"24%"}}>
                     <CustomSelectFilter label='Loan Product' name='loan_product_id'>
                       <option value=''>------</option>
                       {products.map(product => <option key={product.id} value={product.id}>{product.name}</option>)}
                     </CustomSelectFilter>
                   </div>
-                  <div className="row-payments-container" style={{width:"32%"}}>
+                  <div className="row-payments-container" style={{width:"24%"}}>
                     <CustomInputFilter label='Client Name' name='client'/>
                   </div>
-                  <div className="row-payments-container" style={{width:"32%"}}>
+                  <div className="row-payments-container" style={{width:"24%"}}>
                     <CustomSelectFilter label='Currency' name='currency_id' required>
                       <option value=''>------</option>
                       {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
                     </CustomSelectFilter>
+                  </div>
+                  <div className="row-payments-container" style={{width:"24%"}}>
                     <CustomSelectFilter
                       label='Client Type'
                       name='client_type'
@@ -106,7 +108,7 @@ const Filter = ({products, setLoanData, setClientType}) => {
                   </div>
                 </div>
                 <div style={{marginTop:"1rem"}}>
-                  <div style={{width:"85%"}}>
+                  <div style={{width:"100%"}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
