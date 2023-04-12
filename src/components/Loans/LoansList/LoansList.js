@@ -25,7 +25,13 @@ function LoansList({products}) {
           setLoanDetails={setLoanDetails}
         /> :
         <>
-          <Filter products={products} setLoanData={setLoanData} setClientType={setClientType} setLoanId={setLoanId} />
+          <Filter
+            products={products}
+            setLoanData={setLoanData}
+            setClientType={setClientType}
+            setLoanId={setLoanId}
+            setLoanDetails={setLoanDetails}
+          />
           <div style={{paddingTop: '2rem'}}></div>
           <LoansTable
             loanData={loanData}

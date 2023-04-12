@@ -4,19 +4,23 @@ import { useNavigate } from 'react-router-dom';
 import ApproveLoan from './ApproveLoan';
 import UndoLoanApproval from './UndoLoanApproval';
 import DeleteLoan from './DeleteLoan';
+import RejectLoan from './RejectLoan';
 
 const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
   const [approve, setApprove] = useState(false);
+  const [reject, setReject] = useState(false);
   const [deleteLoan, setDelete] = useState(false);
   const [undoApproval, setUndoApproval] = useState(false);
   const navigate = useNavigate();
   
   if (loan.status == 'Processing') {
     const approveUrl = loanType === 'cli' ? `/loansapi/approve_loan/${loan.id}/` : `/loansapi/approve_sloan/${loan.id}/`;
+    const rejectUrl = loanType === 'cli' ? `/loansapi/reject_loan/${loan.id}/` : `/loansapi/reject_sloan/${loan.id}/`;
     const deleteUrl = loanType === 'cli' ? `/loansapi/delete_loan/${loan.id}/` : `/loansapi/delete_sloan/${loan.id}/`;
     return (
       <div style={{display:'flex', columnGap:'3px'}}>
         {approve && <ApproveLoan setOpen={setApprove} url={approveUrl} setLoanDetails={setLoanDetails}/>}
+        {reject && <RejectLoan setOpen={setReject} url={rejectUrl} setLoanDetails={setLoanDetails}/>}
         {deleteLoan && <DeleteLoan
           setOpen={setDelete}
           url={deleteUrl}
@@ -27,7 +31,7 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
         />}
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setApprove(true)}>Approve</button>
-          <button className='btn btn-olive' onClick={(e) => console.log(e)}>Reject</button>
+          <button className='btn btn-olive' onClick={() => setReject(true)}>Reject</button>
           <Link to={`/loans/viewloans/editloan/${loanType}/${loan.id}`}>Edit</Link>
           <button className='btn btn-olive' onClick={() => setDelete(true)}>Delete</button>
           <button className='btn btn-olive' onClick={() => navigate({pathname: '/loans/viewloans', search: `?loan_id=${loan.id}&loan_type=${loanType}`})}>
