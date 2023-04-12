@@ -2,12 +2,18 @@ import React, { useEffect } from 'react';
 import { statusClasses } from './data';
 import Actions from './Actions';
 
-function LoanDetails({loanDetails, setLoanDetails, loanData}) {
+function LoanDetails({
+  loanDetails,
+  setLoanDetails,
+  loanApiData,
+  setLoanData,
+  setLoanId
+}) {
   useEffect(() => {
     const element = document.getElementById('loan-details');
     element.scrollIntoView({ behavior: 'instant' });
     if (!loanDetails) {
-      setLoanDetails(loanData);
+      setLoanDetails(loanApiData);
     }
   }, []);
 
@@ -20,7 +26,13 @@ function LoanDetails({loanDetails, setLoanDetails, loanData}) {
               <button className={statusClasses[loanDetails.loan.status]}>{loanDetails.loan.status}</button>
               <span><b>{loanDetails.loan.client_fullname}&apos;s</b> Loan Details</span>
             </div>
-            <Actions loan={loanDetails.loan} setLoanDetails={setLoanDetails} loanType={'cli'}/>
+            <Actions
+              loan={loanDetails.loan}
+              setLoanDetails={setLoanDetails}
+              setLoanData={setLoanData}
+              setLoanId={setLoanId}
+              loanType={'cli'}
+            />
           </div>
         </div> : null}
     </div>

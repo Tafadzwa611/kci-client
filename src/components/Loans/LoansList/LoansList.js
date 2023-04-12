@@ -20,6 +20,8 @@ function LoansList({products}) {
           loanId={searchParams.get('loan_id')}
           loanType={searchParams.get('loan_type')}
           loanDetails={loanDetails}
+          setLoanData={setLoanData}
+          setLoanId={setLoanId}
           setLoanDetails={setLoanDetails}
         /> :
         <>
@@ -27,6 +29,7 @@ function LoansList({products}) {
           <div style={{paddingTop: '2rem'}}></div>
           <LoansTable
             loanData={loanData}
+            setLoanData={setLoanData}
             clientType={clientType}
             loanDetails={loanDetails}
             setLoanDetails={setLoanDetails}
@@ -38,18 +41,25 @@ function LoansList({products}) {
   )
 }
 
-const LoanDetailView = ({loanId, loanType, loanDetails, setLoanDetails}) => {
+const LoanDetailView = ({
+  loanId,
+  loanType,
+  loanDetails,
+  setLoanData,
+  setLoanId,
+  setLoanDetails
+}) => {
   if (loanDetails) {
     return {
-      cli: <LoanDetails loanDetails={loanDetails} setLoanDetails={setLoanDetails}/>,
-      sol: <SolidarityDetails loan={loanDetails}/>
+      cli: <LoanDetails loanDetails={loanDetails} setLoanDetails={setLoanDetails} setLoanData={setLoanData} setLoanId={setLoanId}/>,
+      sol: <SolidarityDetails loanDetails={loanDetails} setLoanDetails={setLoanDetails} setLoanData={setLoanData} setLoanId={setLoanId}/>
     }[loanType]
   }
 
   if (loanType === 'sol') {
     return (
       <Fetcher urls={[`/loansapi/get_sloan/${loanId}/`]}>
-        {({data}) => <SolidarityDetails loan={data[0]}/>}
+        {({data}) => <SolidarityDetails loanApiData={data[0]} loanDetails={loanDetails} setLoanDetails={setLoanDetails} setLoanData={setLoanData} setLoanId={setLoanId}/>}
       </Fetcher>
     )
   }
@@ -57,7 +67,7 @@ const LoanDetailView = ({loanId, loanType, loanDetails, setLoanDetails}) => {
   if (loanType === 'cli') {
     return (
       <Fetcher urls={[`/loansapi/get_loan/${loanId}/`]}>
-        {({data}) => <LoanDetails loanData={data[0]} loanDetails={loanDetails} setLoanDetails={setLoanDetails}/>}
+        {({data}) => <LoanDetails loanApiData={data[0]} loanDetails={loanDetails} setLoanDetails={setLoanDetails} setLoanData={setLoanData} setLoanId={setLoanId}/>}
       </Fetcher>
     )
   }

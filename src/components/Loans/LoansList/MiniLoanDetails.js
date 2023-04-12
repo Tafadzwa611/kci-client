@@ -3,7 +3,7 @@ import { statusClasses } from './data';
 import React, { useEffect } from 'react';
 
 function MiniLoanDetails({loanData, extra}) {
-  const {loanDetails, setLoanDetails} = extra;
+  const {loanDetails, setLoanDetails, setLoanId, setLoanData} = extra;
 
   useEffect(() => {
     setLoanDetails(loanData);
@@ -23,7 +23,13 @@ function MiniLoanDetails({loanData, extra}) {
               <button className={statusClasses[loanDetails.loan.status]}>{loanDetails.loan.status}</button>
               <span><b>{loanDetails.loan.client_fullname}&apos;s</b> Loan Details</span>
             </div>
-            <Actions loan={loanDetails.loan} setLoanDetails={setLoanDetails} loanType={'cli'}/>
+            <Actions
+              loan={loanDetails.loan}
+              setLoanDetails={setLoanDetails}
+              setLoanId={setLoanId}
+              setLoanData={setLoanData}
+              loanType={'cli'}
+            />
           </div>
         </div>
       </div>

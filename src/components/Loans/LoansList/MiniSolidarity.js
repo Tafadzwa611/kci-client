@@ -3,7 +3,7 @@ import { statusClasses } from './data';
 import Actions from './Actions';
 
 function MiniSolidarity({loanData, extra}) {
-  const {loanDetails, setLoanDetails} = extra;
+  const {loanDetails, setLoanDetails, setLoanId, setLoanData} = extra;
 
   useEffect(() => {
     setLoanDetails(loanData);
@@ -24,7 +24,13 @@ function MiniSolidarity({loanData, extra}) {
                 <button className={statusClasses[loanDetails.status]}>{loanDetails.status}</button>
                 <span><b>{loanDetails.group_name}&apos;s</b> Loan Details</span>
               </div>
-              <Actions loan={loanDetails} setLoanDetails={setLoanDetails} loanType={'sol'}/>
+              <Actions
+                loan={loanDetails}
+                setLoanDetails={setLoanDetails}
+                setLoanId={setLoanId}
+                setLoanData={setLoanData}
+                loanType={'sol'}
+              />
             </div>
           </div>
         </div>

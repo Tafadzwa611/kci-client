@@ -7,7 +7,15 @@ import SolidarityMiniTable from './SolidarityMiniTable';
 import MiniSolidarity from './MiniSolidarity';
 import { Fetcher } from '../../../common';
 
-function LoansTable({loanData, clientType, loanDetails, setLoanDetails, loanId, setLoanId}) {
+function LoansTable({
+  loanData,
+  clientType,
+  loanDetails,
+  setLoanDetails,
+  loanId,
+  setLoanId,
+  setLoanData
+}) {
   const handleClick = (e) => {
     setLoanId(e.target.id);
   }
@@ -22,7 +30,7 @@ function LoansTable({loanData, clientType, loanDetails, setLoanDetails, loanId, 
               <SolidarityMainTable loanData={loanData} handleClick={handleClick}/>}
           </div>
           {loanId &&
-          <Fetcher urls={[`/loansapi/get_sloan/${loanId}/`]} extra={{loanDetails, setLoanDetails}}>
+          <Fetcher urls={[`/loansapi/get_sloan/${loanId}/`]} extra={{loanDetails, setLoanDetails, setLoanId, setLoanData}}>
             {({data, extra}) => <MiniSolidarity loanData={data[0]} extra={extra}/>}
           </Fetcher>}
         </div>
@@ -39,7 +47,7 @@ function LoansTable({loanData, clientType, loanDetails, setLoanDetails, loanId, 
             <MainTable loanData={loanData} handleClick={handleClick}/>}
         </div>
         {loanId &&
-          <Fetcher urls={[`/loansapi/get_loan/${loanId}/`]} extra={{loanDetails, setLoanDetails}}>
+          <Fetcher urls={[`/loansapi/get_loan/${loanId}/`]} extra={{loanDetails, setLoanDetails, setLoanId, setLoanData}}>
             {({data, extra}) => <MiniLoanDetails loanData={data[0]} extra={extra}/>}
           </Fetcher>}
       </div>
