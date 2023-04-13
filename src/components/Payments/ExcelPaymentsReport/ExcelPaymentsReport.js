@@ -104,8 +104,6 @@ function ExcelPaymentsReport() {
     return <div>Loading</div>
   }
 
-  console.log(payments);
-
   return (
     <>
       <div>
