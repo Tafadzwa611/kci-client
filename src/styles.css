@@ -3447,3 +3447,16 @@ input[type=number] {
   border-color: var(--home-section-color) !important;
 }
 
+.card-tools {
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--p-1);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.float-central-loaded {
+  display: flex;
+  justify-content: center;
+  column-gap: 5px;
+  color: var(--light-color);
+}

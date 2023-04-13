@@ -12,12 +12,9 @@ const columns = [
 ];
 
 const PaymentList = ({payments}) => {
-  // console.log(payments)
   const model = useVirtual({
-      itemCount: payments.length
+    itemCount: payments.length
   });
-
-  // console.log(model);
 
   const getRowData = i => {
     const payment = payments[i];

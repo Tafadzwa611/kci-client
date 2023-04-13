@@ -5,7 +5,7 @@ const ViewPayments = lazy(() => import('../Payments/ViewPayments/ViewPayments'))
 
 const PaymentRoutes = (
   <>
-    <Route exact path='/payments/viewpayments' element={<ViewPayments/>}/>
+    <Route exact path='/payments/viewpayments/*' element={<ViewPayments/>}/>
   </>
 )
 
