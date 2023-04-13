@@ -133,12 +133,7 @@ function ExcelPayments() {
                 <div style={{paddingTop: '17px'}}></div>
                 <div className='row'>
                     <div className='col-12'>
-                    <div className='card'>
-                        {/* <TableHeader aggregateData={aggregateData} minDate={minDate}  maxDate={maxDate}/> */}
-                    </div>
-                    <div className='card'>
                         <PaymentsReportList reports={reports}/>
-                    </div>
                     </div>
                 </div>
             </div>

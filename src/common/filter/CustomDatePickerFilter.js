@@ -19,7 +19,7 @@ function CustomDatePickerFilter({ setFieldValue, label, ...props }) {
     <>
       <div>
         <label className='form-label row-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
-        <div className="input-group" style={{margin:"0"}}>
+        <div className="input-group" style={{margin:"0", display:"flex", flexDirection:"column"}}>
           <DatePicker
             format={loggedInUser.date_format.toUpperCase()}
             onChange={handleChange}
