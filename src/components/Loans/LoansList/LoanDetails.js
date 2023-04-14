@@ -22,17 +22,28 @@ function LoanDetails({
       {loanDetails ? 
         <div style={{position:'sticky', top:'0', width:'100%'}}>
           <div style={{display:'flex', flexDirection:'column', padding:'1.5rem'}} className='j-details-container'>
-            <div style={{display:'flex', alignItems:'center', columnGap:'1rem'}}>
-              <button className={statusClasses[loanDetails.loan.status]}>{loanDetails.loan.status}</button>
-              <span><b>{loanDetails.loan.client_fullname}&apos;s</b> Loan Details</span>
+            <div style={{marginBottom:"1rem"}}>
+              <div style={{display:"flex", justifyContent:"space-between"}}>
+                <div style={{display:'flex', alignItems:'center'}}>
+                  <span style={{marginRight:"5px"}}><b>{loanDetails.loan.client_fullname}&apos;s</b> Loan Details</span> /
+                  <div style={{marginLeft:"5px"}}>
+                    <button className={statusClasses[loanDetails.loan.status]}>{loanDetails.loan.status}</button>
+                  </div>
+                </div>
+                <Actions
+                  loan={loanDetails.loan}
+                  setLoanDetails={setLoanDetails}
+                  setLoanData={setLoanData}
+                  setLoanId={setLoanId}
+                  loanType={'cli'}
+                />
+              </div>
             </div>
-            <Actions
-              loan={loanDetails.loan}
-              setLoanDetails={setLoanDetails}
-              setLoanData={setLoanData}
-              setLoanId={setLoanId}
-              loanType={'cli'}
-            />
+            <div>
+              
+              <div>Details</div>
+
+            </div>
           </div>
         </div> : null}
     </div>
