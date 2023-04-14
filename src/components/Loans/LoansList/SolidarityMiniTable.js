@@ -5,11 +5,6 @@ function SolidarityMiniTable({loanData, handleClick, selectedLoanId}) {
 
   return (
     <>
-      <div className='table-header'>
-        <div>
-          Showing {loans.length} of {count} loans.
-        </div>
-      </div>
       <div style={{display:'block'}}>
         <div style={{padding:'0', border:'none'}}>
           <div style={{width:'100%', overflowX:'auto'}}>

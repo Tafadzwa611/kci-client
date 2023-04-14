@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import ApproveLoan from './ApproveLoan';
 import UndoLoanApproval from './UndoLoanApproval';
 import DeleteLoan from './DeleteLoan';
@@ -11,7 +10,6 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
   const [reject, setReject] = useState(false);
   const [deleteLoan, setDelete] = useState(false);
   const [undoApproval, setUndoApproval] = useState(false);
-  const navigate = useNavigate();
   
   if (loan.status == 'Processing') {
     const approveUrl = loanType === 'cli' ? `/loansapi/approve_loan/${loan.id}/` : `/loansapi/approve_sloan/${loan.id}/`;
@@ -32,11 +30,10 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setApprove(true)}>Approve</button>
           <button className='btn btn-olive' onClick={() => setReject(true)}>Reject</button>
-          <Link to={`/loans/viewloans/editloan/${loanType}/${loan.id}`}>Edit</Link>
-          <button className='btn btn-olive' onClick={() => setDelete(true)}>Delete</button>
-          <button className='btn btn-olive' onClick={() => navigate({pathname: '/loans/viewloans', search: `?loan_id=${loan.id}&loan_type=${loanType}`})}>
-            Max
+          <button className='btn btn-olive'>
+            <Link to={`/loans/viewloans/editloan/${loanType}/${loan.id}`}>Edit</Link>
           </button>
+          <button className='btn btn-olive' onClick={() => setDelete(true)}>Delete</button>
         </div>
       </div>
     )
@@ -48,9 +45,6 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setUndoApproval(true)}>Undo Approve</button>
           <button className='btn btn-olive' onClick={(e) => console.log(e)}>Disburse</button>
-          <button className='btn btn-olive' onClick={() => navigate({pathname: '/loans/viewloans', search: `?loan_id=${loan.id}&loan_type=${loanType}`})}>
-            Max
-          </button>
         </div>
       </div>
     )
