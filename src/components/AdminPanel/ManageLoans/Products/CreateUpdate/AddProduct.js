@@ -48,7 +48,7 @@ function AddProduct({productGrps, setView, setProductId}) {
     try {
       const data = removeEmptyValues(values);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post('/loansapi/add_loan_product/', data, CONFIG);
+      const response = await axios.post('/loansapi/add_loan_product/', {...data, fees: values.fees}, CONFIG);
       setProductId(response.data.id);
       setView('list');
     } catch (error) {
