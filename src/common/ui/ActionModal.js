@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DeleteModal = ({children}) => {
+const ActionModal = ({children, text, act}) => {
   return (
     <div className="modalBackground">
       <div className="modalContainer">
@@ -15,4 +15,4 @@ const DeleteModal = ({children}) => {
   )
 }
 
-export default DeleteModal;
+export default ActionModal;

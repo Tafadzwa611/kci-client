@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
-import { Modal, ModalSubmit, NonFieldErrors } from '../../../common';
+import { ActionModal, ActionModalDialog, NonFieldErrors } from '../../../common';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
@@ -41,21 +41,22 @@ const DeleteLoan = ({
   }
 
   return (
-    <Modal open={true} setOpen={setOpen} title={'Delete Loan'}>
+    <ActionModal open={true} setOpen={setOpen} title={'Delete Loan'}>
       <Formik initialValues={{expected_disbursement_date: ''}} onSubmit={onSubmit}>
         {({ errors, isSubmitting }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <div className='create_modal_container'>
-                <div>
-                </div>
-                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
-              </div>
+              <ActionModalDialog 
+                isSubmitting={isSubmitting} 
+                msg={'Are you sure you want to delete this loan.'} 
+                setOpen={setOpen}
+                act={'Delete'}
+              />
             </NonFieldErrors>
           </Form>
         )}
       </Formik>
-    </Modal>
+    </ActionModal>
   )
 }
 

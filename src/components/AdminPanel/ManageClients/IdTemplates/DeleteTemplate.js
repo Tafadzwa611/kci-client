@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 import { makeRequest } from '../../../../utils';
-import { NonFieldErrors, DeleteModal, DeleteModalDialog } from '../../../../common';
+import { NonFieldErrors, ActionModal, ActionModalDialog } from '../../../../common';
 
 const DeleteTemplate = ({setOpen, template, setTemplates}) => {
   const onSubmit = async (_, actions) => {
@@ -20,17 +20,22 @@ const DeleteTemplate = ({setOpen, template, setTemplates}) => {
   }
 
   return (
-    <DeleteModal setOpen={setOpen} title={'Delete Template'}>
+    <ActionModal setOpen={setOpen} title={'Delete Template'}>
       <Formik initialValues={{}} onSubmit={onSubmit}>
         {({isSubmitting, errors}) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <DeleteModalDialog isSubmitting={isSubmitting} msg={`Delete ${template.id_type}.`} setOpen={setOpen} />
+              <ActionModalDialog 
+                isSubmitting={isSubmitting} 
+                msg={`Delete ${template.id_type}.`} 
+                setOpen={setOpen} 
+                act={'Delete'}
+              />
             </NonFieldErrors>
           </Form>
         )}
       </Formik>
-    </DeleteModal>
+    </ActionModal>
   )
 }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { DeleteModal, DeleteModalDialog, NonFieldErrors } from '../../../common';
+import { ActionModal, ActionModalDialog, NonFieldErrors } from '../../../common';
 
 function DeleteIncType({setOpenModal, setIncomeTypeData, incTypeId, setShowDetails}) {
   const onSubmit = async (_, actions) => {
@@ -26,17 +26,22 @@ function DeleteIncType({setOpenModal, setIncomeTypeData, incTypeId, setShowDetai
   }
 
   return (
-    <DeleteModal>
+    <ActionModal>
       <Formik initialValues={{}} onSubmit={onSubmit}>
         {({isSubmitting, errors}) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <DeleteModalDialog isSubmitting={isSubmitting} msg={'Are you sure you want to delete this income type.'} setOpen={setOpenModal}/>
+              <ActionModalDialog 
+                isSubmitting={isSubmitting} 
+                msg={'Are you sure you want to delete this income type.'} 
+                setOpen={setOpenModal}
+                act={'Delete'}
+              />
             </NonFieldErrors>
           </Form>
         )}
       </Formik>
-    </DeleteModal>
+    </ActionModal>
   )
 }
 

@@ -8,8 +8,8 @@ import SubmitButton from './SubmitButton';
 import DeleteDialog from './DeleteDialog';
 import CustomRadio from './CustomRadio';
 import ModalSubmit from './ModalSubmit';
-import DeleteModalDialog from './DeleteModalDialog';
-import ModalDeleteSubmit from './ModalDeleteSubmit';
+import ActionModalDialog from './ActionModalDialog';
+import ModalActionSubmit from './ModalActionSubmit';
 import CustomDatePicker from './CustomDatePicker';
 import CustomMultiSelect from './CustomMultiSelect';
 import CustomSortableSelect from './CustomSortableSelect';
@@ -26,8 +26,8 @@ export {
     NonFieldErrors,
     SubmitButton,
     ModalSubmit,
-    DeleteModalDialog,
-    ModalDeleteSubmit,
+    ActionModalDialog,
+    ModalActionSubmit,
     CustomDatePicker,
     CustomMultiSelect,
     CustomSortableSelect,
