@@ -10,7 +10,7 @@ import {
 } from '../../../../common';
 import { useCurrencies } from '../../../../contexts/CurrenciesContext';
 
-function CategoryForm({initialValues, onSubmit, back}) {
+function FeeForm({initialValues, onSubmit, back}) {
   const feeTypes = ['Deducted', 'Capitalized', 'Upfront Disbursement', 'Payment due', 'Manual fees'];
   const feePayments = ['Flat', 'Flat/Installments', '% Of DB Amount', '% Of DB Amount/Installments'];
   const {currencies} = useCurrencies();
@@ -51,4 +51,4 @@ function CategoryForm({initialValues, onSubmit, back}) {
   )
 }
 
-export default CategoryForm;
+export default FeeForm;
