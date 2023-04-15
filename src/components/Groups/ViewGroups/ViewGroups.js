@@ -1,37 +1,70 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import GroupsList from '../GroupsList/GroupsList';
-import CreateGroup from '../add_group/CreateGroup';
-// import SmsList from '../Sms/SmsList';
-import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
+import AddGroup from '../add_group/AddGroup';
+// import EditGroup from '../add_group/EditGroup';
+import { Fetcher } from '../../../common';
+import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
 
-const ViewClients = () => {
-  const [tab, setTab] = useState('groups');
-
-  const {loggedInUser} = useLoggedInUser();
-
+const ViewGroups = () => {
   useEffect(() => {
     document.title = 'View Groups';
   }, []);
 
   return (
-    <div className='card'>
-      <div className='card-body'>
-        <h5 className='table-heading' style={{marginBottom:'20px'}}>View Groups</h5>
-        <div className='bloc-tabs'>
-          <button className={tab === 'groups' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setTab('groups')}>Groups</button>
-          <button className={tab === 'addgroup' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setTab('addgroup')}>Add Group</button>
-          <button className={tab === 'sms' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setTab('sms')}>Sms</button>
-        </div>
-        <div className='tab-content font-12' style={{marginTop:'3rem'}}>
-          {{
-            'groups': <GroupsList/>, 
-            'addgroup': <CreateGroup/>,
-            // 'sms': <SmsList/>
-          }[tab]}
-        </div>
-      </div>
-    </div>
-  );
+    <Routes>
+      <Route path='/' element={<Layout />}>
+        <Route index element={<GroupListComponent />} />
+        <Route path='addgroup' element={<AddGroupComponent />} />
+        {/* <Route
+          path='editgroup'
+          element={
+            <Fetcher urls={['/loansapi/loan_products_list/']}>
+              {({data}) => <EditGroup products={data[0]}/>}
+            </Fetcher>
+          } 
+        /> */}
+      </Route>
+    </Routes>
+  )
 }
 
-export default ViewClients;
+const AddGroupComponent = () => {
+  return (
+    <Fetcher urls={['/clientsapi/group_types/', '/usersapi/staff/', '/clientsapi/group_roles/']}>
+      {({data}) => <AddGroup groupTypes={data[0]} loanOfficers={data[1]} groupRoles={data[2]} />}
+    </Fetcher>
+  )
+}
+
+const GroupListComponent = () => {
+  return (
+    <GroupsList />
+  )
+}
+
+function Layout() {
+  const location = useLocation();
+
+  return (
+    <div className='card'>
+      <div className='card-body'>
+        <h5 className='table-heading' style={{marginBottom:'20px'}}>View Expenses</h5>
+        <>
+          <div className='bloc-tabs'>
+            <Link to='/groups/viewgroups' id='list' className={location.pathname === '/groups/viewgroups' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              View Groups
+            </Link>
+            <Link to='/groups/viewgroups/addgroup' id='add' className={location.pathname === '/groups/viewgroups/addgroup' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Add Group
+            </Link>
+          </div>
+          <div className='tab-content font-12' style={{marginTop:'3rem'}}>
+            <Outlet />
+          </div>
+        </>
+      </div>
+    </div>
+  )
+}
+
+export default ViewGroups;

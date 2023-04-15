@@ -24,7 +24,6 @@ function AddExpense({expensetypes, fundaccounts}) {
       const data = removeEmptyValues(values);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/expensesapi/add_expense/', data, CONFIG);
-      console.log(response)
       navigate({pathname: '/expenses/viewexpenses', search: `?expense_id=${response.data.id}`});
     } catch (error) {
       if (error.message === "Network Error") {
