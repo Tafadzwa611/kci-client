@@ -1,22 +1,28 @@
 import React from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import CategoryForm from './CategoryForm';
-import { addSchema } from './schema';
+import FeeForm from './FeeForm';
 
-function AddCat({setView, setCategoryId}) {
-  const initialValues = {name: '', is_active: true};
+function EditCat({initialValues, setView, setSelectedFee, setFees}) {
   const back = () => setView('list');
 
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post('/loansapi/add_product_group/', values, CONFIG);
-      setCategoryId(response.data.id);
+      await axios.put(`/loansapi/update_loan_fee/${initialValues.id}/`, values, CONFIG);
+      setFees(curr => {
+        return curr.map(fee => {
+          if (fee.id === values.id) {
+            return values
+          }
+          return fee
+        })
+      });
+      setSelectedFee(values);
       setView('list');
     } catch (error) {
-      if (error.message === "Network Error") {
-        actions.setErrors({responseStatus: "Network Error"});
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
       } else if (error.response.status >= 400 && error.response.status < 500) {
         actions.setErrors({responseStatus: error.response.status, ...error.response.data});
       } else {
@@ -26,13 +32,12 @@ function AddCat({setView, setCategoryId}) {
   }
 
   return (
-    <CategoryForm
+    <FeeForm
       initialValues={initialValues}
-      validationSchema={addSchema}
       onSubmit={onSubmit}
       back={back}
     />
   )
 }
 
-export default AddCat;
+export default EditCat;
