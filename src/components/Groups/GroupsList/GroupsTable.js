@@ -5,8 +5,7 @@ import MiniGroupDetails from './MiniGroupDetails';
 import { Fetcher } from '../../../common';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-function Table({groupData, setGroupDetails}) {
-  const [groupId, setGroupId] = useState(null);
+function Table({groupData, setGroupDetails, groupId, setGroupId}) {
   const [selectedGroupId, setSelectedGroupId] = useState(null);
 
 
@@ -32,7 +31,7 @@ function Table({groupData, setGroupDetails}) {
             <ReactHTMLTableToExcel
               id='test-table-xls-button'
               className='btn btn-default'
-              table='loans'
+              table='groups'
               filename='groups'
               sheet='tablexls'
               buttonText='Download as XLS'

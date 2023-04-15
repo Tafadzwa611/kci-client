@@ -9,6 +9,7 @@ function GroupsList() {
   const [searchParams] = useSearchParams();
   const [groupData, setGroupsData] = useState({count: 0, next_page_num: 0, groups: []});
   const [groupDetails, setGroupDetails] = useState(null);
+  const [groupId, setGroupId] = useState(null);
 
 
   return (
@@ -16,11 +17,17 @@ function GroupsList() {
       {searchParams.get('group_id') ?
         <GroupDetailsView groupId={searchParams.get('group_id')} groupDetails={groupDetails}/> :
         <>
-          <Filter setGroupsData={setGroupsData}/>
+          <Filter 
+            setGroupsData={setGroupsData} 
+            setGroupId={setGroupId} 
+            setGroupDetails={setGroupDetails}
+          />
           <div style={{paddingTop: '2rem'}}></div>
           <GroupsTable
             groupData={groupData} 
             setGroupDetails={setGroupDetails}
+            groupId={groupId}
+            setGroupId={setGroupId}
           />
         </>
       }
