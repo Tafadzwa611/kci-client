@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ModalDeleteSubmit = ({isSubmitting, setOpen}) => {
+const ModalActionSubmit = ({isSubmitting, setOpen, act}) => {
   if (isSubmitting) {
     return (
       <div className="modal-footer">
@@ -14,9 +14,9 @@ const ModalDeleteSubmit = ({isSubmitting, setOpen}) => {
   return (
     <div className="modal-footer">
       <span className="btn btn-default" onClick={() => setOpen(false)}>Cancel</span>
-      <button className='btn btn-danger' type='submit'>Delete</button>
+      <button className='btn btn-danger' type='submit'>{act}</button>
     </div>
   )
 }
 
-export default ModalDeleteSubmit;
+export default ModalActionSubmit;

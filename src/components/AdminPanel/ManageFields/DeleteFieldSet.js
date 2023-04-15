@@ -2,8 +2,8 @@ import React from 'react';
 import { makeRequest } from '../../../utils/utils';
 import { Form, Formik } from 'formik';
 import {
-  DeleteModal,
-  DeleteModalDialog,
+  ActionModal,
+  ActionModalDialog,
   NonFieldErrors
 } from '../../../common';
 
@@ -24,17 +24,22 @@ function DeleteFieldSet({setOpen, fieldSetId, setFieldSets}) {
   }
 
   return (
-    <DeleteModal>
+    <ActionModal>
       <Formik initialValues={{}} onSubmit={onSubmit}>
         {({isSubmitting, errors}) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <DeleteModalDialog isSubmitting={isSubmitting} msg='Delete Form' setOpen={setOpen}/>
+              <ActionModalDialog 
+                isSubmitting={isSubmitting} 
+                msg='Delete Form' 
+                setOpen={setOpen}
+                act={'Delete'}
+              />
             </NonFieldErrors>
           </Form>
         )}
       </Formik>
-    </DeleteModal>
+    </ActionModal>
   )
 }
 

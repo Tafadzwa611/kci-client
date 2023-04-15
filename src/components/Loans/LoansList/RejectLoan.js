@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
-import { Modal, ModalSubmit, NonFieldErrors } from '../../../common';
+import {ModalActionSubmit, ModalSubmit, NonFieldErrors, ActionModal } from '../../../common';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
@@ -24,21 +24,20 @@ const RejectLoan = ({setOpen, url, setLoanDetails}) => {
   }
 
   return (
-    <Modal open={true} setOpen={setOpen} title={'Reject Loan'}>
+    <ActionModal>
       <Formik initialValues={{expected_disbursement_date: ''}} onSubmit={onSubmit}>
         {({ errors, isSubmitting }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <div className='create_modal_container'>
-                <div>
-                </div>
-                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              <div className="title" style={{fontSize: "0.875rem"}}>
+                Are you sure you want to reject.
               </div>
+              <ModalActionSubmit isSubmitting={isSubmitting} setOpen={setOpen} act={'Reject'} />
             </NonFieldErrors>
           </Form>
         )}
       </Formik>
-    </Modal>
+    </ActionModal>
   )
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeRequest } from '../../../utils/utils';
 import { Form, Formik } from 'formik';
-import {DeleteModal, DeleteModalDialog, NonFieldErrors} from '../../../common';
+import {ActionModal, ActionModalDialog, NonFieldErrors} from '../../../common';
 
 const DeleteField = ({setOpen, field, setFields}) => {
   const onSubmit = async (_, actions) => {
@@ -20,17 +20,22 @@ const DeleteField = ({setOpen, field, setFields}) => {
   }
 
   return (
-    <DeleteModal>
+    <ActionModal>
       <Formik initialValues={{}} onSubmit={onSubmit}>
         {({isSubmitting, errors}) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <DeleteModalDialog isSubmitting={isSubmitting} msg={`Delete ${field.name} field.`} setOpen={setOpen}/>
+              <ActionModalDialog 
+                isSubmitting={isSubmitting} 
+                msg={`Delete ${field.name} field.`} 
+                setOpen={setOpen}
+                act={'Delete'}
+              />
             </NonFieldErrors>
           </Form>
         )}
       </Formik>
-    </DeleteModal>
+    </ActionModal>
   )
 }
 

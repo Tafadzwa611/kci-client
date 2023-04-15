@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { DeleteModal, DeleteModalDialog, NonFieldErrors } from '../../../../../common';
+import { ActionModal, ActionModalDialog, NonFieldErrors } from '../../../../../common';
 
 function DeleteProduct({setOpenDeleteProduct, close, setProducts, name, productId}) {
   const onSubmit = async (_, actions) => {
@@ -24,17 +24,22 @@ function DeleteProduct({setOpenDeleteProduct, close, setProducts, name, productI
   }
 
   return (
-    <DeleteModal>
+    <ActionModal>
       <Formik initialValues={{}} onSubmit={onSubmit}>
         {({isSubmitting, errors}) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <DeleteModalDialog isSubmitting={isSubmitting} msg={'Are you sure you want to delete this loan product.'} setOpen={setOpenDeleteProduct}/>
+              <ActionModalDialog 
+                isSubmitting={isSubmitting} 
+                msg={'Are you sure you want to delete this loan product.'} 
+                setOpen={setOpenDeleteProduct}
+                act={'Delete'}
+              />
             </NonFieldErrors>
           </Form>
         )}
       </Formik>
-    </DeleteModal>
+    </ActionModal>
   )
 }
 
