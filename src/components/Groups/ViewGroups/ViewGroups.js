@@ -48,7 +48,7 @@ function Layout() {
   return (
     <div className='card'>
       <div className='card-body'>
-        <h5 className='table-heading' style={{marginBottom:'20px'}}>View Expenses</h5>
+        <h5 className='table-heading' style={{marginBottom:'20px'}}>View Groups</h5>
         <>
           <div className='bloc-tabs'>
             <Link to='/groups/viewgroups' id='list' className={location.pathname === '/groups/viewgroups' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>

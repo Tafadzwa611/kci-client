@@ -5,7 +5,7 @@ import MiniGroupDetails from './MiniGroupDetails';
 import { Fetcher } from '../../../common';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-function Table({groupData, setGroupDetails, groupId, setGroupId}) {
+function Table({groupData, setGroupDetails, groupDetails, groupId, setGroupId, setGroupsData}) {
   const [selectedGroupId, setSelectedGroupId] = useState(null);
 
 
@@ -53,8 +53,8 @@ function Table({groupData, setGroupDetails, groupId, setGroupId}) {
             />
           }
           {groupId &&
-          <Fetcher urls={[`/clientsapi/group/${groupId}/`]} extra={{setGroupDetails}}>
-            {({data, extra}) => <MiniGroupDetails groupDetails={data[0]} extra={extra} setGroupId={setGroupId} />}
+          <Fetcher urls={[`/clientsapi/group/${groupId}/`]} extra={{groupDetails, setGroupDetails, setGroupId, setGroupsData}}>
+            {({data, extra}) => <MiniGroupDetails groupData={data[0]} extra={extra} />}
           </Fetcher>
           }
         </div>

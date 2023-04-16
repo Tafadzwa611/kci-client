@@ -15,7 +15,11 @@ function GroupsList() {
   return (
     <>
       {searchParams.get('group_id') ?
-        <GroupDetailsView groupId={searchParams.get('group_id')} groupDetails={groupDetails}/> :
+        <GroupDetailsView 
+          groupId={searchParams.get('group_id')} 
+          groupDetails={groupDetails}
+          setGroupDetails={setGroupDetails}
+        /> :
         <>
           <Filter 
             setGroupsData={setGroupsData} 
@@ -27,7 +31,9 @@ function GroupsList() {
             groupData={groupData} 
             setGroupDetails={setGroupDetails}
             groupId={groupId}
+            groupDetails={groupDetails}
             setGroupId={setGroupId}
+            setGroupsData={setGroupsData}
           />
         </>
       }
@@ -35,14 +41,14 @@ function GroupsList() {
   )
 }
 
-const GroupDetailsView = ({groupId, groupDetails}) => {
+const GroupDetailsView = ({groupId, groupDetails, setGroupDetails}) => {
   if (groupDetails) {
-    return <GroupDetails groupDetails={groupDetails}/>
+    return <GroupDetails groupDetails={groupDetails} setGroupDetails={setGroupDetails}/>
   }
 
   return (
     <Fetcher urls={[`/clientsapi/group/${groupId}/`]}>
-      {({data}) => <GroupDetails groupDetails={data[0]}/>}
+      {({data}) => <GroupDetails groupApiData={data[0]} groupDetails={groupDetails} setGroupDetails={setGroupDetails}/>}
     </Fetcher>
   )
 }
