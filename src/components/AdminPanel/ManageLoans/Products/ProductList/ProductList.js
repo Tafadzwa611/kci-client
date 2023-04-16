@@ -58,6 +58,8 @@ function ProductList({data, extra}) {
         <AddProduct
           productGrps={data[0]}
           loanFees={data[1]}
+          setProducts={setProducts}
+          setSelectedPrdct={setSelectedPrdct}
           setView={extra.setView}
           setProductId={extra.setProductId}
           reRenderProducts={extra.reRenderProducts}
