@@ -16,7 +16,14 @@ import { useCurrencies } from '../../../../../contexts/CurrenciesContext';
 import { scheduleStrategies } from './data';
 import {Fee, AddFee} from './Fees';
 
-function ProductForm({productGrps, initialValues, validationSchema, onSubmit, back}) {
+function ProductForm({
+  productGrps,
+  loanFees,
+  initialValues,
+  validationSchema,
+  onSubmit,
+  back
+}) {
   const {branches} = useBranches();
   const selectBranches = branches.map(br => ({label: br.name, value:br.id}));
   const {currencies} = useCurrencies();
@@ -149,7 +156,7 @@ function ProductForm({productGrps, initialValues, validationSchema, onSubmit, ba
               {values.fees.map((fee, index) => {
                 return(
                   <React.Fragment key={index}>
-                    <Fee id={fee.id} index={index} fees={values.fees} setFieldValue={setFieldValue} />
+                    <Fee fee={fee} index={index} fees={values.fees} setFieldValue={setFieldValue} loanFees={loanFees} />
                   </React.Fragment>
                 )
               })}

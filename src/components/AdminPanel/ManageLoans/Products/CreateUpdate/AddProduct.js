@@ -5,7 +5,14 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { removeEmptyValues } from '../../../../../utils/utils';
 
-function AddProduct({productGrps, setView, setProductId}) {
+function AddProduct({
+  productGrps,
+  loanFees,
+  setView,
+  setProductId,
+  setProducts,
+  setSelectedPrdct
+}) {
   const initialValues = {
     name: '',
     description: '',
@@ -48,8 +55,11 @@ function AddProduct({productGrps, setView, setProductId}) {
     try {
       const data = removeEmptyValues(values);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post('/loansapi/add_loan_product/', {...data, fees: values.fees}, CONFIG);
+      const response = await axios.post('/loansapi/add_loan_product/', {...data, fees: values.fees, allowed_branches_ids: values.allowed_branches_ids}, CONFIG);
+      console.log(response.data);
       setProductId(response.data.id);
+      setProducts(curr => [response.data, ...curr]);
+      setSelectedPrdct(response.data);
       setView('list');
     } catch (error) {
       if (error.message === "Network Error") {
@@ -69,6 +79,7 @@ function AddProduct({productGrps, setView, setProductId}) {
       validationSchema={createLoanProductSchema}
       onSubmit={onSubmit}
       back={back}
+      loanFees={loanFees}
     />
   )
 }
