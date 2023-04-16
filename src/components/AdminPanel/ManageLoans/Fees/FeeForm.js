@@ -8,18 +8,25 @@ import {
   CustomInput,
   SubmitButton
 } from '../../../../common';
-import { useCurrencies } from '../../../../contexts/CurrenciesContext';
+
+const PAYMENTS_1 = ['Flat', '% Of DB Amount'];
+const PAYMENTS_2 = ['Flat', 'Flat/Installments', '% Of DB Amount', '% Of DB Amount/Installments'];
+const FEE_TYPES_AND_PAYMENTS = {
+  '': [],
+  'Deducted': PAYMENTS_1,
+  'Capitalized': PAYMENTS_1,
+  'Upfront Disbursement': PAYMENTS_1,
+  'Manual fees': PAYMENTS_1,
+  'Payment due': PAYMENTS_2
+};
+const FEE_TYPES = ['Deducted', 'Capitalized', 'Upfront Disbursement', 'Payment due', 'Manual fees'];
 
 function FeeForm({initialValues, onSubmit, back}) {
-  const feeTypes = ['Deducted', 'Capitalized', 'Upfront Disbursement', 'Payment due', 'Manual fees'];
-  const feePayments = ['Flat', 'Flat/Installments', '% Of DB Amount', '% Of DB Amount/Installments'];
-  const {currencies} = useCurrencies();
-
   return (
     <>
       <ButtonDefault value={'Back'} handler={back} />
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        {({ isSubmitting, errors }) => (
+        {({ isSubmitting, errors, values }) => (
           <Form>
             <NonFieldErrors errors={errors}>
               <div className='divider divider-info'>
@@ -28,15 +35,11 @@ function FeeForm({initialValues, onSubmit, back}) {
               <CustomInput label='Name' name='name' type='text' required/>
               <CustomSelect label='Type' name='fee_type' required>
                 <option value=''>------</option>
-                {feeTypes.map(feeType => <option key={feeType} value={feeType}>{feeType}</option>)}
+                {FEE_TYPES.map(feeType => <option key={feeType} value={feeType}>{feeType}</option>)}
               </CustomSelect>
               <CustomSelect label='Fee Payment' name='fee_calculation' required>
                 <option value=''>------</option>
-                {feePayments.map(feePayment => <option key={feePayment} value={feePayment}>{feePayment}</option>)}
-              </CustomSelect>
-              <CustomSelect label='Currency' name='currency_id' required>
-                <option value=''>------</option>
-                {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+                {FEE_TYPES_AND_PAYMENTS[values.fee_type].map(feePayment => <option key={feePayment} value={feePayment}>{feePayment}</option>)}
               </CustomSelect>
               <CustomCheckbox label='Is Mandatory' name='is_mandatory'/>
               <div className='divider divider-default' style={{padding: '1.25rem'}}></div>

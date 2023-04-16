@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import FeeForm from './FeeForm';
 
 function AddFee({setView, setSelectedFee, setFees}) {
-  const initialValues = {name: '', is_active: true};
+  const initialValues = {name: '', fee_type: '', fee_calculation: '', currency_id: '', is_mandatory: false};
   const back = () => setView('list');
 
   const onSubmit = async (values, actions) => {

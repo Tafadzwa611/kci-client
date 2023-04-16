@@ -7,7 +7,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { uuidv4 } from '../../../../../utils';
 
-function EditProduct({productGrps, initialValues, setView, setSelectedPrdct, setProducts}) {
+function EditProduct({productGrps, loanFees, initialValues, setView, setSelectedPrdct, setProducts}) {
   const {currencies} = useCurrencies();
   initialValues.fees = initialValues.fees.map(fee => ({...fee, id: uuidv4()}));
   removeNull(initialValues);
@@ -16,7 +16,7 @@ function EditProduct({productGrps, initialValues, setView, setSelectedPrdct, set
     try {
       const data = removeEmptyValues(values);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      await axios.put(`/loansapi/edit_loan_product/${data.id}/`, {...data, fees: values.fees}, CONFIG);
+      await axios.put(`/loansapi/edit_loan_product/${data.id}/`, {...data, fees: values.fees, allowed_branches_ids: values.allowed_branches_ids}, CONFIG);
       setProducts(curr => {
         return curr.map(prod => {
           if (prod.id === values.id) {
@@ -24,6 +24,18 @@ function EditProduct({productGrps, initialValues, setView, setSelectedPrdct, set
             const group = productGrps.find(group => group.id == values.product_category_id);
             values.currency = currency.fullname;
             values.product_category = group.name;
+            values.fees = values.fees.map(fee => {
+              const lf = loanFees.find(lf => lf.id == fee.loanfee_id);
+              return {
+                fee_calculation: lf.fee_calculation,
+                fee_type: lf.fee_type,
+                is_mandatory: lf.is_mandatory,
+                name: lf.name,
+                loanfee_id: fee.loanfee_id,
+                value: fee.value,
+                id: fee.id,
+              }
+            });
             return values
           }
           return prod
@@ -47,6 +59,7 @@ function EditProduct({productGrps, initialValues, setView, setSelectedPrdct, set
 
   return (
     <ProductForm
+      loanFees={loanFees}
       productGrps={productGrps}
       initialValues={initialValues}
       validationSchema={editLoanProductSchema}

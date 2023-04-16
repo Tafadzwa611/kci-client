@@ -39,22 +39,25 @@ function ProductList({data, extra}) {
     )
   }else if (view === 'edit') {
     return (
-      <Fetcher urls={['/loansapi/product_groups/']} extra={{setView, productId}}>
-        {({data, extra}) => <EditProduct
-          productGrps={data[0]}
-          initialValues={selectedPrdct}
-          setView={extra.setView}
-          setSelectedPrdct={setSelectedPrdct}
-          setProducts={setProducts}
-        />}
+      <Fetcher urls={['/loansapi/product_groups/', '/loansapi/list_fees/']} extra={{setView, productId}}>
+        {({data, extra}) =>
+          <EditProduct
+            productGrps={data[0]}
+            loanFees={data[1]}
+            initialValues={selectedPrdct}
+            setView={extra.setView}
+            setSelectedPrdct={setSelectedPrdct}
+            setProducts={setProducts}
+          />}
       </Fetcher>
     )
   }
   return (
-    <Fetcher urls={['/loansapi/product_groups/']} extra={{setView, setProductId}}>
+    <Fetcher urls={['/loansapi/product_groups/', '/loansapi/list_fees/']} extra={{setView, setProductId}}>
       {({data, extra}) => 
         <AddProduct
           productGrps={data[0]}
+          loanFees={data[1]}
           setView={extra.setView}
           setProductId={extra.setProductId}
           reRenderProducts={extra.reRenderProducts}

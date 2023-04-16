@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import DeleteFee from './DeleteFee';
-import { useCurrencies } from '../../../../contexts/CurrenciesContext';
 
 function Table({
   fees,
@@ -12,7 +11,6 @@ function Table({
 }) {
   const close = () => setSelectedFee(null);
   const [openModal, setOpenModal] = useState(false);
-  const {currencies} = useCurrencies();
 
   return (
     <>
@@ -78,7 +76,6 @@ function Table({
                           <li>Fee Type: {selectedFee.fee_type}</li>
                           <li>Fee Payment: {selectedFee.fee_calculation}</li>
                           <li>Required: {selectedFee.is_mandatory ? 'Yes': 'No'}</li>
-                          <li>Currency: {currencies.find(curr => curr.id == selectedFee.currency_id).fullname}</li>
                         </ul>
                       </div>
                     </div>

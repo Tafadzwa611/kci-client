@@ -107,10 +107,10 @@ function ProductDetails({product, close, setView, setProducts}) {
                 <li style={{marginBottom: '1rem'}}><b>Loan Product Fees</b></li>
                 {product.fees.length > 0 ? product.fees.map((fee, idx) => 
                   <ul key={idx} style={{marginBottom: '1rem'}}>
-                    <li><b>Fee Name: {fee.fee_name}</b></li>
+                    <li><b>Fee Name: {fee.name}</b></li>
                     <li className='fees-item'>Fee Type: {fee.fee_type}</li>
                     <li className='fees-item'>Is Mandatory: {fee.is_mandatory ? 'Yes' : 'No'}</li>
-                    <li className='fees-item'>Fee Payment: {fee.fee_payment}</li>
+                    <li className='fees-item'>Fee Payment: {fee.fee_calculation}</li>
                     <li className='fees-item'>Value: {fee.value}</li>
                   </ul> 
                 ):

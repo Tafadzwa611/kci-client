@@ -6,10 +6,7 @@ const minInt = 1;
 const minIntMsg = 'Minimum allowed value is 1.';
 
 export const feeSchema = yup.object().shape({
-  fee_name: yup.string().required('Required'),
-  fee_type: yup.string().oneOf(['Deducted', 'Capitalized', 'Upfront Disbursement', 'Payment due', 'Manual fees'], 'Invalid').required('Required'),
-  fee_payment: yup.string().oneOf(['Flat', 'Flat/Installments', '% Of DB Amount', '% Of DB Amount/Installments'], 'Invalid').required('Required'),
-  is_mandatory: yup.boolean().required('Required'),
+  loanfee_id: yup.number().integer().required('Required'),
   value: yup.number().min(minAmount, minMsg).required('Required'),
 });
 
