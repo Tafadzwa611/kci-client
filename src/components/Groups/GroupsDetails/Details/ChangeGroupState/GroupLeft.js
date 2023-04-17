@@ -33,7 +33,7 @@ const GroupLeft = ({setOpen, url, setGroupDetails}) => {
               <div className="title" style={{fontSize: "0.875rem"}}>
                 Are you sure you want to mark as left.
               </div>
-              <ModalActionSubmit isSubmitting={isSubmitting} setOpen={setOpen} act={'Left'} />
+              <ModalActionSubmit isSubmitting={isSubmitting} setOpen={setOpen} act={'Continue'} />
             </NonFieldErrors>
           </Form>
         )}

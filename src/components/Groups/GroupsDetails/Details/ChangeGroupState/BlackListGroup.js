@@ -33,7 +33,7 @@ const BlacklistGroup = ({setOpen, url, setGroupDetails}) => {
               <div className="title" style={{fontSize: "0.875rem"}}>
                 Are you sure you want to blacklist.
               </div>
-              <ModalActionSubmit isSubmitting={isSubmitting} setOpen={setOpen} act={'Blacklist'} />
+              <ModalActionSubmit isSubmitting={isSubmitting} setOpen={setOpen} act={'Continue'} />
             </NonFieldErrors>
           </Form>
         )}
