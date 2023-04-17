@@ -59,24 +59,28 @@ const Filter = ({setGroupsData, setGroupId, setGroupDetails}) => {
                 <Form>
                     <NonFieldErrors errors={errors}>
                         <div className="row row-payments row-loans" style={{marginTop:"1rem"}}>
-                            <div className="row-payments-container" style={{width:"24%"}}>
+                          <div style={{width:"49%", display:"flex", justifyContent:"space-between"}}>
+                            <div className="row-payments-container" style={{width:"49%"}}>
                                 <CustomDatePickerFilter label='Min Reg Date' name='min_reg_date' setFieldValue={setFieldValue}/>
                             </div>
-                            <div className="row-payments-container" style={{width:"24%"}}>
+                            <div className="row-payments-container" style={{width:"49%"}}>
                                 <CustomDatePickerFilter label='Max Reg Date' name='max_reg_date' setFieldValue={setFieldValue}/>
                             </div>
-                            <div className="row-payments-container" style={{width:"24%"}}>
+                          </div>
+                          <div style={{width:"49%", display:"flex", justifyContent:"space-between"}}>
+                            <div className="row-payments-container" style={{width:"49%"}}>
                                 <CustomDatePickerFilter label='Min Group Date' name='min_grp_date' setFieldValue={setFieldValue}/>
                             </div>
-                            <div className="row-payments-container" style={{width:"24%"}}>
+                            <div className="row-payments-container" style={{width:"49%"}}>
                                 <CustomDatePickerFilter label='Min Group Date' name='max_grp_date' setFieldValue={setFieldValue}/>
                             </div>
+                          </div>
                         </div>
                         <div className="row row-payments" style={{marginTop:"1rem"}}>
-                            <div className="row-payments-container" style={{width:"48%"}}>
+                            <div className="row-payments-container" style={{width:"49%"}}>
                                 <CustomInputFilter label='Group Name' name='search_str' type='text'/>
                             </div>
-                            <div className="row-payments-container" style={{width:"48%"}}>
+                            <div className="row-payments-container" style={{width:"49%"}}>
                                 <CustomSelectFilter
                                     label='Approval Status'
                                     name='approved'
@@ -88,7 +92,7 @@ const Filter = ({setGroupsData, setGroupId, setGroupDetails}) => {
                             </div>
                         </div>
                         <div style={{marginTop:"1rem", display:"flex", justifyContent:"space-between"}}>
-                            <div style={{width:"70%"}}>
+                            <div style={{width:"85%"}}>
                                 <CustomMultiSelectFilter
                                     label='Branches'
                                     name='branch_ids'

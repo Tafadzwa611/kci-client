@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 
 function GroupDetails({
-  groupDetails,
   setGroupDetails,
   groupApiData,
   setGroupsData,
-  setGroupId
+  setGroupId,
+  groupDetails
 }) {
   useEffect(() => {
     const element = document.getElementById('loan-details');
@@ -14,6 +14,8 @@ function GroupDetails({
       setGroupDetails(groupApiData);
     }
   }, []);
+
+  console.log(groupDetails);
 
   return (
     <div id='loan-details'>

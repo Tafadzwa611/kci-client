@@ -1,56 +1,45 @@
-import React, { useState } from 'react';
-import { makeRequest } from '../../../../../utils/utils';
+import React from 'react';
+import { Form, Formik } from 'formik';
+import {ModalActionSubmit, ModalSubmit, NonFieldErrors, ActionModal } from '../../../../../common';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 
-function BlacklistGroup({setGroupBlacklist, setGroup, groupId}) {
-    const [loading, setLoading] = useState(false);
-    const [errorMsg, setErrorMsg] = useState('');
-
-    const handleSubmit = async () => {
-        setLoading(true);
-        await patchGroup();
+const BlacklistGroup = ({setOpen, url, setGroupDetails}) => {
+  const onSubmit = async (values, actions) => {
+    try {
+      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+      const response = await axios.patch(url, values, CONFIG);
+      console.log(response)
+      setGroupDetails(response.data);
+      setOpen(false);
+    } catch (error) {
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+      } else {
+        actions.setErrors({responseStatus: error.response.status});
+      }
     }
+  }
 
-    async function patchGroup() {
-        try {
-            const response = await makeRequest.patch(`/clientsapi/blacklist_group/${groupId}/`, {}, {timeout: 8000});
-            if (response.ok) {
-                const json_res = await response.json();
-                if (json_res.old_status == 'Active' || json_res.old_status == 'Inactive'){
-                    setGroup(curr => ({...curr, approved: true}));
-                }
-                else
-                {
-                    setGroup(curr => ({...curr, approved: false}));
-                }
-                setGroup(curr => ({...curr, status: 'Blacklisted'}));
-                setGroupBlacklist(false);
-            }else {
-                const error = await response.json();
-                setErrorMsg(Object.values(error)[0]);
-            }
-            setLoading(false);
-        }catch(error) {
-            console.log(error);
-        }
-    }
-
-    return (
-        <div className="modalBackground">
-            <div className="modalContainer">
-                <div>
-                    <i className="uil uil-times-circle modal_circle_left"></i>
-                </div>
-                <div className="title">
-                    Blacklist Group 
-                </div>
-                <div className="modal-footer">
-                    <button className="btn btn-default"onClick={() => setGroupBlacklist(false)}>Cancel</button>
-                    <button className="btn btn-dark" onClick={handleSubmit}>Continue</button>
-                </div>
-            </div>
-        </div>
-    )
+  return (
+    <ActionModal>
+      <Formik initialValues={{status: ''}} onSubmit={onSubmit}>
+        {({ errors, isSubmitting }) => (
+          <Form>
+            <NonFieldErrors errors={errors}>
+              <div className="title" style={{fontSize: "0.875rem"}}>
+                Are you sure you want to blacklist.
+              </div>
+              <ModalActionSubmit isSubmitting={isSubmitting} setOpen={setOpen} act={'Blacklist'} />
+            </NonFieldErrors>
+          </Form>
+        )}
+      </Formik>
+    </ActionModal>
+  )
 }
 
 export default BlacklistGroup;

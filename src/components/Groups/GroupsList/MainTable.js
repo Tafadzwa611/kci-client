@@ -17,7 +17,7 @@ function MainTable({groupData, handleClick}) {
                     <th style={{textAlign:"start"}}>Group_ID</th>
                     <th style={{textAlign:"start"}}>Group_Type</th>
                     <th style={{textAlign:"start"}}>Group_Date</th>
-                    <th style={{textAlign:"start"}}>Date_Phone_Number</th>
+                    <th style={{textAlign:"start"}}>Group_Phone_Number</th>
                   </tr>
                 </thead>
                 <tbody>
