@@ -17,7 +17,7 @@ function List({data}) {
   if (view === 'list') {
     return (
       <>
-        <SuccessBtn handler={() => setView('add')} value={'Add Fee'}/>
+        <SuccessBtn handler={() => setView('add')} value={'Add Holiday'}/>
         <Table
           setView={setView}
           holidays={holidays}
