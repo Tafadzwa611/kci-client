@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, {useState} from 'react';
 import Products from './Products/Products';
 import ProductCategories from './ProductCategories/ProductCategories';
