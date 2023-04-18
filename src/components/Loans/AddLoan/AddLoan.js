@@ -60,6 +60,7 @@ function AddLoan({products}) {
       `?loan_id=${response.data.loan_id}&loan_type=cli`;
       navigate({pathname: '/loans/viewloans', search: search});
     } catch (error) {
+      console.log(error);
       if (error.message === "Network Error") {
         actions.setErrors({responseStatus: "Network Error"});
       } else if (error.response.status >= 400 && error.response.status < 500) {

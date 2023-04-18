@@ -6,9 +6,9 @@ import {
 function Fee({fee, setFieldValue, values}) {
   return (
     <div>
-      <div>Fee Name: {fee.fee_name}</div>
+      <div>Fee Name: {fee.name}</div>
       <div>Fee Type: {fee.fee_type}</div>
-      <div> Fee Payment: {fee.value} {fee.fee_payment}</div>
+      <div> Fee Payment: {fee.value} {fee.fee_calculation}</div>
       {!fee.is_mandatory ?
         <div style={{marginTop:'10px'}}>
           <ButtonDefault
