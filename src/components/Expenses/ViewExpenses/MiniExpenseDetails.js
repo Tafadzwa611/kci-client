@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DeleteExpense from './DeleteExpense';
 
-function MiniExpenseDetails({expenseDetails, extra, setExpenseId}) {
+function MiniExpenseDetails({expenseDetails, extra, setExpenseId, setEpenseData}) {
+  const [deleteExpense, setDeleteExpense] = useState(false);
   const {setExpenseDetails} = extra;
   const navigate = useNavigate();
 
@@ -11,6 +13,7 @@ function MiniExpenseDetails({expenseDetails, extra, setExpenseId}) {
 
   return (
     <div style={{position:"sticky", top:"0", width:"100%"}}>
+      {deleteExpense && <DeleteExpense setOpen={setDeleteExpense} expenseID={expenseDetails.id} setEpenseData={setEpenseData} setExpenseId={setExpenseId} />}
       <div style={{display:"flex", flexDirection:"column", padding:"1.5rem"}} className="j-details-container">
 
         <div className="row" style={{marginBottom:"1.5rem", marginTop:"0"}}>
@@ -20,7 +23,7 @@ function MiniExpenseDetails({expenseDetails, extra, setExpenseId}) {
               </button>
               <div style={{display:"flex", columnGap: "10px"}}>
                 <button><a onClick={e => setExpenseId(null)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
-                <button><a className="btn btn-olive" id="delete" value={expenseDetails.id} onClick={console.log('delete')}>Delete</a></button>
+                <button className="btn btn-olive" onClick={() => setDeleteExpense(true)}>Delete</button>
               </div>
             </div>
         </div>
