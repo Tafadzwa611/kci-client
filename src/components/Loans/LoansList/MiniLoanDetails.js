@@ -1,11 +1,10 @@
 import Actions from './Actions';
 import { statusClasses } from './data';
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function MiniLoanDetails({loanData, extra}) {
   const {loanDetails, setLoanDetails, setLoanId, setLoanData} = extra;
-  const navigate = useNavigate();
 
   useEffect(() => {
     setLoanDetails(loanData);
@@ -23,8 +22,8 @@ function MiniLoanDetails({loanData, extra}) {
             <div style={{marginBottom:"1rem"}}>
               <div style={{marginBottom:"1rem", display:"flex", justifyContent:"space-between"}}>
                 <button className="btn btn-default" onClick={() => setLoanId(null)}>Close</button>
-                <button className='btn btn-default' onClick={() => navigate({pathname: '/loans/viewloans', search: `?loan_id=${loanDetails.loan.id}&loan_type=cli`})}>
-                  Max
+                <button className='btn btn-default'>
+                  <Link to={`/loans/viewloans/loandetails/cli/${loanDetails.loan.id}`}>Max</Link>
                 </button>
               </div>
               <div style={{display:"flex", justifyContent:"space-between"}}>

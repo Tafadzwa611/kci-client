@@ -1,11 +1,10 @@
 import React, {useEffect} from 'react';
 import LoansList from '../LoansList/LoansList';
-// import DueLoansList from '../DueLoans/DueLoansList';
-// import ViewDefaultsAndArrears from '../DefaultedAndArrearsLoans/ViewDefaultsAndArrears';
 import AddLoan from '../AddLoan/AddLoan';
 import EditLoan from '../AddLoan/EditLoan';
 import { Fetcher } from '../../../common';
 import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
+import FullLoanDetails from '../LoansList/FullLoanDetails';
 
 const ViewLoans = () => {
   useEffect(() => {
@@ -24,6 +23,10 @@ const ViewLoans = () => {
               {({data}) => <EditLoan products={data[0]}/>}
             </Fetcher>
           } 
+        />
+        <Route
+          path='loandetails/:loanType/:loanId'
+          element={<FullLoanDetails/>} 
         />
       </Route>
     </Routes>

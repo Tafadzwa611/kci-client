@@ -1,22 +1,9 @@
-import React, { useEffect } from 'react';
-import { statusClasses } from './data';
 import Actions from './Actions';
+import { statusClasses } from './data';
+import React, { useState } from 'react';
 
-function LoanDetails({
-  loanDetails,
-  setLoanDetails,
-  loanApiData,
-  setLoanData,
-  setLoanId
-}) {
-  useEffect(() => {
-    const element = document.getElementById('loan-details');
-    element.scrollIntoView({ behavior: 'instant' });
-    if (!loanDetails) {
-      setLoanDetails(loanApiData);
-    }
-  }, []);
-
+function LoanDetails({loanApiData}) {
+  const [loanDetails, setLoanDetails] = useState(loanApiData);
   return (
     <div id='loan-details'>
       {loanDetails ? 
@@ -33,16 +20,12 @@ function LoanDetails({
                 <Actions
                   loan={loanDetails.loan}
                   setLoanDetails={setLoanDetails}
-                  setLoanData={setLoanData}
-                  setLoanId={setLoanId}
                   loanType={'cli'}
                 />
               </div>
             </div>
             <div>
-              
               <div>Details</div>
-
             </div>
           </div>
         </div> : null}

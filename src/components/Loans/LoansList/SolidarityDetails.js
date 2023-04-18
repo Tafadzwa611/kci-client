@@ -1,19 +1,9 @@
-import React, { useEffect } from 'react';
-import { statusClasses } from './data';
 import Actions from './Actions';
+import { statusClasses } from './data';
+import React, { useState } from 'react';
 
-function SolidarityDetails({
-  loanApiData,
-  loanDetails,
-  setLoanDetails,
-  setLoanData,
-  setLoanId
-}) {
-  useEffect(() => {
-    if (!loanDetails) {
-      setLoanDetails(loanApiData);
-    }
-  }, []);
+function SolidarityDetails({loanApiData}) {
+  const [loanDetails, setLoanDetails] = useState(loanApiData);
 
   return (
     <div id='loan-details'>
@@ -31,16 +21,12 @@ function SolidarityDetails({
               <Actions
                 loan={loanDetails}
                 setLoanDetails={setLoanDetails}
-                setLoanData={setLoanData}
-                setLoanId={setLoanId}
                 loanType={'sol'}
               />
             </div>
           </div>
           <div>
-
             <div>Details</div>
-
           </div>
         </div>
       </div> : null}
