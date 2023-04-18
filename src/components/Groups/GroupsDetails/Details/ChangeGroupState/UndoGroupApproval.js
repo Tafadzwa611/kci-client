@@ -33,7 +33,7 @@ const UndoGroupApproval = ({setOpen, url, setGroupDetails}) => {
               <div className="title" style={{fontSize: "0.875rem"}}>
                 Are you sure you want to undo approval.
               </div>
-              <ModalActionSubmit isSubmitting={isSubmitting} setOpen={setOpen} act={'Undo Approval'} />
+              <ModalActionSubmit isSubmitting={isSubmitting} setOpen={setOpen} act={'Continue'} />
             </NonFieldErrors>
           </Form>
         )}

@@ -33,7 +33,7 @@ const ApproveGroup = ({setOpen, url, setGroupDetails}) => {
               <div className="title" style={{fontSize: "0.875rem"}}>
                 Are you sure you want to approve.
               </div>
-              <ModalActionSubmit isSubmitting={isSubmitting} setOpen={setOpen} act={'Approve'} />
+              <ModalActionSubmit isSubmitting={isSubmitting} setOpen={setOpen} act={'Continue'} />
             </NonFieldErrors>
           </Form>
         )}
