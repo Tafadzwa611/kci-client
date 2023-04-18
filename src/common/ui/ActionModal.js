@@ -1,11 +1,15 @@
 import React from 'react';
 
-const ActionModal = ({children, text, act}) => {
+const ActionModal = ({children, text}) => {
   return (
     <div className="modalBackground">
       <div className="modalContainer">
         <div>
-          <i className="uil uil-info-circle modal_circle"></i>
+          {text == 'add'?
+            <i className="uil uil-check-circle modal_circle_approve"></i>:
+            <i className="uil uil-info-circle modal_circle"></i>
+          }
+
         </div>
         <>
           {children}
@@ -13,6 +17,6 @@ const ActionModal = ({children, text, act}) => {
       </div>
     </div>
   )
-}
+} 
 
 export default ActionModal;

@@ -116,9 +116,6 @@ const Actions = ({group, setGroupDetails, setGroupId, setGroupsData}) => {
 
   return (
     <div style={{display:'flex', columnGap:'3px'}}>
-      {/* <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
-        <button className='btn btn-olive' onClick={(e) => console.log(e)}>Undo Disbursement</button>
-      </div> */}
       <div></div>
     </div>
   )

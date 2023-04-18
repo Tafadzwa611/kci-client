@@ -25,7 +25,7 @@ const UndoGroupRejection = ({setOpen, url, setGroupDetails}) => {
   }
 
   return (
-    <ActionModal>
+    <ActionModal text={'add'}>
       <Formik initialValues={{status: ''}} onSubmit={onSubmit}>
         {({ errors, isSubmitting }) => (
           <Form>
@@ -33,7 +33,7 @@ const UndoGroupRejection = ({setOpen, url, setGroupDetails}) => {
               <div className="title" style={{fontSize: "0.875rem"}}>
                 Are you sure you want to undo reject.
               </div>
-              <ModalActionSubmit isSubmitting={isSubmitting} setOpen={setOpen} act={'Continue'} />
+              <ModalActionSubmit text={'add'} isSubmitting={isSubmitting} setOpen={setOpen} act={'Continue'} />
             </NonFieldErrors>
           </Form>
         )}
