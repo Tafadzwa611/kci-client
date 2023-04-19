@@ -14,7 +14,6 @@ function ExpenseDetails({expenseDetails}) {
         <div className="row" style={{marginBottom:"1.5rem", marginTop:"0"}}>
           <div className="col-12" style={{display:"flex", justifyContent:"space-between"}}>
             <button><a onClick={console.log('delete')} className="btn btn-default" style={{borderRadius:"0"}}>Back</a></button>
-            <button><a className="btn btn-olive" id="delete" value={expenseDetails.id} onClick={console.log('delete')}>Delete</a></button>
           </div>
           </div>
           <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
