@@ -21,19 +21,19 @@ function GroupForm({groupTypes, loanOfficers, groupRoles, initialValues, validat
                 <span>Group Information</span>
               </div>
               <CustomInput label='Group Name' name='name' type='text' required/>
-              <CustomDatePicker label='Group Date' name='group_date' setFieldValue={setFieldValue} required/>
               <CustomSelect label='Group Type' name='group_type_id' required>
                 <option value=''>------</option>
                 {groupTypes.map(gtype => <option key={gtype.id} value={gtype.id}>{gtype.name}</option>)}
               </CustomSelect>
-              <CustomSelect label='Group Officer' name='group_officer_id' required>
-                <option value=''>------</option>
-                {loanOfficers.map(officer => <option key={officer.id} value={officer.id}>{officer.first_name} {officer.last_name}</option>)}
-              </CustomSelect>
+              <CustomDatePicker label='Group Date' name='group_date' setFieldValue={setFieldValue} required/>
               <CustomInput label='Group Phone Number' name='group_phone_number' type='text' required/>
               <CustomInput label='Group Address' name='address' type='text' required/>
               <CustomInput label='Group Account Number' name='group_account_number' type='text' required/>
               <CustomInput label='Group Bank Name' name='group_bank_name' type='text' required/>
+              <CustomSelect label='Group Officer' name='group_officer_id' required>
+                <option value=''>------</option>
+                {loanOfficers.map(officer => <option key={officer.id} value={officer.id}>{officer.first_name} {officer.last_name}</option>)}
+              </CustomSelect>
 
               <div className='divider divider-info'>
                 <span>Members</span>
