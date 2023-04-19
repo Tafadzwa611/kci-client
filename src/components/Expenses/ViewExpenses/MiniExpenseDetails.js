@@ -16,16 +16,16 @@ function MiniExpenseDetails({expenseDetails, extra, setExpenseId, setEpenseData}
       {deleteExpense && <DeleteExpense setOpen={setDeleteExpense} expenseID={expenseDetails.id} setEpenseData={setEpenseData} setExpenseId={setExpenseId} />}
       <div style={{display:"flex", flexDirection:"column", padding:"1.5rem"}} className="j-details-container">
 
-        <div className="row" style={{marginBottom:"1.5rem", marginTop:"0"}}>
+        <div className="row" style={{marginBottom:"1rem", marginTop:"0"}}>
             <div className="col-12" style={{display:"flex", justifyContent:"space-between"}}>
-              <button className='btn btn-olive' onClick={() => navigate({pathname: '/expenses/viewexpenses', search: `?expense_id=${expenseDetails.id}`})}>
+              <button><a onClick={e => setExpenseId(null)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
+              <button className='btn btn-default' onClick={() => navigate({pathname: '/expenses/viewexpenses', search: `?expense_id=${expenseDetails.id}`})}>
                 Max
               </button>
-              <div style={{display:"flex", columnGap: "10px"}}>
-                <button><a onClick={e => setExpenseId(null)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
-                <button className="btn btn-olive" onClick={() => setDeleteExpense(true)}>Delete</button>
-              </div>
             </div>
+        </div>
+        <div className="row" style={{marginBottom:"1rem", marginTop:"0", display:"flex", justifyContent:"flex-end"}}>
+          <button className="btn btn-olive" onClick={() => setDeleteExpense(true)}>Delete</button>
         </div>
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
           <div style={{width:"30%"}}>
