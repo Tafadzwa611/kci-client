@@ -5,7 +5,7 @@ import MiniIncomeDetails from './MiniIncomeDetails';
 import { Fetcher } from '../../../common';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-function Table({otherIncomeData, setIncomeDetails}) {
+function Table({otherIncomeData, setIncomeDetails, setOtherIncomeData}) {
   const [incomeId, setIncomeId] = useState(null);
   const [selectedIncomeId, setSelectedIncomeId] = useState(null);
 
@@ -54,8 +54,8 @@ function Table({otherIncomeData, setIncomeDetails}) {
             />
           }
           {incomeId &&
-          <Fetcher urls={[`/otherincomeapi/get_otherincome/${incomeId}/`]} extra={{setIncomeDetails}}>
-            {({data, extra}) => <MiniIncomeDetails incomeDetails={data[0]} extra={extra} setIncomeId={setIncomeId} />}
+          <Fetcher urls={[`/otherincomeapi/get_otherincome/${incomeId}/`]} extra={{setIncomeDetails, setOtherIncomeData, setIncomeId}}>
+            {({data, extra}) => <MiniIncomeDetails incomeDetails={data[0]} extra={extra} />}
           </Fetcher>
           }
         </div>

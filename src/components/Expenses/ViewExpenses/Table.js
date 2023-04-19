@@ -54,8 +54,8 @@ function Table({expenseData, setExpenseDetails, setEpenseData}) {
             />
           }
           {expenseId &&
-          <Fetcher urls={[`/expensesapi/get_expense/${expenseId}/`]} extra={{setExpenseDetails}}>
-            {({data, extra}) => <MiniExpenseDetails expenseDetails={data[0]} extra={extra} setExpenseId={setExpenseId} setEpenseData={setEpenseData}/>}
+          <Fetcher urls={[`/expensesapi/get_expense/${expenseId}/`]} extra={{setExpenseDetails, setExpenseId, setEpenseData}}>
+            {({data, extra}) => <MiniExpenseDetails expenseDetails={data[0]} extra={extra}/>}
           </Fetcher>
           }
         </div>

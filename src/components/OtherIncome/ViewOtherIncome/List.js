@@ -21,6 +21,7 @@ function List() {
           <Table
             otherIncomeData={otherIncomeData} 
             setIncomeDetails={setIncomeDetails}
+            setOtherIncomeData={setOtherIncomeData}
           />
         </>
       }

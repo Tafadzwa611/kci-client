@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DeleteExpense from './DeleteExpense';
 
-function MiniExpenseDetails({expenseDetails, extra, setExpenseId, setEpenseData}) {
+function MiniExpenseDetails({expenseDetails, extra}) {
   const [deleteExpense, setDeleteExpense] = useState(false);
-  const {setExpenseDetails} = extra;
+  const {setExpenseDetails, setExpenseId, setEpenseData} = extra;
   const navigate = useNavigate();
 
   useEffect(() => {

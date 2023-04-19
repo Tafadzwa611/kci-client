@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DeleteIncome from './DeleteIncome';
 
-function MiniIncomeDetails({incomeDetails, extra, setIncomeId}) {
-  const {setIncomeDetails} = extra;
+function MiniIncomeDetails({incomeDetails, extra}) {
+  const {setIncomeDetails, setOtherIncomeData, setIncomeId} = extra;
+  const [deleteIncome, setDeleteIncome] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -11,18 +13,19 @@ function MiniIncomeDetails({incomeDetails, extra, setIncomeId}) {
 
   return (
     <div style={{position:"sticky", top:"0", width:"100%"}}>
+      {deleteIncome && <DeleteIncome setOpen={setDeleteIncome} incomeID={incomeDetails.id} setOtherIncomeData={setOtherIncomeData} setIncomeId={setIncomeId} />}
       <div style={{display:"flex", flexDirection:"column", padding:"1.5rem"}} className="j-details-container">
 
-        <div className="row" style={{marginBottom:"1.5rem", marginTop:"0"}}>
+        <div className="row" style={{marginBottom:"1rem", marginTop:"0"}}>
             <div className="col-12" style={{display:"flex", justifyContent:"space-between"}}>
-              <button className='btn btn-olive' onClick={() => navigate({pathname: '/otherincome/viewotherincome', search: `?income_id=${incomeDetails.id}`})}>
+              <button><a onClick={e => setIncomeId(null)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
+              <button className='btn btn-default' onClick={() => navigate({pathname: '/otherincome/viewotherincome', search: `?income_id=${incomeDetails.id}`})}>
                 Max
               </button>
-              <div style={{display:"flex", columnGap: "10px"}}>
-                <button><a onClick={e => setIncomeId(null)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
-                <button><a className="btn btn-olive" id="delete" value={incomeDetails.id} onClick={console.log('delete')}>Delete</a></button>
-              </div>
             </div>
+        </div>
+        <div className="row" style={{marginBottom:"1rem", marginTop:"0", display:"flex", justifyContent:"flex-end"}}>
+          <button className="btn btn-olive" onClick={() => setDeleteIncome(true)}>Delete</button>
         </div>
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
           <div style={{width:"30%"}}>
