@@ -5,7 +5,7 @@ import MiniExpenseDetails from './MiniExpenseDetails';
 import { Fetcher } from '../../../common';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-function Table({expenseData, setExpenseDetails}) {
+function Table({expenseData, setExpenseDetails, setEpenseData}) {
   const [expenseId, setExpenseId] = useState(null);
   const [selectedExpenseId, setSelectedExpenseId] = useState(null);
 
@@ -54,8 +54,8 @@ function Table({expenseData, setExpenseDetails}) {
             />
           }
           {expenseId &&
-          <Fetcher urls={[`/expensesapi/get_expense/${expenseId}/`]} extra={{setExpenseDetails}}>
-            {({data, extra}) => <MiniExpenseDetails expenseDetails={data[0]} extra={extra} setExpenseId={setExpenseId} />}
+          <Fetcher urls={[`/expensesapi/get_expense/${expenseId}/`]} extra={{setExpenseDetails, setExpenseId, setEpenseData}}>
+            {({data, extra}) => <MiniExpenseDetails expenseDetails={data[0]} extra={extra}/>}
           </Fetcher>
           }
         </div>

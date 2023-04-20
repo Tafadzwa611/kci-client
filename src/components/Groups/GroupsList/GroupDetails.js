@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import Actions from './Actions';
+import { statusClasses } from './data';
 
 function GroupDetails({
   setGroupDetails,
@@ -15,8 +17,6 @@ function GroupDetails({
     }
   }, []);
 
-  console.log(groupDetails);
-
   return (
     <div id='loan-details'>
       {groupDetails ? 
@@ -25,7 +25,19 @@ function GroupDetails({
             <div style={{marginBottom:"1rem"}}>
               <div style={{display:"flex", justifyContent:"space-between"}}>
 
-                <div>{groupDetails.group_name}</div>
+                <div style={{display:'flex', alignItems:'center'}}>
+                  <span style={{marginRight:"5px"}}><b>{groupDetails.group.group_name}</b></span> /
+                  <span style={{margin: "0 5px"}}><b>{groupDetails.group.group_id}</b></span> /
+                  <div style={{marginLeft:"5px"}}>
+                    <button className={statusClasses[groupDetails.group.status]}>{groupDetails.group.status}</button>
+                  </div>
+                </div>
+                <Actions 
+                  group={groupDetails.group} 
+                  setGroupDetails={setGroupDetails}
+                  setGroupId={setGroupId}
+                  setGroupsData={setGroupsData}
+                />
 
               </div>
             </div>
