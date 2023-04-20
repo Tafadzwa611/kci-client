@@ -36,6 +36,19 @@ export const getDuration = (repayment_cycle, number_of_repayments) => {
   }
 }
 
+export const scheduleStrategies = {
+  'Daily': ['Everyday'],
+  'Weekly': ['Every Mon', 'Every Tue', 'Every Wed', 'Every Thu', 'Every Fri', 'Every Sat', 'Every Sun', 'Every Seven Days'],
+  'Biweekly': ['Same Day', 'Biweek Interval'],
+  'Monthly': ['Same Day', 'First Day Of Next Month', 'Last Day Of Next Month', 'Monthly Interval'],
+  'Bimonthly': ['Same Day', 'Bimonth Interval'],
+  'Quartely': ['Same Day', 'Quarter Interval'],
+  'Every 4 Months': ['Same Day', 'Quadrimester Interval'],
+  'Semi-annually': ['Same Day', 'Semi-annual Interval'],
+  'Yearly': ['Same Day', 'Year Interval'],
+  '': []
+};
+
 export const statusValues = [
   'Processing',
   'Open',

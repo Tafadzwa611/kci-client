@@ -18,16 +18,18 @@ const DeleteLoan = ({
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.delete(url, CONFIG);
-      setLoanId(null);
-      setLoanDetails(null);
-      setLoanData(curr => {
-        return {
-          count: curr.count - 1,
-          next_page_num: curr.next_page_num,
-          loans: curr.loans.filter(loan => loan.id !== loanId)
-        }
-      });
       setOpen(false);
+      if (setLoanId) {
+        setLoanDetails(null);
+        setLoanId(null);
+        setLoanData(curr => {
+          return {
+            count: curr.count - 1,
+            next_page_num: curr.next_page_num,
+            loans: curr.loans.filter(loan => loan.id !== loanId)
+          }
+        });
+      }
       navigate({pathname: '/loans/viewloans'});
     } catch (error) {
       if (error.message === 'Network Error') {

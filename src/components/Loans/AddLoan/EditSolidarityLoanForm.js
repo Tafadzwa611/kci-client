@@ -45,7 +45,7 @@ function EditSolidarityLoanForm({loan, loanProducts}) {
       const data = removeEmptyValues(values);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.put(`/loansapi/update_soloan_api/${loan.id}/`, {...data, fees: values.fees}, CONFIG);
-      navigate({pathname: '/loans/viewloans', search: `?loan_id=${loan.id}&loan_type=sol`});
+      navigate({pathname: `/loans/loandetails/sol/${loan.id}`});
     } catch (error) {
       if (error.message === "Network Error") {
         actions.setErrors({responseStatus: "Network Error"});

@@ -52,7 +52,7 @@ const EditLoanFoam = ({loanDetails, loanProducts}) => {
       const data = removeEmptyValues(values);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.put(`/loansapi/update_loan_api/${loan.id}/`, {...data, fees: values.fees}, CONFIG);
-      navigate({pathname: '/loans/viewloans', search: `?loan_id=${loan.id}&loan_type=cli`});
+      navigate({pathname: `/loans/loandetails/cli/${loan.id}`});
     } catch (error) {
       if (error.message === "Network Error") {
         actions.setErrors({responseStatus: "Network Error"});

@@ -6,7 +6,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 export const approveLoanSchema = yup.object().shape({
-  expected_disbursement_date: yup.date().required('Required')
+  expected_disbursement_date: yup.string().required('Required')
 });
 
 const ApproveLoan = ({setOpen, url, setLoanDetails}) => {
@@ -17,8 +17,8 @@ const ApproveLoan = ({setOpen, url, setLoanDetails}) => {
       setLoanDetails(response.data);
       setOpen(false);
     } catch (error) {
-      if (error.message === "Network Error") {
-        actions.setErrors({responseStatus: "Network Error"});
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
       } else if (error.response.status >= 400 && error.response.status < 500) {
         actions.setErrors({responseStatus: error.response.status, ...error.response.data});
       } else {
@@ -33,7 +33,7 @@ const ApproveLoan = ({setOpen, url, setLoanDetails}) => {
         {({ errors, isSubmitting, setFieldValue }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <div className="create_modal_container">
+              <div className='create_modal_container'>
                 <div>
                   <CustomDatePicker
                     label='Expected Disbursement Date'
