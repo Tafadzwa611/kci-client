@@ -53,9 +53,10 @@ function AddLoan({products}) {
     try {
       const data = removeEmptyValues(values);
       const url = product.client_type === 'Groups (solidarity)' ? '/loansapi/add_soloan_api/' : '/loansapi/add_loan_api/';
+      const loanType = product.client_type === 'Groups (solidarity)' ? 'sol' : 'cli';
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(url, {...data, fees: values.fees}, CONFIG);
-      navigate({pathname: `/loans/loandetails/cli/${response.data.loan_id}`});
+      navigate({pathname: `/loans/viewloans/loandetails/${loanType}/${response.data.loan_id}`});
     } catch (error) {
       console.log(error);
       if (error.message === "Network Error") {
