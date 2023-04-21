@@ -1,15 +1,23 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
-import { ActionModal, ActionModalDialog, NonFieldErrors } from '../../../common';
+import {ModalActionSubmit, NonFieldErrors, ActionModal } from '../../../common';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const UndoLoanApproval = ({setOpen, url, setLoanDetails}) => {
-  const onSubmit = async (values, actions) => {
+
+const DeleteGroup = ({setOpen, groupID, setGroupsData, setGroupId}) => {
+  const onSubmit = async (_, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.patch(url, values, CONFIG);
-      setLoanDetails(response.data);
+      const response = await axios.delete(`/clientsapi/delete_group/${groupID}/`, CONFIG);
+      setGroupsData(curr => {
+        return {
+          count: curr.count - 1,
+          next_page_num: curr.next_page_num,
+          groups: curr.groups.filter(grp => grp.id !== groupID)
+        }
+      });
+      setGroupId(null);
       setOpen(false);
     } catch (error) {
       if (error.message === 'Network Error') {
@@ -23,17 +31,15 @@ const UndoLoanApproval = ({setOpen, url, setLoanDetails}) => {
   }
 
   return (
-    <ActionModal open={true} setOpen={setOpen}>
-      <Formik initialValues={{expected_disbursement_date: ''}} onSubmit={onSubmit}>
+    <ActionModal>
+      <Formik initialValues={{}} onSubmit={onSubmit}>
         {({ errors, isSubmitting }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <ActionModalDialog 
-                isSubmitting={isSubmitting} 
-                msg={'Are you sure you want to undo approval.'} 
-                setOpen={setOpen}
-                act={'Submit'}
-              />
+              <div className="title" style={{fontSize: "0.875rem"}}>
+                Are you sure you want to delete group.
+              </div>
+              <ModalActionSubmit isSubmitting={isSubmitting} setOpen={setOpen} act={'Continue'} />
             </NonFieldErrors>
           </Form>
         )}
@@ -42,4 +48,4 @@ const UndoLoanApproval = ({setOpen, url, setLoanDetails}) => {
   )
 }
 
-export default UndoLoanApproval;
+export default DeleteGroup;

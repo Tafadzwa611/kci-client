@@ -1256,8 +1256,10 @@ tr .edit {
 .modalContainer {
   width: 500px;
   background-color: var(--white);
-  height: 350px;
-  padding: 2rem 2rem 0;
+  /* height: 350px; */
+  min-height: 350px;
+  /* padding: 2rem 2rem 0; */
+  padding: 2rem;
 }
 
 .modalBackground .modalContainer .modal_circle,
