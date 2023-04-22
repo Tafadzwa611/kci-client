@@ -90,12 +90,13 @@ function LoansTable({
       <div style={{padding:"0", border:"none"}} className={loanId ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
         <div className={loanId ? "table-responsive journal__table-container-journals" : "table-responsive full__table"} >
           {loanId ?
-            <MiniTable loanData={loanData} handleClick={handleClick} selectedLoanId={loanId}/> :
+            <>
+              <MiniTable loanData={loanData} handleClick={handleClick} selectedLoanId={loanId}/>
+              <Fetcher urls={[`/loansapi/get_loan/${loanId}/`]} extra={{loanDetails, setLoanDetails, setLoanId, setLoanData}}>
+                {({data, extra}) => <MiniLoanDetails loanData={data[0]} extra={extra}/>}
+              </Fetcher>
+            </> :
             <MainTable loanData={loanData} handleClick={handleClick}/>}
-          {loanId &&
-            <Fetcher urls={[`/loansapi/get_loan/${loanId}/`]} extra={{loanDetails, setLoanDetails, setLoanId, setLoanData}}>
-              {({data, extra}) => <MiniLoanDetails loanData={data[0]} extra={extra}/>}
-            </Fetcher>}
         </div>
       </div>
     </>

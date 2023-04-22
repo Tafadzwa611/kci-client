@@ -8,5 +8,18 @@ import ActionModal from './ActionModal';
 import Button from './Button';
 import ButtonDefault from './ButtonDefault';
 import ButtonSuccess from './ButtonSuccess';
+import CheckBox from './CheckBox';
 
-export {DeleteBtn, EditBtn, Modal, SuccessBtn, Table, Select, ActionModal, Button, ButtonDefault, ButtonSuccess};
+export {
+  CheckBox,
+  DeleteBtn,
+  EditBtn,
+  Modal,
+  SuccessBtn,
+  Table,
+  Select,
+  ActionModal,
+  Button,
+  ButtonDefault,
+  ButtonSuccess
+};

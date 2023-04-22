@@ -27,7 +27,8 @@ export {
   ActionModal,
   Button,
   ButtonDefault,
-  ButtonSuccess
+  ButtonSuccess,
+  CheckBox
 } from './ui'
 export {
   CustomInputFilter,
