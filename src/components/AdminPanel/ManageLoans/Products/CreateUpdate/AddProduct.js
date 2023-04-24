@@ -56,7 +56,6 @@ function AddProduct({
       const data = removeEmptyValues(values);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/loansapi/add_loan_product/', {...data, fees: values.fees, allowed_branches_ids: values.allowed_branches_ids}, CONFIG);
-      console.log(response.data);
       setProductId(response.data.id);
       setProducts(curr => [response.data, ...curr]);
       setSelectedPrdct(response.data);

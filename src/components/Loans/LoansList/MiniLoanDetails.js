@@ -1,20 +1,14 @@
 import Actions from './Actions';
 import { statusClasses } from './data';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckBox } from '../../../common';
+import LoanFiles from './LoanFiles';
 
 function MiniLoanDetails({loanData, extra}) {
-  const {loanDetails, setLoanDetails, setLoanId, setLoanData} = extra;
+  const {setLoanId, setLoanData} = extra;
   const [tab, setTab] = useState('details');
-
-  useEffect(() => {
-    setLoanDetails(loanData);
-  }, []);
-
-  if (!loanDetails) {
-    return <div>Loading</div>
-  }
+  const [loan, setLoan] = useState(loanData.loan);
 
   return (
     <div>
@@ -25,14 +19,14 @@ function MiniLoanDetails({loanData, extra}) {
               <div style={{marginBottom:'1rem', display:'flex', justifyContent:'space-between'}}>
                 <button className='btn btn-default' onClick={() => setLoanId(null)}>Close</button>
                 <button className='btn btn-default'>
-                  <Link to={`/loans/viewloans/loandetails/cli/${loanDetails.loan.id}`}>Max</Link>
+                  <Link to={`/loans/viewloans/loandetails/cli/${loan.id}`}>Max</Link>
                 </button>
               </div>
               <div style={{display:'flex', justifyContent:'space-between'}}>
                 <div style={{display:'flex', alignItems:'center'}}></div>
                 <Actions
-                  loan={loanDetails.loan}
-                  setLoanDetails={setLoanDetails}
+                  loan={loan}
+                  setLoanDetails={setLoan}
                   setLoanId={setLoanId}
                   setLoanData={setLoanData}
                   loanType={'cli'}
@@ -47,14 +41,16 @@ function MiniLoanDetails({loanData, extra}) {
             <button className={tab === 'payments' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('payments')}>Payments</button>
             <button className={tab === 'penalties' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('penalties')}>Penalties</button>
             <button className={tab === 'comments' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('comments')}>Comments</button>
+            <button className={tab === 'files' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('files')}>Attachments</button>
           </div>
           {{
-            'details': <DetailsTab loan={loanDetails.loan}/>,
-            'schedule': <ScheduleTab installments={loanDetails.loan.installments} />,
-            'txns': <Txns txns={loanDetails.loan.txns} />,
-            'payments': <Payments payments={loanDetails.loan.payments} />,
-            'penalties': <Penalties penalties={loanDetails.loan.penalties} />,
-            'comments': <Comments comments={loanDetails.loan.comments} />,
+            'details': <DetailsTab loan={loan}/>,
+            'schedule': <ScheduleTab installments={loan.installments} />,
+            'txns': <Txns txns={loan.txns} />,
+            'payments': <Payments payments={loan.payments} />,
+            'penalties': <Penalties penalties={loan.penalties} />,
+            'comments': <Comments comments={loan.comments} />,
+            'files': <LoanFiles loanId={loan.id} files={loan.files} setLoan={setLoan} />,
           }[tab]}
         </div>
       </div>
