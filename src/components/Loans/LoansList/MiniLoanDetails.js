@@ -69,42 +69,44 @@ const thStyle2 = {border: 'none', borderBottom: '1px solid #c1d0d7'};
 
 const Comments = ({comments}) => {
   return (
-    <table className="table">
-      <thead>
-        <tr className="journal-details fees__report_thead">
-          <th>Date</th>
-          <th>User</th>
-          <th>Comment</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {comments.map(comment => (
-          <tr key={comment.id}>
-            <td className="schedule__table">{comment.cdate_created}</td>
-            <td className="schedule__table">{comment.user_name}</td>
-            <td className="schedule__table">{comment.comments}</td>
-            <td className="schedule__table">Action</td>
+    <div className="miniLoanDetails-container">
+      <table className="table">
+        <thead>
+          <tr className="journal-details schedule__tables">
+            <th>Date</th>
+            <th>User</th>
+            <th>Comment</th>
+            <th>Action</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {comments.map(comment => (
+            <tr key={comment.id}>
+              <td className="schedule__table">{comment.cdate_created}</td>
+              <td className="schedule__table">{comment.user_name}</td>
+              <td className="schedule__table">{comment.comments}</td>
+              <td className="schedule__table">Action</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   )
 }
 
 const Penalties = ({penalties}) => {
   return (
-    <div style={{overflowX:'auto', maxHeight:"600px"}}>
+    <div style={{overflowX:'auto', maxHeight:"600px"}} className="miniLoanDetails-container">
       <table className="table">
         <thead>
-          <tr className="journal-details fees__report_thead" style={{position:'sticky', top:'0'}}>
-            <th>Penalty Date</th>
-            <th>Reason for Penalty</th>
-            <th>Amount</th>
-            <th>Amount Paid</th>
-            <th>Amount Due</th>
-            <th>Status</th>
-            <th>Action</th>
+          <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
+            <th className="schedule__table">Penalty Date</th>
+            <th className="schedule__table">Reason for Penalty</th>
+            <th className="schedule__table">Amount</th>
+            <th className="schedule__table">Amount Paid</th>
+            <th className="schedule__table">Amount Due</th>
+            <th className="schedule__table">Status</th>
+            <th className="schedule__table">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -127,10 +129,10 @@ const Penalties = ({penalties}) => {
 
 const Payments = ({payments}) => {
   return (
-    <div style={{overflowX:'auto', maxHeight:"600px"}}>
+    <div style={{overflowX:'auto', maxHeight:"600px"}} className="miniLoanDetails-container">
       <table className="table">
         <thead>
-          <tr className="journal-details fees__report_thead" style={{position:'sticky', top:'0'}}>
+          <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
             <th className="schedule__table">Date Recorded</th>
             <th className="schedule__table">Collection Date</th>
             <th className="schedule__table">Collected by</th>
@@ -174,25 +176,25 @@ const Payments = ({payments}) => {
 
 const Txns = ({txns}) => {
   return (
-    <div style={{overflowX:'auto', maxHeight:"600px"}}>
+    <div style={{overflowX:'auto', maxHeight:"600px"}} className="miniLoanDetails-container">
       <table className="table">
         <thead>
-          <tr className="journal-details fees__report_thead" style={{position:'sticky', top:'0'}}>
-            <th><b>Value Date</b></th>
-            <th><b>Description</b></th>
-            <th><b>Debit</b></th>
-            <th><b>Credit</b></th>
-            <th><b>Total Balance</b></th>
+          <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
+            <th className="schedule__table">Value Date</th>
+            <th className="schedule__table">Description</th>
+            <th className="schedule__table">Debit</th>
+            <th className="schedule__table">Credit</th>
+            <th className="schedule__table">Total Balance</th>
           </tr>
         </thead>
         <tbody>
           {txns.map(txn => (
             <tr key={txn.id}>
-              <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{txn.cvalue_date}</td>
-              <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{txn.description}</td>
-              <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{txn.entry_type === 'Dr' && txn.amount}</td>
-              <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{txn.entry_type === 'Cr' && txn.amount}</td>
-              <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{txn.balance}</td>
+              <td className="schedule__table">{txn.cvalue_date}</td>
+              <td className="schedule__table">{txn.description}</td>
+              <td className="schedule__table">{txn.entry_type === 'Dr' && txn.amount}</td>
+              <td className="schedule__table">{txn.entry_type === 'Cr' && txn.amount}</td>
+              <td className="schedule__table">{txn.balance}</td>
             </tr>
           ))}
         </tbody>
@@ -213,10 +215,10 @@ const ScheduleTab = ({installments}) => {
         <CheckBox isChecked={paid} label='Amount Paid' onChange={() => setPaid(curr => !curr)} />
         <CheckBox isChecked={dues} label='Amount Due' onChange={() => setDues(curr => !curr)} />
       </div>
-      <div style={{overflow:"auto", maxHeight:"600px"}}>
+      <div style={{overflow:"auto", maxHeight:"600px"}} className="miniLoanDetails-container">
         <table className="table">
           <thead>
-            <tr className="journal-details fees__report_thead" style={{position:'sticky', top:'0'}}>
+            <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
               <th className="schedule__table"><b>#</b></th>
               <th className="schedule__table schedule__installment__right">Due Date</th>
               {expected &&

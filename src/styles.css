@@ -33,7 +33,7 @@ body {
 }
 
 #light {
-  --home-section-color: hsl(225, 22%, 96%);
+  --home-section-color: hsl(225, 20%, 96%);
   --modal-background: hsla(0, 0%, 0%, 0.4);
   --color: hsl(208, 7%, 46%);
   --white: hsl(0, 0%, 100%);
@@ -1811,15 +1811,28 @@ small {
   color: var(--white);
 }
 
+.journal-details.schedule__tables {
+  background-color: #d6e9ff;
+  color: #51575c;
+}
+
+#dark .journal-details.schedule__tables {
+  background-color: #ccc;
+}
+
 .schedule__installment {
   border: none;
-  border-bottom: 1px solid var(--info)
+  border-bottom: 1px solid var(--border-color);
 }
 
 .schedule__installment__right {
   border: none;
-  border-bottom: 1px solid var(--info);
-  border-right: 1px solid var(--info);
+  border-bottom: 1px solid var(--border-color);
+  border-right: 1px solid #c1d0d7;
+}
+
+#dark .schedule__installment__right {
+  border-right: 1px solid #4c4e52;
 }
 
 .par-card {
@@ -3275,7 +3288,8 @@ input:checked + .slider:before {
   height: 1rem;
 }
 
-.css-18c7wyx-control.select__control--is-disabled{
+.css-18c7wyx-control.select__control--is-disabled, 
+.miniLoanDetails-container{
   background: var(--white);
 }
 
