@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { statusClasses } from './data';
 import Actions from './Actions';
 import { Link } from 'react-router-dom';
 
 function MiniSolidarity({loanData, extra}) {
   const {loanDetails, setLoanDetails, setLoanId, setLoanData} = extra;
+  const [tab, setTab] = useState('details');
 
   useEffect(() => {
     setLoanDetails(loanData);
@@ -44,9 +45,16 @@ function MiniSolidarity({loanData, extra}) {
                 </div>
               </div>
               <div>
-
-                <div>Details</div>
-
+                <div className='bloc-tabs'>
+                  <button className={tab === 'details' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('details')}>Details</button>
+                  <button className={tab === 'schedule' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('schedule')}>Schedule</button>
+                  <button className={tab === 'txns' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('txns')}>Statement</button>
+                  <button className={tab === 'payments' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('payments')}>Payments</button>
+                  <button className={tab === 'securities' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('securities')}>Collateral</button>
+                  <button className={tab === 'penalties' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('penalties')}>Penalties</button>
+                  <button className={tab === 'comments' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('comments')}>Comments</button>
+                  <button className={tab === 'files' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('files')}>Attachments</button>
+                </div>
               </div>
             </div>
           </div>

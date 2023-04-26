@@ -3505,3 +3505,9 @@ input[type=number] {
   column-gap: 5px;
   color: var(--light-color);
 }
+
+.add__security__container {
+  background-color: var(--white);
+  margin-top: 1rem;
+  padding: var(--p-1-5);
+}
