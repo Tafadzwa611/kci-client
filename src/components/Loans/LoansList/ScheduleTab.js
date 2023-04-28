@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { CheckBox } from '../../../common';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 function ScheduleTab({installments}) {
   const [expected, setExpected] = useState(true);
@@ -8,13 +9,25 @@ function ScheduleTab({installments}) {
 
   return (
     <>
-      <div style={{display: 'flex', columnGap: "1rem", marginBottom:"1rem"}}>
-        <CheckBox isChecked={expected} label='Amount Expected' onChange={() => setExpected(curr => !curr)} />
-        <CheckBox isChecked={paid} label='Amount Paid' onChange={() => setPaid(curr => !curr)} />
-        <CheckBox isChecked={dues} label='Amount Due' onChange={() => setDues(curr => !curr)} />
+      <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"1rem"}}>
+        <div className="schedule__check__section" style={{display: "flex", columnGap: "1rem", alignItems:"center"}}>
+          <CheckBox isChecked={expected} label='Amount Expected' onChange={() => setExpected(curr => !curr)} />
+          <CheckBox isChecked={paid} label='Amount Paid' onChange={() => setPaid(curr => !curr)} />
+          <CheckBox isChecked={dues} label='Amount Due' onChange={() => setDues(curr => !curr)} />
+        </div>
+        <div>
+          <ReactHTMLTableToExcel
+            id='test-table-xls-button'
+            className='btn btn-default'
+            table='schedule'
+            filename='schedule'
+            sheet='tablexls'
+            buttonText='Download as XLS'
+          />
+        </div>
       </div>
       <div style={{overflow:"auto", maxHeight:"600px"}} className="miniLoanDetails-container">
-        <table className="table">
+        <table className="table" id="schedule">
           <thead>
             <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
               <th className="schedule__table"><b>#</b></th>

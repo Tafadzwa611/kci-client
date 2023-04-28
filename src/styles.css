@@ -3532,3 +3532,7 @@ input[type=number] {
   color: var(--info);
   border: 2px dashed var(--info);
 }
+
+.schedule__check__section label {
+  margin-bottom: 0;
+}
