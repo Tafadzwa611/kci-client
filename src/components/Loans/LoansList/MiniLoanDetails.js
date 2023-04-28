@@ -24,7 +24,7 @@ function MiniLoanDetails({loanData, extra}) {
             <div style={{marginBottom:'1rem'}}>
               <div style={{marginBottom:'1rem', display:'flex', justifyContent:'space-between'}}>
                 <button className='btn btn-default' onClick={() => setLoanId(null)}>Close</button>
-                <button className='btn btn-default'>
+                <button className='btn btn-default max'>
                   <Link to={`/loans/viewloans/loandetails/cli/${loan.id}`}>Max</Link>
                 </button>
               </div>

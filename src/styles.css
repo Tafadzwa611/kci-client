@@ -984,6 +984,10 @@ span {
   background-color: var(--home-section-color);
 }
 
+.btn-default.max a{
+  color: var(--color);
+}
+
 .btn-default.client__details {
   background-color: #fff;
 }
