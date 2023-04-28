@@ -25,33 +25,35 @@ function Securities({collaterals, setLoan, loanId}) {
 
   return (
     <>
-      <div className="miniLoanDetails-container" style={{overflowX:'auto', maxHeight:"200px"}}>
-        <table className="table">
-          <thead>
-            <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
-              <th className="schedule__table">Type</th>
-              <th className="schedule__table">Description</th>
-              <th className="schedule__table">Value</th>
-              <th className="schedule__table">Added By</th>
-              <th className="schedule__table">Date Added</th>
-              <th className="schedule__table">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {collaterals.map(collateral => (
-              <tr key={collateral.id}>
-                <td className="schedule__table">{collateral.collateral_type_name}</td>
-                <td className="schedule__table">{collateral.product_name}</td>
-                <td className="schedule__table">{collateral.value}</td>
-                <td className="schedule__table">{collateral.user_name}</td>
-                <td className="schedule__table">{collateral.date_added}</td>
-                <td className="schedule__table">
-                  <button value={collateral.id} onClick={onClick} className='badge badge-danger'>Delete</button>
-                </td>
+      <div className="miniLoanDetails-container" style={{padding:"1.5rem"}}>
+        <div style={{overflowX:'auto', maxHeight:"200px"}}>
+          <table className="table">
+            <thead>
+              <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
+                <th className="schedule__table">Type</th>
+                <th className="schedule__table">Description</th>
+                <th className="schedule__table">Value</th>
+                <th className="schedule__table">Added By</th>
+                <th className="schedule__table">Date Added</th>
+                <th className="schedule__table">Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {collaterals.map(collateral => (
+                <tr key={collateral.id}>
+                  <td className="schedule__table">{collateral.collateral_type_name}</td>
+                  <td className="schedule__table">{collateral.product_name}</td>
+                  <td className="schedule__table">{collateral.value}</td>
+                  <td className="schedule__table">{collateral.user_name}</td>
+                  <td className="schedule__table">{collateral.date_added}</td>
+                  <td className="schedule__table">
+                    <button value={collateral.id} onClick={onClick} className='badge badge-danger'>Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       <div className="add__security__container">
         <AddSecurity setLoan={setLoan} loanId={loanId}/>

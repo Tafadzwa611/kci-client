@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { CheckBox } from '../../../common';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-function ScheduleTab({installments}) {
+function ScheduleTab({installments, client_name}) {
   const [expected, setExpected] = useState(true);
   const [paid, setPaid] = useState(true);
   const [dues, setDues] = useState(true);
@@ -20,7 +20,7 @@ function ScheduleTab({installments}) {
             id='test-table-xls-button'
             className='btn btn-default'
             table='schedule'
-            filename='schedule'
+            filename={`${client_name}'s schedule`}
             sheet='tablexls'
             buttonText='Download as XLS'
           />

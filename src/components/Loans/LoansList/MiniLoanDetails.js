@@ -31,7 +31,7 @@ function MiniLoanDetails({loanData, extra}) {
               <div style={{marginBottom:'1rem', display:'flex', justifyContent:'space-between'}}>
                 <div style={{display:'flex', alignItems:'center'}}>
                   <span style={{marginRight:"5px"}}><b>{loan.client_fullname}</b></span> /
-                  <span style={{margin: "0 5px"}}><b>{loan.loan_id}</b></span> /
+                  <span style={{margin: "0 5px"}}><b>{loan.loan_id}</b></span> /          
                   <div style={{marginLeft:"5px"}}>
                     <button className={statusClasses[loan.status]}>{loan.status}</button>
                   </div>

@@ -23,6 +23,7 @@ function LoanDetails({loanApiData}) {
             <div style={{display:'flex', justifyContent:'space-between'}}>
               <div style={{display:'flex', alignItems:'center'}}>
                 <span style={{marginRight:'5px'}}><b>{loan.client_fullname}&apos;s</b> Loan Details</span> /
+                <span style={{margin: "0 5px"}}><b>{loan.loan_id}</b></span> /          
                 <div style={{marginLeft:'5px'}}>
                   <button className={statusClasses[loan.status]}>{loan.status}</button>
                 </div>
@@ -44,11 +45,11 @@ function LoanDetails({loanApiData}) {
             </div>
             {{
               'details': <DetailsTab loan={loan}/>,
-              'schedule': <ScheduleTab installments={loan.installments} />,
+              'schedule': <ScheduleTab installments={loan.installments} client_name={loan.client_fullname} />,
               'txns': <Txns txns={loan.txns} />,
-              'payments': <Payments payments={loan.payments} />,
+              'payments': <Payments payments={loan.payments} client_name={loan.client_fullname} />,
               'securities': <Securities collaterals={loan.collaterals} setLoan={setLoan} loanId={loan.id} />,
-              'penalties': <Penalties penalties={loan.penalties} />,
+              'penalties': <Penalties penalties={loan.penalties} client_name={loan.client_fullname} />,
               'comments': <Comments comments={loan.comments} />,
               'files': <LoanFiles loanId={loan.id} files={loan.files} setLoan={setLoan} />,
               'audit': <Audit />,
