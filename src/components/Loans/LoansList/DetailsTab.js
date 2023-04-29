@@ -1,5 +1,4 @@
 import React from 'react';
-import { statusClasses } from './data';
 
 function DetailsTab({loan}) {
   return (
@@ -9,10 +8,6 @@ function DetailsTab({loan}) {
           <div style={{width:'48%'}}>
             <ul style={{paddingRight:'1rem'}}>
               <li style={{marginBottom: '1rem'}}><b>General</b></li>
-              {/* <li>Client Name: {loan.client_fullname}</li>
-              <li>Group Name: {loan.group_name}</li>
-              <li>Account ID: {loan.loan_id}</li>
-              <li>Account State: <button className={statusClasses[loan.status]}>{loan.status}</button></li> */}
               <li style={{marginBottom:"0.25rem"}}>Assigned to Branch: {loan.branch}</li>
               <li style={{marginBottom:"0.25rem"}}>Assigned to Loan Officer: {loan.loan_officer_name}</li>
               <li style={{marginBottom:"0.25rem"}}>Loan Created By: {loan.loan_created_by}</li>

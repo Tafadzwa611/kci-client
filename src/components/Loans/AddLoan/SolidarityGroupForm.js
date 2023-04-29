@@ -123,24 +123,23 @@ function SolidarityGroupForm({product, isSubmitting, setFieldValue, values}) {
       <small><em>Minimum = {product.minimum_principal_amount} Maximum = {product.maximum_principal_amount}</em></small>
       {values.principal_distribution.map(part =>
         <CustomInput
-          key={part.id}
+          key={part.client_id}
           label={part.fullname}
-          name={part.id}
+          name={part.client_id}
           type='number'
           onChange={(evt) => {
             const principal_distribution = values.principal_distribution.filter(part => {
-              if (part.id == evt.target.name) {
+              if (part.client_id == evt.target.name) {
                 part.principal = evt.target.value;
               }
               return part;
             });
             setFieldValue('principal_distribution', principal_distribution);
           }}
-          value={part.principal}
+          value={part.principal ? part.principal : 0}
           step={product.number_of_decimal_places}
           required
-        />)
-      }
+        />)}
       <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
       <div style={{display:'flex', justifyContent: 'flex-end'}}> 
         <SubmitButton isSubmitting={isSubmitting}/>

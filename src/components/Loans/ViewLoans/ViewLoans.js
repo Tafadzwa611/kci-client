@@ -3,8 +3,15 @@ import LoansList from '../LoansList/LoansList';
 import AddLoan from '../AddLoan/AddLoan';
 import EditLoan from '../AddLoan/EditLoan';
 import { Fetcher } from '../../../common';
-import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
-import FullLoanDetails from '../LoansList/FullLoanDetails';
+import LoanDetails from '../LoansList/LoanDetails';
+import { useParams } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  Outlet,
+  Link,
+  useLocation
+} from 'react-router-dom';
 
 const ViewLoans = () => {
   useEffect(() => {
@@ -24,12 +31,18 @@ const ViewLoans = () => {
             </Fetcher>
           } 
         />
-        <Route
-          path='loandetails/:loanType/:loanId'
-          element={<FullLoanDetails/>} 
-        />
+        <Route path='loandetails/:loanType/:loanId' element={<FullLoanDetails/>}/>
       </Route>
     </Routes>
+  )
+}
+
+function FullLoanDetails() {
+  const params = useParams();
+  return (
+    <Fetcher urls={[`/loansapi/get_loan/${params.loanId}/`]}>
+      {({data}) => <LoanDetails loanApiData={data[0]}/>}
+    </Fetcher>
   )
 }
 
@@ -51,7 +64,6 @@ const LoanListComponent = () => {
 
 function Layout() {
   const location = useLocation();
-
   return (
     <div className='card'>
       <div className='card-body'>
