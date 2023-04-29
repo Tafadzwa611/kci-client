@@ -14,8 +14,9 @@ function BlocTabs({loan, setLoan}) {
   const [tab, setTab] = useState('details');
 
   return (
+    <>
     <div>
-      <div className='bloc-tabs'>
+      <div className='bloc-tabs' style={{marginBottom:"2rem"}}>
         <button className={tab === 'details' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('details')}>Details</button>
         {loan.client_type === 'Groups (solidarity)' && <button className={tab === 'loans' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('loans')}>Loans</button>}
         <button className={tab === 'schedule' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('schedule')}>Schedule</button>
@@ -40,6 +41,8 @@ function BlocTabs({loan, setLoan}) {
         'audit': <Audit />,
       }[tab]}
     </div>
+    </>
+    
   )
 }
 
