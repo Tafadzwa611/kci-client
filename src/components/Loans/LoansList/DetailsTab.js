@@ -52,7 +52,7 @@ function DetailsTab({loan}) {
               </>}
               {loan.next_installment ?
               <>
-                <li>Next Installment Date: {loan.currency_name} {loan.next_installment.installment_date}</li>
+                <li>Next Installment Date: {loan.next_installment.installment_date}</li>
                 <li>Next Installment Amount: {loan.currency_name} {loan.next_installment.installment}</li>
                 <li>Next Installment Principal: {loan.currency_name} {loan.next_installment.principal}</li>
                 <li>Next Installment Principal Balance: {loan.currency_name} {loan.next_installment.principal_due}</li>

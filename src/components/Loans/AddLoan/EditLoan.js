@@ -9,14 +9,14 @@ function EditLoan({products}) {
 
   if (params.loanType === 'sol') {
     return (
-      <Fetcher urls={[`/loansapi/get_sloan/${params.loanId}/`]}>
+      <Fetcher urls={[`/loansapi/get_loan/${params.loanId}/`]}>
         {({data}) => <EditSolidarityLoanForm loan={data[0]} loanProducts={products}/>}
       </Fetcher>
     )
   }
   return (
     <Fetcher urls={[`/loansapi/get_loan/${params.loanId}/`]}>
-      {({data}) => <EditLoanFoam loanDetails={data[0]} loanProducts={products} />}
+      {({data}) => <EditLoanFoam loan={data[0]} loanProducts={products} />}
     </Fetcher>
   )
 }

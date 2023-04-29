@@ -7,10 +7,9 @@ import { NonFieldErrors, CustomSelect } from '../../../common';
 import ClientFormFields from './ClientFormFields';
 import { Form, Formik } from 'formik';
 
-const EditLoanFoam = ({loanDetails, loanProducts}) => {
+const EditLoanFoam = ({loan, loanProducts}) => {
   const navigate = useNavigate();
-  const {loan} = loanDetails;
-  const [product, setProduct] = useState(loanProducts.find(prod => prod.id == loanDetails.loan.loan_product_id));
+  const [product, setProduct] = useState(loanProducts.find(prod => prod.id == loan.loan_product_id));
   const products = loanProducts.filter(prod => prod.client_type === loan.client_type && prod.is_active && prod.id !== product.id);
 
   const initialValues = {
@@ -52,10 +51,10 @@ const EditLoanFoam = ({loanDetails, loanProducts}) => {
       const data = removeEmptyValues(values);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.put(`/loansapi/update_loan_api/${loan.id}/`, {...data, fees: values.fees}, CONFIG);
-      navigate({pathname: `/loans/loandetails/cli/${loan.id}`});
+      navigate({pathname: `/loans/viewloans/loandetails/cli/${loan.id}`});
     } catch (error) {
-      if (error.message === "Network Error") {
-        actions.setErrors({responseStatus: "Network Error"});
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
       } else if (error.response.status >= 400 && error.response.status < 500) {
         actions.setErrors({responseStatus: error.response.status, ...error.response.data});
       } else {

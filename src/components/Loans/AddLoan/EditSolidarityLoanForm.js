@@ -16,14 +16,14 @@ function EditSolidarityLoanForm({loan, loanProducts}) {
     loan_product_id: product.id,
     principal: loan.principal,
     interest_rate: loan.interest_rate,
-    application_date: loan.application_date,
+    application_date: loan.app_date,
     number_of_repayments: loan.number_of_repayments,
-    first_repayment_date: loan.first_repayment_date,
+    first_repayment_date: loan.first_payment_date,
     schedule_strategy: loan.schedule_strategy,
-    reason_for_loan: loan.reason_for_loan,
+    reason_for_loan: loan.reason_for_borrowing,
     fees: product.fees,
     files: [],
-    principal_distribution: loan.loans,
+    principal_distribution: loan.sub_loans_list,
     group_id: loan.group_id,
     group: {value: loan.group_id, label: `${loan.group_name} - ${loan.group_branch}`},
     guarantor_id: loan.guarantor_id,
@@ -45,7 +45,7 @@ function EditSolidarityLoanForm({loan, loanProducts}) {
       const data = removeEmptyValues(values);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.put(`/loansapi/update_soloan_api/${loan.id}/`, {...data, fees: values.fees}, CONFIG);
-      navigate({pathname: `/loans/loandetails/sol/${loan.id}`});
+      navigate({pathname: `/loans/viewloans/loandetails/cli/${loan.id}`});
     } catch (error) {
       if (error.message === "Network Error") {
         actions.setErrors({responseStatus: "Network Error"});

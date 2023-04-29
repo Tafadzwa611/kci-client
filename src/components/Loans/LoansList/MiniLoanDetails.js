@@ -1,19 +1,12 @@
 import Actions from './Actions';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import LoanFiles from './LoanFiles';
-import Securities from './Securities';
-import Comments from './Comments';
-import Penalties from './Penalties';
-import Payments from './Payments';
-import Txns from './Txns';
-import ScheduleTab from './ScheduleTab';
-import DetailsTab from './DetailsTab';
+import BlocTabs from './BlocTabs';
 
 function MiniLoanDetails({loanData, extra}) {
   const {setLoanId, setLoanData} = extra;
-  const [tab, setTab] = useState('details');
   const [loan, setLoan] = useState(loanData);
+  const loanType = loan.client_type === 'Clients' ? 'cli' : 'sol';
 
   return (
     <div>
@@ -34,31 +27,12 @@ function MiniLoanDetails({loanData, extra}) {
                   setLoanDetails={setLoan}
                   setLoanId={setLoanId}
                   setLoanData={setLoanData}
-                  loanType={'cli'}
+                  loanType={loanType}
                 />
               </div>
             </div>
           </div>
-          <div className='bloc-tabs'>
-            <button className={tab === 'details' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('details')}>Details</button>
-            <button className={tab === 'schedule' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('schedule')}>Schedule</button>
-            <button className={tab === 'txns' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('txns')}>Statement</button>
-            <button className={tab === 'payments' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('payments')}>Payments</button>
-            <button className={tab === 'securities' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('securities')}>Collateral</button>
-            <button className={tab === 'penalties' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('penalties')}>Penalties</button>
-            <button className={tab === 'comments' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('comments')}>Comments</button>
-            <button className={tab === 'files' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('files')}>Attachments</button>
-          </div>
-          {{
-            'details': <DetailsTab loan={loan}/>,
-            'schedule': <ScheduleTab installments={loan.installments} />,
-            'txns': <Txns txns={loan.txns} />,
-            'payments': <Payments payments={loan.payments} />,
-            'securities': <Securities collaterals={loan.collaterals} setLoan={setLoan} loanId={loan.id} />,
-            'penalties': <Penalties penalties={loan.penalties} />,
-            'comments': <Comments comments={loan.comments} />,
-            'files': <LoanFiles loanId={loan.id} files={loan.files} setLoan={setLoan} />,
-          }[tab]}
+          <BlocTabs loan={loan} setLoan={setLoan}/>
         </div>
       </div>
     </div>
