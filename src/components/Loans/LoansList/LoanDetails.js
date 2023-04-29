@@ -46,7 +46,7 @@ function LoanDetails({loanApiData}) {
             {{
               'details': <DetailsTab loan={loan}/>,
               'schedule': <ScheduleTab installments={loan.installments} client_name={loan.client_fullname} />,
-              'txns': <Txns txns={loan.txns} />,
+              'txns': <Txns txns={loan.txns} client_name={loan.client_fullname} />,
               'payments': <Payments payments={loan.payments} client_name={loan.client_fullname} />,
               'securities': <Securities collaterals={loan.collaterals} setLoan={setLoan} loanId={loan.id} />,
               'penalties': <Penalties penalties={loan.penalties} client_name={loan.client_fullname} />,
