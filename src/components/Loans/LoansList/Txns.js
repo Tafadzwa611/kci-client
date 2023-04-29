@@ -1,30 +1,31 @@
 import React from 'react';
 
-const thStyle2 = {border: 'none', borderBottom: '1px solid #c1d0d7'};
 function Txns({txns}) {
   return (
-    <table>
-      <thead>
-        <tr>
-          <th style={thStyle2}><b>Value Date</b></th>
-          <th style={thStyle2}><b>Description</b></th>
-          <th style={thStyle2}><b>Debit</b></th>
-          <th style={thStyle2}><b>Credit</b></th>
-          <th style={thStyle2}><b>Total Balance</b></th>
-        </tr>
-      </thead>
-      <tbody>
-        {txns.map(txn => (
-          <tr key={txn.id}>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{txn.cvalue_date}</td>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{txn.description}</td>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{txn.entry_type === 'Dr' && txn.amount}</td>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{txn.entry_type === 'Cr' && txn.amount}</td>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{txn.balance}</td>
+    <div style={{overflowX:'auto', maxHeight:"600px"}} className="miniLoanDetails-container">
+      <table className="table">
+        <thead>
+          <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
+            <th className="schedule__table">Value Date</th>
+            <th className="schedule__table">Description</th>
+            <th className="schedule__table">Debit</th>
+            <th className="schedule__table">Credit</th>
+            <th className="schedule__table">Total Balance</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {txns.map(txn => (
+            <tr key={txn.id}>
+              <td className="schedule__table">{txn.cvalue_date}</td>
+              <td className="schedule__table">{txn.description}</td>
+              <td className="schedule__table">{txn.entry_type === 'Dr' && txn.amount}</td>
+              <td className="schedule__table">{txn.entry_type === 'Cr' && txn.amount}</td>
+              <td className="schedule__table">{txn.balance}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   )
 }
 

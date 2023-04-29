@@ -1,105 +1,120 @@
 import React, {useState} from 'react';
 import { CheckBox } from '../../../common';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-const thStyle1 = {border: 'none', borderBottom: '1px solid #c1d0d7', borderRight: '1px solid #c1d0d7'};
-const thStyle2 = {border: 'none', borderBottom: '1px solid #c1d0d7'};
-function ScheduleTab({installments}) {
+function ScheduleTab({installments, client_name}) {
   const [expected, setExpected] = useState(true);
   const [paid, setPaid] = useState(true);
   const [dues, setDues] = useState(true);
 
   return (
     <>
-      <CheckBox isChecked={expected} label='Amount Expected' onChange={() => setExpected(curr => !curr)} />
-      <CheckBox isChecked={paid} label='Amount Paid' onChange={() => setPaid(curr => !curr)} />
-      <CheckBox isChecked={dues} label='Amount Due' onChange={() => setDues(curr => !curr)} />
-      <table>
-        <thead>
-          <tr style={{backgroundColor: '#F2F8FF'}}>
-            <th style={{width: '10px', border: 'none', borderBottom: '1px solid #c1d0d7'}}><b>#</b></th>
-            <th style={thStyle1}><b>Due Date</b></th>
-            {expected &&
-            <>
-              <th style={thStyle2}><b>Principal Expected</b></th>
-              <th style={thStyle2}><b>Interest Expected</b></th>
-              <th style={thStyle2}><b>Fees Expected</b></th>
-              <th style={thStyle2}><b>Penalty Expected</b></th>
-              <th style={thStyle1}><b>Total Expected</b></th>
-            </>}
-            {paid &&
-            <>
-              <th style={thStyle2}><b>Principal Paid</b></th>
-              <th style={thStyle2}><b>Interest Paid</b></th>
-              <th style={thStyle2}><b>Fees Paid</b></th>
-              <th style={thStyle2}><b>Penalty Paid</b></th>
-              <th style={thStyle1}><b>Total Paid</b></th>
-            </>}
-            {dues &&
-            <>
-              <th style={thStyle2}><b>Principal Due</b></th>
-              <th style={thStyle2}><b>Interest Due</b></th>
-              <th style={thStyle2}><b>Fees Due</b></th>
-              <th style={thStyle2}><b>Penalty Due</b></th>
-              <th style={thStyle1}><b>Total Due</b></th>
-            </>}
-            <th style={thStyle2}><b>State</b></th>
-          </tr>
-        </thead>
-        <tbody>
-          {installments.map(installment => (
-            <tr key={installment.period}>
-              <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{installment.period}</td>
-              <td style={{border: 'none', borderBottom: '1px dotted #e6ecef,border-right: 1px solid #c1d0d7'}}>{installment.installment_date}</td>
+      <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"1rem"}}>
+        <div className="schedule__check__section" style={{display: "flex", columnGap: "1rem", alignItems:"center"}}>
+          <CheckBox isChecked={expected} label='Amount Expected' onChange={() => setExpected(curr => !curr)} />
+          <CheckBox isChecked={paid} label='Amount Paid' onChange={() => setPaid(curr => !curr)} />
+          <CheckBox isChecked={dues} label='Amount Due' onChange={() => setDues(curr => !curr)} />
+        </div>
+        <div>
+          <ReactHTMLTableToExcel
+            id='test-table-xls-button'
+            className='btn btn-default'
+            table='schedule'
+            filename={`${client_name}'s schedule`}
+            sheet='tablexls'
+            buttonText='Download as XLS'
+          />
+        </div>
+      </div>
+      <div style={{overflow:"auto", maxHeight:"600px"}} className="miniLoanDetails-container">
+        <table className="table" id="schedule">
+          <thead>
+            <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
+              <th className="schedule__table"><b>#</b></th>
+              <th className="schedule__table schedule__installment__right">Due Date</th>
               {expected &&
               <>
-                <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{installment.principal}</td>
-                <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>
-                  {installment.interest_on_settlement && installment.interest_on_settlement != installment.interest ?
-                  <>
-                    <del>{`${installment.interest}`}</del>
-                    {` ${installment.interest_on_settlement}`}
-                  </> :
-                  `${installment.interest}`}
-                </td>
-                <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>
-                  {installment.fees_on_settlement && installment.fees_on_settlement != installment.fees ?
-                  <>
-                    <del>{`${installment.fees}`}</del>
-                    {` ${installment.fees_on_settlement}`}
-                  </> :
-                  `${installment.fees}`}
-                </td>
-                <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>
-                  {installment.penalty_on_settlement && installment.penalty_on_settlement != installment.penalty ?
-                  <>
-                    <del>{`${installment.penalty}`}</del>
-                    {` ${installment.penalty_on_settlement}`}
-                  </> :
-                  `${installment.penalty}`}
-                </td>
-                <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{installment.installment}</td>
+                <th className="schedule__table">Principal Expected</th>
+                <th className="schedule__table">Interest Expected</th>
+                <th className="schedule__table">Fees Expected</th>
+                <th className="schedule__table">Penalty Expected</th>
+                <th className="schedule__table schedule__installment__right">Total Expected</th>
               </>}
               {paid &&
               <>
-                <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{installment.principal_paid}</td>
-                <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{installment.interest_paid}</td>
-                <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{installment.fees_paid}</td>
-                <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{installment.penalty_paid}</td>
-                <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{installment.total_paid}</td>
+                <th className="schedule__table">Principal Paid</th>
+                <th className="schedule__table">Interest Paid</th>
+                <th className="schedule__table">Fees Paid</th>
+                <th className="schedule__table">Penalty Paid</th>
+                <th className="schedule__table schedule__installment__right">Total Paid</th>
               </>}
               {dues &&
               <>
-                <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{installment.principal_due}</td>
-                <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{installment.interest_due}</td>
-                <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{installment.fees_due}</td>
-                <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{installment.penalty_due}</td>
-                <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{installment.balance}</td>
+                <th className="schedule__table">Principal Due</th>
+                <th className="schedule__table">Interest Due</th>
+                <th className="schedule__table">Fees Due</th>
+                <th className="schedule__table">Penalty Due</th>
+                <th className="schedule__table schedule__installment__right">Total Due</th>
               </>}
-              <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>Pending</td>
+              <th className="schedule__table">State</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {installments.map(installment => (
+              <tr key={installment.period}>
+                <td className='schedule__table schedule__installment'>{installment.period}</td>
+                <td className='schedule__table schedule__installment schedule__installment__right'>{installment.installment_date}</td>
+                {expected &&
+                <>
+                  <td className='schedule__table schedule__installment'>{installment.principal}</td>
+                  <td className='schedule__table schedule__installment'>
+                    {installment.interest_on_settlement && installment.interest_on_settlement != installment.interest ?
+                    <>
+                      <del>{`${installment.interest}`}</del>
+                      {` ${installment.interest_on_settlement}`}
+                    </> :
+                    `${installment.interest}`}
+                  </td>
+                  <td className='schedule__table schedule__installment'>
+                    {installment.fees_on_settlement && installment.fees_on_settlement != installment.fees ?
+                    <>
+                      <del>{`${installment.fees}`}</del>
+                      {` ${installment.fees_on_settlement}`}
+                    </> :
+                    `${installment.fees}`}
+                  </td>
+                  <td className='schedule__table schedule__installment'>
+                    {installment.penalty_on_settlement && installment.penalty_on_settlement != installment.penalty ?
+                    <>
+                      <del>{`${installment.penalty}`}</del>
+                      {` ${installment.penalty_on_settlement}`}
+                    </> :
+                    `${installment.penalty}`}
+                  </td>
+                  <td className='schedule__table schedule__installment schedule__installment__right'>{installment.installment}</td>
+                </>}
+                {paid &&
+                <>
+                  <td className='schedule__table schedule__installment'>{installment.principal_paid}</td>
+                  <td className='schedule__table schedule__installment'>{installment.interest_paid}</td>
+                  <td className='schedule__table schedule__installment'>{installment.fees_paid}</td>
+                  <td className='schedule__table schedule__installment'>{installment.penalty_paid}</td>
+                  <td className='schedule__table schedule__installment schedule__installment__right'>{installment.total_paid}</td>
+                </>}
+                {dues &&
+                <>
+                  <td className='schedule__table schedule__installment'>{installment.principal_due}</td>
+                  <td className='schedule__table schedule__installment'>{installment.interest_due}</td>
+                  <td className='schedule__table schedule__installment'>{installment.fees_due}</td>
+                  <td className='schedule__table schedule__installment'>{installment.penalty_due}</td>
+                  <td className='schedule__table schedule__installment schedule__installment__right'>{installment.balance}</td>
+                </>}
+                <td className='schedule__table schedule__installment'>Pending</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   )
 }

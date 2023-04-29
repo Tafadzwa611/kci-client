@@ -2,6 +2,7 @@ import Actions from './Actions';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import BlocTabs from './BlocTabs';
+import {statusClasses} from './data';
 
 function MiniLoanDetails({loanData, extra}) {
   const {setLoanId, setLoanData} = extra;
@@ -16,12 +17,18 @@ function MiniLoanDetails({loanData, extra}) {
             <div style={{marginBottom:'1rem'}}>
               <div style={{marginBottom:'1rem', display:'flex', justifyContent:'space-between'}}>
                 <button className='btn btn-default' onClick={() => setLoanId(null)}>Close</button>
-                <button className='btn btn-default'>
+                <button className='btn btn-default max'>
                   <Link to={`/loans/viewloans/loandetails/cli/${loan.id}`}>Max</Link>
                 </button>
               </div>
-              <div style={{display:'flex', justifyContent:'space-between'}}>
-                <div style={{display:'flex', alignItems:'center'}}></div>
+              <div style={{marginBottom:'1rem', display:'flex', justifyContent:'space-between'}}>
+                <div style={{display:'flex', alignItems:'center'}}>
+                  <span style={{marginRight:"5px"}}><b>{loan.client_fullname}</b></span> /
+                  <span style={{margin: "0 5px"}}><b>{loan.loan_id}</b></span> /          
+                  <div style={{marginLeft:"5px"}}>
+                    <button className={statusClasses[loan.status]}>{loan.status}</button>
+                  </div>
+                </div>
                 <Actions
                   loan={loan}
                   setLoanDetails={setLoan}

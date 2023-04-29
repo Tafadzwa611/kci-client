@@ -16,6 +16,7 @@ function MainTable({loanData, handleClick}) {
                     <th>Client</th>
                     <th>Group</th>
                     <th>Loan_Number</th>
+                    <th>Status</th>
                     <th>Date_Disbursed</th>
                     <th>Interest_Rate</th>
                     <th>Loan_Duration</th>
@@ -26,7 +27,7 @@ function MainTable({loanData, handleClick}) {
                     <th>Principal_Amount_Due</th>
                     <th>Interest_Amount_Due</th>
                     <th>Penalty_Amount_Due</th>
-                    <th>Fees Due</th>
+                    <th>Fees_Due</th>
                     <th>Amount_Due_At_Maturity</th>
                     <th>Amount_Paid</th>
                   </tr>
@@ -39,6 +40,8 @@ function MainTable({loanData, handleClick}) {
                         <td className='td-class'><div title={loan.group}><span id={loan.group_pk}>{loan.group_name}</span></div></td>
                         <td>
                           <span onClick={handleClick} id={loan.id} style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>{loan.loan_id}</span>
+                        </td>
+                        <td>
                           <span className={statusClasses[loan.status]}>{loan.status}</span>
                         </td>
                         <td>{loan.db_date}</td>

@@ -1,34 +1,48 @@
 import React from 'react';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-const thStyle2 = {border: 'none', borderBottom: '1px solid #c1d0d7'};
-function Penalties({penalties}) {
+function Penalties({penalties, client_name}) {
   return (
-    <table>
-      <thead>
-        <tr>
-          <th style={thStyle2}><b>Penalty Date</b></th>
-          <th style={thStyle2}><b>Reason for Penalty</b></th>
-          <th style={thStyle2}><b>Amount</b></th>
-          <th style={thStyle2}><b>Amount Paid</b></th>
-          <th style={thStyle2}><b>Amount Due</b></th>
-          <th style={thStyle2}><b>Status</b></th>
-          <th style={thStyle2}><b>Action</b></th>
-        </tr>
-      </thead>
-      <tbody>
-        {penalties.map(penalty => (
-          <tr key={penalty.id}>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{penalty.cdate_created}</td>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{penalty.description}</td>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{penalty.amount_for_fixed_amount_penalty}</td>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{penalty.amount_paid}</td>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{penalty.amount_due}</td>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{penalty.status}</td>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>Action</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <>
+      <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"1rem"}}>
+        <ReactHTMLTableToExcel
+          id='test-table-xls-button'
+          className='btn btn-default'
+          table='penalties'
+          filename={`${client_name}'s penalties`}
+          sheet='tablexls'
+          buttonText='Download as XLS'
+        />
+      </div>
+      <div style={{overflowX:'auto', maxHeight:"600px"}} className="miniLoanDetails-container">
+        <table className="table" id="penalties">
+          <thead>
+            <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
+              <th className="schedule__table">Penalty Date</th>
+              <th className="schedule__table">Reason for Penalty</th>
+              <th className="schedule__table">Amount</th>
+              <th className="schedule__table">Amount Paid</th>
+              <th className="schedule__table">Amount Due</th>
+              <th className="schedule__table">Status</th>
+              <th className="schedule__table">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {penalties.map(penalty => (
+              <tr key={penalty.id}>
+                <td className="schedule__table">{penalty.cdate_created}</td>
+                <td className="schedule__table">{penalty.description}</td>
+                <td className="schedule__table">{penalty.amount_for_fixed_amount_penalty}</td>
+                <td className="schedule__table">{penalty.amount_paid}</td>
+                <td className="schedule__table">{penalty.amount_due}</td>
+                <td className="schedule__table">{penalty.status}</td>
+                <td className="schedule__table">Action</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   )
 }
 

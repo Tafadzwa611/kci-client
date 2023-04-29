@@ -11,7 +11,6 @@ import Cookies from 'js-cookie';
 import { Form, Formik } from 'formik';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
 
-const thStyle2 = {border: 'none', borderBottom: '1px solid #c1d0d7'};
 
 function Securities({collaterals, setLoan, loanId}) {
   const onClick = async (evt) => {
@@ -26,34 +25,39 @@ function Securities({collaterals, setLoan, loanId}) {
 
   return (
     <>
-      <table>
-        <thead>
-          <tr>
-            <th style={thStyle2}><b>Type</b></th>
-            <th style={thStyle2}><b>Description</b></th>
-            <th style={thStyle2}><b>Value</b></th>
-            <th style={thStyle2}><b>Added By</b></th>
-            <th style={thStyle2}><b>Date Added</b></th>
-            <th style={thStyle2}><b>Action</b></th>
-          </tr>
-        </thead>
-        <tbody>
-          {collaterals.map(collateral => (
-            <tr key={collateral.id}>
-              <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{collateral.collateral_type_name}</td>
-              <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{collateral.product_name}</td>
-              <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{collateral.value}</td>
-              <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{collateral.user_name}</td>
-              <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{collateral.date_added}</td>
-              <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>
-                <button value={collateral.id} onClick={onClick} className='badge badge-danger'>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
-      <AddSecurity setLoan={setLoan} loanId={loanId}/>
+      <div className="miniLoanDetails-container" style={{padding:"1.5rem"}}>
+        <div style={{overflowX:'auto', maxHeight:"200px"}}>
+          <table className="table">
+            <thead>
+              <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
+                <th className="schedule__table">Type</th>
+                <th className="schedule__table">Description</th>
+                <th className="schedule__table">Value</th>
+                <th className="schedule__table">Added By</th>
+                <th className="schedule__table">Date Added</th>
+                <th className="schedule__table">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {collaterals.map(collateral => (
+                <tr key={collateral.id}>
+                  <td className="schedule__table">{collateral.collateral_type_name}</td>
+                  <td className="schedule__table">{collateral.product_name}</td>
+                  <td className="schedule__table">{collateral.value}</td>
+                  <td className="schedule__table">{collateral.user_name}</td>
+                  <td className="schedule__table">{collateral.date_added}</td>
+                  <td className="schedule__table">
+                    <button value={collateral.id} onClick={onClick} className='badge badge-danger'>Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div className="add__security__container">
+        <AddSecurity setLoan={setLoan} loanId={loanId}/>
+      </div>
     </>
   )
 }

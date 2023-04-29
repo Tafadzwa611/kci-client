@@ -87,22 +87,26 @@ const LoanFiles = ({loanId, files, setLoan}) => {
 
   return (
     <>
-      {files.map(file => (
-        <div key={file.filename}>
-          {file.description}-{file.user_name}-{file.date_added}
-          <a id={file.filename} name={file.description} onClick={dowloadFile}>Download</a>
-          <a id={file.id} onClick={deleteFile}>Remove</a>
-        </div>
-      ))}
+      <div style={{marginBottom: '1rem'}}>
+        {files.map(file => (
+          <div key={file.filename} style={{marginBottom: '0.25rem', display:'flex', columnGap:'10px'}}>
+            <span>
+              {file.description}-{file.user_name}-{file.date_added}
+            </span>
+            <span className='badge badge-info' id={file.filename} name={file.description} onClick={dowloadFile}>Download</span>
+            <span className='badge badge-danger' id={file.id} onClick={deleteFile}>Remove</span>
+          </div>
+        ))}
+      </div>
       <Dropzone onDrop={onDrop}>
         {({acceptedFiles, getRootProps, getInputProps}) => (
           <section className="container">
             <div {...getRootProps({className: 'dropzone'})}>
               <input {...getInputProps()} />
-              <p>Drag and drop some files here, or click to select files</p>
+              <p className="dropzone__text">Drag and drop some files here, or click to select files</p>
             </div>
             <aside>
-              <h4>Files</h4>
+              <p style={{marginTop:"1rem"}}>Files</p>
               <ul>
                 {acceptedFiles.map(file => (
                   <li key={file.path}>
