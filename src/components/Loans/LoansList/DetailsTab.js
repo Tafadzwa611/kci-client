@@ -47,7 +47,7 @@ function DetailsTab({loan}) {
               </>}
               {loan.next_installment ?
               <>
-                <li style={{marginBottom:"0.25rem"}}>Next Installment Date: {loan.currency_name} {loan.next_installment.installment_date}</li>
+                <li style={{marginBottom:"0.25rem"}}>Next Installment Date: {loan.next_installment.installment_date}</li>
                 <li style={{marginBottom:"0.25rem"}}>Next Installment Amount: {loan.currency_name} {loan.next_installment.installment}</li>
                 <li style={{marginBottom:"0.25rem"}}>Next Installment Principal: {loan.currency_name} {loan.next_installment.principal}</li>
                 <li style={{marginBottom:"0.25rem"}}>Next Installment Principal Balance: {loan.currency_name} {loan.next_installment.principal_due}</li>
