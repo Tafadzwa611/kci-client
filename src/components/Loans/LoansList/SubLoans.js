@@ -1,7 +1,7 @@
 import React from 'react';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-const thStyle2 = {border: 'none', borderBottom: '1px solid #c1d0d7'};
-function SubLoans({loans}) {
+function SubLoans({loans, client_name}) {
   const sortedLoans = loans.sort((a, b) => {
     if (a.id === null) {
       return 1;
@@ -13,33 +13,45 @@ function SubLoans({loans}) {
   });
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th style={thStyle2}><b>Client Name</b></th>
-          <th style={thStyle2}><b>Loan ID</b></th>
-          <th style={thStyle2}><b>Principal</b></th>
-          <th style={thStyle2}><b>Interest</b></th>
-          <th style={thStyle2}><b>Status</b></th>
-        </tr>
-      </thead>
-      <tbody>
-        {sortedLoans.map(loan => (
-          loan.id ?
-            <tr key={loan.client_id}>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{loan.fullname}</td>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{loan.loan_id}</td>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{loan.principal}</td>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{loan.interest}</td>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{loan.status}</td>
-          </tr>:
-          <tr key={loan.client_id}>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}}>{loan.fullname}</td>
-            <td style={{border: 'none', borderBottom: '1px dotted #e6ecef'}} colSpan={4} >Unallocated</td>
+    <>
+      <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"1rem"}}>
+        <ReactHTMLTableToExcel
+          id='test-table-xls-button'
+          className='btn btn-default'
+          table='loans'
+          filename={`${client_name}'s loans`}
+          sheet='tablexls'
+          buttonText='Download as XLS'
+        />
+      </div>
+      <table className="table" id="loans">
+        <thead>
+          <tr className="journal-details schedule__tables">
+            <th className="schedule__table"><b>Client Name</b></th>
+            <th className="schedule__table"><b>Loan ID</b></th>
+            <th className="schedule__table"><b>Principal</b></th>
+            <th className="schedule__table"><b>Interest</b></th>
+            <th className="schedule__table"><b>Status</b></th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {sortedLoans.map(loan => (
+            loan.id ?
+              <tr key={loan.client_id}>
+                <td className="schedule__table">{loan.fullname}</td>
+                <td className="schedule__table">{loan.loan_id}</td>
+                <td className="schedule__table">{loan.principal}</td>
+                <td className="schedule__table">{loan.interest}</td>
+                <td className="schedule__table">{loan.status}</td>
+              </tr>:
+            <tr key={loan.client_id}>
+              <td className="schedule__table">{loan.fullname}</td>
+              <td className="schedule__table" colSpan={4} >Unallocated</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   )
 }
 

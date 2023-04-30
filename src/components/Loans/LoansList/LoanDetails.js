@@ -23,7 +23,7 @@ function LoanDetails({loanApiData}) {
               <Actions loan={loan} setLoanDetails={setLoan} loanType={loanType}/>
             </div>
           </div>
-          <BlocTabs loan={loan} setLoan={setLoan} client_name={loan.client_fullname} />
+          <BlocTabs loan={loan} setLoan={setLoan} client_name={loan.client_fullname ? loan.client_fullname : loan.group_name} />
         </div>
       </div>
     </div>
