@@ -13,9 +13,10 @@ import { Form, Formik } from 'formik';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-function Penalties({penalties, client_name, loanId, setLoan}) {
-  const [showForm, setShowForm] = useState(false);
+function Penalties({penalties, penalty, client_name, loanId, setLoan, locked}) {
+  const [form, setForm] = useState(null);
   const [showDelete, setDelete] = useState(false);
+  const [showLock, setLock] = useState(false);
   const penId = useRef(null);
 
   const showDeleteModal = (evt) => {
@@ -25,9 +26,13 @@ function Penalties({penalties, client_name, loanId, setLoan}) {
 
   return (
     <>
-      <SuccessBtn handler={() => setShowForm(curr => !curr)} value={'Add Penalty'}/>
-      {showForm ? <PenaltyForm loanId={loanId} setLoan={setLoan} /> : null}
+      <SuccessBtn handler={() => setForm('add')} value={'Add Penalty'}/>
+      <SuccessBtn handler={() => setForm('reduce')} value={'Change Balance'}/>
+      <SuccessBtn handler={() => setLock(true)} value={locked ? 'Unlock Account' : 'Lock Account'}/>
+      {form === 'add' ?  <PenaltyForm loanId={loanId} setLoan={setLoan} /> : null}
+      {form === 'reduce' ? <ReducePenaltyForm loanId={loanId} orgPenalty={penalty} setLoan={setLoan} /> : null}
       {showDelete ? <DeletePenalty penaltyId={penId.current} setLoan={setLoan} setOpenModal={setDelete} /> : null}
+      {showLock ? <ToggleLock loanId={loanId} setLoan={setLoan} setOpenModal={setLock} locked={locked} /> : null}
       <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'1rem'}}>
         <ReactHTMLTableToExcel
           id='test-table-xls-button'
@@ -62,7 +67,7 @@ function Penalties({penalties, client_name, loanId, setLoan}) {
                 <td className='schedule__table'>{penalty.status}</td>
                 <td className='schedule__table'>
                   <span className='badge badge-danger' id={penalty.id} onClick={showDeleteModal} style={{cursor: 'pointer'}}>
-                    Delete
+                    Reverse
                   </span>
                 </td>
               </tr>
@@ -109,6 +114,41 @@ const PenaltyForm = ({loanId, setLoan}) => {
   )
 }
 
+const ReducePenaltyForm = ({loanId, orgPenalty, setLoan}) => {
+  const onSubmit = async (values, actions) => {
+    try {
+      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+      const response = await axios.post(`/loansapi/reduce_penalty/${loanId}/`, values, CONFIG);
+      setLoan(response.data);
+      actions.resetForm();
+    } catch (error) {
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+      } else {
+        actions.setErrors({responseStatus: error.response.status});
+      }
+    }
+  }
+
+  return (
+    <Formik initialValues={{new_balance: ''}} onSubmit={onSubmit}>
+      {({ isSubmitting, errors }) => (
+        <Form>
+          <NonFieldErrors errors={errors}>
+            <div>Original Balance {orgPenalty}</div>
+            <CustomInput label='New Balance' name='new_balance' type='number' required/>
+            <div style={{display:'flex', justifyContent: 'flex-end'}}> 
+            <SubmitButton isSubmitting={isSubmitting}/>
+            </div>
+          </NonFieldErrors>
+        </Form>
+      )}
+    </Formik>
+  )
+}
+
 function DeletePenalty({setOpenModal, setLoan, penaltyId}) {
   const onSubmit = async (_, actions) => {
     try {
@@ -134,6 +174,44 @@ function DeletePenalty({setOpenModal, setLoan, penaltyId}) {
           <Form>
             <NonFieldErrors errors={errors}>
               <ActionModalDialog isSubmitting={isSubmitting} act={'Delete'} msg={'Are you sure you want to delete this penalty.'} setOpen={setOpenModal}/>
+            </NonFieldErrors>
+          </Form>
+        )}
+      </Formik>
+    </ActionModal>
+  )
+}
+
+function ToggleLock({setOpenModal, setLoan, loanId, locked}) {
+  const onSubmit = async (values, actions) => {
+    try {
+      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+      await axios.patch(`/loansapi/toggle_penalty_lock/${loanId}/`, values, CONFIG);
+      setLoan(curr => ({...curr, penalties_locked: !locked}));
+      setOpenModal(false);
+    } catch (error) {
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+      } else {
+        actions.setErrors({responseStatus: error.response.status});
+      }
+    }
+  }
+
+  return (
+    <ActionModal>
+      <Formik initialValues={{}} onSubmit={onSubmit}>
+        {({isSubmitting, errors}) => (
+          <Form>
+            <NonFieldErrors errors={errors}>
+              <ActionModalDialog
+                isSubmitting={isSubmitting}
+                act={`${locked ? 'Unlock' : 'Lock'}`}
+                msg={`Are you sure you want to ${locked ? 'unlock' : 'lock'} this loan account.`}
+                setOpen={setOpenModal}
+              />
             </NonFieldErrors>
           </Form>
         )}
