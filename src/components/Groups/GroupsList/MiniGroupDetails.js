@@ -50,7 +50,7 @@ function MiniGroupDetails({groupData, extra}) {
 
               <div>
                 <ul style={{display:"flex", flexDirection:"column", rowGap:"10px"}}>
-                  <li>Group Date: {groupDetails.group.group_date}</li>
+                  <li>Group Date: {groupDetails.group.grou_date}</li>
                   <li>Group Phone Number: {groupDetails.group.group_phone_number}</li>
                   <li>Branch: {groupDetails.group.branch}</li>
                   <li>Group Type: {groupDetails.group.group_type}</li>
@@ -74,7 +74,7 @@ function MiniGroupDetails({groupData, extra}) {
                 <ul style={{maxHeight:"250px", overflowY:"auto"}}>
                   {groupDetails.group.members.map(member => {
                     return (
-                      <li className="fees-item" key={member.id}>{member.fullname} ~ {member.role}</li>
+                      <li className="fees-item" key={member.client_id}>{member.fullname} ~ {member.role}</li>
                     )
                   })}
                 </ul>

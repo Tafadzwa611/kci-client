@@ -5,16 +5,7 @@ import {initialMemberValues} from './data';
 
 function Member({id, index, selectedMember, setFieldValue, members, groupRoles}) {
     const setMember = (fieldName, selected) => {
-        const u = members.map(member => {
-            if (member.id === id) {
-                member.client_id = selected.value;
-                member.client_pk = selected.value;
-                member.value = selected.value;
-                member.label = selected.label;
-            }
-            return member
-        })
-        setFieldValue(fieldName, u);
+        setFieldValue(fieldName, {client_id: selected.value, fullname: selected.label});
     }
 
     const remove = (evt) => {
@@ -34,10 +25,11 @@ function Member({id, index, selectedMember, setFieldValue, members, groupRoles})
             label='Group Member'
             url='/clientsapi/search_client/'
             setFieldValue={setMember}
-            selected={selectedMember}
+            selected={selectedMember.client_id ?
+                {value: selectedMember.client_id, label: selectedMember.fullname} : ''}
             queryParamName='query'
             placeholder='Search Client'
-            name={`members[${index}].client_id`}
+            name={`members[${index}]`}
             required
         />
         <CustomSelect label='Group Member Role' name={`members[${index}].role_id`} required>
@@ -56,7 +48,7 @@ function AddMember({setFieldValue, members}) {
     const add = (evt) => {
         evt.preventDefault();
         const memberId = uuidv4();
-        setFieldValue('members', [...members, {...initialMemberValues, id: memberId}]);
+        setFieldValue('members', [...members, {client_id: '', role_id: '', id: memberId}]);
     }
 
     return (

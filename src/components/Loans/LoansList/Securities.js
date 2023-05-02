@@ -32,6 +32,7 @@ function Securities({collaterals, setLoan, loanId}) {
               <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
                 <th className="schedule__table">Type</th>
                 <th className="schedule__table">Description</th>
+                <th className="schedule__table">Currency</th>
                 <th className="schedule__table">Value</th>
                 <th className="schedule__table">Added By</th>
                 <th className="schedule__table">Date Added</th>
@@ -43,6 +44,7 @@ function Securities({collaterals, setLoan, loanId}) {
                 <tr key={collateral.id}>
                   <td className="schedule__table">{collateral.collateral_type_name}</td>
                   <td className="schedule__table">{collateral.product_name}</td>
+                  <td className="schedule__table">{collateral.currency_name}</td>
                   <td className="schedule__table">{collateral.value}</td>
                   <td className="schedule__table">{collateral.user_name}</td>
                   <td className="schedule__table">{collateral.date_added}</td>

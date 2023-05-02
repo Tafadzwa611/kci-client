@@ -42,9 +42,9 @@ const Actions = ({group, setGroupDetails, setGroupId, setGroupsData}) => {
           <button className='btn btn-olive' onClick={() => setApprove(true)}>Approve</button>
           <button className='btn btn-olive' onClick={() => setReject(true)}>Reject</button>
           <button className='btn btn-olive' onClick={() => setBlacklist(true)}>Blacklist</button>
-          {/* <button className='btn btn-olive'>
-            <Link to={`/loans/viewloans/editloan/${loanType}/${group.id}`}>Edit</Link>
-          </button> */}
+          <button className='btn btn-olive'>
+            <Link to={`/groups/viewgroups/editgroup/${group.id}`}>Edit</Link>
+          </button>
           <button className='btn btn-olive' onClick={() => setDeleteGroup(true)}>Delete</button>
         </div>
       </div>
