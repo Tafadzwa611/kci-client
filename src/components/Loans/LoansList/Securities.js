@@ -25,8 +25,11 @@ function Securities({collaterals, setLoan, loanId}) {
 
   return (
     <>
+      <div className="add__security__container">
+        <AddSecurity setLoan={setLoan} loanId={loanId}/>
+      </div>
       <div className="miniLoanDetails-container" style={{padding:"1.5rem"}}>
-        <div style={{overflowX:'auto', maxHeight:"200px"}}>
+        <div style={{overflowX:'auto', maxHeight:"500px"}}>
           <table className="table">
             <thead>
               <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
@@ -56,9 +59,6 @@ function Securities({collaterals, setLoan, loanId}) {
             </tbody>
           </table>
         </div>
-      </div>
-      <div className="add__security__container">
-        <AddSecurity setLoan={setLoan} loanId={loanId}/>
       </div>
     </>
   )

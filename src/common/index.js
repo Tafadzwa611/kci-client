@@ -28,7 +28,8 @@ export {
   Button,
   ButtonDefault,
   ButtonSuccess,
-  CheckBox
+  CheckBox,
+  DefaultBtn
 } from './ui'
 export {
   CustomInputFilter,
