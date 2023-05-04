@@ -14,7 +14,7 @@ import { Form, Formik } from 'formik';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-function Penalties({penalties, penalty, client_name, loanId, setLoan, locked}) {
+function Penalties({penalties, penalty, client_name, loanId, setLoan, locked, status}) {
   const [form, setForm] = useState(null);
   const [showDelete, setDelete] = useState(false);
   const [showLock, setLock] = useState(false);
@@ -27,19 +27,21 @@ function Penalties({penalties, penalty, client_name, loanId, setLoan, locked}) {
 
   return (
     <>
-      <div className="add__security__container" style={{paddingTop:'4px', paddingBottom:"0"}}>
-        <div style={{display:"flex", justifyContent:"space-between"}}>
-          <div style={{display:"flex", columnGap:"5px"}}>
-            <SuccessBtn handler={() => setForm('add')} value={'Add Penalty'}/>
-            <SuccessBtn handler={() => setForm('reduce')} value={'Change Balance'}/>
+      {status == 'Arrears' &&
+        <div className="add__security__container" style={{paddingTop:'4px', paddingBottom:"0"}}>
+          <div style={{display:"flex", justifyContent:"space-between"}}>
+            <div style={{display:"flex", columnGap:"5px"}}>
+              <SuccessBtn handler={() => setForm('add')} value={'Add Penalty'}/>
+              <SuccessBtn handler={() => setForm('reduce')} value={'Change Balance'}/>
+            </div>
+            <DefaultBtn handler={() => setLock(true)} value={locked ? 'Unlock Account' : 'Lock Account'}/>
           </div>
-          <DefaultBtn handler={() => setLock(true)} value={locked ? 'Unlock Account' : 'Lock Account'}/>
+          {form === 'add' ?  <PenaltyForm loanId={loanId} setLoan={setLoan} /> : null}
+          {form === 'reduce' ? <ReducePenaltyForm loanId={loanId} orgPenalty={penalty} setLoan={setLoan} /> : null}
+          {showDelete ? <DeletePenalty penaltyId={penId.current} setLoan={setLoan} setOpenModal={setDelete} /> : null}
+          {showLock ? <ToggleLock loanId={loanId} setLoan={setLoan} setOpenModal={setLock} locked={locked} /> : null}
         </div>
-        {form === 'add' ?  <PenaltyForm loanId={loanId} setLoan={setLoan} /> : null}
-        {form === 'reduce' ? <ReducePenaltyForm loanId={loanId} orgPenalty={penalty} setLoan={setLoan} /> : null}
-        {showDelete ? <DeletePenalty penaltyId={penId.current} setLoan={setLoan} setOpenModal={setDelete} /> : null}
-        {showLock ? <ToggleLock loanId={loanId} setLoan={setLoan} setOpenModal={setLock} locked={locked} /> : null}
-      </div>
+      }
       <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'1rem'}}>
         <ReactHTMLTableToExcel
           id='test-table-xls-button'

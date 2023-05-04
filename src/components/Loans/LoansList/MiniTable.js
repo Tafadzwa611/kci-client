@@ -21,10 +21,18 @@ function MiniTable({loanData, handleClick, selectedLoanId}) {
                   {loans.map(loan => {
                     return (
                       <tr className='tr-class' key={loan.id}>
-                        <td>
+                        <td style={{display:"flex", flexDirection:"column"}}>
                           {(selectedLoanId==loan.id) ?
-                            <span onClick={handleClick} id={loan.id} style={{fontSize:'0.75rem', cursor:'pointer', color: 'red'}} className='link'>{loan.loan_id}</span>:
-                            <span onClick={handleClick} id={loan.id} style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>{loan.loan_id}</span>}
+                          <>
+                            <span onClick={handleClick} id={loan.id} style={{fontSize:'0.75rem', cursor:'pointer', color: 'red'}} className='link'>{loan.loan_id}</span>
+                            <span>{loan.client_name}</span>
+                            <span>{loan.group_name}</span>
+                          </>:
+                          <>
+                            <span onClick={handleClick} id={loan.id} style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>{loan.loan_id}</span>
+                            <span>{loan.client_name}</span>
+                            <span>{loan.group_name}</span>
+                          </>}
                         </td>
                         <td>
                           <span className={statusClasses[loan.status]}>{loan.status}</span>
