@@ -3,7 +3,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import Dropzone from 'react-dropzone';
 
-const LoanFiles = ({loanId, files, setLoan}) => {
+const GroupFiles = ({groupId, files, setGroupDetails}) => {
   const [progress, setProgress] = useState({});
   const onDrop = async (acceptedFiles) => {
     const progress = {};
@@ -26,7 +26,7 @@ const LoanFiles = ({loanId, files, setLoan}) => {
       xhr.open('PUT', url);
       xhr.onload = () => {
         const postXHR = new XMLHttpRequest();
-        postXHR.open('POST', `/loansapi/add_loan_file/${loanId}/`);
+        postXHR.open('POST', `/clientsapi/add_group_file/${groupId}/`);
         const formData = new FormData();
         formData.append('filename', fileName);
         formData.append('description', file.name);
@@ -34,7 +34,7 @@ const LoanFiles = ({loanId, files, setLoan}) => {
         postXHR.send(formData);
         postXHR.onload = () => {
           const jsonResponse = JSON.parse(postXHR.responseText);
-          setLoan(curr => ({...curr, files: [...curr.files, jsonResponse]}));
+          setGroupDetails(curr => ({...curr, files: [...curr.files, jsonResponse]}));
           setProgress(curr => ({...curr, [file.path]: {...curr[file.path], status: 'Uploaded'}}));
           res();
         }
@@ -78,8 +78,8 @@ const LoanFiles = ({loanId, files, setLoan}) => {
   const deleteFile = async (evt) => {
     const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
     try {
-      await axios.delete(`/loansapi/delete_loan_file/${evt.target.id}/`, CONFIG);
-      setLoan(curr => ({...curr, files: curr.files.filter(file => file.id != evt.target.id)}));
+      await axios.delete(`/clientsapi/delete_group_file/${evt.target.id}/`, CONFIG);
+      setGroupDetails(curr => ({...curr, files: curr.files.filter(file => file.id != evt.target.id)}));
     } catch {
       console.log('error')
     }
@@ -122,4 +122,4 @@ const LoanFiles = ({loanId, files, setLoan}) => {
   )
 }
 
-export default LoanFiles;
+export default GroupFiles;

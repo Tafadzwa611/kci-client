@@ -9,6 +9,7 @@ import Button from './Button';
 import ButtonDefault from './ButtonDefault';
 import ButtonSuccess from './ButtonSuccess';
 import CheckBox from './CheckBox';
+import DefaultBtn from './DefaultBtn';
 
 export {
   CheckBox,
@@ -21,5 +22,6 @@ export {
   ActionModal,
   Button,
   ButtonDefault,
-  ButtonSuccess
+  ButtonSuccess,
+  DefaultBtn,
 };

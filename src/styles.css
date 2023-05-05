@@ -3512,7 +3512,7 @@ input[type=number] {
 
 .add__security__container {
   background-color: var(--white);
-  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   padding: var(--p-1-5);
 }
 

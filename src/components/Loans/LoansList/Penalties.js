@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import {
   SuccessBtn,
+  DefaultBtn,
   NonFieldErrors,
   CustomInput,
   CustomTextField,
@@ -13,7 +14,7 @@ import { Form, Formik } from 'formik';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-function Penalties({penalties, penalty, client_name, loanId, setLoan, locked}) {
+function Penalties({penalties, penalty, client_name, loanId, setLoan, locked, status}) {
   const [form, setForm] = useState(null);
   const [showDelete, setDelete] = useState(false);
   const [showLock, setLock] = useState(false);
@@ -26,13 +27,21 @@ function Penalties({penalties, penalty, client_name, loanId, setLoan, locked}) {
 
   return (
     <>
-      <SuccessBtn handler={() => setForm('add')} value={'Add Penalty'}/>
-      <SuccessBtn handler={() => setForm('reduce')} value={'Change Balance'}/>
-      <SuccessBtn handler={() => setLock(true)} value={locked ? 'Unlock Account' : 'Lock Account'}/>
-      {form === 'add' ?  <PenaltyForm loanId={loanId} setLoan={setLoan} /> : null}
-      {form === 'reduce' ? <ReducePenaltyForm loanId={loanId} orgPenalty={penalty} setLoan={setLoan} /> : null}
-      {showDelete ? <DeletePenalty penaltyId={penId.current} setLoan={setLoan} setOpenModal={setDelete} /> : null}
-      {showLock ? <ToggleLock loanId={loanId} setLoan={setLoan} setOpenModal={setLock} locked={locked} /> : null}
+      {status == 'Arrears' &&
+        <div className="add__security__container" style={{paddingTop:'4px', paddingBottom:"0"}}>
+          <div style={{display:"flex", justifyContent:"space-between"}}>
+            <div style={{display:"flex", columnGap:"5px"}}>
+              <SuccessBtn handler={() => setForm('add')} value={'Add Penalty'}/>
+              <SuccessBtn handler={() => setForm('reduce')} value={'Change Balance'}/>
+            </div>
+            <DefaultBtn handler={() => setLock(true)} value={locked ? 'Unlock Account' : 'Lock Account'}/>
+          </div>
+          {form === 'add' ?  <PenaltyForm loanId={loanId} setLoan={setLoan} /> : null}
+          {form === 'reduce' ? <ReducePenaltyForm loanId={loanId} orgPenalty={penalty} setLoan={setLoan} /> : null}
+          {showDelete ? <DeletePenalty penaltyId={penId.current} setLoan={setLoan} setOpenModal={setDelete} /> : null}
+          {showLock ? <ToggleLock loanId={loanId} setLoan={setLoan} setOpenModal={setLock} locked={locked} /> : null}
+        </div>
+      }
       <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'1rem'}}>
         <ReactHTMLTableToExcel
           id='test-table-xls-button'
@@ -104,8 +113,8 @@ const PenaltyForm = ({loanId, setLoan}) => {
           <NonFieldErrors errors={errors}>
             <CustomInput label='Amount' name='penalty_amount' type='number' required/>
             <CustomTextField label='Description' name='description' type='text' required/>
-            <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-            <SubmitButton isSubmitting={isSubmitting}/>
+            <div style={{display:'flex', justifyContent: 'flex-end', paddingBottom:"1.5rem"}}> 
+              <SubmitButton isSubmitting={isSubmitting}/>
             </div>
           </NonFieldErrors>
         </Form>
@@ -139,8 +148,8 @@ const ReducePenaltyForm = ({loanId, orgPenalty, setLoan}) => {
           <NonFieldErrors errors={errors}>
             <div>Original Balance {orgPenalty}</div>
             <CustomInput label='New Balance' name='new_balance' type='number' required/>
-            <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-            <SubmitButton isSubmitting={isSubmitting}/>
+            <div style={{display:'flex', justifyContent: 'flex-end', paddingBottom:"1.5rem"}}> 
+              <SubmitButton isSubmitting={isSubmitting}/>
             </div>
           </NonFieldErrors>
         </Form>

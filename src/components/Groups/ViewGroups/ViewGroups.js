@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import GroupsList from '../GroupsList/GroupsList';
 import AddGroup from '../add_group/AddGroup';
-// import EditGroup from '../add_group/EditGroup';
+import EditGroup from '../edit_group/EditGroup';
 import { Fetcher } from '../../../common';
 import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
 
@@ -15,14 +15,14 @@ const ViewGroups = () => {
       <Route path='/' element={<Layout />}>
         <Route index element={<GroupListComponent />} />
         <Route path='addgroup' element={<AddGroupComponent />} />
-        {/* <Route
-          path='editgroup'
+        <Route
+          path='editgroup/:groupId'
           element={
-            <Fetcher urls={['/loansapi/loan_products_list/']}>
-              {({data}) => <EditGroup products={data[0]}/>}
+            <Fetcher urls={['/clientsapi/group_types/', '/usersapi/staff/', '/clientsapi/group_roles/']}>
+              {({data}) => <EditGroup groupTypes={data[0]} loanOfficers={data[1]} groupRoles={data[2]} />}
             </Fetcher>
           } 
-        /> */}
+        />
       </Route>
     </Routes>
   )

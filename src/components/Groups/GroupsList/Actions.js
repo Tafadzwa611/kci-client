@@ -37,14 +37,21 @@ const Actions = ({group, setGroupDetails, setGroupId, setGroupsData}) => {
         {approve && <ApproveGroup setOpen={setApprove} url={approveUrl} setGroupDetails={setGroupDetails} />}
         {reject && <RejectGroup setOpen={setReject} url={rejectUrl} setGroupDetails={setGroupDetails}/>}
         {blacklist && <BlackListGroup setOpen={setBlacklist} url={blacklistUrl} setGroupDetails={setGroupDetails}/>}
-        {deleteGroup && <DeleteGroup setOpen={setDeleteGroup} url={deleteUrl} setGroupId={setGroupId} groupID={group.id} setGroupsData={setGroupsData} />}
+        {deleteGroup && <DeleteGroup 
+                          setOpen={setDeleteGroup} 
+                          url={deleteUrl} 
+                          setGroupId={setGroupId} 
+                          groupID={group.id} 
+                          setGroupsData={setGroupsData} 
+                          setGroupDetails={setGroupDetails}
+                        />}
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setApprove(true)}>Approve</button>
           <button className='btn btn-olive' onClick={() => setReject(true)}>Reject</button>
           <button className='btn btn-olive' onClick={() => setBlacklist(true)}>Blacklist</button>
-          {/* <button className='btn btn-olive'>
-            <Link to={`/loans/viewloans/editloan/${loanType}/${group.id}`}>Edit</Link>
-          </button> */}
+          <button className='btn btn-olive'>
+            <Link to={`/groups/viewgroups/editgroup/${group.id}`}>Edit</Link>
+          </button>
           <button className='btn btn-olive' onClick={() => setDeleteGroup(true)}>Delete</button>
         </div>
       </div>
@@ -57,7 +64,14 @@ const Actions = ({group, setGroupDetails, setGroupId, setGroupsData}) => {
         {undoApproval && <UndoGroupApproval setOpen={setUndoApproval} url={undoApprovalUrl} setGroupDetails={setGroupDetails}/>}
         {blacklist && <BlackListGroup setOpen={setBlacklist} url={blacklistUrl} setGroupDetails={setGroupDetails}/>}
         {left && <GroupLeft setOpen={setLeft} url={leftUrl} setGroupDetails={setGroupDetails}/>}
-        {deleteGroup && <DeleteGroup setOpen={setDeleteGroup} url={deleteUrl} setGroupId={setGroupId} groupID={group.id} setGroupsData={setGroupsData} />}
+        {deleteGroup && <DeleteGroup 
+                          setOpen={setDeleteGroup} 
+                          url={deleteUrl} 
+                          setGroupId={setGroupId} 
+                          groupID={group.id} 
+                          setGroupsData={setGroupsData} 
+                          setGroupDetails={setGroupDetails}
+                        />}
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setUndoApproval(true)}>Undo Approve</button>
           <button className='btn btn-olive' onClick={() => setBlacklist(true)}>Blacklist</button>

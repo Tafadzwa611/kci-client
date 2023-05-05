@@ -25,13 +25,17 @@ function Securities({collaterals, setLoan, loanId}) {
 
   return (
     <>
+      <div className="add__security__container">
+        <AddSecurity setLoan={setLoan} loanId={loanId}/>
+      </div>
       <div className="miniLoanDetails-container" style={{padding:"1.5rem"}}>
-        <div style={{overflowX:'auto', maxHeight:"200px"}}>
+        <div style={{overflowX:'auto', maxHeight:"500px"}}>
           <table className="table">
             <thead>
               <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
                 <th className="schedule__table">Type</th>
                 <th className="schedule__table">Description</th>
+                <th className="schedule__table">Currency</th>
                 <th className="schedule__table">Value</th>
                 <th className="schedule__table">Added By</th>
                 <th className="schedule__table">Date Added</th>
@@ -43,6 +47,7 @@ function Securities({collaterals, setLoan, loanId}) {
                 <tr key={collateral.id}>
                   <td className="schedule__table">{collateral.collateral_type_name}</td>
                   <td className="schedule__table">{collateral.product_name}</td>
+                  <td className="schedule__table">{collateral.currency_name}</td>
                   <td className="schedule__table">{collateral.value}</td>
                   <td className="schedule__table">{collateral.user_name}</td>
                   <td className="schedule__table">{collateral.date_added}</td>
@@ -54,9 +59,6 @@ function Securities({collaterals, setLoan, loanId}) {
             </tbody>
           </table>
         </div>
-      </div>
-      <div className="add__security__container">
-        <AddSecurity setLoan={setLoan} loanId={loanId}/>
       </div>
     </>
   )

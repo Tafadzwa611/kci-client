@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Actions from './Actions';
 import { statusClasses } from './data';
+import BlocTabs from './BlocTabs';
 
 function GroupDetails({
   setGroupDetails,
@@ -26,14 +27,14 @@ function GroupDetails({
               <div style={{display:"flex", justifyContent:"space-between"}}>
 
                 <div style={{display:'flex', alignItems:'center'}}>
-                  <span style={{marginRight:"5px"}}><b>{groupDetails.group.group_name}</b></span> /
-                  <span style={{margin: "0 5px"}}><b>{groupDetails.group.group_id}</b></span> /
+                  <span style={{marginRight:"5px"}}><b>{groupDetails.group_name}</b></span> /
+                  <span style={{margin: "0 5px"}}><b>{groupDetails.group_id}</b></span> /
                   <div style={{marginLeft:"5px"}}>
-                    <button className={statusClasses[groupDetails.group.status]}>{groupDetails.group.status}</button>
+                    <button className={statusClasses[groupDetails.status]}>{groupDetails.status}</button>
                   </div>
                 </div>
                 <Actions 
-                  group={groupDetails.group} 
+                  group={groupDetails} 
                   setGroupDetails={setGroupDetails}
                   setGroupId={setGroupId}
                   setGroupsData={setGroupsData}
@@ -42,9 +43,7 @@ function GroupDetails({
               </div>
             </div>
             <div>
-              
-              <div>Details</div>
-
+              <BlocTabs groupDetails={groupDetails} setGroupDetails={setGroupDetails}/>
             </div>
           </div>
         </div> : null}
