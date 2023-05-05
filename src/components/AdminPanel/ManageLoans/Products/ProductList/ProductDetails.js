@@ -45,7 +45,7 @@ function ProductDetails({product, close, setView, setProducts}) {
                     <li style={{marginBottom: '1rem'}}><b>Principal Settings</b></li>
                     <li>Product Currency: {product.currency}</li>
                     <li>Minimum Principal Amount: {product.minimum_principal_amount}</li>
-                    <li>Default Principal Amount: {product.default_interest_rate}</li>
+                    <li>Default Principal Amount: {product.default_principal_amount}</li>
                     <li>Maximum Principal Amount: {product.maximum_principal_amount}</li>
                   </ul>
                 </div>
