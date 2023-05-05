@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import GroupFiles from './GroupFiles';
 import Details from './Details';
-// function BlocTabs({loan, setLoan}) {
 function BlocTabs({groupDetails, setGroupDetails}) {
     const [tab, setTab] = useState('details');
 
@@ -14,8 +13,7 @@ function BlocTabs({groupDetails, setGroupDetails}) {
                 </div>
                 {{
                     'details': <Details groupDetails={groupDetails}/>,
-                    'files': <GroupFiles groupId={groupDetails.group.id} files={groupDetails.group.files} setGroupDetails={setGroupDetails} />,
-                    //   'files': <GroupFiles loanId={loan.id} files={loan.files} setLoan={setLoan} />,
+                    'files': <GroupFiles groupId={groupDetails.id} files={groupDetails.files} setGroupDetails={setGroupDetails} />,
                 }[tab]}
             </div>
         </>

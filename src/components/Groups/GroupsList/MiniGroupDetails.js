@@ -23,20 +23,20 @@ function MiniGroupDetails({groupData, extra}) {
         <div style={{marginBottom:"1rem"}}>
           <div style={{marginBottom:"1rem", display:"flex", justifyContent:"space-between"}}>
             <button><a onClick={e => setGroupId(null)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
-            <button className='btn btn-default' onClick={() => navigate({pathname: '/groups/viewgroups', search: `?group_id=${groupDetails.group.id}`})}>
+            <button className='btn btn-default' onClick={() => navigate({pathname: '/groups/viewgroups', search: `?group_id=${groupDetails.id}`})}>
               Max
             </button>
           </div>
           <div style={{display:"flex", justifyContent:"space-between"}}>
             <div style={{display:'flex', alignItems:'center'}}>
-              <span style={{marginRight:"5px"}}><b>{groupDetails.group.group_name}</b></span> /
-              <span style={{margin: "0 5px"}}><b>{groupDetails.group.group_id}</b></span> /
+              <span style={{marginRight:"5px"}}><b>{groupDetails.group_name}</b></span> /
+              <span style={{margin: "0 5px"}}><b>{groupDetails.group_id}</b></span> /
               <div style={{marginLeft:"5px"}}>
-                <button className={statusClasses[groupDetails.group.status]}>{groupDetails.group.status}</button>
+                <button className={statusClasses[groupDetails.status]}>{groupDetails.status}</button>
               </div>
             </div>
             <Actions 
-              group={groupDetails.group} 
+              group={groupDetails} 
               setGroupDetails={setGroupDetails}
               setGroupId={setGroupId}
               setGroupsData={setGroupsData}

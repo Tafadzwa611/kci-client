@@ -10,7 +10,6 @@ function GroupDetails({
   setGroupId,
   groupDetails
 }) {
-  // const [group, setGroup] = useState(groupApiData);
   useEffect(() => {
     const element = document.getElementById('loan-details');
     element.scrollIntoView({ behavior: 'instant' });
@@ -28,14 +27,14 @@ function GroupDetails({
               <div style={{display:"flex", justifyContent:"space-between"}}>
 
                 <div style={{display:'flex', alignItems:'center'}}>
-                  <span style={{marginRight:"5px"}}><b>{groupDetails.group.group_name}</b></span> /
-                  <span style={{margin: "0 5px"}}><b>{groupDetails.group.group_id}</b></span> /
+                  <span style={{marginRight:"5px"}}><b>{groupDetails.group_name}</b></span> /
+                  <span style={{margin: "0 5px"}}><b>{groupDetails.group_id}</b></span> /
                   <div style={{marginLeft:"5px"}}>
-                    <button className={statusClasses[groupDetails.group.status]}>{groupDetails.group.status}</button>
+                    <button className={statusClasses[groupDetails.status]}>{groupDetails.status}</button>
                   </div>
                 </div>
                 <Actions 
-                  group={groupDetails.group} 
+                  group={groupDetails} 
                   setGroupDetails={setGroupDetails}
                   setGroupId={setGroupId}
                   setGroupsData={setGroupsData}

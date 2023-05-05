@@ -78,7 +78,7 @@ const GroupFiles = ({groupId, files, setGroupDetails}) => {
   const deleteFile = async (evt) => {
     const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
     try {
-      await axios.delete(`/loansapi/delete_loan_file/${evt.target.id}/`, CONFIG);
+      await axios.delete(`/clientsapi/delete_group_file/${evt.target.id}/`, CONFIG);
       setGroupDetails(curr => ({...curr, files: curr.files.filter(file => file.id != evt.target.id)}));
     } catch {
       console.log('error')
