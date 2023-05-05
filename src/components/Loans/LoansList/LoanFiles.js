@@ -93,8 +93,8 @@ const LoanFiles = ({loanId, files, setLoan}) => {
             <span>
               {file.description}-{file.user_name}-{file.date_added}
             </span>
-            <span className='badge badge-info' id={file.filename} name={file.description} onClick={dowloadFile}>Download</span>
-            <span className='badge badge-danger' id={file.id} onClick={deleteFile}>Remove</span>
+            <span style={{cursor:'pointer'}} className='badge badge-info' id={file.filename} name={file.description} onClick={dowloadFile}>Download</span>
+            <span style={{cursor:'pointer'}} className='badge badge-danger' id={file.id} onClick={deleteFile}>Remove</span>
           </div>
         ))}
       </div>
