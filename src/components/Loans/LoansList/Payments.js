@@ -28,11 +28,20 @@ function Payments({payments, client_name, loanId, setLoan, currencyId}) {
   const [modal, setModal] = useState(none);
   const [form, setForm] = useState(null);
   const paymentId = useRef(null);
+  const [payId, setPayId] = useState(null);
+  const [selectedPayment, setSelectedPayment] = useState(null);
 
   const showDeleteModal = (evt) => {
     paymentId.current = evt.target.id;
     setModal(reverse);
   }
+
+  const handleClick = (e) => {
+    setPayId(e.target.id);
+    setSelectedPayment(payments.filter(payment => payment.id == e.target.id))
+  }
+
+  console.log(selectedPayment);
 
   return (
     <>
@@ -51,60 +60,85 @@ function Payments({payments, client_name, loanId, setLoan, currencyId}) {
           buttonText='Download as XLS'
         />
       </div>
-      <div style={{overflowX:'auto', maxHeight:"600px"}} className="miniLoanDetails-container">
-        <table className="table" id="payments">
-          <thead>
-            <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
-              <th className="schedule__table">Date_Recorded</th>
-              <th className="schedule__table">Collection_Date</th>
-              <th className="schedule__table">Collected_by</th>
-              <th className="schedule__table">Receipt_Number</th>
-              <th className="schedule__table">Notes</th>
-              <th className="schedule__table">Branch_Collected</th>
-              <th className="schedule__table">Account</th>
-              <th className="schedule__table">Principal Paid</th>
-              <th className="schedule__table">Interest Paid</th>
-              <th className="schedule__table">Penalty Paid</th>
-              <th className="schedule__table">Fees Paid</th>
-              <th className="schedule__table">To_Be Refunded</th>
-              <th className="schedule__table">Total Amount_Paid</th>
-              <th className="schedule__table">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {payments.map(payment => (
-              <tr key={payment.id}>
-                <td className="schedule__table">{payment.date_recorded}</td>
-                <td className="schedule__table">{payment.cdate_created}</td>
-                <td className="schedule__table">{payment.user_name}</td>
-                <td className="schedule__table">{payment.receipt_number}</td>
-                <td className="schedule__table">{payment.notes}</td>
-                <td className="schedule__table">{payment.branch_name}</td>
-                <td className="schedule__table">{payment.fund_account_name}</td>
-                <td className="schedule__table">{payment.principal_amount_paid}</td>
-                <td className="schedule__table">{payment.interest_amount_paid}</td>
-                <td className="schedule__table">{payment.penalty}</td>
-                <td className="schedule__table">{payment.fees}</td>
-                <td className="schedule__table">{payment.money_to_be_refunded}</td>
-                <td className="schedule__table">{payment.amount_paid}</td>
-                <td className="schedule__table" style={{display:"flex", columnGap:"2px"}}>
-                  <span className='badge badge-danger' id={payment.id} onClick={showDeleteModal} style={{cursor: 'pointer'}}>
-                    Reverse
-                  </span><br/>
-                  <span className='badge badge-info'style={{cursor: 'pointer'}}>
-                    Edit
-                  </span><br/>
-                  <span className='badge badge-info'style={{cursor: 'pointer'}}>
-                    Print
-                  </span><br/>
-                  <span className='badge badge-info'style={{cursor: 'pointer'}}>
-                    Refund
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div style={{overflowX:'auto', maxHeight:"600px", padding:"1.5rem"}} className="miniLoanDetails-container">
+        <div className={payId ? "table-responsive journal__table-container-journals-payments" : "table-responsive full__table"}>
+          <table className="table" id="payments">
+            <thead>
+              {payId ?
+                <tr className="journal-details header" style={{position:'sticky', top:'0'}}>
+                  <th className="schedule__table">Date_Recorded</th>
+                  <th className="schedule__table">Collection_Date</th>
+                </tr>:
+                <tr className="journal-details header" style={{position:'sticky', top:'0'}}>
+                  <th className="schedule__table">Date_Recorded</th>
+                  <th className="schedule__table">Collection_Date</th>
+                  <th className="schedule__table">Collected_by</th>
+                  {/* <th className="schedule__table">Receipt_Number</th> */}
+                  {/* <th className="schedule__table">Notes</th> */}
+                  {/* <th className="schedule__table">Branch_Collected</th> */}
+                  {/* <th className="schedule__table">Account</th> */}
+                  <th className="schedule__table">Principal Paid</th>
+                  <th className="schedule__table">Interest Paid</th>
+                  <th className="schedule__table">Penalty Paid</th>
+                  <th className="schedule__table">Fees Paid</th>
+                  <th className="schedule__table">To_Be Refunded</th>
+                  <th className="schedule__table">Total Amount_Paid</th>
+                  {/* <th className="schedule__table">Action</th> */}
+                </tr>
+              }
+            </thead>
+            <tbody>
+              {payments.map(payment => (
+                <tr key={payment.id}>
+                  {payId ?
+                    <>
+                      <td className="schedule__table">{payment.date_recorded}</td>
+                      <td className="schedule__table">{payment.cdate_created}</td>
+                    </>:
+                    <>
+                      <td className="schedule__table">
+                        <span onClick={handleClick} id={payment.id} style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>
+                          {payment.date_recorded}
+                        </span>
+                      </td>
+                      <td className="schedule__table">{payment.cdate_created}</td>
+                      <td className="schedule__table">{payment.user_name}</td>
+                      {/* <td className="schedule__table">{payment.receipt_number}</td> */}
+                      {/* <td className="schedule__table">{payment.notes}</td>
+                      <td className="schedule__table">{payment.branch_name}</td>
+                      <td className="schedule__table">{payment.fund_account_name}</td> */}
+                      <td className="schedule__table">{payment.principal_amount_paid}</td>
+                      <td className="schedule__table">{payment.interest_amount_paid}</td>
+                      <td className="schedule__table">{payment.penalty}</td>
+                      <td className="schedule__table">{payment.fees}</td>
+                      <td className="schedule__table">{payment.money_to_be_refunded}</td>
+                      <td className="schedule__table">{payment.amount_paid}</td>
+                      {/* <td className="schedule__table" style={{display:"flex", columnGap:"2px"}}>
+                        <span className='badge badge-danger' id={payment.id} onClick={showDeleteModal} style={{cursor: 'pointer'}}>
+                          Reverse
+                        </span><br/>
+                        <span className='badge badge-info'style={{cursor: 'pointer'}}>
+                          Edit
+                        </span><br/>
+                        <span className='badge badge-info'style={{cursor: 'pointer'}}>
+                          Print
+                        </span><br/>
+                        <span className='badge badge-info'style={{cursor: 'pointer'}}>
+                          Refund
+                        </span>
+                      </td> */}
+                    </>
+                  }
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {payId &&
+            <div id='loan-details'>
+                    <>details</>
+            </div>
+          }
+        </div>
       </div>
     </>
   )
