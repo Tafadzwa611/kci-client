@@ -36,9 +36,11 @@ function Payments({payments, client_name, loanId, setLoan, currencyId}) {
 
   return (
     <>
-      <SuccessBtn handler={() => setForm('add')} value={'Add Penalty'}/>
+      <div className="add__security__container" style={{paddingTop:'4px', paddingBottom:"4px"}}>
+        <SuccessBtn handler={() => setForm('add')} value={'Add Payment'}/>
+        {form === 'add' ?  <PaymentForm loanId={loanId} currencyId={currencyId} setLoan={setLoan} /> : null}
+      </div>
       {modal == reverse && <DeletePayment paymentId={paymentId.current} setOpen={setModal} setLoan={setLoan}/>}
-      {form === 'add' ?  <PaymentForm loanId={loanId} currencyId={currencyId} setLoan={setLoan} /> : null}
       <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"1rem"}}>
         <ReactHTMLTableToExcel
           id='test-table-xls-button'
@@ -53,19 +55,19 @@ function Payments({payments, client_name, loanId, setLoan, currencyId}) {
         <table className="table" id="payments">
           <thead>
             <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
-              <th className="schedule__table">Date Recorded</th>
-              <th className="schedule__table">Collection Date</th>
-              <th className="schedule__table">Collected by</th>
-              <th className="schedule__table">Receipt Number</th>
+              <th className="schedule__table">Date_Recorded</th>
+              <th className="schedule__table">Collection_Date</th>
+              <th className="schedule__table">Collected_by</th>
+              <th className="schedule__table">Receipt_Number</th>
               <th className="schedule__table">Notes</th>
-              <th className="schedule__table">Branch Collected</th>
+              <th className="schedule__table">Branch_Collected</th>
               <th className="schedule__table">Account</th>
               <th className="schedule__table">Principal Paid</th>
               <th className="schedule__table">Interest Paid</th>
               <th className="schedule__table">Penalty Paid</th>
               <th className="schedule__table">Fees Paid</th>
-              <th className="schedule__table">To Be Refunded</th>
-              <th className="schedule__table">Total Amount Paid</th>
+              <th className="schedule__table">To_Be Refunded</th>
+              <th className="schedule__table">Total Amount_Paid</th>
               <th className="schedule__table">Action</th>
             </tr>
           </thead>
@@ -85,7 +87,7 @@ function Payments({payments, client_name, loanId, setLoan, currencyId}) {
                 <td className="schedule__table">{payment.fees}</td>
                 <td className="schedule__table">{payment.money_to_be_refunded}</td>
                 <td className="schedule__table">{payment.amount_paid}</td>
-                <td className="schedule__table">
+                <td className="schedule__table" style={{display:"flex", columnGap:"2px"}}>
                   <span className='badge badge-danger' id={payment.id} onClick={showDeleteModal} style={{cursor: 'pointer'}}>
                     Reverse
                   </span><br/>
@@ -151,8 +153,8 @@ const PaymentForm = ({loanId, setLoan, currencyId}) => {
                 </CustomSelect>
                 <CustomInput label='Receipt Number' name='receipt_number' type='text'/>
                 <CustomTextField label='Description' name='description' type='text'/>
-                <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-                <SubmitButton isSubmitting={isSubmitting}/>
+                <div style={{display:'flex', justifyContent: 'flex-end', paddingBottom:"1.5rem"}}> 
+                  <SubmitButton isSubmitting={isSubmitting}/>
                 </div>
               </NonFieldErrors>
             </Form>

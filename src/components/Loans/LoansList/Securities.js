@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Fetcher,
+  SuccessBtn,
   NonFieldErrors,
   CustomInput,
   CustomSelect,
@@ -13,6 +14,8 @@ import { useCurrencies } from '../../../contexts/CurrenciesContext';
 
 
 function Securities({collaterals, setLoan, loanId}) {
+  const [form, setForm] = useState(null);
+
   const onClick = async (evt) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
@@ -25,8 +28,9 @@ function Securities({collaterals, setLoan, loanId}) {
 
   return (
     <>
-      <div className="add__security__container">
-        <AddSecurity setLoan={setLoan} loanId={loanId}/>
+      <div className="add__security__container" style={{paddingTop:'4px', paddingBottom:"4px"}}>
+        <SuccessBtn handler={() => setForm('add')} value={'Add Collateral'}/>
+        {form === 'add' ?  <AddSecurity loanId={loanId} setLoan={setLoan} /> : null}
       </div>
       <div className="miniLoanDetails-container" style={{padding:"1.5rem"}}>
         <div style={{overflowX:'auto', maxHeight:"500px"}}>
@@ -102,7 +106,7 @@ const AddSecurity = ({setLoan, loanId}) => {
                   {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
                 </CustomSelect>
                 <CustomInput label='Value' name='value' type='number' required/>
-                <div style={{display:'flex', justifyContent: 'flex-end'}}> 
+                <div style={{display:'flex', justifyContent: 'flex-end', paddingBottom:"1.5rem"}}> 
                   <SubmitButton isSubmitting={isSubmitting}/>
                 </div>
               </NonFieldErrors>
