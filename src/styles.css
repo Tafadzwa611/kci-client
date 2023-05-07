@@ -3110,8 +3110,8 @@ input:checked + .slider:before {
 
 .table-responsive.journal__table-container-journals-payments {
   display: grid;
-  column-gap: 2%;
-  grid-template-columns: 25% 73%;
+  column-gap: 1%;
+  grid-template-columns: 25% 74%;
 }
 
 .fees-container {

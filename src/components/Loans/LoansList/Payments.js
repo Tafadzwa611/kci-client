@@ -41,8 +41,6 @@ function Payments({payments, client_name, loanId, setLoan, currencyId}) {
     setSelectedPayment(payments.find(payment => payment.id == e.target.id))
   }
 
-  console.log(selectedPayment)
-
   return (
     <>
       <div className="add__security__container" style={{paddingTop:'4px', paddingBottom:"4px"}}>
@@ -60,58 +58,69 @@ function Payments({payments, client_name, loanId, setLoan, currencyId}) {
           buttonText='Download as XLS'
         />
       </div>
-      <div style={{overflowX:'auto', maxHeight:"600px", padding:"1.5rem"}} className="miniLoanDetails-container">
+      <div style={{padding:"1.5rem"}} className="miniLoanDetails-container">
         <div className={payId ? "table-responsive journal__table-container-journals-payments" : "table-responsive full__table"}>
-          <table className="table" id="payments">
-            <thead>
-              {payId ?
-                <tr className="journal-details header" style={{position:'sticky', top:'0'}}>
-                  <th className="schedule__table">Date_Recorded</th>
-                  <th className="schedule__table">Collection_Date</th>
-                </tr>:
-                <tr className="journal-details header" style={{position:'sticky', top:'0'}}>
-                  <th className="schedule__table">Date_Recorded</th>
-                  <th className="schedule__table">Collection_Date</th>
-                  <th className="schedule__table">Collected_by</th>
-                  <th className="schedule__table">Principal Paid</th>
-                  <th className="schedule__table">Interest Paid</th>
-                  <th className="schedule__table">Penalty Paid</th>
-                  <th className="schedule__table">Fees Paid</th>
-                  <th className="schedule__table">To_Be Refunded</th>
-                  <th className="schedule__table">Total Amount_Paid</th>
-                </tr>
-              }
-            </thead>
-            <tbody>
-              {payments.map(payment => (
-                <tr key={payment.id}>
+          <div style={{width:'100%', overflowX:'auto'}}>
+            <div style={{maxHeight:'600px'}}>
+              <table className="table" id="payments">
+                <thead>
                   {payId ?
-                    <>
-                      <td className="schedule__table">
-                        {payment.date_recorded}
-                      </td>
-                      <td className="schedule__table">{payment.cdate_created}</td>
-                    </>:
-                    <>
-                      <td className="schedule__table">
-                        <span onClick={handleClick} id={payment.id} style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>
-                          {payment.date_recorded}
-                        </span>
-                      </td>
-                      <td className="schedule__table">{payment.cdate_created}</td>
-                      <td className="schedule__table">{payment.user_name}</td>
-                      <td className="schedule__table">{payment.principal_amount_paid}</td>
-                      <td className="schedule__table">{payment.interest_amount_paid}</td>
-                      <td className="schedule__table">{payment.penalty}</td>
-                      <td className="schedule__table">{payment.fees}</td>
-                      <td className="schedule__table">{payment.money_to_be_refunded}</td>
-                      <td className="schedule__table">{payment.amount_paid}</td>
-                    </>
+                    <tr className="journal-details header" style={{position:'sticky', top:'0'}}>
+                      <th className="schedule__table">Date_Recorded</th>
+                      <th className="schedule__table">Collection_Date</th>
+                    </tr>:
+                    <tr className="journal-details header" style={{position:'sticky', top:'0'}}>
+                      <th className="schedule__table">Date_Recorded</th>
+                      <th className="schedule__table">Collection_Date</th>
+                      <th className="schedule__table">Collected_by</th>
+                      <th className="schedule__table">Principal Paid</th>
+                      <th className="schedule__table">Interest Paid</th>
+                      <th className="schedule__table">Penalty Paid</th>
+                      <th className="schedule__table">Fees Paid</th>
+                      <th className="schedule__table">To_Be Refunded</th>
+                      <th className="schedule__table">Total Amount_Paid</th>
+                    </tr>
                   }
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                  {payments.map(payment => (
+                    <tr key={payment.id}>
+                      {payId ?
+                        <>
+                          <td className="schedule__table">
+                            {(selectedPayment.id==payment.id) ?
+                              <span onClick={handleClick} id={payment.id} style={{fontSize:'0.75rem', cursor:'pointer', color:'red'}} className='link'>
+                                {payment.date_recorded}
+                              </span>:
+                              <span onClick={handleClick} id={payment.id} style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>
+                                {payment.date_recorded}
+                              </span>
+                            }
+                          </td>
+                          <td className="schedule__table">{payment.cdate_created}</td>
+                        </>:
+                        <>
+                          <td className="schedule__table">
+                            <span onClick={handleClick} id={payment.id} style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>
+                              {payment.date_recorded}
+                            </span>
+                          </td>
+                          <td className="schedule__table">{payment.cdate_created}</td>
+                          <td className="schedule__table">{payment.user_name}</td>
+                          <td className="schedule__table">{payment.principal_amount_paid}</td>
+                          <td className="schedule__table">{payment.interest_amount_paid}</td>
+                          <td className="schedule__table">{payment.penalty}</td>
+                          <td className="schedule__table">{payment.fees}</td>
+                          <td className="schedule__table">{payment.money_to_be_refunded}</td>
+                          <td className="schedule__table">{payment.amount_paid}</td>
+                        </>
+                      }
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
           {payId &&
             <div style={{position:"sticky", top:"0", width:"100%"}}>
               <div style={{display:"flex", flexDirection:"column", padding:"1.5rem"}} className="j-details-container">
