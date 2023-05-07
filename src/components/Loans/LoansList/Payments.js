@@ -38,10 +38,10 @@ function Payments({payments, client_name, loanId, setLoan, currencyId}) {
 
   const handleClick = (e) => {
     setPayId(e.target.id);
-    setSelectedPayment(payments.filter(payment => payment.id == e.target.id))
+    setSelectedPayment(payments.find(payment => payment.id == e.target.id))
   }
 
-  console.log(selectedPayment);
+  console.log(selectedPayment)
 
   return (
     <>
@@ -49,7 +49,7 @@ function Payments({payments, client_name, loanId, setLoan, currencyId}) {
         <SuccessBtn handler={() => setForm('add')} value={'Add Payment'}/>
         {form === 'add' ?  <PaymentForm loanId={loanId} currencyId={currencyId} setLoan={setLoan} /> : null}
       </div>
-      {modal == reverse && <DeletePayment paymentId={paymentId.current} setOpen={setModal} setLoan={setLoan}/>}
+      {modal == reverse && <DeletePayment paymentId={payId} setOpen={setModal} setLoan={setLoan} setPayId={setPayId} />}
       <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"1rem"}}>
         <ReactHTMLTableToExcel
           id='test-table-xls-button'
@@ -73,17 +73,12 @@ function Payments({payments, client_name, loanId, setLoan, currencyId}) {
                   <th className="schedule__table">Date_Recorded</th>
                   <th className="schedule__table">Collection_Date</th>
                   <th className="schedule__table">Collected_by</th>
-                  {/* <th className="schedule__table">Receipt_Number</th> */}
-                  {/* <th className="schedule__table">Notes</th> */}
-                  {/* <th className="schedule__table">Branch_Collected</th> */}
-                  {/* <th className="schedule__table">Account</th> */}
                   <th className="schedule__table">Principal Paid</th>
                   <th className="schedule__table">Interest Paid</th>
                   <th className="schedule__table">Penalty Paid</th>
                   <th className="schedule__table">Fees Paid</th>
                   <th className="schedule__table">To_Be Refunded</th>
                   <th className="schedule__table">Total Amount_Paid</th>
-                  {/* <th className="schedule__table">Action</th> */}
                 </tr>
               }
             </thead>
@@ -92,7 +87,9 @@ function Payments({payments, client_name, loanId, setLoan, currencyId}) {
                 <tr key={payment.id}>
                   {payId ?
                     <>
-                      <td className="schedule__table">{payment.date_recorded}</td>
+                      <td className="schedule__table">
+                        {payment.date_recorded}
+                      </td>
                       <td className="schedule__table">{payment.cdate_created}</td>
                     </>:
                     <>
@@ -103,30 +100,12 @@ function Payments({payments, client_name, loanId, setLoan, currencyId}) {
                       </td>
                       <td className="schedule__table">{payment.cdate_created}</td>
                       <td className="schedule__table">{payment.user_name}</td>
-                      {/* <td className="schedule__table">{payment.receipt_number}</td> */}
-                      {/* <td className="schedule__table">{payment.notes}</td>
-                      <td className="schedule__table">{payment.branch_name}</td>
-                      <td className="schedule__table">{payment.fund_account_name}</td> */}
                       <td className="schedule__table">{payment.principal_amount_paid}</td>
                       <td className="schedule__table">{payment.interest_amount_paid}</td>
                       <td className="schedule__table">{payment.penalty}</td>
                       <td className="schedule__table">{payment.fees}</td>
                       <td className="schedule__table">{payment.money_to_be_refunded}</td>
                       <td className="schedule__table">{payment.amount_paid}</td>
-                      {/* <td className="schedule__table" style={{display:"flex", columnGap:"2px"}}>
-                        <span className='badge badge-danger' id={payment.id} onClick={showDeleteModal} style={{cursor: 'pointer'}}>
-                          Reverse
-                        </span><br/>
-                        <span className='badge badge-info'style={{cursor: 'pointer'}}>
-                          Edit
-                        </span><br/>
-                        <span className='badge badge-info'style={{cursor: 'pointer'}}>
-                          Print
-                        </span><br/>
-                        <span className='badge badge-info'style={{cursor: 'pointer'}}>
-                          Refund
-                        </span>
-                      </td> */}
                     </>
                   }
                 </tr>
@@ -134,8 +113,52 @@ function Payments({payments, client_name, loanId, setLoan, currencyId}) {
             </tbody>
           </table>
           {payId &&
-            <div id='loan-details'>
-                    <>details</>
+            <div style={{position:"sticky", top:"0", width:"100%"}}>
+              <div style={{display:"flex", flexDirection:"column", padding:"1.5rem"}} className="j-details-container">
+
+                <div style={{marginBottom:"1.5rem", display:"flex", justifyContent:"space-between"}}>
+                  <button><a onClick={e => setPayId(null)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
+                  <div style={{display:'flex', columnGap:'3px'}}>
+                    <button className='btn btn-olive' id={selectedPayment.id} onClick={showDeleteModal}>Reverse</button>
+                    <button className='btn btn-olive'>Edit</button>
+                    <button className='btn btn-olive'>Print</button>
+                    <button className='btn btn-olive'>Refund</button>
+                  </div>
+                </div>
+                <div style={{display:"flex", width:"100%", justifyContent:"space-between"}}>
+
+                  <div>
+                      <ul style={{display:"flex", flexDirection:"column", rowGap:"10px"}}>
+                          <li>Date Recorded: {selectedPayment.date_recorded}</li>
+                          <li>Collection Date: {selectedPayment.cdate_created}</li>
+                          <li>Collected by: {selectedPayment.user_name}</li>
+                          <li>Branch Collected: {selectedPayment.branch_name}</li>
+                          <li>Account: {selectedPayment.fund_account_name}</li>
+                      </ul>
+                  </div>
+
+                  <div>
+                      <ul style={{display:"flex", flexDirection:"column", rowGap:"10px"}}>
+                          <li>Principal Paid: {selectedPayment.principal_amount_paid}</li>
+                          <li>Interest Paid: {selectedPayment.interest_amount_paid}</li>
+                          <li>Penalty Paid: {selectedPayment.penalty}</li>
+                          <li>Fees Paid: {selectedPayment.fees}</li>
+                          <li>Total Amount Paid: {selectedPayment.amount_paid}</li>
+                      </ul>
+                  </div>
+
+                  <div>
+                      <ul style={{display:"flex", flexDirection:"column", rowGap:"10px"}}>
+
+                          <li>To Be Refunded: {selectedPayment.money_to_be_refunded}</li>
+                          <li>Receipt Number: {selectedPayment.receipt_number}</li>
+                          <li>Notes: {selectedPayment.notes}</li>
+                      </ul>
+                  </div>
+
+                </div>
+
+              </div>
             </div>
           }
         </div>
