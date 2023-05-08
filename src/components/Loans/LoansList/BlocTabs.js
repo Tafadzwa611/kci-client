@@ -30,7 +30,15 @@ function BlocTabs({loan, setLoan, client_name}) {
         </div>
         {{
           'details': <DetailsTab loan={loan}/>,
-          'payments': <Payments payments={loan.payments} currencyId={loan.currency_id} setLoan={setLoan} loanId={loan.id} client_name={client_name} />,
+          'payments': <Payments
+            payments={loan.payments}
+            currencyId={loan.currency_id}
+            setLoan={setLoan}
+            loanId={loan.id}
+            currencyName={loan.currency_name}
+            accountId={loan.loan_id}
+            clientName={loan.client_fullname ? loan.client_fullname : loan.group_name}
+          />,
           'securities': <Securities collaterals={loan.collaterals} setLoan={setLoan} loanId={loan.id} />,
           'loans': <SubLoans loans={loan.sub_loans_list} client_name={client_name} />,
           'schedule': <ScheduleTab installments={loan.installments} client_name={client_name} />,
