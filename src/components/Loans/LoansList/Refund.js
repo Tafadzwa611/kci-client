@@ -4,13 +4,14 @@ import { Modal, ModalSubmit, NonFieldErrors, CustomInput } from '../../../common
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const Refund = ({setOpen, selectedPayment, setLoan}) => {
+const Refund = ({setOpen, selectedPayment, setLoan, payId, setSelectedPayment}) => {
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(`/loansapi/refund/${selectedPayment.id}/`, values, CONFIG);
       setLoan(response.data);
       setOpen(false);
+      setSelectedPayment(response.data.payments.find(payment => payment.id == payId));
     } catch (error) {
       if (error.message === 'Network Error') {
         actions.setErrors({responseStatus: 'Network Error'});
