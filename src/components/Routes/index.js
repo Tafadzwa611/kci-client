@@ -16,6 +16,7 @@ import { Routes as ReactRoutes, Route } from 'react-router-dom';
 
 const Home = lazy(() => import('../Home/Home'));
 const Dashboard = lazy(() => import('../Dashboard/Dashboard'));
+const CreateFile = lazy(() => import('../CreateFile/CreateFile'));
 
 const Routes = ({loggedInUser, branches, currencies}) => {
   const {setLoggedInUser} = useLoggedInUser();
@@ -33,6 +34,7 @@ const Routes = ({loggedInUser, branches, currencies}) => {
       <ReactRoutes >
         <Route exact path='/home' element={<Home/>} />
         <Route exact path='/dashboard' element={<Dashboard/>}/>
+        <Route exact path='/create_file' element={<CreateFile/>}/>
         {AccountingRoutes}
         {AssetRoutes}
         {ClientRoutes}

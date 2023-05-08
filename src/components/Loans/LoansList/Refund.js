@@ -1,23 +1,15 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
-import { Modal, ModalSubmit, NonFieldErrors, CustomInput, CustomTextField } from '../../../common';
+import { Modal, ModalSubmit, NonFieldErrors, CustomInput } from '../../../common';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { removeEmptyValues } from '../../../utils/utils';
 
-const EditPayment = ({setOpen, selectedPayment, setLoan}) => {
+const Refund = ({setOpen, selectedPayment, setLoan}) => {
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const data = removeEmptyValues(values);
-      await axios.patch(`/loansapi/update_payment/${selectedPayment.id}/`, data, CONFIG);
-      setLoan(curr => ({...curr, payments: curr.payments.map(payment => {
-        if (selectedPayment.id == payment.id) {
-          payment.receipt_number = values.receipt_number;
-          payment.notes = values.notes;
-        }
-        return payment
-      })}));
+      const response = await axios.post(`/loansapi/refund/${selectedPayment.id}/`, values, CONFIG);
+      setLoan(response.data);
       setOpen(false);
     } catch (error) {
       if (error.message === 'Network Error') {
@@ -31,15 +23,14 @@ const EditPayment = ({setOpen, selectedPayment, setLoan}) => {
   }
 
   return (
-    <Modal open={true} setOpen={setOpen} title={'Edit Payment'}>
-      <Formik initialValues={{receipt_number: selectedPayment.receipt_number || '', notes: selectedPayment.notes || ''}} onSubmit={onSubmit}>
+    <Modal open={true} setOpen={setOpen} title={'Refund'}>
+      <Formik initialValues={{refund_amount: ''}} onSubmit={onSubmit}>
         {({ errors, isSubmitting }) => (
           <Form>
             <NonFieldErrors errors={errors}>
               <div className='create_modal_container'>
                 <div>
-                  <CustomInput label='Receipt Number' name='receipt_number'/>
-                  <CustomTextField label='Notes' name='notes'/>
+                  <CustomInput label='Refund Amount' name='refund_amount' type='number' required/>
                 </div>
                 <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
               </div>
@@ -51,4 +42,4 @@ const EditPayment = ({setOpen, selectedPayment, setLoan}) => {
   )
 }
 
-export default EditPayment;
+export default Refund;

@@ -15,6 +15,9 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { removeEmptyValues } from '../../../utils/utils';
 import DeletePayment from './DeletePayment';
+import EditPayment from './EditPayment';
+import Refund from './Refund';
+import { Link } from 'react-router-dom';
 
 const MODAL_STATES = {
   reverse: 'reverse',
@@ -23,28 +26,39 @@ const MODAL_STATES = {
   none: false,
 };
 
-function Payments({payments, client_name, loanId, setLoan, currencyId}) {
-  const {reverse, none } = MODAL_STATES;
+function Payments({
+  payments,
+  clientName,
+  loanId,
+  setLoan,
+  currencyId,
+  currencyName,
+  accountId
+}) {
+  const {reverse, edit, refund, none } = MODAL_STATES;
   const [modal, setModal] = useState(none);
   const [form, setForm] = useState(null);
-  const paymentId = useRef(null);
+  const paymentRef = useRef(null);
 
-  const showDeleteModal = (evt) => {
-    paymentId.current = evt.target.id;
-    setModal(reverse);
+  const showModal = (evt) => {
+    const payment = payments.find(payment => payment.id == evt.target.id);
+    paymentRef.current = payment;
+    setModal(evt.target.getAttribute('data-name'));
   }
 
   return (
     <>
       <SuccessBtn handler={() => setForm('add')} value={'Add Penalty'}/>
-      {modal == reverse && <DeletePayment paymentId={paymentId.current} setOpen={setModal} setLoan={setLoan}/>}
+      {modal == reverse && <DeletePayment paymentId={paymentRef.current.id} setOpen={setModal} setLoan={setLoan}/>}
+      {modal == edit && <EditPayment selectedPayment={paymentRef.current} setOpen={setModal} setLoan={setLoan}/>}
+      {modal == refund && <Refund selectedPayment={paymentRef.current} setOpen={setModal} setLoan={setLoan}/>}
       {form === 'add' ?  <PaymentForm loanId={loanId} currencyId={currencyId} setLoan={setLoan} /> : null}
       <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"1rem"}}>
         <ReactHTMLTableToExcel
           id='test-table-xls-button'
           className='btn btn-default'
           table='payments'
-          filename={`${client_name}'s payments`}
+          filename={`${currencyName}'s payments`}
           sheet='tablexls'
           buttonText='Download as XLS'
         />
@@ -86,16 +100,21 @@ function Payments({payments, client_name, loanId, setLoan, currencyId}) {
                 <td className="schedule__table">{payment.money_to_be_refunded}</td>
                 <td className="schedule__table">{payment.amount_paid}</td>
                 <td className="schedule__table">
-                  <span className='badge badge-danger' id={payment.id} onClick={showDeleteModal} style={{cursor: 'pointer'}}>
+                  <span className='badge badge-danger' id={payment.id} data-name={reverse} onClick={showModal} style={{cursor: 'pointer'}}>
                     Reverse
                   </span><br/>
-                  <span className='badge badge-info'style={{cursor: 'pointer'}}>
+                  <span className='badge badge-info' id={payment.id} data-name={edit} onClick={showModal} style={{cursor: 'pointer'}}>
                     Edit
                   </span><br/>
-                  <span className='badge badge-info'style={{cursor: 'pointer'}}>
-                    Print
+                  <span className='badge badge-info' style={{cursor: 'pointer'}}>
+                    <Link
+                      to={{pathname: `/create_file?type=payment&branchName=${payment.branch_name}&notes=${payment.notes}&receiptNumber=${payment.receipt_number}&collectedBy=${payment.user_name}&paymentDate=${payment.cdate_created}&dateRecorded=${payment.date_recorded}&amountPaid=${payment.amount_paid}&currencyName=${currencyName}&clientName=${clientName}&accountId=${accountId}`}}
+                      target='_blank'
+                    >
+                      Print
+                    </Link>
                   </span><br/>
-                  <span className='badge badge-info'style={{cursor: 'pointer'}}>
+                  <span className='badge badge-info' id={payment.id} data-name={refund} onClick={showModal} style={{cursor: 'pointer'}}>
                     Refund
                   </span>
                 </td>
