@@ -182,7 +182,7 @@ function DeletePenalty({setOpenModal, setLoan, penaltyId}) {
         {({isSubmitting, errors}) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <ActionModalDialog isSubmitting={isSubmitting} act={'Delete'} msg={'Are you sure you want to delete this penalty.'} setOpen={setOpenModal}/>
+              <ActionModalDialog isSubmitting={isSubmitting} act={'Reverse'} msg={'Are you sure you want to reverse this penalty.'} setOpen={setOpenModal}/>
             </NonFieldErrors>
           </Form>
         )}
