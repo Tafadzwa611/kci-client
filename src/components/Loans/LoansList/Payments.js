@@ -133,7 +133,7 @@ function Payments({
                   </div>
                 </div>
                 <div style={{display:'flex', width:'100%', justifyContent:'space-between'}}>
-                  <div>
+                  <div style={{width:"32%"}}>
                     <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
                       <li>Date Recorded: {selectedPayment.date_recorded}</li>
                       <li>Collection Date: {selectedPayment.cdate_created}</li>
@@ -142,7 +142,7 @@ function Payments({
                       <li>Account: {selectedPayment.fund_account_name}</li>
                     </ul>
                   </div>
-                  <div>
+                  <div style={{width:"32%"}}>
                     <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
                       <li>Principal Paid: {selectedPayment.principal_amount_paid}</li>
                       <li>Interest Paid: {selectedPayment.interest_amount_paid}</li>
@@ -151,7 +151,7 @@ function Payments({
                       <li>Total Amount Paid: {selectedPayment.amount_paid}</li>
                     </ul>
                   </div>
-                  <div>
+                  <div style={{width:"32%"}}>
                     <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
                       <li>To Be Refunded: {selectedPayment.money_to_be_refunded}</li>
                       <li>Receipt Number: {selectedPayment.receipt_number}</li>

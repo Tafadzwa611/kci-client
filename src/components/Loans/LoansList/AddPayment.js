@@ -8,6 +8,7 @@ import {
   CustomSelect,
   CustomDatePicker,
   Fetcher,
+  ModalSubmit,
   Modal
 } from '../../../common';
 import axios from 'axios';
@@ -44,7 +45,7 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen}) => {
   };
 
   return (
-    <Modal open={true} setOpen={setOpen} title={'Disburse Loan'}>
+    <Modal open={true} setOpen={setOpen} title={'Add Payment'}>
       <Fetcher urls={['/acc-api/cash-and-cash-equivalents/']}>
         {({data}) => (
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
@@ -52,17 +53,17 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen}) => {
               <Form>
                 <NonFieldErrors errors={errors}>
                 <div className='create_modal_container'>
-                  <CustomInput label='Amount Paid' name='amount_paid' type='number' required/>
-                  <CustomDatePicker label='Payment Date' name='payment_date' setFieldValue={setFieldValue} required/>
-                  <CustomSelect label='Fund Account' name='cash_account_id' required>
-                    <option value=''>------</option>
-                    {data[0].filter(acc => acc.currency_id == currencyId).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_name}</option>)}
-                  </CustomSelect>
-                  <CustomInput label='Receipt Number' name='receipt_number' type='text'/>
-                  <CustomTextField label='Description' name='notes' type='text'/>
-                  <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-                    <SubmitButton isSubmitting={isSubmitting}/>
+                  <div>
+                    <CustomInput label='Amount Paid' name='amount_paid' type='number' required/>
+                    <CustomDatePicker label='Payment Date' name='payment_date' setFieldValue={setFieldValue} required/>
+                    <CustomSelect label='Fund Account' name='cash_account_id' required>
+                      <option value=''>------</option>
+                      {data[0].filter(acc => acc.currency_id == currencyId).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_name}</option>)}
+                    </CustomSelect>
+                    <CustomInput label='Receipt Number' name='receipt_number' type='text'/>
+                    <CustomTextField label='Description' name='notes' type='text'/>
                   </div>
+                  <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
                 </div>
               </NonFieldErrors>
               </Form>

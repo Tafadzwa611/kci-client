@@ -36,7 +36,7 @@ function Securities({collaterals, setLoan, loanId}) {
         <div style={{overflowX:'auto', maxHeight:"500px"}}>
           <table className="table">
             <thead>
-              <tr className="journal-details schedule__tables" style={{position:'sticky', top:'0'}}>
+              <tr className="journal-details header" style={{position:'sticky', top:'0'}}>
                 <th className="schedule__table">Type</th>
                 <th className="schedule__table">Description</th>
                 <th className="schedule__table">Currency</th>

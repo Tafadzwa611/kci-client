@@ -5,7 +5,7 @@ import { Form, Formik } from 'formik';
 import {
   NonFieldErrors,
   CustomTextField,
-  SubmitButton,
+  ModalSubmit,
   Modal
 } from '../../../common';
 
@@ -37,9 +37,7 @@ function AddComment({setLoan, setOpen, loanId}) {
               <NonFieldErrors errors={errors}>
               <div className='create_modal_container'>
                 <CustomTextField label='Comment' name='comment' type='text' required/>
-                <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-                  <SubmitButton isSubmitting={isSubmitting}/>
-                </div>
+                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
               </div>
             </NonFieldErrors>
             </Form>
