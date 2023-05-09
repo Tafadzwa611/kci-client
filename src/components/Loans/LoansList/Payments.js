@@ -145,7 +145,7 @@ function Payments({
                     <button className='btn btn-olive' id={selectedPayment.id} data-name={edit} onClick={showModal}>Edit</button>
                     <button className='btn btn-olive'>
                       <Link
-                        to={{pathname: `/create_file?type=payment&receiptNumber=${selectedPayment.receipt_number}&collectedBy=${selectedPayment.user_name}&paymentDate=${selectedPayment.cdate_created}&dateRecorded=${selectedPayment.date_recorded}&amountPaid=${selectedPayment.amount_paid}&currencyName=${currencyName}&clientName=${clientName}&accountId=${accountId}`}}
+                        to={{pathname: `/create_file?type=payment&receiptNumber=${selectedPayment.receipt_number}&collectedBy=${selectedPayment.user_name}&paymentDate=${selectedPayment.cdate_created}&dateRecorded=${selectedPayment.date_recorded}&amountPaid=${selectedPayment.amount_paid}&currencyName=${currencyName}&clientName=${clientName}&accountId=${accountId}&branchName=${selectedPayment.branch_name}`}}
                         target='_blank'
                       >
                         Print
