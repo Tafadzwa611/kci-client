@@ -13,10 +13,21 @@ import { useLoggedInUser } from '../../contexts/LoggedInUserContext';
 const styles = StyleSheet.create({
   page: {
     color: 'black',
+    padding: 20,
   },
   section: {
-    margin: 10,
-    padding: 10,
+    paddingBottom: 20,
+    fontSize: 12,
+  },
+  sectionBottom: {
+    paddingTop: 20,
+    fontSize: 12,
+  },
+  sectionText: {
+    paddingBottom: 5,
+  },
+  sectionTextR: {
+    paddingBottom: 10,
   },
   viewer: {
     width: window.innerWidth,
@@ -60,10 +71,11 @@ function CreateFile() {
       <Document title={`${params.clientName} Payment.pdf`}>
         <Page size='A4' style={styles.page}>
           <View style={styles.section}>
-            <Text>{loggedInUser.company_name}</Text>
-            <Text>From: {params.clientName}</Text>
-            <Text>Loan Number: {params.accountId}</Text>
-            <Text>Branch: {params.branchName}</Text>
+            <Text style={styles.sectionTextR}>Payment Invoice</Text>
+            <Text style={styles.sectionText}>From: {loggedInUser.company_name}</Text>
+            <Text style={styles.sectionText}>To: {params.clientName}</Text>
+            <Text style={styles.sectionText}>Loan Number: {params.accountId}</Text>
+            <Text style={styles.sectionText}>Branch: {params.branchName}</Text>
           </View>
           <View style={styles.table}>
             <View style={styles.tableRow}> 
@@ -100,6 +112,9 @@ function CreateFile() {
                 <Text style={styles.tableCell}>{params.amountPaid}</Text> 
               </View>
             </View> 
+          </View>
+          <View style={styles.sectionBottom}>
+            <Text style={styles.sectionText}>Collected By: {params.collectedBy}</Text>
           </View>
         </Page>
       </Document>

@@ -21,14 +21,14 @@ function Comments({setLoan, comments, loanId}) {
       <SuccessBtn handler={() => setModal(add)} value={'Add Comment'}/>
       {modal === add && <AddComment setOpen={setModal} setLoan={setLoan} loanId={loanId}/>}
       {modal === reverse && <DeleteComment setOpen={setModal} setLoan={setLoan} commentId={commentIdRef.current}/>}
-      <div className='miniLoanDetails-container'>
+      <div style={{padding:"1.5rem"}} className='miniLoanDetails-container'>
         <table className='table'>
           <thead>
-            <tr className='journal-details schedule__tables'>
-              <th>Date</th>
-              <th>User</th>
-              <th>Comment</th>
-              <th>Action</th>
+            <tr className='journal-details header'>
+              <th className='schedule__table'>Date</th>
+              <th className='schedule__table'>User</th>
+              <th className='schedule__table'>Comment</th>
+              <th className='schedule__table'>Action</th>
             </tr>
           </thead>
           <tbody>
