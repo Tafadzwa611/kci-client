@@ -1,14 +1,27 @@
 import React, {useState} from 'react';
 import { CheckBox } from '../../../common';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import {
+  SuccessBtn
+} from '../../../common';
+import EarlySettlement from './EarlySettlement';
 
-function ScheduleTab({installments, client_name}) {
+const MODAL_STATES = {
+  es: 'es',
+  none: false
+};
+
+function ScheduleTab({installments, client_name, loanId, currencyId, setLoan}) {
+  const {es, none } = MODAL_STATES;
+  const [modal, setModal] = useState(none);
   const [expected, setExpected] = useState(true);
   const [paid, setPaid] = useState(true);
   const [dues, setDues] = useState(true);
 
   return (
     <>
+      <SuccessBtn handler={() => setModal(es)} value={'Early Settlement'}/>
+      {modal === es && <EarlySettlement setOpen={setModal} setLoan={setLoan} loanId={loanId} currencyId={currencyId} />}
       <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"1rem"}}>
         <div className="schedule__check__section" style={{display: "flex", columnGap: "1rem", alignItems:"center"}}>
           <CheckBox isChecked={expected} label='Amount Expected' onChange={() => setExpected(curr => !curr)} />
@@ -109,7 +122,7 @@ function ScheduleTab({installments, client_name}) {
                   <td className='schedule__table schedule__installment'>{installment.penalty_due}</td>
                   <td className='schedule__table schedule__installment schedule__installment__right'>{installment.balance}</td>
                 </>}
-                <td className='schedule__table schedule__installment'>Pending</td>
+                <td className='schedule__table schedule__installment'>{installment.status}</td>
               </tr>
             ))}
           </tbody>

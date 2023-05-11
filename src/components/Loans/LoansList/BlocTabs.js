@@ -41,9 +41,17 @@ function BlocTabs({loan, setLoan, client_name}) {
           />,
           'securities': <Securities collaterals={loan.collaterals} setLoan={setLoan} loanId={loan.id} />,
           'loans': <SubLoans loans={loan.sub_loans_list} client_name={client_name} />,
-          'schedule': <ScheduleTab installments={loan.installments} client_name={client_name} />,
+          'schedule': <ScheduleTab installments={loan.installments} client_name={client_name} loanId={loan.id} setLoan={setLoan} currencyId={loan.currency_id}/>,
           'txns': <Txns txns={loan.txns} client_name={client_name} />,
-          'penalties': <Penalties penalties={loan.penalties} status={loan.status} client_name={client_name} loanId={loan.id} penalty={loan.penalty} setLoan={setLoan} locked={loan.penalties_locked} />,
+          'penalties': <Penalties
+            penalties={loan.penalties}
+            status={loan.status}
+            client_name={client_name}
+            loanId={loan.id}
+            penalty={loan.penalty}
+            setLoan={setLoan}
+            locked={loan.penalties_locked}
+          />,
           'comments': <Comments comments={loan.comments} setLoan={setLoan} loanId={loan.id}/>,
           'files': <LoanFiles loanId={loan.id} files={loan.files} setLoan={setLoan} />,
           'audit': <Audit />,
