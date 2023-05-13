@@ -102,7 +102,7 @@ function ClientFormFields({product, isSubmitting, setFieldValue, values}) {
       />
       <small><em>Minimum = {product.minimum_loan_duration} Maximum = {product.maximum_loan_duration}</em></small>
       <CustomDatePicker label='First Repayment Date' name='first_repayment_date' setFieldValue={setFieldValue} required/>
-      <CustomSelect label='Default Loan Schedule Strategy' name='schedule_strategy' required>
+      <CustomSelect label='Loan Schedule Strategy' name='schedule_strategy' required>
         <option value=''>------</option>
         {scheduleStrategies[product.loan_duration_time_unit].map(strategy => <option key={strategy} value={strategy}>{strategy}</option>)}
       </CustomSelect>

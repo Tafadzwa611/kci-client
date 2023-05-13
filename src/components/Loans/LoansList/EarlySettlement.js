@@ -20,7 +20,6 @@ function EarlySettlement({setLoan, setOpen, loanId, currencyId}) {
   const [interestDate, setInterestDate] = useState(dt);
 
   const onSubmit = async (values, actions) => {
-    console.log(values);
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(`/loansapi/early_settlement/${loanId}/`, values, CONFIG);

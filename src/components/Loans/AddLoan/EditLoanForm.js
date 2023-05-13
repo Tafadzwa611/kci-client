@@ -11,7 +11,7 @@ const EditLoanFoam = ({loan, loanProducts}) => {
   const navigate = useNavigate();
   const [product, setProduct] = useState(loanProducts.find(prod => prod.id == loan.loan_product_id));
   const products = loanProducts.filter(prod => prod.client_type === loan.client_type && prod.is_active && prod.id !== product.id);
-  console.log(loan);
+  
   const initialValues = {
     loan_product_id: product.id,
     principal: loan.principal,
