@@ -8,7 +8,8 @@ import {
   CustomTextField,
   ActionModal,
   ActionModalDialog,
-  SubmitButton
+  SubmitButton,
+  OliveBtn
 } from '../../../common';
 import { Form, Formik } from 'formik';
 import axios from 'axios';
@@ -27,6 +28,10 @@ function Penalties({penalties, penalty, client_name, loanId, setLoan, locked, st
 
   return (
     <>
+      <div>
+        <OliveBtn handler={() => setLock(true)} value={locked ? 'Unlock Account' : 'Lock Account'}/>
+        {showLock ? <ToggleLock loanId={loanId} setLoan={setLoan} setOpenModal={setLock} locked={locked} /> : null}
+      </div>
       {status == 'Arrears' &&
         <div className="add__security__container" style={{paddingTop:'4px', paddingBottom:"0"}}>
           <div style={{display:"flex", justifyContent:"space-between"}}>
@@ -34,12 +39,10 @@ function Penalties({penalties, penalty, client_name, loanId, setLoan, locked, st
               <SuccessBtn handler={() => setForm('add')} value={'Add Penalty'}/>
               <SuccessBtn handler={() => setForm('reduce')} value={'Change Balance'}/>
             </div>
-            <DefaultBtn handler={() => setLock(true)} value={locked ? 'Unlock Account' : 'Lock Account'}/>
           </div>
           {form === 'add' ?  <PenaltyForm loanId={loanId} setLoan={setLoan} /> : null}
           {form === 'reduce' ? <ReducePenaltyForm loanId={loanId} orgPenalty={penalty} setLoan={setLoan} /> : null}
           {showDelete ? <DeletePenalty penaltyId={penId.current} setLoan={setLoan} setOpenModal={setDelete} /> : null}
-          {showLock ? <ToggleLock loanId={loanId} setLoan={setLoan} setOpenModal={setLock} locked={locked} /> : null}
         </div>
       }
       <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'1rem'}}>

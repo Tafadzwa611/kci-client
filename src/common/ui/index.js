@@ -10,6 +10,7 @@ import ButtonDefault from './ButtonDefault';
 import ButtonSuccess from './ButtonSuccess';
 import CheckBox from './CheckBox';
 import DefaultBtn from './DefaultBtn';
+import OliveBtn from './OliveBtn';
 
 export {
   CheckBox,
@@ -24,4 +25,5 @@ export {
   ButtonDefault,
   ButtonSuccess,
   DefaultBtn,
+  OliveBtn,
 };
