@@ -4,8 +4,8 @@ import {
   NonFieldErrors,
   CustomInput,
   CustomTextField,
-  SubmitButton,
   CustomSelect,
+  CustomMultiSelect,
   CustomDatePicker,
   Fetcher,
   ModalSubmit,
@@ -15,7 +15,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { removeEmptyValues } from '../../../utils/utils';
 
-const AddPayment = ({loanId, setLoan, currencyId, setOpen}) => {
+const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType}) => {
   const onSubmit = async (values, actions) => {
     const data = removeEmptyValues(values);
     try {
@@ -35,11 +35,14 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen}) => {
     }
   }
 
+  const selectOpts = subLoans.filter(loan => loan.id !== null).map(loan => ({value: loan.id, label: loan.fullname}));
+
   const initialValues = {
     cash_account_id: '',
     payment_type: 'Installment',
     payment_date: '',
     amount_paid: '',
+    sub_loan_ids: '',
     receipt_number: '',
     notes: '',
   };
@@ -60,6 +63,7 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen}) => {
                       <option value=''>------</option>
                       {data[0].filter(acc => acc.currency_id == currencyId).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_name}</option>)}
                     </CustomSelect>
+                    {clientType === 'Groups (solidarity)' && <CustomMultiSelect label='Sub Loan(s)' name='sub_loan_ids' options={selectOpts} setFieldValue={setFieldValue} required/>}
                     <CustomInput label='Receipt Number' name='receipt_number' type='text'/>
                     <CustomTextField label='Description' name='notes' type='text'/>
                   </div>

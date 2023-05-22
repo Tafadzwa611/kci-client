@@ -17,7 +17,7 @@ function Payments({
   clientName,
   setLoan,
   currencyName,
-  accountId
+  accountId,
 }) {
   const {reverse, edit, refund, none } = MODAL_STATES;
   const [modal, setModal] = useState(none);
