@@ -8,6 +8,8 @@ import DisburseLoan from './DisburseLoan';
 import UndoDisbursement from './UndoDisbursement';
 import AddPayment from './AddPayment';
 import AddFee from './AddFee';
+import WriteOff from './WriteOff';
+import UndoWriteOff from './UndoWriteOff';
 
 const MODAL_STATES = {
   approve: 'approve',
@@ -18,11 +20,25 @@ const MODAL_STATES = {
   undoApproval: 'undoApproval',
   addPayment: 'addPayment',
   addFee: 'addFee',
+  writeOff: 'writeOff',
+  undoWriteOff: 'undoWriteOff',
   none: false
 };
 
 const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
-  const {approve, reject, deleteLoan, disburse, undoDisburse, undoApproval, addPayment, addFee, none} = MODAL_STATES;
+  const {
+    approve,
+    reject,
+    deleteLoan,
+    disburse,
+    undoDisburse,
+    undoApproval,
+    addPayment,
+    addFee,
+    writeOff,
+    undoWriteOff,
+    none
+  } = MODAL_STATES;
   const [modal, setModal] = useState(none);
   
   if (loan.status == 'Processing') {
@@ -103,10 +119,25 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
           subLoans={loan.sub_loans_list}
           manualFees={loan.manual_fees}
         />}
+        {modal === writeOff &&
+        <WriteOff
+          loanId={loan.id}
+          setOpen={setModal}
+          setLoan={setLoanDetails}
+        />}
+        {modal === undoWriteOff &&
+        <UndoWriteOff
+          loanId={loan.id}
+          setOpen={setModal}
+          setLoan={setLoanDetails}
+        />}
         {modal === undoDisburse && <UndoDisbursement setOpen={setModal} url={undoDisburseUrl} setLoanDetails={setLoanDetails}/>}
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setModal(addPayment)}>Add Payment</button>
           <button className='btn btn-olive' onClick={() => setModal(addFee)}>Add Fee</button>
+          {loan.status == 'Written-Off' ?
+          <button className='btn btn-olive' onClick={() => setModal(undoWriteOff)}>Undo Write Off</button> :
+          <button className='btn btn-olive' onClick={() => setModal(writeOff)}>Write Off</button>}
           <button className='btn btn-olive' onClick={() => setModal(undoDisburse)}>Undo Disbursement</button>
         </div>
       </div>
