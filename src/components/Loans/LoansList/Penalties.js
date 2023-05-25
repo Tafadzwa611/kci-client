@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import {
   SuccessBtn,
-  DefaultBtn,
   NonFieldErrors,
   CustomInput,
   CustomTextField,
@@ -33,9 +32,9 @@ function Penalties({penalties, penalty, client_name, loanId, setLoan, locked, st
         {showLock ? <ToggleLock loanId={loanId} setLoan={setLoan} setOpenModal={setLock} locked={locked} /> : null}
       </div>
       {status == 'Arrears' &&
-        <div className="add__security__container" style={{paddingTop:'4px', paddingBottom:"0"}}>
-          <div style={{display:"flex", justifyContent:"space-between"}}>
-            <div style={{display:"flex", columnGap:"5px"}}>
+        <div className='add__security__container' style={{paddingTop:'4px', paddingBottom:'0'}}>
+          <div style={{display:'flex', justifyContent:'space-between'}}>
+            <div style={{display:'flex', columnGap:'5px'}}>
               <SuccessBtn handler={() => setForm('add')} value={'Add Penalty'}/>
               <SuccessBtn handler={() => setForm('reduce')} value={'Change Balance'}/>
             </div>
@@ -55,8 +54,8 @@ function Penalties({penalties, penalty, client_name, loanId, setLoan, locked, st
           buttonText='Download as XLS'
         />
       </div>
-      <div style={{padding:"1.5rem"}} className='miniLoanDetails-container'>
-        <div style={{overflowX:'auto', maxHeight:"600px"}}>
+      <div style={{padding:'1.5rem'}} className='miniLoanDetails-container'>
+        <div style={{overflowX:'auto', maxHeight:'600px'}}>
           <table className='table' id='penalties'>
             <thead>
               <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
@@ -118,7 +117,7 @@ const PenaltyForm = ({loanId, setLoan}) => {
           <NonFieldErrors errors={errors}>
             <CustomInput label='Amount' name='penalty_amount' type='number' required/>
             <CustomTextField label='Description' name='description' type='text' required/>
-            <div style={{display:'flex', justifyContent: 'flex-end', paddingBottom:"1.5rem"}}> 
+            <div style={{display:'flex', justifyContent: 'flex-end', paddingBottom:'1.5rem'}}> 
               <SubmitButton isSubmitting={isSubmitting}/>
             </div>
           </NonFieldErrors>
@@ -153,7 +152,7 @@ const ReducePenaltyForm = ({loanId, orgPenalty, setLoan}) => {
           <NonFieldErrors errors={errors}>
             <div>Original Balance {orgPenalty}</div>
             <CustomInput label='New Balance' name='new_balance' type='number' required/>
-            <div style={{display:'flex', justifyContent: 'flex-end', paddingBottom:"1.5rem"}}> 
+            <div style={{display:'flex', justifyContent: 'flex-end', paddingBottom:'1.5rem'}}> 
               <SubmitButton isSubmitting={isSubmitting}/>
             </div>
           </NonFieldErrors>

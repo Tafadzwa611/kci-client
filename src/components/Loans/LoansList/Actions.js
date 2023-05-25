@@ -7,6 +7,7 @@ import RejectLoan from './RejectLoan';
 import DisburseLoan from './DisburseLoan';
 import UndoDisbursement from './UndoDisbursement';
 import AddPayment from './AddPayment';
+import AddFee from './AddFee';
 
 const MODAL_STATES = {
   approve: 'approve',
@@ -16,11 +17,12 @@ const MODAL_STATES = {
   undoDisburse: 'undoDisburse',
   undoApproval: 'undoApproval',
   addPayment: 'addPayment',
+  addFee: 'addFee',
   none: false
 };
 
 const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
-  const {approve, reject, deleteLoan, disburse, undoDisburse, undoApproval, addPayment, none} = MODAL_STATES;
+  const {approve, reject, deleteLoan, disburse, undoDisburse, undoApproval, addPayment, addFee, none} = MODAL_STATES;
   const [modal, setModal] = useState(none);
   
   if (loan.status == 'Processing') {
@@ -92,9 +94,19 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
           subLoans={loan.sub_loans_list}
           clientType={loan.client_type}
         />}
+        {modal === addFee &&
+        <AddFee
+          setOpen={setModal}
+          loanId={loan.id}
+          setLoan={setLoanDetails}
+          currencyId={loan.currency_id}
+          subLoans={loan.sub_loans_list}
+          manualFees={loan.manual_fees}
+        />}
         {modal === undoDisburse && <UndoDisbursement setOpen={setModal} url={undoDisburseUrl} setLoanDetails={setLoanDetails}/>}
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setModal(addPayment)}>Add Payment</button>
+          <button className='btn btn-olive' onClick={() => setModal(addFee)}>Add Fee</button>
           <button className='btn btn-olive' onClick={() => setModal(undoDisburse)}>Undo Disbursement</button>
         </div>
       </div>
