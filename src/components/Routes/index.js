@@ -8,6 +8,7 @@ import LoanRoutes from './LoanRoutes';
 import OtherIncomeRoutes from './OtherIncomeRoutes';
 import PaymentRoutes from './PaymentRoutes';
 import ReportRoutes from './ReportRoutes';
+import DataRoutes from './DataRoutes';
 import UserRoutes from './UserRoutes';
 import {useLoggedInUser} from '../../contexts/LoggedInUserContext';
 import { useBranches } from '../../contexts/BranchesContext';
@@ -45,6 +46,7 @@ const Routes = ({loggedInUser, branches, currencies}) => {
         {PaymentRoutes}
         {ReportRoutes}
         {UserRoutes}
+        {DataRoutes}
       </ReactRoutes>
     </Suspense>
   )

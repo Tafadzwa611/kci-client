@@ -5,7 +5,7 @@ const ViewReports = lazy(() => import('../Reports/ViewReports/ViewReports'));
 
 const ReportRoutes = (
   <>
-    <Route exact path='/reports/viewreports' element={<ViewReports/>}/>
+    <Route exact path='/reports/viewreports/*' element={<ViewReports/>}/>
   </>
 )
 
