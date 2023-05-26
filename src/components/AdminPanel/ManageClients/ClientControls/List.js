@@ -28,7 +28,7 @@ const List = ({initControls}) => {
 
   return (
     <div>
-      <SuccessBtn handler={_ => setOpenModal(true)} value={'Update Controls'}/>
+      <SuccessBtn handler={() => setOpenModal(true)} value={'Update Controls'}/>
       <UpdateClientControls
         key={JSON.stringify(clientControls)}
         open={openModal}
