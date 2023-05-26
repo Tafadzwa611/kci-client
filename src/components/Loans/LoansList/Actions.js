@@ -7,6 +7,9 @@ import RejectLoan from './RejectLoan';
 import DisburseLoan from './DisburseLoan';
 import UndoDisbursement from './UndoDisbursement';
 import AddPayment from './AddPayment';
+import AddFee from './AddFee';
+import WriteOff from './WriteOff';
+import UndoWriteOff from './UndoWriteOff';
 
 const MODAL_STATES = {
   approve: 'approve',
@@ -16,11 +19,26 @@ const MODAL_STATES = {
   undoDisburse: 'undoDisburse',
   undoApproval: 'undoApproval',
   addPayment: 'addPayment',
+  addFee: 'addFee',
+  writeOff: 'writeOff',
+  undoWriteOff: 'undoWriteOff',
   none: false
 };
 
 const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
-  const {approve, reject, deleteLoan, disburse, undoDisburse, undoApproval, addPayment, none} = MODAL_STATES;
+  const {
+    approve,
+    reject,
+    deleteLoan,
+    disburse,
+    undoDisburse,
+    undoApproval,
+    addPayment,
+    addFee,
+    writeOff,
+    undoWriteOff,
+    none
+  } = MODAL_STATES;
   const [modal, setModal] = useState(none);
   
   if (loan.status == 'Processing') {
@@ -62,14 +80,64 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
         </div>
       </div>
     )
+  }else if (loan.status == 'Rejected') {
+    const deleteUrl = loanType === 'cli' ? `/loansapi/delete_loan/${loan.id}/` : `/loansapi/delete_sloan/${loan.id}/`;
+    return (
+      <div style={{display:'flex', columnGap:'3px'}}>
+        {modal === deleteLoan && <DeleteLoan
+          loanId={loan.id}
+          setOpen={setModal}
+          url={deleteUrl}
+          setLoanDetails={setLoanDetails}
+          setLoanId={setLoanId}
+          setLoanData={setLoanData}
+        />}
+        <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
+          <button className='btn btn-olive' onClick={() => setModal(deleteLoan)}>Delete</button>
+        </div>
+      </div>
+    )
   }else {
     const undoDisburseUrl = loanType === 'cli' ? `/loansapi/undo_loan_disbursement/${loan.id}/` : `/loansapi/undo_sloan_disbursement/${loan.id}/`;
     return (
       <div style={{display:'flex', columnGap:'3px'}}>
-        {modal === addPayment && <AddPayment setOpen={setModal} loanId={loan.id} setLoan={setLoanDetails} currencyId={loan.currency_id}/>}
+        {modal === addPayment &&
+        <AddPayment
+          setOpen={setModal}
+          loanId={loan.id}
+          setLoan={setLoanDetails}
+          currencyId={loan.currency_id}
+          subLoans={loan.sub_loans_list}
+          clientType={loan.client_type}
+        />}
+        {modal === addFee &&
+        <AddFee
+          setOpen={setModal}
+          loanId={loan.id}
+          setLoan={setLoanDetails}
+          currencyId={loan.currency_id}
+          subLoans={loan.sub_loans_list}
+          manualFees={loan.manual_fees}
+        />}
+        {modal === writeOff &&
+        <WriteOff
+          loanId={loan.id}
+          setOpen={setModal}
+          setLoan={setLoanDetails}
+        />}
+        {modal === undoWriteOff &&
+        <UndoWriteOff
+          loanId={loan.id}
+          setOpen={setModal}
+          setLoan={setLoanDetails}
+        />}
         {modal === undoDisburse && <UndoDisbursement setOpen={setModal} url={undoDisburseUrl} setLoanDetails={setLoanDetails}/>}
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setModal(addPayment)}>Add Payment</button>
+          <button className='btn btn-olive' onClick={() => setModal(addFee)}>Add Fee</button>
+          {loan.status == 'Written-Off' ?
+          <button className='btn btn-olive' onClick={() => setModal(undoWriteOff)}>Undo Write Off</button> :
+          <button className='btn btn-olive' onClick={() => setModal(writeOff)}>Write Off</button>}
           <button className='btn btn-olive' onClick={() => setModal(undoDisburse)}>Undo Disbursement</button>
         </div>
       </div>

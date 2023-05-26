@@ -9,6 +9,7 @@ import ScheduleTab from './ScheduleTab';
 import DetailsTab from './DetailsTab';
 import SubLoans from './SubLoans';
 import Audit from './Audit';
+import Fees from './Fees';
 
 function BlocTabs({loan, setLoan, client_name}) {
   const [tab, setTab] = useState('details');
@@ -22,8 +23,9 @@ function BlocTabs({loan, setLoan, client_name}) {
           <button className={tab === 'schedule' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('schedule')}>Schedule</button>
           <button className={tab === 'txns' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('txns')}>Transactions</button>
           <button className={tab === 'payments' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('payments')}>Payments</button>
-          <button className={tab === 'securities' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('securities')}>Collateral</button>
+          <button className={tab === 'fees' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('fees')}>Fees</button>
           <button className={tab === 'penalties' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('penalties')}>Penalties</button>
+          <button className={tab === 'securities' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('securities')}>Collateral</button>
           <button className={tab === 'comments' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('comments')}>Comments</button>
           <button className={tab === 'files' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('files')}>Attachments</button>
           <button className={tab === 'audit' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('audit')}>Audit</button>
@@ -52,9 +54,10 @@ function BlocTabs({loan, setLoan, client_name}) {
             setLoan={setLoan}
             locked={loan.penalties_locked}
           />,
+          'fees': <Fees setLoan={setLoan} fees={loan.applied_fees}/>,
           'comments': <Comments comments={loan.comments} setLoan={setLoan} loanId={loan.id}/>,
           'files': <LoanFiles loanId={loan.id} files={loan.files} setLoan={setLoan} />,
-          'audit': <Audit />,
+          'audit': <Audit loanId={loan.id}/>,
         }[tab]}
       </div>
     </>
