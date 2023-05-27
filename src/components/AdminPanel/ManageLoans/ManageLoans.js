@@ -3,6 +3,7 @@ import Products from './Products/Products';
 import ProductCategories from './ProductCategories/ProductCategories';
 import Fees from './Fees/Fees';
 import Collateral from './Collateral/Collateral';
+import LoanControls from './LoanControls/LoanControls';
 
 const ManageLoans = () => {
   const [tab, setTab] = useState('products');
@@ -14,13 +15,15 @@ const ManageLoans = () => {
         <button className={tab === 'categories' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('categories')}>Product Categories</button>
         <button className={tab === 'fees' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('fees')}>Loan Fees</button>
         <button className={tab === 'collateral' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('collateral')}>Collateral</button>
+        <button className={tab === 'controls' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('controls')}>Loan Controls</button>
       </div>
       <div className='tab-content font-12' style={{marginTop:'3rem'}}>
         {{
-          'products': <Products />,
-          'categories': <ProductCategories />,
-          'fees': <Fees />,
-          'collateral': <Collateral />,
+          products: <Products />,
+          categories: <ProductCategories />,
+          fees: <Fees />,
+          collateral: <Collateral />,
+          controls: <LoanControls />,
         }[tab]}
       </div>
     </>
