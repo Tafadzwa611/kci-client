@@ -28,6 +28,7 @@ const Filter = ({products, setLoanData, setLoanId, setLoanDetails}) => {
     min_total_amount_paid: '',
     max_total_amount_paid: '',
     client: '',
+    group: '',
     loan_product_id: '',
     client_type: ''
   };
@@ -42,10 +43,23 @@ const Filter = ({products, setLoanData, setLoanId, setLoanDetails}) => {
     setFieldValue('client_type', value);
   }
 
+  const getParams = (values) => {
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(values)) {
+      if (Array.isArray(value)) {
+        value.forEach(el => params.append(key, el));
+      }else {
+        params.append(key, value);
+      }
+    }
+    return params
+  }
+
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
-      const response = await axios.get('/loansapi/loan_list/', {params: data});
+      const params = getParams(data);
+      const response = await axios.get('/loansapi/loan_list/', {params: params});
       setLoanData(response.data);
     } catch (error) {
       if (error.message === 'Network Error') {
@@ -108,14 +122,17 @@ const Filter = ({products, setLoanData, setLoanId, setLoanDetails}) => {
                     </CustomSelectFilter>
                   </div>
                 </div>
-                <div style={{marginTop:'1rem'}}>
-                  <div style={{width:'100%'}}>
+                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
+                  <div style={{width:'60%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
                       options={branches.map(br => ({label: br.name, value:br.id}))}
                       setFieldValue={setFieldValue}
                     />
+                  </div>
+                  <div className='row-payments-container' style={{width:'24%'}}>
+                    <CustomInputFilter label='Group Name' name='group'/>
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
