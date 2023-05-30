@@ -18,7 +18,7 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan}) {
     fund_account_id: '',
     loan_officer_id: '',
     first_repayment_date: loan.first_payment_date,
-    schedule_strategy: loan.schedule_strategy
+    schedule_strategy: loan.default_schedule_strategy
   };
 
   const onSubmit = async (values, actions) => {

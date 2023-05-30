@@ -142,7 +142,9 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
                     initVals={values.two_man_rules.map(rule => ({label: rule, value: rule}))}
                     options={[
                       {label: 'Loan Approval', value: 'Loan Approval'},
-                      {label: 'Loan Disbursement', value: 'Loan Disbursement'}
+                      {label: 'Loan Disbursement', value: 'Loan Disbursement'},
+                      {label: 'Loan Rejection', value: 'Loan Rejection'},
+                      {label: 'Loan Deletion', value: 'Loan Deletion'},
                     ]}
                   />
                   {currencies.map((currency, idx) => (
