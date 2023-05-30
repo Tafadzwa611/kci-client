@@ -16,7 +16,7 @@ import { statusValues } from './data';
 import axios from 'axios';
 import { removeEmptyValues } from '../../../utils/utils';
 
-const Filter = ({products, setLoanData, setLoanId, setLoanDetails}) => {
+const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) => {
   const initialValues = {
     branch_ids: [],
     status: [],
@@ -59,6 +59,7 @@ const Filter = ({products, setLoanData, setLoanId, setLoanDetails}) => {
     try {
       const data = removeEmptyValues(values);
       const params = getParams(data);
+      setParams(params);
       const response = await axios.get('/loansapi/loan_list/', {params: params});
       setLoanData(response.data);
     } catch (error) {
