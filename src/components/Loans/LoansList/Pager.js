@@ -25,10 +25,10 @@ const Pager = ({
   }
 
   return (
-    <div className='footer-container font-12 text-light'>
+    <div className='footer-container font-12 text-light' style={{display:'flex', columnGap:'3px'}}>
       {errors && JSON.stringify(errors)}
-      {prevPageNumber && <><button onClick={onClick}>Back</button><br/></>}
-      {nextPageNumber && <button onClick={onClick}>Next</button>}
+      {prevPageNumber && <><button className='btn btn-default' onClick={onClick}>Back</button><br/></>}
+      {nextPageNumber && <button className='btn btn-default' onClick={onClick}>Next</button>}
     </div>
   )
 }

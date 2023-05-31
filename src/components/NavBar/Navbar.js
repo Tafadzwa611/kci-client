@@ -41,9 +41,9 @@ const Navbar = (props) => {
           <NavLink to='/accounting/viewaccounting' className='btn btn-default dashboard'>
             <span>Accounting</span>
           </NavLink>
-          <NavLink to='/data/viewdata' className='btn btn-default dashboard'>
+          {/* <NavLink to='/data/viewdata' className='btn btn-default dashboard'>
             <span>Data Export</span>
-          </NavLink>
+          </NavLink> */}
           <NavLink to='/users/admin' className='btn btn-default dashboard'>
             <span>Admin</span>
           </NavLink>
