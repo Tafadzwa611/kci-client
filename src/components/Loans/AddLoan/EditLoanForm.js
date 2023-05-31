@@ -14,7 +14,7 @@ const EditLoanFoam = ({loan, loanProducts}) => {
   
   const initialValues = {
     loan_product_id: product.id,
-    principal: loan.principal,
+    principal: loan.org_principal,
     interest_rate: loan.interest_rate,
     application_date: loan.app_date,
     number_of_repayments: loan.number_of_repayments,

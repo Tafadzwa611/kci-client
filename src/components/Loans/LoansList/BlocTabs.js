@@ -11,7 +11,7 @@ import SubLoans from './SubLoans';
 import Audit from './Audit';
 import Fees from './Fees';
 
-function BlocTabs({loan, setLoan, client_name}) {
+function BlocTabs({loan, setLoan, client_name, setLoanData}) {
   const [tab, setTab] = useState('details');
 
   return (
@@ -43,7 +43,14 @@ function BlocTabs({loan, setLoan, client_name}) {
           />,
           'securities': <Securities collaterals={loan.collaterals} setLoan={setLoan} loanId={loan.id} />,
           'loans': <SubLoans loans={loan.sub_loans_list} client_name={client_name} />,
-          'schedule': <ScheduleTab installments={loan.installments} client_name={client_name} loanId={loan.id} setLoan={setLoan} currencyId={loan.currency_id}/>,
+          'schedule': <ScheduleTab
+            loanId={loan.id}
+            setLoan={setLoan}
+            client_name={client_name}
+            setLoanData={setLoanData}
+            currencyId={loan.currency_id}
+            installments={loan.installments}
+          />,
           'txns': <Txns txns={loan.txns} client_name={client_name} />,
           'penalties': <Penalties
             penalties={loan.penalties}

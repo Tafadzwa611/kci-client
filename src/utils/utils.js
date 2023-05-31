@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { async } from 'regenerator-runtime';
+// import { async } from 'regenerator-runtime';
 
 const REQUEST_OPTIONS = {
   credentials: 'same-origin',
@@ -68,7 +68,7 @@ const makeRequestWrapper = async (resource, method, setLoggedInUser, data={}) =>
   if (method in ['post', 'patch', 'put']) {
     var response = await requestHandler(resource, body, options);
   }else {
-    var response = await requestHandler(resource, options);
+    response = await requestHandler(resource, options);
   }
 
   if (response.redirected) {

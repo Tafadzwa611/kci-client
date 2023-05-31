@@ -47,8 +47,14 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
     const deleteUrl = loanType === 'cli' ? `/loansapi/delete_loan/${loan.id}/` : `/loansapi/delete_sloan/${loan.id}/`;
     return (
       <div style={{display:'flex', columnGap:'3px'}}>
-        {modal === approve && <ApproveLoan setOpen={setModal} url={approveUrl} setLoanDetails={setLoanDetails}/>}
-        {modal === reject && <RejectLoan setOpen={setModal} url={rejectUrl} setLoanDetails={setLoanDetails}/>}
+        {modal === approve && <ApproveLoan
+          setOpen={setModal}
+          updateLoanList={updateLoanList}
+          url={approveUrl}
+          setLoanDetails={setLoanDetails}
+          setLoanData={setLoanData}
+        />}
+        {modal === reject && <RejectLoan setOpen={setModal} url={rejectUrl} setLoanDetails={setLoanDetails} updateLoanList={updateLoanList} setLoanData={setLoanData}/>}
         {modal === deleteLoan && <DeleteLoan
           loanId={loan.id}
           setOpen={setModal}
@@ -72,8 +78,21 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
     const disburseUrl = loanType === 'cli' ? `/loansapi/disburse_loan/${loan.id}/` : `/loansapi/disburse_sloan/${loan.id}/`;
     return (
       <div style={{display:'flex', columnGap:'3px'}}>
-        {modal === undoApproval && <UndoLoanApproval setOpen={setModal} url={undoApprovalUrl} setLoanDetails={setLoanDetails}/>}
-        {modal === disburse && <DisburseLoan setOpen={setModal} loan={loan} url={disburseUrl} setLoanDetails={setLoanDetails}/>}
+        {modal === undoApproval && <UndoLoanApproval
+          updateLoanList={updateLoanList}
+          setLoanData={setLoanData}
+          setOpen={setModal}
+          url={undoApprovalUrl}
+          setLoanDetails={setLoanDetails}
+        />}
+        {modal === disburse && <DisburseLoan
+          setOpen={setModal}
+          loan={loan}
+          url={disburseUrl}
+          setLoanDetails={setLoanDetails}
+          updateLoanList={updateLoanList}
+          setLoanData={setLoanData}
+        />}
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setModal(undoApproval)}>Undo Approve</button>
           <button className='btn btn-olive' onClick={() => setModal(disburse)}>Disburse</button>
@@ -109,6 +128,8 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
           currencyId={loan.currency_id}
           subLoans={loan.sub_loans_list}
           clientType={loan.client_type}
+          updateLoanList={updateLoanList}
+          setLoanData={setLoanData}
         />}
         {modal === addFee &&
         <AddFee
@@ -118,20 +139,32 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
           currencyId={loan.currency_id}
           subLoans={loan.sub_loans_list}
           manualFees={loan.manual_fees}
+          updateLoanList={updateLoanList}
+          setLoanData={setLoanData}
         />}
         {modal === writeOff &&
         <WriteOff
           loanId={loan.id}
           setOpen={setModal}
           setLoan={setLoanDetails}
+          updateLoanList={updateLoanList}
+          setLoanData={setLoanData}
         />}
         {modal === undoWriteOff &&
         <UndoWriteOff
           loanId={loan.id}
           setOpen={setModal}
           setLoan={setLoanDetails}
+          updateLoanList={updateLoanList}
+          setLoanData={setLoanData}
         />}
-        {modal === undoDisburse && <UndoDisbursement setOpen={setModal} url={undoDisburseUrl} setLoanDetails={setLoanDetails}/>}
+        {modal === undoDisburse && <UndoDisbursement
+          setOpen={setModal}
+          url={undoDisburseUrl}
+          setLoanDetails={setLoanDetails}
+          updateLoanList={updateLoanList}
+          setLoanData={setLoanData}
+        />}
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setModal(addPayment)}>Add Payment</button>
           <button className='btn btn-olive' onClick={() => setModal(addFee)}>Add Fee</button>
@@ -143,6 +176,32 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
       </div>
     )
   }
+}
+
+
+const updateLoanList = (newLoan, setLoanData) => {
+  setLoanData(curr => {
+    return {
+      ...curr,
+      loans: curr.loans.map(loan => {
+        if (loan.id === newLoan.id) {
+          return {
+            ...loan,
+            total_amount_paid: newLoan.total_amount_paid,
+            principal_amount_due: newLoan.principal_amount_due,
+            interest_amount_due: newLoan.interest_amount_due,
+            penalty: newLoan.penalty,
+            non_deductable_fees: newLoan.non_deductable_fees,
+            status: newLoan.status,
+            total_loan_penalty: newLoan.penalty_reference_settlement || newLoan.penalty_reference,
+            total_loan_non_deduc_fees: newLoan.non_deductable_fees_reference_settlement || newLoan.non_deductable_fees_reference,
+            db_date: newLoan.db_date
+          }
+        }
+        return loan
+      })
+    }
+  })
 }
 
 export default Actions;

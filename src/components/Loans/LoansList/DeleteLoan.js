@@ -22,13 +22,15 @@ const DeleteLoan = ({
       if (setLoanId) {
         setLoanDetails(null);
         setLoanId(null);
-        setLoanData(curr => {
-          return {
-            count: curr.count - 1,
-            next_page_num: curr.next_page_num,
-            loans: curr.loans.filter(loan => loan.id !== loanId)
-          }
-        });
+        if (setLoanData) {
+          setLoanData(curr => {
+            return {
+              count: curr.count - 1,
+              next_page_num: curr.next_page_num,
+              loans: curr.loans.filter(loan => loan.id !== loanId)
+            }
+          });
+        }
       }
       navigate({pathname: '/loans/viewloans'});
     } catch (error) {

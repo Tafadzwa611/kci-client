@@ -15,15 +15,19 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { removeEmptyValues } from '../../../utils/utils';
 
-const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType}) => {
+const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType, updateLoanList, setLoanData}) => {
   const onSubmit = async (values, actions) => {
     const data = removeEmptyValues(values);
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(`/loansapi/add_payment/${loanId}/`, data, CONFIG);
-      setLoan(response.data);
+      const newLoan = response.data;
+      setLoan(newLoan);
       setOpen(false);
       actions.resetForm();
+      if (setLoanData && updateLoanList) {
+        updateLoanList(newLoan, setLoanData);
+      }
     } catch (error) {
       if (error.message === 'Network Error') {
         actions.setErrors({responseStatus: 'Network Error'});
