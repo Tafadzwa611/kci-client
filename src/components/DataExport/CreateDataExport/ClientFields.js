@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useField } from 'formik';
 
 function ClientFields() {
@@ -61,8 +61,17 @@ export default ClientFields;
 const CustomCheckboxFields = ({ label, ...props }) => {
     props['type'] = 'checkbox';
     const [field, meta] = useField(props);
+    const [checkedField, setCheckedField] = useState([]);
 
-    console.log(field)
+    // if (field.value == ''){
+    //     setCheckedField(field.name);
+    // }
+
+    // console.log(checkedField)
+
+    // const handleChange = (e) => {
+    //     console.log(e.target)
+    // };
   
     return (
         <>
