@@ -4,13 +4,17 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Form, Formik } from 'formik';
 
-function WriteOff({loanId, setOpen, setLoan}) {
+function WriteOff({loanId, setOpen, setLoan, updateLoanList, setLoanData}) {
   const onSubmit = async (_, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.patch(`/loansapi/write_off/${loanId}/`, {}, CONFIG);
-      setLoan(response.data);
+      const newLoan = response.data;
+      setLoan(newLoan);
       setOpen(false);
+      if (setLoanData && updateLoanList) {
+        updateLoanList(newLoan, setLoanData);
+      }
     } catch (error) {
       if (error.message === 'Network Error') {
         actions.setErrors({responseStatus: 'Network Error'});

@@ -39,7 +39,7 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
     const {value} = evt.target;
     setLoanId(null);
     setLoanDetails(null);
-    setLoanData({count: 0, next_page_num: 0, loans: []});
+    // setLoanData({count: 0, next_page_num: 0, loans: []});
     setFieldValue('client_type', value);
   }
 

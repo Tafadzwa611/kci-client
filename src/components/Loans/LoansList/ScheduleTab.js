@@ -11,7 +11,7 @@ const MODAL_STATES = {
   none: false
 };
 
-function ScheduleTab({installments, client_name, loanId, currencyId, setLoan}) {
+function ScheduleTab({installments, client_name, loanId, currencyId, setLoan, setLoanData}) {
   const {es, none } = MODAL_STATES;
   const [modal, setModal] = useState(none);
   const [expected, setExpected] = useState(true);
@@ -21,7 +21,7 @@ function ScheduleTab({installments, client_name, loanId, currencyId, setLoan}) {
   return (
     <>
       <SuccessBtn handler={() => setModal(es)} value={'Early Settlement'}/>
-      {modal === es && <EarlySettlement setOpen={setModal} setLoan={setLoan} loanId={loanId} currencyId={currencyId} />}
+      {modal === es && <EarlySettlement setLoanData={setLoanData} setOpen={setModal} setLoan={setLoan} loanId={loanId} currencyId={currencyId} />}
       <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"1rem"}}>
         <div className="schedule__check__section" style={{display: "flex", columnGap: "1rem", alignItems:"center"}}>
           <CheckBox isChecked={expected} label='Amount Expected' onChange={() => setExpected(curr => !curr)} />

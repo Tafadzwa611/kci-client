@@ -12,7 +12,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { scheduleStrategies } from './data';
 
-function DisburseLoan({setOpen, url, setLoanDetails, loan}) {
+function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLoanData}) {
   const initialValues = {
     disbursement_date: '',
     fund_account_id: '',
@@ -25,8 +25,12 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan}) {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.patch(url, values, CONFIG);
-      setLoanDetails(response.data);
+      const newLoan = response.data;
+      setLoanDetails(newLoan);
       setOpen(false);
+      if (setLoanData && updateLoanList) {
+        updateLoanList(newLoan, setLoanData);
+      }
     } catch (error) {
       console.log(error);
       if (error.message === 'Network Error') {

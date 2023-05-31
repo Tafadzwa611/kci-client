@@ -11,7 +11,7 @@ import { Form, Formik } from 'formik';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-function AddFee({loanId, manualFees, setOpen, setLoan}) {
+function AddFee({loanId, manualFees, setOpen, setLoan, updateLoanList, setLoanData}) {
   const onSubmit = async (values, actions) => {
     const data = values.fee_type === 'Manual' ?
     {manual_fee_id: values.manual_fee_id} :
@@ -20,9 +20,13 @@ function AddFee({loanId, manualFees, setOpen, setLoan}) {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(`/loansapi/add_manual_fee/${loanId}/`, data, CONFIG);
-      setLoan(response.data);
+      const newLoan = response.data;
+      setLoan(newLoan);
       setOpen(false);
       actions.resetForm();
+      if (setLoanData && updateLoanList) {
+        updateLoanList(newLoan, setLoanData);
+      }
     } catch (error) {
       if (error.message === 'Network Error') {
         actions.setErrors({responseStatus: 'Network Error'});

@@ -13,7 +13,7 @@ import Cookies from 'js-cookie';
 import { Form, Formik } from 'formik';
 import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
 
-function EarlySettlement({setLoan, setOpen, loanId, currencyId}) {
+function EarlySettlement({setLoan, setOpen, loanId, currencyId, setLoanData}) {
   const {loggedInUser} = useLoggedInUser();
   const today = new Date();
   const dt = loggedInUser.date_format.replace('dd', today.getDate()).replace('mm', today.getMonth()+1).replace('yyyy', today.getFullYear());
@@ -23,8 +23,12 @@ function EarlySettlement({setLoan, setOpen, loanId, currencyId}) {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(`/loansapi/early_settlement/${loanId}/`, values, CONFIG);
-      setLoan(response.data);
+      const newLoan = response.data;
+      setLoan(newLoan);
       setOpen(false);
+      if (setLoanData) {
+        updateLoanList(newLoan, setLoanData);
+      }
     } catch (error) {
       console.log(error);
       if (error.message === 'Network Error') {
@@ -99,6 +103,31 @@ function EarlySettlement({setLoan, setOpen, loanId, currencyId}) {
       </Fetcher>
     </Modal>
   )
+}
+
+const updateLoanList = (newLoan, setLoanData) => {
+  setLoanData(curr => {
+    return {
+      ...curr,
+      loans: curr.loans.map(loan => {
+        if (loan.id === newLoan.id) {
+          return {
+            ...loan,
+            total_amount_paid: newLoan.total_amount_paid,
+            principal_amount_due: newLoan.principal_amount_due,
+            interest_amount_due: newLoan.interest_amount_due,
+            penalty: newLoan.penalty,
+            non_deductable_fees: newLoan.non_deductable_fees,
+            status: newLoan.status,
+            total_loan_penalty: newLoan.penalty_reference_settlement || newLoan.penalty_reference,
+            total_loan_non_deduc_fees: newLoan.non_deductable_fees_reference_settlement || newLoan.non_deductable_fees_reference,
+            db_date: newLoan.db_date
+          }
+        }
+        return loan
+      })
+    }
+  })
 }
 
 export default EarlySettlement;

@@ -9,13 +9,17 @@ export const approveLoanSchema = yup.object().shape({
   expected_disbursement_date: yup.string().required('Required')
 });
 
-const ApproveLoan = ({setOpen, url, setLoanDetails}) => {
+const ApproveLoan = ({setOpen, url, setLoanDetails, updateLoanList, setLoanData}) => {
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.patch(url, values, CONFIG);
-      setLoanDetails(response.data);
+      const newLoan = response.data;
+      setLoanDetails(newLoan);
       setOpen(false);
+      if (setLoanData && updateLoanList) {
+        updateLoanList(newLoan, setLoanData);
+      }
     } catch (error) {
       if (error.message === 'Network Error') {
         actions.setErrors({responseStatus: 'Network Error'});

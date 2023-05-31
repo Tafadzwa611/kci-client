@@ -38,7 +38,12 @@ function MiniLoanDetails({loanData, extra}) {
               />
             </div>
           </div>
-          <BlocTabs loan={loan} setLoan={setLoan} client_name={loan.client_fullname ? loan.client_fullname : loan.group_name}/>
+          <BlocTabs
+            loan={loan}
+            setLoan={setLoan}
+            setLoanData={setLoanData}
+            client_name={loan.client_fullname ? loan.client_fullname : loan.group_name}
+          />
         </div>
       </div>
     </div>

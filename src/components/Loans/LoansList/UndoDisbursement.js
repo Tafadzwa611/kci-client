@@ -4,13 +4,17 @@ import { Form, Formik } from 'formik';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-function UndoDisbursement({url, setOpen, setLoanDetails}) {
+function UndoDisbursement({url, setOpen, setLoanDetails, updateLoanList, setLoanData}) {
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.patch(url, values, CONFIG);
-      setLoanDetails(response.data);
+      const newLoan = response.data;
+      setLoanDetails(newLoan);
       setOpen(false);
+      if (setLoanData && updateLoanList) {
+        updateLoanList(newLoan, setLoanData);
+      }
     } catch (error) {
       console.log(error);
       if (error.message === 'Network Error') {
