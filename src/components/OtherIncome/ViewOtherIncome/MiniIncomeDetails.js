@@ -31,20 +31,20 @@ function MiniIncomeDetails({incomeDetails, extra}) {
           <div style={{width:"30%"}}>
             <ul>
                 <li>Other Income Name: {incomeDetails.otherincome_name}</li>
-                <li>Other Income Type: {incomeDetails.income_type}</li>
-                <li>Other Income Type: {incomeDetails.currency} {incomeDetails.income_amount}</li>
+                <li>Other Income Type: {incomeDetails.inc_type}</li>
+                <li>Other Income Type: {incomeDetails.currency_code} {incomeDetails.income_amount}</li>
             </ul>
         </div>
         <div style={{width:"30%", display:"flex", alignItems:"start", justifyContent:"center"}}>
             <ul>
                 <li>Reference: {incomeDetails.reference}</li>
-                <li>Date Created: {incomeDetails.date_created}</li>
-                <li>Created By: {incomeDetails.created_by}</li>
+                <li>Date Created: {incomeDetails.db_date_created}</li>
+                <li>Created By: {incomeDetails.created_by_username}</li>
             </ul>
         </div>
         <div style={{width:"30%", display:"flex", alignItems:"start", justifyContent:"end"}}>
             <ul>
-                <li>Other Income Date: {incomeDetails.income_date}</li>
+                <li>Other Income Date: {incomeDetails.db_income_date}</li>
                 <li>Description: {incomeDetails.description}</li>
             </ul>
           </div>
