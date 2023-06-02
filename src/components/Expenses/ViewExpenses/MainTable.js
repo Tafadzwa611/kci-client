@@ -24,11 +24,11 @@ function MainTable({expenseData, handleClick}) {
                   {expenses.map(expense => {
                     return (
                       <tr key={expense.id}>
-                        <td style={{verticalAlign:"middle"}}>{expense.expense_type}</td>
+                        <td style={{verticalAlign:"middle"}}>{expense.exp_type}</td>
                         <td style={{verticalAlign:"middle"}}><span onClick={handleClick} id={expense.id} style={{fontSize:"0.75rem", cursor:"pointer"}} className="link">{expense.expense_name}</span></td>
-                        <td style={{verticalAlign:"middle"}}>{expense.expense_date}</td>
-                        <td style={{verticalAlign:"middle"}}>{expense.date_created}</td>
-                        <td style={{verticalAlign:"middle"}}>{expense.currency} {expense.expense_amount}</td>
+                        <td style={{verticalAlign:"middle"}}>{expense.db_expense_date}</td>
+                        <td style={{verticalAlign:"middle"}}>{expense.db_date_created}</td>
+                        <td style={{verticalAlign:"middle"}}>{expense.currency_code} {expense.expense_amount}</td>
                       </tr>
                     )
                   })}
