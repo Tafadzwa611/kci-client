@@ -7,6 +7,7 @@ import { Fetcher } from '../../../common';
 
 function GroupsList() {
   const [searchParams] = useSearchParams();
+  const [params, setParams] = useState(null);
   const [groupData, setGroupsData] = useState({count: 0, next_page_num: 0, groups: []});
   const [groupDetails, setGroupDetails] = useState(null);
   const [groupId, setGroupId] = useState(null);
@@ -25,6 +26,7 @@ function GroupsList() {
             setGroupsData={setGroupsData} 
             setGroupId={setGroupId} 
             setGroupDetails={setGroupDetails}
+            setParams={setParams}
           />
           <div style={{paddingTop: '2rem'}}></div>
           <GroupsTable
@@ -34,6 +36,7 @@ function GroupsList() {
             groupDetails={groupDetails}
             setGroupId={setGroupId}
             setGroupsData={setGroupsData}
+            params={params}
           />
         </>
       }

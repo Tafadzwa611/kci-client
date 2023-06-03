@@ -14,7 +14,7 @@ import { useBranches } from '../../../contexts/BranchesContext';
 import axios from 'axios';
 import { removeEmptyValues } from '../../../utils/utils';
 
-const Filter = ({setGroupsData, setGroupId, setGroupDetails}) => {
+const Filter = ({setGroupsData, setGroupId, setGroupDetails, setParams}) => {
   const initialValues = {
     branch_ids: [],
     page_num: 1,
@@ -35,10 +35,24 @@ const Filter = ({setGroupsData, setGroupId, setGroupDetails}) => {
     setFieldValue('approved', value);
   }
 
+  const getParams = (values) => {
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(values)) {
+      if (Array.isArray(value)) {
+        value.forEach(el => params.append(key, el));
+      }else {
+        params.append(key, value);
+      }
+    }
+    return params
+  }
+
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
-      const response = await axios.get('/clientsapi/groups/', {params: data});
+      const params = getParams(data);
+      setParams(params);
+      const response = await axios.get('/clientsapi/groups/', {params: params});
       setGroupsData(response.data);
     } catch (error) {
       if (error.message === "Network Error") {

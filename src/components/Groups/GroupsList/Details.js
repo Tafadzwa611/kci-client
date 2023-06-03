@@ -7,10 +7,10 @@ function Details({groupDetails}) {
 
                 <div>
                     <ul style={{display:"flex", flexDirection:"column", rowGap:"10px"}}>
-                        <li>Group Date: {groupDetails.grou_date}</li>
+                        <li>Group Date: {groupDetails.db_group_date}</li>
                         <li>Group Phone Number: {groupDetails.group_phone_number}</li>
                         <li>Branch: {groupDetails.branch}</li>
-                        <li>Group Type: {groupDetails.group_type}</li>
+                        <li>Group Type: {groupDetails.grp_type}</li>
                     </ul>
                 </div>
 
