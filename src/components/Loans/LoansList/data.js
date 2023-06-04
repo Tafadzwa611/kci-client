@@ -57,6 +57,5 @@ export const statusValues = [
   'Over Paid',
   'Rejected',
   'Written-Off',
-  'Restructured',
   'Early Settlement'
 ];

@@ -18,29 +18,32 @@ const Navbar = (props) => {
             <span>Dashboard</span>
           </NavLink>
           <NavLink to='/clients/viewclients' className='btn btn-default dashboard'>
-            <span>View Clients</span>
+            <span>Clients</span>
           </NavLink>
           <NavLink to='/groups/viewgroups' className='btn btn-default dashboard'>
-            <span>View Groups</span>
+            <span>Groups</span>
           </NavLink>
           <NavLink to='/loans/viewloans' className='btn btn-default dashboard'>
-            <span>View Loans</span>
+            <span>Loans</span>
           </NavLink>
           <NavLink to='/payments/viewpayments' className='btn btn-default dashboard'>
-            <span>View Payments</span>
+            <span>Payments</span>
           </NavLink>
           <NavLink to='/otherincome/viewotherincome' className='btn btn-default dashboard'>
-            <span>View Other Income</span>
+            <span>Other Income</span>
           </NavLink>
           <NavLink to='/expenses/viewexpenses' className='btn btn-default dashboard'>
-            <span>View Expenses</span>
+            <span>Expenses</span>
           </NavLink>
           <NavLink to='/reports/viewreports' className='btn btn-default dashboard'>
-            <span>View Reports</span>
+            <span>Reports</span>
           </NavLink>
           <NavLink to='/accounting/viewaccounting' className='btn btn-default dashboard'>
-            <span>View Accounting</span>
+            <span>Accounting</span>
           </NavLink>
+          {/* <NavLink to='/data/viewdata' className='btn btn-default dashboard'>
+            <span>Data Export</span>
+          </NavLink> */}
           <NavLink to='/users/admin' className='btn btn-default dashboard'>
             <span>Admin</span>
           </NavLink>

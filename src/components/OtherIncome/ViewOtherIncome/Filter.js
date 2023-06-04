@@ -15,7 +15,7 @@ import { useBranches } from '../../../contexts/BranchesContext';
 import axios from 'axios';
 import { removeEmptyValues } from '../../../utils/utils';
 
-const Filter = ({setOtherIncomeData}) => {
+const Filter = ({setOtherIncomeData, setParams}) => {
   const initialValues = {
     branch_ids: [],
     page_num: 1,
@@ -26,10 +26,24 @@ const Filter = ({setOtherIncomeData}) => {
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
+  const getParams = (values) => {
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(values)) {
+      if (Array.isArray(value)) {
+        value.forEach(el => params.append(key, el));
+      }else {
+        params.append(key, value);
+      }
+    }
+    return params
+  }
+
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
-      const response = await axios.get('/otherincomeapi/otherincomelist/', {params: data});
+      const params = getParams(data);
+      setParams(params);
+      const response = await axios.get('/otherincomeapi/otherincomelist/', {params: params});
       setOtherIncomeData(response.data);
     } catch (error) {
       if (error.message === "Network Error") {

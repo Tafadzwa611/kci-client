@@ -24,10 +24,10 @@ function MainTable({otherIncomeData, handleClick}) {
                   {otherincomes.map(income => {
                     return (
                       <tr key={income.id}>
-                        <td style={{verticalAlign:"middle"}}>{income.income_type}</td>
+                        <td style={{verticalAlign:"middle"}}>{income.inc_type}</td>
                         <td style={{verticalAlign:"middle"}}><span onClick={handleClick} id={income.id} style={{fontSize:"0.75rem", cursor:"pointer"}} className="link">{income.otherincome_name}</span></td>
-                        <td style={{verticalAlign:"middle"}}>{income.income_date}</td>
-                        <td style={{verticalAlign:"middle"}}>{income.date_created}</td>
+                        <td style={{verticalAlign:"middle"}}>{income.db_income_date}</td>
+                        <td style={{verticalAlign:"middle"}}>{income.db_date_created}</td>
                         <td style={{verticalAlign:"middle"}}>{income.currency} {income.income_amount}</td>
                       </tr>
                     )

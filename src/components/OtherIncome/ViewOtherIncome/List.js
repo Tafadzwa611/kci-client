@@ -7,6 +7,7 @@ import { Fetcher } from '../../../common';
 
 function List() {
   const [searchParams] = useSearchParams();
+  const [params, setParams] = useState(null);
   const [otherIncomeData, setOtherIncomeData] = useState({count: 0, next_page_num: 0, otherincomes: []});
   const [incomeDetails, setIncomeDetails] = useState(null);
 
@@ -16,12 +17,13 @@ function List() {
       {searchParams.get('income_id') ?
         <IncomeDetailsView incomeId={searchParams.get('income_id')} incomeDetails={incomeDetails}/> :
         <>
-          <Filter setOtherIncomeData={setOtherIncomeData}/>
+          <Filter setOtherIncomeData={setOtherIncomeData} setParams={setParams}/>
           <div style={{paddingTop: '2rem'}}></div>
           <Table
             otherIncomeData={otherIncomeData} 
             setIncomeDetails={setIncomeDetails}
             setOtherIncomeData={setOtherIncomeData}
+            params={params}
           />
         </>
       }

@@ -4,7 +4,7 @@ import axios from 'axios';
 const Pager = ({
   prevPageNumber,
   nextPageNumber,
-  setLoanData,
+  setGroupsData,
   params
 }) => {
   const [errors, setErrors] = useState(null);
@@ -13,8 +13,8 @@ const Pager = ({
     try {
       const pageNum = evt.target.innerText === 'Next' ? nextPageNumber : prevPageNumber;
       params.set('page_num', pageNum);
-      const response = await axios.get('/loansapi/loan_list/', {params: params});
-      setLoanData(response.data);
+      const response = await axios.get('/clientsapi/groups/', {params: params});
+      setGroupsData(response.data);
     } catch (error) {
       if (error.message === 'Network Error') {
         setErrors({detail: 'Network Error'});
@@ -28,7 +28,7 @@ const Pager = ({
     <div className='footer-container font-12 text-light' style={{display:'flex', columnGap:'3px'}}>
       {errors && JSON.stringify(errors)}
       {prevPageNumber && <><button className='btn btn-default' onClick={onClick}>Back</button><br/></>}
-      {nextPageNumber && <button className='btn btn-default' onClick={onClick}>Next</button>}
+      {nextPageNumber ? <button className='btn btn-default' onClick={onClick}>Next</button>: null}
     </div>
   )
 }

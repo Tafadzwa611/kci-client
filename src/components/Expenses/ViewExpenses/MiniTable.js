@@ -21,7 +21,7 @@ function MiniTable({expenseData, handleClick, selectedExpenseId}) {
                     return (
                       <tr className='tr-class' key={expense.id}>
                         <td>
-                            {expense.expense_type}
+                            {expense.exp_type}
                         </td>
                         <td>
                           {(selectedExpenseId==expense.id) ?

@@ -26,8 +26,8 @@ function MainTable({groupData, handleClick}) {
                       <tr key={group.id}>
                         <td style={{verticalAlign:"middle"}}>{group.group_name}</td>
                         <td style={{verticalAlign:"middle"}}><span onClick={handleClick} id={group.id} style={{fontSize:"0.75rem", cursor:"pointer"}} className="link">{group.group_id}</span></td>
-                        <td style={{verticalAlign:"middle"}}>{group.group_type}</td>
-                        <td style={{verticalAlign:"middle"}}>{group.group_date}</td>
+                        <td style={{verticalAlign:"middle"}}>{group.grp_type}</td>
+                        <td style={{verticalAlign:"middle"}}>{group.db_group_date}</td>
                         <td style={{verticalAlign:"middle"}}>{group.group_phone_number}</td>
                       </tr>
                     )

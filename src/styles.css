@@ -1691,6 +1691,10 @@ form {
   font-size: var(--medium-font-size);
 }
 
+.row .form-label-base__entity {
+  width: 33%;
+}
+
 .form-title {
   font-size: 1rem;
 }
@@ -3460,6 +3464,11 @@ input[type=number] {
   color: var(--white);
 }
 
+.divider-white {
+  background: var(--white);
+  /* color: var(--white); */
+}
+
 .divider-default {
   color: var(--color);
   background: var(--home-section-color);
@@ -3541,4 +3550,25 @@ input[type=number] {
 
 .schedule__check__section label {
   margin-bottom: 0;
+}
+
+.data__export {
+  display: grid;
+  grid-template-columns: 45% 54%;
+  column-gap: 1%;
+}
+
+.data__export__fields {
+  padding: 1.5rem;
+}
+
+.base__entity__fields {
+  margin-top: 1rem;
+  padding: 20px;
+  background-color: var(--white);
+}
+
+.base__entity__fields__select__all {
+  display: flex;
+  justify-content: flex-end;
 }

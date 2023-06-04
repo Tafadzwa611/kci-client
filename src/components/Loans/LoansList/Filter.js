@@ -124,11 +124,11 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
                   </div>
                 </div>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div style={{width:'60%'}}>
+                  <div style={{width:'70%'}}>
                     <CustomMultiSelectFilter
-                      label='Branches'
-                      name='branch_ids'
-                      options={branches.map(br => ({label: br.name, value:br.id}))}
+                      label='Status'
+                      name='status'
+                      options={statusValues.map(val => ({label: val, value: val}))}
                       setFieldValue={setFieldValue}
                     />
                   </div>
@@ -139,9 +139,9 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
                   <div style={{width:'85%'}}>
                     <CustomMultiSelectFilter
-                      label='Status'
-                      name='status'
-                      options={statusValues.map(val => ({label: val, value: val}))}
+                      label='Branches'
+                      name='branch_ids'
+                      options={branches.map(br => ({label: br.name, value:br.id}))}
                       setFieldValue={setFieldValue}
                     />
                   </div>
