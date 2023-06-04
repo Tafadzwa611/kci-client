@@ -1,50 +1,147 @@
-import React, {useState} from 'react';
-import Select from 'react-select';
+import React from 'react';
+import { useBranches } from '../../../contexts/BranchesContext';
+import { Form, Formik } from 'formik';
+import {
+  CustomMultiSelectFilter,
+  CustomDatePickerFilter,
+  CustomSelectFilter,
+  SubmitButtonFilter,
+  CustomInputFilter,
+  NonFieldErrors
+} from '../../../common';
+import { removeEmptyValues, getParams } from '../../../utils/utils';
+import axios from 'axios';
 
-const Filter = (props) => {
+const Filter = ({ setClientsData, clientTypes, setParams }) => {
+  const initialValues = {
+    page_num: 1,
+    branch_ids: [],
+    search_str: '',
+    min_reg_date: '',
+    max_reg_date: '',
+    min_dob: '',
+    max_dob: '',
+    client_type_id: '',
+    gender: '',
+    status: '',
+  };
+  const {branches} = useBranches();
 
-    const {
-        minRegDate,
-        maxRegDate,
-        setMinRegDate,
-        setMaxRegDate,
-        searchStr,
-        setSearchStr,
-        branches,
-        setBranchIds,
-        minDob,
-        setMinDob,
-        maxDob,
-        setMaxDob,
-        typeOfClient,
-        setTypeOfClient,
-        gender,
-        setGender,
-        approved,
-        setApproved,
-        onSubmit,
-        details
-    } = props;
-
-    const style = {
-        control: base => ({
-            ...base,
-            border: '1px solid #dee2e6',
-            boxShadow: "none",
-            '&:hover':'1px solid #dee2e6',
-        })
-    };
-
-    const [optionSelected, setOptionSelected] = useState([]);
-    const selectorBranches = [...branches.map(result => ({...result, label: result.name, value:result.id}))];
-
-    const handleMultiSelect = selected => {
-        setOptionSelected(selected);
-        setBranchIds(selected.map(branch => branch.id));
+  const onSubmit = async (values, actions) => {
+    try {
+      const data = removeEmptyValues(values);
+      const params = getParams(data);
+      setParams(params);
+      const response = await axios.get('/clientsapi/clients/', {params: params});
+      console.log(response.data);
+      setClientsData(response.data);
+    } catch (error) {
+      console.log(error);
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+      } else {
+        actions.setErrors({responseStatus: error.response.status});
+      }
     }
+  }
 
-    return (
-        <div className="search_background">
+  return (
+    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      {({isSubmitting, setFieldValue, errors}) => (
+        <div className='search_background'>
+          <div className='row-containers' style={{border:'none'}}>
+            <Form>
+              <NonFieldErrors errors={errors}>
+                <div style={{display:'flex', justifyContent:'space-between'}}>
+                  <div style={{display:'flex', justifyContent:'space-between', width:'100%', columnGap:'1rem'}}>
+                    <CustomDatePickerFilter label='Min Reg Date' name='min_reg_date' setFieldValue={setFieldValue}/>
+                    <CustomDatePickerFilter label='Max Reg Date' name='max_reg_date' setFieldValue={setFieldValue}/>
+                    <CustomDatePickerFilter label='Min Date Of Birth' name='min_dob' setFieldValue={setFieldValue}/>
+                    <CustomDatePickerFilter label='Max Date Of Birth' name='max_dob' setFieldValue={setFieldValue}/>
+                    <CustomSelectFilter label='Client Type' name='client_type_id'>
+                      <option value=''>------</option>
+                      {clientTypes.map(ct => (<option key={ct.id} value={ct.id}>{ct.name}</option>))}
+                    </CustomSelectFilter>
+                  </div>
+                </div>
+                <div style={{display:'flex', justifyContent:'space-between'}}>
+                  <div style={{display:'flex', justifyContent:'space-between', width:'100%', columnGap:'1rem'}}>
+                    <CustomMultiSelectFilter
+                      label='Branches'
+                      name='branch_ids'
+                      setFieldValue={setFieldValue}
+                      options={branches.map(br => ({value: br.id, label: br.name}))}
+                    />
+                    <CustomInputFilter label='Search Client' name='search_str'/>
+                    <CustomSelectFilter label='Gender' name='gender'>
+                      <option value=''>------</option>
+                      <option value='MALE'>Male</option>
+                      <option value='FEMALE'>Female</option>
+                    </CustomSelectFilter>
+                    <CustomSelectFilter label='Status' name='status'>
+                      <option value=''>------</option>
+                      <option value='Pending Approval'>Pending Approval</option>
+                      <option value='Inactive'>Inactive</option>
+                      <option value='Active'>Active</option>
+                      <option value='Rejected'>Rejected</option>
+                      <option value='Blacklisted'>Blacklisted</option>
+                      <option value='Left'>Left</option>
+                    </CustomSelectFilter>
+                  </div>
+                </div>
+                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
+                  <SubmitButtonFilter isSubmitting={isSubmitting}/>
+                </div>
+              </NonFieldErrors>
+            </Form>
+          </div>
+        </div>
+      )}
+    </Formik>
+  );
+}
+
+// function getUrl() {
+//   if (searchType === 'advanced') {
+//     return '/clientsapi/advanced_search/'
+//   }
+
+//   let url = `/clientsapi/clients/?page_num=${pageNum.current}`;
+//   if (branchIds !== null) {
+//     branchIds.forEach(id => (url += `&branch_ids=${id}`));
+//   }
+//   if (searchStr !== '') {
+//     url += `&search_str=${searchStr}`;
+//   }
+//   if (minRegDate !== '') {
+//     url += `&min_reg_date=${minRegDate}`;
+//   }
+//   if (maxRegDate !== '') {
+//     url += `&max_reg_date=${maxRegDate}`;
+//   }
+//   if (minDob !== '') {
+//     url += `&min_dob=${minDob}`;
+//   }
+//   if (maxDob !== '') {
+//     url += `&max_dob=${maxDob}`;
+//   }
+//   if (typeOfClient !== '') {
+//     url += `&type_of_client=${typeOfClient}`;
+//   }
+//   if (gender !== '') {
+//     url += `&gender=${gender}`;
+//   }
+//   if (approved !== '') {
+//     url += `&approved=${approved}`;
+//   }
+//   return url
+// }
+
+export default Filter;
+
+{/* <div className="search_background">
             <form onSubmit={onSubmit}>
                 <div className="row-containers" style={{border:"none"}}>
                     <div className="row row-payments">
@@ -170,15 +267,4 @@ const Filter = (props) => {
                 </div>
 
             </form>
-        </div>
-        );
-    }
-
-    Filter.defaultProps = {
-        allOption: {
-            label: 'Select all',
-            value: '*'
-        }
-    };
-
-export default Filter;
+        </div> */}

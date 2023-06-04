@@ -4,11 +4,11 @@ import {
   NonFieldErrors,
 } from '../../../common';
 import {
-    CustomInputFilter,
-    CustomDatePickerFilter,
-    CustomSelectFilter,
-    CustomMultiSelectFilter,
-    SubmitButtonFilter
+  CustomInputFilter,
+  CustomDatePickerFilter,
+  CustomSelectFilter,
+  CustomMultiSelectFilter,
+  SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
 import { useBranches } from '../../../contexts/BranchesContext';

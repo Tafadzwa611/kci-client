@@ -1,37 +1,69 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import ClientsList from '../ClientsList/ClientsList';
 import NewAddClient from '../add_client/NewAddClient';
 import SmsList from '../Sms/SmsList';
-import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
+import Client from '../ClientsDetails/Client';
+import {
+  Routes,
+  Route,
+  Link,
+  Outlet,
+  useParams,
+  useLocation
+} from 'react-router-dom';
+import { Fetcher } from '../../../common';
 
 const ViewClients = () => {
-  const [tab, setTab] = useState('clients');
-
-  const {loggedInUser} = useLoggedInUser();
-
   useEffect(() => {
     document.title = 'View Clients';
   }, []);
 
   return (
+    <Routes>
+      <Route path='/' element={<Layout />}>
+        <Route index element={<ClientsList />} />
+        <Route path='addclient' element={<NewAddClient />} />
+        <Route path='sms' element={<SmsList />} />
+        <Route path='clientdetails/:clientId' element={<FullClientDetails/>}/>
+      </Route>
+    </Routes>
+  )
+}
+
+function FullClientDetails() {
+  const params = useParams();
+  return (
+    <Fetcher urls={[`/clientsapi/get_client/${params.clientId}/`]}>
+      {({data}) => <Client clientData={data[0]}/>}
+    </Fetcher>
+  )
+}
+
+function Layout() {
+  const location = useLocation();
+  return (
     <div className='card'>
       <div className='card-body'>
         <h5 className='table-heading' style={{marginBottom:'20px'}}>View Clients</h5>
-        <div className='bloc-tabs'>
-          <button className={tab === 'clients' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setTab('clients')}>Clients</button>
-          <button className={tab === 'addclient' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setTab('addclient')}>Add Client</button>
-          <button className={tab === 'sms' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={e=> setTab('sms')}>Sms</button>
-        </div>
-        <div className='tab-content font-12' style={{marginTop:'3rem'}}>
-          {{
-            'clients': <ClientsList setMainTab={setTab}/>, 
-            'addclient': <NewAddClient setMainTab={setTab}/>,
-            'sms': <SmsList setMainTab={setTab}/>
-          }[tab]}
-        </div>
+        <>
+          <div className='bloc-tabs'>
+            <Link to='/clients/viewclients' id='list' className={location.pathname === '/clients/viewclients' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              View Clients
+            </Link>
+            <Link to='/clients/viewclients/addclient' id='add' className={location.pathname === '/clients/viewclients/addclient' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Add Client
+            </Link>
+            <Link to='/clients/viewclients/sms' id='add' className={location.pathname === '/clients/viewclients/sms' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              SmS
+            </Link>
+          </div>
+          <div className='tab-content font-12' style={{marginTop:'3rem'}}>
+            <Outlet />
+          </div>
+        </>
       </div>
     </div>
-  );
+  )
 }
 
 export default ViewClients;

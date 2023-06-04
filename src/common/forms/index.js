@@ -14,6 +14,7 @@ import CustomDatePicker from './CustomDatePicker';
 import CustomMultiSelect from './CustomMultiSelect';
 import CustomSortableSelect from './CustomSortableSelect';
 import CustomSelectRemote from './CustomSelectRemote';
+import CustomPhoneNumber from './CustomPhoneNumber';
 
 export {
     CustomRadio,
@@ -31,5 +32,6 @@ export {
     CustomDatePicker,
     CustomMultiSelect,
     CustomSortableSelect,
-    CustomSelectRemote
+    CustomSelectRemote,
+    CustomPhoneNumber
 };

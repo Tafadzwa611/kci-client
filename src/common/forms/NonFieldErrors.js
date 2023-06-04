@@ -21,7 +21,7 @@ const NonFieldErrors = ({children, errors}) => {
         {children}
         <div className='row custom-background' style={{marginTop: '15px', display:"flex", justifyContent:"center"}}>
           <div className='col-12' style={{color:"red", padding:"1.75rem 1rem", border:"1px solid red", backgroundColor: "#ffe5e5"}}>
-            <div style={{fontSize: 12, color: 'red'}}>Error: {errors.detail}</div>
+            <div style={{fontSize: 12, color: 'red'}}>Error: {JSON.stringify(errors.detail)}</div>
           </div>
         </div>
       </>

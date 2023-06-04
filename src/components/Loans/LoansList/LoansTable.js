@@ -26,8 +26,6 @@ function LoansTable({
             <Pager
               nextPageNumber={loanData.next_page_num}
               params={params}
-              loadMoreLoans={() => console.log('loadMoreLoans')}
-              loadingMore={false}
               prevPageNumber={loanData.prev_page_num}
               setLoanData={setLoanData}
             />
@@ -66,12 +64,12 @@ const TableHeader = ({loanData}) => {
       <div>Page {loanData.number} of {loanData.num_of_pages}</div>
       <div>
         <ReactHTMLTableToExcel
-        id='test-table-xls-button'
-        className='btn btn-default'
-        table='loans'
-        filename='loans'
-        sheet='tablexls'
-        buttonText='Download as XLS'
+          id='test-table-xls-button'
+          className='btn btn-default'
+          table='loans'
+          filename='loans'
+          sheet='tablexls'
+          buttonText='Download as XLS'
         />
       </div>
     </div>
