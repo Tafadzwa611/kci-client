@@ -1,45 +1,101 @@
-import React from 'react';
-import { useVirtual, Table } from "@af-utils/react-table";
+import React, { useState, useEffect } from 'react';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import Pager from './Pager';
+import MainTable from './MainTable';
 
-const columns = [
-  {key: "Loan #"},
-  {key: "Collection_Date"},
-  {key: "Collected_By"},
-  {key: "Payment_Type"},
-  {key: "Method"},
-  {key: "Client"},
-  {key: "Amount_Paid"}
-];
-
-const PaymentList = ({payments}) => {
-  const model = useVirtual({
-    itemCount: payments.length
-  });
-
-  const getRowData = i => {
-    const payment = payments[i];
-    return {
-        "Loan #": payment.loan,
-        "Collection_Date": payment.date_created,
-        "Collected_By": payment.collected_by,
-        "Payment_Type": payment.payment_type,
-        "Method": payment.payment_method,
-        "Client": payment.client,
-        "Amount_Paid": payment.amount_paid,
-    }
-  }
+function PaymentsList({paymentsData, params, setPayments}) {
 
   return (
-    <div className="text-light view__payments" style={{paddingTop:"2rem"}}>
-      <Table
-        model={model}
-        className="h-full basic-table-container"
-        getRowData={getRowData}
-        columns={columns}
-      />
-    </div>
-  );
-};
+    <>
+      <TableHeader paymentsData={paymentsData} params={params} setPayments={setPayments}/>
+      <div style={{padding:"0", border:"none"}} className='table-container full__width font-12'>
+        <div className="table-responsive full__table" >
+            <MainTable 
+              paymentsData={paymentsData} 
+            />
+        </div>
+      </div>
+    </>
+  )
+}
 
-export default PaymentList;
+const TableHeader = ({paymentsData, params, setPayments}) => {
+  return (
+    <div className='table-header'>
+      <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
+        <Pager
+          nextPageNumber={paymentsData.next_page_num}
+          params={params}
+          loadMorePayments={() => console.log('loadMorePayments')}
+          loadingMore={false}
+          prevPageNumber={paymentsData.prev_page_num}
+          setPayments={setPayments}
+        />
+        <div style={{marginTop:'6px'}}>Showing {paymentsData.payments.length} of {paymentsData.count} payments.</div>
+      </div>
+      <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
+        <div style={{marginTop:'6px'}}>Page {paymentsData.number} of {paymentsData.num_of_pages}</div>
+        <div>
+          <ReactHTMLTableToExcel
+              id='test-table-xls-button'
+              className='btn btn-default'
+              table='payments'
+              filename='payments'
+              sheet='tablexls'
+              buttonText='Download as XLS'
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default PaymentsList;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

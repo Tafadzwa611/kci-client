@@ -15,7 +15,7 @@ import { useBranches } from '../../../contexts/BranchesContext';
 import axios from 'axios';
 import { removeEmptyValues } from '../../../utils/utils';
 
-const Filter = ({setPayments}) => {
+const Filter = ({setPayments, setParams}) => {
   const initialValues = {
     branch_ids: [],
     page_num: 1,
@@ -26,11 +26,25 @@ const Filter = ({setPayments}) => {
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
+  const getParams = (values) => {
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(values)) {
+      if (Array.isArray(value)) {
+        value.forEach(el => params.append(key, el));
+      }else {
+        params.append(key, value);
+      }
+    }
+    return params
+  }
+
   const onSubmit = async (values, actions) => {
 
     try {
       const data = removeEmptyValues(values);
-      const response = await axios.get('/loansapi/payments_list/', {params: data});
+      const params = getParams(data);
+      setParams(params);
+      const response = await axios.get('/loansapi/payments_list/', {params: params});
       setPayments(response.data);
     } catch (error) {
       if (error.message === "Network Error") {
