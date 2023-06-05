@@ -38,7 +38,7 @@ function ClientsTable({clientId, setClientId, clientsData, params, setClientsDat
 const Pager = ({
   prevPageNumber,
   nextPageNumber,
-  setLoanData,
+  setClientsData,
   params
 }) => {
   const [errors, setErrors] = useState(null);
@@ -47,8 +47,8 @@ const Pager = ({
     try {
       const pageNum = evt.target.innerText === 'Next' ? nextPageNumber : prevPageNumber;
       params.set('page_num', pageNum);
-      const response = await axios.get('/loansapi/loan_list/', {params: params});
-      setLoanData(response.data);
+      const response = await axios.get('/clientsapi/clients/', {params: params});
+      setClientsData(response.data);
     } catch (error) {
       if (error.message === 'Network Error') {
         setErrors({detail: 'Network Error'});
@@ -147,9 +147,9 @@ const MainTable = ({clientsData, handleClick}) => {
                         <td>{client.type_of_client}</td>
                         <td>{client.phone_number}</td>
                         <td>{client.gender}</td>
-                        <td>{client.registration_date}</td>  
-                        <td>{client.date_of_birth} <em>(Age in years)</em></td>
-                        <td>{client.branch}</td>
+                        <td>{client.db_registration_date}</td>  
+                        <td>{client.db_date_of_birth} <em>(Age in years)</em></td>
+                        <td>{client.branch_name}</td>
                       </tr>
                     )
                   })
