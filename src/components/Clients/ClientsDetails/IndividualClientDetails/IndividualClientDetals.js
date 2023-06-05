@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Details from './Details/Details';
 import ClientAddresses from './ClientAddresses/ClientAddresses';
@@ -26,7 +25,8 @@ import RequestUndoClientLeft from './ChangeClientState/RequestChangeClientState/
 import MoreIndividualClientDetails from './Details/MoreIndividualClientDetails';
 import ClientLoans from './ClientLoans/ClientLoans';
 
-function IndividualClientDetails({client, setClient, addresses, setAddresses, nokList, setNokList, clientId, files, userperms, branches, setFiles, setDetails}) {
+function 
+IndividualClientDetails({client, setClient, addresses, setAddresses, nokList, setNokList, clientId, files, userperms, branches, setFiles, setDetails}) {
   const [tab, setTab] = useState('details');
   const [openApproveClient, setOpenApproveClient] = useState(false);
   const [rejectClient, setRejectClient] = useState(false);

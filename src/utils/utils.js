@@ -126,6 +126,18 @@ const removeEmptyValues = (object) => {
   return data;
 };
 
+const getParams = (values) => {
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(values)) {
+    if (Array.isArray(value)) {
+      value.forEach(el => params.append(key, el));
+    }else {
+      params.append(key, value);
+    }
+  }
+  return params
+}
+
 const removeNull = (object) => {
   const keys = Object.keys(object);
   for (var i = 0; i < keys.length; ++i) {
@@ -137,4 +149,14 @@ const removeNull = (object) => {
   }
 };
 
-export { makeRequest, useAuth, makeRequestWrapper, getFormattedDate, uuidv4, isDate, removeEmptyValues, removeNull };
+export {
+  makeRequest,
+  useAuth,
+  makeRequestWrapper,
+  getFormattedDate,
+  uuidv4,
+  isDate,
+  removeEmptyValues,
+  removeNull,
+  getParams
+};

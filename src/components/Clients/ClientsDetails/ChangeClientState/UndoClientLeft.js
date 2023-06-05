@@ -1,18 +1,16 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
-import {ModalActionSubmit, NonFieldErrors, ActionModal } from '../../../../../common';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { ModalActionSubmit, NonFieldErrors, ActionModal } from '../../../../common';
 
-
-const ApproveGroup = ({setOpen, url, setGroupDetails}) => {
+function UndoClientLeft({setOpen, setClient, clientId}) {
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.patch(url, values, CONFIG);
-      console.log(response)
-      setGroupDetails(response.data);
-      setOpen(false);
+      await axios.patch(`/clientsapi/undo_mark_as_left/${clientId}/`, values, CONFIG);
+      setClient(curr => ({...curr, status: 'Inactive'}));
+      setOpen(null);
     } catch (error) {
       if (error.message === 'Network Error') {
         actions.setErrors({responseStatus: 'Network Error'});
@@ -24,16 +22,17 @@ const ApproveGroup = ({setOpen, url, setGroupDetails}) => {
     }
   }
 
+
   return (
-    <ActionModal text={'add'}>
-      <Formik initialValues={{status: ''}} onSubmit={onSubmit}>
+    <ActionModal text='add'>
+      <Formik initialValues={{}} onSubmit={onSubmit}>
         {({ errors, isSubmitting }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <div className="title" style={{fontSize: "0.875rem"}}>
-                Are you sure you want to approve.
+              <div className='title' style={{fontSize: '0.875rem'}}>
+                Are you sure you want to unmark this client.
               </div>
-              <ModalActionSubmit text={'add'} isSubmitting={isSubmitting} setOpen={setOpen} act={'Continue'} />
+              <ModalActionSubmit text='add' isSubmitting={isSubmitting} setOpen={setOpen} act={'Unmark'} />
             </NonFieldErrors>
           </Form>
         )}
@@ -42,4 +41,4 @@ const ApproveGroup = ({setOpen, url, setGroupDetails}) => {
   )
 }
 
-export default ApproveGroup;
+export default UndoClientLeft;

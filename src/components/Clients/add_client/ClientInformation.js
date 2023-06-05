@@ -1,6 +1,10 @@
 import React from 'react';
-import { CustomInput, CustomSelect, CustomDatePicker } from '../../../common';
-import { countryPhoneCodes } from './data';
+import {
+  CustomInput,
+  CustomSelect,
+  CustomDatePicker,
+  CustomPhoneNumber
+} from '../../../common';
 
 const ClientInformation = ({clientTypes, setFieldValue}) => {
   return (
@@ -16,15 +20,12 @@ const ClientInformation = ({clientTypes, setFieldValue}) => {
         <option value='MALE'>Male</option>
         <option value='FEMALE'>Female</option>
       </CustomSelect>
-      <CustomDatePicker label='Date Of Birth' setFieldValue={setFieldValue} name='date_of_birth' type='date'/>
-      <CustomInput label='Registration Date' name='registration_date' type='date'/>
-      <CustomSelect label='' name='mobile_number_code'>
-        {countryPhoneCodes.map((code, index) => <option key={index} value={code.code}>{`+${code.code}-${code.country}`}</option>)}
-      </CustomSelect>
-      <CustomInput label='Mobile Number' name='mobile_number' type='text'/>
-      <CustomInput label='Secondary Mobile Number' name='phone_number_secondary' type='text'/>
+      <CustomDatePicker label='Date Of Birth' setFieldValue={setFieldValue} name='date_of_birth'/>
+      <CustomDatePicker label='Registration Date' setFieldValue={setFieldValue} name='registration_date'/>
+      <CustomPhoneNumber label='Mobile Number' name='mobile_number' setFieldValue={setFieldValue}/>
+      <CustomPhoneNumber label='Secondary Mobile Number' name='phone_number_secondary' setFieldValue={setFieldValue}/>
+      <CustomPhoneNumber label='Whatsapp Number' name='whatsapp_number' setFieldValue={setFieldValue}/>
       <CustomInput label='Home Phone' name='home_phone' type='text'/>
-      <CustomInput label='Whatsapp Number' name='whatsapp_number' type='text'/>
       <CustomInput label='Email' name='email' type='text'/>
     </>
   )
