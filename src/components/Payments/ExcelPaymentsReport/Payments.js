@@ -1,107 +1,102 @@
-// import React from 'react';
-// import 'react-virtualized/styles.css';
-// // import '../payments_report/payments_report.css';
-// import {AutoSizer, MultiGrid} from 'react-virtualized';
+import React, { useState, useEffect } from 'react';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import Pager from './Pager';
+import MainTable from './MainTable';
 
-
-// const headerCols = [
-//   { name: 'status', displayName: 'Status', width: 500 },
-//   { name: 'reference', displayName: 'Reference', width: 200 },
-//   { name: 'amount_paid', displayName: 'Amount Paid', width: 150 },
-//   { name: 'payment__loan__loan_id', displayName: 'Loan', width: 150 }
-// ];
-
-// function Payments({payments}) {
-//   console.log(payments);
-//   const heightCount = payments.length + 1;
-//   const rowHeight = 40;
-//   const height = 690;
-
-//   const renderHeaderColumns = columnIndex => {
-//     const headerCol = headerCols[columnIndex];
-//     return <div key={headerCol.name}>{headerCol.displayName}</div>;
-//   }
-
-//   const cellRenderer = ({ columnIndex, key, rowIndex, style }) => {
-//     if (rowIndex === 0) {
-//       return <div key={key} style={style}>{renderHeaderColumns(columnIndex)}</div>
-//     } else {
-//       const columnName = headerCols[columnIndex].name;
-//       if (columnName === 'status') {
-//         const failReason = payments[rowIndex-1]['fail_reason'];
-//         return <div key={key} style={style}><b>{payments[rowIndex-1][columnName]}</b> {failReason}</div>
-//       }else if (columnName === 'payment__loan__loan_id') {
-//         const id = payments[rowIndex-1]['payment__loan__id'];
-//         return (
-//           <div key={key} style={style}>
-//             <a href={`/loans/loan_detail/${id}`}>{payments[rowIndex-1][columnName]}</a>
-//           </div>
-//         )
-//       }
-//       return <div key={key} style={style}>{payments[rowIndex-1][columnName]}</div>
-//     }
-//   }
-
-//   return (
-//     <div className='react-virtualized-table'>
-//       <AutoSizer>
-//         {({ width }) => (
-//           <MultiGrid
-//             cellRenderer={cellRenderer}
-//             fixedRowCount={1}
-//             height={height}
-//             width={width}
-//             columnCount={headerCols.length}
-//             columnWidth={({ index }) => headerCols[index].width}
-//             rowCount={heightCount}
-//             rowHeight={rowHeight}
-//           />
-//         )}
-//       </AutoSizer>
-//     </div>
-//   )
-// }
-
-// export default Payments;
-
-
-import React from 'react';
-import { useVirtual, Table } from "@af-utils/react-table";
-
-const columns = [
-  {key: "Status"},
-  {key: "Reference"},
-  {key: "Amount_Paid"},
-  {key: "Loan"},
-];
-
-const Payments = ({payments}) => {
-
-  const model = useVirtual({
-      itemCount: payments.length
-  });
-
-  const getRowData = i => {
-    const payment = payments[i];
-    return {
-        "Status": payment.status,
-        "Reference": payment.reference,
-        "Amount_Paid": payment.amount_paid,
-        "Loan": payment.payment__loan__loan_id,
-    }
-  }
-
+function Payments({payments, params, setPayments}) {
   return (
-    <div className="text-light view__payments" style={{paddingTop:"2rem"}}>
-      <Table
-        model={model}
-        className="h-full basic-table-container"
-        getRowData={getRowData}
-        columns={columns}
-      />
+    <>
+      <TableHeader payments={payments} params={params} setPayments={setPayments}/>
+      <div style={{padding:"0", border:"none"}} className='table-container full__width font-12'>
+        {payments.payments ?
+          <div className="table-responsive full__table" >
+              <MainTable 
+                payments={payments} 
+              />
+          </div>
+        : null}
+      </div>
+    </>
+  )
+}
+
+const TableHeader = ({payments, params, setPayments}) => {
+  return (
+    <div className='table-header'>
+      <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
+        <Pager
+          nextPageNumber={payments.next_page_num}
+          params={params}
+          loadMorePayments={() => console.log('loadMorePayments')}
+          loadingMore={false}
+          prevPageNumber={payments.prev_page_num}
+          setPayments={setPayments}
+        />
+        <div style={{marginTop:'6px'}}>Showing {payments.payments.length} of {payments.count} payments.</div>
+      </div>
+      <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
+        <div style={{marginTop:'6px'}}>Page {payments.number} of {payments.num_of_pages}</div>
+        <div>
+          <ReactHTMLTableToExcel
+              id='test-table-xls-button'
+              className='btn btn-default'
+              table='payments'
+              filename='payments'
+              sheet='tablexls'
+              buttonText='Download as XLS'
+          />
+        </div>
+      </div>
     </div>
-  );
-};
+  )
+}
 
 export default Payments;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

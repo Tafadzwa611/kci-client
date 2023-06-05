@@ -7,7 +7,7 @@ import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
 import ExcelPaymentsReport from '../ExcelPaymentsReport/ExcelPaymentsReport';
 
 const ViewPayments = () => {
-        useEffect(() => {
+    useEffect(() => {
         document.title = 'View Payments';
     }, []);
 
