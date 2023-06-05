@@ -17,7 +17,7 @@ function Client({clientData, close}) {
     <div style={{position:'sticky', top:'0', width:'100%'}}>
       <div className='j-details-container' style={{padding:'1.5rem'}}>
         <ModalSelector modal={modal} setModal={setModal} clientId={client.id} setClient={setClient}/>
-        <Actions setModal={setModal} client={clientData} close={close}/>
+        <Actions setModal={setModal} client={client} close={close}/>
       </div>
     </div>
   )
@@ -99,14 +99,14 @@ const Actions = ({setModal, client, close}) => {
 const ModalSelector = ({modal, clientId, setClient, setModal}) => {
   return {
     null: null,
-    undoBlacklist: <UndoClientBlackList clientId={clientId} setClient={setClient} setUndoClientBlacklist={setModal}/>,
-    undoLeft: <UndoClientLeft clientId={clientId} setClient={setClient} setUndoClientLeft={setModal}/>,
-    blacklist: <BlacklistClient clientId={clientId} setClient={setClient} setClientBlacklist={setModal}/>,
-    left: <ClientLeft clientId={clientId} setClient={setClient} setClientLeft={setModal}/>,
-    undoApprove: <UndoClientApproval clientId={clientId} setClient={setClient} setUndoClientApproval={setModal}/>,
-    reject: <RejectClient clientId={clientId} setClient={setClient} setRejectClient={setModal}/>,
-    approve: <ApproveClient clientId={clientId} setClient={setClient} setOpenApproveClient={setModal} />,
-    undoReject: <UndoClientRejection clientId={clientId} setClient={setClient} setUndoClientRejection={setModal} />
+    undoBlacklist: <UndoClientBlackList clientId={clientId} setClient={setClient} setOpen={setModal}/>,
+    undoLeft: <UndoClientLeft clientId={clientId} setClient={setClient} setOpen={setModal}/>,
+    blacklist: <BlacklistClient clientId={clientId} setClient={setClient} setOpen={setModal}/>,
+    left: <ClientLeft clientId={clientId} setClient={setClient} setOpen={setModal}/>,
+    undoApprove: <UndoClientApproval clientId={clientId} setClient={setClient} setOpen={setModal}/>,
+    reject: <RejectClient clientId={clientId} setClient={setClient} setOpen={setModal}/>,
+    approve: <ApproveClient clientId={clientId} setClient={setClient} setOpen={setModal} />,
+    undoReject: <UndoClientRejection clientId={clientId} setClient={setClient} setOpen={setModal} />
   }[modal]
 }
 

@@ -1,51 +1,44 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { ModalActionSubmit, NonFieldErrors, ActionModal } from '../../../../common';
+import { Form, Formik } from 'formik';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 
-function UndoClientApproval({setUndoClientApproval, setClient, clientId}) {
-    const [loading, setLoading] = useState(false);
-    const [errorMsg, setErrorMsg] = useState('');
-
-
-    const handleSubmit = async () => {
-        setLoading(true);
-        await patchClient();
+function UndoClientApproval({setOpen, setClient, clientId}) {
+  const onSubmit = async (values, actions) => {
+    try {
+      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+      await axios.patch(`/clientsapi/undo_client_approval/${clientId}/`, values, CONFIG);
+      setClient(curr => ({...curr, status: 'Pending Approval'}));
+      setOpen(null);
+    } catch (error) {
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+      } else {
+        actions.setErrors({responseStatus: error.response.status});
+      }
     }
+  }
 
-    async function patchClient() {
-        console.log('UndoClientApproval');
-        // try {
-        //     const response = await makeRequest.patch(`/clientsapi/undo_client_approval/${clientId}/`, {}, {timeout: 8000});
-        //     if (response.ok) {
-        //         setClient(curr => ({...curr, approved: false}));
-        //         setClient(curr => ({...curr, status: 'Pending Approval'}));
-        //         setUndoClientApproval(false);
-        //     }else {
-        //         const error = await response.json();
-        //         setErrorMsg(Object.values(error)[0]);
-        //     }
-        //     setLoading(false);
-        // }catch(error) {
-        //     console.log(error);
-        // }
-    }
-
-
-    return (
-        <div className="modalBackground">
-            <div className="modalContainer">
-                <div>
-                    <i className="uil uil-history-alt modal_circle_left"></i>
-                </div>
-                <div className="title">
-                    Undo Approve Client 
-                </div>
-                <div className="modal-footer">
-                    <button className="btn btn-default"onClick={() => setUndoClientApproval(false)}>Cancel</button>
-                    <button className="btn btn-dark" onClick={handleSubmit}>Continue</button>
-                </div>
-            </div>
-        </div>
-    )
+  return (
+    <ActionModal>
+      <Formik initialValues={{}} onSubmit={onSubmit}>
+        {({ errors, isSubmitting }) => (
+          <Form>
+            <NonFieldErrors errors={errors}>
+              <div className='title' style={{fontSize: '0.875rem'}}>
+                Are you sure you want to reverse client approval.
+              </div>
+              <ModalActionSubmit isSubmitting={isSubmitting} setOpen={setOpen} act={'Reverse'} />
+            </NonFieldErrors>
+          </Form>
+        )}
+      </Formik>
+    </ActionModal>
+  )
 }
 
 export default UndoClientApproval;
