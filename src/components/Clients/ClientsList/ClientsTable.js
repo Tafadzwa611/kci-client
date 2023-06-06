@@ -3,6 +3,7 @@ import Client from '../ClientsDetails/Client';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { Fetcher } from '../../../common';
 import axios from 'axios';
+import Pager from './Pager';
 
 function ClientsTable({clientId, setClientId, clientsData, params, setClientsData}) {
   const handleClick = (e) => setClientId(e.target.id);
@@ -10,7 +11,7 @@ function ClientsTable({clientId, setClientId, clientsData, params, setClientsDat
 
   return (
     <>
-      <TableHeader clientsData={clientsData}/>
+      <TableHeader clientsData={clientsData} setClientsData={setClientsData} params={params}/>
       {clientId ?
         <div style={{padding:'0', border:'none'}} className='table-container journal__table font-12'>
           <div className='table-responsive journal__table-container-journals'>
@@ -22,12 +23,6 @@ function ClientsTable({clientId, setClientId, clientsData, params, setClientsDat
         </div> :
         <div style={{padding: '0', border: 'none'}} className='table-container full__width font-12'>
           <div className='table-responsive full__table'>
-            <Pager
-              nextPageNumber={clientsData.next_page_num}
-              params={params}
-              prevPageNumber={clientsData.prev_page_num}
-              setClientsData={setClientsData}
-            />
             <MainTable clientsData={clientsData} handleClick={handleClick}/>
           </div>
         </div>}
@@ -35,52 +30,32 @@ function ClientsTable({clientId, setClientId, clientsData, params, setClientsDat
   )
 }
 
-const Pager = ({
-  prevPageNumber,
-  nextPageNumber,
-  setClientsData,
-  params
-}) => {
-  const [errors, setErrors] = useState(null);
-
-  const onClick = async (evt) => {
-    try {
-      const pageNum = evt.target.innerText === 'Next' ? nextPageNumber : prevPageNumber;
-      params.set('page_num', pageNum);
-      const response = await axios.get('/clientsapi/clients/', {params: params});
-      setClientsData(response.data);
-    } catch (error) {
-      if (error.message === 'Network Error') {
-        setErrors({detail: 'Network Error'});
-      } else {
-        setErrors({detail: 'Server Error'});
-      }
-    }
-  }
-
-  return (
-    <div className='footer-container font-12 text-light'>
-      {errors && JSON.stringify(errors)}
-      {prevPageNumber && <><button onClick={onClick}>Back</button><br/></>}
-      {nextPageNumber && <button onClick={onClick}>Next</button>}
-    </div>
-  )
-}
-
-const TableHeader = ({clientsData}) => {
+const TableHeader = ({clientsData, params, setClientsData}) => {
   return (
     <div className='table-header'>
-      <div>Showing {clientsData.clients.length} of {clientsData.count} clients.</div>
-      <div>Page {clientsData.number} of {clientsData.num_of_pages}</div>
-      <div>
-        <ReactHTMLTableToExcel
-          id='test-table-xls-button'
-          className='btn btn-default'
-          table='loans'
-          filename='loans'
-          sheet='tablexls'
-          buttonText='Download as XLS'
+      <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
+        <Pager
+          nextPageNumber={clientsData.next_page_num}
+          params={params}
+          loadMoreClients={() => console.log('loadMoreClients')}
+          loadingMore={false}
+          prevPageNumber={clientsData.prev_page_num}
+          setClientsData={setClientsData}
         />
+        <div style={{marginTop:'6px'}}>Showing {clientsData.clients.length} of {clientsData.count} clients.</div>
+      </div>
+      <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
+        <div style={{marginTop:'6px'}}>Page {clientsData.number} of {clientsData.num_of_pages}</div>
+        <div>
+          <ReactHTMLTableToExcel
+              id='test-table-xls-button'
+              className='btn btn-default'
+              table='clients'
+              filename='clients'
+              sheet='tablexls'
+              buttonText='Download as XLS'
+          />
+        </div>
       </div>
     </div>
   )
@@ -88,7 +63,7 @@ const TableHeader = ({clientsData}) => {
 
 const MiniTable = ({clients, handleClick, clientId}) => {
   return (
-    <div style={{display:'grid', gridTemplateColumns:'1fr 4fr', columnGap:'1rem'}}>
+    <div>
       <div style={{padding:'0', border:'none'}}>
         <div style={{width:'100%', overflowX:'auto'}}>
           <div className='table__height'>
