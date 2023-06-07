@@ -1,39 +1,30 @@
 import React, {Fragment} from 'react';
 import { FirstRow, SecondRow, ThirdRow, FourthRow } from './TableRows';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import Pager from './Pager';
 
-const Table = ({ clients, currencyIso, minDate, maxDate, selectedBranches, loggedInUser }) => {
-    const getStrDate = (date) => {
-        const mydate = new Date(date);
-        const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
-        return `${month} ${mydate.getDate()}, ${mydate.getFullYear()}`;
-    }
-    
+const Table = ({ clientsReportData, params, setClientsReportData, loggedInUser, intValues }) => {    
+
     const getFileName = () => {
-        if (minDate != '' && maxDate != '') {
-            return `${currencyIso} Clients report for ${loggedInUser.company_name} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`
+        if (intValues.min_date != '' && intValues.max_date != '') {
+            return `Clients report for ${loggedInUser.company_name} from ${intValues.min_date} to ${intValues.max_date}`
         }
-        if (minDate == '' && maxDate != '') {
-            return `${currencyIso} Clients report for ${loggedInUser.company_name} upto ${getStrDate(maxDate)}`
+        if (intValues.min_date == '' && intValues.max_date != '') {
+            return `Clients report for ${loggedInUser.company_name} upto ${intValues.max_date}`
         }
-        if (minDate != '' && maxDate == '') {
-            return `${currencyIso} Clients report for ${loggedInUser.company_name} from ${getStrDate(minDate)}`
+        if (intValues.min_date != '' && intValues.max_date == '') {
+            return `Clients report for ${loggedInUser.company_name} from ${intValues.min_date}`
         }
-        return `${currencyIso} Clients report for ${loggedInUser.company_name} all time.`
+        return `Clients report for ${loggedInUser.company_name} all time.`
     }
 
     return (
         <>
-            <div style={{margin:"1rem 0", display:"flex", justifyContent:"flex-end"}}>
-                <ReactHTMLTableToExcel
-                id='test-table-xls-button'
-                className='download-table-xls-button btn btn-default'
-                table='clients-report'
-                filename={getFileName()}
-                sheet='tablexls'
-                buttonText='Download as XLS'
-                />
-            </div>
+            <TableHeader 
+                clientsReportData={clientsReportData} 
+                params={params} 
+                setClientsReportData={setClientsReportData} 
+            />
             <div className="table-container" style={{padding:"0", border:"none"}}>
                 <div className="table-responsive font-12" style={{maxHeight:"600px"}}>
                     <table className="table" id='clients-report' style={{width:"100%"}}>
@@ -57,24 +48,24 @@ const Table = ({ clients, currencyIso, minDate, maxDate, selectedBranches, logge
                             <tr>
                                 <td className='text-bold text-left' colSpan={9}>{getFileName()}</td>
                             </tr>
-                            <tr>
+                            {/* <tr>
                                 <td className='text-bold text-left' colSpan={9}>
                                     Branches: {selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)}
                                 </td>
                             </tr>
                             <tr>
                                 <td className='text-bold text-left' colSpan={9}>Currency: {currencyIso}</td>
-                            </tr>
+                            </tr> */}
                             <tr>
                                 <td className='text-bold text-left' colSpan={9}>{`Extracted On: ${new Date()}`}</td>
                             </tr>
-                            {clients.map(client => {
+                            {clientsReportData.clients.map(client => {
                                 return (
                                 <Fragment key={client.id}>
                                     <FirstRow client={client}/>
-                                    <SecondRow client={client} currencyIso={currencyIso}/>
-                                    <ThirdRow client={client} currencyIso={currencyIso}/>
-                                    <FourthRow client={client} currencyIso={currencyIso}/>
+                                    <SecondRow client={client}/>
+                                    <ThirdRow client={client}/>
+                                    <FourthRow client={client}/>
                                 </Fragment>
                                 )
                             })}
@@ -84,6 +75,37 @@ const Table = ({ clients, currencyIso, minDate, maxDate, selectedBranches, logge
             </div>
         </>
     );
+}
+
+const TableHeader = ({clientsReportData, params, setClientsReportData }) => {
+    return (
+        <div className='table-header'>
+            <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
+                <Pager
+                    nextPageNumber={clientsReportData.next_page_num}
+                    params={params}
+                    loadMoreExpenses={() => console.log('loadMoreExpenses')}
+                    loadingMore={false}
+                    prevPageNumber={clientsReportData.prev_page_num}
+                    setClientsReportData={setClientsReportData}
+                />
+                <div style={{marginTop:'6px'}}>Showing {clientsReportData.clients.length} of {clientsReportData.count} clients.</div>
+            </div>
+            <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
+            <div style={{marginTop:'6px'}}>Page {clientsReportData.number} of {clientsReportData.num_of_pages}</div>
+                <div>
+                    <ReactHTMLTableToExcel
+                        id='test-table-xls-button'
+                        className='btn btn-default'
+                        table='clients-report'
+                        filename='clients-report'
+                        sheet='tablexls'
+                        buttonText='Download as XLS'
+                    />
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default Table;
