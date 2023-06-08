@@ -48,14 +48,9 @@ const Table = ({ clientsReportData, params, setClientsReportData, loggedInUser, 
                             <tr>
                                 <td className='text-bold text-left' colSpan={9}>{getFileName()}</td>
                             </tr>
-                            {/* <tr>
-                                <td className='text-bold text-left' colSpan={9}>
-                                    Branches: {selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)}
-                                </td>
-                            </tr>
                             <tr>
-                                <td className='text-bold text-left' colSpan={9}>Currency: {currencyIso}</td>
-                            </tr> */}
+                                <td className='text-bold text-left' colSpan={9}>Currency: {clientsReportData.currency}</td>
+                            </tr>
                             <tr>
                                 <td className='text-bold text-left' colSpan={9}>{`Extracted On: ${new Date()}`}</td>
                             </tr>
