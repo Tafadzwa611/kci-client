@@ -9,10 +9,11 @@ import {
 const ClientInformation = ({clientTypes, setFieldValue}) => {
   return (
     <>
+      {clientTypes &&
       <CustomSelect label='Client Type' name='client_type_id'>
         <option value=''>------</option>
         {clientTypes.map(ct => <option key={ct.id} value={ct.id}>{ct.name}</option>)}
-      </CustomSelect>
+      </CustomSelect>}
       <CustomInput label='Forenames' name='first_name' type='text'/>
       <CustomInput label='Lastnames' name='last_name' type='text'/>
       <CustomSelect label='Gender' name='gender'>

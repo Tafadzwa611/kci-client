@@ -8,6 +8,13 @@ import UndoClientBlackList from './ChangeClientState/UndoClientBlackList';
 import UndoClientLeft from './ChangeClientState/UndoClientLeft';
 import UndoClientRejection from './ChangeClientState/UndoClientRejection';
 import { Link } from 'react-router-dom';
+import PersonalInfo from './PersonalInfo';
+import UpdatePersonalInfo from './UpdatePersonalInfo';
+import Addresses from './Addresses';
+import Nok from './Nok';
+import Identity from './Identity';
+import CustomData from './CustomData';
+import { MODAL_STATES } from './data';
 
 function Client({clientData, close}) {
   const [client, setClient] = useState(clientData);
@@ -16,27 +23,21 @@ function Client({clientData, close}) {
   return (
     <div style={{position:'sticky', top:'0', width:'100%'}}>
       <div className='j-details-container' style={{padding:'1.5rem'}}>
-        <ModalSelector modal={modal} setModal={setModal} clientId={client.id} setClient={setClient}/>
-        <Actions setModal={setModal} client={client} close={close}/>
+        <ModalSelector modal={modal} client={client} setModal={setModal} setClient={setClient}/>
+        <Actions modal={modal} setModal={setModal} client={client} close={close} setClient={setClient}/>
       </div>
     </div>
   )
 }
 
-const MODAL_STATES = {
-  null: null,
-  undoBlacklist: 'undoBlacklist',
-  undoLeft: 'undoLeft',
-  blacklist: 'blacklist',
-  undoApprove: 'undoApprove',
-  left: 'left',
-  approve: 'approve',
-  reject: 'reject',
-  undoReject: 'undoReject',
-};
+const Actions = ({modal, setModal, client, close, setClient}) => {
+  const [tab, setTab] = useState('details');
 
-const Actions = ({setModal, client, close}) => {
-  const [tab, setTab] = useState();
+  const customViews = {};
+  client.custom_data.forEach(fs => {
+    customViews[fs.field_set_id] = <CustomData fieldset={fs} setModal={setModal} modal={modal} setClient={setClient} client={client}/>;
+  });
+
 
   const Inactive = () => {
     return (
@@ -83,30 +84,42 @@ const Actions = ({setModal, client, close}) => {
       </div>
       <div className='bloc-tabs'>
         <button className={tab === 'details' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('details')}> Personal Info </button>
+        <button className={tab === 'id' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('id')}>Identification</button>
         <button className={tab === 'addresses' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('addresses')}> Address List </button>
-        <button className={tab === 'emp' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('emp')}> Employment Details </button>
-        <button className={tab === 'bnk' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('bnk')}> Banking Details </button>
         <button className={tab === 'nok' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('nok')}> Next Of Kin List </button>
+        {client.custom_data.map(fs => (
+          <button key={fs.field_set_id} className={tab === fs.field_set_id ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab(fs.field_set_id)}>
+            {fs.field_set}
+          </button>
+        ))}
         <button className={tab === 'files' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('files')}> Files </button>
-        <button className={tab === 'txns' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('txns')}> Transactions </button>
         <button className={tab === 'loans' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('loans')}> Loans </button>
       </div>
-      <div className='tab-content font-12' style={{marginTop: '3rem'}}></div>
+      <div className='tab-content font-12' style={{marginTop: '3rem'}}>
+        {{
+          details: <PersonalInfo client={client} setModal={setModal}/>,
+          id: <Identity client={client} setModal={setModal} modal={modal} setClient={setClient}/>,
+          addresses: <Addresses client={client} modal={modal} setModal={setModal} setClient={setClient}/>,
+          nok: <Nok client={client} modal={modal} setModal={setModal} setClient={setClient}/>,
+          ...customViews
+        }[tab]}
+      </div>
     </>
   )
 }
 
-const ModalSelector = ({modal, clientId, setClient, setModal}) => {
+const ModalSelector = ({modal, client, setClient, setModal}) => {
   return {
     null: null,
-    undoBlacklist: <UndoClientBlackList clientId={clientId} setClient={setClient} setOpen={setModal}/>,
-    undoLeft: <UndoClientLeft clientId={clientId} setClient={setClient} setOpen={setModal}/>,
-    blacklist: <BlacklistClient clientId={clientId} setClient={setClient} setOpen={setModal}/>,
-    left: <ClientLeft clientId={clientId} setClient={setClient} setOpen={setModal}/>,
-    undoApprove: <UndoClientApproval clientId={clientId} setClient={setClient} setOpen={setModal}/>,
-    reject: <RejectClient clientId={clientId} setClient={setClient} setOpen={setModal}/>,
-    approve: <ApproveClient clientId={clientId} setClient={setClient} setOpen={setModal} />,
-    undoReject: <UndoClientRejection clientId={clientId} setClient={setClient} setOpen={setModal} />
+    undoBlacklist: <UndoClientBlackList clientId={client.id} setClient={setClient} setOpen={setModal}/>,
+    undoLeft: <UndoClientLeft clientId={client.id} setClient={setClient} setOpen={setModal}/>,
+    blacklist: <BlacklistClient clientId={client.id} setClient={setClient} setOpen={setModal}/>,
+    left: <ClientLeft clientId={client.id} setClient={setClient} setOpen={setModal}/>,
+    undoApprove: <UndoClientApproval clientId={client.id} setClient={setClient} setOpen={setModal}/>,
+    reject: <RejectClient clientId={client.id} setClient={setClient} setOpen={setModal}/>,
+    approve: <ApproveClient clientId={client.id} setClient={setClient} setOpen={setModal} />,
+    undoReject: <UndoClientRejection clientId={client.id} setClient={setClient} setOpen={setModal} />,
+    updateInfo: <UpdatePersonalInfo client={client} setClient={setClient} setOpen={setModal} />,
   }[modal]
 }
 

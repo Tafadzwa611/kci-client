@@ -90,16 +90,16 @@ const processValues = (values, customForms) => {
     const data = form.fields.map(field => ({'field_id': field.id, [field.data_type]: values[`custom_${field.id}`]}));
     return {'field_set_id': form.id, 'data': data}
   });
-  values.next_of_kin_list = values.next_of_kin_list.map(nok => ({...nok, phone_number: `${nok.phone_number.countryCode}${nok.phone_number.phoneNumber}`}));
+  values.next_of_kin_list = values.next_of_kin_list.map(nok => ({...nok, phone_number: `${nok.phone_number.countryCode} ${nok.phone_number.phoneNumber}`}));
   const phoneNumbers = {mobile_number: '', phone_number_secondary: '', whatsapp_number: ''};
   if (values.mobile_number.phoneNumber) {
-    phoneNumbers.mobile_number = `${values.mobile_number.countryCode}${values.mobile_number.phoneNumber}`;
+    phoneNumbers.mobile_number = `${values.mobile_number.countryCode} ${values.mobile_number.phoneNumber}`;
   }
   if (values.phone_number_secondary.phoneNumber) {
-    phoneNumbers.phone_number_secondary = `${values.phone_number_secondary.countryCode}${values.phone_number_secondary.phoneNumber}`;
+    phoneNumbers.phone_number_secondary = `${values.phone_number_secondary.countryCode} ${values.phone_number_secondary.phoneNumber}`;
   }
   if (values.whatsapp_number.phoneNumber) {
-    phoneNumbers.whatsapp_number = `${values.whatsapp_number.countryCode}${values.whatsapp_number.phoneNumber}`;
+    phoneNumbers.whatsapp_number = `${values.whatsapp_number.countryCode} ${values.whatsapp_number.phoneNumber}`;
   }
   let data = {...values, ...phoneNumbers, custom_data};
   data = removeEmptyValues(data);
