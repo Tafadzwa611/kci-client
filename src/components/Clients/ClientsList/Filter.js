@@ -55,31 +55,37 @@ const Filter = ({ setClientsData, clientTypes, setParams }) => {
             <Form>
               <NonFieldErrors errors={errors}>
                 <div style={{display:'flex', justifyContent:'space-between'}}>
-                  <div style={{display:'flex', justifyContent:'space-between', width:'100%', columnGap:'1rem'}}>
+                  <div className='row-payments-container' style={{width:'24%'}}>
                     <CustomDatePickerFilter label='Min Reg Date' name='min_reg_date' setFieldValue={setFieldValue}/>
+                  </div>
+                  <div className='row-payments-container' style={{width:'24%'}}>
                     <CustomDatePickerFilter label='Max Reg Date' name='max_reg_date' setFieldValue={setFieldValue}/>
+                  </div>
+                  <div className='row-payments-container' style={{width:'24%'}}>
                     <CustomDatePickerFilter label='Min Date Of Birth' name='min_dob' setFieldValue={setFieldValue}/>
+                  </div>
+                  <div className='row-payments-container' style={{width:'24%'}}>
                     <CustomDatePickerFilter label='Max Date Of Birth' name='max_dob' setFieldValue={setFieldValue}/>
+                  </div>
+                </div>
+                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
+                  <div className='row-payments-container' style={{width:'24%'}}>
                     <CustomSelectFilter label='Client Type' name='client_type_id'>
                       <option value=''>------</option>
                       {clientTypes.map(ct => (<option key={ct.id} value={ct.id}>{ct.name}</option>))}
                     </CustomSelectFilter>
                   </div>
-                </div>
-                <div style={{display:'flex', justifyContent:'space-between'}}>
-                  <div style={{display:'flex', justifyContent:'space-between', width:'100%', columnGap:'1rem'}}>
-                    <CustomMultiSelectFilter
-                      label='Branches'
-                      name='branch_ids'
-                      setFieldValue={setFieldValue}
-                      options={branches.map(br => ({value: br.id, label: br.name}))}
-                    />
+                  <div className='row-payments-container' style={{width:'24%'}}>
                     <CustomInputFilter label='Search Client' name='search_str'/>
+                  </div>
+                  <div className='row-payments-container' style={{width:'24%'}}>
                     <CustomSelectFilter label='Gender' name='gender'>
                       <option value=''>------</option>
                       <option value='MALE'>Male</option>
                       <option value='FEMALE'>Female</option>
                     </CustomSelectFilter>
+                  </div>
+                  <div className='row-payments-container' style={{width:'24%'}}>
                     <CustomSelectFilter label='Status' name='status'>
                       <option value=''>------</option>
                       <option value='Pending Approval'>Pending Approval</option>
@@ -92,6 +98,14 @@ const Filter = ({ setClientsData, clientTypes, setParams }) => {
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
+                  <div style={{width:'85%'}}>
+                    <CustomMultiSelectFilter
+                      label='Branches'
+                      name='branch_ids'
+                      setFieldValue={setFieldValue}
+                      options={branches.map(br => ({value: br.id, label: br.name}))}
+                    />
+                  </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>
               </NonFieldErrors>

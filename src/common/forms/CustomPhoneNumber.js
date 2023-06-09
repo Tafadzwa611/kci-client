@@ -27,31 +27,33 @@ const CustomPhoneNumber = ({ label, setFieldValue, ...props }) => {
     <>
       <div className='row custom-background'>
         <label className='form-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
-        <div className='col-9' style={{display:'flex', columnGap:'10px'}}>
-          <div style={{width:'350px'}}>
-            <Select
-              defaultValue={defaultCode}
-              isSearchable={true}
-              name='code'
-              options={options}
-              onChange={onCodeChange}
+        <div style={{width:'50%'}}>
+          <div className='col-9' style={{display:'flex', columnGap:'10px'}}>
+            <div style={{width:'350px'}}>
+              <Select
+                defaultValue={defaultCode}
+                isSearchable={true}
+                name='code'
+                options={options}
+                onChange={onCodeChange}
+              />
+            </div>
+            <input
+              {...field}
+              {...props}
+              value={field.value.phoneNumber || ''}
+              type='number'
+              name='phoneNumber'
+              onChange={onPhoneNumChange}
+              style={{width: '-webkit-fill-available'}}
+              className={`custom-select-form ${meta.touched && meta.error ? 'input-error' : ''}`}
             />
+            {meta.touched && meta.error && <div className='error'>{meta.error}</div>}
           </div>
-          <input
-            {...field}
-            {...props}
-            value={field.value.phoneNumber || ''}
-            type='number'
-            name='phoneNumber'
-            onChange={onPhoneNumChange}
-            style={{width: '-webkit-fill-available'}}
-            className={`custom-select-form ${meta.touched && meta.error ? 'input-error' : ''}`}
-          />
-          {meta.touched && meta.error && <div className='error'>{meta.error}</div>}
         </div>
       </div>
     </>
   )
 }
 
-export default CustomPhoneNumber
+export default CustomPhoneNumber;
