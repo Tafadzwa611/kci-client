@@ -27,7 +27,7 @@ function FieldList({data, fieldSetId}) {
 
   return (
     <>
-      <SuccessBtn value={'Add Field'} handler={evt => setOpenCreateFieldModal(true)}/>
+      <SuccessBtn value={'Add Field'} handler={() => setOpenCreateFieldModal(true)}/>
       <CreateField open={openCreateFieldModal} setOpen={setOpenCreateFieldModal} setFields={setFields} fieldSetId={fieldSetId}/>
       <Table rows={rows} headers={headers}/>
       {fields.some(field => field.id == fieldId) &&

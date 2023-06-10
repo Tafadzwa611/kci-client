@@ -11,7 +11,7 @@ function ManageFields() {
       <div className='bloc-tabs'>
         {entityTypes.map(et => {
           return (
-            <button key={et} className={entityType === et ? 'tabs-client active-tabs' : 'tabs-client'} onClick={_ => setEntityType(et)}>
+            <button key={et} className={entityType === et ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setEntityType(et)}>
               {et}S
             </button>
           )

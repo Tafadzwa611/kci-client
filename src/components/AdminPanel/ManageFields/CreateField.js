@@ -14,13 +14,14 @@ import {
 } from '../../../common';
 
 const CreateField = ({open, setOpen, setFields, fieldSetId}) => {
-  const initialValues = {name: '', data_type: '', text_format: '', select_opts: [], is_required: false};
+  const initialValues = {name: '', data_type: '', text_format: '', select_opts: [], is_required: false, is_unique: false};
 
   const getPayload = (values) => {
     return {
       name: values.name,
       data_type: values.data_type,
       is_required: values.is_required,
+      is_unique: values.is_unique,
       field_set_id: fieldSetId,
       ...(values.text_format != '') && {text_format: values.text_format},
       ...(values.select_opts.length > 0) && {select_opts: values.select_opts}
@@ -48,6 +49,7 @@ const CreateField = ({open, setOpen, setFields, fieldSetId}) => {
                     {Object.keys(dataTypes).map(key => <option key={key} value={key}>{dataTypes[key]}</option>)}
                   </CustomSelect>
                   <CustomCheckbox label='Is Mandatory' name='is_required'/>
+                  {values.data_type === 'free_text' && <CustomCheckbox label='Is Unique' name='is_unique'/>}
                   {values.data_type === 'free_text' && <CustomInput label='Text Format' name='text_format' type='text'/>}
                   {values.data_type === 'select' &&
                     <CustomTypeAndAdd
