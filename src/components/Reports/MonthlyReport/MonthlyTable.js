@@ -3,7 +3,7 @@ import { SecondRow } from './TableRows';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 
-const MonthlyTable = ({report, currencyIso, selectedBranches, loggedInUser}) => {
+const MonthlyTable = ({report, loggedInUser}) => {
   return (
     <>
       <div style={{display:"flex", justifyContent:"flex-end", margin:"1rem 0"}}>
@@ -11,7 +11,7 @@ const MonthlyTable = ({report, currencyIso, selectedBranches, loggedInUser}) => 
           id='test-table-xls-button'
           className='btn btn-default'
           table='monthly-report'
-          filename={`${currencyIso} Monthly Report for ${loggedInUser.company_name} extracted on ${new Date()}`}
+          filename={`Monthly Report for ${loggedInUser.company_name} extracted on ${new Date()}`}
           sheet='tablexls'
           buttonText='Download as XLS'
         />
@@ -39,19 +39,19 @@ const MonthlyTable = ({report, currencyIso, selectedBranches, loggedInUser}) => 
               <td className='text-bold text-left' colSpan={12}>Loans Report</td>
             </tr>
             <tr>
-              <td colSpan={12} title={`${currencyIso} Monthly Report for ${loggedInUser.company_name} extracted on ${new Date()}`} className='text-bold text-left' style={{whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: '5px'}}>
-                {`${currencyIso} Monthly Report for ${loggedInUser.company_name} extracted on ${new Date()}`}
+              <td colSpan={12} title={`Monthly Report for ${loggedInUser.company_name} extracted on ${new Date()}`} className='text-bold text-left' style={{whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: '5px'}}>
+                {`Monthly Report for ${loggedInUser.company_name} extracted on ${new Date()}`}
               </td>
             </tr>
-            <tr>
+            {/* <tr>
               <td colSpan={12} title={selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)} className='text-bold text-left' style={{whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: '5px'}}>
                 Branches: {selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)}
               </td>
-            </tr>
+            </tr> */}
             <tr>
-              <td className='text-bold text-left' colSpan={12}>Currency: {currencyIso}</td>
+              <td className='text-bold text-left' colSpan={12}>Currency: {report.currency}</td>
             </tr>
-            {report.map((monthlyReport, index) => {
+            {report.report.map((monthlyReport, index) => {
               return (
                 <SecondRow key={index} monthlyReport={monthlyReport}/>
               )
