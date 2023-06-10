@@ -17,13 +17,15 @@ const EditField = ({open, setOpen, field, setFields}) => {
     data_type: field.data_type,
     text_format: field.text_format ?? '',
     select_opts: field.select_opts ?? [],
-    is_required: field.is_required
+    is_required: field.is_required,
+    is_unique: field.is_unique
   };
 
   const getPayload = (values) => {
     return {
       name: values.name,
       is_required: values.is_required,
+      is_unique: values.is_unique,
       ...(values.text_format != '') && {text_format: values.text_format},
       ...(values.select_opts.length > 0) && {select_opts: values.select_opts}
     };
@@ -46,6 +48,7 @@ const EditField = ({open, setOpen, field, setFields}) => {
                 <div>
                   <CustomInput label='Name' name='name' type='text'/>
                   <CustomCheckbox label='Is Mandatory' name='is_required'/>
+                  {values.data_type === 'free_text' && <CustomCheckbox label='Is Unique' name='is_unique'/>}
                   {values.data_type === 'free_text' && <CustomInput label='Text Format' name='text_format' type='text'/>}
                   {values.data_type === 'select' &&
                     <CustomTypeAndAdd

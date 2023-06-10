@@ -14,7 +14,7 @@ const FieldSets = ({data, entityType, clientTypes}) => {
 
   return (
     <>
-      <SuccessBtn handler={(evt) => setOpenCreateFieldSetModal(true)} value={'Add Form'}/>
+      <SuccessBtn handler={() => setOpenCreateFieldSetModal(true)} value={'Add Form'}/>
       <CreateFieldSet open={openCreateFieldSetModal} setOpen={setOpenCreateFieldSetModal} setFieldSets={setFieldSets} entityType={entityType} clientTypes={clientTypes}/>
       <div style={{width:"33%"}}>
         <Select value={fieldSetId} onChange={(evt) => setFieldSetId(evt.target.value)}>
@@ -25,8 +25,8 @@ const FieldSets = ({data, entityType, clientTypes}) => {
       {fieldSets.some(fs => fs.id == fieldSetId) != '' &&
         <>
           <div style={{marginTop:"20px"}}>
-            <EditBtn handler={(evt) => setOpenEditFieldSetModal(true)}/>
-            <DeleteBtn handler={(evt) => setOpenDeleteFieldSetModal(true)}/>
+            <EditBtn handler={() => setOpenEditFieldSetModal(true)}/>
+            <DeleteBtn handler={() => setOpenDeleteFieldSetModal(true)}/>
           </div>
           <EditFieldSet
             key={JSON.stringify(fieldSets.find(fs => fs.id == fieldSetId))}
