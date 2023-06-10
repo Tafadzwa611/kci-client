@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Filter from './Filter';
 import LoansReportTable from './LoansReportTable';
+import Summary from './Summary';
 
 function LoansReport({loggedInUser}) {
   const [params, setParams] = useState(null);
@@ -11,7 +12,11 @@ function LoansReport({loggedInUser}) {
     <>
         <>
           <Filter setLoansReportData={setLoansReportData} setParams={setParams} setIntValues={setIntValues}/>
-          <div style={{paddingTop: '2rem'}}></div>
+          <Summary 
+            report={loansReportData} 
+            intValues={intValues}
+            loggedInUser={loggedInUser}
+          />
           <LoansReportTable
             loansReportData={loansReportData} 
             setLoansReportData={setLoansReportData}
