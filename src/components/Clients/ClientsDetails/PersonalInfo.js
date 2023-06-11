@@ -34,7 +34,7 @@ function PersonalInfo({client, setModal}) {
           <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
             <li>Client State: <span className={statusClasses[client.status]}>{client.status}</span></li>
             <li>Account Number: {client.client_id}</li>
-            <li>Client Type: {client.client_type}</li>
+            <li>Client Type: {client.client_type} <a style={{cursor: 'pointer'}} onClick={() => setModal(MODAL_STATES.changeType)}><small>Change</small></a></li>
             <li>Gender: {client.gender}</li>
             <li>Date of Birth: {client.date_of_birth}</li>
             <li>Client Registration Date: {client.registration_date}</li>

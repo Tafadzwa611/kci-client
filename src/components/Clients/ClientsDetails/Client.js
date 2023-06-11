@@ -14,6 +14,7 @@ import Addresses from './Addresses';
 import Nok from './Nok';
 import Identity from './Identity';
 import CustomData from './CustomData';
+import ChangeClientType from './ChangeClientType';
 import { MODAL_STATES } from './data';
 
 function Client({clientData, close}) {
@@ -120,6 +121,7 @@ const ModalSelector = ({modal, client, setClient, setModal}) => {
     approve: <ApproveClient clientId={client.id} setClient={setClient} setOpen={setModal} />,
     undoReject: <UndoClientRejection clientId={client.id} setClient={setClient} setOpen={setModal} />,
     updateInfo: <UpdatePersonalInfo client={client} setClient={setClient} setOpen={setModal} />,
+    changeType: <ChangeClientType client={client} setClient={setClient} setOpen={setModal} />,
   }[modal]
 }
 

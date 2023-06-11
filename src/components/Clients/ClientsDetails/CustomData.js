@@ -125,4 +125,5 @@ const getElement = (field, setFieldValue) => {
   }[field.data_type]
 }
 
+export {getElement};
 export default CustomData;

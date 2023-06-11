@@ -15,6 +15,7 @@ const MODAL_STATES = {
   deleteNok: 'deleteNok',
   editId: 'editId',
   editCustom: 'editCustom',
+  changeType: 'changeType',
 };
 
 export {MODAL_STATES};
