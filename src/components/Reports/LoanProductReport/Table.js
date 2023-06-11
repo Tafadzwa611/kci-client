@@ -1,22 +1,17 @@
 import React, { Fragment } from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-const Table = ({report, currencyIso, minDate, maxDate, selectedBranches, loggedInUser}) => {
-    const getStrDate = (date) => {
-        const mydate = new Date(date);
-        const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
-        return `${month} ${mydate.getDate()}, ${mydate.getFullYear()}`;
-    }
+const Table = ({report, intValues, loggedInUser}) => {
     
     const getFileName = () => {
-        if (minDate != '' && maxDate != '') {
-            return `Loan Product Report for ${loggedInUser.company_name} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`
+        if (intValues.min_date != '' && intValues.max_date != '') {
+            return `Loan Product Report for ${loggedInUser.company_name} from ${intValues.min_date} to ${intValues.max_date}`
         }
-        if (minDate == '' && maxDate != '') {
-            return `Loan Product Report for ${loggedInUser.company_name} upto ${getStrDate(maxDate)}`
+        if (intValues.min_date == '' && intValues.max_date != '') {
+            return `Loan Product Report for ${loggedInUser.company_name} upto ${intValues.max_date}`
         }
-        if (minDate != '' && maxDate == '') {
-            return `Loan Product Report for ${loggedInUser.company_name} from ${getStrDate(minDate)}`
+        if (intValues.min_date != '' && intValues.max_date == '') {
+            return `Loan Product Report for ${loggedInUser.company_name} from ${intValues.min_date}`
         }
         return `Loan Product Report for ${loggedInUser.company_name} all time.`
     }
@@ -58,14 +53,14 @@ const Table = ({report, currencyIso, minDate, maxDate, selectedBranches, loggedI
                                 {getFileName()}
                                 </td>
                             </tr>
-                            <tr>
+                            {/* <tr>
                                 <td
                                     title={selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)}
                                     colSpan={9}
                                     style={{whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden'}}
                                     >Branches: {selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)}
                                 </td>
-                            </tr>
+                            </tr> */}
                             <tr>
                                 <td colSpan={9}>{`Extracted On: ${new Date()}`}</td>
                             </tr>
@@ -88,36 +83,36 @@ const Table = ({report, currencyIso, minDate, maxDate, selectedBranches, loggedI
                                         </tr>
                                         <tr>
                                             <td style={{textAlign:"right"}}>{ lp.loan_count }</td>
-                                            <td style={{textAlign: 'right'}}>{`${currencyIso} ${lp.sum_principal}`}</td>
-                                            <td style={{textAlign: 'right'}}>{`${currencyIso} ${lp.sum_principal_due}`}</td>
+                                            <td style={{textAlign: 'right'}}>{lp.sum_principal}</td>
+                                            <td style={{textAlign: 'right'}}>{lp.sum_principal_due}</td>
                                             <td className="text-bold text-red text-right">Amount:</td>
-                                            <td className='text-bold text-red text-right'>{`${currencyIso} ${lp.sum_principal}`}</td>
-                                            <td className='text-bold text-red text-right'>{`${currencyIso} ${lp.sum_interest}`}</td>
-                                            <td className='text-bold text-red text-right'>{`${currencyIso} ${lp.sum_fees}`}</td>
-                                            <td className='text-bold text-red text-right'>{`${currencyIso} ${lp.sum_penalty}`}</td>
-                                            <td className="text-bold text-red text-right ">{`${currencyIso} ${lp.total_amount}`}</td>
+                                            <td className='text-bold text-red text-right'>{lp.sum_principal}</td>
+                                            <td className='text-bold text-red text-right'>{lp.sum_interest}</td>
+                                            <td className='text-bold text-red text-right'>{lp.sum_fees}</td>
+                                            <td className='text-bold text-red text-right'>{lp.sum_penalty}</td>
+                                            <td className="text-bold text-red text-right ">{lp.total_amount}</td>
                                         </tr>
                                         <tr>
                                             <td></td>
                                             <td></td>
                                             <td></td>
                                             <td className="text-bold text-green" style={{textAlign:"right"}}>Total_Payments:</td>
-                                            <td className='text-bold text-green' style={{textAlign: 'right'}}>{`${currencyIso} ${lp.sum_principal_paid}`}</td>
-                                            <td className='text-bold text-green' style={{textAlign: 'right'}}>{`${currencyIso} ${lp.sum_interest_paid}`}</td>
-                                            <td className='text-bold text-green' style={{textAlign: 'right'}}>{`${currencyIso} ${lp.sum_fees_paid}`}</td>
-                                            <td className='text-bold text-green' style={{textAlign: 'right'}}>{`${currencyIso} ${lp.sum_penalty_paid}`}</td>
-                                            <td className="text-bold text-green " style={{textAlign:"right"}}>{`${currencyIso} ${lp.total_paid}`}</td>
+                                            <td className='text-bold text-green' style={{textAlign: 'right'}}>{lp.sum_principal_paid}</td>
+                                            <td className='text-bold text-green' style={{textAlign: 'right'}}>{lp.sum_interest_paid}</td>
+                                            <td className='text-bold text-green' style={{textAlign: 'right'}}>{lp.sum_fees_paid}</td>
+                                            <td className='text-bold text-green' style={{textAlign: 'right'}}>{lp.sum_penalty_paid}</td>
+                                            <td className="text-bold text-green " style={{textAlign:"right"}}>{lp.total_paid}</td>
                                         </tr>
                                         <tr>
                                             <td style={{textAlign:"right"}}  className="last__row__border"></td>
                                             <td style={{textAlign:"right"}} className="last__row__border"></td>
                                             <td style={{textAlign:"right"}} className="last__row__border"></td>
                                             <td className="text-bold last__row__border" style={{textAlign:"right", width:"9%"}}>Net_Due:</td>
-                                            <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${lp.sum_principal_due}`}</td>
-                                            <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${lp.sum_interest_amount_due}`}</td>
-                                            <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${lp.sum_fees_due}`}</td>
-                                            <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${lp.sum_penalty_due}`}</td>
-                                            <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{`${currencyIso} ${lp.total_due}`}</td>
+                                            <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{lp.sum_principal_due}</td>
+                                            <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{lp.sum_interest_amount_due}</td>
+                                            <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{lp.sum_fees_due}</td>
+                                            <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{lp.sum_penalty_due}</td>
+                                            <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{lp.total_due}</td>
                                         </tr>
                                     </Fragment>
                                 )
