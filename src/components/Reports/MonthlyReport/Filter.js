@@ -1,87 +1,89 @@
-import React, { useEffect, useState } from 'react';
-import Select from 'react-select';
-import { makeRequest } from '../../../utils/utils';
+import React from 'react';
+import { Form, Formik } from 'formik';
+import {
+  NonFieldErrors,
+} from '../../../common';
+import {
+    CustomSelectFilter,
+    CustomMultiSelectFilter,
+    SubmitButtonFilter
+} from '../../../common';
+import { useCurrencies } from '../../../contexts/CurrenciesContext';
+import { useBranches } from '../../../contexts/BranchesContext';
+import axios from 'axios';
+import { removeEmptyValues } from '../../../utils/utils';
 
+const Filter = ({setMonthlyReportData, setParams}) => {
+  const initialValues = {
+    branch_ids: [],
+    page_num: 1,
+  };
+  const {currencies} = useCurrencies();
+  const {branches} = useBranches();
 
-const Filter = (props) => {
-  const [optionSelected, setOptionSelected] = useState([]);
-  const [branches, setBranches] = useState([]);
-  const {currencies, currencyId, setCurrencyId, month, setMonth, onSubmit, disableFetch, updateSelectedBranchesId, setSelectedBranches} = props;
-  const fetchStyles = disableFetch ? {pointerEvents: 'none', opacity: '0.7'} : {};
-
-  useEffect(() => {
-    fetchBranches();
-  }, []);
-
-  const handleMultiSelect = selected => {
-    setOptionSelected(selected);
-    setSelectedBranches(selected);
-    updateSelectedBranchesId(selected.map(branch => branch.id));
-  }
-
-  const changeCurrency = (evt) => {
-    setCurrencyId(evt.target.value);
-  }
-
-  async function fetchBranches() {
-    try {
-      const response = await makeRequest.get('/usersapi/get-branches/', {timeout: 6000});
-      if (response.ok) {
-        const data = await response.json();
-        return setBranches([...data.results.map(result => ({...result, label: result.name, value:result.id}))]);
+  const getParams = (values) => {
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(values)) {
+      if (Array.isArray(value)) {
+        value.forEach(el => params.append(key, el));
       }else {
-        const error = await response.json();
-        console.log(error);
+        params.append(key, value);
       }
-    }catch(error) {
-      console.log(error);
+    }
+    return params
+  }
+
+  const onSubmit = async (values, actions) => {
+    try {
+      const data = removeEmptyValues(values);
+      const params = getParams(data);
+      setParams(params);
+      const response = await axios.get('/reportsapi/monthly-report/', {params: params});
+      setMonthlyReportData(response.data);
+    } catch (error) {
+      if (error.message === "Network Error") {
+        actions.setErrors({responseStatus: "Network Error"});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+      } else {
+        actions.setErrors({responseStatus: error.response.status});
+      }
     }
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <div>
-        <div style={{display:"flex", width:"100%", columnGap:"1rem"}}>
-          <div style={{width:"80%"}}>
-            <Select
-              isMulti
-              name='colors'
-              options={[props.allOption, ...branches]}
-              value={optionSelected}
-              classNamePrefix='select'
-              className='basic-multi-select'
-              placeholder='Select Branches'
-              onChange={selected => {
-                if (selected !== null && selected.length > 0 && selected[selected.length - 1].value === props.allOption.value) {
-                  return handleMultiSelect(branches);
-                }
-                handleMultiSelect(selected);
-              }}
-            />
-          </div>
-          <div style={{width:"10%"}}>
-            <select className='custom-select-form row-form' value={currencyId} onChange={changeCurrency}>
-              {currencies.map(currency => {
-                return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
-              })}
-            </select>
-          </div>
-          <div>
-            <span>
-              <button type='submit' className='btn btn-olive' style={fetchStyles} disabled={disableFetch}>Apply_Filters_!</button>
-            </span>
-          </div>
+    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      {({isSubmitting, setFieldValue, errors}) => (
+          <div className="search_background">
+            <div className="row-containers" style={{border:"none"}}>
+                <Form>
+                    <NonFieldErrors errors={errors}>
+                        <div style={{display:"flex", justifyContent:"space-between"}}>
+                            <div style={{width:"75%"}}>
+                                <CustomMultiSelectFilter
+                                    label='Branches'
+                                    name='branch_ids'
+                                    options={branches.map(br => ({label: br.name, value:br.id}))}
+                                    setFieldValue={setFieldValue}
+                                    required
+                                />
+                            </div>
+                            <div className="row-payments-container" style={{width:"15%"}}>
+                              <CustomSelectFilter label='Currency' name='currency_id' required>
+                                    <option value=''>------</option>
+                                    {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+                                </CustomSelectFilter>
+                            </div>
+                            <SubmitButtonFilter isSubmitting={isSubmitting}/>
+                        </div>
+                    </NonFieldErrors>
+                </Form>
+            </div>
         </div>
-      </div>
-    </form>
-  )
+      )}
+    </Formik>
+  );
 }
 
-Filter.defaultProps = {
-  allOption: {
-    label: 'Select all',
-    value: '*'
-  }
-};
-
 export default Filter;
+

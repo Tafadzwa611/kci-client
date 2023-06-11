@@ -992,6 +992,10 @@ span {
   background-color: #fff;
 }
 
+.btn.btn-default.client__details a {
+  color: var(--color);
+}
+
 #dark .btn-default.client__details {
   border-color: #20232a;
   background-color: #20232a;
@@ -1489,6 +1493,7 @@ button.close, button.mailbox-attachment-close {
 
 .bloc-tabs {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .tabs, 
@@ -1507,6 +1512,7 @@ button.close, button.mailbox-attachment-close {
 
 .tabs-client {
   padding: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .tabs-client_a {
@@ -3572,3 +3578,4 @@ input[type=number] {
   display: flex;
   justify-content: flex-end;
 }
+

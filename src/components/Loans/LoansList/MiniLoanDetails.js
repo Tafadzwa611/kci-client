@@ -16,9 +16,9 @@ function MiniLoanDetails({loanData, extra}) {
         <div style={{display:'flex', flexDirection:'column', padding:'1.5rem'}} className='j-details-container'>
           <div style={{marginBottom:'1rem'}}>
             <div style={{marginBottom:'1rem', display:'flex', justifyContent:'space-between'}}>
-              <button className='btn btn-default' onClick={() => setLoanId(null)}>Close</button>
-              <button className='btn btn-default max'>
-                <Link to={`/loans/viewloans/loandetails/cli/${loan.id}`}>Max</Link>
+              <button className='btn btn-default client__details' onClick={() => setLoanId(null)}>Close</button>
+              <button className='btn btn-default client__details'>
+                <Link to={`/loans/viewloans/loandetails/cli/${loan.id}`}>Expand</Link>
               </button>
             </div>
             <div style={{marginBottom:'1rem', display:'flex', justifyContent:'space-between'}}>

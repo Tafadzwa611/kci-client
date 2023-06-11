@@ -1,123 +1,164 @@
-import React, { useEffect, useState } from 'react';
-import DateRange from './DateRange';
-import Header from './Header';
-import Table from './Table';
-import Footer from './Footer';
-import { makeRequest } from '../../../utils/utils';
-import NoData from '../ClientsReport/NoData';
-import MiniLoader from '../../Loader/MiniLoader';
+// import React, { useEffect, useState } from 'react';
+// import DateRange from './DateRange';
+// import Header from './Header';
+// import Table from './Table';
+// import Footer from './Footer';
+// import { makeRequest } from '../../../utils/utils';
+// import NoData from '../ClientsReport/NoData';
+// import MiniLoader from '../../Loader/MiniLoader';
 
-const LoanProductReport = ({loggedInUser}) => {
-    const [minDate, setMinDate] = useState('');
-    const [maxDate, setMaxDate] = useState('');
-    const [report, setReport] = useState([]);
-    const [selected, setSelected] = useState([]);
-    const [products, setProducts] = useState(null);
-    const [currencies, setCurrencies] = useState(null);
-    const [currencyId, setCurrencyId] = useState(null);
-    const [currencyIso, setCurrencyIso] = useState(null);
-    const [selectedBranches, setSelectedBranches] = useState([]);
-    const [msg, setMsg] = useState('Select date range and at least one product, then click search to views loan products report.');
-    const disableFetch = minDate === '' || maxDate === '' || selected.length === 0 || minDate > maxDate;
+// const LoanProductReport = ({loggedInUser}) => {
+//     const [minDate, setMinDate] = useState('');
+//     const [maxDate, setMaxDate] = useState('');
+//     const [report, setReport] = useState([]);
+//     const [selected, setSelected] = useState([]);
+//     const [products, setProducts] = useState(null);
+//     const [currencies, setCurrencies] = useState(null);
+//     const [currencyId, setCurrencyId] = useState(null);
+//     const [currencyIso, setCurrencyIso] = useState(null);
+//     const [selectedBranches, setSelectedBranches] = useState([]);
+//     const [msg, setMsg] = useState('Select date range and at least one product, then click search to views loan products report.');
+//     const disableFetch = minDate === '' || maxDate === '' || selected.length === 0 || minDate > maxDate;
   
-    const onSubmit = (evt) => {
-        evt.preventDefault();
-        fetchLoanProductReport();
-    }
+//     const onSubmit = (evt) => {
+//         evt.preventDefault();
+//         fetchLoanProductReport();
+//     }
 
-    useEffect(() => {
-      setReport([]);
-    }, [minDate, maxDate, selected]);
+//     useEffect(() => {
+//       setReport([]);
+//     }, [minDate, maxDate, selected]);
 
-    useEffect(() => {
-        fetchProducts();
-        fetchCurrencies();
-    }, []);
+//     useEffect(() => {
+//         fetchProducts();
+//         fetchCurrencies();
+//     }, []);
     
-    async function fetchProducts() {
-        try {
-            const response = await makeRequest.get('/loansapi/loan_products/', {timeout: 8000});
-            if (response.ok) {
-                const data = await response.json();
-                return setProducts([...data.loan_products.map(result => ({...result, label: result.name, value: result.id}))]);
-            }else {
-                const error = await response.json();
-                console.log(error);
-            }
-        }catch(error) {
-            console.log(error);
-        }
-    }
+//     async function fetchProducts() {
+//         try {
+//             const response = await makeRequest.get('/loansapi/loan_products/', {timeout: 8000});
+//             if (response.ok) {
+//                 const data = await response.json();
+//                 return setProducts([...data.loan_products.map(result => ({...result, label: result.name, value: result.id}))]);
+//             }else {
+//                 const error = await response.json();
+//                 console.log(error);
+//             }
+//         }catch(error) {
+//             console.log(error);
+//         }
+//     }
     
-    async function fetchLoanProductReport() {
-        let url = `/reportsapi/loan-product-report/?min_date=${minDate}&max_date=${maxDate}&currency_id=${currencyId}`;
-        selected.forEach(id => (url = url + `&loan_product_ids=${id}`));
-        const response = await makeRequest.get(url, {timeout: 8000});
-        if (response.ok) {
-            const data = await response.json();
-            setCurrencyIso(currencies.filter(currency => currency.id == currencyId)[0].shortname);
-            return setReport(data)
-        }else {
-            const error = await response.json();
-            console.log(error);
-        }
-    }
+//     async function fetchLoanProductReport() {
+//         let url = `/reportsapi/loan-product-report/?min_date=${minDate}&max_date=${maxDate}&currency_id=${currencyId}`;
+//         selected.forEach(id => (url = url + `&loan_product_ids=${id}`));
+//         const response = await makeRequest.get(url, {timeout: 8000});
+//         if (response.ok) {
+//             const data = await response.json();
+//             setCurrencyIso(currencies.filter(currency => currency.id == currencyId)[0].shortname);
+//             return setReport(data)
+//         }else {
+//             const error = await response.json();
+//             console.log(error);
+//         }
+//     }
     
-    async function fetchCurrencies() {
-      try {
-        const response = await makeRequest.get('/usersapi/list_currencies/', {timeout: 8000});
-        if (response.ok) {
-          const data = await response.json();
-          if (currencyId===null) {
-            const zwlId = data.filter(currency => currency.shortname === 'ZWL')[0].id;
-            setCurrencyId(zwlId);
-          }
-          return setCurrencies([...data.map(result => ({...result, label: result.shortname, value:result.id}))]);
-        }else {
-          const error = await response.json();
-          console.log(error);
-        }
-      }catch(error) {
-        console.log(error);
-      }
-    }
+//     async function fetchCurrencies() {
+//       try {
+//         const response = await makeRequest.get('/usersapi/list_currencies/', {timeout: 8000});
+//         if (response.ok) {
+//           const data = await response.json();
+//           if (currencyId===null) {
+//             const zwlId = data.filter(currency => currency.shortname === 'ZWL')[0].id;
+//             setCurrencyId(zwlId);
+//           }
+//           return setCurrencies([...data.map(result => ({...result, label: result.shortname, value:result.id}))]);
+//         }else {
+//           const error = await response.json();
+//           console.log(error);
+//         }
+//       }catch(error) {
+//         console.log(error);
+//       }
+//     }
     
-    if (currencies===null || products===null) {
-      return <MiniLoader />
-    }
+//     if (currencies===null || products===null) {
+//       return <MiniLoader />
+//     }
 
-    return (
-        <>
-            <DateRange 
-              currencies={currencies}
-              currencyId={currencyId}
-              setCurrencyId={setCurrencyId}
-              minDate={minDate}
-              maxDate={maxDate}
-              options={products}
-              disableFetch={disableFetch}
-              onSubmit={onSubmit}
-              setMaxDate={setMaxDate}
-              setMinDate={setMinDate}
-              updateSelected={setSelected}
-              setSelectedBranches={setSelectedBranches}
-            />
-            {report.length > 0 ?
-              <>
-                <Table 
-                  report={report} 
-                  currencyIso={currencyIso}
-                  minDate={minDate}
-                  maxDate={maxDate}
-                  selectedBranches={selectedBranches}
-                  loggedInUser={loggedInUser}
-                />
-                <Footer minDate={minDate} maxDate={maxDate} />
-              </>:
-              <NoData msg={msg} />
-            }
-        </>
-    );
+//     return (
+//         <>
+//             <DateRange 
+//               currencies={currencies}
+//               currencyId={currencyId}
+//               setCurrencyId={setCurrencyId}
+//               minDate={minDate}
+//               maxDate={maxDate}
+//               options={products}
+//               disableFetch={disableFetch}
+//               onSubmit={onSubmit}
+//               setMaxDate={setMaxDate}
+//               setMinDate={setMinDate}
+//               updateSelected={setSelected}
+//               setSelectedBranches={setSelectedBranches}
+//             />
+//             {report.length > 0 ?
+//               <>
+//                 <Table 
+//                   report={report} 
+//                   currencyIso={currencyIso}
+//                   minDate={minDate}
+//                   maxDate={maxDate}
+//                   selectedBranches={selectedBranches}
+//                   loggedInUser={loggedInUser}
+//                 />
+//                 <Footer minDate={minDate} maxDate={maxDate} />
+//               </>:
+//               <NoData msg={msg} />
+//             }
+//         </>
+//     );
+// }
+
+// export default LoanProductReport;
+
+import React, {useState} from 'react';
+import DateRange from './DateRange';
+import { Fetcher } from '../../../common';
+import Table from './Table';
+
+function LoanProductReport({loggedInUser}) {
+
+  return (
+    <>
+      <Fetcher urls={[`/loansapi/loan_products_list/`]}>
+        {({data}) => <ViewProducts products={data[0]} loggedInUser={loggedInUser} />}
+      </Fetcher>
+    </>
+  )
+}
+
+const ViewProducts = ({products, loggedInUser}) => {
+  const [params, setParams] = useState(null);
+  const [loanProductsReportData, setLoanProductsReportData] = useState([]);
+  const [intValues, setIntValues] = useState([])
+
+  return (
+    <>
+      <DateRange 
+        setLoanProductsReportData={setLoanProductsReportData} 
+        setParams={setParams} 
+        setIntValues={setIntValues}
+        products={products}
+      />
+      <div style={{paddingTop: '2rem'}}></div>
+      <Table
+        report={loanProductsReportData} 
+        loggedInUser={loggedInUser}
+        intValues={intValues}
+      />
+    </>
+  )
 }
 
 export default LoanProductReport;

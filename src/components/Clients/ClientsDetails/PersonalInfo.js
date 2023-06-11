@@ -1,23 +1,9 @@
 import React from 'react';
 import { MODAL_STATES } from './data';
 
-const statusClasses = {
-  'Active': 'badge badge-success',
-  'Blacklisted': 'badge badge-dark',
-  'Processing': 'badge badge-info-lighter',
-  'Pending Approval': 'badge badge-info-light',
-  'Inactive': 'badge badge-info',
-  'Left': 'badge badge-semi-dark',
-  'Rejected': 'badge badge-danger',
-}
-
 function PersonalInfo({client, setModal}) {
   return (
     <div>
-      <div style={{display:'flex'}}>
-        <span><b>{client.first_name} {client.last_name}</b></span>
-      </div>
-
       <div style={{display:'flex', justifyContent:'space-between', marginTop:'1.5rem'}}>
         {client.status == 'Inactive' &&
           <div style={{display:'flex', columnGap:'10px'}}>
@@ -32,7 +18,7 @@ function PersonalInfo({client, setModal}) {
       <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', marginTop:'1.5rem'}}>
         <div>
           <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
-            <li>Client State: <span className={statusClasses[client.status]}>{client.status}</span></li>
+            {/* <li>Client State: <span className={statusClasses[client.status]}>{client.status}</span></li> */}
             <li>Account Number: {client.client_id}</li>
             <li>Client Type: {client.client_type} <a style={{cursor: 'pointer'}} onClick={() => setModal(MODAL_STATES.changeType)}><small>Change</small></a></li>
             <li>Gender: {client.gender}</li>
