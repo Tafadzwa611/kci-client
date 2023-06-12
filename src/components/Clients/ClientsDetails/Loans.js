@@ -17,8 +17,8 @@ export const statusClasses = {
 
 function Loans({client}) {
   return (
-    <div style={{display:'block'}}>
-      <div style={{padding:'0', border:'none'}}>
+    <div style={{padding:'1.5rem'}} className='miniLoanDetails-container'>
+      <div style={{border:'none'}}>
         <div style={{width:'100%', overflowX:'auto'}}>
           <div className='table__height'>
             <table className='table' id='clients'>
