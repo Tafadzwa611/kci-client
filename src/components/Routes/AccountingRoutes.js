@@ -6,7 +6,7 @@ const AddMainAccount = lazy(() => import('../Accounting/AddMainAccount/AddMainAc
 
 const AccountingRoutes = (
   <>
-    <Route exact path='/accounting/viewaccounting' element={<ViewAccounting/>}/>
+    <Route exact path='/accounting/viewaccounting/*' element={<ViewAccounting/>}/>
     <Route exact path='/accounting/addmainaccount' element={<AddMainAccount/>}/>
   </>
 )

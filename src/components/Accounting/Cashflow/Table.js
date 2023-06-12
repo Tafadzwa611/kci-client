@@ -3,7 +3,7 @@ import Receipts from './Receipts';
 import Payments from './Payments';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-const Table = ({statement, currencyIso}) => {
+const Table = ({statement}) => {
     return (
         <>
             <div style={{marginTop:"1.5rem"}}>
@@ -27,11 +27,11 @@ const Table = ({statement, currencyIso}) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <Receipts currencyIso={currencyIso} statement={statement}/>
-                                <Payments currencyIso={currencyIso} statement={statement}/>
+                                <Receipts statement={statement}/>
+                                <Payments statement={statement}/>
                                 <tr className="danger">
                                     <td><b>Total Cash Balance (A) - (B)</b></td>
-                                    <td style={{textAlign:"right"}}><b>{currencyIso} {statement.cash_balance}</b></td>
+                                    <td style={{textAlign:"right"}}><b>{statement.cash_balance}</b></td>
                                 </tr>
                             </tbody>
                         </table>
