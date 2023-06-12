@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Client from '../ClientsDetails/Client';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { Fetcher } from '../../../common';
-import axios from 'axios';
 import Pager from './Pager';
 
 function ClientsTable({clientId, setClientId, clientsData, params, setClientsData}) {
