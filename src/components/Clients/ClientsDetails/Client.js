@@ -16,6 +16,7 @@ import Identity from './Identity';
 import CustomData from './CustomData';
 import ChangeClientType from './ChangeClientType';
 import { MODAL_STATES } from './data';
+import Loans from './Loans';
 
 function Client({clientData, close}) {
   const [client, setClient] = useState(clientData);
@@ -119,6 +120,7 @@ const Actions = ({modal, setModal, client, close, setClient}) => {
           id: <Identity client={client} setModal={setModal} modal={modal} setClient={setClient}/>,
           addresses: <Addresses client={client} modal={modal} setModal={setModal} setClient={setClient}/>,
           nok: <Nok client={client} modal={modal} setModal={setModal} setClient={setClient}/>,
+          loans: <Loans client={client}/>,
           ...customViews
         }[tab]}
       </div>

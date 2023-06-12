@@ -99,7 +99,7 @@ const MainForm = ({client, setClient, setOpen, clientTypes, fieldSets}) => {
               <div>
                 <CustomSelect label='New Client Type' name='client_type_id'>
                   <option value=''>------</option>
-                  {clientTypes.filter(ct => ct.id !== client.client_type_id).map(ct => <option key={ct.id} value={ct.id}>{ct.name}</option>)}
+                  {clientTypes.filter(ct => ct.id != client.client_type_id).map(ct => <option key={ct.id} value={ct.id}>{ct.name}</option>)}
                 </CustomSelect>
                 {fieldSets.filter(fs => fs.client_type_id == values.client_type_id).map(fs => <CustomForm key={fs.id} fieldSet={fs} setFieldValue={setFieldValue}/>)}
               </div>
