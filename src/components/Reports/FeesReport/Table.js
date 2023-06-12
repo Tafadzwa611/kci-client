@@ -2,22 +2,17 @@ import React, { Fragment } from 'react';
 import Header from './Header';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-const Table = ({report, currencyIso, minDate, maxDate, selectedBranches, loggedInUser, changeOrder, order, disableSelect}) => {
-    const getStrDate = (date) => {
-        const mydate = new Date(date);
-        const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
-        return `${month} ${mydate.getDate()}, ${mydate.getFullYear()}`;
-      }
+const Table = ({feesReportData, loggedInUser, intValues}) => {
     
     const getFileName = () => {
-        if (minDate != '' && maxDate != '') {
-            return `Fees Report for ${loggedInUser.company_name} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`
+        if (intValues.min_date != '' && intValues.max_date != '') {
+            return `Fees Report for ${loggedInUser.company_name} from ${intValues.min_date} to ${intValues.max_date}`
         }
-        if (minDate == '' && maxDate != '') {
-            return `Fees Report for ${loggedInUser.company_name} upto ${getStrDate(maxDate)}`
+        if (intValues.min_date == '' && intValues.max_date != '') {
+            return `Fees Report for ${loggedInUser.company_name} upto ${intValues.max_date}`
         }
-        if (minDate != '' && maxDate == '') {
-            return `Fees Report for ${loggedInUser.company_name} from ${getStrDate(minDate)}`
+        if (intValues.min_date != '' && intValues.max_date == '') {
+            return `Fees Report for ${loggedInUser.company_name} from ${intValues.min_date}`
         }
         return `Fees Report for ${loggedInUser.company_name} all time.`
     }
@@ -25,11 +20,11 @@ const Table = ({report, currencyIso, minDate, maxDate, selectedBranches, loggedI
     return (
         <>
             <div style={{display:"flex", justifyContent:"space-between", marginTop:"1.5rem"}}>
-                <Header 
+                {/* <Header 
                     changeOrder={changeOrder}
                     order={order}
                     disableSelect={disableSelect}
-                />
+                /> */}
                 <ReactHTMLTableToExcel
                     id='test-table-xls-button'
                     className='btn btn-default'
@@ -61,21 +56,21 @@ const Table = ({report, currencyIso, minDate, maxDate, selectedBranches, loggedI
                                     {getFileName()}
                                 </td>
                             </tr>
-                            <tr>
+                            {/* <tr>
                                 <td
                                     title={selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)}
                                 
                                     colSpan={9}
                                     style={{whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden'}}
                                 >Branches: {selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)}</td>
-                            </tr>
+                            </tr> */}
                             <tr>
-                                <td colSpan={9}>Currency: {currencyIso}</td>
+                                <td colSpan={9}>Currency: </td>
                             </tr>
                             <tr>
                                 <td colSpan={9}>{`Extracted On: ${new Date()}`}</td>
                             </tr>
-                            {report.map(date => {
+                            {feesReportData.report.map(date => {
                                 return (
                                     <Fragment key={date.day}>
                                         {date.fees_recorded.map(fee => (
@@ -85,7 +80,7 @@ const Table = ({report, currencyIso, minDate, maxDate, selectedBranches, loggedI
                                                 <td style={{textAlign:"right"}}>{ fee.loan_id }</td>
                                                 <td style={{textAlign:"right"}}>{ fee.branch }</td>
                                                 <td style={{textAlign:"right"}}>{ fee.fee_name }</td>
-                                                <td style={{textAlign:"right"}}>{`${currencyIso} ${fee.amount}`}</td>
+                                                <td style={{textAlign:"right"}}>{ fee.amount }</td>
                                             </tr>
                                         ))}
                                     </Fragment>
