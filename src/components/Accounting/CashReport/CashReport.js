@@ -1,88 +1,140 @@
-import React, { useState, useEffect } from 'react';
+// import React, { useState, useEffect } from 'react';
+// import DateRange from './DateRange';
+// import { makeRequest } from '../../../utils/utils';
+// import NoData from './NoData';
+// import Table from './Table';
+// import MiniLoader from '../../Loader/MiniLoader';
+
+// function CashReport() {
+//   const [accounts, setAccounts] = useState(null);
+//   const [rDate, setRDate] = useState('');
+//   const [accountId, setAccountId] = useState('');
+//   const [statement, setStatement] = useState(null);
+//   const [reconciled, setReconciled] = useState(null);
+//   const [loading, setLoading] = useState(false);
+//   const [currentDate, setCurrentDate] = useState(false);
+//   const [order, setOrder] = useState('ReceiptsFirst');
+
+//   useEffect(() => {
+//     fetchAccounts();
+//   }, []);
+
+//   async function fetchAccounts() {
+//     try {
+//       const response = await makeRequest.get('/acc-api/cash-accounts-list/', {timeout: 6000});
+//       if (response.ok) {
+//         const data = await response.json();
+//         setCurrentDate(data.current_date);
+//         return setAccounts(data.accounts);
+//       }else {
+//         const error = await response.json();
+//         console.log(error);
+//       }
+//     }catch(error) {
+//       console.log(error);
+//     }
+//   }
+
+//   async function getStatement() {
+//     let url = `/acc-api/cash-report/?account_id=${accountId}&report_date=${rDate}`;
+//     const response = await makeRequest.get(url, {timeout: 6000});
+//     if (response.ok) {
+//       const data = await response.json();
+//       return data
+//     } else {
+//       const error = await response.json();
+//       console.log(error);
+//     }
+//   }
+
+//   const onSubmit = async (evt) => {
+//     evt.preventDefault();
+//     setLoading(true);
+//     const data = await getStatement();
+//     setStatement(data);
+//     setReconciled(data.reconciled);
+//     setLoading(false);
+//   }
+
+//   if (accounts === null) {
+//     return <MiniLoader />
+//   }
+
+//   return (
+//     <>
+//           <DateRange
+//             accounts={accounts}
+//             currentDate={currentDate}
+//             loading={loading}
+//             rDate={rDate}
+//             setRDate={setRDate}
+//             onSubmit={onSubmit}
+//             accountId={accountId}
+//             setAccountId={setAccountId}
+//           />
+//           <div style={{paddingTop: '17px'}}></div>
+//           {statement === null ?
+//             <NoData /> :
+//             <Table
+//               statement={statement}
+//               accountId={accountId}
+//               order={order}
+//               setOrder={setOrder}
+//               reconciled={reconciled}
+//               setReconciled={setReconciled}
+//             />}
+//     </>
+//   )
+// }
+
+// export default CashReport;
+
+
+import React, {useState} from 'react';
 import DateRange from './DateRange';
-import { makeRequest } from '../../../utils/utils';
-import NoData from './NoData';
+import { Fetcher } from '../../../common';
 import Table from './Table';
-import MiniLoader from '../../Loader/MiniLoader';
+import NoData from './NoData';
 
-function CashReport() {
-  const [accounts, setAccounts] = useState(null);
-  const [rDate, setRDate] = useState('');
-  const [accountId, setAccountId] = useState('');
-  const [statement, setStatement] = useState(null);
-  const [reconciled, setReconciled] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [currentDate, setCurrentDate] = useState(false);
-  const [order, setOrder] = useState('ReceiptsFirst');
-
-  useEffect(() => {
-    fetchAccounts();
-  }, []);
-
-  async function fetchAccounts() {
-    try {
-      const response = await makeRequest.get('/acc-api/cash-accounts-list/', {timeout: 6000});
-      if (response.ok) {
-        const data = await response.json();
-        setCurrentDate(data.current_date);
-        return setAccounts(data.accounts);
-      }else {
-        const error = await response.json();
-        console.log(error);
-      }
-    }catch(error) {
-      console.log(error);
-    }
-  }
-
-  async function getStatement() {
-    let url = `/acc-api/cash-report/?account_id=${accountId}&report_date=${rDate}`;
-    const response = await makeRequest.get(url, {timeout: 6000});
-    if (response.ok) {
-      const data = await response.json();
-      return data
-    } else {
-      const error = await response.json();
-      console.log(error);
-    }
-  }
-
-  const onSubmit = async (evt) => {
-    evt.preventDefault();
-    setLoading(true);
-    const data = await getStatement();
-    setStatement(data);
-    setReconciled(data.reconciled);
-    setLoading(false);
-  }
-
-  if (accounts === null) {
-    return <MiniLoader />
-  }
+function CashReport({loggedInUser}) {
 
   return (
     <>
-          <DateRange
-            accounts={accounts}
-            currentDate={currentDate}
-            loading={loading}
-            rDate={rDate}
-            setRDate={setRDate}
-            onSubmit={onSubmit}
-            accountId={accountId}
-            setAccountId={setAccountId}
-          />
-          <div style={{paddingTop: '17px'}}></div>
-          {statement === null ?
-            <NoData /> :
-            <Table
-              statement={statement}
-              accountId={accountId}
-              order={order}
-              setOrder={setOrder}
-              reconciled={reconciled}
-              setReconciled={setReconciled}
-            />}
+      <Fetcher urls={[`/acc-api/cash-accounts-list/`]}>
+        {({data}) => <Report accounts={data[0]} loggedInUser={loggedInUser} />}
+      </Fetcher>
+    </>
+  )
+}
+
+const Report = ({accounts, loggedInUser}) => {
+  const [params, setParams] = useState(null);
+  const [statement, setStatement] = useState(null);
+  const [intValues, setIntValues] = useState([])
+  const [order, setOrder] = useState('ReceiptsFirst');
+  const [reconciled, setReconciled] = useState(null);
+
+  return (
+    <>
+      <DateRange 
+        setStatement={setStatement} 
+        setParams={setParams} 
+        setIntValues={setIntValues}
+        accounts={accounts}
+        setReconciled={setReconciled}
+      />
+      <div style={{paddingTop: '2rem'}}></div>
+      {statement === null ?
+        <NoData /> :
+        <Table
+          statement={statement} 
+          loggedInUser={loggedInUser}
+          intValues={intValues}
+          order={order}
+          setOrder={setOrder}
+          reconciled={reconciled}
+        />
+      }
     </>
   )
 }

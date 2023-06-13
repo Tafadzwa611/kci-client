@@ -2,22 +2,21 @@ import React, { useState } from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Journal from './Journal';
 import { makeRequest } from '../../../utils/utils';
-import { async } from 'regenerator-runtime';
 
-function Table(props) {
+function Table({setOrder, statement, loggedInUser, intValues, order, reconciled}) {
   const [showJournal, setShowJournal] = useState(false);
   const [journal, setJournal] = useState(null);
   const [selectedrowId, setSelectedrowId] = useState(null);
-  const receipts = props.statement.transactions.filter(txn => txn.type == 'receipt');
-  const payments = props.statement.transactions.filter(txn => txn.type == 'payment');
+  const receipts = statement.transactions.filter(txn => txn.type == 'receipt');
+  const payments = statement.transactions.filter(txn => txn.type == 'payment');
   let transactions;
 
-  if (props.order === 'ReceiptsFirst') {
+  if (order === 'ReceiptsFirst') {
     transactions = [...receipts, ...payments];
-  }else if (props.order === 'PaymentsFirst') {
+  }else if (order === 'PaymentsFirst') {
     transactions = [...payments, ...receipts];
   }else {
-    transactions = props.statement.transactions;
+    transactions = statement.transactions;
   }
 
   const goToJournalDetails = (evt) => {
@@ -31,10 +30,10 @@ function Table(props) {
   const reconcile = async (evt) => {
     evt.preventDefault();
     try {
-      const body = {last_reconciliation_date: props.statement.report_date}
-      const response = await makeRequest.patch(`/acc-api/mark-reconciled/${props.accountId}/`, body, {timeout: 6000});
+      const body = {last_reconciliation_date: statement.report_date}
+      const response = await makeRequest.patch(`/acc-api/mark-reconciled/${intValues.account_id}/`, body, {timeout: 6000});
       if (response.ok) {
-        return props.setReconciled(true);
+        return setReconciled(true);
       }else {
         const error = await response.json();
         console.log(error);
@@ -74,13 +73,13 @@ function Table(props) {
                 />
               </div>
               <div className="btn btn-default csh-btn">
-                <select value={props.order} onChange={evt => props.setOrder(evt.target.value)} className="cashreport-select">
+                <select value={order} onChange={evt => setOrder(evt.target.value)} className="cashreport-select">
                   <option value='ReceiptsFirst'>Show Receipts First</option>
                   <option value='PaymentsFirst'>Show Payments First</option>
                   <option value='Chronologically'>List Chronologically</option>
                 </select>
               </div>
-              {props.reconciled ?
+              {reconciled ?
                 <button className='btn btn-success'>Reconciled</button> :
                 <button type='submit' onClick={reconcile} className="btn btn-default">Mark As Reconciled</button>
               }
@@ -98,12 +97,12 @@ function Table(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr style={{background: Number(props.statement.balance_bd) >= 0 ? '#7FFF00' : '#FFB6C1', position:'sticky', top:'0'}} className="cashreport-balance">
-                      <td>{props.statement.report_date}</td>
+                    <tr style={{background: Number(statement.balance_bd) >= 0 ? '#7FFF00' : '#FFB6C1', position:'sticky', top:'0'}} className="cashreport-balance">
+                      <td>{statement.report_date}</td>
                       <td>Balance b/d</td>
                       <td></td>
-                      <td>{Number(props.statement.balance_bd) >= 0 && props.statement.balance_bd}</td>
-                      <td>{Number(props.statement.balance_bd) < 0 && Math.abs(props.statement.balance_bd)}</td>
+                      <td>{Number(statement.balance_bd) >= 0 && statement.balance_bd}</td>
+                      <td>{Number(statement.balance_bd) < 0 && Math.abs(statement.balance_bd)}</td>
                     </tr>
                     {transactions.map(txn => {
                       return (
@@ -116,19 +115,19 @@ function Table(props) {
                         </tr>
                       )
                     })}
-                    <tr style={{background: Number(props.statement.balance_cd) >= 0 ? '#7FFF00' : '#FFB6C1', position:'sticky', insetBlockEnd:'0'}} className="cashreport-balance">
+                    <tr style={{background: Number(statement.balance_cd) >= 0 ? '#7FFF00' : '#FFB6C1', position:'sticky', insetBlockEnd:'0'}} className="cashreport-balance">
                       <td></td>
                       <td>Balance c/d</td>
                       <td></td>
-                      <td>{Number(props.statement.balance_cd) < 0 && Math.abs(props.statement.balance_cd)}</td>
-                      <td>{Number(props.statement.balance_cd) >= 0 && props.statement.balance_cd}</td>
+                      <td>{Number(statement.balance_cd) < 0 && Math.abs(statement.balance_cd)}</td>
+                      <td>{Number(statement.balance_cd) >= 0 && statement.balance_cd}</td>
                     </tr>
                     <tr>
                       <td></td>
                       <td></td>
                       <td></td>
-                      <td>{props.statement.total_receipts}</td>
-                      <td>{props.statement.total_payments}</td>
+                      <td>{statement.total_receipts}</td>
+                      <td>{statement.total_payments}</td>
                     </tr>
                   </tbody>
                 </table>

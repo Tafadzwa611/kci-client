@@ -1,5 +1,4 @@
 import React from 'react';
-import MiniLoader from '../../Loader/MiniLoader';
 import Empty from './Empty';
 import IncomeStatementTable from './IncomeStatementTable';
 
