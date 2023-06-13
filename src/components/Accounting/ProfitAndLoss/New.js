@@ -3,19 +3,10 @@ import Empty from './Empty';
 import MiniLoader from '../../Loader/MiniLoader';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-function New({report, loading, minDate, maxDate, currencyIso, loggedInUser}) {
-  if (loading) {
-    return <MiniLoader />
-  }
+function New({report, intValues, loggedInUser}) {
 
   if (report===null || report.rtype != 'accrual') {
     return <Empty message='Select Start Date, End Date and at least one branch to run income statement.'/>
-  }
-
-  const getStrDate = (date) => {
-    const mydate = new Date(date);
-    const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
-    return `${month} ${mydate.getDate()}, ${mydate.getFullYear()}`;
   }
 
   const incomeAccs = report.income_statement.filter(acc => acc.type === 'INCOME');
@@ -28,7 +19,7 @@ function New({report, loading, minDate, maxDate, currencyIso, loggedInUser}) {
           id='test-table-xls-button'
           className='btn btn-default'
           table='new-income-statement'
-          filename={`${currencyIso} Income Statement for ${loggedInUser.company_name} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`}
+          filename={`${report.currency} Income Statement for ${loggedInUser.company_name} from ${intValues.minDate} to ${intValues.maxDate}`}
           sheet='tablexls'
           buttonText='Download as XLS'
         />
@@ -44,13 +35,13 @@ function New({report, loading, minDate, maxDate, currencyIso, loggedInUser}) {
         </thead>
         <tbody>
           <tr>
-            <td><b>{currencyIso} Income Statement</b></td>
+            <td><b>{report.currency} Income Statement</b></td>
             <td></td>
             <td></td>
             <td></td>
           </tr>
           <tr>
-            <td><b>{loggedInUser.company_name} From {getStrDate(minDate)} to {getStrDate(maxDate)}</b></td>
+            <td><b>{loggedInUser.company_name} From {intValues.minDate} to {intValues.maxDate}</b></td>
             <td></td>
             <td></td>
             <td></td>

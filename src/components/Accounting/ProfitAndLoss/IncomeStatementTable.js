@@ -17,7 +17,7 @@ import Dividend from './expenses/Dividend';
 import RetainedEarnings from './income/RetainedEarnings';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-function IncomeStatementTable({ report, currencyIso }) {
+function IncomeStatementTable({ report }) {
   const loansAndAdvances = report.entries.filter(entry => entry.type === 'Interest Income from Loans and Advances');
   const investments = report.entries.filter(entry => entry.type === 'Interest Income and discounts received from investments');
   const nonInterestIncome = report.entries.filter(entry => entry.type === 'Non-Interest Income');
@@ -47,22 +47,22 @@ function IncomeStatementTable({ report, currencyIso }) {
             </tr>
           </thead>
           <tbody>
-            <LoansAndAdvances currencyIso={currencyIso} loansAndAdvances={loansAndAdvances} totalAmount={report.total_income_from_loans_and_advances}/>
-            <Investments currencyIso={currencyIso} investments={investments} totalInvestments={report.total_income_from_investments}/>
-            <TotalInterestIncome currencyIso={currencyIso} totalInterestIncome={report.total_interest_income}/>
-            <NonInterestIncome currencyIso={currencyIso} nonInterestIncome={nonInterestIncome} totalNonInterestIncome={report.total_non_interest_income}/>
-            <TotalOperatingIncome currencyIso={currencyIso} totalOperatingIncome={report.total_operating_income}/>
-            <InterestExpenses currencyIso={currencyIso} interestExpenses={interestExpenses} totalInterestExpenses={report.total_interest_expenses}/>
-            <NetInterestIncome currencyIso={currencyIso} netInterestIncome={report.net_interest_income}/>
-            <Provision currencyIso={currencyIso} loanLosses={loanLosses} totalLoanlosses={report.total_provision_for_loan_losses}/>
-            <OperatingExpenses currencyIso={currencyIso} operatingExpenses={operatingExpenses} totalOperatingExpenses={report.total_operating_expenses}/>
-            <NetIncome currencyIso={currencyIso} netIncomeFromOps={report.net_income_from_operations}/>
-            <Donations currencyIso={currencyIso} totalDonations={report.total_donations}/>
-            <IncomeBeforeTax currencyIso={currencyIso} totalIncomeBeforeTax={report.total_income_before_tax}/>
-            <Taxation currencyIso={currencyIso} totalTaxation={report.total_taxation}/>
-            <IncomeAfterTax currencyIso={currencyIso} netIncomeAfterTax={report.net_income_after_tax}/>
-            <Dividend currencyIso={currencyIso} totalDividend={report.total_dividend}/>
-            <RetainedEarnings currencyIso={currencyIso} retainedEarnings={report.retained_earnings_from_operations}/>
+            <LoansAndAdvances currencyIso={report.currency} loansAndAdvances={loansAndAdvances} totalAmount={report.total_income_from_loans_and_advances}/>
+            <Investments currencyIso={report.currency} investments={investments} totalInvestments={report.total_income_from_investments}/>
+            <TotalInterestIncome currencyIso={report.currency} totalInterestIncome={report.total_interest_income}/>
+            <NonInterestIncome currencyIso={report.currency} nonInterestIncome={nonInterestIncome} totalNonInterestIncome={report.total_non_interest_income}/>
+            <TotalOperatingIncome currencyIso={report.currency} totalOperatingIncome={report.total_operating_income}/>
+            <InterestExpenses currencyIso={report.currency} interestExpenses={interestExpenses} totalInterestExpenses={report.total_interest_expenses}/>
+            <NetInterestIncome currencyIso={report.currency} netInterestIncome={report.net_interest_income}/>
+            <Provision currencyIso={report.currency} loanLosses={loanLosses} totalLoanlosses={report.total_provision_for_loan_losses}/>
+            <OperatingExpenses currencyIso={report.currency} operatingExpenses={operatingExpenses} totalOperatingExpenses={report.total_operating_expenses}/>
+            <NetIncome currencyIso={report.currency} netIncomeFromOps={report.net_income_from_operations}/>
+            <Donations currencyIso={report.currency} totalDonations={report.total_donations}/>
+            <IncomeBeforeTax currencyIso={report.currency} totalIncomeBeforeTax={report.total_income_before_tax}/>
+            <Taxation currencyIso={report.currency} totalTaxation={report.total_taxation}/>
+            <IncomeAfterTax currencyIso={report.currency} netIncomeAfterTax={report.net_income_after_tax}/>
+            <Dividend currencyIso={report.currency} totalDividend={report.total_dividend}/>
+            <RetainedEarnings currencyIso={report.currency} retainedEarnings={report.retained_earnings_from_operations}/>
           </tbody>
         </table>
       </div>
