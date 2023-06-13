@@ -3,19 +3,10 @@ import MiniLoader from '../../Loader/MiniLoader';
 import Empty from './Empty';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-const Display = ({report, loading, currencyIso, reportDate, loggedInUser}) => {
-    if (loading) {
-        return <MiniLoader />
-    }
+const Display = ({report, currencyIso, intValues, loggedInUser}) => {
 
     if (report===null) {
         return <Empty message='Select Report Date and at least one branch to run income statement.'/>
-    }
-
-    const getStrDate = () => {
-        const mydate = new Date(reportDate);
-        const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
-        return `${month} ${mydate.getDate()}, ${mydate.getFullYear()}`;
     }
 
     const assetAccs = report.balance_sheet.filter(acc => acc.type === 'ASSET');
@@ -32,7 +23,7 @@ const Display = ({report, loading, currencyIso, reportDate, loggedInUser}) => {
                                 id='test-table-xls-button'
                                 className='download-table-xls-button btn btn-default'
                                 table='balance-sheet'
-                                filename={`${currencyIso} Balance Sheet for ${loggedInUser.company_name} as on ${getStrDate()}`}
+                                filename={`${currencyIso} Balance Sheet for ${loggedInUser.company_name} as on ${intValues.report_date}`}
                                 sheet='tablexls'
                                 buttonText='Download as XLS'
                             />
@@ -54,7 +45,7 @@ const Display = ({report, loading, currencyIso, reportDate, loggedInUser}) => {
                                 <td></td>
                                 </tr>
                                 <tr>
-                                <td><b>{loggedInUser.company_name} as on {getStrDate()}</b></td>
+                                <td><b>{loggedInUser.company_name} as on {intValues.report_date}</b></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
