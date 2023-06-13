@@ -1,105 +1,97 @@
-import React, { useState } from 'react';
-import Select from 'react-select';
+import React from 'react';
+import { Form, Formik } from 'formik';
+import {
+  NonFieldErrors,
+} from '../../../common';
+import {
+    CustomDatePickerFilter,
+    CustomSelectFilter,
+    CustomMultiSelectFilter,
+    SubmitButtonFilter
+} from '../../../common';
+import { useCurrencies } from '../../../contexts/CurrenciesContext';
+import { useBranches } from '../../../contexts/BranchesContext';
+import axios from 'axios';
+import { removeEmptyValues } from '../../../utils/utils';
 
-const Filter = (props) => {
+const Filter = ({setTrialBalanceData, setParams, setIntValues}) => {
+  const initialValues = {
+    branch_ids: [],
+    page_num: 1,
+    maxDate: '',
+  };
+  const {currencies} = useCurrencies();
+  const {branches} = useBranches();
 
-    const {
-        maxDate,
-        setMaxDate,
-        branches,
-        setBranchIds,
-        onSubmit,
-        currencies,
-        currencyId,
-        setCurrencyId
-    } = props;
-
-    const [optionSelected, setOptionSelected] = useState([]);
-    const selectorBranches = [...branches.map(result => ({...result, label: result.name, value:result.id}))];
-
-    const style = {
-        control: base => ({
-            ...base,
-            border: '1px solid #dee2e6',
-            boxShadow: "none",
-            '&:hover':'1px solid #dee2e6',
-        })
-    };
-
-    const handleMultiSelect = selected => {
-        setOptionSelected(selected);
-        setBranchIds(selected.map(branch => branch.id));
+  const getParams = (values) => {
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(values)) {
+      if (Array.isArray(value)) {
+        value.forEach(el => params.append(key, el));
+      }else {
+        params.append(key, value);
+      }
     }
+    return params
+  }
 
-    const changeCurrency = (evt) => {
-        setCurrencyId(evt.target.value);
+  const onSubmit = async (values, actions) => {
+    try {
+      const data = removeEmptyValues(values);
+      const params = getParams(data);
+      setParams(params);
+      setIntValues(values);
+      const response = await axios.get('/acc-api/trial-balance-entries/', {params: params});
+      setTrialBalanceData(response.data);
+    } catch (error) {
+      if (error.message === "Network Error") {
+        actions.setErrors({responseStatus: "Network Error"});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+      } else {
+        actions.setErrors({responseStatus: error.response.status});
+      }
     }
-    
-    const disableSubmitButton = maxDate==='' || optionSelected.length===0;
+  }
 
-    return (
-
-        <div className="font-13 text-light">
-
-            <form onSubmit={onSubmit}>
-                <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0"}}>
-                    <div className="row-payments-container" style={{width:"48%"}}>
-                        <label className="form-label row-label">To</label>
-                        <div className="input-group" style={{margin:"0"}}>
-                            <i className="uil uil-calendar-alt"></i>
-                            <input type='date' value={maxDate} onKeyDown={(e) => e.preventDefault()} onChange={(e) => setMaxDate(e.target.value)} className='custom-select-form row-form input-background' />
+  return (
+    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      {({isSubmitting, setFieldValue, errors}) => (
+          <div className="search_background">
+            <div className="row-containers" style={{border:"none"}}>
+                <Form>
+                    <NonFieldErrors errors={errors}>
+                        <div className="row row-payments row-loans" style={{marginTop:"1rem"}}>
+                            <div className="row-payments-container" style={{width:"49%"}}>
+                                <CustomDatePickerFilter label='Max Date' name='maxDate' setFieldValue={setFieldValue} required/>
+                            </div>
+                            <div className="row-payments-container" style={{width:"49%"}}>
+                                <CustomSelectFilter label='Currency' name='currency_id' required>
+                                    <option value=''>------</option>
+                                    {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+                                </CustomSelectFilter>
+                            </div>
                         </div>
-                    </div>
-
-                    <div className="row-payments-container" style={{width:"48%"}}>
-                        <label className="form-label row-label">Currency</label>
-                        <select className='custom-select-form row-form' style={{margin:"0"}} value={currencyId} onChange={changeCurrency}>
-                            {currencies.map(currency => {
-                                return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
-                            })}
-                        </select>
-                    </div>
-                </div>
-
-                <div className="view_search_container online__applications font-13" style={{border:"none", padding:"0", marginTop:"1rem"}}>
-                    <div className="row-payments-container" style={{width:"80%"}}>
-                        <Select
-                            isMulti
-                            name='colors'
-                            options={[props.allOption, ...selectorBranches]}
-                            value={optionSelected}
-                            classNamePrefix='select'
-                            className='basic-multi-select'
-                            placeholder='Select Branches'
-                            onChange={selected => {
-                                if (selected !== null && selected.length > 0 && selected[selected.length - 1].value === props.allOption.value) {
-                                return handleMultiSelect(selectorBranches);
-                                }
-                                handleMultiSelect(selected);
-                            }}
-                            styles={style}
-                            />
-                    </div>
-                    <div style={{display:"flex", flexDirection:"column"}}>
-                        <button 
-                            type="submit" 
-                            className="btn btn-olive"
-                            style={disableSubmitButton ? {pointerEvents: 'none', opacity: '0.7'} : {}}
-                            disabled={disableSubmitButton}>Apply_filters_!</button>
-                    </div>
-                </div>
-            </form>
-
+                        <div style={{marginTop:"1rem", display:"flex", justifyContent:"space-between"}}>
+                            <div style={{width:"90%"}}>
+                                <CustomMultiSelectFilter
+                                    label='Branches'
+                                    name='branch_ids'
+                                    options={branches.map(br => ({label: br.name, value:br.id}))}
+                                    setFieldValue={setFieldValue}
+                                    required
+                                />
+                            </div>
+                            <SubmitButtonFilter isSubmitting={isSubmitting}/>
+                        </div>
+                    </NonFieldErrors>
+                </Form>
+            </div>
         </div>
-        
-    );
+      )}
+    </Formik>
+  );
 }
 
-Filter.defaultProps = {
-    allOption: {
-      label: 'Select all',
-      value: '*'
-    }
-};
-
 export default Filter;
+
