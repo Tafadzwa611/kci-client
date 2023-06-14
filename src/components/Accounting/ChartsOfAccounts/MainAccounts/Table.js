@@ -38,42 +38,58 @@ const Table = ({ mainaccounts, selectedMainAccID, setSelectedMainAccID, accDetai
             <div style={{padding:"0", border:"none"}} className={accDetails ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
                 <div className={accDetails ? "table-responsive journal__table-container" : "table-responsive full__table"}>
                     <div style={{width:'100%', overflowX:'auto'}}>
-                    <div className='table__height'>
-                        <table className="table" id='accounts'>
-                            <thead>
-                                {accDetails ?
-                                    <tr className="journal-details header" style={{position:"sticky", top:"0"}}>
-                                        <th>GL Code</th>
-                                        <th>Main Account Name</th>
-                                    </tr>:
-                                    <tr className="journal-details header" style={{position:"sticky", top:"0"}}>
-                                        <th>GL Code</th>
-                                        <th>Main Account Name</th>
-                                        <th>Type</th>
-                                        <th>Branch</th>
-                                        <th>Date Created</th>
-                                    </tr>
-                                }
-                            </thead>
-                            <tbody>
-                                {mainaccounts.mainaccounts.map(account => {
-                                    if (accDetails) {
-                                        if (selectedMainAccID == account.id) {
-                                            return (
-                                                <tr key={account.id}>
-                                                    <td>
-                                                        <span 
-                                                            onClick={handleClickMainAcc} 
-                                                            id={account.id} 
-                                                            style={{fontSize:"0.75rem",color:"red", cursor:"pointer"}} 
-                                                            className="link">
-                                                            {account.general_ledger_code}
-                                                        </span>
-                                                    </td>
-                                                    <td><span style={{color:"red"}} >{account.general_ledger_name}</span></td>
-                                                </tr>
-                                            )
-                                        }else{
+                        <div className='table__height'>
+                            <table className="table" id='accounts'>
+                                <thead>
+                                    {accDetails ?
+                                        <tr className="journal-details header" style={{position:"sticky", top:"0"}}>
+                                            <th>GL Code</th>
+                                            <th>Main Account Name</th>
+                                        </tr>:
+                                        <tr className="journal-details header" style={{position:"sticky", top:"0"}}>
+                                            <th>GL Code</th>
+                                            <th>Main Account Name</th>
+                                            <th>Type</th>
+                                            <th>Branch</th>
+                                            <th>Date Created</th>
+                                        </tr>
+                                    }
+                                </thead>
+                                <tbody>
+                                    {mainaccounts.mainaccounts.map(account => {
+                                        if (accDetails) {
+                                            if (selectedMainAccID == account.id) {
+                                                return (
+                                                    <tr key={account.id}>
+                                                        <td>
+                                                            <span 
+                                                                onClick={handleClickMainAcc} 
+                                                                id={account.id} 
+                                                                style={{fontSize:"0.75rem",color:"red", cursor:"pointer"}} 
+                                                                className="link">
+                                                                {account.general_ledger_code}
+                                                            </span>
+                                                        </td>
+                                                        <td><span style={{color:"red"}} >{account.general_ledger_name}</span></td>
+                                                    </tr>
+                                                )
+                                            }else{
+                                                return (
+                                                    <tr key={account.id}>
+                                                        <td>
+                                                            <span 
+                                                                onClick={handleClickMainAcc} 
+                                                                id={account.id} 
+                                                                style={{fontSize:"0.75rem", cursor:"pointer"}} 
+                                                                className="link">
+                                                                {account.general_ledger_code}
+                                                            </span>
+                                                        </td>
+                                                        <td>{account.general_ledger_name}</td>
+                                                    </tr>
+                                                )
+                                            }
+                                        }else { 
                                             return (
                                                 <tr key={account.id}>
                                                     <td>
@@ -86,32 +102,16 @@ const Table = ({ mainaccounts, selectedMainAccID, setSelectedMainAccID, accDetai
                                                         </span>
                                                     </td>
                                                     <td>{account.general_ledger_name}</td>
+                                                    <td>{account.account_type}</td>
+                                                    <td>{account.branch}</td>
+                                                    <td>{convertDate(account.date_created)}</td>
                                                 </tr>
                                             )
                                         }
-                                    }else { 
-                                        return (
-                                            <tr key={account.id}>
-                                                <td>
-                                                    <span 
-                                                        onClick={handleClickMainAcc} 
-                                                        id={account.id} 
-                                                        style={{fontSize:"0.75rem", cursor:"pointer"}} 
-                                                        className="link">
-                                                        {account.general_ledger_code}
-                                                    </span>
-                                                </td>
-                                                <td>{account.general_ledger_name}</td>
-                                                <td>{account.account_type}</td>
-                                                <td>{account.branch}</td>
-                                                <td>{convertDate(account.date_created)}</td>
-                                            </tr>
-                                        )
-                                    }
-                                })}
-                            </tbody>
-                        </table>
-                    </div>
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     {accDetails && (
                         <SubAccounts 
