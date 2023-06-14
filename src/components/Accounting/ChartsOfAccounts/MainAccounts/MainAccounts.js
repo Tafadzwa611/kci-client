@@ -7,7 +7,7 @@ import Footer from './Footer';
 import Table from './Table';
 
 const MainAccounts = () => {
-    const [mainaccounts, setMainAccounts] = useState(null)
+    const [mainaccounts, setMainAccounts] = useState({count: 0, next_page_num: 0, mainaccounts: []})
     const [branches, setBranches] = useState(null);
     const [branchIds, setBranchIds] = useState(null);
     const [nextPageNumber, setNextPageNumber] = useState(null);
@@ -18,97 +18,7 @@ const MainAccounts = () => {
     const [selectedMainAccID, setSelectedMainAccID] = useState(null)
     const [accDetails, setAccDetails] = useState(false)
     const [open, setOpen] = useState(false);
-
-    const pageNum = useRef(1);
-
-    useEffect(() => {
-        getMainAccounts();
-    }, []);
-
-    useEffect(() => {
-        getBranches();
-    }, [])
-
-    const getMainAccounts = async () => {
-        window.scrollTo(0, 0);
-        const data = await fetchMainAccounts();
-        setMainAccounts(data.mainaccounts);
-        setTotalCount(data.count);
-    };
-
-    const getBranches = async () => {
-        window.scrollTo(0, 0);
-        const branches = await fetchBranches();
-        setBranches(branches);
-    };
-
-    async function fetchMainAccounts() {
-        try {
-            const url = getUrl();
-            const response = await makeRequest.get(url, {timeout: 8000});
-            if (response.ok) {
-                const json_res = await response.json();
-                setNextPageNumber(json_res.next_page_num);
-                setLoadingMore(false);
-                setSearching(false);
-                return json_res;
-            }else {
-                const error = await response.json();
-                console.log(error);
-            }
-        }catch(error) {
-            console.log(error);
-        }
-    }
-    
-    async function fetchBranches() {
-        try {
-          const response = await makeRequest.get('/usersapi/get-branches/', {timeout: 6000});
-          if (response.ok) {
-            const json_res = await response.json();
-            return json_res.results;
-          }else {
-            const error = await response.json();
-            console.log(error);
-          }
-        }catch(error) {
-          console.log(error);
-        }
-      }
-    
-
-    function getUrl() {
-
-        let url = `/acc-api/main-accounts-list/?page_num=${pageNum.current}`;
-        if (branchIds !== null) {
-            branchIds.forEach(id => (url += `&branch_ids=${id}`));
-          }
-        if (accType !== '') {
-          url += `&acc_type=${accType}`;
-        }
-        return url
-    }
-
-    const loadMore = async (evt) => {
-        evt.preventDefault();
-        setLoadingMore(true);
-        pageNum.current += 1;
-        const data = await fetchMainAccounts();
-        setMainAccounts(curr => [...curr,...data.mainaccounts]);
-    }
-    
-    const onSubmit = async (evt) => {
-        evt.preventDefault();
-        setSearching(true);
-        pageNum.current = 1;
-        const data = await fetchMainAccounts();
-        setTotalCount(data.count);
-        setMainAccounts(data.mainaccounts);
-    }
-
-    if (mainaccounts === null || branches === null) {
-        return <MiniLoader />
-    }
+    const [params, setParams] = useState(null);
 
     return (
         <>
@@ -119,28 +29,19 @@ const MainAccounts = () => {
             </div>
             <CreateMainAccountModal open={open} setOpen={setOpen} setMainAccounts={setMainAccounts} />
             <DateRange 
-                accType={accType}
-                setAccType={setAccType}
-                onSubmit={onSubmit}
-                searching={searching}
-                branches={branches}
-                setBranchIds={setBranchIds}
+                setMainAccounts={setMainAccounts}
+                setParams={setParams}
             />
+            <div style={{paddingTop: '2rem'}}></div>
             <Table 
                 mainaccounts={mainaccounts}
                 setSelectedMainAccID={setSelectedMainAccID}
                 selectedMainAccID={selectedMainAccID}
                 accDetails={accDetails}
                 setAccDetails={setAccDetails}
+                params={params}
+                setMainAccounts={setMainAccounts}
             />
-            <Footer 
-                mainaccounts={mainaccounts}
-                totalCount={totalCount}
-                nextPageNumber={nextPageNumber}
-                loadMoreAccounts={loadMore}
-                loadingMore={loadingMore}
-            />
-
         </>
     )
 }
