@@ -37,7 +37,8 @@ const Table = ({ mainaccounts, selectedMainAccID, setSelectedMainAccID, accDetai
             <TableHeader mainaccounts={mainaccounts} params={params} setMainAccounts={setMainAccounts}/>
             <div style={{padding:"0", border:"none"}} className={accDetails ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
                 <div className={accDetails ? "table-responsive journal__table-container" : "table-responsive full__table"}>
-                    <div style={{position:"sticky", top:"0"}}>
+                    <div style={{width:'100%', overflowX:'auto'}}>
+                    <div className='table__height'>
                         <table className="table" id='accounts'>
                             <thead>
                                 {accDetails ?
@@ -110,6 +111,7 @@ const Table = ({ mainaccounts, selectedMainAccID, setSelectedMainAccID, accDetai
                                 })}
                             </tbody>
                         </table>
+                    </div>
                     </div>
                     {accDetails && (
                         <SubAccounts 

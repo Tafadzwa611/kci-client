@@ -3,7 +3,6 @@ import { makeRequest } from '../../../../utils/utils';
 import MiniLoader from '../../../Loader/MiniLoader';
 import CreateMainAccountModal from './CreateMainAccountModal';
 import DateRange from './DateRange';
-import Footer from './Footer';
 import Table from './Table';
 
 const MainAccounts = () => {
