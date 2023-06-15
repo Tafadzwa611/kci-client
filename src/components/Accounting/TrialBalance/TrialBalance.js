@@ -7,6 +7,8 @@ function TrialBalance({loggedInUser}) {
     const [trialBalanceData, setTrialBalanceData] = useState(null);
     const [intValues, setIntValues] = useState([])
 
+    console.log(intValues.currency_id)
+
     return (
         <>
             <Filter setTrialBalanceData={setTrialBalanceData} setParams={setParams} setIntValues={setIntValues}/>

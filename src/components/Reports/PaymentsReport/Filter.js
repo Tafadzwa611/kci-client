@@ -1,133 +1,124 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { useBranches } from '../../../contexts/BranchesContext';
+import { Form, Formik } from 'formik';
+import {
+    CustomMultiSelectFilter,
+    CustomDatePickerFilter,
+    CustomSelectFilter,
+    SubmitButtonFilter,
+    CustomInputFilter,
+    NonFieldErrors
+} from '../../../common';
+import { removeEmptyValues, getParams } from '../../../utils/utils';
+import { useCurrencies } from '../../../contexts/CurrenciesContext';
+import axios from 'axios';
 
-function Filter({
-    currencyId,
-    setCurrencyId,
-    currencies,
-    minDate,
-    setMinDate,
-    maxDate,
-    setMaxDate,
-    paymentBranchId,
-    setPaymentBranchId,
-    loanBranchId,
-    setLoanBranchId,
-    branches,
-    accounts,
-    paymentFundAccountId,
-    setPaymentFundAccountId,
-    loanFundAccountId,
-    setLoanFundAccountId,
-    loanNumber,
-    setLoanNumber,
-    disableFetch,
-    loading,
-    onSubmit,
-    mode,
-    setMode
-}) {
-    const fetchStyles = disableFetch ? {pointerEvents: 'none', opacity: '0.7'} : {};
+const Filter = ({ setPayments, accounts, setParams, branches, setAggregateData, setIntValues }) => {
+    const initialValues = {
+        page_num: 1,
+        loan_branch_id: '',
+        min_date: '',
+        max_date: '',
+        payment_branch_id: '',
+        loan_number: '',
+        payment_fund_account_id: '',
+        loan_fund_account_id: '',
+    };
+    const {currencies} = useCurrencies();
+
+    const [currencyId, seCurrencyId] = useState('');
+    const onChange = (setFieldValue, newValue) => {
+        setFieldValue('currency_id', newValue);
+        seCurrencyId(newValue)
+    }
+    const newaccounts = accounts.accounts.filter(acc => acc.currency_id == currencyId);
+
+    const onSubmit = async (values, actions) => {
+        try {
+            const data = removeEmptyValues(values);
+            const params = getParams(data);
+            setParams(params);
+            setIntValues(values);
+            const response = await axios.get('/reportsapi/payments-report/', {params: params});
+            setPayments(response.data.payments);
+            setAggregateData(response.data.aggregate_data)
+        } catch (error) {
+            console.log(error);
+            if (error.message === 'Network Error') {
+                actions.setErrors({responseStatus: 'Network Error'});
+            } else if (error.response.status >= 400 && error.response.status < 500) {
+                actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+            } else {
+                actions.setErrors({responseStatus: error.response.status});
+            }
+        }
+    }
+
     return (
-        <form>
-            <div className="row-containers" style={{padding:"0", border:"none"}}>
-                <div className="row row-payments">
-                    <div className="row-payments-container">
-                        <label className="form-label row-label">Currency<span style={{color: 'red'}}>*</span></label>
-                        <select className='custom-select-form row-form' value={currencyId} onChange={e => setCurrencyId(e.target.value)} style={{margin:"10px 0 0"}}>
-                            <option value=''>Select Currency</option>
-                            {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.shortname}</option>)}
-                        </select>
-                    </div>
-
-                    <div className="row-payments-container">
-                        <label className="form-label row-label">Start Value Date<span style={{color: 'red'}}>*</span></label>
-                        <div className="input-group" style={{margin:"10px 0 0"}}>
-                            <input
-                                type='date'
-                                value={minDate}
-                                onKeyDown={(e) => e.preventDefault()}
-                                onChange={(e) => setMinDate(e.target.value)}
-                                className='custom-select-form row-form input-background'
-                            />
-                        </div>
-                    </div>
-
-                    <div className="row-payments-container">
-                        <label className="form-label row-label">End Value Date<span style={{color: 'red'}}>*</span></label>
-                        <div className="input-group" style={{margin:"10px 0 0"}}>
-                            <input
-                                type='date'
-                                value={maxDate}
-                                onKeyDown={(e) => e.preventDefault()}
-                                onChange={(e) => setMaxDate(e.target.value)}
-                                className='custom-select-form row-form input-background'
-                            />
-                        </div>
-                    </div>
-
-                    <div className="row-payments-container">
-                        <label className="form-label row-label">Loan Number</label>
-                        <div className="input-group" style={{margin:"10px 0 0"}}>
-                            <input
-                                step='1'
-                                type='number'
-                                value={loanNumber}
-                                onKeyDown={(e) => {if(e.key==='.')e.preventDefault()}}
-                                onChange={(e) => setLoanNumber(e.target.value)}
-                                className='custom-select-form row-form input-background'
-                            />
-                        </div>
-                    </div>
-
-                </div>
-
-                <div className="row row-payments" style={{marginTop:"1rem"}}>
-                    <div className="row-payments-container">
-                        <select className='custom-select-form row-form' value={paymentBranchId} onChange={e => setPaymentBranchId(e.target.value)}>
-                            <option value=''>Select Payment Branch</option>
-                            {branches.map(branch => <option key={branch.id} value={branch.id}>{branch.name}</option>)}
-                        </select>
-                    </div>
-
-                    <div className="row-payments-container">
-                        <select className='custom-select-form row-form' value={loanBranchId} onChange={e => setLoanBranchId(e.target.value)}>
-                            <option value=''>Select Loan Branch</option>
-                            {branches.map(branch => <option key={branch.id} value={branch.id}>{branch.name}</option>)}
-                        </select>
-                    </div>
-
-                    <div className="row-payments-container">
-                        <select className='custom-select-form row-form' value={paymentFundAccountId} onChange={e => setPaymentFundAccountId(e.target.value)}>
-                            <option value=''>Select Payment Fund Account</option>
-                            {accounts.filter(acc => acc.currency_id == currencyId).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_code} {acc.general_ledger_name}</option>)}
-                        </select>
-                    </div>
-
-                    <div className="row-payments-container">
-                        <select className='custom-select-form row-form' value={loanFundAccountId} onChange={e => setLoanFundAccountId(e.target.value)}>
-                            <option value=''>Select Loan Fund Account</option>
-                            {accounts.filter(acc => acc.currency_id == currencyId).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_code} {acc.general_ledger_name}</option>)}
-                        </select>
-                    </div>
-
-
-                </div>
-
-                <div className='form-group row'>
-
-                    <div className='col-3'>
-                        <span className='input-group-btn'>
-                        {
-                            loading ?
-                            <button type='submit' className='btn btn-olive'><i className='fa fa-spinner fa-spin'></i> Please wait..</button> :
-                            <button type='submit' name='ledger' className='btn btn-olive' onClick={onSubmit} style={fetchStyles} disabled={disableFetch}>Apply Filters!</button>
-                        }
-                        </span>
+        <Formik initialValues={initialValues} onSubmit={onSubmit}>
+            {({isSubmitting, setFieldValue, errors}) => (
+                <div className='search_background'>
+                    <div className='row-containers' style={{border:'none'}}>
+                        <Form>
+                            <NonFieldErrors errors={errors}>
+                                <div style={{display:'flex', justifyContent:'space-between'}}>
+                                    <div className='row-payments-container' style={{width:'24%'}}>
+                                        <CustomSelectFilter 
+                                            label='Currency' 
+                                            name='currency_id' 
+                                            onChange={evt => onChange(setFieldValue, evt.target.value)}
+                                            required
+                                        >
+                                            <option value=''>------</option>
+                                            {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+                                        </CustomSelectFilter>
+                                    </div>
+                                    <div className='row-payments-container' style={{width:'24%'}}>
+                                        <CustomDatePickerFilter label='Start Value Date' name='min_date' setFieldValue={setFieldValue} required/>
+                                    </div>
+                                    <div className='row-payments-container' style={{width:'24%'}}>
+                                        <CustomDatePickerFilter label='End Value Date' name='max_date' setFieldValue={setFieldValue} required/>
+                                    </div>
+                                    <div className='row-payments-container' style={{width:'24%'}}>
+                                        <CustomDatePickerFilter label='Loan Number' name='loan_number' setFieldValue={setFieldValue}/>
+                                    </div>
+                                </div>
+                                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
+                                    <div className='row-payments-container' style={{width:'24%'}}>
+                                        <CustomSelectFilter label='Payment Branch' name='payment_branch_id'>
+                                            <option value=''>------</option>
+                                            {branches.map(branch => (<option key={branch.id} value={branch.id}>{branch.name}</option>))}
+                                        </CustomSelectFilter>
+                                    </div>
+                                    <div className='row-payments-container' style={{width:'24%'}}>
+                                        <CustomSelectFilter label='Loan Branch' name='loan_branch_id'>
+                                            <option value=''>------</option>
+                                            {branches.map(branch => (<option key={branch.id} value={branch.id}>{branch.name}</option>))}
+                                        </CustomSelectFilter>
+                                    </div>
+                                    <div className='row-payments-container' style={{width:'24%'}}>
+                                        <CustomSelectFilter label='Payment Fund Account' name='payment_fund_account_id'>
+                                            <option value=''>------</option>
+                                            {newaccounts.map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_code} {acc.general_ledger_name}</option>)}
+                                        </CustomSelectFilter>
+                                    </div>
+                                    <div className='row-payments-container' style={{width:'24%'}}>
+                                        <CustomSelectFilter label='Loan Fund Account' name='loan_fund_account_id'>
+                                            <option value=''>------</option>
+                                            {newaccounts.map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_code} {acc.general_ledger_name}</option>)}
+                                        </CustomSelectFilter>
+                                    </div>
+                                </div>
+                                <div style={{display:'flex', justifyContent:'space-between'}}>
+                                    <SubmitButtonFilter isSubmitting={isSubmitting}/>
+                                </div>
+                            </NonFieldErrors>
+                        </Form>
                     </div>
                 </div>
-            </div>
-        </form>
-    )
+            )}
+        </Formik>
+    );
 }
 
 export default Filter;
