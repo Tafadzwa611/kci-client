@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import MiniLoader from '../../Loader/MiniLoader';
 
-const TrialBalanceTable = ({trialBalance, currencyIso, loading, loggedInUser, maxDate}) => {
+const TrialBalanceTable = ({trialBalance, loggedInUser, intValues}) => {
 
-    if (loading) {
-        return <MiniLoader />
-    }
-    
     const [omitZeroBalances, setOmitZeroBalances] = useState(false);
     const [accounts, setAccounts] = useState([]);
     
@@ -19,12 +14,6 @@ const TrialBalanceTable = ({trialBalance, currencyIso, loading, loggedInUser, ma
         };
     }, [omitZeroBalances]);
 
-    const getStrDate = (maxDate) => {
-        const mydate = new Date(maxDate);
-        const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
-        return `${month} ${mydate.getDate()}, ${mydate.getFullYear()}`;
-    }
-
     return (
         <div className="col-12 font-12">
             <div style={{marginTop:"40px", border:"none", padding:"0"}} className="trial_balance_table_container">
@@ -34,7 +23,7 @@ const TrialBalanceTable = ({trialBalance, currencyIso, loading, loggedInUser, ma
                             id='test-table-xls-button'
                             className='download-table-xls-button btn btn-default'
                             table='trial-balance'
-                            filename={`${currencyIso} Trial Balance for ${loggedInUser.company_name} as on ${getStrDate(maxDate)}`}
+                            filename={`${trialBalance.currency} Trial Balance for ${loggedInUser.company_name} as on ${intValues.maxDate}`}
                             sheet='tablexls'
                             buttonText='Download as XLS'
                         />
@@ -51,22 +40,20 @@ const TrialBalanceTable = ({trialBalance, currencyIso, loading, loggedInUser, ma
                                 <th>Account</th>
                                 <th>Branch</th>
                                 <th>Account Type</th>
-                                <th>Debit({currencyIso})</th>
-                                <th>Credit({currencyIso})</th>
+                                <th>Debit({trialBalance.currency})</th>
+                                <th>Credit({trialBalance.currency})</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><b>{currencyIso} Trial Balance</b></td>
-                                <td></td>
+                                <td><b>{trialBalance.currency} Trial Balance</b></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
                             <tr>
-                                <td><b>{loggedInUser.company_name} as on {getStrDate(maxDate)}</b></td>
-                                <td></td>
+                                <td><b>{loggedInUser.company_name} as on {intValues.maxDate}</b></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

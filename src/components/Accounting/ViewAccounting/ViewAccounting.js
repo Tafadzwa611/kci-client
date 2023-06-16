@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import Cashflow from '../Cashflow/Cashflow';
 import CashReport from '../CashReport/CashReport';
 import ProfitAndLoss from '../ProfitAndLoss/ProfitAndLoss';
@@ -8,47 +8,78 @@ import ChartsOfAccounts from '../ChartsOfAccounts/ChartsOfAccounts';
 import BalanceSheet from '../BalanceSheet/BalanceSheet';
 import Ledger from '../Ledger/Ledger';
 import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
+import {
+    Routes,
+    Route,
+    Outlet,
+    Link,
+    useLocation
+  } from 'react-router-dom';
 
 const ViewAccounting = () => {
-    const [tab, setTab] = useState('cshflw');
-
-    useEffect(() => {
-        document.title = 'View Accounting';
-    }, []);
-    
     const {loggedInUser} = useLoggedInUser()
 
-    return (
-        <div className="card">
-            <div className="card-body">
-                <h5 className="table-heading" style={{marginBottom:"20px"}}>View Accounting</h5>
-                <>
-                    <div className="bloc-tabs">
-                            <button className={tab === "cshflw" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("cshflw")}> Cashflow </button>
-                            <button className={tab === "cshmngmnt" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("cshmngmnt")}> Cash Management </button>
-                            <button className={tab === "prftnls" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("prftnls")}> Profit & Loss </button>
-                            <button className={tab === "trlbnce" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("trlbnce")}> Trial Balance </button>
-                            <button className={tab === "blncesht" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("blncesht")}> Balance Sheet </button>
-                            <button className={tab === "jrnls" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("jrnls")}> Journal Entries </button>
-                            <button className={tab === "chtsoaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("chtsoaccs")}> Charts of Accounts </button>
-                            <button className={tab === "ledger" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("ledger")}> Ledger </button>
-                    </div>
-                    <div className='tab-content font-12' style={{marginTop:"3rem"}}>
-                        {{
-                            'cshflw': <Cashflow setTab={setTab}/>,
-                            'cshmngmnt': <CashReport setTab={setTab}/>,
-                            'prftnls': <ProfitAndLoss loggedInUser={loggedInUser} />,
-                            'trlbnce': <TrialBalance loggedInUser={loggedInUser}/>,
-                            'blncesht': <BalanceSheet loggedInUser={loggedInUser} />,
-                            'jrnls': <Journals setTab={setTab}/>,
-                            'chtsoaccs': <ChartsOfAccounts setTab={setTab}/>,
-                            'ledger': <Ledger setTab={setTab}/>
-                        }[tab]}
-                    </div>
-                </>
-            </div>
-        </div>
-    );
+    useEffect(() => {
+        document.title = 'View Reports';
+    }, []);
+
+  return (
+    <Routes>
+      <Route path='/' element={<Layout />}>
+        <Route index element={<Cashflow loggedInUser={loggedInUser} />} />
+        <Route path='cashreport' element={<CashReport loggedInUser={loggedInUser} />} />
+        <Route path='profitandloss' element={<ProfitAndLoss loggedInUser={loggedInUser} />} />
+        <Route path='trialbalance' element={<TrialBalance loggedInUser={loggedInUser} />} />
+        <Route path='balancesheet' element={<BalanceSheet loggedInUser={loggedInUser} />} />
+        <Route path='journals' element={<Journals loggedInUser={loggedInUser} />} />
+        <Route path='chartsofaccounts' element={<ChartsOfAccounts loggedInUser={loggedInUser} />} />
+        <Route path='ledger' element={<Ledger loggedInUser={loggedInUser} />} />
+      </Route>
+    </Routes>
+  )
+}
+
+
+function Layout() {
+  const location = useLocation();
+  return (
+    <div className='card'>
+      <div className='card-body'>
+        <h5 className='table-heading' style={{marginBottom:'20px'}}>View Reports</h5>
+        <>
+          <div className='bloc-tabs'>
+            <Link to='/accounting/viewaccounting' className={location.pathname === '/accounting/viewaccounting' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Cashflow
+            </Link>
+            <Link to='/accounting/viewaccounting/cashreport' className={location.pathname === '/accounting/viewaccounting/cashreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Cash Management
+            </Link>
+            <Link to='/accounting/viewaccounting/profitandloss' className={location.pathname === '/accounting/viewaccounting/profitandloss' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Profit & Loss
+            </Link>
+            <Link to='/accounting/viewaccounting/trialbalance' className={location.pathname === '/accounting/viewaccounting/trialbalance' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Trial Balance
+            </Link>
+            <Link to='/accounting/viewaccounting/balancesheet' className={location.pathname === '/accounting/viewaccounting/balancesheet' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Balance Sheet
+            </Link>
+            <Link to='/accounting/viewaccounting/journals' className={location.pathname === '/accounting/viewaccounting/journals' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Journal Entries
+            </Link>
+            <Link to='/accounting/viewaccounting/chartsofaccounts' className={location.pathname === '/accounting/viewaccounting/chartsofaccounts' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Charts of Accounts
+            </Link>
+            <Link to='/accounting/viewaccounting/ledger' className={location.pathname === '/accounting/viewaccounting/ledger' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Ledger
+            </Link>
+          </div>
+          <div className='tab-content font-12' style={{marginTop:'3rem'}}>
+            <Outlet />
+          </div>
+        </>
+      </div>
+    </div>
+  )
 }
 
 export default ViewAccounting;

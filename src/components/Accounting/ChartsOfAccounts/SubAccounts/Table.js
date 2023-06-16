@@ -115,7 +115,7 @@ const Table = ({ subaccounts, accStatement, setAccStatement, selectedSubAccID, s
 
                     {subaccounts == "" && 
                         <div style={{textAlign:"center"}} className="text-light">
-                            <span>Account type has no sub accounts.</span>
+                            <span>Account type has no sub accounts OR filter above.</span>
                         </div>
                     }
                     
