@@ -26,9 +26,11 @@ const getElement = (field, setFieldValue) => {
     date: 'date',
   };
 
+  const fieldName = field.is_required ? field.name : `${field.name} (Optional)`;
+
   if (field.data_type === 'select') {
     return (
-      <CustomSelect label={field.name} name={`custom_${field.id}`} required={field.is_required}>
+      <CustomSelect label={fieldName} name={`custom_${field.id}`}>
         <option value=''>------</option>
         {field.select_opts.map(opt => <option key={opt} value={opt}>{opt}</option>)}
       </CustomSelect>
@@ -36,20 +38,19 @@ const getElement = (field, setFieldValue) => {
   }
 
   if (field.data_type === 'checkbox') {
-    return <CustomCheckbox label={field.name} name={`custom_${field.id}`} required={field.is_required}/>
+    return <CustomCheckbox label={fieldName} name={`custom_${field.id}`}/>
   }
 
   return {
-    free_text: <CustomInput label={field.name} name={`custom_${field.id}`} type={dataTypes[field.data_type]} required={field.is_required}/>,
+    free_text: <CustomInput label={fieldName} name={`custom_${field.id}`} type={dataTypes[field.data_type]}/>,
     integer: <CustomInput
-      label={field.name}
+      label={fieldName}
       name={`custom_${field.id}`}
       type={dataTypes[field.data_type]}
-      required={field.is_required}
       onKeyDown={e => {if(e.key==='.')e.preventDefault()}}
     />,
-    decimal: <CustomInput label={field.name} name={`custom_${field.id}`} type={dataTypes[field.data_type]} required={field.is_required}/>,
-    date: <CustomDatePicker label={field.name} name={`custom_${field.id}`} setFieldValue={setFieldValue} required={field.is_required}/>
+    decimal: <CustomInput label={fieldName} name={`custom_${field.id}`} type={dataTypes[field.data_type]}/>,
+    date: <CustomDatePicker label={fieldName} name={`custom_${field.id}`} setFieldValue={setFieldValue}/>
   }[field.data_type]
 }
 

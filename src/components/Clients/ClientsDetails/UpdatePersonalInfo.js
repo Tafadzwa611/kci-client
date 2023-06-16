@@ -5,6 +5,20 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { ModalSubmit, NonFieldErrors, Modal } from '../../../common';
 import { removeEmptyValues } from '../../../utils/utils';
+import * as yup from 'yup';
+
+const validationSchema = yup.object().shape({
+  first_name: yup.string().required('Required').max(300),
+  last_name: yup.string().required('Required').max(300),
+  gender: yup.string().required('Required').oneOf(['MALE', 'FEMALE']),
+  date_of_birth: yup.string().required('Required'),
+  registration_date: yup.string().required('Required'),
+  mobile_number: yup.object().shape({
+    countryCode: yup.string().required(),
+    phoneNumber: yup.string().required('Required'),
+  }),
+  email: yup.string().email('Must be a valid email address.'),
+});
 
 function UpdatePersonalInfo({setOpen, client, setClient}) {
   const onSubmit = async (values, actions) => {
@@ -12,8 +26,7 @@ function UpdatePersonalInfo({setOpen, client, setClient}) {
     data = removeEmptyValues(data);
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.put(`/clientsapi/update_client_personal/${client.id}/`, data, CONFIG);
-      console.log(response.data);
+      await axios.put(`/clientsapi/update_client_personal/${client.id}/`, data, CONFIG);
       setClient(curr => ({...curr,...data}));
       setOpen(null);
     } catch (error) {
@@ -21,7 +34,7 @@ function UpdatePersonalInfo({setOpen, client, setClient}) {
       if (error.message === 'Network Error') {
         actions.setErrors({responseStatus: 'Network Error'});
       } else if (error.response.status >= 400 && error.response.status < 500) {
-        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+        actions.setErrors({responseStatus: error.response.status, detail: processErrors(error.response.data)});
       } else {
         actions.setErrors({responseStatus: error.response.status});
       }
@@ -30,6 +43,8 @@ function UpdatePersonalInfo({setOpen, client, setClient}) {
 
   const initialValues = {
     ...client,
+    email: client.email || '',
+    home_phone: client.home_phone || '',
     mobile_number: {countryCode: client.mobile_number.split(' ')[0], phoneNumber: client.mobile_number.split(' ')[1]},
     phone_number_secondary: {
       ...(client.phone_number_secondary && {countryCode: client.phone_number_secondary.split(' ')[0], phoneNumber: client.phone_number_secondary.split(' ')[1]})
@@ -41,9 +56,9 @@ function UpdatePersonalInfo({setOpen, client, setClient}) {
 
   return (
     <Modal open={true} setOpen={setOpen} title='Update Client Info' text='add'>
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
         {({ errors, isSubmitting, setFieldValue }) => (
-          <Form>
+          <Form autoComplete='off'>
             <NonFieldErrors errors={errors}>
               <div className='create_modal_container'>
                 <div>
@@ -74,4 +89,40 @@ const processValues = (values) => {
   return data
 }
 
+const processErrors = (errors) => {
+  let {detail} = errors;
+
+  const fieldNames = {
+    first_name: 'First Name',
+    last_name: 'Last Name',
+    full_name: 'Full Name',
+    gender: 'Gender',
+    date_of_birth: 'Date Of Birth',
+    registration_date: 'Registration Date',
+    mobile_number: 'Mobile Number',
+    phone_number_secondary: 'Secondary Mobile Number',
+    home_phone: 'Home Phone',
+    whatsapp_number: 'Whatsapp Number',
+    email: 'Email',
+    id_num: 'Id Number'
+  }
+
+  if (typeof detail === 'string') {
+    return detail
+  }else if (typeof detail === 'object' && !Array.isArray(detail)) {
+    return {
+      msg: detail.msg,
+      field_name: fieldNames[detail.field_name],
+      level: detail.level,
+    }
+  }
+
+  return detail.map(error => ({
+    msg: error.msg,
+    field_name: fieldNames[error.field_name],
+    level: error.level,
+  }));
+}
+
+export {processErrors};
 export default UpdatePersonalInfo

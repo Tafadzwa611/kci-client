@@ -1,18 +1,85 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
-import { NonFieldErrors } from '../../../common';
-import FormStepper from './FormStepper';
+import {
+  NonFieldErrors,
+  CustomSelect,
+  SubmitButton,
+  CustomCheckbox
+} from '../../../common';
 import ClientInformation from './ClientInformation';
 import CustomForm from './CustomForm';
 import Addresses from './Addresses';
 import NextOfKin from './NextOfKin';
 import ClientId from './ClientId';
+import * as yup from 'yup';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { removeEmptyValues } from '../../../utils/utils';
 import { useNavigate } from 'react-router-dom';
+import { uuidv4 } from '../../../utils';
+
+const initValidationSchema = yup.object().shape({
+  client_type_id: yup.number().required('Required'),
+  first_name: yup.string().required('Required').max(300),
+  last_name: yup.string().required('Required').max(300),
+  gender: yup.string().required('Required').oneOf(['MALE', 'FEMALE']),
+  date_of_birth: yup.string().required('Required'),
+  registration_date: yup.string().required('Required'),
+  mobile_number: yup.object().shape({
+    countryCode: yup.string().required(),
+    phoneNumber: yup.string().required('Required'),
+  }),
+  email: yup.string().email(),
+  next_of_kin_list: yup.array().of(yup.object().shape({
+    first_name: yup.string().required('Required'),
+    last_name: yup.string().required('Required'),
+    gender: yup.string().required('Required').oneOf(['MALE', 'FEMALE']),
+    relationship: yup.string().required('Required'),
+    phone_number: yup.object().shape({
+      countryCode: yup.string().required(),
+      phoneNumber: yup.string().required('Required'),
+    }),
+    address: yup.string().required('Required'),
+    city: yup.string().required('Required'),
+    country: yup.string().required('Required'),
+    ownership: yup.string().required('Required').oneOf(['OWNER', 'RENTING']),
+  })),
+  address_list: yup.array().of(yup.object().shape({
+    address: yup.string().required('Required'),
+    city: yup.string().required('Required'),
+    country: yup.string().required('Required'),
+    ownership: yup.string().required('Required').oneOf(['OWNER', 'RENTING']),
+  })),
+  id_nums: yup.array().of(yup.object().shape({
+    id_template_id: yup.string().required('Required'),
+    id_number: yup.string().required('Required'),
+  }))
+});
 
 function AddClientForm({customForms, clientTypes, idTemplates}) {
+  const [validationSchema, setValidationSchema] = useState(initValidationSchema);
+  const [showIgnore, setShowIgnore] = useState(false);
+
+  const handleClientTypeChange = (evt) => {
+    const {name, value} = evt.target;
+    if (name !== 'client_type_id')return;
+    let newSchema = initValidationSchema;
+    customForms.filter(form => form.client_type_id == value).forEach(form => {
+      form.fields.forEach(field => {
+        let schema;
+        if (field.data_type === 'free_text' || field.data_type === 'date') {
+          schema = yup.string();
+        }else if (field.data_type === 'select') {
+          schema = yup.string().oneOf(field.select_opts);
+        }
+        schema = field.is_required ? schema.required('Required') : schema;
+        newSchema = newSchema.concat(yup.object().shape({
+          [`custom_${field.id}`]: schema
+        }));
+      });
+    });
+    setValidationSchema(newSchema);
+  }
   const initialValues = {
     client_type_id: '',
     first_name: '',
@@ -27,7 +94,8 @@ function AddClientForm({customForms, clientTypes, idTemplates}) {
     email: '',
     address_list: [],
     next_of_kin_list: [],
-    id_nums: [],
+    ignore_warnings: false,
+    id_nums: [{id: uuidv4(), id_number: '', id_template_id: ''}],
   };
 
   customForms.forEach(form => {
@@ -42,14 +110,15 @@ function AddClientForm({customForms, clientTypes, idTemplates}) {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/clientsapi/add_client/', data, CONFIG);
-      console.log(response.data);
       navigate({pathname: `/clients/viewclients/clientdetails/${response.data.client_id}`});
     } catch (error) {
       console.log(error);
       if (error.message === 'Network Error') {
         actions.setErrors({responseStatus: 'Network Error'});
       } else if (error.response.status >= 400 && error.response.status < 500) {
-        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+        setShowIgnore(true);
+        console.log(processErrors(error.response.data));
+        actions.setErrors({responseStatus: error.response.status, detail: processErrors(error.response.data)});
       } else {
         actions.setErrors({responseStatus: error.response.status});
       }
@@ -57,26 +126,30 @@ function AddClientForm({customForms, clientTypes, idTemplates}) {
   }
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
       {({ isSubmitting, errors, values, setFieldValue }) => (
-        <Form>
+        <Form autoComplete='off' onChange={handleClientTypeChange}>
           <NonFieldErrors errors={errors}>
-            <FormStepper isSubmitting={isSubmitting} errors={errors} customForms={customForms} client_type_id={values.client_type_id}>
-              <ClientInformation clientTypes={clientTypes} setFieldValue={setFieldValue}/>
-              <Addresses address_list={values.address_list} setFieldValue={setFieldValue}/>
-              <NextOfKin next_of_kin_list={values.next_of_kin_list} setFieldValue={setFieldValue}/>
-              <ClientId id_nums={values.id_nums} setFieldValue={setFieldValue} idTemplates={idTemplates}/>
-              {customForms.map(form => {
-                if (form.client_type_id == values.client_type_id) {
-                  return (
-                    <React.Fragment key={form.id}>
-                      <CustomForm form={form} setFieldValue={setFieldValue}/>
-                    </React.Fragment>
-                  )
-                }
-              })}
-              <div>Overview</div>
-            </FormStepper>
+            <CustomSelect label='Client Type' name='client_type_id'>
+              <option value=''>------</option>
+              {clientTypes.map(ct => <option key={ct.id} value={ct.id}>{ct.name}</option>)}
+            </CustomSelect>
+            <ClientInformation clientTypes={clientTypes} setFieldValue={setFieldValue}/>
+            <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+            <ClientId id_nums={values.id_nums} setFieldValue={setFieldValue} idTemplates={idTemplates}/>
+            <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+            <Addresses address_list={values.address_list} setFieldValue={setFieldValue}/>
+            <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+            <NextOfKin next_of_kin_list={values.next_of_kin_list} setFieldValue={setFieldValue}/>
+            <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+            {customForms.filter(form => form.client_type_id == values.client_type_id).map(form => (
+              <React.Fragment key={form.id}>
+                <CustomForm form={form} setFieldValue={setFieldValue}/>
+                <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+              </React.Fragment>
+            ))}
+            {showIgnore ? <CustomCheckbox label='Ignore Warnings' name='ignore_warnings'/>: null}
+            <SubmitButton isSubmitting={isSubmitting}/>
           </NonFieldErrors>
         </Form>
       )}
@@ -87,7 +160,12 @@ function AddClientForm({customForms, clientTypes, idTemplates}) {
 const processValues = (values, customForms) => {
   const applicableForms = customForms.filter(form => form.client_type_id == values.client_type_id);
   const custom_data = applicableForms.map(form => {
-    const data = form.fields.map(field => ({'field_id': field.id, [field.data_type]: values[`custom_${field.id}`]}));
+    const data = [];
+    form.fields.forEach(field => {
+      if (values[`custom_${field.id}`]) {
+        data.push({'field_id': field.id, [field.data_type]: values[`custom_${field.id}`]});
+      }
+    });
     return {'field_set_id': form.id, 'data': data}
   });
   values.next_of_kin_list = values.next_of_kin_list.map(nok => ({...nok, phone_number: `${nok.phone_number.countryCode} ${nok.phone_number.phoneNumber}`}));
@@ -104,6 +182,48 @@ const processValues = (values, customForms) => {
   let data = {...values, ...phoneNumbers, custom_data};
   data = removeEmptyValues(data);
   return data
+}
+
+const processErrors = (errors, customForms) => {
+  let {detail} = errors;
+
+  if (typeof detail === 'string') {
+    return detail
+  }else if (typeof detail === 'object' && !Array.isArray(detail)) {
+    return {
+      msg: detail.msg,
+      field_name: getFieldName(detail.field_name, detail.field_set_id, customForms),
+      level: detail.level,
+    }
+  }
+
+  return detail.map(error => ({
+    msg: error.msg,
+    field_name: getFieldName(error.field_name, error.field_set_id, customForms),
+    level: error.level,
+  }));
+}
+
+const getFieldName = (fieldName, fieldSetId, customForms) => {
+  if (!fieldSetId) {
+    return {
+      first_name: 'First Name',
+      last_name: 'Last Name',
+      full_name: 'Full Name',
+      gender: 'Gender',
+      date_of_birth: 'Date Of Birth',
+      registration_date: 'Registration Date',
+      mobile_number: 'Mobile Number',
+      phone_number_secondary: 'Secondary Mobile Number',
+      home_phone: 'Home Phone',
+      whatsapp_number: 'Whatsapp Number',
+      email: 'Email',
+      id_number: 'Id Number',
+    }[fieldName]
+  }
+  const fs = customForms.find(fs => fs.id == fieldSetId);
+  const field = fs.fields.find(field => field.id == fieldName);
+  return field.name
 }
 
 export default AddClientForm;

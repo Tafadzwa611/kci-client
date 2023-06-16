@@ -122,7 +122,7 @@ const MainTable = ({clientsData, handleClick}) => {
                         <td>{client.phone_number}</td>
                         <td>{client.gender}</td>
                         <td>{client.db_registration_date}</td>  
-                        <td>{client.db_date_of_birth} <em>(Age in years)</em></td>
+                        <td>{client.db_date_of_birth} <em>({client.age_year} years, {client.age_month} month(s))</em></td>
                         <td>{client.branch_name}</td>
                       </tr>
                     )
