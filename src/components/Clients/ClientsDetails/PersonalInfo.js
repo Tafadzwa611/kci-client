@@ -22,7 +22,7 @@ function PersonalInfo({client, setModal}) {
             <li>Account Number: {client.client_id}</li>
             <li>Client Type: {client.client_type} <a style={{cursor: 'pointer'}} onClick={() => setModal(MODAL_STATES.changeType)}><small>Change</small></a></li>
             <li>Gender: {client.gender}</li>
-            <li>Date of Birth: {client.date_of_birth}</li>
+            <li>Date of Birth: {client.date_of_birth} <em>({client.age_year} years, {client.age_month} month(s))</em></li>
             <li>Client Registration Date: {client.registration_date}</li>
             <li>Branch: {client.branch}</li>
           </ul>

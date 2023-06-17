@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { ModalSubmit, NonFieldErrors, Modal, CustomSelect, CustomInput, Fetcher } from '../../../common';
+import { processErrors } from './UpdatePersonalInfo';
 
 function EditId({setOpen, setClient, ID}) {
   const onSubmit = async (values, actions) => {
@@ -15,7 +16,7 @@ function EditId({setOpen, setClient, ID}) {
       if (error.message === 'Network Error') {
         actions.setErrors({responseStatus: 'Network Error'});
       } else if (error.response.status >= 400 && error.response.status < 500) {
-        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+        actions.setErrors({responseStatus: error.response.status, detail: processErrors(error.response.data)});
       } else {
         actions.setErrors({responseStatus: error.response.status});
       }
@@ -29,7 +30,7 @@ function EditId({setOpen, setClient, ID}) {
         {({data}) => (
             <Formik initialValues={initialValues} onSubmit={onSubmit}>
               {({ errors, isSubmitting }) => (
-                <Form>
+                <Form autoComplete='off'>
                   <NonFieldErrors errors={errors}>
                     <div className='create_modal_container'>
                       <div>

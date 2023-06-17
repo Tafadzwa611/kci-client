@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
 import Select from 'react-select';
 import { countryPhoneCodes } from './data';
@@ -9,17 +9,21 @@ const CustomPhoneNumber = ({ label, setFieldValue, ...props }) => {
   const defaultCode = field.value.countryCode ? options.find(code => `+${code.value}` == field.value.countryCode) : options[0];
   const [countryCode, setCountryCode] = useState(`+${defaultCode.value}`);
   const [phoneNumber, setPhoneNumber] = useState(field.value.phoneNumber || '');
+  const isFirst = useRef(true);
 
   useEffect(() => {
+    if (isFirst.current){return}
     setFieldValue(field.name, {countryCode, phoneNumber});
   }, [countryCode, phoneNumber]);
 
   const onCodeChange = newValue => {
+    isFirst.current = false;
     setCountryCode(`+${newValue.value}`);
   }
 
   const onPhoneNumChange = evt => {
     if (evt.target.value[0] === '0') return;
+    isFirst.current = false;
     setPhoneNumber(evt.target.value);
   }
 
@@ -48,8 +52,8 @@ const CustomPhoneNumber = ({ label, setFieldValue, ...props }) => {
               style={{width: '-webkit-fill-available'}}
               className={`custom-select-form ${meta.touched && meta.error ? 'input-error' : ''}`}
             />
-            {meta.touched && meta.error && <div className='error'>{meta.error}</div>}
           </div>
+          {meta.touched && meta.error && <div className='error'>{meta.error.phoneNumber}</div>}
         </div>
       </div>
     </>

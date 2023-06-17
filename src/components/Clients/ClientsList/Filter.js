@@ -33,7 +33,6 @@ const Filter = ({ setClientsData, clientTypes, setParams }) => {
       const params = getParams(data);
       setParams(params);
       const response = await axios.get('/clientsapi/clients/', {params: params});
-      console.log(response.data);
       setClientsData(response.data);
     } catch (error) {
       console.log(error);
