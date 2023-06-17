@@ -3579,3 +3579,10 @@ input[type=number] {
   justify-content: flex-end;
 }
 
+.phone__number-container {
+  width: 50%;
+}
+
+.modal-dialog .phone__number-container {
+  width: 75%;
+}

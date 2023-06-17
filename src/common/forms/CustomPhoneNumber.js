@@ -31,7 +31,7 @@ const CustomPhoneNumber = ({ label, setFieldValue, ...props }) => {
     <>
       <div className='row custom-background'>
         <label className='form-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
-        <div style={{width:'50%'}}>
+        <div className='phone__number-container'>
           <div className='col-9' style={{display:'flex', columnGap:'10px'}}>
             <div style={{width:'350px'}}>
               <Select
