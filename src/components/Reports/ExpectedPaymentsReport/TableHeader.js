@@ -1,22 +1,21 @@
 
 import React from 'react';
-import { convertDate } from '../../Accounting/Journals/utils';
 
 
-function TableHeader({aggregateData, minDate, maxDate}) {
+function TableHeader({aggregateData, intValues}) {
   return (  
     <div style={{marginBottom:"1.5rem"}}>
       <div className="header-padding-container">
         <div className="header-padding"><b>From:</b></div>
-        <div className="header-padding">{convertDate(minDate)}</div>
+        <div className="header-padding">{intValues.start_date}</div>
       </div>
       <div className="header-padding-container">
         <div className="header-padding"><b>To:</b></div>
-        <div className="header-padding">{convertDate(maxDate)}</div>
+        <div className="header-padding">{intValues.end_date}</div>
       </div>
       <div className="header-padding-container">
         <div className="header-padding"><b>Report Run Date:</b></div>
-        <div className="header-padding">{convertDate(aggregateData.report_run_date)} {aggregateData.report_run_time}</div>
+        <div className="header-padding">{aggregateData.report_run_date} {aggregateData.report_run_time}</div>
       </div>
       <div className="header-padding-container">
         <div className="header-padding"><b>Number Of Installments:</b></div>

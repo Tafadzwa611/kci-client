@@ -1,12 +1,9 @@
 import React, {useState} from 'react';
-import { useBranches } from '../../../contexts/BranchesContext';
 import { Form, Formik } from 'formik';
 import {
-    CustomMultiSelectFilter,
     CustomDatePickerFilter,
     CustomSelectFilter,
     SubmitButtonFilter,
-    CustomInputFilter,
     NonFieldErrors
 } from '../../../common';
 import { removeEmptyValues, getParams } from '../../../utils/utils';

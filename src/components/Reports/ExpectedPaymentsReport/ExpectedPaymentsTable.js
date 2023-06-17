@@ -39,7 +39,7 @@ const ExpectedPaymentsTable = ({installments}) => {
         "Princ_Paid": installment.principal_paid,
         "Int_Paid": installment.interest_paid,
         "Pen_Paid": installment.penalty_paid,
-        "Loan_Status": installment.status,
+        "Loan_Status": installment.loan_status,
         "Branch": installment.branch,
         "Date": installment.installment_date,
         "Loan_Officer": installment.loan_officer,
