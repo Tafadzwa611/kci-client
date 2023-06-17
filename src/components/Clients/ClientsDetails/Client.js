@@ -17,6 +17,8 @@ import CustomData from './CustomData';
 import ChangeClientType from './ChangeClientType';
 import { MODAL_STATES } from './data';
 import Loans from './Loans';
+import ClientFiles from './ClientFiles';
+import Groups from './Groups';
 
 function Client({clientData, close}) {
   const [client, setClient] = useState(clientData);
@@ -111,8 +113,9 @@ const Actions = ({modal, setModal, client, close, setClient}) => {
             {fs.field_set}
           </button>
         ))}
-        <button className={tab === 'files' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('files')}> Files </button>
-        <button className={tab === 'loans' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('loans')}> Loans </button>
+        <button className={tab === 'files' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('files')}>Files</button>
+        <button className={tab === 'loans' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('loans')}>Loans</button>
+        <button className={tab === 'groups' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('groups')}>Groups</button>
       </div>
       <div className='tab-content font-12' style={{marginTop: '3rem'}}>
         {{
@@ -120,7 +123,9 @@ const Actions = ({modal, setModal, client, close, setClient}) => {
           id: <Identity client={client} setModal={setModal} modal={modal} setClient={setClient}/>,
           addresses: <Addresses client={client} modal={modal} setModal={setModal} setClient={setClient}/>,
           nok: <Nok client={client} modal={modal} setModal={setModal} setClient={setClient}/>,
-          loans: <Loans client={client}/>,
+          files: <ClientFiles client={client}/>,
+          loans: <Loans client={client} setClient={setClient}/>,
+          groups: <Groups client={client} />,
           ...customViews
         }[tab]}
       </div>
