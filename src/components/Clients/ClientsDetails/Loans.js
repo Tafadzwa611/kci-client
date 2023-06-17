@@ -39,7 +39,9 @@ function Loans({client}) {
                     <tr key={loan.id}>
                       <td>
                         <span style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>
-                          <Link to={`/loans/viewloans/loandetails/cli/${loan.id}`}>{loan.loan_id}</Link>
+                          <Link to={`/loans/viewloans/loandetails/cli/${loan.is_sub_loan ? loan.main_loan : loan.id}`}>
+                            {loan.loan_id} {loan.is_sub_loan ? <button className='badge badge-info'>Solidarity</button> : null}
+                          </Link>
                         </span>
                       </td>
                       <td>{loan.loan_product__name}</td>
