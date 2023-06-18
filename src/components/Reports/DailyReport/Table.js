@@ -83,7 +83,7 @@ const Table = ({report, intValues, loggedInUser}) => {
                             {report.payment_summary.length == 0 ? 
                                 <tr>
                                     <td>
-                                        No payments were recorded on this day {intValues.date_of_report} .
+                                        No payments were recorded on this day {intValues.date_of_report}.
                                     </td>
                                 </tr>
                                 : 
