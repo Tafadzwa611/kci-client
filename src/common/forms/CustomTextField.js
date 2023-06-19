@@ -13,7 +13,7 @@ const CustomTextField = ({ label, ...props }) => {
         <label className='form-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
         <div className='col-9'>
           <textarea {...props} {...field} className='custom-select-form'></textarea>
-          {meta.touched && meta.error && <div className='error'>{meta.error}</div>}
+          {meta.error ? <div className='error'>{meta.error}</div> : null}
         </div>
       </div>
     </>
