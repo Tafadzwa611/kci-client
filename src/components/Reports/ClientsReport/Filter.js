@@ -43,7 +43,6 @@ const Filter = ({setClientsReportData, setParams, setIntValues}) => {
     try {
       const data = removeEmptyValues(values);
       const params = getParams(data);
-      console.log(params)
       setParams(params);
       setIntValues(values);
       const response = await axios.get('/reportsapi/clients-report/', {params: params});

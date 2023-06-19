@@ -5,28 +5,21 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 const Table = (
     {
-        report, currencyIso, minDate, maxDate, selectedBranches, loggedInUser,
-        changeOrder, order, disableSelect, loanCount, numberOfLoansLoaded
+        report, intValues, loggedInUser, currency
     }) => {
     const [groupByDate, setGroupByDate] = useState(true);
 
-    const getStrDate = (date) => {
-        const mydate = new Date(date);
-        const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
-        return `${month} ${mydate.getDate()}, ${mydate.getFullYear()}`;
-    }
-
     const getFileName = () => {
-        if (minDate != '' && maxDate != '') {
-            return `${currencyIso} Disbursement Report for ${loggedInUser.company_name} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`
+        if (intValues.min_date != '' && intValues.max_date != '') {
+            return `${currency} Disbursement Report for ${loggedInUser.company_name} from ${intValues.min_date} to ${intValues.max_date}`
         }
-        if (minDate == '' && maxDate != '') {
-            return `${currencyIso} Disbursement Report for ${loggedInUser.company_name} upto ${getStrDate(maxDate)}`
+        if (intValues.min_date == '' && intValues.max_date != '') {
+            return `${currency} Disbursement Report for ${loggedInUser.company_name} upto ${intValues.max_date}`
         }
-        if (minDate != '' && maxDate == '') {
-            return `${currencyIso} Disbursement Report for ${loggedInUser.company_name} from ${getStrDate(minDate)}`
+        if (intValues.min_date != '' && intValues.max_date == '') {
+            return `${currency} Disbursement Report for ${loggedInUser.company_name} from ${intValues.min_date}`
         }
-        return `${currencyIso} Disbursement Report for ${loggedInUser.company_name} all time.`
+        return `${currency} Disbursement Report for ${loggedInUser.company_name} all time.`
     }
 
     const handleOnChange = () => {
@@ -36,13 +29,6 @@ const Table = (
     return (
         <>
             <div style={{display:"flex", justifyContent:"space-between", marginTop:"2rem"}}>
-                <Header 
-                    changeOrder={changeOrder} 
-                    order={order} 
-                    disableSelect={disableSelect} 
-                    loanCount={loanCount} 
-                    numberOfLoansLoaded={numberOfLoansLoaded} 
-                />
                 <div style={{display:"flex", alignItems:"center", columnGap:"10px"}}>
                     <div style={{display:"flex", alignItems:"center", columnGap:"5px"}}>
                         <input
@@ -90,44 +76,50 @@ const Table = (
                                 {getFileName()}
                                 </td>
                             </tr>
-                            <tr>
+                            {/* <tr>
                                 <td
                                     title={selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)}
                                     className='text-bold text-left'
                                     colSpan={9}
                                     style={{whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden'}}
                                 >Branches: {selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)}</td>
-                            </tr>
+                            </tr> */}
                             <tr>
                                 <td className='text-bold text-left' colSpan={9}>
-                                    Currency: {currencyIso}
+                                    Currency: {currency}
                                 </td>
                             </tr>
                             <tr>
                                 <td className='text-bold text-left' colSpan={9}>{`Extracted On: ${new Date()}`}</td>
                             </tr>
-                            {report.map(date => {
+                            {report.report.map(date => {
                                 return (
                                 <Fragment key={date.day}>
-                                    {groupByDate && <tr>
-                                    <td className='text-bold journal-details header text-left' colSpan='9'>{convertDate(date.day)}</td>
-                                    <td style={{display: 'none'}}></td>
-                                    <td style={{display: 'none'}}></td>
-                                    <td style={{display: 'none'}}></td>
-                                    </tr> }
-                                    {date.loans.map(loan => (
-                                    <tr key={loan.id}>
-                                        <td style={{textAlign: 'right'}}>{convertDate(date.day)}</td>
-                                        <td style={{textAlign: 'right'}}>{loan.fullname}</td>
-                                        <td style={{textAlign: 'right'}}>{loan.loan_id}</td>
-                                        <td style={{textAlign: 'right'}}>{loan.branch}</td>
-                                        <td style={{textAlign: 'right'}}>{`${currencyIso} ${loan.principal}`}</td>
-                                        <td style={{textAlign: 'right'}}>{`${currencyIso} ${loan.interest}`}</td>
-                                        <td style={{textAlign: 'right'}}>{`${currencyIso} ${loan.amount_due}`}</td>
-                                        <td style={{textAlign: 'right'}}>{`${currencyIso} ${loan.total_amount_paid}`}</td>
-                                        <td style={{textAlign: 'right'}}>{`${currencyIso} ${loan.balance}`}</td>
-                                    </tr>
-                                    ))}
+                                    {date.loans && 
+                                        <>
+                                            {groupByDate &&
+                                                <tr>
+                                                    <td className='text-bold journal-details header text-left' colSpan='9'>{convertDate(date.day)}</td>
+                                                    <td style={{display: 'none'}}></td>
+                                                    <td style={{display: 'none'}}></td>
+                                                    <td style={{display: 'none'}}></td>
+                                                </tr> 
+                                            }
+                                            {date.loans.map(loan => (
+                                                <tr key={loan.id}>
+                                                    <td style={{textAlign: 'right'}}>{convertDate(date.day)}</td>
+                                                    <td style={{textAlign: 'right'}}>{loan.fullname}</td>
+                                                    <td style={{textAlign: 'right'}}>{loan.loan_id}</td>
+                                                    <td style={{textAlign: 'right'}}>{loan.branch}</td>
+                                                    <td style={{textAlign: 'right'}}>{loan.principal}</td>
+                                                    <td style={{textAlign: 'right'}}>{loan.interest}</td>
+                                                    <td style={{textAlign: 'right'}}>{loan.amount_due}</td>
+                                                    <td style={{textAlign: 'right'}}>{loan.total_amount_paid}</td>
+                                                    <td style={{textAlign: 'right'}}>{loan.balance}</td>
+                                                </tr>
+                                            ))}
+                                        </>
+                                    }
                                 </Fragment>
                                 )
                             })}
