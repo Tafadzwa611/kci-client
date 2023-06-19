@@ -14,7 +14,7 @@ const statusClasses = {
     'Written-Off': 'badge badge-dark',
 };
 
-function Row({client, idx, currencyIso, showLoans}) {
+function Row({client, idx, currency, showLoans}) {
 
   return (
     <>
@@ -22,8 +22,8 @@ function Row({client, idx, currencyIso, showLoans}) {
         <td style={{textAlign: 'left'}}><p style={{fontWeight: "bold"}}>{idx+1}</p></td>
         <td style={{textAlign: 'left'}}>{client.fullname}</td>
         <td style={{textAlign: 'right'}}>{client.branch}</td>
-        <td style={{textAlign: 'right'}}>{`${currencyIso} ${client.sum_principal}`}</td>
-        <td style={{textAlign: 'right'}}>{`${currencyIso} ${client.sum_principal_amount_due}`}</td>
+        <td style={{textAlign: 'right'}}>{currency} {client.sum_principal}</td>
+        <td style={{textAlign: 'right'}}>{currency} {client.sum_principal_amount_due}</td>
       </tr>
       {showLoans && client.loans.map(loan => {
         return (
@@ -33,8 +33,8 @@ function Row({client, idx, currencyIso, showLoans}) {
             <td style={{textAlign: 'right'}}>
               {loan.loan_id} <small className={statusClasses[loan.status]} style={{margin: '3px'}}>{loan.status}</small>
             </td>
-            <td style={{textAlign: 'right'}}>{`${currencyIso} ${loan.principal}`}</td>
-            <td style={{textAlign: 'right'}}>{`${currencyIso} ${loan.principal_amount_due}`}</td>
+            <td style={{textAlign: 'right'}}>{currency} {loan.principal}</td>
+            <td style={{textAlign: 'right'}}>{currency} {loan.principal_amount_due}</td>
           </tr>
         )
       })}
