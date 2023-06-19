@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import ClientsList from '../ClientsList/ClientsList';
 import NewAddClient from '../add_client/NewAddClient';
-import SmsList from '../Sms/SmsList';
+import Sms from '../Sms/Sms';
 import Client from '../ClientsDetails/Client';
 import {
   Routes,
@@ -23,7 +23,7 @@ const ViewClients = () => {
       <Route path='/' element={<Layout />}>
         <Route index element={<ClientsList />} />
         <Route path='addclient' element={<NewAddClient />} />
-        <Route path='sms' element={<SmsList />} />
+        <Route path='sms' element={<Sms />} />
         <Route path='clientdetails/:clientId' element={<FullClientDetails/>}/>
       </Route>
     </Routes>

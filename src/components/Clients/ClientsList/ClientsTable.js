@@ -36,8 +36,6 @@ const TableHeader = ({clientsData, params, setClientsData}) => {
         <Pager
           nextPageNumber={clientsData.next_page_num}
           params={params}
-          loadMoreClients={() => console.log('loadMoreClients')}
-          loadingMore={false}
           prevPageNumber={clientsData.prev_page_num}
           setClientsData={setClientsData}
         />

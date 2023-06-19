@@ -8,8 +8,7 @@ function CustomMultiSelect({label, options, initVals, setFieldValue, ...props}) 
 
   const handleMultiSelect = selected => {
     setOptionSelected(selected);
-    const newVals = selected.map(val => val.value);
-    setFieldValue(field.name, newVals);
+    setFieldValue(field.name, selected);
   }
 
   return (
@@ -25,7 +24,7 @@ function CustomMultiSelect({label, options, initVals, setFieldValue, ...props}) 
           classNamePrefix='select'
           onChange={selected => handleMultiSelect(selected)}
         />
-        {meta.error && <div className='error'>{meta.error}</div>}
+        {meta.error && <div className='error'>{JSON.stringify(meta.error)}</div>}
       </div>
     </div>
   )
