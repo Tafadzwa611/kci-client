@@ -1,35 +1,27 @@
 import React, {useState} from 'react';
 import Row from './Row';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import Header from './Header';
 
-const Table = ({report, currencyIso, minDate, maxDate, selectedBranches, changeOrder, order, disableSelect, loggedInUser}) => {
+const Table = ({report, intValues, loggedInUser, currency}) => {
     const [showLoans, setShowLoans] = useState(false);
-
-    const getStrDate = (date) => {
-      const mydate = new Date(date);
-      const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][mydate.getMonth()];
-      return `${month} ${mydate.getDate()}, ${mydate.getFullYear()}`;
-    }
   
     const getFileName = () => {
-      if (minDate != '' && maxDate != '') {
-        return `${currencyIso} Borrowers Report for ${loggedInUser.company_name} from ${getStrDate(minDate)} to ${getStrDate(maxDate)}`
+      if (intValues.min_date != '' && intValues.max_date != '') {
+        return `${currency} Borrowers Report for ${loggedInUser.company_name} from ${intValues.min_date} to ${intValues.max_date}`
       }
-      if (minDate == '' && maxDate != '') {
-        return `${currencyIso} Borrowers Report for ${loggedInUser.company_name} upto ${getStrDate(maxDate)}`
+      if (intValues.min_date == '' && intValues.max_date != '') {
+        return `${currency} Borrowers Report for ${loggedInUser.company_name} upto ${intValues.max_date}`
       }
-      if (minDate != '' && maxDate == '') {
-        return `${currencyIso} Borrowers Report for ${loggedInUser.company_name} from ${getStrDate(minDate)}`
+      if (intValues.min_date != '' && intValues.max_date == '') {
+        return `${currency} Borrowers Report for ${loggedInUser.company_name} from ${intValues.min_date}`
       }
-      return `${currencyIso} Borrowers Report for ${loggedInUser.company_name} all time.`
+      return `${currency} Borrowers Report for ${loggedInUser.company_name} all time.`
     }
 
     return (
         <>
             <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginTop:"2rem"}}>
                 <div style={{display:"flex", alignItems:"center", columnGap:"1rem"}}>
-                    <Header changeOrder={changeOrder} order={order} disableSelect={disableSelect} />
                     <div style={{display:"flex", alignItems:"center", columnGap:"5px"}}>
                         <span>Expand</span>
                         <input type='checkbox' checked={showLoans} onChange={_=> setShowLoans(curr => !curr)}/>
@@ -67,18 +59,18 @@ const Table = ({report, currencyIso, minDate, maxDate, selectedBranches, changeO
                                 {getFileName()}
                                 </td>
                             </tr>
-                            <tr>
+                            {/* <tr>
                                 <td colSpan={12} title={selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)} className='text-bold text-left' style={{whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: '5px'}}>
                                 Branches: {selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)}
                                 </td>
-                            </tr>
+                            </tr> */}
                             <tr>
-                                <td colSpan={12} className='text-bold text-left'>Currency: {currencyIso}</td>
+                                <td colSpan={12} className='text-bold text-left'>Currency: {currency}</td>
                             </tr>
                             <tr>
                                 <td className='text-bold text-left' colSpan={9}>{`Extracted On: ${new Date()}`}</td>
                             </tr>
-                            {report.map((client, idx) => <Row key={client.id} idx={idx} client={client} currencyIso={currencyIso} showLoans={showLoans}/>)}
+                            {report.report.map((client, idx) => <Row key={client.id} idx={idx} client={client} currency={currency} showLoans={showLoans}/>)}
                         </tbody>
                     </table>
                 </div>
