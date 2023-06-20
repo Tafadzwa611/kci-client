@@ -7,6 +7,7 @@ import ManageLoans from './ManageLoans/ManageLoans';
 import ManageBranches from './ManageBranches/ManageBranches';
 import ManageClients from './ManageClients/ManageClients';
 import ManageFields from './ManageFields/ManageFields';
+import ManageComms from './ManageComms/ManageComms';
 import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
 
 const AdminPanel = () => {
@@ -25,6 +26,7 @@ const AdminPanel = () => {
         <Route path='managebranches' element={<ManageBranches />} />
         <Route path='manageclients' element={<ManageClients />} />
         <Route path='managefields' element={<ManageFields />} />
+        <Route path='managecomms' element={<ManageComms />} />
       </Route>
     </Routes>
   )
@@ -95,6 +97,13 @@ function Layout() {
               className={location.pathname === '/users/admin/managefields' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
             >
               Manage Forms
+            </Link>
+            <Link 
+              to='/users/admin/managecomms'
+              id='managecomms' 
+              className={location.pathname === '/users/admin/managecomms' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+            >
+              Manage Comms
             </Link>
           </div>
           <div className='tab-content font-12' style={{marginTop:'3rem'}}>
