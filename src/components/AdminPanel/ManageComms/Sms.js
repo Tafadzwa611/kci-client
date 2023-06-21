@@ -4,7 +4,7 @@ import {
   NonFieldErrors,
   CustomInput,
   CustomSelect,
-  SubmitButton
+  ModalSubmit
 } from '../../../common';
 import { Form, Formik } from 'formik';
 import axios from 'axios';
@@ -21,13 +21,19 @@ function Sms({data}) {
       <div style={{margin: '20px 0'}}>
         <button type='button' className='btn btn-success' onClick={() => setModal(true)}>Update Gateway</button>
       </div>
-      <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', marginTop:'1.5rem'}}>
-        <div>
-          <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
-            <li>Gateway: {gateway.gateway}</li>
-            <li>Sender ID: {gateway.sender_id}</li>
-          </ul>
-        </div>
+      <div className="table-responsive font-12">
+        <table className="table table-hover">
+          <tbody>
+            <tr className="journal-details header">
+              <th>Gateway</th>
+              <th>Sender ID</th>
+            </tr>  
+            <tr className="table-row">
+              <td>{gateway.gateway}</td>
+              <td>{gateway.sender_id}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </>
   )
@@ -68,21 +74,21 @@ const GateWayForm = ({setOpen, setGateway}) => {
         {({ isSubmitting, errors, values }) => (
           <Form autoComplete='off'>
             <NonFieldErrors errors={errors}>
-              <div className='divider divider-info'><span>Gateway Info</span></div>
-              <CustomSelect label='Gateway' name='gateway'>
-                <option value=''>------</option>
-                <option value='Not Set'>None</option>
-                <option value='Default'>Default</option>
-                <option value='Econet'>Econet</option>
-              </CustomSelect>
-              {values.gateway === 'Econet' ?
-              <>
-                <CustomInput label='Econet Sender ID' name='econet_sender_id' type='text' autoComplete='new-password' required/>
-                <CustomInput label='Econet Api Key' name='econet_api_key' type='text' required/>
-              </>: null}
-              <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
-              <div style={{display:'flex', justifyContent: 'flex-end'}}>
-                <SubmitButton isSubmitting={isSubmitting}/>
+              <div className="create_modal_container">
+                <div>
+                  <CustomSelect label='Gateway' name='gateway'>
+                    <option value=''>------</option>
+                    <option value='Not Set'>None</option>
+                    <option value='Default'>Default</option>
+                    <option value='Econet'>Econet</option>
+                  </CustomSelect>
+                  {values.gateway === 'Econet' ?
+                  <>
+                    <CustomInput label='Econet Sender ID' name='econet_sender_id' type='text' autoComplete='new-password' required/>
+                    <CustomInput label='Econet Api Key' name='econet_api_key' type='text' required/>
+                  </>: null}
+                </div>
+                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
               </div>
             </NonFieldErrors>
           </Form>
