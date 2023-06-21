@@ -130,26 +130,31 @@ function AddClientForm({customForms, clientTypes, idTemplates}) {
       {({ isSubmitting, errors, values, setFieldValue }) => (
         <Form autoComplete='off' onChange={handleClientTypeChange}>
           <NonFieldErrors errors={errors}>
+            <div className='divider divider-info'>
+              <span>Client Information</span>
+            </div>
             <CustomSelect label='Client Type' name='client_type_id'>
               <option value=''>------</option>
               {clientTypes.map(ct => <option key={ct.id} value={ct.id}>{ct.name}</option>)}
             </CustomSelect>
             <ClientInformation clientTypes={clientTypes} setFieldValue={setFieldValue}/>
-            <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+            <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
             <ClientId id_nums={values.id_nums} setFieldValue={setFieldValue} idTemplates={idTemplates}/>
-            <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+            <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
             <Addresses address_list={values.address_list} setFieldValue={setFieldValue}/>
-            <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+            <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
             <NextOfKin next_of_kin_list={values.next_of_kin_list} setFieldValue={setFieldValue}/>
-            <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+            <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
             {customForms.filter(form => form.client_type_id == values.client_type_id).map(form => (
               <React.Fragment key={form.id}>
                 <CustomForm form={form} setFieldValue={setFieldValue}/>
-                <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+                <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
               </React.Fragment>
             ))}
             {showIgnore ? <CustomCheckbox label='Ignore Warnings' name='ignore_warnings'/>: null}
-            <SubmitButton isSubmitting={isSubmitting}/>
+            <div style={{display:'flex', justifyContent: 'flex-end'}}> 
+              <SubmitButton isSubmitting={isSubmitting}/>
+            </div>
           </NonFieldErrors>
         </Form>
       )}

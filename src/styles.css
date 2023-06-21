@@ -3586,3 +3586,10 @@ input[type=number] {
 .modal-dialog .phone__number-container {
   width: 75%;
 }
+
+.success__submit {
+  color: green;
+  padding: 1.75rem 1rem;
+  border: 1px solid green;
+  background-color: #c6ecb7;
+}

@@ -26,6 +26,7 @@ function SmsList() {
   return (
     <>
       <Filter setParams={setParams} setMessages={setMessages}/>
+      <div style={{paddingTop: '2rem'}}></div>
       <div className='table-header'>
         <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
           <Pager
@@ -86,32 +87,36 @@ const Filter = ({setParams, setMessages}) => {
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors}) => (
-        <Form>
-          <NonFieldErrors errors={errors}>
-            <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-              <div className='row-payments-container' style={{width:'24%'}}>
-                <CustomDatePickerFilter label='Min Date' name='min_date' setFieldValue={setFieldValue}/>
-              </div>
-              <div className='row-payments-container' style={{width:'24%'}}>
-                <CustomDatePickerFilter label='Max Date' name='max_date' setFieldValue={setFieldValue}/>
-              </div>
-              <div className='row-payments-container' style={{width:'24%'}}>
-                <CustomSelectFilter label='Status' name='status'>
-                  <option value=''>------</option>
-                  <option value='SENT'>Sent</option>
-                  <option value='FAILED'>Failed</option>
-                  <option value='PENDING'>Pending</option>
-                </CustomSelectFilter>
-              </div>
-              <div className='row-payments-container' style={{width:'24%'}}>
-                <CustomSelectFilter label='Sender' name='sender_id'>
-                  <option value=''>------</option>
-                </CustomSelectFilter>
-              </div>
-            </div>
-            <SubmitButtonFilter isSubmitting={isSubmitting}/>
-          </NonFieldErrors>
-        </Form>
+        <div className="search_background">
+          <div className="row-containers" style={{border:"none"}}>
+            <Form>
+              <NonFieldErrors errors={errors}>
+                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
+                  <div className='row-payments-container' style={{width:'24%'}}>
+                    <CustomDatePickerFilter label='Min Date' name='min_date' setFieldValue={setFieldValue}/>
+                  </div>
+                  <div className='row-payments-container' style={{width:'24%'}}>
+                    <CustomDatePickerFilter label='Max Date' name='max_date' setFieldValue={setFieldValue}/>
+                  </div>
+                  <div className='row-payments-container' style={{width:'24%'}}>
+                    <CustomSelectFilter label='Status' name='status'>
+                      <option value=''>------</option>
+                      <option value='SENT'>Sent</option>
+                      <option value='FAILED'>Failed</option>
+                      <option value='PENDING'>Pending</option>
+                    </CustomSelectFilter>
+                  </div>
+                  <div className='row-payments-container' style={{width:'24%'}}>
+                    <CustomSelectFilter label='Sender' name='sender_id'>
+                      <option value=''>------</option>
+                    </CustomSelectFilter>
+                  </div>
+                </div>
+                <SubmitButtonFilter isSubmitting={isSubmitting}/>
+              </NonFieldErrors>
+            </Form>
+          </div>
+        </div>
       )}
     </Formik>
   )
@@ -127,11 +132,11 @@ const MainTable = ({messages}) => {
               <thead>
                 <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
                   <th style={{textAlign:'start'}}>Client</th>
-                  <th style={{textAlign:'start'}}>Phone Number</th>
+                  <th style={{textAlign:'start'}}>Phone_Number</th>
                   <th style={{textAlign:'start'}}>Message</th>
                   <th style={{textAlign:'start'}}>Status</th>
-                  <th style={{textAlign:'start'}}>Date Send</th>
-                  <th style={{textAlign:'start'}}>Send By</th>
+                  <th style={{textAlign:'start'}}>Date_Send</th>
+                  <th style={{textAlign:'start'}}>Send_By</th>
                 </tr>
               </thead>
               <tbody>
