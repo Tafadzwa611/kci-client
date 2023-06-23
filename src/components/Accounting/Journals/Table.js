@@ -12,9 +12,9 @@ export default function Table(
     accountId, 
     openBal, 
     msg, 
-    nextPageNumber, 
-    loadMoreJournals, 
-    loadingMore,
+    // nextPageNumber, 
+    // loadMoreJournals, 
+    // loadingMore,
     selectedjrnl,
     selectedjrnlID,
     setSelectedJrnlID,
@@ -75,7 +75,7 @@ export default function Table(
             </tbody>
           </table>
         </div>
-        <Footer nextPageNumber={nextPageNumber} loadMoreJournals={loadMoreJournals} loadingMore={loadingMore}/>
+        {/* <Footer nextPageNumber={nextPageNumber} loadMoreJournals={loadMoreJournals} loadingMore={loadingMore}/> */}
       </div>
     )
   }
@@ -297,7 +297,8 @@ export default function Table(
           </div>
         )}
       </div>
-      <Footer nextPageNumber={nextPageNumber} loadMoreJournals={loadMoreJournals} loadingMore={loadingMore}/>
+      {/* <Footer nextPageNumber={nextPageNumber} loadMoreJournals={loadMoreJournals} loadingMore={loadingMore}/> */}
     </div>
   )
 }
+
