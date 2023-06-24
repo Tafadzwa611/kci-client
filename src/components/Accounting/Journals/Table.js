@@ -3,6 +3,7 @@ import { convertDate } from './utils';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import NoData from './NoData';
 import Footer from './Footer';
+import TableHeader from './TableHeader';
 
 
 export default function Table(
@@ -12,14 +13,13 @@ export default function Table(
     accountId, 
     openBal, 
     msg, 
-    // nextPageNumber, 
-    // loadMoreJournals, 
-    // loadingMore,
     selectedjrnl,
     selectedjrnlID,
     setSelectedJrnlID,
     details,
     setDetails,
+    setJournals,
+    params
   }) {
 
   const handleClick = (e) => {
@@ -31,19 +31,10 @@ export default function Table(
     }
   }
 
-  if (journals.length === 0 && asStatement) {
+  if (journals.journals.length === 0 && asStatement) {
     return (
       <div style={{marginTop:"1rem"}}>
-        <div>
-          <ReactHTMLTableToExcel
-            id='test-table-xls-button'
-            className='download-table-xls-button btn btn-default'
-            table='journals'
-            filename='Journals'
-            sheet='tablexls'
-            buttonText='Download as XLS'
-          />
-        </div>
+      <TableHeader journals={journals} params={params} setJournals={setJournals}/>
         <div style={{maxHeight: '600px'}}>
           <table className='table' id='journals'>
             <thead>
@@ -80,21 +71,14 @@ export default function Table(
     )
   }
 
-  if (journals.length === 0) {
+  if (journals.journals.length === 0) {
     return <NoData msg={msg} />
   }
 
   return (
     <div style={{marginTop:"1rem"}}>
       <div style={{marginBottom:"1rem"}}>
-        <ReactHTMLTableToExcel
-          id='test-table-xls-button'
-          className='download-table-xls-button btn btn-default'
-          table='journals'
-          filename='Journals'
-          sheet='tablexls'
-          buttonText='Download as XLS'
-        />
+      <TableHeader journals={journals} params={params} setJournals={setJournals}/>
       </div>
       <div style={details ? {display:"grid", gridTemplateColumns:"1fr 2fr", columnGap:"1rem"} : {display:"block"}}>
         <div className='table-responsive p-0' style={{maxHeight: '600px'}}>
@@ -139,7 +123,7 @@ export default function Table(
               <td></td>
               </tr>
               }
-              {journals.map(journal => {
+              {journals.journals.map(journal => {
                 if (details) {
                   if (selectedjrnl.id == journal.id) {
                     return (
