@@ -25,6 +25,8 @@ const ViwJournals = ({accounts, loggedInUser, staff}) => {
   const [details, setDetails] = useState(false)
   const [asStatement, setAsStatement] = useState(false);
 
+  console.log(journals);
+
   return (
     <>
       <DateRange 

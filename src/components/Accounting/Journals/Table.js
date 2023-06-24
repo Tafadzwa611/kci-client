@@ -107,21 +107,25 @@ export default function Table(
             </thead>
             <tbody>
               {asStatement && 
-              <tr>
-              <td>Opening Balance</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>{openBal}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              </tr>
+                <>
+                  {journals.number == 1 &&
+                    <tr>
+                      <td>Opening Balance</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>{openBal}</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  }
+              </>
               }
               {journals.journals.map(journal => {
                 if (details) {
