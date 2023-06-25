@@ -18,7 +18,7 @@ function List({data, extra}) {
       </>
     )
   }
-  return <AddCur setView={setView} setCurrencyId={setCurrencyId}/>
+  return <AddCur setView={setView} setCurrencyId={setCurrencyId} setCurs={setCurs}/>
 }
 
 export default List;

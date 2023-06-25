@@ -17,7 +17,7 @@ function CurrencyForm({initialValues, validationSchema, onSubmit, back}) {
           <Form>
             <NonFieldErrors errors={errors}>
               <div className='divider divider-info'>
-                <span>Name & Status</span>
+                <span>Name</span>
               </div>
               <CustomInput label='Fullname' name='fullname' type='text' required/>
               <CustomInput label='Shortname' name='shortname' type='text' required/>
