@@ -60,7 +60,7 @@ function SmsForm() {
         <Form autoComplete='off'>
           <NonFieldErrors errors={errors}>
             {notifs.map((notif, idx) => (
-              <div className='success__submit' key={idx}>{notif}</div>
+              <div id='hideMe' className='success__submit' key={idx}>{notif}</div>
             ))}
             <div className='divider divider-info'>
               <span>Sms Information</span>
