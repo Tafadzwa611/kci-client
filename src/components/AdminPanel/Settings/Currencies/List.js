@@ -4,7 +4,6 @@ import Table from './Table';
 import AddCur from './AddCur';
 
 function List({data, extra}) {
-  const {currencyId, setCurrencyId} = extra;
   const [currs, setCurs] = useState(data);
   const [view, setView] = useState('list');
 
@@ -18,7 +17,7 @@ function List({data, extra}) {
       </>
     )
   }
-  return <AddCur setView={setView} setCurrencyId={setCurrencyId} setCurs={setCurs}/>
+  return <AddCur setView={setView} setCurs={setCurs}/>
 }
 
 export default List;
