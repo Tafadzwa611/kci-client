@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import CategoryForm from './CategoryForm';
 import { addSchema } from './schema';
 
-function AddCat({setView, setCategoryId}) {
+function AddCat({setView, setCategoryId, setCats}) {
   const initialValues = {name: '', is_active: true};
   const back = () => setView('list');
 
@@ -12,6 +12,7 @@ function AddCat({setView, setCategoryId}) {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/loansapi/add_product_group/', values, CONFIG);
+      setCats(curr => [response.data, ...curr]);
       setCategoryId(response.data.id);
       setView('list');
     } catch (error) {

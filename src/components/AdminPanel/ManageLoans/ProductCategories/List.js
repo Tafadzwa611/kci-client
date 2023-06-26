@@ -46,7 +46,7 @@ function List({data, extra}) {
       />
     )
   }
-  return <AddCat setView={setView} setCategoryId={setCategoryId}/>
+  return <AddCat setView={setView} setCategoryId={setCategoryId} setCats={setCats} />
 }
 
 export default List;
