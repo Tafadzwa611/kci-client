@@ -67,10 +67,10 @@ const DateRange = ({setFeesReportData, setParams, setIntValues}) => {
                     <NonFieldErrors errors={errors}>
                         <div className="row row-payments row-loans" style={{marginTop:"1rem"}}>
                             <div className="row-payments-container" style={{width:"24%"}}>
-                                <CustomDatePickerFilter label='Min Date' name='min_date' setFieldValue={setFieldValue}/>
+                                <CustomDatePickerFilter label='Min Date' name='min_date' setFieldValue={setFieldValue} required/>
                             </div>
                             <div className="row-payments-container" style={{width:"24%"}}>
-                                <CustomDatePickerFilter label='Max Date' name='max_date' setFieldValue={setFieldValue}/>
+                                <CustomDatePickerFilter label='Max Date' name='max_date' setFieldValue={setFieldValue} required/>
                             </div>
                             <div className="row-payments-container" style={{width:"24%"}}>
                                 <CustomSelectFilter label='Order' name='order' required>
@@ -93,6 +93,7 @@ const DateRange = ({setFeesReportData, setParams, setIntValues}) => {
                                     name='branch_ids'
                                     options={branches.map(br => ({label: br.name, value:br.id}))}
                                     setFieldValue={setFieldValue}
+                                    required
                                 />
                             </div>
                             <SubmitButtonFilter isSubmitting={isSubmitting}/>

@@ -85,6 +85,7 @@ const Filter = ({setBorrowersData, setParams, setIntValues, setCurrency}) => {
                                     name='branch_ids'
                                     options={branches.map(br => ({label: br.name, value:br.id}))}
                                     setFieldValue={setFieldValue}
+                                    required
                                 />
                             </div>
                             <div className="row-payments-container" style={{width:"15%"}}>
