@@ -15,7 +15,7 @@ import { useBranches } from '../../../contexts/BranchesContext';
 import axios from 'axios';
 import { removeEmptyValues } from '../../../utils/utils';
 
-const DateRange = ({setFeesReportData, setParams, setIntValues}) => {
+const DateRange = ({setFeesReportData, setParams, setIntValues, setCurrency, setSummary}) => {
   const initialValues = {
     branch_ids: [],
     page_num: 1,
@@ -47,6 +47,8 @@ const DateRange = ({setFeesReportData, setParams, setIntValues}) => {
       setIntValues(values);
       const response = await axios.get('/reportsapi/loans-fees-report/', {params: params});
       setFeesReportData(response.data);
+      setCurrency(response.data.currency);
+      setSummary(response.data.summary);
     } catch (error) {
       if (error.message === "Network Error") {
         actions.setErrors({responseStatus: "Network Error"});
