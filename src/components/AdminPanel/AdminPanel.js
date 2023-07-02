@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import Settings from './Settings/Settings'
+import Currencies from './Settings/Currencies/Currencies'
 import ManageStaff from './ManageStaff/ManageStaff';
 import OtherIncomeTypes from '../OtherIncome/IncomeTypes/IncomeTypes';
 import ExpenseTypes from '../Expenses/ExpenseTypes/ExpenseTypes';
@@ -18,7 +18,7 @@ const AdminPanel = () => {
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
-        <Route index element={<Settings />} />
+        <Route index element={<Currencies />} />
         <Route path='staff' element={<ManageStaff />} />
         <Route path='otherincome' element={<OtherIncomeTypes />} />
         <Route path='expensetypes' element={<ExpenseTypes />} />
@@ -43,11 +43,11 @@ function Layout() {
         <>
           <div className='bloc-tabs'>
             <Link 
-              to='/users/admin/'
+              to='/users/admin'
               id='admin' 
-              className={location.pathname === '/users/admin/' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+              className={location.pathname === '/users/admin' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
             >
-              Settings
+              Currencies
             </Link>
             <Link 
               to='/users/admin/staff'

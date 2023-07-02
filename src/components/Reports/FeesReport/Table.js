@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react';
 import Header from './Header';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import Pager from './Pager';
 
-const Table = ({feesReportData, loggedInUser, intValues}) => {
+const Table = ({feesReportData, loggedInUser, intValues, setFeesReportData, params, currency}) => {
     
     const getFileName = () => {
         if (intValues.min_date != '' && intValues.max_date != '') {
@@ -19,22 +20,12 @@ const Table = ({feesReportData, loggedInUser, intValues}) => {
 
     return (
         <>
-            <div style={{display:"flex", justifyContent:"space-between", marginTop:"1.5rem"}}>
-                {/* <Header 
-                    changeOrder={changeOrder}
-                    order={order}
-                    disableSelect={disableSelect}
-                /> */}
-                <ReactHTMLTableToExcel
-                    id='test-table-xls-button'
-                    className='btn btn-default'
-                    table='fees-report'
-                    filename={getFileName()}
-                    sheet='tablexls'
-                    buttonText='Download as XLS'
-                />
-            </div>
-            <div className="table-container" style={{padding:"0", paddingTop:"1rem", border:"none"}}>
+            <TableHeader 
+                feesReportData={feesReportData} 
+                params={params} 
+                setFeesReportData={setFeesReportData} 
+            />
+            <div className="table-container" style={{padding:"0", border:"none"}}>
                 <div className="table-responsive font-12" style={{maxHeight:"600px"}}>
                     <table className="table" id="fees-report">
                         <thead className="clients-report-table">
@@ -65,7 +56,7 @@ const Table = ({feesReportData, loggedInUser, intValues}) => {
                                 >Branches: {selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)}</td>
                             </tr> */}
                             <tr>
-                                <td colSpan={9}>Currency: </td>
+                                <td colSpan={9}>Currency: {currency}</td>
                             </tr>
                             <tr>
                                 <td colSpan={9}>{`Extracted On: ${new Date()}`}</td>
@@ -92,6 +83,37 @@ const Table = ({feesReportData, loggedInUser, intValues}) => {
             </div>
         </>
     );
+}
+
+const TableHeader = ({feesReportData, params, setFeesReportData }) => {
+    return (
+        <div className='table-header'>
+            <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
+                <Pager
+                    nextPageNumber={feesReportData.next_page_num}
+                    params={params}
+                    loadMoreFees={() => console.log('loadMoreFees')}
+                    loadingMore={false}
+                    prevPageNumber={feesReportData.prev_page_num}
+                    setFeesReportData={setFeesReportData}
+                />
+                <div style={{marginTop:'6px'}}>Showing {feesReportData.report.length} of {feesReportData.count} fees.</div>
+            </div>
+            <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
+            <div style={{marginTop:'6px'}}>Page {feesReportData.number} of {feesReportData.num_of_pages}</div>
+                <div>
+                    <ReactHTMLTableToExcel
+                        id='test-table-xls-button'
+                        className='btn btn-default'
+                        table='fees-report'
+                        filename='fees-report'
+                        sheet='tablexls'
+                        buttonText='Download as XLS'
+                    />
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default Table;

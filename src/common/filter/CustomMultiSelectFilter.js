@@ -1,16 +1,36 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Select from 'react-select';
 import { useField } from 'formik';
+// import {uu}
+
+function uuidv4() {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
 
 function CustomMultiSelectFilter({label, options, initVals, setFieldValue, ...props}) {
   const [optionSelected, setOptionSelected] = useState(initVals);
   const [field, meta] = useField(props);
 
+  const inputId = uuidv4();
+
   const handleMultiSelect = selected => {
     setOptionSelected(selected);
     const newVals = selected.map(val => val.value);
     setFieldValue(field.name, newVals);
+    const el = document.getElementById(inputId);
+    if (selected.length === 0) {
+      el.required = props.required;
+    }else {
+      el.required = false;
+    }
   }
+
+  useEffect(() => {
+    const el = document.getElementById(inputId);
+    el.required = props.required;
+  }, []);
 
   return (
     <div>
@@ -25,6 +45,7 @@ function CustomMultiSelectFilter({label, options, initVals, setFieldValue, ...pr
           classNamePrefix='select'
           onChange={selected => handleMultiSelect(selected)}
           styles={style}
+          inputId={inputId}
         />
         {meta.error && <div className='error'>{meta.error}</div>}
       </div>

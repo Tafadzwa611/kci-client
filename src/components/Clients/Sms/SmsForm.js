@@ -60,8 +60,11 @@ function SmsForm() {
         <Form autoComplete='off'>
           <NonFieldErrors errors={errors}>
             {notifs.map((notif, idx) => (
-              <div style={{width: '100%', height: '100px', display: 'flex', alignItems: 'center', backgroundColor: 'green'}} key={idx}>{notif}</div>
+              <div id='hideMe' className='success__submit' key={idx}>{notif}</div>
             ))}
+            <div className='divider divider-info'>
+              <span>Sms Information</span>
+            </div>
             <CustomTextField label='Message' name='sms'/>
             <CustomMultiSelect
               label='Client Status'
@@ -89,7 +92,10 @@ function SmsForm() {
               name='clients'
               isMulti
             />
-            <SubmitButton isSubmitting={isSubmitting}/>
+            <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
+            <div style={{display:'flex', justifyContent: 'flex-end'}}> 
+              <SubmitButton isSubmitting={isSubmitting}/>
+            </div>
           </NonFieldErrors>
         </Form>
       )}

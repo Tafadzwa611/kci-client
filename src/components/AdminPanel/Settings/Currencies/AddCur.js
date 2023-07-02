@@ -1,19 +1,18 @@
 import React from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import CategoryForm from './CategoryForm';
+import CurrencyForm from './CurrencyForm';
 import { addSchema } from './schema';
 
-function AddCat({setView, setCategoryId, setCats}) {
-  const initialValues = {name: '', is_active: true};
+function AddCur({setView, setCurs}) {
+  const initialValues = {fullname: '', shortname: '', date_created: ''};
   const back = () => setView('list');
 
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post('/loansapi/add_product_group/', values, CONFIG);
-      setCats(curr => [response.data, ...curr]);
-      setCategoryId(response.data.id);
+      const response = await axios.post('/usersapi/add_currency/', values, CONFIG);
+      setCurs(curr => [response.data, ...curr]);
       setView('list');
     } catch (error) {
       if (error.message === "Network Error") {
@@ -27,7 +26,7 @@ function AddCat({setView, setCategoryId, setCats}) {
   }
 
   return (
-    <CategoryForm
+    <CurrencyForm
       initialValues={initialValues}
       validationSchema={addSchema}
       onSubmit={onSubmit}
@@ -36,4 +35,4 @@ function AddCat({setView, setCategoryId, setCats}) {
   )
 }
 
-export default AddCat;
+export default AddCur;

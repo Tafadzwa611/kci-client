@@ -12,7 +12,6 @@ function AddBranch({setView, setBranchData}) {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/usersapi/add_branch/', values, CONFIG);
-      console.log(response.data)
       setBranchData(curr => [response.data, ...curr])
       setView('list');
     } catch (error) {
