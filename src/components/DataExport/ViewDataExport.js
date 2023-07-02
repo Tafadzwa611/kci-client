@@ -16,7 +16,7 @@ const ViewDataExport = () => {
         <Route
           index
           element={
-          <Fetcher urls={[`/reportsapi/get_user_exports/`]}>
+          <Fetcher key={'/'} urls={[`/reportsapi/get_user_exports/`]}>
             {({data}) => <DataExportQueue exportsList={data[0]} />}
           </Fetcher>}
         />
