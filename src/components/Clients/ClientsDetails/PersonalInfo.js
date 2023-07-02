@@ -7,8 +7,8 @@ function PersonalInfo({client, setModal}) {
       <div style={{display:'flex', justifyContent:'space-between', marginTop:'1.5rem'}}>
         {client.status == 'Inactive' &&
           <div style={{display:'flex', columnGap:'10px'}}>
-              <button className='btn btn-default client__details'>Add loan</button>
-              <button className='btn btn-default client__details'>Transfer Client</button>
+            <button className='btn btn-default client__details'>Add loan</button>
+            <button className='btn btn-default client__details'>Transfer Client</button>
           </div>}
         <div>
           <button className='btn btn-success' onClick={() => setModal(MODAL_STATES.updateInfo)}>Update Personal Details</button>
@@ -18,7 +18,6 @@ function PersonalInfo({client, setModal}) {
       <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', marginTop:'1.5rem'}}>
         <div>
           <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
-            {/* <li>Client State: <span className={statusClasses[client.status]}>{client.status}</span></li> */}
             <li>Account Number: {client.client_id}</li>
             <li>Client Type: {client.client_type} <a style={{cursor: 'pointer'}} onClick={() => setModal(MODAL_STATES.changeType)}><small>Change</small></a></li>
             <li>Gender: {client.gender}</li>

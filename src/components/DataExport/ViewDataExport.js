@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
-import { Fetcher } from '../../common';
-import CreateDataExport from './CreateDataExport/CreateDataExport';
+import EntityForm from './CreateDataExport/EntityForm';
 import DataExportQueue from './DataExportQueue/DataExportQueue';
-import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
+import DataExport from './DataExportQueue/DataExport';
+import { Fetcher } from '../../common';
+import { Routes, Route, Outlet, Link, useLocation, useParams } from 'react-router-dom';
 
 const ViewDataExport = () => {
   useEffect(() => {
@@ -12,10 +13,35 @@ const ViewDataExport = () => {
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
-        <Route index element={<CreateDataExport />} />
-        <Route path='dataexportqueue' element={<DataExportQueue />} />
+        <Route
+          index
+          element={
+          <Fetcher urls={[`/reportsapi/get_user_exports/`]}>
+            {({data}) => <DataExportQueue exportsList={data[0]} />}
+          </Fetcher>}
+        />
+        <Route
+          path='create_data_export'
+          element={
+          <Fetcher urls={[`/reportsapi/get_entity_fields/`]}>
+            {({data}) => <EntityForm fields={data[0]} />}
+          </Fetcher>}
+        />
+        <Route
+          path='dataexport/:dataexportId'
+          element={<DataExportElement/>}
+        />
       </Route>
     </Routes>
+  )
+}
+
+function DataExportElement() {
+  const params = useParams();
+  return (
+    <Fetcher urls={[`/reportsapi/get_export/${params.dataexportId}/`]}>
+      {({data}) => <DataExport data={data[0]}/>}
+    </Fetcher>
   )
 }
 
@@ -26,19 +52,17 @@ function Layout() {
     <div className='card'>
       <div className='card-body'>
         <h5 className='table-heading' style={{marginBottom:'20px'}}>View Data Export</h5>
-        <>
-          <div className='bloc-tabs'>
-            <Link to='/data/viewdata' className={location.pathname === '/data/viewdata' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              View Data Export
-            </Link>
-            <Link to='/data/viewdata/dataexportqueue' className={location.pathname === '/data/viewdata/dataexportqueue' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Data Export Queue
-            </Link>
-          </div>
-          <div className='tab-content font-12' style={{marginTop:'3rem'}}>
-            <Outlet />
-          </div>
-        </>
+        <div className='bloc-tabs'>
+          <Link to='/data/viewdata' className={location.pathname === '/data/viewdata' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+            Data Export List
+          </Link>
+          <Link to='/data/viewdata/create_data_export' className={location.pathname === '/data/viewdata/create_data_export' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+            Create Data Export
+          </Link>
+        </div>
+        <div className='tab-content font-12' style={{marginTop:'3rem'}}>
+          <Outlet />
+        </div>
       </div>
     </div>
   )
