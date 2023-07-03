@@ -117,7 +117,7 @@ function Payments({
             <div style={{position:'sticky', top:'0', width:'100%'}}>
               <div style={{display:'flex', flexDirection:'column', padding:'1.5rem'}} className='j-details-container'>
                 <div style={{marginBottom:'1.5rem', display:'flex', justifyContent:'space-between'}}>
-                  <button><a onClick={() => setPayId(null)} className='btn btn-default' style={{borderRadius:'0'}}>Close</a></button>
+                  <button><a onClick={() => setPayId(null)} className='btn btn-default client__details' style={{borderRadius:'0'}}>Close</a></button>
                   <div style={{display:'flex', columnGap:'3px'}}>
                     <button className='btn btn-olive' id={selectedPayment.id} data-name={reverse} onClick={showModal}>Reverse</button>
                     <button className='btn btn-olive' id={selectedPayment.id} data-name={edit} onClick={showModal}>Edit</button>

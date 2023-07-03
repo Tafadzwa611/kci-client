@@ -14,7 +14,7 @@ function ProductDetails({product, close, setView, setProducts}) {
         <div style={{display:"flex", flexDirection:"column", padding:"1.5rem"}} className="j-details-container">
           <div className="row" style={{marginBottom:"1.5rem", marginTop:"0"}}>
             <div className="col-12" style={{display:"flex", justifyContent:"space-between"}}>
-              <button><a onClick={close} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
+              <button><a onClick={close} className="btn btn-default client__details" style={{borderRadius:"0"}}>Close</a></button>
               <div style={{display:"flex", columnGap: "5px"}}>
                 <button className="btn btn-olive" onClick={() => setView('edit')}>Edit</button>
                 <button className="btn btn-olive" onClick={() => setOpenDeleteProduct(true)}>Delete</button>

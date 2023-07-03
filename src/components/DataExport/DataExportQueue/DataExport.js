@@ -51,7 +51,7 @@ function DataExport({data, close}) {
           <div style={{display:'flex', justifyContent:'space-between'}}>
             {close ?
             <>
-              <button className='btn btn-default' onClick={close}>Close</button>
+              <button className='btn btn-default client__details' onClick={close}>Close</button>
               <button className='btn btn-default client__details'>
                 <Link to={`dataexport/${dataExport.id}`}>Expand</Link>
               </button>
@@ -65,7 +65,9 @@ function DataExport({data, close}) {
               <li>Name: {dataExport.data_export_name}</li>
               <li>File Format: {dataExport.data_export_file_format}</li>
               <li>
-                Status: {dataExport.status}
+                <span style={{marginRight:'5px'}}>
+                  Status: {dataExport.status}
+                </span>
                 {dataExport.status === 'Completed' ?
                 <span style={{cursor:'pointer'}} className='badge badge-info' onClick={dowloadFile}>
                   Download

@@ -177,9 +177,12 @@ function EntityForm({fields}) {
           />
         </div>
       </> : null}
-      <button className='btn btn-info' type='submit' onClick={onSubmit}>
-        Submit
-      </button>
+      <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+      <div style={{display:'flex', justifyContent: 'flex-end'}}>
+        <button className='btn btn-info' type='submit' onClick={onSubmit}>
+          Submit
+        </button>
+      </div>
     </>
   )
 }
