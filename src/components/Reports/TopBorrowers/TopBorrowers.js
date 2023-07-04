@@ -24,6 +24,8 @@ function TopBorrowers({loggedInUser}) {
                     loggedInUser={loggedInUser}
                     intValues={intValues}
                     currency={currency}
+                    params={params}
+                    setBorrowersData={setBorrowersData}
                 />
             }
         </>
