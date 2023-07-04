@@ -24,6 +24,8 @@ function DisbursementReport({loggedInUser}) {
                     loggedInUser={loggedInUser}
                     intValues={intValues}
                     currency={currency}
+                    setDisbursementData={setDisbursementData}
+                    params={params}
                 />
             }
         </>
