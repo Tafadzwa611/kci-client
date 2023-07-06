@@ -33,6 +33,7 @@ const Routes = ({loggedInUser, branches, currencies}) => {
   return (
     <Suspense fallback='Loading...'>
       <ReactRoutes >
+        <Route exact path='/' element={<Home/>} />
         <Route exact path='/home' element={<Home/>} />
         <Route exact path='/dashboard' element={<Dashboard/>}/>
         <Route exact path='/create_file' element={<CreateFile/>}/>

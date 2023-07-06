@@ -6,7 +6,7 @@ import Routes from './Routes';
 import {LoggedInUserProvider} from '../contexts/LoggedInUserContext';
 import { BranchesProvider } from '../contexts/BranchesContext';
 import { CurrenciesProvider } from '../contexts/CurrenciesContext';
- 
+
 export const ThemeContext = createContext(null);
 function App() {
   const [theme, setTheme] = useState('light');
