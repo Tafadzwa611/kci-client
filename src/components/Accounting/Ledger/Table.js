@@ -1,107 +1,99 @@
 import React from 'react';
-import { FixedSizeList as List } from 'react-window';
-import { convertDate } from '../Journals/utils';
+import Pager from './Pager';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-function Table({openingBal, txns}) {
-  const Row = ({ index, style }) => {
-    const txn = txns[index];
-    if (index === 0) {
-      return (
-        <div>
-          <div style={{...style, display:'flex', position:"relative", height:"30px", paddingTop:"5px", textAlign:"center"}}>
-            <div style={{width:"10%"}}>Opening_Balance</div>
-            <div style={{width:"10%"}}></div>
-            <div style={{width:"10%"}}></div>
-            <div style={{width:"5%"}}></div>
-            <div style={{width:"5%"}}></div>
-            <div style={{width:"5%"}}>{openingBal}</div>
-            <div style={{width:"15%"}}></div>
-            <div style={{width:"15%"}}></div>
-            <div style={{width:"10%"}}></div>
-            <div style={{width:"15%"}}></div>
-          </div>
-          <div style={{...style, display:'flex', position:"relative", height: "30px", paddingTop:"5px", textAlign:"center"}}>
-            <div style={{width:"10%"}} className="link">{txn.transaction_id}</div>
-            <div style={{width:"10%"}}>{convertDate(txn.booking_date)}</div>
-            <div style={{width:"10%"}}>{convertDate(txn.date_logged)}</div>
-            <div style={{width:"5%"}}>{txn.credit ?? ''}</div>
-            <div style={{width:"5%"}}>{txn.debit ?? ''}</div>
-            <div style={{width:"5%"}}>{txn.balance}</div>
-            <div style={{width:"15%"}}>{txn.client_id}</div>
-            <div style={{width:"15%"}}>{txn.client_name}</div>
-            <div style={{width:"10%"}}>{txn.account_id}</div>
-            <div style={{width:"15%"}}>{txn.created_by_name}</div>
-          </div>
-        </div>
-      )
-    }
-
-    return (
-      <>
-        <div className="div__border" style={{...style, display:'flex', textAlign:"center", display:"flex", alignItems:"center"}}>
-          <div style={{width:"10%"}} className="link">{txn.transaction_id}</div>
-          <div style={{width:"10%"}}>{convertDate(txn.booking_date)}</div>
-          <div style={{width:"10%"}}>{convertDate(txn.date_logged)}</div>
-          <div style={{width:"5%"}}>{txn.credit ?? ''}</div>
-          <div style={{width:"5%"}}>{txn.debit ?? ''}</div>
-          <div style={{width:"5%"}}>{txn.balance}</div>
-          <div style={{width:"15%"}}>{txn.client_id}</div>
-          <div style={{width:"15%"}}>{txn.client_name}</div>
-          <div style={{width:"10%"}}>{txn.account_id}</div>
-          <div style={{width:"15%"}}>{txn.created_by_name}</div>
-        </div>
-      </>
-    )
-  }
-
-  if (txns.length === 0) {
-    return (
-      <div className='table-responsive p-0'>
-        <div className="journal-details header" style={{display:'flex', textAlign:"center"}}>
-          <div style={{width:"10%"}}>Transaction_ID</div>
-          <div style={{width:"10%"}}>Booking_Date</div>
-          <div style={{width:"10%"}}>Date_Created</div>
-          <div style={{width:"5%"}}>Credit</div>
-          <div style={{width:"5%"}}>Debit</div>
-          <div style={{width:"5%"}}>Balance</div>
-          <div style={{width:"15%"}}>Client_Id</div>
-          <div style={{width:"15%"}}>Client_Name</div>
-          <div style={{width:"10%"}}>Account_Id</div>
-          <div style={{width:"15%"}}>Created_By</div>
-        </div>
-        <div style={{display:'flex', position:"relative", height:"20px", textAlign:"center"}}>
-          <div style={{width:"10%"}}>Opening Balance</div>
-          <div style={{width:"10%"}}></div>
-          <div style={{width:"10%"}}></div>
-          <div style={{width:"5%"}}></div>
-          <div style={{width:"5%"}}></div>
-          <div style={{width:"5%"}}>{openingBal}</div>
-          <div style={{width:"15%"}}></div>
-          <div style={{width:"15%"}}></div>
-          <div style={{width:"10%"}}></div>
-          <div style={{width:"15%"}}></div>
-        </div>
-      </div>
-    )
-  }
-
+function Table({openingBal, txns, params, setTxns, mode}) {
   return (
-    <div className='table-responsive p-0'>
-      <div className="journal-details header" style={{display:'flex', textAlign:"center"}}>
-        <div style={{width:"10%"}}>Transaction_ID</div>
-        <div style={{width:"10%"}}>Booking_Date</div>
-        <div style={{width:"10%"}}>Date_Created</div>
-        <div style={{width:"5%"}}>Credit</div>
-        <div style={{width:"5%"}}>Debit</div>
-        <div style={{width:"5%"}}>Balance</div>
-        <div style={{width:"15%"}}>Client_Id</div>
-        <div style={{width:"15%"}}>Client_Name</div>
-        <div style={{width:"10%"}}>Account_Id</div>
-        <div style={{width:"15%"}}>Created_By</div>
+    <>
+      <TableHeader txns={txns} params={params} setTxns={setTxns} mode={mode}/>
+      <div style={{display:'block'}}>
+        <div style={{padding:'0', border:'none'}}>
+          <div style={{width:'100%', overflowX:'auto'}}>
+            <div className='table__height'>
+              <table className='table' id='journals'>
+                <thead>
+                  <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
+                    <th style={{textAlign:"start"}}>Transaction_ID</th>
+                    <th style={{textAlign:"start"}}>Booking_Date</th>
+                    <th style={{textAlign:"start"}}>Date_Created</th>
+                    <th style={{textAlign:"start"}}>Credit</th>
+                    <th style={{textAlign:"start"}}>Debit</th>
+                    <th style={{textAlign:"start"}}>Balance</th>
+                    <th style={{textAlign:"start"}}>Client_Id</th>
+                    <th style={{textAlign:"start"}}>Client_Name</th>
+                    <th style={{textAlign:"start"}}>Account_Id</th>
+                    <th style={{textAlign:"start"}}>Created_By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {txns.number == 1 &&
+                    <tr>
+                      <td style={{verticalAlign:"middle"}}>Opening Balance</td>
+                      <td style={{verticalAlign:"middle"}}></td>
+                      <td style={{verticalAlign:"middle"}}></td>
+                      <td style={{verticalAlign:"middle"}}></td>
+                      <td style={{verticalAlign:"middle"}}></td>
+                      <td style={{verticalAlign:"middle"}}>{openingBal}</td>
+                      <td style={{verticalAlign:"middle"}}></td>
+                      <td style={{verticalAlign:"middle"}}></td>
+                      <td style={{verticalAlign:"middle"}}></td>
+                      <td style={{verticalAlign:"middle"}}></td>
+                    </tr>
+                  }
+                  {txns.journals.map(txn => {
+                    return (
+                      <tr key={txn.id}>
+                        <td style={{verticalAlign:"middle"}}>{txn.transaction_id}</td>
+                        <td style={{verticalAlign:"middle"}}>{txn.booking_date}</td>
+                        <td style={{verticalAlign:"middle"}}>{txn.date_logged}</td>
+                        <td style={{verticalAlign:"middle"}}>{txn.credit ?? ''}</td>
+                        <td style={{verticalAlign:"middle"}}>{txn.debit ?? ''}</td>
+                        <td style={{verticalAlign:"middle"}}>{txn.balance}</td>
+                        <td style={{verticalAlign:"middle"}}>{txn.client_id}</td>
+                        <td style={{verticalAlign:"middle"}}>{txn.client_name}</td>
+                        <td style={{verticalAlign:"middle"}}>{txn.account_id}</td>
+                        <td style={{verticalAlign:"middle"}}>{txn.created_by_name}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
-      <List height={600} itemCount={txns.length} itemSize={50} width={'100%'}>
-        {Row}
-      </List>
+    </>
+  )
+}
+
+const TableHeader = ({txns, params, setTxns, mode}) => {
+  return (
+    <div className='table-header'>
+      <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
+        <Pager
+          nextPageNumber={txns.next_page_num}
+          params={params}
+          loadMoreExpenses={() => console.log('loadMoreExpenses')}
+          loadingMore={false}
+          prevPageNumber={txns.prev_page_num}
+          setTxns={setTxns}
+          mode={mode}
+        />
+        <div style={{marginTop:'6px'}}>Showing {txns.journals.length} of {txns.count} transactions.</div>
+      </div>
+      <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
+        <div style={{marginTop:'6px'}}>Page {txns.number} of {txns.num_of_pages}</div>
+        <div>
+          <ReactHTMLTableToExcel
+              id='test-table-xls-button'
+              className='btn btn-default'
+              table='journals'
+              filename='ledger'
+              sheet='tablexls'
+              buttonText='Download as XLS'
+          />
+        </div>
+      </div>
     </div>
   )
 }
