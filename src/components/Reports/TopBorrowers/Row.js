@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 
 
 const statusClasses = {
-    'Fully Paid': 'badge badge-success',
-    'Early Settlement': 'badge badge-success',
-    'Restructured': 'badge badge-dark',
-    'Processing': 'badge badge-info-lighter',
-    'Arrears': 'badge badge-info-light',
-    'Open': 'badge badge-info',
-    'Over Paid': 'badge badge-warning',
-    'Defaulted': 'badge badge-danger',
-    'Rejected': 'badge badge-danger',
-    'Written-Off': 'badge badge-dark',
+  'Fully Paid': 'badge badge-success',
+  'Early Settlement': 'badge badge-success',
+  'Restructured': 'badge badge-dark',
+  'Processing': 'badge badge-info-lighter',
+  'Arrears': 'badge badge-danger',
+  'Approved': 'badge badge-info-light',
+  'Open': 'badge badge-info',
+  'Over Paid': 'badge badge-warning',
+  'Defaulted': 'badge badge-danger',
+  'Rejected': 'badge badge-danger',
+  'Written-Off': 'badge badge-dark',
 };
 
 function Row({client, idx, currency, showLoans}) {

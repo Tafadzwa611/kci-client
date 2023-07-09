@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 function LoansTable({loans, currencyIso, loggedInUser, par_name}) {
@@ -34,7 +35,13 @@ function LoansTable({loans, currencyIso, loggedInUser, par_name}) {
                 {loans.length > 0 ? loans.map(loan => {
                   return (
                     <tr className='tr-class' key={loan.id}>
-                      <td><a href={`/loans/loan_detail/${loan.id}`}>{loan.loan_id}</a></td>
+                      <td>
+                        <span style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>
+                          <Link to={`/loans/viewloans/loandetails/cli/${loan.is_sub_loan ? loan.main_loan : loan.id}`}>
+                            {loan.loan_id} {loan.is_sub_loan ? <button className='badge badge-info'>Solidarity</button> : null}
+                          </Link>
+                        </span>
+                      </td>
                       <td className='td-class'>
                         <div title={loan.client}>
                           {loan.client.length >14 ? `${loan.client.slice(0, 15)}...`: loan.client}

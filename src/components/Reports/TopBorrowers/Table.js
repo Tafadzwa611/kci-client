@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import Row from './Row';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import Pager from './Pager';
 
-const Table = ({report, intValues, loggedInUser, currency}) => {
+const Table = ({report, intValues, loggedInUser, currency, setBorrowersData, params}) => {
     const [showLoans, setShowLoans] = useState(false);
   
     const getFileName = () => {
@@ -20,25 +21,20 @@ const Table = ({report, intValues, loggedInUser, currency}) => {
 
     return (
         <>
-            <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginTop:"2rem"}}>
-                <div style={{display:"flex", alignItems:"center", columnGap:"1rem"}}>
+            <div style={{display:"flex", justifyContent:"space-between"}}>
+                <div style={{display:"flex", alignItems:"center", columnGap:"10px"}}>
                     <div style={{display:"flex", alignItems:"center", columnGap:"5px"}}>
                         <span>Expand</span>
                         <input type='checkbox' checked={showLoans} onChange={_=> setShowLoans(curr => !curr)}/>
                     </div>
                 </div>
-                <div>
-                    <ReactHTMLTableToExcel
-                        id='test-table-xls-button'
-                        className='download-table-xls-button btn btn-default'
-                        table='borrowers-report'
-                        filename={getFileName()}
-                        sheet='tablexls'
-                        buttonText='Download as XLS'
-                    />
-                </div>
             </div>
-            <div className="table-container" style={{padding:"0", paddingTop:"1.5rem", border:"none"}}>
+            <TableHeader 
+                report={report} 
+                params={params} 
+                setBorrowersData={setBorrowersData} 
+            />
+            <div className="table-container" style={{padding:"0", border:"none"}}>
                 <div className="table-responsive font-12" style={{maxHeight:"600px"}}>
                     <table className="table table-hover" id='borrowers-report' style={{width:"100%"}}>
                         <thead className="clients-report-table">
@@ -77,6 +73,37 @@ const Table = ({report, intValues, loggedInUser, currency}) => {
             </div>
         </>
     );
+}
+
+const TableHeader = ({report, params, setBorrowersData }) => {
+    return (
+        <div className='table-header' style={{marginTop:'1rem'}}>
+            <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
+                <Pager
+                    nextPageNumber={report.next_page_num}
+                    params={params}
+                    loadMoreBorrowers={() => console.log('loadMoreBorrowers')}
+                    loadingMore={false}
+                    prevPageNumber={report.prev_page_num}
+                    setBorrowersData={setBorrowersData}
+                />
+                <div style={{marginTop:'6px'}}>Showing {report.report.length} of {report.count} loans.</div>
+            </div>
+            <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
+            <div style={{marginTop:'6px'}}>Page {report.number} of {report.num_of_pages}</div>
+                <div>
+                    <ReactHTMLTableToExcel
+                        id='test-table-xls-button'
+                        className='btn btn-default'
+                        table='borrowers-report'
+                        filename='borrowers-report'
+                        sheet='tablexls'
+                        buttonText='Download as XLS'
+                    />
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default Table;

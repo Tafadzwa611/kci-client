@@ -22,8 +22,8 @@ function MiniGroupDetails({groupData, extra}) {
 
         <div style={{marginBottom:"1rem"}}>
           <div style={{marginBottom:"1rem", display:"flex", justifyContent:"space-between"}}>
-            <button><a onClick={e => setGroupId(null)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
-            <button className='btn btn-default' onClick={() => navigate({pathname: '/groups/viewgroups', search: `?group_id=${groupDetails.id}`})}>
+            <button><a onClick={e => setGroupId(null)} className="btn btn-default client__details" style={{borderRadius:"0"}}>Close</a></button>
+            <button className='btn btn-default client__details' onClick={() => navigate({pathname: '/groups/viewgroups', search: `?group_id=${groupDetails.id}`})}>
               Max
             </button>
           </div>

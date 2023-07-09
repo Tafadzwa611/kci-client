@@ -18,7 +18,7 @@ function MiniIncomeDetails({incomeDetails, extra}) {
 
         <div className="row" style={{marginBottom:"1rem", marginTop:"0"}}>
             <div className="col-12" style={{display:"flex", justifyContent:"space-between"}}>
-              <button><a onClick={e => setIncomeId(null)} className="btn btn-default" style={{borderRadius:"0"}}>Close</a></button>
+              <button><a onClick={e => setIncomeId(null)} className="btn btn-default client__details" style={{borderRadius:"0"}}>Close</a></button>
               <button className='btn btn-default' onClick={() => navigate({pathname: '/otherincome/viewotherincome', search: `?income_id=${incomeDetails.id}`})}>
                 Max
               </button>
