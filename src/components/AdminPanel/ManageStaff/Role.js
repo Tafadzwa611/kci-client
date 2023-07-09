@@ -15,9 +15,9 @@ function Role() {
           <div>
             <div style={{display:'flex', justifyContent:'space-between'}}>
               <>
-              <button className='btn btn-olive'>
-                <Link to={`/users/admin/staff/editrole/${data[0].id}`}>Edit</Link>
-              </button>
+                <button className='btn btn-olive'>
+                  <Link to={`/users/admin/staff/editrole/${data[0].id}`}>Edit</Link>
+                </button>
               </>
             </div>
             <div style={{margin:'1rem 0', display:'flex', justifyContent:'space-between'}}>

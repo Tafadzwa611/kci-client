@@ -18,9 +18,9 @@ const List = ({data}) => {
 
   return (
     <>
-      <Link to='/users/admin/staff/addrole'>
-        Add Staff Role
-      </Link>
+      <button className='btn btn-olive'>
+        <Link to='/users/admin/staff/addrole'>Add Staff Role</Link>
+      </button>
       <Table rows={rows} headers={headers}/>
     </>
   )
