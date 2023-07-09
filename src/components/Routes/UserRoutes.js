@@ -19,7 +19,7 @@ const UserRoutes = (
     <Route exact path='/users/addbranch' element={<AddBranch/>}/>
     <Route exact path='/users/banknames' element={<BankNames/>}/>
     <Route exact path='/users/branches' element={<Branches/>}/>
-    <Route exact path='/users/staff' element={<Staff/>}/>
+    <Route exact path='/users/staff/*' element={<Staff/>}/>
     <Route exact path='/users/staffroles' element={<StaffRoles/>}/>
     <Route exact path='/users/addbankname' element={<AddBankName/>}/>
     <Route exact path='/users/addstaffrole' element={<AddStaffRole/>}/>

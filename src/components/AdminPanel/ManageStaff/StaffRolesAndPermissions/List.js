@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, SuccessBtn, EditBtn, DeleteBtn } from '../../../../common';
+import { Table, SuccessBtn, EditBtn } from '../../../../common';
 import CreateRoles from './CreateStaffRole/CreateStaffRoleModal';
 import EditStaffRole from './EditStaffRole/EditStaffRoleModal';
 
@@ -19,7 +19,7 @@ const List = ({data}) => {
 
   return (
     <>
-      <SuccessBtn value={'Add Staff Role'} handler={_ => setOpenCreateFieldModal(true)}/>
+      <SuccessBtn value={'Add Staff Role'} handler={() => setOpenCreateFieldModal(true)}/>
       <CreateRoles open={openCreateFieldModal} setOpen={setOpenCreateFieldModal} setRoles={setRoles}/>
       <Table rows={rows} headers={headers}/>
       {roles.some(role => role.id==roleId) &&

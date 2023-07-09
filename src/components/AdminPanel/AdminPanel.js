@@ -19,7 +19,7 @@ const AdminPanel = () => {
     <Routes>
       <Route path='/' element={<Layout />}>
         <Route index element={<Currencies />} />
-        <Route path='staff' element={<ManageStaff />} />
+        <Route path='staff/*' element={<ManageStaff />} />
         <Route path='otherincome' element={<OtherIncomeTypes />} />
         <Route path='expensetypes' element={<ExpenseTypes />} />
         <Route path='manageloans' element={<ManageLoans />} />
