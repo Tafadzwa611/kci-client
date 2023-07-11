@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import {
@@ -47,39 +48,46 @@ function AddStaffForm({roles}) {
   const {branches} = useBranches();
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ isSubmitting, errors, setFieldValue}) => (
-        <Form>
-          <NonFieldErrors errors={errors}>
-            <div className='divider divider-info'>
-              <span>Staff Information</span>
-            </div>
-            <CustomInput label='First Name' name='first_name' type='text' required/>
-            <CustomInput label='Last Name' name='last_name' type='text' required/>
-            <CustomInput label='Email' name='email' type='text' required/>
-            <CustomSelect label='Role' name='role_id'>
-              <option value=''>------</option>
-              {roles.map(role => <option key={role.id} value={role.id}>{role.role}</option>)}
-            </CustomSelect>
-            <CustomSelect label='Branch' name='branch_id'>
-              <option value=''>------</option>
-              {branches.map(branch => <option key={branch.id} value={branch.id}>{branch.name}</option>)}
-            </CustomSelect>
-            <CustomMultiSelect
-              label='Branch Access'
-              setFieldValue={setFieldValue}
-              name='access_branches'
-              options={branches.map(branch => ({value: branch.id, label: branch.name}))}
-            />
-            <CustomCheckbox label='Is Loan Officer' name='is_loan_officer'/>
-            <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
-            <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-              <SubmitButton isSubmitting={isSubmitting}/>
-            </div>
-          </NonFieldErrors>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <div>
+          <button type='button' className='btn btn-default max'>
+            <Link to='/users/admin/staff'>Back</Link>
+          </button>
+      </div>
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        {({ isSubmitting, errors, setFieldValue}) => (
+          <Form>
+            <NonFieldErrors errors={errors}>
+              <div className='divider divider-info'>
+                <span>Staff Information</span>
+              </div>
+              <CustomInput label='First Name' name='first_name' type='text' required/>
+              <CustomInput label='Last Name' name='last_name' type='text' required/>
+              <CustomInput label='Email' name='email' type='text' required/>
+              <CustomSelect label='Role' name='role_id'>
+                <option value=''>------</option>
+                {roles.map(role => <option key={role.id} value={role.id}>{role.role}</option>)}
+              </CustomSelect>
+              <CustomSelect label='Branch' name='branch_id'>
+                <option value=''>------</option>
+                {branches.map(branch => <option key={branch.id} value={branch.id}>{branch.name}</option>)}
+              </CustomSelect>
+              <CustomMultiSelect
+                label='Branch Access'
+                setFieldValue={setFieldValue}
+                name='access_branches'
+                options={branches.map(branch => ({value: branch.id, label: branch.name}))}
+              />
+              <CustomCheckbox label='Is Loan Officer' name='is_loan_officer'/>
+              <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+              <div style={{display:'flex', justifyContent: 'flex-end'}}> 
+                <SubmitButton isSubmitting={isSubmitting}/>
+              </div>
+            </NonFieldErrors>
+          </Form>
+        )}
+      </Formik>
+    </>
   )
 }
 

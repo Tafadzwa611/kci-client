@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   NonFieldErrors,
   CustomInput,
@@ -75,33 +76,40 @@ function AddRoleForm({perms}) {
   }
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ isSubmitting, errors, setFieldValue}) => (
-        <Form>
-          <NonFieldErrors errors={errors}>
-            <div className='divider divider-info'>
-              <span>Role Information</span>
-            </div>
-            <CustomInput label='Role' name='role' type='text' required/>
-            {Object.keys(perms).map(key => {
-              return (
-                <CustomMultiSelect
-                  key={key}
-                  label={permNames[key]}
-                  setFieldValue={setFieldValue}
-                  name={key}
-                  options={perms[key].map(perm => ({value: perm.id, label: perm.name}))}
-                />
-              )
-            })}
-            <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
-            <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-              <SubmitButton isSubmitting={isSubmitting}/>
-            </div>
-          </NonFieldErrors>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <div>
+        <button type='button' className='btn btn-default max'>
+          <Link to='/users/admin/staff/rolesndperm'>Back</Link>
+        </button>
+      </div>
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        {({ isSubmitting, errors, setFieldValue}) => (
+          <Form>
+            <NonFieldErrors errors={errors}>
+              <div className='divider divider-info'>
+                <span>Role Information</span>
+              </div>
+              <CustomInput label='Role' name='role' type='text' required/>
+              {Object.keys(perms).map(key => {
+                return (
+                  <CustomMultiSelect
+                    key={key}
+                    label={permNames[key]}
+                    setFieldValue={setFieldValue}
+                    name={key}
+                    options={perms[key].map(perm => ({value: perm.id, label: perm.name}))}
+                  />
+                )
+              })}
+              <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+              <div style={{display:'flex', justifyContent: 'flex-end'}}> 
+                <SubmitButton isSubmitting={isSubmitting}/>
+              </div>
+            </NonFieldErrors>
+          </Form>
+        )}
+      </Formik>
+    </>
   )
 }
 

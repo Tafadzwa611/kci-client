@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Fetcher, CustomMultiSelect, NonFieldErrors, SubmitButton } from '../../../../common';
 import { useNavigate } from 'react-router-dom';
@@ -71,33 +72,40 @@ const UpdatePermsForm = ({user, allPerms}) => {
   }
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ isSubmitting, errors, setFieldValue, values}) => (
-        <Form>
-          <NonFieldErrors errors={errors}>
-            <div className='divider divider-info'>
-              <span>Role Information</span>
-            </div>
-            {Object.keys(allPerms).map(key => {
-              return (
-                <CustomMultiSelect
-                  key={key}
-                  label={permNames[key]}
-                  initVals={values[key]}
-                  setFieldValue={setFieldValue}
-                  name={key}
-                  options={allPerms[key].map(perm => ({value: perm.id, label: perm.name}))}
-                />
-              )
-            })}
-            <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
-            <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-              <SubmitButton isSubmitting={isSubmitting}/>
-            </div>
-          </NonFieldErrors>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <div style={{marginBottom:'20px'}}>
+        <button type='button' className='btn btn-default max'>
+          <Link to={`/users/admin/staff/staffdetails/${user.id}`}>Back</Link>
+        </button>
+      </div>
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        {({ isSubmitting, errors, setFieldValue, values}) => (
+          <Form>
+            <NonFieldErrors errors={errors}>
+              <div className='divider divider-info'>
+                <span>Role Information</span>
+              </div>
+              {Object.keys(allPerms).map(key => {
+                return (
+                  <CustomMultiSelect
+                    key={key}
+                    label={permNames[key]}
+                    initVals={values[key]}
+                    setFieldValue={setFieldValue}
+                    name={key}
+                    options={allPerms[key].map(perm => ({value: perm.id, label: perm.name}))}
+                  />
+                )
+              })}
+              <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+              <div style={{display:'flex', justifyContent: 'flex-end'}}> 
+                <SubmitButton isSubmitting={isSubmitting}/>
+              </div>
+            </NonFieldErrors>
+          </Form>
+        )}
+      </Formik>
+    </>
   )
 }
 

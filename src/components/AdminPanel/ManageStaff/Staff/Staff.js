@@ -93,22 +93,22 @@ function Filter({roles, setUsers}) {
             <Form>
               <NonFieldErrors errors={errors}>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'20%'}}>
+                  <div className='row-payments-container' style={{width:'19%'}}>
                     <CustomSelectFilter label='Branch' name='branch_id'>
                       <option value=''>------</option>
                       {branches.map(branch => <option key={branch.id} value={branch.id}>{branch.name}</option>)}
                     </CustomSelectFilter>
                   </div>
-                  <div className='row-payments-container' style={{width:'20%'}}>
+                  <div className='row-payments-container' style={{width:'19%'}}>
                     <CustomInputFilter label='First Name' name='first_name'/>
                   </div>
-                  <div className='row-payments-container' style={{width:'20%'}}>
+                  <div className='row-payments-container' style={{width:'19%'}}>
                     <CustomInputFilter label='Last Name' name='last_name'/>
                   </div>
-                  <div className='row-payments-container' style={{width:'20%'}}>
+                  <div className='row-payments-container' style={{width:'19%'}}>
                     <CustomInputFilter label='Email' name='email'/>
                   </div>
-                  <div className='row-payments-container' style={{width:'20%'}}>
+                  <div className='row-payments-container' style={{width:'19%'}}>
                     <CustomSelectFilter label='Role' name='staff_role_id'>
                       <option value=''>------</option>
                       {roles.map(role => <option key={role.id} value={role.id}>{role.role}</option>)}
