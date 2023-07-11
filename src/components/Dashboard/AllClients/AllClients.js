@@ -53,7 +53,7 @@ const AllClients = ({showDiv2, div2, branches}) => {
 
             <div className="loans_clients_summary_container-header" onClick={showDiv2}>
                 <div>
-                    <h1 className="dashboard-section-title">All Clients</h1>
+                    <h1 className="dashboard-section-title">All Clients <em><small>(Groups included)</small></em></h1>
                     <span className="dashboard-section-amount-or-number">{allclients['all_clients_count']}</span>
                 </div>
 
@@ -100,7 +100,7 @@ const AllClients = ({showDiv2, div2, branches}) => {
 
                 <div className="loans__clients__data">
                     <div className="loan_client_summary__titles">
-                        <h3 className="loan_client_item_name"> Company/Co-operative Clients</h3>
+                        <h3 className="loan_client_item_name"> Groups</h3>
                         <span className="loan_client_item_number">{allclients['all_group_clients_count']} ( {allclients['all_group_clients_percentage']}% )</span>
                     </div>
                     <div className="loan_client_item__bar">

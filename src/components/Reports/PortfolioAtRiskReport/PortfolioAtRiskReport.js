@@ -8,8 +8,14 @@ const PortfolioAtRiskReport = ({loggedInUser}) => {
     const [currencies, setCurrencies] = useState(null);
     const [pars, setPars] = useState([]);
     const [branches, setBranches] = useState(null);
-    const [openModal, setOpenModal] = useState(false);
-  
+    const [openModal, setOpen] = useState(false);
+    const [intValues, setIntValues] = useState([])
+    const [params, setParams] = useState(null);
+    const [lowerLimit, setLowerLimit] = useState('');
+    const [upperLimit, setUpperLimit] = useState('');
+    const [currencyId, setCurrencyId] = useState(null);
+    const [selectedBranchesIds, setSelectedBranchesIds] = useState([]);
+
     useEffect(() => {
         fetchCurrencies();
         fetchBranches();
@@ -47,7 +53,7 @@ const PortfolioAtRiskReport = ({loggedInUser}) => {
   
     const showModal = (e) => {
         e.preventDefault();
-        setOpenModal(true);
+        setOpen(true);
     }
   
     if (currencies===null || branches===null) {
@@ -60,11 +66,18 @@ const PortfolioAtRiskReport = ({loggedInUser}) => {
         <>
             <AddPar
                 open={openModal}
-                setOpen={setOpenModal}
+                setOpen={setOpen}
                 setPars={setPars}
                 branches={branches}
                 setBranches={setBranches}
                 currencies={currencies}
+                setParams={setParams}
+                setIntValues={setIntValues}
+                setLowerLimit={setLowerLimit}
+                setUpperLimit={setUpperLimit}
+                setCurrencyId={setCurrencyId}
+                selectedBranchesIds={selectedBranchesIds}
+                setSelectedBranchesIds={setSelectedBranchesIds}
             />
             <>
                 <div style={{paddingBottom: '40px'}}>
@@ -82,9 +95,11 @@ const PortfolioAtRiskReport = ({loggedInUser}) => {
                     principal_at_risk={par.principal_at_risk}
                     total_loan_portfolio={par.total_loan_portfolio}
                     currencyIso={par.currencyIso}
-                    currencyId={par.currencyId}
-                    branches={branches.filter(branch => par.selectedBranchesIds.includes(branch.id))}
-                    limits={par.limits}
+                    currencyId={currencyId}
+                    branches={branches.filter(branch => par.selectedBIds.includes(branch.id))}
+                    selectedBranchesIds={selectedBranchesIds}
+                    lowerLimit={lowerLimit}
+                    upperLimit={upperLimit}
                     loggedInUser={loggedInUser}
                     />)}
                 </div>
