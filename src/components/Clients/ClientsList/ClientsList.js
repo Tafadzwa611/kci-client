@@ -14,19 +14,19 @@ function ClientsList() {
     clients: []
   });
   const [params, setParams] = useState(null);
-  const [searchType, setSearchType] = useState('basic');
+  // const [searchType, setSearchType] = useState('basic');
   const [clientId, setClientId] = useState(null);
 
   return (
     <Fetcher urls={['/clientsapi/client_types/']}>
       {({data}) => (
         <>
-          <div className='row-payments-container' style={{width: '200px', margin: '10px 0'}}>
+          {/* <div className='row-payments-container' style={{width: '200px', margin: '10px 0'}}>
             <select className='custom-select-form row-form' onChange={(e) => setSearchType(e.target.value)} value={searchType}>
               <option value='basic'>Basic Search</option>
               <option value='advanced'>Advanced Search</option>
             </select>
-          </div>
+          </div> */}
           <Filter setParams={setParams} setClientsData={setClientsData} clientTypes={data[0]}/>
           <div style={{paddingTop: '2rem'}}></div>
           <ClientsTable

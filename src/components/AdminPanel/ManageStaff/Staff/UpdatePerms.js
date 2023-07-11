@@ -1,25 +1,22 @@
 import React from 'react';
-import {
-  NonFieldErrors,
-  CustomInput,
-  SubmitButton,
-  Fetcher,
-  CustomMultiSelect
-} from '../../../common';
+import { useParams } from 'react-router-dom';
+import { Fetcher, CustomMultiSelect, NonFieldErrors, SubmitButton } from '../../../../common';
+import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
 
-function AddRole() {
+function UpdatePerms() {
+  const params = useParams();
+
   return (
-    <Fetcher urls={['/usersapi/perms_list_api/']}>
-      {({data}) => <AddRoleForm perms={data[0]} />}
+    <Fetcher urls={[`/usersapi/user_details/${params.staffId}/`, '/usersapi/perms_list_api/']}>
+      {({data}) => <UpdatePermsForm user={data[0]} allPerms={data[1]}/>}
     </Fetcher>
   )
 }
 
-function AddRoleForm({perms}) {
+const UpdatePermsForm = ({user, allPerms}) => {
   const navigate = useNavigate();
 
   const permNames = {
@@ -36,17 +33,16 @@ function AddRoleForm({perms}) {
   };
 
   const initialValues = {
-    role: '',
-    clients__client: [],
-    clients__group: [],
-    loans__loan: [],
-    reports__dataexportreport: [],
-    expenses__expense: [],
-    otherincome__otherincome: [],
-    accounting__journal: [],
-    accounting__generalledgeraccount: [],
-    reports__rightssupport: [],
-    admin_perms: [],
+    clients__client: user.perms.clients__client ? user.perms.clients__client.map(perm => ({value: perm.id, label: perm.name})) : [],
+    clients__group: user.perms.clients__group ? user.perms.clients__group.map(perm => ({value: perm.id, label: perm.name})) : [],
+    loans__loan: user.perms.loans__loan ? user.perms.loans__loan.map(perm => ({value: perm.id, label: perm.name})) : [],
+    reports__dataexportreport: user.perms.reports__dataexportreport ? user.perms.reports__dataexportreport.map(perm => ({value: perm.id, label: perm.name})) : [],
+    expenses__expense: user.perms.expenses__expense ? user.perms.expenses__expense.map(perm => ({value: perm.id, label: perm.name})) : [],
+    otherincome__otherincome: user.perms.otherincome__otherincome ? user.perms.otherincome__otherincome.map(perm => ({value: perm.id, label: perm.name})) : [],
+    accounting__journal: user.perms.accounting__journal ? user.perms.accounting__journal.map(perm => ({value: perm.id, label: perm.name})) : [],
+    accounting__generalledgeraccount: user.perms.accounting__generalledgeraccount ? user.perms.accounting__generalledgeraccount.map(perm => ({value: perm.id, label: perm.name})) : [],
+    reports__rightssupport: user.perms.reports__rightssupport ? user.perms.reports__rightssupport.map(perm => ({value: perm.id, label: perm.name})) : [],
+    admin_perms: user.perms.admin_perms ? user.perms.admin_perms.map(perm => ({value: perm.id, label: perm.name})) : [],
   };
 
   const onSubmit = async (values, actions) => {
@@ -60,8 +56,8 @@ function AddRoleForm({perms}) {
     });
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post('/usersapi/add_staff_role/', {name: values.role, perm_ids: perm_ids}, CONFIG);
-      navigate({pathname: `/users/admin/staff/roledetails/${response.data.id}`});
+      await axios.patch(`/usersapi/update_staff_perms/${user.id}/`, {perm_ids: perm_ids}, CONFIG);
+      navigate({pathname: `/users/admin/staff/staffdetails/${user.id}`});
     } catch (error) {
       console.log(error);
       if (error.message === 'Network Error') {
@@ -76,21 +72,21 @@ function AddRoleForm({perms}) {
 
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ isSubmitting, errors, setFieldValue}) => (
+      {({ isSubmitting, errors, setFieldValue, values}) => (
         <Form>
           <NonFieldErrors errors={errors}>
             <div className='divider divider-info'>
               <span>Role Information</span>
             </div>
-            <CustomInput label='Role' name='role' type='text' required/>
-            {Object.keys(perms).map(key => {
+            {Object.keys(allPerms).map(key => {
               return (
                 <CustomMultiSelect
                   key={key}
                   label={permNames[key]}
+                  initVals={values[key]}
                   setFieldValue={setFieldValue}
                   name={key}
-                  options={perms[key].map(perm => ({value: perm.id, label: perm.name}))}
+                  options={allPerms[key].map(perm => ({value: perm.id, label: perm.name}))}
                 />
               )
             })}
@@ -105,4 +101,4 @@ function AddRoleForm({perms}) {
   )
 }
 
-export default AddRole;
+export default UpdatePerms;

@@ -1,0 +1,86 @@
+import React from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import {
+  CustomInput,
+  CustomSelect,
+  Fetcher,
+  NonFieldErrors,
+  CustomMultiSelect,
+  CustomCheckbox,
+  SubmitButton
+} from '../../../../common';
+import { Form, Formik } from 'formik';
+import { useBranches } from '../../../../contexts/BranchesContext';
+import { useNavigate } from 'react-router-dom';
+
+const AddStaff= () => {
+  return (
+    <Fetcher urls={['/usersapi/staffroles/']}>
+      {({data}) => <AddStaffForm roles={data[0]} />}
+    </Fetcher>
+  )
+}
+
+function AddStaffForm({roles}) {
+  const navigate = useNavigate();
+
+  const onSubmit = async (values, actions) => {
+    try {
+      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+      const data = {...values, access_branch_ids: values.access_branches.map(branch => branch.value)};
+      const response = await axios.post('/usersapi/add_staff/', data, CONFIG);
+      navigate({pathname: `/users/admin/staff/staffdetails/${response.data.id}`});
+    } catch (error) {
+      console.log(error);
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+      } else {
+        actions.setErrors({responseStatus: error.response.status});
+      }
+    }
+  }
+
+  const initialValues = {first_name: '', last_name: '', email: '', branch_id: '', role_id: '', access_branches: [], is_loan_officer: false};
+  const {branches} = useBranches();
+
+  return (
+    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      {({ isSubmitting, errors, setFieldValue}) => (
+        <Form>
+          <NonFieldErrors errors={errors}>
+            <div className='divider divider-info'>
+              <span>Staff Information</span>
+            </div>
+            <CustomInput label='First Name' name='first_name' type='text' required/>
+            <CustomInput label='Last Name' name='last_name' type='text' required/>
+            <CustomInput label='Email' name='email' type='text' required/>
+            <CustomSelect label='Role' name='role_id'>
+              <option value=''>------</option>
+              {roles.map(role => <option key={role.id} value={role.id}>{role.role}</option>)}
+            </CustomSelect>
+            <CustomSelect label='Branch' name='branch_id'>
+              <option value=''>------</option>
+              {branches.map(branch => <option key={branch.id} value={branch.id}>{branch.name}</option>)}
+            </CustomSelect>
+            <CustomMultiSelect
+              label='Branch Access'
+              setFieldValue={setFieldValue}
+              name='access_branches'
+              options={branches.map(branch => ({value: branch.id, label: branch.name}))}
+            />
+            <CustomCheckbox label='Is Loan Officer' name='is_loan_officer'/>
+            <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
+            <div style={{display:'flex', justifyContent: 'flex-end'}}> 
+              <SubmitButton isSubmitting={isSubmitting}/>
+            </div>
+          </NonFieldErrors>
+        </Form>
+      )}
+    </Formik>
+  )
+}
+
+export default AddStaff;
