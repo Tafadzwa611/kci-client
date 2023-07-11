@@ -1,25 +1,63 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import Staff from './Staff/Staff';
-import StaffRolesAndPermissions from './StaffRolesAndPermissions/StaffRolesAndPermissions'
+import AddRole from './AddRole';
+import ClientRoles from './ClientRoles';
+import Role from './Role';
+import EditRole from './EditRole';
+import {
+  Routes,
+  Route,
+  Link,
+  Outlet,
+  useLocation
+} from 'react-router-dom';
+import AddStaff from './Staff/AddStaff';
+import StaffDetails from './Staff/StaffDetails';
+import EditStaff from './Staff/EditStaff';
+import UpdatePerms from './Staff/UpdatePerms';
 
 const ManageStaff = () => {
+  useEffect(() => {
+    document.title = 'Manage Users';
+  }, []);
 
-    const [tab, setTab] = useState('staff');
-    
-    return (
-        <>
-            <div className="bloc-tabs">
-                    <button className={tab === "staff" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("staff")}> Staff </button>
-                    <button className={tab === "rolesndperm" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("rolesndperm")}> Staff Roles and Permissions </button>
-            </div>
-            <div className='tab-content font-12' style={{marginTop:"3rem"}}>
-                {{
-                    'staff': <Staff setMainTab={setTab}/>,
-                    'rolesndperm': <StaffRolesAndPermissions setMainTab={setTab}/>,
-                }[tab]}
-            </div>
-        </>
-    )
+  return (
+    <Routes>
+      <Route path='/' element={<Layout />}>
+        <Route index element={<Staff />} />
+        <Route path='rolesndperm' element={<ClientRoles />} />
+        <Route path='addstaff' element={<AddStaff />} />
+        <Route path='editstaff/:staffId' element={<EditStaff />} />
+        <Route path='updateperms/:staffId' element={<UpdatePerms />} />
+        <Route path='addrole' element={<AddRole />} />
+        <Route path='staffdetails/:staffId' element={<StaffDetails />} />
+        <Route path='roledetails/:roleId' element={<Role />} />
+        <Route path='editrole/:roleId' element={<EditRole />} />
+      </Route>
+    </Routes>
+  )
+}
+
+function Layout() {
+  const location = useLocation();
+  return (
+    <div className='card-body'>
+      <h5 className='table-heading' style={{marginBottom:'20px'}}>Manage Users</h5>
+      <>
+        <div className='bloc-tabs'>
+          <Link to='/users/admin/staff' id='list' className={location.pathname === '/users/admin/staff' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+            Staff
+          </Link>
+          <Link to='/users/admin/staff/rolesndperm' id='add' className={location.pathname === '/users/admin/staff/rolesndperm' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+            Staff Roles and Permissions
+          </Link>
+        </div>
+        <div className='tab-content font-12' style={{marginTop:'3rem'}}>
+          <Outlet />
+        </div>
+      </>
+    </div>
+  )
 }
 
 export default ManageStaff;

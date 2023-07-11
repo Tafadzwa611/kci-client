@@ -16,14 +16,26 @@ const NonFieldErrors = ({children, errors}) => {
   }
 
   if (errors.responseStatus >= 400) {
+    if ('detail' in errors) {
+      return (
+        <>
+          {children}
+          <div className='row custom-background' style={{marginTop: '15px', display:"flex", justifyContent:"center"}}>
+            <div className='col-12' style={{color:"red", padding:"1.75rem 1rem", border:"1px solid red", backgroundColor: "#ffe5e5"}}>
+              {typeof errors.detail === 'string' ?
+              <div style={{fontSize: 12, color: 'red'}}>Error: {JSON.stringify(errors.detail)}</div> :
+              Array.isArray(errors.detail) ? errors.detail.map((error, idx) => <DictError key={idx} error={error}/>) : <DictError error={errors.detail}/>}
+            </div>
+          </div>
+        </>
+      )
+    }
     return (
       <>
         {children}
         <div className='row custom-background' style={{marginTop: '15px', display:"flex", justifyContent:"center"}}>
           <div className='col-12' style={{color:"red", padding:"1.75rem 1rem", border:"1px solid red", backgroundColor: "#ffe5e5"}}>
-            {typeof errors.detail === 'string' ?
-            <div style={{fontSize: 12, color: 'red'}}>Error: {JSON.stringify(errors.detail)}</div> :
-            Array.isArray(errors.detail) ? errors.detail.map((error, idx) => <DictError key={idx} error={error}/>) : <DictError error={errors.detail}/>}
+            Error: {JSON.stringify(errors)}
           </div>
         </div>
       </>
