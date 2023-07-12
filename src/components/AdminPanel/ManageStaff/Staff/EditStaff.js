@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import {
@@ -59,41 +60,48 @@ const EditStaffForm = ({staff, roles}) => {
   }
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ isSubmitting, errors, setFieldValue}) => (
-        <Form>
-          <NonFieldErrors errors={errors}>
-            <div className='divider divider-info'>
-              <span>Staff Information</span>
-            </div>
-            <CustomInput label='First Name' name='first_name' type='text' required/>
-            <CustomInput label='Last Name' name='last_name' type='text' required/>
-            <CustomInput label='Email' name='email' type='text' required/>
-            <CustomSelect label='Role' name='role_id'>
-              <option value=''>------</option>
-              {roles.map(role => <option key={role.id} value={role.id}>{role.role}</option>)}
-            </CustomSelect>
-            <CustomSelect label='Branch' name='branch_id'>
-              <option value=''>------</option>
-              {branches.map(branch => <option key={branch.id} value={branch.id}>{branch.name}</option>)}
-            </CustomSelect>
-            <CustomMultiSelect
-              label='Branch Access'
-              initVals={staff.branch_access.map(branch => ({value: branch.id, label: branch.name}))}
-              setFieldValue={setFieldValue}
-              name='access_branches'
-              options={branches.map(branch => ({value: branch.id, label: branch.name}))}
-            />
-            <CustomCheckbox label='Is Active' name='is_active'/>
-            <CustomCheckbox label='Is Loan Officer' name='is_loan_officer'/>
-            <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
-            <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-              <SubmitButton isSubmitting={isSubmitting}/>
-            </div>
-          </NonFieldErrors>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <div style={{marginBottom:'20px'}}>
+        <button type='button' className='btn btn-default max'>
+          <Link to={`/users/admin/staff/staffdetails/${staff.id}`}>Back</Link>
+        </button>
+      </div>
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        {({ isSubmitting, errors, setFieldValue}) => (
+          <Form>
+            <NonFieldErrors errors={errors}>
+              <div className='divider divider-info'>
+                <span>Staff Information</span>
+              </div>
+              <CustomInput label='First Name' name='first_name' type='text' required/>
+              <CustomInput label='Last Name' name='last_name' type='text' required/>
+              <CustomInput label='Email' name='email' type='text' required/>
+              <CustomSelect label='Role' name='role_id'>
+                <option value=''>------</option>
+                {roles.map(role => <option key={role.id} value={role.id}>{role.role}</option>)}
+              </CustomSelect>
+              <CustomSelect label='Branch' name='branch_id'>
+                <option value=''>------</option>
+                {branches.map(branch => <option key={branch.id} value={branch.id}>{branch.name}</option>)}
+              </CustomSelect>
+              <CustomMultiSelect
+                label='Branch Access'
+                initVals={staff.branch_access.map(branch => ({value: branch.id, label: branch.name}))}
+                setFieldValue={setFieldValue}
+                name='access_branches'
+                options={branches.map(branch => ({value: branch.id, label: branch.name}))}
+              />
+              <CustomCheckbox label='Is Active' name='is_active'/>
+              <CustomCheckbox label='Is Loan Officer' name='is_loan_officer'/>
+              <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+              <div style={{display:'flex', justifyContent: 'flex-end'}}> 
+                <SubmitButton isSubmitting={isSubmitting}/>
+              </div>
+            </NonFieldErrors>
+          </Form>
+        )}
+      </Formik>
+    </>
   )
 }
 

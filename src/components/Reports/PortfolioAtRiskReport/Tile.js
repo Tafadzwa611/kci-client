@@ -13,8 +13,10 @@ function Tile({
   currencyIso,
   currencyId,
   branches,
-  limits,
-  loggedInUser
+  lowerLimit,
+  upperLimit,
+  loggedInUser,
+  selectedBranchesIds,
 }) {
   const [openModal, setOpenModal] = useState(false);
 
@@ -32,7 +34,9 @@ function Tile({
                 currencyIso={currencyIso}
                 currencyId={currencyId}
                 branches={branches}
-                limits={limits}
+                selectedBranchesIds={selectedBranchesIds}
+                lowerLimit={lowerLimit}
+                upperLimit={upperLimit}
                 loans_in_arrears_count={loans_in_arrears_count}
                 total_loan_count={total_loan_count}
                 principal_at_risk={principal_at_risk}
@@ -69,4 +73,4 @@ function Tile({
     )
 }
 
-export default Tile
+export default Tile;

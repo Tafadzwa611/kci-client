@@ -41,8 +41,6 @@ const ManageStaff = () => {
 function Layout() {
   const location = useLocation();
   return (
-    <div className='card-body'>
-      <h5 className='table-heading' style={{marginBottom:'20px'}}>Manage Users</h5>
       <>
         <div className='bloc-tabs'>
           <Link to='/users/admin/staff' id='list' className={location.pathname === '/users/admin/staff' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
@@ -56,7 +54,6 @@ function Layout() {
           <Outlet />
         </div>
       </>
-    </div>
   )
 }
 

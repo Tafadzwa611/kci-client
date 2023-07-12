@@ -17,12 +17,14 @@ function AgeingAnalysis({
   currencyIso,
   branches,
   currencyId,
-  limits,
+  lowerLimit,
+  upperLimit,
   loans_in_arrears_count,
   total_loan_count,
   principal_at_risk,
   total_loan_portfolio,
-  loggedInUser
+  loggedInUser,
+  selectedBranchesIds,
 }) {
   const [loans, setLoans] = useState([]);
 
@@ -53,7 +55,7 @@ function AgeingAnalysis({
   async function fetchLoans() {
     try {
       const url = getUrl();
-      const response = await makeRequest.get(url, {timeout: 6000});
+      const response = await makeRequest.get(url, {timeout: 20000});
       if (response.ok) {
         const data = await response.json();
         return setLoans(data);
@@ -67,9 +69,11 @@ function AgeingAnalysis({
   }
 
   const getUrl = () => {
-    const branchesIds = branches.map(branch => branch.id);
-    return `/reportsapi/ageing-report/?currency_id=${currencyId}&branch_ids=${branchesIds.toString()}${limits.lowerLimit != '' ? `&lower_limit=${limits.lowerLimit}`: ``}
-    ${limits.upperLimit != '' ? `&upper_limit=${limits.upperLimit}`: ``}`
+    let url = `/reportsapi/ageing-report/?currency_id=${currencyId}${lowerLimit != '' ? `&lower_limit=${lowerLimit}`: ``}${upperLimit != '' ? `&upper_limit=${upperLimit}`: ``}`
+    if (selectedBranchesIds !== null) {
+      selectedBranchesIds.forEach(id => (url += `&branch_ids=${id}`));
+    }
+    return url
   }
 
   return (

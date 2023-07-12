@@ -979,6 +979,10 @@ span {
   color: var(--white);
 }
 
+.btn-success a {
+  color: var(--white);
+}
+
 .btn-default {
   border-color: var(--home-section-color);
   background-color: var(--home-section-color);
