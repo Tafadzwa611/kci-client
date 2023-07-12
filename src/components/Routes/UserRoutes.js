@@ -11,7 +11,7 @@ const UserProfile = lazy(() => import('../Users/UserProfile'));
 const StaffRoles = lazy(() => import('../Users/StaffRoles'));
 const AddBranch = lazy(() => import('../Users/AddBranch'));
 const AddStaffRole = lazy(() => import('../Users/AddStaffRole'));
-const BranchDetails = lazy(() => import('../Users/BranchDetails'));
+// const BranchDetails = lazy(() => import('../Users/BranchDetails'));
 const AdminPanel = lazy(() => import('../AdminPanel/AdminPanel'));
 
 const UserRoutes = (
@@ -27,7 +27,7 @@ const UserRoutes = (
     <Route exact path='/users/admin/*' element={<AdminPanel />}/>
     <Route exact path='/users/notifications' element={<Notifications/>}/>
     <Route exact path='/users/userprofile' element={<UserProfile/>}/>
-    <Route exact path='/users/branchdetails' element={<BranchDetails/>}/>
+    {/* <Route exact path='/users/branchdetails' element={<BranchDetails/>}/> */}
   </>
 )
 
