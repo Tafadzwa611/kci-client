@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Fetcher } from '../../../../common';
 import List from './List';
 
 function Currencies() {
-
   return (
     <>
       <Fetcher urls={['/usersapi/currencieslist/']}>

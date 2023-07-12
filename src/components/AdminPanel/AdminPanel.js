@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import Currencies from './Settings/Currencies/Currencies'
 import ManageStaff from './ManageStaff/ManageStaff';
 import OtherIncomeTypes from '../OtherIncome/IncomeTypes/IncomeTypes';
 import ExpenseTypes from '../Expenses/ExpenseTypes/ExpenseTypes';
@@ -8,17 +7,18 @@ import ManageBranches from './ManageBranches/ManageBranches';
 import ManageClients from './ManageClients/ManageClients';
 import ManageFields from './ManageFields/ManageFields';
 import ManageComms from './ManageComms/ManageComms';
+import ManageCurrencies from './ManageCurrencies/ManageCurrencies';
 import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
 
 const AdminPanel = () => {
   useEffect(() => {
-    document.title = 'View Admin';
+    document.title = 'View Admin'; 
   }, []);
 
   return (
     <Routes>
-      <Route path='/' element={<Layout />}>
-        <Route index element={<Currencies />} />
+      <Route path='*' element={<Layout />}>
+        <Route path='*' element={<ManageCurrencies />} />
         <Route path='staff/*' element={<ManageStaff />} />
         <Route path='otherincome' element={<OtherIncomeTypes />} />
         <Route path='expensetypes' element={<ExpenseTypes />} />
