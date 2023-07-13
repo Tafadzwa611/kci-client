@@ -23,11 +23,12 @@ function LoansTable({loans, currencyIso, loggedInUser, par_name}) {
                 <tr className="journal-details header">
                   <th>Loan #</th>
                   <th>Client</th>
-                  <th>Last Default Date</th>
-                  <th>Total Principal Due</th>
-                  <th>Total Interest Due</th>
-                  <th>Total Penalty Due</th>
-                  <th>Overdue Balance</th>
+                  <th>Client_Phone_Number</th>
+                  <th>Last_Default_Date</th>
+                  <th>Total_Principal_Due</th>
+                  <th>Total_Interest_Due</th>
+                  <th>Total_Penalty_Due</th>
+                  <th>Overdue_Balance</th>
                   <th>Status</th>
                 </tr>
               </thead>
@@ -47,6 +48,7 @@ function LoansTable({loans, currencyIso, loggedInUser, par_name}) {
                           {loan.client.length >14 ? `${loan.client.slice(0, 15)}...`: loan.client}
                         </div>
                       </td>
+                      <td>{currencyIso} {loan.client_phone_number}</td>
                       <td>{convertDate(loan.last_default_date)} <em>({days(loan.last_default_date)} days late.)</em></td>
                       <td>{currencyIso} {loan.principal_amount_due}</td>
                       <td>{currencyIso} {loan.interest_amount_due}</td>

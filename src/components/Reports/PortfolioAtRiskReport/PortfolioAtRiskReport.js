@@ -3,11 +3,11 @@ import Tile from './Tile';
 import { makeRequest } from '../../../utils/utils';
 import AddPar from './AddPar';
 import MiniLoader from '../../Loader/MiniLoader';
+import { useCurrencies } from '../../../contexts/CurrenciesContext';
+import { useBranches } from '../../../contexts/BranchesContext';
 
 const PortfolioAtRiskReport = ({loggedInUser}) => {
-    const [currencies, setCurrencies] = useState(null);
     const [pars, setPars] = useState([]);
-    const [branches, setBranches] = useState(null);
     const [openModal, setOpen] = useState(false);
     const [intValues, setIntValues] = useState([])
     const [params, setParams] = useState(null);
@@ -16,50 +16,12 @@ const PortfolioAtRiskReport = ({loggedInUser}) => {
     const [currencyId, setCurrencyId] = useState(null);
     const [selectedBranchesIds, setSelectedBranchesIds] = useState([]);
 
-    useEffect(() => {
-        fetchCurrencies();
-        fetchBranches();
-    }, []);
-  
-    async function fetchCurrencies() {
-        try {
-            const response = await makeRequest.get('/usersapi/list_currencies/', {timeout: 8000});
-            if (response.ok) {
-                const data = await response.json();
-                return setCurrencies([...data.map(result => ({...result, label: result.shortname, value:result.id}))]);
-            }else {
-                const error = await response.json();
-                console.log(error);
-            }
-        }catch(error) {
-            console.log(error);
-        }
-    }
-  
-    async function fetchBranches() {
-        try {
-            const response = await makeRequest.get('/usersapi/get-branches/', {timeout: 8000});
-            if (response.ok) {
-                const data = await response.json();
-                return setBranches([...data.results.map(result => ({...result, label: result.name, value:result.id}))]);
-            }else {
-                const error = await response.json();
-                console.log(error);
-            }
-        }catch(error) {
-            console.log(error);
-        }
-    }
-  
+    const {currencies} = useCurrencies();
+    const {branches} = useBranches();
+
     const showModal = (e) => {
         e.preventDefault();
         setOpen(true);
-    }
-  
-    if (currencies===null || branches===null) {
-        return (
-            <MiniLoader />
-        )
     }
   
     return (
@@ -69,7 +31,6 @@ const PortfolioAtRiskReport = ({loggedInUser}) => {
                 setOpen={setOpen}
                 setPars={setPars}
                 branches={branches}
-                setBranches={setBranches}
                 currencies={currencies}
                 setParams={setParams}
                 setIntValues={setIntValues}

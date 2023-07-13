@@ -1,27 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import AgeingAnalysis from './AgeingAnalysis';
 
 
 function Tile({
-  loans_in_arrears_count,
-  total_loan_count,
-  par_name,
-  par_value,
-  principal_at_risk,
-  total_loan_portfolio,
-  currencyIso,
-  currencyId,
-  branches,
-  lowerLimit,
-  upperLimit,
-  loggedInUser,
-  selectedBranchesIds,
+    loans_in_arrears_count,
+    total_loan_count,
+    par_name,
+    par_value,
+    principal_at_risk,
+    total_loan_portfolio,
+    currencyIso,
+    currencyId,
+    branches,
+    lowerLimit,
+    upperLimit,
+    loggedInUser,
+    selectedBranchesIds,
 }) {
-  const [openModal, setOpenModal] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
+    const [newBranches, setNewBranches] = useState(null);
 
-  const handleClick = () => {
-    setOpenModal(true);
+    useEffect(() => {
+        setNewBranches([...branches.map(result => ({...result, label: result.name, value:result.id}))]);
+    }, [])
+
+    const handleClick = () => {
+        setOpenModal(true);
   }
 
   return (
@@ -33,7 +38,7 @@ function Tile({
                 par_value={par_value}
                 currencyIso={currencyIso}
                 currencyId={currencyId}
-                branches={branches}
+                branches={newBranches}
                 selectedBranchesIds={selectedBranchesIds}
                 lowerLimit={lowerLimit}
                 upperLimit={upperLimit}
@@ -50,8 +55,8 @@ function Tile({
                             <Select
                                 isMulti
                                 name='branches'
-                                options={branches}
-                                value={branches}
+                                options={newBranches}
+                                value={newBranches}
                                 classNamePrefix='select'
                                 className='basic-multi-select'
                                 placeholder='Select Branches'
