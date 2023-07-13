@@ -32,7 +32,7 @@ function LoansTable({loans, currencyIso, loggedInUser, par_name}) {
                 </tr>
               </thead>
               <tbody>
-                {loans.length > 0 ? loans.map(loan => {
+                {loans.loans_in_arrears.length > 0 ? loans.loans_in_arrears.map(loan => {
                   return (
                     <tr className='tr-class' key={loan.id}>
                       <td>

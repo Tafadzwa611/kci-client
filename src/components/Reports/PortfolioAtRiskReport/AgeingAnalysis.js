@@ -26,7 +26,7 @@ function AgeingAnalysis({
   loggedInUser,
   selectedBranchesIds,
 }) {
-  const [loans, setLoans] = useState([]);
+  const [loans, setLoans] = useState({count: 0, next_page_num: 0, loans_in_arrears: []});
 
   useEffect(() => {
     fetchLoans();
@@ -55,7 +55,7 @@ function AgeingAnalysis({
   async function fetchLoans() {
     try {
       const url = getUrl();
-      const response = await makeRequest.get(url, {timeout: 20000});
+      const response = await makeRequest.get(url, {timeout: 8000});
       if (response.ok) {
         const data = await response.json();
         return setLoans(data);
@@ -69,7 +69,7 @@ function AgeingAnalysis({
   }
 
   const getUrl = () => {
-    let url = `/reportsapi/ageing-report/?currency_id=${currencyId}${lowerLimit != '' ? `&lower_limit=${lowerLimit}`: ``}${upperLimit != '' ? `&upper_limit=${upperLimit}`: ``}`
+    let url = `/reportsapi/ageing-report/?currency_id=${currencyId}&page_num=1${lowerLimit != '' ? `&lower_limit=${lowerLimit}`: ``}${upperLimit != '' ? `&upper_limit=${upperLimit}`: ``}`
     if (selectedBranchesIds !== null) {
       selectedBranchesIds.forEach(id => (url += `&branch_ids=${id}`));
     }
@@ -165,3 +165,4 @@ const ModalBody = ({
 }
 
 export default AgeingAnalysis;
+
