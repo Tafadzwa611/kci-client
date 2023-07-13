@@ -19,11 +19,6 @@ function Tile({
     selectedBranchesIds,
 }) {
     const [openModal, setOpenModal] = useState(false);
-    const [newBranches, setNewBranches] = useState(null);
-
-    useEffect(() => {
-        setNewBranches([...branches.map(result => ({...result, label: result.name, value:result.id}))]);
-    }, [])
 
     const handleClick = () => {
         setOpenModal(true);
@@ -38,7 +33,7 @@ function Tile({
                 par_value={par_value}
                 currencyIso={currencyIso}
                 currencyId={currencyId}
-                branches={newBranches}
+                branches={[...branches.map(result => ({...result, label: result.name, value:result.id}))]}
                 selectedBranchesIds={selectedBranchesIds}
                 lowerLimit={lowerLimit}
                 upperLimit={upperLimit}
@@ -55,8 +50,8 @@ function Tile({
                             <Select
                                 isMulti
                                 name='branches'
-                                options={newBranches}
-                                value={newBranches}
+                                options={[...branches.map(result => ({...result, label: result.name, value:result.id}))]}
+                                value={[...branches.map(result => ({...result, label: result.name, value:result.id}))]}
                                 classNamePrefix='select'
                                 className='basic-multi-select'
                                 placeholder='Select Branches'
