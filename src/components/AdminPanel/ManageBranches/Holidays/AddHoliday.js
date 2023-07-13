@@ -10,7 +10,8 @@ function AddHoliday({setView, setHoliday, setHolidays}) {
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post('/usersapi/add_branch_holiday/', values, CONFIG);
+      const data = {...values, branch_ids: values.branch_ids.map(br => br.value)}
+      const response = await axios.post('/usersapi/add_branch_holiday/', data, CONFIG);
       setHolidays(curr => [response.data, ...curr]);
       setHoliday(response.data);
       setView('list');

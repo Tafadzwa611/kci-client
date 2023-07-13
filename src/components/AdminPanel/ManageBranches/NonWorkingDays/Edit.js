@@ -23,10 +23,11 @@ function Edit({setView, days, setDays}) {
   const back = () => setView('list');
 
   const onSubmit = async (values, actions) => {
+    console.log(values)
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      await axios.patch('/usersapi/update_non_working_days/', values, CONFIG);
-      setDays(values.non_working_days);
+      await axios.patch('/usersapi/update_non_working_days/', {non_working_days: values.non_working_days.map(day => day.value)}, CONFIG);
+      setDays(values.non_working_days.map(day => day.value));
       setView('list');
     } catch (error) {
       if (error.message === 'Network Error') {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import {
   Fetcher,
@@ -42,23 +43,30 @@ function EditCurrencyForm({currency}) {
   }
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ isSubmitting, errors }) => (
-        <Form>
-          <NonFieldErrors errors={errors}>
-            <div className='divider divider-info'>
-              <span>Currency Information</span>
-            </div>
-            <CustomInput label='Fullname' name='fullname' type='text' required/>
-            <CustomInput label='Shortname' name='shortname' type='text'/>
-            <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
-            <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-              <SubmitButton isSubmitting={isSubmitting}/>
-            </div>
-          </NonFieldErrors>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <div>
+          <button type='button' className='btn btn-default max'>
+            <Link to='/users/admin'>Back</Link>
+          </button>
+      </div>
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        {({ isSubmitting, errors }) => (
+          <Form>
+            <NonFieldErrors errors={errors}>
+              <div className='divider divider-info'>
+                <span>Currency Information</span>
+              </div>
+              <CustomInput label='Fullname' name='fullname' type='text' required/>
+              <CustomInput label='Shortname' name='shortname' type='text'/>
+              <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+              <div style={{display:'flex', justifyContent: 'flex-end'}}> 
+                <SubmitButton isSubmitting={isSubmitting}/>
+              </div>
+            </NonFieldErrors>
+          </Form>
+        )}
+      </Formik>
+    </>
   )
 }
 

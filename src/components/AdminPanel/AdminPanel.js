@@ -52,7 +52,7 @@ function Layout() {
             <Link 
               to='/users/admin/staff'
               id='staff' 
-              className={location.pathname === '/users/admin/staff' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+              className={location.pathname.includes('/users/admin/staff') ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
             >
               Manage Staff
             </Link>
@@ -73,7 +73,7 @@ function Layout() {
             <Link 
               to='/users/admin/managebranches'
               id='managebranches' 
-              className={location.pathname === '/users/admin/managebranches' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+              className={location.pathname.includes('/users/admin/managebranches') ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
             >
               Manage Branches
             </Link>

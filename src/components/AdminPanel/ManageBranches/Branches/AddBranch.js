@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Form, Formik } from 'formik';
@@ -44,31 +45,38 @@ function AddBranchForm({loanProducts}) {
   }
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ isSubmitting, setFieldValue, errors }) => (
-        <Form>
-          <NonFieldErrors errors={errors}>
-            <div className='divider divider-info'>
-              <span>Branch Information</span>
-            </div>
-            <CustomInput label='Name' name='name' type='text' required/>
-            <CustomInput label='Geographical Location' name='geographical_location' type='text'/>
-            <CustomInput label='Branch Code' name='branch_code' type='text' maxLength='5' required/>
-            <CustomDatePicker label='Date of Opening' name='date_of_opening' setFieldValue={setFieldValue} required/>
-            <CustomMultiSelect
-              label='Loan Products'
-              setFieldValue={setFieldValue}
-              name='loan_products'
-              options={loanProducts.map(loanProduct => ({value: loanProduct.id, label: loanProduct.name}))}
-            />
-            <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
-            <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-              <SubmitButton isSubmitting={isSubmitting}/>
-            </div>
-          </NonFieldErrors>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <div>
+          <button type='button' className='btn btn-default max'>
+            <Link to='/users/admin/managebranches'>Back</Link>
+          </button>
+      </div>
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        {({ isSubmitting, setFieldValue, errors }) => (
+          <Form>
+            <NonFieldErrors errors={errors}>
+              <div className='divider divider-info'>
+                <span>Branch Information</span>
+              </div>
+              <CustomInput label='Name' name='name' type='text' required/>
+              <CustomInput label='Geographical Location' name='geographical_location' type='text'/>
+              <CustomInput label='Branch Code' name='branch_code' type='text' maxLength='5' required/>
+              <CustomDatePicker label='Date of Opening' name='date_of_opening' setFieldValue={setFieldValue} required/>
+              <CustomMultiSelect
+                label='Loan Products'
+                setFieldValue={setFieldValue}
+                name='loan_products'
+                options={loanProducts.map(loanProduct => ({value: loanProduct.id, label: loanProduct.name}))}
+              />
+              <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+              <div style={{display:'flex', justifyContent: 'flex-end'}}> 
+                <SubmitButton isSubmitting={isSubmitting}/>
+              </div>
+            </NonFieldErrors>
+          </Form>
+        )}
+      </Formik>
+    </>
   )
 }
 

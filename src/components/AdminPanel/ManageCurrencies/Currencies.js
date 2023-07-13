@@ -7,7 +7,7 @@ function Currencies() {
     <Fetcher urls={['/usersapi/currencieslist/']}>
       {({data}) => (
         <>
-          <button className='btn btn-success'>
+          <button className='btn btn-success' style={{marginBottom:'20px'}}>
             <Link to='/users/admin/addcurrency'>
               Add Currency
             </Link>
@@ -31,9 +31,9 @@ function Currencies() {
                             <td>{currency.shortname}</td>
                             <td>{currency.currency_date}</td>
                             <td>
-                              <button style={{ background:"#1bbf5f", color:"#fff", border:"none", borderRadius:".15rem", cursor:"pointer", padding:".2rem .25rem",fontSize: "0.75rem"}}>
+                              <span className='edit_button'>
                                 <Link to={`/users/admin/editcurrency/${currency.id}`}>Edit</Link>
-                              </button>
+                              </span>
                             </td>
                           </tr>
                         )

@@ -12,7 +12,7 @@ function List() {
               Add Branch
             </Link>
           </button>
-          <div style={{padding:'0', border:'none'}} className='table-container full__width font-12'>
+          <div style={{padding:'0', border:'none', marginTop:'20px'}} className='table-container full__width font-12'>
             <div className='full__table'>
               <div className='table-responsive'>
                 <div className='table__height'>
