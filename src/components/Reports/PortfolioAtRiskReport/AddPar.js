@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { Form, Formik } from 'formik';
+import {addSchema} from './schema';
 import {
   NonFieldErrors,
 } from '../../../common';
@@ -73,7 +74,7 @@ const AddPar = (
 
     return (
         <Modal open={open} setOpen={setOpen} title={'Add Par'}>
-            <Formik initialValues={initialValues} onSubmit={onSubmit}>
+            <Formik initialValues={initialValues} validationSchema={addSchema} onSubmit={onSubmit}>
                 {({ isSubmitting, setFieldValue, errors }) => (
                     <Form>
                         <NonFieldErrors errors={errors}>
