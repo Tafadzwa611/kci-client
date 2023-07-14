@@ -40,7 +40,7 @@ function LoansTable({loans, currency, loggedInUser, par_name, params, setLoans})
                           {loan.client.length >14 ? `${loan.client.slice(0, 15)}...`: loan.client}
                         </div>
                       </td>
-                      <td>{currency} {loan.client_phone_number}</td>
+                      <td>{loan.client_phone_number}</td>
                       <td>{convertDate(loan.last_default_date)} <em>({days(loan.last_default_date)} days late.)</em></td>
                       <td>{currency} {loan.principal_amount_due}</td>
                       <td>{currency} {loan.interest_amount_due}</td>
