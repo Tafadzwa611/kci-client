@@ -15,6 +15,7 @@ const PortfolioAtRiskReport = ({loggedInUser}) => {
     const [upperLimit, setUpperLimit] = useState('');
     const [currencyId, setCurrencyId] = useState(null);
     const [selectedBranchesIds, setSelectedBranchesIds] = useState([]);
+    const [currency, setCurrency] = useState(null);
 
     const {currencies} = useCurrencies();
     const {branches} = useBranches();
@@ -34,6 +35,7 @@ const PortfolioAtRiskReport = ({loggedInUser}) => {
                 currencies={currencies}
                 setParams={setParams}
                 setIntValues={setIntValues}
+                setCurrency={setCurrency}
                 setLowerLimit={setLowerLimit}
                 setUpperLimit={setUpperLimit}
                 setCurrencyId={setCurrencyId}
@@ -48,21 +50,25 @@ const PortfolioAtRiskReport = ({loggedInUser}) => {
                 </div>
                 <div className='row'>
                     {pars.map((par, idx) => <Tile
-                    key={idx}
-                    loans_in_arrears_count={par.loans_in_arrears_count}
-                    total_loan_count={par.total_loan_count}
-                    par_name={par.par_name}
-                    par_value={par.par_value}
-                    principal_at_risk={par.principal_at_risk}
-                    total_loan_portfolio={par.total_loan_portfolio}
-                    currencyIso={par.currencyIso}
-                    currencyId={currencyId}
-                    branches={branches.filter(branch => par.selectedBIds.includes(branch.id))}
-                    selectedBranchesIds={selectedBranchesIds}
-                    lowerLimit={lowerLimit}
-                    upperLimit={upperLimit}
-                    loggedInUser={loggedInUser}
-                    />)}
+                        key={idx}
+                        loans_in_arrears_count={par.loans_in_arrears_count}
+                        total_loan_count={par.total_loan_count}
+                        par_name={par.par_name}
+                        par_value={par.par_value}
+                        principal_at_risk={par.principal_at_risk}
+                        total_loan_portfolio={par.total_loan_portfolio}
+                        currencyId={currencyId}
+                        branches={branches.filter(branch => par.selectedBIds.includes(branch.id))}
+                        selectedBranchesIds={selectedBranchesIds}
+                        lowerLimit={lowerLimit}
+                        upperLimit={upperLimit}
+                        loggedInUser={loggedInUser}
+                        intValues={intValues}
+                        setParams={setParams}
+                        params={params}
+                        currency={currency}
+                        />
+                    )}
                 </div>
             </>
         </>

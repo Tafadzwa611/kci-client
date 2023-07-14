@@ -22,6 +22,7 @@ const AddPar = (
         setPars, 
         setIntValues, 
         setParams, 
+        setCurrency,
         setLowerLimit, 
         setUpperLimit, 
         setCurrencyId, 
@@ -57,6 +58,7 @@ const AddPar = (
             setCurrencyId(values.currency_id);
             const response = await axios.get('/reportsapi/par-report/', {params: params});
             setPars(curr => [...curr, {...response.data, selectedBIds: values.branch_ids }]);
+            setCurrency(response.data.currency)
             setOpen(false);
         } catch (error) {
             if (error.message === "Network Error") {

@@ -10,13 +10,16 @@ function Tile({
     par_value,
     principal_at_risk,
     total_loan_portfolio,
-    currencyIso,
     currencyId,
     branches,
     lowerLimit,
     upperLimit,
     loggedInUser,
     selectedBranchesIds,
+    intValues,
+    setParams,
+    params,
+    currency
 }) {
     const [openModal, setOpenModal] = useState(false);
 
@@ -31,7 +34,6 @@ function Tile({
                 setOpen={setOpenModal}
                 par_name={par_name}
                 par_value={par_value}
-                currencyIso={currencyIso}
                 currencyId={currencyId}
                 branches={[...branches.map(result => ({...result, label: result.name, value:result.id}))]}
                 selectedBranchesIds={selectedBranchesIds}
@@ -42,6 +44,10 @@ function Tile({
                 principal_at_risk={principal_at_risk}
                 total_loan_portfolio={total_loan_portfolio}
                 loggedInUser={loggedInUser}
+                intValues={intValues}
+                setParams={setParams}
+                params={params}
+                currency={currency}
             />
             <div onClick={handleClick} style={{width:"100%", marginBottom:"1.5rem", cursor: 'grab'}}>
                 <div style={{display:"flex", flexDirection:"column", rowGap:"1rem", padding:"1.5rem"}} className="par-card">
@@ -61,11 +67,11 @@ function Tile({
                     </div>
                     <div style={{display:"flex", flexDirection:"column", rowGap:"5px"}}>
                         <span><b>Par Value: {par_value}%</b></span>
-                        <span>{currencyIso} PAR {par_name}</span>
+                        <span>{currency} PAR {par_name}</span>
                         <span>Number of loans {par_name} days late: <b>{loans_in_arrears_count}</b></span>
                         <span>Total Loan Count: <b>{total_loan_count}</b></span>
-                        <span>Principal At Risk: <b>{currencyIso} {principal_at_risk}</b></span>
-                        <span>Total Loan Portfolio: <b>{currencyIso} {total_loan_portfolio}</b></span>
+                        <span>Principal At Risk: <b>{currency} {principal_at_risk}</b></span>
+                        <span>Total Loan Portfolio: <b>{currency} {total_loan_portfolio}</b></span>
                     </div>
                 </div>
             </div>
