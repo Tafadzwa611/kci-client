@@ -9,19 +9,19 @@ import BalanceSheet from '../BalanceSheet/BalanceSheet';
 import Ledger from '../Ledger/Ledger';
 import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
 import {
-    Routes,
-    Route,
-    Outlet,
-    Link,
-    useLocation
-  } from 'react-router-dom';
+  Routes,
+  Route,
+  Outlet,
+  Link,
+  useLocation
+} from 'react-router-dom';
 
 const ViewAccounting = () => {
-    const {loggedInUser} = useLoggedInUser()
+  const {loggedInUser} = useLoggedInUser()
 
-    useEffect(() => {
-        document.title = 'View Reports';
-    }, []);
+  useEffect(() => {
+    document.title = 'View Accounts';
+  }, []);
 
   return (
     <Routes>
@@ -32,7 +32,7 @@ const ViewAccounting = () => {
         <Route path='trialbalance' element={<TrialBalance loggedInUser={loggedInUser} />} />
         <Route path='balancesheet' element={<BalanceSheet loggedInUser={loggedInUser} />} />
         <Route path='journals' element={<Journals loggedInUser={loggedInUser} />} />
-        <Route path='chartsofaccounts' element={<ChartsOfAccounts loggedInUser={loggedInUser} />} />
+        <Route path='chartsofaccounts/*' element={<ChartsOfAccounts />} />
         <Route path='ledger' element={<Ledger loggedInUser={loggedInUser} />} />
       </Route>
     </Routes>
