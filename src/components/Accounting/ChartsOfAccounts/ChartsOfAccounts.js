@@ -1,38 +1,49 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import MainAccounts from './MainAccounts/MainAccounts';
 import SubAccounts from './SubAccounts/SubAccounts';
-// import AssetsSubAccounts from './AssetsSubAccounts/AssetsSubAccounts';
-// import LiabilitiesSubAccounts from './LiabilitiesSubAccounts/LiabilitiesSubAccounts';
-// import EquitySubAccounts from './EquitySubAccounts/EquitySubAccounts';
-// import IncomeSubAccounts from './IncomeSubAccounts/IncomeSubAccounts';
-// import ExpensesSubAccounts from './ExpensesSubAccounts/ExpensesSubAccounts';
+import AddHeaderAccount from './MainAccounts/AddHeaderAccount';
+import HeaderAccount from './MainAccounts/HeaderAccount';
+import EditHeaderAccount from './MainAccounts/EditHeaderAccount';
+import {
+  Routes,
+  Route,
+  Outlet,
+  Link,
+  useLocation
+} from 'react-router-dom';
 
 const ChartsOfAccounts = () => {
-    const [tab, setTab] = useState('mainaccs');
-    return (
-        <>
-            <div className="bloc-tabs">
-                    <button className={tab === "mainaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("mainaccs")}> Main Accounts </button>
-                    <button className={tab === "subaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("subaccs")}> Sub Accounts </button>
-                    {/* <button className={tab === "assetssubaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("assetssubaccs")}> Assets </button>
-                    <button className={tab === "liabilitiessubaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("liabilitiessubaccs")}> Liabilities </button>
-                    <button className={tab === "equitysubaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("equitysubaccs")}> Equity </button>
-                    <button className={tab === "incomesubaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("incomesubaccs")}> Income </button>
-                    <button className={tab === "expensessubaccs" ? "tabs-client active-tabs" : "tabs-client"} onClick={e=> setTab("expensessubaccs")}> Expenses </button> */}
-            </div>
-            <div className='tab-content font-12' style={{marginTop:"3rem"}}>
-                {{
-                    'mainaccs': <MainAccounts setTab={setTab}/>,
-                    'subaccs': <SubAccounts setTab={setTab}/>,
-                    // 'assetssubaccs': <AssetsSubAccounts setTab={setTab}/>,
-                    // 'liabilitiessubaccs': <LiabilitiesSubAccounts setTab={setTab}/>,
-                    // 'equitysubaccs': <EquitySubAccounts setTab={setTab}/>,
-                    // 'incomesubaccs': <IncomeSubAccounts setTab={setTab}/>,
-                    // 'expensessubaccs': <ExpensesSubAccounts setTab={setTab}/>,
-                }[tab]}
-            </div>
-        </>
-    );
+  return (
+    <Routes>
+      <Route path='/' element={<Layout />}>
+        <Route index element={<SubAccounts />} />
+        <Route path='headeraccounts' element={<MainAccounts />} />
+        <Route path='addheaderaccount' element={<AddHeaderAccount />} />
+        <Route path='headeraccount/:headerAccountId' element={<HeaderAccount />} />
+        <Route path='editheaderaccount/:headerAccountId' element={<EditHeaderAccount />} />
+      </Route>
+    </Routes>
+  )
+}
+
+function Layout() {
+  const location = useLocation();
+  return (
+    <div className='card-body'>
+      <h5 className='table-heading' style={{marginBottom:'20px'}}>Chart Of Accounts</h5>
+      <div className='bloc-tabs'>
+        <Link to='/accounting/viewaccounting/chartsofaccounts' className={location.pathname === '/accounting/viewaccounting/chartsofaccounts' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+          Detail Accounts
+        </Link>
+        <Link to='/accounting/viewaccounting/chartsofaccounts/headeraccounts' className={location.pathname === '/accounting/viewaccounting/chartsofaccounts/headeraccounts' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+          Header Accounts
+        </Link>
+      </div>
+      <div className='tab-content font-12' style={{marginTop:'3rem'}}>
+        <Outlet />
+      </div>
+    </div>
+  )
 }
 
 export default ChartsOfAccounts;

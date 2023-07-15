@@ -1,13 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Select from 'react-select';
 import { useField } from 'formik';
-// import {uu}
-
-function uuidv4() {
-  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-  );
-}
+import { uuidv4 } from '../../utils';
 
 function CustomMultiSelectFilter({label, options, initVals, setFieldValue, ...props}) {
   const [optionSelected, setOptionSelected] = useState(initVals);

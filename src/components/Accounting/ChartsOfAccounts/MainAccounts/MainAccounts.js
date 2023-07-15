@@ -1,48 +1,55 @@
-import React, {useEffect, useRef, useState} from 'react';
-import { makeRequest } from '../../../../utils/utils';
-import MiniLoader from '../../../Loader/MiniLoader';
-import CreateMainAccountModal from './CreateMainAccountModal';
+import React, {useState} from 'react';
 import DateRange from './DateRange';
-import Table from './Table';
+import { Link } from 'react-router-dom';
 
 const MainAccounts = () => {
-    const [mainaccounts, setMainAccounts] = useState({count: 0, next_page_num: 0, mainaccounts: []})
-    const [branches, setBranches] = useState(null);
-    const [branchIds, setBranchIds] = useState(null);
-    const [nextPageNumber, setNextPageNumber] = useState(null);
-    const [totalCount, setTotalCount] = useState(0);
-    const [accType, setAccType] = useState('');
-    const [searching, setSearching] = useState(false);
-    const [loadingMore, setLoadingMore] = useState(false);
-    const [selectedMainAccID, setSelectedMainAccID] = useState(null)
-    const [accDetails, setAccDetails] = useState(false)
-    const [open, setOpen] = useState(false);
-    const [params, setParams] = useState(null);
+  const [mainaccounts, setMainAccounts] = useState([]);
 
-    return (
-        <>
-            <div style={{marginBottom:"1.5rem"}}>
-                <button type='button' className='btn btn-success' onClick={(e) => setOpen(curr => !curr)} 
-                    >Add Main Account
-                </button>
+  return (
+    <>
+      <div style={{margin:'20px 0'}}>
+        <button type='button' className='btn btn-success'>
+          <Link to='/accounting/viewaccounting/chartsofaccounts/addheaderaccount'>Add Header Account</Link>
+        </button>
+      </div>
+      <DateRange setMainAccounts={setMainAccounts}/>
+      <div style={{paddingTop: '2rem'}}></div>
+      <div style={{padding:'0', border:'none'}} className='table-container full__width font-12'>
+        <div className='table-responsive full__table'>
+          <div style={{width:'100%', overflowX:'auto'}}>
+            <div className='table__height'>
+              <table className='table' id='accounts'>
+                <thead>
+                  <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
+                    <th>GL Code</th>
+                    <th>Main Account Name</th>
+                    <th>Type</th>
+                    <th>Date Created</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {mainaccounts.map(account => {
+                    return (
+                      <tr key={account.id}>
+                        <td>
+                          <Link to={`/accounting/viewaccounting/chartsofaccounts/headeraccount/${account.id}`}>
+                            {account.general_ledger_code}
+                          </Link>
+                        </td>
+                        <td>{account.general_ledger_name}</td>
+                        <td>{account.account_type}</td>
+                        <td>{account.account_date}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
             </div>
-            <CreateMainAccountModal open={open} setOpen={setOpen} setMainAccounts={setMainAccounts} />
-            <DateRange 
-                setMainAccounts={setMainAccounts}
-                setParams={setParams}
-            />
-            <div style={{paddingTop: '2rem'}}></div>
-            <Table 
-                mainaccounts={mainaccounts}
-                setSelectedMainAccID={setSelectedMainAccID}
-                selectedMainAccID={selectedMainAccID}
-                accDetails={accDetails}
-                setAccDetails={setAccDetails}
-                params={params}
-                setMainAccounts={setMainAccounts}
-            />
-        </>
-    )
+          </div>
+        </div>
+      </div>
+    </>
+  )
 }
 
 export default MainAccounts;
