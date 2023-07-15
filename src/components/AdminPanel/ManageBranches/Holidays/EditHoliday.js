@@ -14,7 +14,8 @@ function EditHoliday({
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      await axios.put(`/usersapi/update_branch_holiday/${initialValues.id}/`, values, CONFIG);
+      const data = {...values, branch_ids: values.branch_ids.map(br => br.value)}
+      await axios.put(`/usersapi/update_branch_holiday/${initialValues.id}/`, data, CONFIG);
       setHolidays(curr => {
         return curr.map(holiday => {
           if (holiday.id === values.id) {
@@ -23,7 +24,7 @@ function EditHoliday({
           return holiday
         })
       });
-      setHoliday(values);
+      setHoliday(data);
       setView('list');
     } catch (error) {
       if (error.message === 'Network Error') {

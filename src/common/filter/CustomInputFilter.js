@@ -15,8 +15,8 @@ const CustomInputFilter = ({ label, ...props }) => {
             className={`custom-select-form row-form input-background ${meta.touched && meta.error ? 'input-error' : ''}`}
             autoComplete='new-password'
           />
-          {meta.touched && meta.error && <div className='error'>{meta.error}</div>}
         </div>
+        {meta.touched && meta.error && <div className='error'>{meta.error}</div>}
       </div>
     </>
   );

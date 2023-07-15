@@ -21,7 +21,10 @@ function List({data}) {
       <>
         <SuccessBtn handler={() => setView('edit')} value={'Edit'}/>
         <table className='table'>
-          <tbody>
+          <tbody>                
+            <tr className='journal-details header'>
+              <th>Non-Working Days</th>
+            </tr>
             {days.sort().map(day => {
               return (
                 <tr key={day}>

@@ -4,7 +4,7 @@ import { Pie } from 'react-chartjs-2';
 import LoansTable from './LoansTable';
 import Select from 'react-select';
 import { makeRequest } from '../../../utils/utils';
-
+import AgeingAnalysisFilter from './AgeingAnalysisFilter';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -14,7 +14,6 @@ function AgeingAnalysis({
   setOpen,
   par_name,
   par_value,
-  currencyIso,
   branches,
   currencyId,
   lowerLimit,
@@ -25,12 +24,17 @@ function AgeingAnalysis({
   total_loan_portfolio,
   loggedInUser,
   selectedBranchesIds,
+  intValues,
+  setParams,
+  params,
+  currency
 }) {
-  const [loans, setLoans] = useState([]);
+  const [loans, setLoans] = useState({count: 0, next_page_num: 0, loans_in_arrears: []});
 
-  useEffect(() => {
-    fetchLoans();
-  }, []);
+  const closeModal = () => {
+    setLoans({count: 0, next_page_num: 0, loans_in_arrears: []});
+    setOpen(false);
+  }
 
   const otherLoans = 100 - Number(par_value);
   const data = {
@@ -52,43 +56,20 @@ function AgeingAnalysis({
     ],
   };
 
-  async function fetchLoans() {
-    try {
-      const url = getUrl();
-      const response = await makeRequest.get(url, {timeout: 20000});
-      if (response.ok) {
-        const data = await response.json();
-        return setLoans(data);
-      }else {
-        const error = await response.json();
-        console.log(error);
-      }
-    }catch(error) {
-      console.log(error);
-    }
-  }
-
-  const getUrl = () => {
-    let url = `/reportsapi/ageing-report/?currency_id=${currencyId}${lowerLimit != '' ? `&lower_limit=${lowerLimit}`: ``}${upperLimit != '' ? `&upper_limit=${upperLimit}`: ``}`
-    if (selectedBranchesIds !== null) {
-      selectedBranchesIds.forEach(id => (url += `&branch_ids=${id}`));
-    }
-    return url
-  }
-
   return (
     <div className={open ? 'modal fade show' : 'modal fade'} style={{display: open ? 'block' : 'none'}}>
       <div className='modal-dialog modal-xl modal-dialog-scrollable' style={{maxWidth:"calc(100% - 3rem)", height:"calc(100% - 7rem)", top:"3.8rem"}}>
         <div className='modal-content'>
           <div className='modal-header'>
             <span style={{fontWeight:"600"}}>Aging Report {par_name}</span>
-            <button type='button' className='close' onClick={e => setOpen(false)}><span aria-hidden='true'>&times;</span></button>
+            <button type='button' className='close' onClick={closeModal}><span aria-hidden='true'>&times;</span></button>
           </div>
           <ModalBody
             data={data}
-            currencyIso={currencyIso}
+            currency={currency}
             branches={branches}
             loans={loans}
+            setLoans={setLoans}
             loans_in_arrears_count={loans_in_arrears_count}
             par_name={par_name}
             par_value={par_value}
@@ -96,10 +77,12 @@ function AgeingAnalysis({
             principal_at_risk={principal_at_risk}
             total_loan_portfolio={total_loan_portfolio}
             loggedInUser={loggedInUser}
+            setParams={setParams}
+            intValues={intValues}
+            params={params}
           />
           <div className='modal-footer justify-content-between'>
-            <button type='button' className='btn btn-default' onClick={e => setOpen(false)}>Close</button>
-            {/* <button>Submit</button> */}
+            <button type='button' className='btn btn-default' onClick={closeModal}>Close</button>
           </div>
         </div>
       </div>
@@ -110,7 +93,7 @@ function AgeingAnalysis({
 
 const ModalBody = ({
   data,
-  currencyIso,
+  currency,
   branches,
   loans,
   loans_in_arrears_count,
@@ -119,7 +102,11 @@ const ModalBody = ({
   total_loan_count,
   principal_at_risk,
   total_loan_portfolio,
-  loggedInUser
+  loggedInUser,
+  setLoans,
+  intValues,
+  setParams,
+  params
 }) => {
     return (
         <>
@@ -152,16 +139,27 @@ const ModalBody = ({
                                 <span className='info-box-text'>Par Value: <b>{par_value}%</b></span><br/>
                                 <span className='info-box-text'>Number of loans {par_name} days late: <b>{loans_in_arrears_count}</b></span><br/>
                                 <span className='info-box-text'>Total Loan Count: <b>{total_loan_count}</b></span><br/>
-                                <span className='info-box-text'>Principal At Risk: <b>{currencyIso} {principal_at_risk}</b></span><br/>
-                                <span className='info-box-text'>Total Loan Portfolio: <b>{currencyIso} {total_loan_portfolio}</b></span>
+                                <span className='info-box-text'>Principal At Risk: <b>{currency} {principal_at_risk}</b></span><br/>
+                                <span className='info-box-text'>Total Loan Portfolio: <b>{currency} {total_loan_portfolio}</b></span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <LoansTable currencyIso={currencyIso} loans={loans} par_name={par_name} loggedInUser={loggedInUser} />
+                <AgeingAnalysisFilter setLoans={setLoans} intValues={intValues} setParams={setParams} />
+                {loans.loans_in_arrears &&
+                  <LoansTable 
+                    currency={currency} 
+                    loans={loans} 
+                    par_name={par_name} 
+                    loggedInUser={loggedInUser} 
+                    setLoans={setLoans}
+                    params={params}
+                  />
+                }
             </div>
         </>
     )
 }
 
 export default AgeingAnalysis;
+

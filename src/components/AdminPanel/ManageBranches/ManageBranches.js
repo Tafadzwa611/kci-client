@@ -31,25 +31,22 @@ const ManageBranches = () => {
 function Layout() {
   const location = useLocation();
   return (
-    <div className='card-body'>
-      <h5 className='table-heading' style={{marginBottom:'20px'}}>Manage Branches</h5>
-      <>
-        <div className='bloc-tabs'>
-          <Link to='/users/admin/managebranches' id='list' className={location.pathname === '/users/admin/managebranches' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-            Branches
-          </Link>
-          <Link to='/users/admin/managebranches/holidays' id='add' className={location.pathname === '/users/admin/managebranches/holidays' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-            Holidays
-          </Link>
-          <Link to='/users/admin/managebranches/nonworkingDays' id='add' className={location.pathname === '/users/admin/managebranches/nonworkingDays' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-            Non-Working Days
-          </Link>
-        </div>
-        <div className='tab-content font-12' style={{marginTop:'3rem'}}>
-          <Outlet />
-        </div>
-      </>
-    </div>
+    <>
+      <div className='bloc-tabs'>
+        <Link to='/users/admin/managebranches' id='list' className={location.pathname === '/users/admin/managebranches' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+          Branches
+        </Link>
+        <Link to='/users/admin/managebranches/holidays' id='add' className={location.pathname === '/users/admin/managebranches/holidays' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+          Holidays
+        </Link>
+        <Link to='/users/admin/managebranches/nonworkingDays' id='add' className={location.pathname === '/users/admin/managebranches/nonworkingDays' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+          Non-Working Days
+        </Link>
+      </div>
+      <div className='tab-content font-12' style={{marginTop:'3rem'}}>
+        <Outlet />
+      </div>
+    </>
   )
 }
 

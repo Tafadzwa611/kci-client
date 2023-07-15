@@ -4,8 +4,6 @@ import Pager from './Pager';
 
 const LoansReportTable = ({loansReportData, intValues, loggedInUser, setLoansReportData, params}) => {
 
-    console.log(loansReportData)
-
     const getFileName = () => {
         if (intValues.min_date != '' && intValues.max_date != '') {
             return `loans report for ${loggedInUser.company_name} from ${intValues.min_date} to ${intValues.max_date}`
