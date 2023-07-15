@@ -31,7 +31,7 @@ function ScheduleTab({installments, client_name, loanId, currencyId, setLoan, se
         <div>
           <ReactHTMLTableToExcel
             id='test-table-xls-button'
-            className='btn btn-default'
+            className='btn btn-default client__details'
             table='schedule'
             filename={`${client_name}'s schedule`}
             sheet='tablexls'

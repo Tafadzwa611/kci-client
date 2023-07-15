@@ -44,7 +44,7 @@ function Payments({
       <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'1rem'}}>
         <ReactHTMLTableToExcel
           id='test-table-xls-button'
-          className='btn btn-default'
+          className='btn btn-default client__details'
           table='payments'
           filename={`${currencyName}'s payments`}
           sheet='tablexls'
