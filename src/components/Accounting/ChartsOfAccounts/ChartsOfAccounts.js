@@ -29,8 +29,7 @@ const ChartsOfAccounts = () => {
 function Layout() {
   const location = useLocation();
   return (
-    <div className='card-body'>
-      <h5 className='table-heading' style={{marginBottom:'20px'}}>Chart Of Accounts</h5>
+    <>
       <div className='bloc-tabs'>
         <Link to='/accounting/viewaccounting/chartsofaccounts' className={location.pathname === '/accounting/viewaccounting/chartsofaccounts' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
           Detail Accounts
@@ -42,7 +41,7 @@ function Layout() {
       <div className='tab-content font-12' style={{marginTop:'3rem'}}>
         <Outlet />
       </div>
-    </div>
+    </>
   )
 }
 

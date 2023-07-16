@@ -2,33 +2,18 @@ import React from 'react';
 import { convertDate } from '../../Journals/utils';
 import AccountStatement from './AccountStatement/AccountStatement';
 
-const Table = ({ subaccounts, accStatement, setAccStatement, selectedSubAccID, setSelectedSubAccID }) => {
+const Table = ({ subaccounts, selectedSubAccID, setSelectedSubAccID }) => {
 
-    const [generalLedgerName, setGeneralLedgerName] = React.useState(null)
-    const [generalLedgerCode, setGeneralLedgerCode] = React.useState(null)
-    const [generalLedgerAccCreationDate, setGeneralLedgerAccCreationDate] = React.useState(null)
-    const [generalLedgerBalance, setGeneralLedgerBalance] = React.useState(null)
-    const [generalLedgerCurrency, setGeneralLedgerCurrency] = React.useState(null)
-    const [transactions, setTransactions] = React.useState([]);
+    const [generalLedger, setGeneralLedger] = React.useState([])
 
     const handleClickSubAcc = (evt) => {
         setSelectedSubAccID(evt.target.id)
-        if (evt.target.id != selectedSubAccID){
-            setAccStatement(true)
-            setTransactions([])
-        }else{
-            setAccStatement(curr => !curr)
-        }
     }
 
     const getGLN = async () => {
         const subacc = await subaccounts.filter(acc => acc.id == selectedSubAccID)
         if (subacc.length == 1){
-            setGeneralLedgerName(subacc[0].general_ledger_name)
-            setGeneralLedgerCode(subacc[0].general_ledger_code)
-            setGeneralLedgerAccCreationDate(subacc[0].date_created)
-            setGeneralLedgerBalance(subacc[0].account_balance)
-            setGeneralLedgerCurrency(subacc[0].currency_shortname)
+            setGeneralLedger(subacc[0])
         }
     }
 
@@ -37,14 +22,14 @@ const Table = ({ subaccounts, accStatement, setAccStatement, selectedSubAccID, s
     }, [selectedSubAccID])
 
     return (
-        <div style={{padding:"0", border:"none", marginTop:"2rem"}} className={accStatement ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
-            <div className={accStatement ? "table-responsive journal__table-container acc__statement" : "table-responsive full__table"}>
+        <div style={{padding:"0", border:"none", marginTop:"2rem"}} className={selectedSubAccID ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
+            <div className={selectedSubAccID ? "table-responsive journal__table-container acc__statement" : "table-responsive full__table"}>
                 <div style={{position:"sticky", top:"0"}}>
 
                     {subaccounts != "" && 
                         <table className="table">
                             <thead>
-                                {accStatement ?
+                                {selectedSubAccID ?
                                     <tr className="journal-details header" style={{position:"sticky", top:"0"}}>
                                         <th>GL Code</th>
                                     </tr>:
@@ -59,7 +44,7 @@ const Table = ({ subaccounts, accStatement, setAccStatement, selectedSubAccID, s
                             </thead>
                             <tbody>
                                 {subaccounts.map(account => {
-                                    if (accStatement){
+                                    if (selectedSubAccID){
                                         if (selectedSubAccID == account.id) {
                                             return (
                                                 <tr key={account.id}>
@@ -120,18 +105,41 @@ const Table = ({ subaccounts, accStatement, setAccStatement, selectedSubAccID, s
                     }
                     
                 </div>
-                {accStatement && (
-                    <AccountStatement 
-                        selectedSubAccID={selectedSubAccID} 
-                        setAccStatement={setAccStatement} 
-                        generalLedgerName={generalLedgerName} 
-                        generalLedgerCode={generalLedgerCode}
-                        generalLedgerAccCreationDate={generalLedgerAccCreationDate}
-                        generalLedgerBalance={generalLedgerBalance}
-                        generalLedgerCurrency={generalLedgerCurrency}
-                        transactions={transactions}
-                        setTransactions={setTransactions}
-                    />
+                {selectedSubAccID && (
+                    <>
+                        <div id='loan-details'>
+                            <div style={{display:'flex', flexDirection:'column', padding:'1.5rem'}} className='j-details-container'>
+                                <div className="row" style={{marginBottom:"1rem", marginTop:"0"}}>
+                                    <div className="col-12" style={{display:"flex", justifyContent:"space-between"}}>
+                                        <button><a onClick={e => setSelectedSubAccID(null)} className="btn btn-default client__details" style={{borderRadius:"0"}}>Close</a></button>
+                                        <div>
+                                            <b style={{fontSize:"1rem"}}>{generalLedger.currency_shortname} {generalLedger.account_balance}</b>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+                                    <div style={{width:"30%"}}>
+                                        <ul>
+                                            <li>General Ledger Name: {generalLedger.general_ledger_name}</li>
+                                            <li>General Ledger Code: {generalLedger.general_ledger_code}</li>
+                                            <li>Branch: {generalLedger.branch}</li>
+                                        </ul>
+                                    </div>
+                                    <div style={{width:"30%", display:"flex", alignItems:"start", justifyContent:"center"}}>
+                                        <ul>
+                                            <li>Currency: {generalLedger.currency_fullname}</li>
+                                            <li>Date Created: {generalLedger.date_created}</li>
+                                        </ul>
+                                    </div>
+                                    <div style={{width:"30%", display:"flex", alignItems:"start", justifyContent:"end"}}>
+                                        <ul>
+                                            <li>Suspended: {generalLedger.suspended? 'True' : 'False'}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </>
                 )}
             </div>
         </div>

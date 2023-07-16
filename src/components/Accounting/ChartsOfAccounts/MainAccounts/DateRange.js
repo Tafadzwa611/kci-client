@@ -30,33 +30,39 @@ const DateRange = ({setMainAccounts}) => {
   }
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({isSubmitting, errors}) => (
-        <div className='search_background'>
-          <div className='row-containers' style={{border:'none'}}>
-            <Form>
-              <NonFieldErrors errors={errors}>
-                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'10%'}}>
-                    <CustomSelectFilter label='Account Type' name='acc_type'>
-                      <option value=''>------</option>
-                      <option value={'ASSET'}>ASSET</option>
-                      <option value={'LIABILITY'}>LIABILITY</option>
-                      <option value={'EQUITY'}>EQUITY</option>
-                      <option value={'INCOME'}>INCOME</option>
-                      <option value={'EXPENSE'}>EXPENSE</option>
-                    </CustomSelectFilter>
+    <>
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        {({isSubmitting, errors}) => (
+          <div className='search_background'>
+            <div className='row-containers' style={{border:'none'}}>
+              <Form>
+                <NonFieldErrors errors={errors}>
+                  <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
+                    <div className='row-payments-container' style={{width:'30%'}}>
+                      <CustomSelectFilter label='Account Type' name='acc_type'>
+                        <option value=''>------</option>
+                        <option value={'ASSET'}>ASSET</option>
+                        <option value={'LIABILITY'}>LIABILITY</option>
+                        <option value={'EQUITY'}>EQUITY</option>
+                        <option value={'INCOME'}>INCOME</option>
+                        <option value={'EXPENSE'}>EXPENSE</option>
+                      </CustomSelectFilter>
+                    </div>
+                    <div className='row-payments-container' style={{width:'30%'}}>
+                      <CustomInputFilter label='GL Code' name='gl_code'/>
+                    </div>
+                    <div className='row-payments-container' style={{width:'30%'}}>
+                      <CustomInputFilter label='GL Name' name='gl_name'/>
+                    </div>
+                    <SubmitButtonFilter isSubmitting={isSubmitting}/>
                   </div>
-                  <CustomInputFilter label='GL Code' name='gl_code'/>
-                  <CustomInputFilter label='GL Name' name='gl_name'/>
-                  <SubmitButtonFilter isSubmitting={isSubmitting}/>
-                </div>
-              </NonFieldErrors>
-            </Form>
+                </NonFieldErrors>
+              </Form>
+            </div>
           </div>
-        </div>
-      )}
-    </Formik>
+        )}
+      </Formik>
+    </>
   );
 }
 
