@@ -16,6 +16,7 @@ const SubAccounts = () => {
         </button>
       </div>
       <Filter setSubAccounts={setSubAccounts} setPageInfo={setPageInfo} setParams={setParams}/>
+      <div style={{marginTop:'2rem'}}></div>
       <Table
         detailAccounts={subaccounts}
         pageInfo={pageInfo}

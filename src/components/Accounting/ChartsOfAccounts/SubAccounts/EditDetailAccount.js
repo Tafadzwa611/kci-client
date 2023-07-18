@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   CustomInput,
   CustomSelect,
@@ -62,47 +63,54 @@ const EditDetailAccountForm = ({branches, headerAccounts, detailAccount}) => {
   }
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ isSubmitting, errors, setFieldValue}) => (
-        <Form>
-          <NonFieldErrors errors={errors}>
-            <div className='divider divider-info'>
-              <span>Detail Account Information</span>
-            </div>
-            <CustomInput label='General Ledger Name' name='general_ledger_name' type='text' required/>
-            <CustomInput label='General Ledger Code' name='general_ledger_code' type='text' required/>
-            <CustomSelect label='Account Type' name='account_type' required>
-              <option value=''>------</option>
-              <option value='ASSET'>ASSET</option>
-              <option value='LIABILITY'>LIABILITY</option>
-              <option value='EQUITY'>EQUITY</option>
-              <option value='INCOME'>INCOME</option>
-              <option value='EXPENSE'>EXPENSE</option>
-            </CustomSelect>
-            <CustomSelect label='Branch' name='branch_id' required>
-              <option value=''>------</option>
-              {branches.map(br => <option key={br.id} value={br.id}>{br.name}</option>)}
-            </CustomSelect>
-            <CustomSelect label='Currency' name='currency_id' required>
-              <option value=''>------</option>
-              {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-            </CustomSelect>
-            <CustomDatePicker label='Account Date' name='account_open_date' setFieldValue={setFieldValue} required/>
-            <CustomSelect label='Header Account' name='header_account_id'>
-              <option value=''>------</option>
-              {headerAccounts.map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_code}-{acc.general_ledger_name}-{acc.account_type}</option>)}
-            </CustomSelect>
-            <CustomCheckbox label='Is Cash Account' name='is_cash_account'/>
-            <CustomCheckbox label='Is Suspended' name='suspended'/>
-            <CustomTextField label='Description' name='description'/>
-            <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
-            <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-              <SubmitButton isSubmitting={isSubmitting}/>
-            </div>
-          </NonFieldErrors>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <div>
+        <button type='button' className='btn btn-default max'>
+          <Link to={`/accounting/viewaccounting/chartsofaccounts/detailaccount/${detailAccount.id}`}>Back</Link>
+        </button>
+      </div>
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        {({ isSubmitting, errors, setFieldValue}) => (
+          <Form>
+            <NonFieldErrors errors={errors}>
+              <div className='divider divider-info'>
+                <span>Detail Account Information</span>
+              </div>
+              <CustomInput label='General Ledger Name' name='general_ledger_name' type='text' required/>
+              <CustomInput label='General Ledger Code' name='general_ledger_code' type='text' required/>
+              <CustomSelect label='Account Type' name='account_type' required>
+                <option value=''>------</option>
+                <option value='ASSET'>ASSET</option>
+                <option value='LIABILITY'>LIABILITY</option>
+                <option value='EQUITY'>EQUITY</option>
+                <option value='INCOME'>INCOME</option>
+                <option value='EXPENSE'>EXPENSE</option>
+              </CustomSelect>
+              <CustomSelect label='Branch' name='branch_id' required>
+                <option value=''>------</option>
+                {branches.map(br => <option key={br.id} value={br.id}>{br.name}</option>)}
+              </CustomSelect>
+              <CustomSelect label='Currency' name='currency_id' required>
+                <option value=''>------</option>
+                {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+              </CustomSelect>
+              <CustomDatePicker label='Account Date' name='account_open_date' setFieldValue={setFieldValue} required/>
+              <CustomSelect label='Header Account' name='header_account_id'>
+                <option value=''>------</option>
+                {headerAccounts.map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_code}-{acc.general_ledger_name}-{acc.account_type}</option>)}
+              </CustomSelect>
+              <CustomCheckbox label='Is Cash Account' name='is_cash_account'/>
+              <CustomCheckbox label='Is Suspended' name='suspended'/>
+              <CustomTextField label='Description' name='description'/>
+              <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+              <div style={{display:'flex', justifyContent: 'flex-end'}}> 
+                <SubmitButton isSubmitting={isSubmitting}/>
+              </div>
+            </NonFieldErrors>
+          </Form>
+        )}
+      </Formik>
+    </>
   )
 }
 

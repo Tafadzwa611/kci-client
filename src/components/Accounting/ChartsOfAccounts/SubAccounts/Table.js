@@ -15,7 +15,7 @@ const Table = ({ detailAccounts, pageInfo, currentNumOfAccounts, setSubAccounts,
             setSubAccounts={setSubAccounts}
             setPageInfo={setPageInfo}
           />
-          <div style={{marginTop:'6px'}}>Showing {currentNumOfAccounts} of {pageInfo.count} clients.</div>
+          <div style={{marginTop:'6px'}}>Showing {currentNumOfAccounts} of {pageInfo.count} accounts.</div>
         </div>
         <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
           <div style={{marginTop:'6px'}}>Page {pageInfo.number} of {pageInfo.num_of_pages}</div>
@@ -23,18 +23,18 @@ const Table = ({ detailAccounts, pageInfo, currentNumOfAccounts, setSubAccounts,
             <ReactHTMLTableToExcel
               id='test-table-xls-button'
               className='btn btn-default'
-              table='clients'
-              filename='clients'
+              table='accounts'
+              filename='detail accounts'
               sheet='tablexls'
               buttonText='Download as XLS'
             />
           </div>
         </div>
       </div>
-      <div style={{padding:'0', border:'none', marginTop:'2rem'}} className='table-container full__width font-12'>
+      <div style={{padding:'0', border:'none'}} className='table-container full__width font-12'>
         <div className='table-responsive full__table'>
           <div style={{position:'sticky', top:'0'}}>
-            <table className='table'>
+            <table className='table' id='accounts'>
               <thead>
                 <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
                   <th>GL Code</th>

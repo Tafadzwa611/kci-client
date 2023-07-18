@@ -22,31 +22,42 @@ const DetailAccountInfo = ({detailAccount}) => {
   return (
     <>
       {openDeleteModal ? <DeleteDetailAccount setOpen={setOpenDeleteModal} detailAccountId={detailAccount.id} /> : null}
-      <div>
-        <div className='client-state-btns' style={{display: 'flex', columnGap: '3px'}}>
-          <button className='btn btn-olive'>
-            <Link to={`/accounting/viewaccounting/chartsofaccounts/editdetailaccount/${detailAccount.id}`}>Edit</Link>
-          </button>
-          <button className='btn btn-olive' onClick={() => setOpenDeleteModal(true)}>Delete</button>
-        </div>
+      <div style={{marginBottom:'1rem'}}>
+        <button type='button' className='btn btn-default max'>
+          <Link to='/accounting/viewaccounting/chartsofaccounts'>Back</Link>
+        </button>
       </div>
-      <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', marginTop:'1.5rem'}}>
+      <div style={{padding:'1.5rem'}} className='j-details-container'>
         <div>
-          <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
-            <li>General Ledger Name: {detailAccount.general_ledger_name}</li>
-            <li>General Ledger Code: {detailAccount.general_ledger_code}</li>
-            <li>Account Type: {detailAccount.account_type}</li>
-            <li>Branch: {detailAccount.branch}</li>
-            <li>Header Account: {`${detailAccount.header_account}`}</li>
-            <li>Header Account Code: {`${detailAccount.header_account_code}`}</li>
-            <li>Is Suspended: {`${detailAccount.suspended}`}</li>
-            <li>Is Cash Account: {`${detailAccount.is_cash_account}`}</li>
-            <li>Is System Account: {`${detailAccount.is_system_account}`}</li>
-            <li>Currency: {detailAccount.currency}</li>
-            <li>Account balance: {detailAccount.currency} {detailAccount.account_balance}</li>
-            <li>Account Date: {detailAccount.account_open_date}</li>
-            <li>Description: {detailAccount.description}</li>
-          </ul>
+          <div className='client-state-btns' style={{display: 'flex', justifyContent:'space-between'}}>
+            <button className='btn btn-olive'>
+              <Link to={`/accounting/viewaccounting/chartsofaccounts/editdetailaccount/${detailAccount.id}`}>Edit</Link>
+            </button>
+            <button className='btn btn-olive' onClick={() => setOpenDeleteModal(true)}>Delete</button>
+          </div>
+        </div>
+        <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', marginTop:'1.5rem'}}>
+          <div>
+            <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
+              <li>General Ledger Name: {detailAccount.general_ledger_name}</li>
+              <li>General Ledger Code: {detailAccount.general_ledger_code}</li>
+              <li>Account Type: {detailAccount.account_type}</li>
+              <li>Branch: {detailAccount.branch}</li>
+              <li>Header Account: {`${detailAccount.header_account}`}</li>
+              <li>Header Account Code: {`${detailAccount.header_account_code}`}</li>
+              <li>Description: {detailAccount.description}</li>
+            </ul>
+          </div>
+          <div>
+            <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
+              <li>Is Suspended: {`${detailAccount.suspended}`}</li>
+              <li>Is Cash Account: {`${detailAccount.is_cash_account}`}</li>
+              <li>Is System Account: {`${detailAccount.is_system_account}`}</li>
+              <li>Currency: {detailAccount.currency}</li>
+              <li>Account balance: {detailAccount.currency} {detailAccount.account_balance}</li>
+              <li>Account Date: {detailAccount.account_open_date}</li>
+            </ul>
+          </div>
         </div>
       </div>
     </>

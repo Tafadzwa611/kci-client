@@ -48,7 +48,7 @@ const HeaderAccountDetails = ({data}) => {
       <div style={{padding:'1.5rem'}} className='j-details-container'>
         <div>
           <div className='client-state-btns' style={{display: 'flex', justifyContent:'space-between'}}>
-            <div style={{display:'flex', columnGap:'5px'}}>
+            <div style={{display:'flex', columnGap:'3px'}}>
               <button className='btn btn-olive'>
                 <Link to={`/accounting/viewaccounting/chartsofaccounts/editheaderaccount/${headerAccount.id}`}>Edit</Link>
               </button>
