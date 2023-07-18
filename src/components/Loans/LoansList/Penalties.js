@@ -47,7 +47,7 @@ function Penalties({penalties, penalty, client_name, loanId, setLoan, locked, st
       <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'1rem'}}>
         <ReactHTMLTableToExcel
           id='test-table-xls-button'
-          className='btn btn-default'
+          className='btn btn-default client__details'
           table='penalties'
           filename={`${client_name}'s penalties`}
           sheet='tablexls'

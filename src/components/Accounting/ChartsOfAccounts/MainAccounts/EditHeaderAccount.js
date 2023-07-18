@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Fetcher,
   CustomInput,
@@ -53,33 +54,40 @@ const EditHeaderAccountForm = ({headerAccount}) => {
   }
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ isSubmitting, errors, setFieldValue}) => (
-        <Form>
-          <NonFieldErrors errors={errors}>
-            <div className='divider divider-info'>
-              <span>Header Account Information</span>
-            </div>
-            <CustomInput label='General Ledger Name' name='general_ledger_name' type='text' required/>
-            <CustomInput label='General Ledger Code' name='general_ledger_code' type='text' required/>
-            <CustomSelect label='Account Type' name='account_type'>
-              <option value=''>------</option>
-              <option value='ASSET'>ASSET</option>
-              <option value='LIABILITY'>LIABILITY</option>
-              <option value='EQUITY'>EQUITY</option>
-              <option value='INCOME'>INCOME</option>
-              <option value='EXPENSE'>EXPENSE</option>
-            </CustomSelect>
-            <CustomDatePicker label='Account Date' name='date_created' setFieldValue={setFieldValue} required/>
-            <CustomTextField label='Description' name='description'/>
-            <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
-            <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-              <SubmitButton isSubmitting={isSubmitting}/>
-            </div>
-          </NonFieldErrors>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <div>
+        <button type='button' className='btn btn-default max'>
+          <Link to={`/accounting/viewaccounting/chartsofaccounts/headeraccount/${headerAccount.id}`}>Back</Link>
+        </button>
+      </div>
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        {({ isSubmitting, errors, setFieldValue}) => (
+          <Form>
+            <NonFieldErrors errors={errors}>
+              <div className='divider divider-info'>
+                <span>Header Account Information</span>
+              </div>
+              <CustomInput label='General Ledger Name' name='general_ledger_name' type='text' required/>
+              <CustomInput label='General Ledger Code' name='general_ledger_code' type='text' required/>
+              <CustomSelect label='Account Type' name='account_type'>
+                <option value=''>------</option>
+                <option value='ASSET'>ASSET</option>
+                <option value='LIABILITY'>LIABILITY</option>
+                <option value='EQUITY'>EQUITY</option>
+                <option value='INCOME'>INCOME</option>
+                <option value='EXPENSE'>EXPENSE</option>
+              </CustomSelect>
+              <CustomDatePicker label='Account Date' name='date_created' setFieldValue={setFieldValue} required/>
+              <CustomTextField label='Description' name='description'/>
+              <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+              <div style={{display:'flex', justifyContent: 'flex-end'}}> 
+                <SubmitButton isSubmitting={isSubmitting}/>
+              </div>
+            </NonFieldErrors>
+          </Form>
+        )}
+      </Formik>
+    </>
   )
 }
 

@@ -24,7 +24,7 @@ function Fees({fees, setLoan}) {
       <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'1rem'}}>
         <ReactHTMLTableToExcel
           id='test-table-xls-button'
-          className='btn btn-default'
+          className='btn btn-default client__details'
           table='penalties'
           filename={'Applied Fees'}
           sheet='tablexls'

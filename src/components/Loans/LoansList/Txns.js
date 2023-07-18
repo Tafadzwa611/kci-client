@@ -7,7 +7,7 @@ function Txns({txns, client_name}) {
       <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"1rem"}}>
         <ReactHTMLTableToExcel
           id='test-table-xls-button'
-          className='btn btn-default'
+          className='btn btn-default client__details'
           table='transactions'
           filename={`${client_name}'s transactions`}
           sheet='tablexls'

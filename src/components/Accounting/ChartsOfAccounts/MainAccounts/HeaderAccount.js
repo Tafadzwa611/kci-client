@@ -40,27 +40,38 @@ const HeaderAccountDetails = ({data}) => {
       {openModal ? <UpdateDetailAccounts open={openModal} setOpen={setOpenModal} setHeaderAccount={setHeaderAccount} headerAccountId={headerAccount.id} /> : null}
       {openRemoveModal ? <RemoveAccount setOpen={setOpenRemoveModal} setHeaderAccount={setHeaderAccount} detAccId={detAccId} /> : null}
       {openDeleteModal ? <DeleteHeaderAccount setOpen={setOpenDeleteModal} headerAccountId={headerAccount.id} /> : null}
-      <div>
-        <div className='client-state-btns' style={{display: 'flex', columnGap: '3px'}}>
-          <button className='btn btn-olive'>
-            <Link to={`/accounting/viewaccounting/chartsofaccounts/editheaderaccount/${headerAccount.id}`}>Edit</Link>
-          </button>
-          <button className='btn btn-olive' onClick={() => setOpenModal(true)}>Update Detail Accounts</button>
-          <button className='btn btn-olive' onClick={() => setOpenDeleteModal(true)}>Delete</button>
-        </div>
+      <div style={{marginBottom:'1rem'}}>
+        <button type='button' className='btn btn-default max'>
+          <Link to='/accounting/viewaccounting/chartsofaccounts/headeraccounts'>Back</Link>
+        </button>
       </div>
-      <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', marginTop:'1.5rem'}}>
+      <div style={{padding:'1.5rem'}} className='j-details-container'>
         <div>
-          <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
-            <li>General Ledger Name: {headerAccount.general_ledger_name}</li>
-            <li>General Ledger Code: {headerAccount.general_ledger_code}</li>
-            <li>Account Type: {headerAccount.account_type}</li>
-            <li>Account Date: {headerAccount.account_date}</li>
-            <li>Description: {headerAccount.description}</li>
-          </ul>
+          <div className='client-state-btns' style={{display: 'flex', justifyContent:'space-between'}}>
+            <div style={{display:'flex', columnGap:'5px'}}>
+              <button className='btn btn-olive'>
+                <Link to={`/accounting/viewaccounting/chartsofaccounts/editheaderaccount/${headerAccount.id}`}>Edit</Link>
+              </button>
+              <button className='btn btn-olive' onClick={() => setOpenModal(true)}>Update Detail Accounts</button>
+            </div>
+            <div>
+              <button className='btn btn-olive' onClick={() => setOpenDeleteModal(true)}>Delete</button>
+            </div>
+          </div>
+        </div>
+        <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', marginTop:'1.5rem'}}>
+          <div>
+            <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
+              <li>General Ledger Name: {headerAccount.general_ledger_name}</li>
+              <li>General Ledger Code: {headerAccount.general_ledger_code}</li>
+              <li>Account Type: {headerAccount.account_type}</li>
+              <li>Account Date: {headerAccount.account_date}</li>
+              <li>Description: {headerAccount.description}</li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div style={{margin:'1rem 0', display:'flex', justifyContent:'space-between'}}>
+      <div style={{margin:'1.5rem 0 1rem', display:'flex', justifyContent:'space-between'}}>
         <div style={{display:'flex', alignItems:'center'}}>
           <span style={{marginRight:'5px'}}><b>Detail Accounts</b></span>
         </div>
@@ -117,6 +128,7 @@ const UpdateDetailAccounts = ({open, setOpen, setHeaderAccount, headerAccountId}
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.put(`/acc-api/add_detail_account/${headerAccountId}/${values.detail_account.value}/`, {}, CONFIG);
       setHeaderAccount(curr => ({...curr, detail_accounts: [response.data, ...curr.detail_accounts]}));
+      setOpen(false);
     } catch (error) {
       console.log(error);
       if (error.message === 'Network Error') {
@@ -137,18 +149,19 @@ const UpdateDetailAccounts = ({open, setOpen, setHeaderAccount, headerAccountId}
             {({ errors, setFieldValue, isSubmitting }) => (
               <Form>
                 <NonFieldErrors errors={errors}>
-                  <div className='divider divider-info'>
-                    <span>Detail Account</span>
+                  <div className="create_modal_container">
+                    <div>
+                      <CustomMultiSelect
+                        required
+                        isMulti={false}
+                        label='Detail Account'
+                        setFieldValue={setFieldValue}
+                        name='detail_account'
+                        options={data[0].map(acc => ({value: acc.id, label: `${acc.currency} ${acc.general_ledger_code} ${acc.general_ledger_name} ${acc.branch}`}))}
+                      />
+                    </div>
+                    <ModalSubmit text='add' isSubmitting={isSubmitting} setOpen={setOpen} />
                   </div>
-                  <CustomMultiSelect
-                    required
-                    isMulti={false}
-                    label='Detail Account'
-                    setFieldValue={setFieldValue}
-                    name='detail_account'
-                    options={data[0].map(acc => ({value: acc.id, label: `${acc.currency} ${acc.general_ledger_code} ${acc.general_ledger_name} ${acc.branch}`}))}
-                  />
-                  <ModalSubmit text='add' isSubmitting={isSubmitting} setOpen={setOpen} />
                 </NonFieldErrors>
               </Form>
             )}
