@@ -1,141 +1,101 @@
-import React from 'react';
-import { convertDate } from '../../Journals/utils';
-import AccountStatement from './AccountStatement/AccountStatement';
+import React, {useState} from 'react';
+import axios from 'axios';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import { Link } from 'react-router-dom';
 
-const Table = ({ subaccounts, accStatement, setAccStatement, selectedSubAccID, setSelectedSubAccID }) => {
-
-    const [generalLedgerName, setGeneralLedgerName] = React.useState(null)
-    const [generalLedgerCode, setGeneralLedgerCode] = React.useState(null)
-    const [generalLedgerAccCreationDate, setGeneralLedgerAccCreationDate] = React.useState(null)
-    const [generalLedgerBalance, setGeneralLedgerBalance] = React.useState(null)
-    const [generalLedgerCurrency, setGeneralLedgerCurrency] = React.useState(null)
-    const [transactions, setTransactions] = React.useState([]);
-
-    const handleClickSubAcc = (evt) => {
-        setSelectedSubAccID(evt.target.id)
-        if (evt.target.id != selectedSubAccID){
-            setAccStatement(true)
-            setTransactions([])
-        }else{
-            setAccStatement(curr => !curr)
-        }
-    }
-
-    const getGLN = async () => {
-        const subacc = await subaccounts.filter(acc => acc.id == selectedSubAccID)
-        if (subacc.length == 1){
-            setGeneralLedgerName(subacc[0].general_ledger_name)
-            setGeneralLedgerCode(subacc[0].general_ledger_code)
-            setGeneralLedgerAccCreationDate(subacc[0].date_created)
-            setGeneralLedgerBalance(subacc[0].account_balance)
-            setGeneralLedgerCurrency(subacc[0].currency_shortname)
-        }
-    }
-
-    React.useEffect(() => {
-        getGLN();
-    }, [selectedSubAccID])
-
-    return (
-        <div style={{padding:"0", border:"none", marginTop:"2rem"}} className={accStatement ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
-            <div className={accStatement ? "table-responsive journal__table-container acc__statement" : "table-responsive full__table"}>
-                <div style={{position:"sticky", top:"0"}}>
-
-                    {subaccounts != "" && 
-                        <table className="table">
-                            <thead>
-                                {accStatement ?
-                                    <tr className="journal-details header" style={{position:"sticky", top:"0"}}>
-                                        <th>GL Code</th>
-                                    </tr>:
-                                    <tr className="journal-details header" style={{position:"sticky", top:"0"}}>
-                                        <th>Date Created</th>
-                                        <th>GL Code</th>
-                                        <th>Sub Account Name</th>
-                                        <th>Currency</th>
-                                        <th>Balance</th>
-                                    </tr>
-                                }
-                            </thead>
-                            <tbody>
-                                {subaccounts.map(account => {
-                                    if (accStatement){
-                                        if (selectedSubAccID == account.id) {
-                                            return (
-                                                <tr key={account.id}>
-                                                    <td>
-                                                        <span 
-                                                            onClick={handleClickSubAcc} 
-                                                            id={account.id} 
-                                                            style={{fontSize:"0.75rem",color:"red", cursor:"pointer"}} 
-                                                            className="link">
-                                                            {account.general_ledger_code}
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        }else{
-                                            return (
-                                                <tr key={account.id}>
-                                                    <td>
-                                                        <span 
-                                                            onClick={handleClickSubAcc} 
-                                                            id={account.id} 
-                                                            style={{fontSize:"0.75rem", cursor:"pointer"}} 
-                                                            className="link">
-                                                            {account.general_ledger_code}
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        }
-                                    }else {
-                                        return (
-                                            <tr key={account.id}>
-                                                <td>{convertDate(account.date_created)}</td>
-                                                <td>
-                                                     <span 
-                                                         onClick={handleClickSubAcc} 
-                                                         id={account.id} 
-                                                         style={{fontSize:"0.75rem", cursor:"pointer"}} 
-                                                         className="link">
-                                                         {account.general_ledger_code}
-                                                     </span>
-                                                 </td>
-                                                <td>{account.general_ledger_name}</td>
-                                                <td>{account.currency_shortname}</td>
-                                                <td>{account.account_balance}</td>
-                                            </tr>
-                                        )
-                                    }
-                                })}
-                            </tbody>
-                        </table>
-                    }
-
-                    {subaccounts == "" && 
-                        <div style={{textAlign:"center"}} className="text-light">
-                            <span>Account type has no sub accounts OR filter above.</span>
-                        </div>
-                    }
-                    
-                </div>
-                {accStatement && (
-                    <AccountStatement 
-                        selectedSubAccID={selectedSubAccID} 
-                        setAccStatement={setAccStatement} 
-                        generalLedgerName={generalLedgerName} 
-                        generalLedgerCode={generalLedgerCode}
-                        generalLedgerAccCreationDate={generalLedgerAccCreationDate}
-                        generalLedgerBalance={generalLedgerBalance}
-                        generalLedgerCurrency={generalLedgerCurrency}
-                        transactions={transactions}
-                        setTransactions={setTransactions}
-                    />
-                )}
-            </div>
+const Table = ({ detailAccounts, pageInfo, currentNumOfAccounts, setSubAccounts, setPageInfo, params }) => {
+  return (
+    <>
+      <div className='table-header'>
+        <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
+          <Pager
+            nextPageNumber={pageInfo.next_page_num}
+            prevPageNumber={pageInfo.prev_page_num}
+            params={params}
+            setSubAccounts={setSubAccounts}
+            setPageInfo={setPageInfo}
+          />
+          <div style={{marginTop:'6px'}}>Showing {currentNumOfAccounts} of {pageInfo.count} clients.</div>
         </div>
-    )
+        <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
+          <div style={{marginTop:'6px'}}>Page {pageInfo.number} of {pageInfo.num_of_pages}</div>
+          <div>
+            <ReactHTMLTableToExcel
+              id='test-table-xls-button'
+              className='btn btn-default'
+              table='clients'
+              filename='clients'
+              sheet='tablexls'
+              buttonText='Download as XLS'
+            />
+          </div>
+        </div>
+      </div>
+      <div style={{padding:'0', border:'none', marginTop:'2rem'}} className='table-container full__width font-12'>
+        <div className='table-responsive full__table'>
+          <div style={{position:'sticky', top:'0'}}>
+            <table className='table'>
+              <thead>
+                <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
+                  <th>GL Code</th>
+                  <th>Branch</th>
+                  <th>Account Date</th>
+                  <th>Account Name</th>
+                  <th>Account Type</th>
+                  <th>Balance</th>
+                  <th>Active</th>
+                </tr>
+              </thead>
+              <tbody>
+                {detailAccounts.map(account => {
+                  return (
+                    <tr key={account.id}>
+                      <td><Link to={`/accounting/viewaccounting/chartsofaccounts/detailaccount/${account.id}`}>{account.general_ledger_code}</Link></td>
+                      <td>{account.branch__name}</td>
+                      <td>{account.account_date}</td>
+                      <td>{account.general_ledger_name}</td>
+                      <td>{account.account_type}</td>
+                      <td>{account.account_balance}</td>
+                      <td>{account.suspended ? 'No' : 'Yes'}</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
+
+const Pager = ({prevPageNumber, nextPageNumber, setSubAccounts, setPageInfo, params}) => {
+  const [errors, setErrors] = useState(null);
+
+  const onClick = async (evt) => {
+    try {
+      const pageNum = evt.target.innerText === 'Next' ? nextPageNumber : prevPageNumber;
+      params.set('page_num', pageNum);
+      const response = await axios.get('/acc-api/sub_accounts_api/', {params: params});
+      setSubAccounts(response.data.accounts);
+      delete response.data['accounts'];
+      setPageInfo(response.data);
+    } catch (error) {
+      if (error.message === 'Network Error') {
+        setErrors({detail: 'Network Error'});
+      } else {
+        setErrors({detail: 'Server Error'});
+      }
+    }
+  }
+
+  return (
+    <div className='footer-container font-12 text-light' style={{display:'flex', columnGap:'3px'}}>
+      {errors ? JSON.stringify(errors) : null}
+      {prevPageNumber ? <><button className='btn btn-default' onClick={onClick}>Back</button><br/></> : null}
+      {nextPageNumber ? <button className='btn btn-default' onClick={onClick}>Next</button> : null}
+    </div>
+  )
 }
 
 export default Table;
