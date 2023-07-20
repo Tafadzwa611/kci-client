@@ -1,116 +1,127 @@
 import React from 'react'
-import MiniLoader from '../../Loader/MiniLoader';
-import Empty from './Empty';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-const Display = ({report, currencyIso, intValues, loggedInUser}) => {
+const Display = ({report}) => {
+  const groupedAssetAccs = report.grouped_accounts.ASSET;
+  const groupedLiabilityAccs = report.grouped_accounts.LIABILITY;
+  const groupedEquityAccs = report.grouped_accounts.EQUITY;
 
-    if (report===null) {
-        return <Empty message='Select Report Date and at least one branch to run income statement.'/>
-    }
+  const assetAccs = report.ungrouped_accounts.filter(acc => acc.type === 'ASSET');
+  const liabAccs = report.ungrouped_accounts.filter(acc => acc.type === 'LIABILITY');
+  const equityAccs = report.ungrouped_accounts.filter(acc => acc.type === 'EQUITY');
 
-    const assetAccs = report.balance_sheet.filter(acc => acc.type === 'ASSET');
-    const liabAccs = report.balance_sheet.filter(acc => acc.type === 'LIABILITY');
-    const equityAccs = report.balance_sheet.filter(acc => acc.type === 'EQUITY');
-
-    return (
-        <div style={{paddingTop: "17px"}}>
-            <div className='cardone card-success card-outline' style={{paddingTop: "17px"}}>
-                <div className='table-responsive no-padding'>
-                    <div className='col-sm-12'>
-                        <div style={{marginBottom:"1rem"}}>
-                            <ReactHTMLTableToExcel
-                                id='test-table-xls-button'
-                                className='download-table-xls-button btn btn-default'
-                                table='balance-sheet'
-                                filename={`${currencyIso} Balance Sheet for ${loggedInUser.company_name} as on ${intValues.report_date}`}
-                                sheet='tablexls'
-                                buttonText='Download as XLS'
-                            />
-                        </div>
-                        <table id='balance-sheet' className='table table-bordered table-condensed table-hover'>
-                            <thead>
-                                <tr className="journal-details header">
-                                    <th>Account Branch</th>
-                                    <th>GL Code</th>
-                                    <th>Account Name</th>
-                                    <th>Balance</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                <td><b>{currencyIso} Balance Sheet</b></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                </tr>
-                                <tr>
-                                <td><b>{loggedInUser.company_name} as on {intValues.report_date}</b></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                </tr>
-                                {assetAccs.map((acc, idx) => {
-                                return (
-                                    <tr key={idx}>
-                                    <td>{acc.branch_name}</td>
-                                    <td>{acc.code}</td>
-                                    <td>{acc.name}</td>
-                                    <td>{acc.balance}</td>
-                                    </tr>
-                                )
-                                })}
-                                <tr>
-                                <td></td>
-                                <td></td>
-                                <td><b>TOTAL ASSETS</b></td>
-                                <td><b>{report.total_assets}</b></td>
-                                </tr>
-                                {liabAccs.map((acc, idx) => {
-                                return (
-                                    <tr key={idx}>
-                                    <td>{acc.branch_name}</td>
-                                    <td>{acc.code}</td>
-                                    <td>{acc.name}</td>
-                                    <td>{acc.balance}</td>
-                                    </tr>
-                                )
-                                })}
-                                <tr>
-                                <td></td>
-                                <td></td>
-                                <td><b>TOTAL LIABILITIES</b></td>
-                                <td><b>{report.total_liabs}</b></td>
-                                </tr>
-                                {equityAccs.map((acc, idx) => {
-                                return (
-                                    <tr key={idx}>
-                                    <td>{acc.branch_name}</td>
-                                    <td>{acc.code}</td>
-                                    <td>{acc.name}</td>
-                                    <td>{acc.balance}</td>
-                                    </tr>
-                                )
-                                })}
-                                <tr>
-                                <td></td>
-                                <td></td>
-                                <td><b>TOTAL EQUITY</b></td>
-                                <td><b>{report.total_equity}</b></td>
-                                </tr>
-                                <tr>
-                                <td></td>
-                                <td></td>
-                                <td><b>EQUITY + LIABILITIES</b></td>
-                                <td><b>{report.total_equity_and_liab}</b></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+  return (
+    <div style={{paddingTop: '17px'}}>
+      <div className='cardone card-success card-outline' style={{paddingTop: '17px'}}>
+        <div className='table-responsive no-padding'>
+          <div className='col-sm-12'>
+            <div style={{marginBottom:'1rem'}}>
+              <ReactHTMLTableToExcel
+                id='test-table-xls-button'
+                className='download-table-xls-button btn btn-default'
+                table='balance-sheet'
+                filename={`${report.currency} Balance Sheet for ${report.company_name} as at ${report.report_date}`}
+                sheet='tablexls'
+                buttonText='Download as XLS'
+              />
             </div>
+            <table id='balance-sheet' className='table table-bordered table-condensed table-hover'>
+              <thead>
+                <tr className='journal-details header'>
+                  <th>GL Code</th>
+                  <th>Account Branch</th>
+                  <th>Account Name</th>
+                  <th>Balance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>{report.currency} - Balance Sheet</b></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><b>{report.company_name} as on {report.report_date}</b></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                {Object.keys(groupedAssetAccs).map((headerAccountName, idx) => (
+                  <GroupedAccounts key={idx} headerAccountName={headerAccountName} detailAccounts={groupedAssetAccs[headerAccountName]}/>
+                ))}
+                {assetAccs.map((acc, idx) => <DetailAccount key={idx} acc={acc} />)}
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td><b>TOTAL ASSETS</b></td>
+                  <td><b>{report.total_assets}</b></td>
+                </tr>
+                {Object.keys(groupedLiabilityAccs).map((headerAccountName, idx) => (
+                  <GroupedAccounts key={idx} headerAccountName={headerAccountName} detailAccounts={groupedLiabilityAccs[headerAccountName]}/>
+                ))}
+                {liabAccs.map((acc, idx) => <DetailAccount key={idx} acc={acc} />)}
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td><b>TOTAL LIABILITIES</b></td>
+                  <td><b>{report.total_liabs}</b></td>
+                </tr>
+                {Object.keys(groupedEquityAccs).map((headerAccountName, idx) => (
+                  <GroupedAccounts key={idx} headerAccountName={headerAccountName} detailAccounts={groupedEquityAccs[headerAccountName]}/>
+                ))}
+                {equityAccs.map((acc, idx) => <DetailAccount key={idx} acc={acc} />)}
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td><b>TOTAL EQUITY</b></td>
+                  <td><b>{report.total_equity}</b></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td><b>EQUITY + LIABILITIES</b></td>
+                  <td><b>{report.total_equity_and_liab}</b></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-    )
+      </div>
+    </div>
+  )
+}
+
+const DetailAccount = ({acc}) => {
+  return (
+    <tr>
+      <td>{acc.code}</td>
+      <td>{acc.branch_name ? acc.branch_name : 'Interbranch'}</td>
+      <td>{acc.name}</td>
+      <td>{acc.balance}</td>
+    </tr>
+  )
+}
+
+const GroupedAccounts = ({headerAccountName, detailAccounts}) => {
+  return (
+    <>
+      <tr>
+        <td><b>{headerAccountName}</b></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      {detailAccounts.map((acc, idx) => (
+        <tr key={idx}>
+          <td style={{paddingLeft:'5rem'}}>{acc.code}</td>
+          <td>{acc.branch_name}</td>
+          <td>{acc.name}</td>
+          <td>{acc.balance}</td>
+        </tr>
+      ))}
+    </>
+  )
 }
 
 export default Display

@@ -30,7 +30,7 @@ const ViewAccounting = () => {
         <Route path='cashreport' element={<CashReport loggedInUser={loggedInUser} />} />
         <Route path='profitandloss' element={<ProfitAndLoss loggedInUser={loggedInUser} />} />
         <Route path='trialbalance' element={<TrialBalance loggedInUser={loggedInUser} />} />
-        <Route path='balancesheet' element={<BalanceSheet loggedInUser={loggedInUser} />} />
+        <Route path='balancesheet' element={<BalanceSheet />} />
         <Route path='journals/*' element={<Journals loggedInUser={loggedInUser} />} />
         <Route path='chartsofaccounts/*' element={<ChartsOfAccounts />} />
         <Route path='ledger' element={<Ledger loggedInUser={loggedInUser} />} />
@@ -67,7 +67,7 @@ function Layout() {
               Journal Entries
             </Link>
             <Link to='/accounting/viewaccounting/chartsofaccounts' className={location.pathname.includes('/accounting/viewaccounting/chartsofaccounts') ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Charts of Accounts
+              Chart of Accounts
             </Link>
             <Link to='/accounting/viewaccounting/ledger' className={location.pathname === '/accounting/viewaccounting/ledger' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Ledger
