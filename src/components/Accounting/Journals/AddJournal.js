@@ -171,8 +171,10 @@ function AddJournal() {
 const Notification = ({journalId}) => {
   if (Object.keys(journalId).length === 1) {
     return (
-      <div>
-        Journal created
+      <div className='success__submit' style={{display:'flex', columnGap:'5px'}}>
+        <div>
+          Journal created
+        </div>
         <Link to={`/accounting/viewaccounting/journals/journal/${journalId.id}`}>
           View Journal
         </Link>
@@ -180,8 +182,10 @@ const Notification = ({journalId}) => {
     )
   }
   return (
-    <div>
-      Journals created
+    <div className='success__submit' style={{display:'flex', columnGap:'5px'}}>
+      <div>
+        Journals created
+      </div>
       <Link to={`/accounting/viewaccounting/journals/journal/${journalId.debit_journal_id}`}>
         View Debit Journal
       </Link>
