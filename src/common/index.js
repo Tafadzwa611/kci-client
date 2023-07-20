@@ -38,5 +38,6 @@ export {
   CustomDatePickerFilter,
   CustomSelectFilter,
   CustomMultiSelectFilter,
-  SubmitButtonFilter
+  SubmitButtonFilter,
+  CustomSelectRemoteFilter
 } from './filter';
