@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
-import { Form, Formik } from 'formik';
+import { Form, Formik, useField } from 'formik';
+import CustomSelectRemoteJournal from './CustomSelectRemoteJournal';
 import {
   NonFieldErrors,
   CustomSelect,
   CustomInput,
   CustomDatePicker,
   CustomTextField,
-  CustomSelectRemote,
   CustomCheckbox,
   SubmitButton,
   Fetcher
@@ -92,60 +92,64 @@ function AddJournal() {
                     <option value=''>------</option>
                     {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
                   </CustomSelect>
-                  <CustomSelect
-                    label='Branch Debited'
-                    name='branch_debited_id'
-                    onChange={(evt) => {
-                      setFieldValue('account_debited', '');
-                      setFieldValue('branch_debited_id', evt.target.value);
-                    }}
-                    required
-                  >
-                    <option value=''>------</option>
-                    {data[0].map(br => <option key={br.id} value={br.id}>{br.name}</option>)}
-                  </CustomSelect>
-                  {values.currency_id && values.branch_debited_id ?
-                  <CustomSelectRemote
-                    label='Account Debited'
-                    url='/acc-api/search_account/'
-                    selected={values.account_debited}
-                    params={[
-                      {key: 'currency_id', value: values.currency_id},
-                      {key: 'branch_ids', value: values.branch_debited_id}
-                    ]}
-                    setFieldValue={setFieldValue}
-                    queryParamName='query'
-                    placeholder='Search Account'
-                    name='account_debited'
-                    required
-                  /> : null}
-                  <CustomSelect
-                    label='Branch Credited'
-                    name='branch_credited_id'
-                    onChange={(evt) => {
-                      setFieldValue('account_credited', '');
-                      setFieldValue('branch_credited_id', evt.target.value);
-                    }}
-                    required
-                  >
-                    <option value=''>------</option>
-                    {data[0].map(br => <option key={br.id} value={br.id}>{br.name}</option>)}
-                  </CustomSelect>
-                  {values.currency_id && values.branch_credited_id ?
-                  <CustomSelectRemote
-                    label='Account Credited'
-                    url='/acc-api/search_account/'
-                    selected={values.account_credited}
-                    params={[
-                      {key: 'currency_id', value: values.currency_id},
-                      {key: 'branch_ids', value: values.branch_credited_id}
-                    ]}
-                    setFieldValue={setFieldValue}
-                    queryParamName='query'
-                    placeholder='Search Account'
-                    name='account_credited'
-                    required
-                  /> : null}
+                  <div style={{display:'flex', columnGap:'1%'}}>
+                    <CustomSelectForm
+                      label='Branch Debited'
+                      name='branch_debited_id'
+                      onChange={(evt) => {
+                        setFieldValue('account_debited', '');
+                        setFieldValue('branch_debited_id', evt.target.value);
+                      }}
+                      required
+                    >
+                      <option value=''>------</option>
+                      {data[0].map(br => <option key={br.id} value={br.id}>{br.name}</option>)}
+                    </CustomSelectForm>
+                    {values.currency_id && values.branch_debited_id ?
+                    <CustomSelectRemoteJournal
+                      label='Account Debited'
+                      url='/acc-api/search_account/'
+                      selected={values.account_debited}
+                      params={[
+                        {key: 'currency_id', value: values.currency_id},
+                        {key: 'branch_ids', value: values.branch_debited_id}
+                      ]}
+                      setFieldValue={setFieldValue}
+                      queryParamName='query'
+                      placeholder='Search Account'
+                      name='account_debited'
+                      required
+                    /> : null}
+                  </div>
+                  <div style={{display:'flex', columnGap:'1%'}}>
+                    <CustomSelectForm
+                      label='Branch Credited'
+                      name='branch_credited_id'
+                      onChange={(evt) => {
+                        setFieldValue('account_credited', '');
+                        setFieldValue('branch_credited_id', evt.target.value);
+                      }}
+                      required
+                    >
+                      <option value=''>------</option>
+                      {data[0].map(br => <option key={br.id} value={br.id}>{br.name}</option>)}
+                    </CustomSelectForm>
+                    {values.currency_id && values.branch_credited_id ?
+                    <CustomSelectRemoteJournal
+                      label='Account Credited'
+                      url='/acc-api/search_account/'
+                      selected={values.account_credited}
+                      params={[
+                        {key: 'currency_id', value: values.currency_id},
+                        {key: 'branch_ids', value: values.branch_credited_id}
+                      ]}
+                      setFieldValue={setFieldValue}
+                      queryParamName='query'
+                      placeholder='Search Account'
+                      name='account_credited'
+                      required
+                    /> : null}
+                  </div>
                   <CustomInput label='Amount' name='amount' type='number' step='0.00001' required/>
                   <CustomDatePicker label='Date' name='txn_date' setFieldValue={setFieldValue} required/>
                   <CustomTextField label='Narrative' name='narrative' required/>
@@ -186,6 +190,20 @@ const Notification = ({journalId}) => {
       </Link>
     </div>
   ) 
+}
+
+const CustomSelectForm = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+
+  return (
+    <div className='custom-background' style={{marginTop:'1.5rem', width:'24%'}}>
+      <label className='form-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
+      <div style={{width:'100%'}}>
+        <select {...field} {...props} className={`custom-select-form ${meta.touched && meta.error ? 'input-error' : ''}`} style={{width:'100%'}}/>
+        {meta.touched && meta.error && <div className='error'>{meta.error}</div>}
+      </div>
+    </div>
+  );
 }
 
 export default AddJournal;
