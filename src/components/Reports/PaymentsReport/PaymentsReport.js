@@ -35,7 +35,9 @@ const Report = ({accounts, loggedInUser, branches}) => {
         {aggregateData &&
         <TableHeader aggregateData={aggregateData} intValues={intValues} />
         }
-        <Table payments={payments}/>
+        {payments.length > 0 &&
+          <Table payments={payments}/>
+        }
     </>
   )
 }
