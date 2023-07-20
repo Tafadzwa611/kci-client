@@ -24,7 +24,7 @@ function CustomDatePicker({ setFieldValue, label, ...props }) {
             value={field.value}
             format={loggedInUser.date_format.toUpperCase()}
             onChange={handleChange}
-            render={<CustomInput touched={meta.touched} error={meta.error} />}
+            render={<CustomInput required={props.required} touched={meta.touched} error={meta.error} />}
           />
           {meta.touched && meta.error && <div className='error'>{meta.error}</div>}
         </div>
@@ -41,6 +41,7 @@ function CustomInput(props) {
       onFocus={props.openCalendar}
       value={props.value}
       onChange={props.handleValueChange}
+      required={props.required}
     />
   )
 }

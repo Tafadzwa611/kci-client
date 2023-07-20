@@ -1,17 +1,33 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import AsyncSelect from 'react-select/async';
 import axios from 'axios';
 import { useField } from 'formik';
+import { uuidv4 } from '../../utils';
 
 function CustomSelectRemote({url, label, selected, queryParamName, params, setFieldValue, placeholder, isMulti, ...props}) {
   const [field, meta] = useField(props);
 
+  const inputId = uuidv4();
+
+  useEffect(() => {
+    const el = document.getElementById(inputId);
+    el.required = props.required;
+  }, []);
+
   const onChange = selected => {
     setFieldValue(field.name, selected);
+    const el = document.getElementById(inputId);
+    if (selected === null) {
+      el.required = props.required;
+    }else if (selected.length === 0) {
+      el.required = props.required;
+    }else {
+      el.required = false;
+    }
   }
 
   const loadOptions = (inputValue, callback) => {
-    if (inputValue.length <= 2) return
+    if (inputValue.length <= 1) return
     let search = '';
     if (params) {
       params.forEach(param => {
@@ -27,8 +43,8 @@ function CustomSelectRemote({url, label, selected, queryParamName, params, setFi
       <div className='col-9'>
         <div style={{width:"50%"}}>
           {isMulti ?
-          <AsyncSelect onChange={onChange} value={selected} loadOptions={loadOptions} placeholder={placeholder} isMulti /> :
-          <AsyncSelect onChange={onChange} value={selected} loadOptions={loadOptions} placeholder={placeholder} />}
+          <AsyncSelect onChange={onChange} value={selected} loadOptions={loadOptions} placeholder={placeholder} inputId={inputId} isMulti isClearable /> :
+          <AsyncSelect onChange={onChange} value={selected} loadOptions={loadOptions} placeholder={placeholder} inputId={inputId} isClearable />}
           {meta.error && <div className='error'>{meta.error}</div>}
         </div>
       </div>

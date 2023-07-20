@@ -121,6 +121,9 @@ const removeEmptyValues = (object) => {
         continue
       }
     }
+    if (value === null || value === undefined) {
+      continue
+    }
     data[key] = value;
   }
   return data;

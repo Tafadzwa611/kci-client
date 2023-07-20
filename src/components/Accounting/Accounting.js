@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
-import Cashflow from '../Cashflow/Cashflow';
-import CashReport from '../CashReport/CashReport';
-import ProfitAndLoss from '../ProfitAndLoss/ProfitAndLoss';
-import TrialBalance from '../TrialBalance/TrialBalance';
-import Journals from '../Journals/Journals';
-import ChartsOfAccounts from '../ChartsOfAccounts/ChartsOfAccounts';
-import BalanceSheet from '../BalanceSheet/BalanceSheet';
-import Ledger from '../Ledger/Ledger';
-import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
+import Cashflow from './Cashflow/Cashflow';
+import CashReport from './CashReport/CashReport';
+import ProfitAndLoss from './ProfitAndLoss/ProfitAndLoss';
+import TrialBalance from './TrialBalance/TrialBalance';
+import Journals from './Journals/Journals';
+import ChartsOfAccounts from './ChartsOfAccounts/ChartsOfAccounts';
+import BalanceSheet from './BalanceSheet/BalanceSheet';
+import Ledger from './Ledger/Ledger';
+import { useLoggedInUser } from '../../contexts/LoggedInUserContext';
 import {
   Routes,
   Route,
@@ -31,7 +31,7 @@ const ViewAccounting = () => {
         <Route path='profitandloss' element={<ProfitAndLoss loggedInUser={loggedInUser} />} />
         <Route path='trialbalance' element={<TrialBalance loggedInUser={loggedInUser} />} />
         <Route path='balancesheet' element={<BalanceSheet loggedInUser={loggedInUser} />} />
-        <Route path='journals' element={<Journals loggedInUser={loggedInUser} />} />
+        <Route path='journals/*' element={<Journals loggedInUser={loggedInUser} />} />
         <Route path='chartsofaccounts/*' element={<ChartsOfAccounts />} />
         <Route path='ledger' element={<Ledger loggedInUser={loggedInUser} />} />
       </Route>
