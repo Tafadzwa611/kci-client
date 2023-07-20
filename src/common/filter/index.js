@@ -5,6 +5,7 @@ import CustomSelectFilter from './CustomSelectFilter';
 // import CustomTypeAndAdd from './CustomTypeAndAdd';
 // import NonFieldErrors from './NonFieldErrors';
 import SubmitButtonFilter from './SubmitButtonFilter';
+import CustomSelectRemoteFilter from './CustomSelectRemoteFilter';
 // import DeleteDialog from './DeleteDialog';
 // import CustomRadio from './CustomRadio';
 // import ModalSubmit from './ModalSubmit';
@@ -30,6 +31,7 @@ export {
     // ModalDeleteSubmit,
     CustomDatePickerFilter,
     CustomMultiSelectFilter,
+    CustomSelectRemoteFilter,
     // CustomSortableSelect,
     // CustomSelectRemote
 };

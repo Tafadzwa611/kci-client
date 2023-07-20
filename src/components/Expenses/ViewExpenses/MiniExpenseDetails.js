@@ -19,7 +19,7 @@ function MiniExpenseDetails({expenseDetails, extra}) {
         <div className="row" style={{marginBottom:"1rem", marginTop:"0"}}>
             <div className="col-12" style={{display:"flex", justifyContent:"space-between"}}>
               <button><a onClick={e => setExpenseId(null)} className="btn btn-default client__details" style={{borderRadius:"0"}}>Close</a></button>
-              <button className='btn btn-default' onClick={() => navigate({pathname: '/expenses/viewexpenses', search: `?expense_id=${expenseDetails.id}`})}>
+              <button className='btn btn-default client__details' onClick={() => navigate({pathname: '/expenses/viewexpenses', search: `?expense_id=${expenseDetails.id}`})}>
                 Max
               </button>
             </div>

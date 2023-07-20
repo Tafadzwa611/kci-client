@@ -41,21 +41,21 @@ const MainTable = ({journals, handleClick, line}) => {
         <table className='table table-bordered table-head-fixed text-nowrap' id='journals'>
           <thead>
             <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
-              <th className='th-sm'>Transaction ID</th>
-              <th className='th-sm'>Value Date</th>
-              <th className='th-sm'>Date Logged</th>
-              <th className='th-sm'>Account Debited Name</th>
-              <th className='th-sm'>Account Debited Code</th>
-              <th className='th-sm'>Account Debited Balance</th>
-              <th className='th-sm'>Branch Debited</th>
-              <th className='th-sm'>Account Credited Name</th>
-              <th className='th-sm'>Account Credited Code</th>
-              <th className='th-sm'>Account Credited Balance</th>
-              <th className='th-sm'>Branch Credited</th>
-              <th className='th-sm'>Transaction Amount</th>
-              <th className='th-sm'>Client ID</th>
-              <th className='th-sm'>Client Name</th>
-              <th className='th-sm'>Loan Account ID</th>
+              <th className='th-sm'>Transaction_ID</th>
+              <th className='th-sm'>Value_Date</th>
+              <th className='th-sm'>Date_Logged</th>
+              <th className='th-sm'>Account_Debited_Name</th>
+              <th className='th-sm'>Account_Debited_Code</th>
+              <th className='th-sm'>Account_Debited_Balance</th>
+              <th className='th-sm'>Branch_Debited</th>
+              <th className='th-sm'>Account_Credited_Name</th>
+              <th className='th-sm'>Account_Credited_Code</th>
+              <th className='th-sm'>Account_Credited_Balance</th>
+              <th className='th-sm'>Branch_Credited</th>
+              <th className='th-sm'>Transaction_Amount</th>
+              <th className='th-sm'>Client_ID</th>
+              <th className='th-sm'>Client_Name</th>
+              <th className='th-sm'>Loan_Account_ID</th>
               <th className='th-sm'>Created_By</th>
             </tr>
           </thead>
@@ -97,14 +97,14 @@ const MiniTable = ({handleClick, close, journals, jID, line}) => {
   }, []);
 
   return (
-    <div style={{display:'grid', gridTemplateColumns:'1fr 2fr', columnGap:'1rem'}}>
+    <div style={{display:'grid', gridTemplateColumns:'2fr 3fr', columnGap:'1rem'}}>
       <div className='table-responsive p-0' style={{maxHeight: '600px'}}>
         <table className='table table-bordered table-head-fixed text-nowrap' id='journals'>
           <thead>
             <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
-              <th>Transaction ID</th>
-              <th className='th-sm'>Account Debited Name</th>
-              <th className='th-sm'>Account Credited Name</th>
+              <th>Transaction_ID</th>
+              <th className='th-sm'>Account_Debited_Name</th>
+              <th className='th-sm'>Account_Credited_Name</th>
             </tr>
           </thead>
           <tbody>

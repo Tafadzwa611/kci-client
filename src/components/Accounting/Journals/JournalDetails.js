@@ -14,40 +14,40 @@ const JournalDetails = ({journalId, close}) => {
         <div style={{position:'sticky', top:'0', width:'100%'}}>
           <div style={{display:'flex', flexDirection:'column', padding:'1.5rem'}} className='j-details-container'>
             {close ?
-            <div className='row' style={{margin:'0 0 1.5rem'}}>
-              <div className='col-12' style={{display:'flex', justifyContent:'flex-end'}}>
-                <button><a onClick={close} className='btn btn-default' style={{borderRadius:'0'}}>Close</a></button>
-              </div>
-              <button className='btn btn-olive'>
+            <div style={{margin:'0 0 1.5rem', display:'flex', justifyContent:'space-between'}}>
+              <button><a onClick={close} className='btn btn-default client__details' style={{borderRadius:'0'}}>Close</a></button>
+              <button className='btn btn-default client__details'>
                 <Link to={`/accounting/viewaccounting/journals/journal/${journalId}`}>Max</Link>
               </button>
             </div> : null}
-            <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-              <div>
-                <ul>
-                  <li><b>Debit</b></li>
-                  <li>Account Debited: {data[0].account_debited}</li>
-                  <li>Account Debited Code: {data[0].account_debited_code}</li>
-                  <li>Branch Debited: {data[0].branch_debited}</li>
-                  <li>Amount Debited: {data[0].currency} {data[0].amount}</li>
-                </ul>
-              </div>
-              <div>
-                <ul>
-                  <li><b>Credit</b></li>
-                  <li>Account Credited: {data[0].account_credited}</li>
-                  <li>Account Credited Code: {data[0].account_credited_code}</li>
-                  <li>Branch Credited: {data[0].branch_credited}</li>
-                  <li>Amount Credited: {data[0].currency} {data[0].amount}</li>
-                </ul>
-              </div>
-              <div>
-                <ul>
-                  <li><b>Loan and Client Details</b></li>
-                  <li>Client Name: {data[0].client_name}</li>
-                  <li>Client ID: {data[0].client_id}</li>
-                  <li>Account ID: {data[0].account_id}</li>
-                </ul>
+            <div style={{display:'flex', flexDirection:'column', rowGap:'1rem'}}>
+              <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                <div>
+                  <ul>
+                    <li><b>Debit</b></li>
+                    <li>Account Debited: {data[0].account_debited}</li>
+                    <li>Account Debited Code: {data[0].account_debited_code}</li>
+                    <li>Branch Debited: {data[0].branch_debited}</li>
+                    <li>Amount Debited: {data[0].currency} {data[0].amount}</li>
+                  </ul>
+                </div>
+                <div>
+                  <ul>
+                    <li><b>Credit</b></li>
+                    <li>Account Credited: {data[0].account_credited}</li>
+                    <li>Account Credited Code: {data[0].account_credited_code}</li>
+                    <li>Branch Credited: {data[0].branch_credited}</li>
+                    <li>Amount Credited: {data[0].currency} {data[0].amount}</li>
+                  </ul>
+                </div>
+                <div>
+                  <ul>
+                    <li><b>Loan and Client Details</b></li>
+                    <li>Client Name: {data[0].client_name}</li>
+                    <li>Client ID: {data[0].client_id}</li>
+                    <li>Account ID: {data[0].account_id}</li>
+                  </ul>
+                </div>
               </div>
               <div>
                 <ul>
