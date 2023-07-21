@@ -28,8 +28,8 @@ const ViewAccounting = () => {
       <Route path='/' element={<Layout />}>
         <Route index element={<Cashflow loggedInUser={loggedInUser} />} />
         <Route path='cashreport' element={<CashReport loggedInUser={loggedInUser} />} />
-        <Route path='profitandloss' element={<ProfitAndLoss loggedInUser={loggedInUser} />} />
-        <Route path='trialbalance' element={<TrialBalance loggedInUser={loggedInUser} />} />
+        <Route path='profitandloss' element={<ProfitAndLoss />} />
+        <Route path='trialbalance' element={<TrialBalance />} />
         <Route path='balancesheet' element={<BalanceSheet />} />
         <Route path='journals/*' element={<Journals loggedInUser={loggedInUser} />} />
         <Route path='chartsofaccounts/*' element={<ChartsOfAccounts />} />
