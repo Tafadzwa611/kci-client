@@ -52,7 +52,7 @@ function Layout() {
               Cashflow
             </Link>
             <Link to='/accounting/viewaccounting/cashreport' className={location.pathname === '/accounting/viewaccounting/cashreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Cash Management
+              Cash Book
             </Link>
             <Link to='/accounting/viewaccounting/profitandloss' className={location.pathname === '/accounting/viewaccounting/profitandloss' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Profit & Loss
