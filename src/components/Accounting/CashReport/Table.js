@@ -77,6 +77,7 @@ function Table({statement, setStatement}) {
                   <td>{statement.report_date}</td>
                   <td>Balance b/d</td>
                   <td></td>
+                  <td></td>
                   <td>{Number(statement.balance_bd) >= 0 && statement.balance_bd}</td>
                   <td>{Number(statement.balance_bd) < 0 && Math.abs(statement.balance_bd)}</td>
                 </tr>
@@ -96,10 +97,12 @@ function Table({statement, setStatement}) {
                   <td></td>
                   <td>Balance c/d</td>
                   <td></td>
+                  <td></td>
                   <td>{Number(statement.balance_cd) < 0 && Math.abs(statement.balance_cd)}</td>
                   <td>{Number(statement.balance_cd) >= 0 && statement.balance_cd}</td>
                 </tr>
                 <tr>
+                  <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
