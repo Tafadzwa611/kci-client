@@ -1,34 +1,30 @@
 import React from 'react';
-import Empty from './Empty';
-import MiniLoader from '../../Loader/MiniLoader';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-function New({report, intValues, loggedInUser}) {
+function New({report}) {
+  const groupedIncomeAccs = report.grouped_accounts.INCOME;
+  const groupedExpenseAccs = report.grouped_accounts.EXPENSE;
 
-  if (report===null || report.rtype != 'accrual') {
-    return <Empty message='Select Start Date, End Date and at least one branch to run income statement.'/>
-  }
-
-  const incomeAccs = report.income_statement.filter(acc => acc.type === 'INCOME');
-  const expenseAccs = report.income_statement.filter(acc => acc.type === 'EXPENSE');
+  const incomeAccs = report.ungrouped_accounts.filter(acc => acc.type === 'INCOME');
+  const expenseAccs = report.ungrouped_accounts.filter(acc => acc.type === 'EXPENSE');
 
   return (
-    <div style={{marginTop:"2rem"}}>
+    <div style={{marginTop:'2rem'}}>
       <div>
         <ReactHTMLTableToExcel
           id='test-table-xls-button'
           className='btn btn-default'
           table='new-income-statement'
-          filename={`${report.currency} Income Statement for ${loggedInUser.company_name} from ${intValues.minDate} to ${intValues.maxDate}`}
+          filename={`${report.currency} Income Statement for ${report.company_name} from ${report.min_date} to ${report.max_date}`}
           sheet='tablexls'
           buttonText='Download as XLS'
         />
       </div>
-      <table id='new-income-statement' className='table' style={{marginTop:"10px"}}>
-        <thead className="journal-details header">
+      <table id='new-income-statement' className='table' style={{marginTop:'10px'}}>
+        <thead className='journal-details header'>
           <tr>
-            <th>Account Branch</th>
             <th>GL Code</th>
+            <th>Account Branch</th>
             <th>Account Name</th>
             <th>Balance</th>
           </tr>
@@ -41,37 +37,25 @@ function New({report, intValues, loggedInUser}) {
             <td></td>
           </tr>
           <tr>
-            <td><b>{loggedInUser.company_name} From {intValues.minDate} to {intValues.maxDate}</b></td>
+            <td><b>{report.company_name} From {report.min_date} to {report.max_date}</b></td>
             <td></td>
             <td></td>
             <td></td>
           </tr>
-          {incomeAccs.map((acc, idx) => {
-            return (
-              <tr key={idx}>
-                <td>{acc.branch_name}</td>
-                <td>{acc.code}</td>
-                <td>{acc.name}</td>
-                <td>{acc.amount}</td>
-              </tr>
-            )
-          })}
+          {Object.keys(groupedIncomeAccs).map((headerAccountName, idx) => (
+            <GroupedAccounts key={idx} headerAccountName={headerAccountName} detailAccounts={groupedIncomeAccs[headerAccountName]}/>
+          ))}
+          {incomeAccs.map((acc, idx) => <DetailAccount key={idx} acc={acc} />)}
           <tr>
             <td></td>
             <td></td>
             <td><b>TOTAL INCOME</b></td>
             <td><b>{report.total_income}</b></td>
           </tr>
-          {expenseAccs.map((acc, idx) => {
-            return (
-              <tr key={idx}>
-                <td>{acc.branch_name}</td>
-                <td>{acc.code}</td>
-                <td>{acc.name}</td>
-                <td>{acc.amount}</td>
-              </tr>
-            )
-          })}
+          {Object.keys(groupedExpenseAccs).map((headerAccountName, idx) => (
+            <GroupedAccounts key={idx} headerAccountName={headerAccountName} detailAccounts={groupedExpenseAccs[headerAccountName]}/>
+          ))}
+          {expenseAccs.map((acc, idx) => <DetailAccount key={idx} acc={acc} />)}
           <tr>
             <td></td>
             <td></td>
@@ -87,6 +71,38 @@ function New({report, intValues, loggedInUser}) {
         </tbody>
       </table>
     </div>
+  )
+}
+
+const DetailAccount = ({acc}) => {
+  return (
+    <tr>
+      <td>{acc.code}</td>
+      <td>{acc.branch_name ? acc.branch_name : 'Interbranch'}</td>
+      <td>{acc.name}</td>
+      <td>{acc.balance}</td>
+    </tr>
+  )
+}
+
+const GroupedAccounts = ({headerAccountName, detailAccounts}) => {
+  return (
+    <>
+      <tr>
+        <td><b>{headerAccountName}</b></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      {detailAccounts.map((acc, idx) => (
+        <tr key={idx}>
+          <td style={{paddingLeft:'5rem'}}>{acc.code}</td>
+          <td>{acc.branch_name}</td>
+          <td>{acc.name}</td>
+          <td>{acc.balance}</td>
+        </tr>
+      ))}
+    </>
   )
 }
 

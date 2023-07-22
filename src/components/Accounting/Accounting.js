@@ -28,8 +28,8 @@ const ViewAccounting = () => {
       <Route path='/' element={<Layout />}>
         <Route index element={<Cashflow loggedInUser={loggedInUser} />} />
         <Route path='cashreport' element={<CashReport loggedInUser={loggedInUser} />} />
-        <Route path='profitandloss' element={<ProfitAndLoss loggedInUser={loggedInUser} />} />
-        <Route path='trialbalance' element={<TrialBalance loggedInUser={loggedInUser} />} />
+        <Route path='profitandloss' element={<ProfitAndLoss />} />
+        <Route path='trialbalance' element={<TrialBalance />} />
         <Route path='balancesheet' element={<BalanceSheet />} />
         <Route path='journals/*' element={<Journals loggedInUser={loggedInUser} />} />
         <Route path='chartsofaccounts/*' element={<ChartsOfAccounts />} />
@@ -52,7 +52,7 @@ function Layout() {
               Cashflow
             </Link>
             <Link to='/accounting/viewaccounting/cashreport' className={location.pathname === '/accounting/viewaccounting/cashreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Cash Management
+              Cash Book
             </Link>
             <Link to='/accounting/viewaccounting/profitandloss' className={location.pathname === '/accounting/viewaccounting/profitandloss' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Profit & Loss
