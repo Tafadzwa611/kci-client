@@ -33,7 +33,7 @@ const ViewAccounting = () => {
         <Route path='balancesheet' element={<BalanceSheet />} />
         <Route path='journals/*' element={<Journals loggedInUser={loggedInUser} />} />
         <Route path='chartsofaccounts/*' element={<ChartsOfAccounts />} />
-        <Route path='ledger' element={<Ledger loggedInUser={loggedInUser} />} />
+        <Route path='ledger' element={<Ledger />} />
       </Route>
     </Routes>
   )
