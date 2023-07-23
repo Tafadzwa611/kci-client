@@ -20,7 +20,7 @@ function DetailsTab({loan}) {
               <li style={{marginBottom:"0.25rem"}}>First Repayment Date: {loan.first_payment_date}</li>
               <li style={{marginBottom:"0.25rem"}}>Maturity Date: {loan.mat_date}</li>
               <li style={{marginBottom:"0.25rem"}}>Product: {loan.product_name}</li>
-              <li style={{marginBottom:"0.25rem"}}>Loan Amount: {loan.currency_name}{loan.principal}</li>
+              <li style={{marginBottom:"0.25rem"}}>Loan Amount: {loan.currency_name} {loan.principal}</li>
               <li style={{marginBottom:"0.25rem"}}>Interest Rate: {loan.interest_rate}%{loan.interest_interval}</li>
               <li style={{marginBottom:"0.25rem"}}>Interest Method: {loan.interest_method}</li>
               <li style={{marginBottom:"0.25rem"}}>Reason For Loan: {loan.reason_for_borrowing}</li>
@@ -66,30 +66,30 @@ function DetailsTab({loan}) {
                 <li style={{marginBottom: '1rem'}}>Next Installment Penalty Balance: {loan.currency_name} {loan.next_installment.penalty_due}</li>
               </>: <li style={{marginBottom: '1rem'}}>Next Installment Date: --</li>}
 
-              <li style={{marginBottom:"0.25rem"}}>Principal: {loan.currency_name}{loan.principal}</li>
+              <li style={{marginBottom:"0.25rem"}}>Principal: {loan.currency_name} {loan.principal}</li>
               <li style={{marginBottom:"0.25rem"}}>
                 Total Interest: {loan.interest_settlement && loan.interest_settlement != loan.interest ?
                 <>
-                  <del>{`${loan.currency_name}${loan.interest}`}</del>
-                  {` ${loan.currency_name}${loan.interest_settlement}`}
+                  <del>{`${loan.currency_name} ${loan.interest}`}</del>
+                  {` ${loan.currency_name} ${loan.interest_settlement}`}
                 </> :
-                `${loan.currency_name}${loan.interest}`}
+                `${loan.currency_name} ${loan.interest}`}
               </li>
               <li style={{marginBottom:"0.25rem"}}>
                 Total Fees: {loan.non_deductable_fees_reference_settlement && loan.non_deductable_fees_reference_settlement != loan.non_deductable_fees_reference ?
                 <>
-                  <del>{`${loan.currency_name}${loan.non_deductable_fees_reference}`}</del>
-                  {` ${loan.currency_name}${loan.non_deductable_fees_reference_settlement}`}
+                  <del>{`${loan.currency_name} ${loan.non_deductable_fees_reference}`}</del>
+                  {` ${loan.currency_name} ${loan.non_deductable_fees_reference_settlement}`}
                 </> :
-                `${loan.currency_name}${loan.non_deductable_fees_reference}`}
+                `${loan.currency_name} ${loan.non_deductable_fees_reference}`}
               </li>
               <li style={{marginBottom: '1rem'}}>
                 Total Penalty: {loan.penalty_reference_settlement && loan.penalty_reference_settlement != loan.penalty_reference ?
                 <>
-                  <del>{`${loan.currency_name}${loan.penalty_reference}`}</del>
-                  {` ${loan.currency_name}${loan.penalty_reference_settlement}`}
+                  <del>{`${loan.currency_name} ${loan.penalty_reference}`}</del>
+                  {` ${loan.currency_name} ${loan.penalty_reference_settlement}`}
                 </> :
-                `${loan.currency_name}${loan.penalty_reference}`}
+                `${loan.currency_name} ${loan.penalty_reference}`}
               </li>
 
               <li style={{marginBottom:"0.25rem"}}>Total Principal Balance: {loan.currency_name} {loan.principal_amount_due}</li>

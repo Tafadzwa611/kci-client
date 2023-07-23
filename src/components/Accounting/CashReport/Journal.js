@@ -10,11 +10,11 @@ function Journal({journalID, setJournalID}) {
   return (
     <Fetcher urls={[`/acc-api/journal-details/${journalID}`]}>
       {({data}) => (
-        <div style={{width: '35%'}}>
+        <div style={{width: '38%'}}>
           <span>Journal Details</span>
           <div className='journal-details'>
             <button type='button' className='close' onClick={closeJournalDetails}><span aria-hidden='true' style={{fontSize:'1.2rem'}}>&times;</span></button>
-            <div className='row'>
+            <div style={{display:'flex', columnGap:'7px', marginTop:'1.5rem'}}>
               <div className='col-6'>
                 <ul className='list-unstyled well'>
                   <li><b>Debit</b></li>

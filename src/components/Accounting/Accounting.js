@@ -63,7 +63,7 @@ function Layout() {
             <Link to='/accounting/viewaccounting/balancesheet' className={location.pathname === '/accounting/viewaccounting/balancesheet' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Balance Sheet
             </Link>
-            <Link to='/accounting/viewaccounting/journals' className={location.pathname === '/accounting/viewaccounting/journals' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+            <Link to='/accounting/viewaccounting/journals' className={location.pathname.includes('/accounting/viewaccounting/journals') ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Journal Entries
             </Link>
             <Link to='/accounting/viewaccounting/chartsofaccounts' className={location.pathname.includes('/accounting/viewaccounting/chartsofaccounts') ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
