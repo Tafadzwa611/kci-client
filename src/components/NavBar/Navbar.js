@@ -1,7 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+import { useNotifications } from '../../contexts/NotificationsContext';
 
+const MINUTE_MS = 10000;
 const Navbar = (props) => {
+  const {unreadNotifs, setUnreadNotifs} = useNotifications(0);
+
+  const checkNotifs = async () => {
+    try {
+      const response = await axios.get('/usersapi/check_new_notifications/');
+      if (response.request.responseURL.includes('users/login')) {
+        window.location.reload();
+      }
+      setUnreadNotifs(response.data.count);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    checkNotifs();
+    const interval = setInterval(() => {
+      checkNotifs();
+    }, MINUTE_MS);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className='home-content'>
       <div className='home-content-header-left' style={{display:'flex', columnGap:'3rem'}}>
@@ -53,8 +78,12 @@ const Navbar = (props) => {
 
       <div className='home-content-header-float-right' style={{paddingRight:'1.5rem', display:'flex', alignItems:'center'}}>
         <i className={props.theme === 'light' ? 'uil uil-moon toggle-theme' : 'uil uil-sun toggle-theme'} onClick={props.toggleTheme}></i>
-        <NavLink to='/notifications' className='first-atag notifications-icon'>
+        <NavLink to='/users/notifications' className='first-atag notifications-icon'>
           <i className='uil uil-bell'></i>
+          {/* Nested Tenary Operators */}
+          {unreadNotifs ?
+          unreadNotifs > 9 ? '9+' : unreadNotifs :
+          null}
         </NavLink>
         <div className='nav-logout'>
           <span className='user_name'>{props.loggedInUser.first_name} {props.loggedInUser.last_name}</span>
