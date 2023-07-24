@@ -6,8 +6,10 @@ import Routes from './Routes';
 import {LoggedInUserProvider} from '../contexts/LoggedInUserContext';
 import { BranchesProvider } from '../contexts/BranchesContext';
 import { CurrenciesProvider } from '../contexts/CurrenciesContext';
+import { NotificationsProvider } from '../contexts/NotificationsContext';
 
 export const ThemeContext = createContext(null);
+
 function App() {
   const [theme, setTheme] = useState('light');
 
@@ -33,16 +35,18 @@ function App() {
               <LoggedInUserProvider>
                 <CurrenciesProvider>
                   <BranchesProvider>
-                    <Router>
-                      <div id={theme}>
-                        <section className='home-section'>
-                          <Navbar theme={theme} loggedInUser={data[0]} toggleTheme={toggleTheme} />
-                          <div className='app'>
-                            <Routes loggedInUser={data[0]} branches={data[1]} currencies={data[2]}/>
-                          </div>
-                        </section>
-                      </div>
-                    </Router>
+                    <NotificationsProvider>
+                      <Router>
+                        <div id={theme}>
+                          <section className='home-section'>
+                            <Navbar theme={theme} loggedInUser={data[0]} toggleTheme={toggleTheme}/>
+                            <div className='app'>
+                              <Routes loggedInUser={data[0]} branches={data[1]} currencies={data[2]}/>
+                            </div>
+                          </section>
+                        </div>
+                      </Router>
+                    </NotificationsProvider>
                   </BranchesProvider>
                 </CurrenciesProvider>
               </LoggedInUserProvider>
