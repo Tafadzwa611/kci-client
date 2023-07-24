@@ -10,7 +10,6 @@ const Navbar = (props) => {
   const checkNotifs = async () => {
     try {
       const response = await axios.get('/usersapi/check_new_notifications/');
-      console.log(response.request.responseURL);
       if (response.request.responseURL.includes('users/login')) {
         window.location.reload();
       }
