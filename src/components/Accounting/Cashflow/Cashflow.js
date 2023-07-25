@@ -2,21 +2,15 @@ import React, {useState} from 'react';
 import DateRange from './DateRange';
 import Table from './Table';
 
-function Cashflow({loggedInUser}) {
-  const [params, setParams] = useState(null);
+function Cashflow() {
   const [cashflowData, setCashFlowData] = useState(null);
 
   return (
     <>
         <>
-          <DateRange setCashFlowData={setCashFlowData} setParams={setParams}/>
+          <DateRange setCashFlowData={setCashFlowData}/>
           <div style={{paddingTop: '2rem'}}></div>
-          {cashflowData &&
-            <Table
-              statement={cashflowData} 
-              loggedInUser={loggedInUser}
-            />
-          }
+          {cashflowData ? <Table statement={cashflowData} /> : null}
         </>
     </>
   )
