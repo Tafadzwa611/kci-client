@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import ClientsReport from '../ClientsReport/ClientsReport';
 import LoansReport from '../LoansReport/LoansReport';
 import MonthlyReport from '../MonthlyReport/MonthlyReport';
@@ -13,19 +13,19 @@ import PortfolioAtRiskReport from '../PortfolioAtRiskReport/PortfolioAtRiskRepor
 import ExpectedPaymentsReport from '../ExpectedPaymentsReport/ExpectedPaymentsReport';
 import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
 import {
-    Routes,
-    Route,
-    Outlet,
-    Link,
-    useLocation
-  } from 'react-router-dom';
+  Routes,
+  Route,
+  Outlet,
+  Link,
+  useLocation
+} from 'react-router-dom';
 
 const ViewReports = () => {
-    const {loggedInUser} = useLoggedInUser()
+  const {loggedInUser} = useLoggedInUser()
 
-    useEffect(() => {
-        document.title = 'View Reports';
-    }, []);
+  useEffect(() => {
+    document.title = 'View Reports';
+  }, []);
 
   return (
     <Routes>
@@ -50,6 +50,7 @@ const ViewReports = () => {
 
 function Layout() {
   const location = useLocation();
+
   return (
     <div className='card'>
       <div className='card-body'>
