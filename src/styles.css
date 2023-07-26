@@ -2662,6 +2662,11 @@ select option {
   background: var(--home-section-color);
 }
 
+#dark .table-head-row th {
+  color: var(--light-color);
+}
+
+
 /* skeleton loading  */
 
 #dark .skeleton {
