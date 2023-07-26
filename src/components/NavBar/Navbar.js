@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { useNotifications } from '../../contexts/NotificationsContext';
 
-const MINUTE_MS = 10000;
+const MINUTE_MS = 15000;
 const Navbar = (props) => {
   const {unreadNotifs, setUnreadNotifs} = useNotifications(0);
 
