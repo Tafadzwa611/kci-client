@@ -50,10 +50,10 @@ const Filter = ({setClientsReportData, setParams}) => {
               <NonFieldErrors errors={errors}>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
                   <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomDatePickerFilter label='Min Date' name='min_date' setFieldValue={setFieldValue} required/>
+                    <CustomDatePickerFilter label='Min Reg Date' name='min_date' setFieldValue={setFieldValue} required/>
                   </div>
                   <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomDatePickerFilter label='Max Date' name='max_date' setFieldValue={setFieldValue} required/>
+                    <CustomDatePickerFilter label='Max Reg Date' name='max_date' setFieldValue={setFieldValue} required/>
                   </div>
                   <div className='row-payments-container' style={{width:'24%'}}>
                     <CustomInputFilter label='Search Client' name='client_str' type='text'/>
