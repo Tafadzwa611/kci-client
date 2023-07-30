@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { removeEmptyValues } from '../../../utils/utils';
@@ -44,6 +44,12 @@ const EditGroupForm = ({group, groupTypes, loanOfficers, groupRoles}) => {
   }
 
   return (
+      <>
+        <div>
+          <button type='button' className='btn btn-default max'>
+            <Link to={`/groups/viewgroups?group_id=${group.id}`}>Back</Link>
+          </button>
+        </div>
         <GroupForm
             groupTypes={groupTypes}
             loanOfficers={loanOfficers}
@@ -52,6 +58,7 @@ const EditGroupForm = ({group, groupTypes, loanOfficers, groupRoles}) => {
             initialValues={initialValues}
             groupRoles={groupRoles}
         />
+      </>
     )
 }
 

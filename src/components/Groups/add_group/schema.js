@@ -5,4 +5,8 @@ export const createGroupSchema = yup.object().shape({
   group_type_id: yup.number().integer().required('Required'),
   group_officer_id: yup.number().integer().required('Required'),
   address: yup.string().required('Required'),
+  group_phone_number: yup.object().shape({
+    countryCode: yup.string().required(),
+    phoneNumber: yup.string().required('Required'),
+  }),
 });

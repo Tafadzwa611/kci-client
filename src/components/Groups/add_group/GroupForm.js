@@ -6,7 +6,8 @@ import {
   SubmitButton,
   CustomSelect,
   CustomDatePicker,
-  CustomSelectRemote
+  CustomSelectRemote,
+  CustomPhoneNumber
 } from '../../../common';
 import {Member, AddMember} from './Members';
 
@@ -26,7 +27,7 @@ function GroupForm({groupTypes, loanOfficers, groupRoles, initialValues, validat
                 {groupTypes.map(gtype => <option key={gtype.id} value={gtype.id}>{gtype.name}</option>)}
               </CustomSelect>
               <CustomDatePicker label='Group Date' name='group_date' setFieldValue={setFieldValue} required/>
-              <CustomInput label='Group Phone Number' name='group_phone_number' type='text' required/>
+              <CustomPhoneNumber label='Group Phone Number' name='group_phone_number' setFieldValue={setFieldValue} />
               <CustomInput label='Group Address' name='address' type='text' required/>
               <CustomInput label='Group Account Number' name='group_account_number' type='text' required/>
               <CustomInput label='Group Bank Name' name='group_bank_name' type='text' required/>

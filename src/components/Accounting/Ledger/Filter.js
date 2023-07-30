@@ -62,14 +62,14 @@ const Filter = ({setTxns, setParams, setQueue}) => {
                   </div>
                 </div>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'32%'}}>
+                  <div className='row-payments-container' style={{width:'49%'}}>
                     <CustomSelectFilter label='Mode' name='mode' required>
                       <option value='html'>Screen (HTML)</option>
                       <option value='xlsx'>Excel</option>
                       <option value='csv'>CSV</option>
                     </CustomSelectFilter>
                   </div>
-                  {values.currency_id ? <div className='row-payments-container' style={{width:'32%'}}>
+                  {values.currency_id ? <div className='row-payments-container' style={{width:'49%'}}>
                     <CustomSelectRemoteFilter
                       label='Account'
                       url='/acc-api/search_account/'

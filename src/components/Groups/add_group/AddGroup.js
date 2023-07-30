@@ -15,7 +15,7 @@ function AddGroup({groupTypes, loanOfficers, groupRoles}) {
     group_type_id: '',
     group_date: '',
     address: '',
-    group_phone_number: '',
+    group_phone_number: {},
     group_account_number: '',
     group_bank_name: '',
     group_officer_id: '',
@@ -23,7 +23,12 @@ function AddGroup({groupTypes, loanOfficers, groupRoles}) {
 
   const onSubmit = async (values, actions) => {
     try {
-      const data = removeEmptyValues(values);
+      const phoneNumbers = {group_phone_number: ''};
+      if (values.group_phone_number.phoneNumber) {
+        phoneNumbers.group_phone_number = `${values.group_phone_number.countryCode} ${values.group_phone_number.phoneNumber}`;
+      }
+      let dataValues = {...values, ...phoneNumbers};
+      const data = removeEmptyValues(dataValues);
       data.members = data.members.map(member => ({client_id: member.client_id, role_id: member.role_id}))
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/clientsapi/add_group/', data, CONFIG);
