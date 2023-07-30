@@ -3,28 +3,27 @@ import Filter from './Filter';
 import LoansReportTable from './LoansReportTable';
 import Summary from './Summary';
 
-function LoansReport({loggedInUser}) {
+function LoansReport() {
   const [params, setParams] = useState(null);
-  const [loansReportData, setLoansReportData] = useState({count: 0, next_page_num: 0, loans: []});
-  const [intValues, setIntValues] = useState([])
+  const [report, setReport] = useState(null);
+  const [tab, setTab] = useState('summary');
 
   return (
     <>
-        <>
-          <Filter setLoansReportData={setLoansReportData} setParams={setParams} setIntValues={setIntValues}/>
-          <Summary 
-            report={loansReportData} 
-            intValues={intValues}
-            loggedInUser={loggedInUser}
-          />
-          <LoansReportTable
-            loansReportData={loansReportData} 
-            setLoansReportData={setLoansReportData}
-            params={params}
-            loggedInUser={loggedInUser}
-            intValues={intValues}
-          />
-        </>
+      <Filter setReport={setReport} setParams={setParams}/>
+      {report ?
+      <>
+        <div className='bloc-tabs'>
+          <button className={tab === 'summary' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('summary')}>Summary</button>
+          <button className={tab === 'loans' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('loans')}>Loans</button>
+        </div>
+        <div className='tab-content font-12' style={{marginTop: '3rem'}}>
+          {{
+            summary: <Summary summary={report.summary}/>,
+            loans: <LoansReportTable report={report} setReport={setReport} params={params}/>
+          }[tab]}
+        </div>
+      </> : null}
     </>
   )
 }
