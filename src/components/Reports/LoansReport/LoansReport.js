@@ -11,6 +11,7 @@ function LoansReport() {
   return (
     <>
       <Filter setReport={setReport} setParams={setParams}/>
+      <div style={{paddingTop: '2rem'}}></div>
       {report ?
       <>
         <div className='bloc-tabs'>
