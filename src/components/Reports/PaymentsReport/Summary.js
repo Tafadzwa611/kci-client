@@ -2,12 +2,12 @@ import React from 'react';
 
 function Summary({summary}) {
   return (
-    <div style={{margin:'2rem 0'}}>
+    <div className='search_background' style={{padding:'20px'}}>
       <div>
-        <div style={{display:'grid', marginTop:'1.5rem', gridTemplateColumns: '1fr 1fr 1fr 1fr', columnGap: '10px'}}>
+        <div style={{display:'grid', marginTop:'0.5rem', gridTemplateColumns: '1fr 1fr 1fr 1fr', columnGap: '10px'}}>
           <div>
             <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
-              <li><b>Payments Info</b></li>
+              <li style={{marginBottom:'0.5rem'}}><b>Payments Info</b></li>
               <li>Total Amount Paid: {summary.total_amount_paid}</li>
               <li>Total Principal Paid: {summary.total_principal_paid}</li>
               <li>Total Interest Paid: {summary.total_interest_paid}</li>

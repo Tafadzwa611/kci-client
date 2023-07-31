@@ -14,7 +14,7 @@ import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
 const Filter = ({setReport, setParams}) => {
-  const initialValues = {branch_ids: [], page_num: 1, min_date: '', max_date: '', client_str: '', order: '-id'};
+  const initialValues = {branch_ids: [], page_num: 1, min_date: '', max_date: '', client_str: '', order: '-id', mode: 'html'};
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
