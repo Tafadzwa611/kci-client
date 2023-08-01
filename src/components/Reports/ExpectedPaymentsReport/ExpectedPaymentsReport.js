@@ -1,27 +1,31 @@
 import React, {useState} from 'react';
 import Filter from './Filter';
-import ExpectedPaymentsTable from './ExpectedPaymentsTable';
-import TableHeader from './TableHeader';
+import Table from './Table';
+import Summary from './Summary';
 
-function ExpectedPaymentsReport({accounts, branches}) {
+function ExpectedPaymentsReport() {
   const [params, setParams] = useState(null);
-  const [installments, setInstallments] = useState([]);
-  const [aggregateData, setAggregateData] = useState(null);
-  const [intValues, setIntValues] = useState([]);
+  const [report, setReport] = useState(null);
+  const [tab, setTab] = useState('summary');
 
   return (
     <>
-        <Filter 
-            setInstallments={setInstallments} 
-            setParams={setParams} 
-            setIntValues={setIntValues}
-            setAggregateData={setAggregateData}
-        />
-        <div style={{paddingTop: '2rem'}}></div>
-        {aggregateData &&
-        <TableHeader aggregateData={aggregateData} intValues={intValues} />
-        }
-        <ExpectedPaymentsTable installments={installments}/>
+      <Filter setReport={setReport} setParams={setParams}/>
+      <div style={{paddingTop: '2rem'}}></div>
+      {report ?
+      <>
+        <div className='bloc-tabs'>
+          <button className={tab === 'summary' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('summary')}>Summary</button>
+          <button className={tab === 'table' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('table')}>Loans</button>
+        </div>
+        <div className='tab-content font-12' style={{marginTop: '3rem'}}>
+          {{
+            summary: <Summary summary={report.aggregate_data}/>,
+            table: <Table report={report} params={params} setReport={setReport}/>
+          }[tab]}
+        </div>
+      </> :
+      null}
     </>
   )
 }
