@@ -14,7 +14,7 @@ import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
 const Filter = ({setReport, setParams}) => {
-  const initialValues = {branch_ids: [], page_num: 1, min_date: '', max_date: '', client_str: '', order: '-id'};
+  const initialValues = {branch_ids: [], page_num: 1, min_date: '', max_date: '', client_str: '', order: '-id', mode: 'html'};
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
@@ -66,7 +66,7 @@ const Filter = ({setReport, setParams}) => {
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'60%'}}>
+                  <div style={{width:'70%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
@@ -75,14 +75,14 @@ const Filter = ({setReport, setParams}) => {
                       required
                     />
                   </div>
-                  <div className='row-payments-container' style={{width:'15%'}}>
+                  <div className='row-payments-container' style={{width:'10%'}}>
                     <CustomSelectFilter label='Mode' name='mode' required>
                       <option value='html'>Screen (HTML)</option>
                       <option value='xlsx'>Excel</option>
                       <option value='csv'>CSV</option>
                     </CustomSelectFilter>
                   </div>
-                  <div className='row-payments-container' style={{width:'15%'}}>
+                  <div className='row-payments-container' style={{width:'10%'}}>
                     <CustomSelectFilter label='Order' name='order' required>
                       <option value={'-id'}>Show newest first</option>
                       <option value={'id'}>Show oldest first</option>

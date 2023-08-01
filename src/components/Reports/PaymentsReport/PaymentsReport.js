@@ -14,6 +14,7 @@ function PaymentsReport() {
       {({data}) => (
         <>
           <Filter setReport={setReport} setParams={setParams} accounts={data[0]} branches={data[1]}/>
+          <div style={{paddingTop: '2rem'}}></div>
           {report ?
           <>
           <div className='bloc-tabs'>

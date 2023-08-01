@@ -106,8 +106,8 @@ const Filter = ({setReport, accounts, setParams, branches}) => {
                     </CustomSelectFilter>
                   </div>
                 </div>
-                <div style={{display:'flex', justifyContent:'space-between'}}>
-                  <div className='row-payments-container' style={{width:'20%'}}>
+                <div className='row row-payments row-loans' style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
+                  <div className='row-payments-container' style={{width:'24%'}}>
                     <CustomSelectFilter label='Mode' name='mode' required>
                       <option value='html'>Screen (HTML)</option>
                       <option value='xlsx'>Excel</option>
