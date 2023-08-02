@@ -13,7 +13,7 @@ import { useBranches } from '../../../contexts/BranchesContext';
 import axios from 'axios';
 import { removeEmptyValues } from '../../../utils/utils';
 
-const Filter = ({setMonthlyReportData, setParams}) => {
+const Filter = ({setMonthlyReportData}) => {
   const initialValues = {
     branch_ids: [],
     page_num: 1,
@@ -37,7 +37,6 @@ const Filter = ({setMonthlyReportData, setParams}) => {
     try {
       const data = removeEmptyValues(values);
       const params = getParams(data);
-      setParams(params);
       const response = await axios.get('/reportsapi/monthly-report/', {params: params});
       setMonthlyReportData(response.data);
     } catch (error) {
