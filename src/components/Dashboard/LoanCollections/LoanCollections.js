@@ -15,7 +15,6 @@ function LoanCollections({branches, currencies}) {
     const isFirstRun = useRef(true);
     const months = {0: 'Jan', 1: 'Feb', 2: 'Mar', 3: 'Apr', 4: 'May', 5: 'Jun', 6: 'Jul', 7: 'Aug', 8: 'Sep', 9: 'Oct', 10: 'Nov', 11: 'Dec'};
     const [optionSelected, setOptionSelected] = useState([]);
-    const [allloanscollections, setAllLoansCollections]= useState([])
     const [currency, setCurrency] = useState('ZWL');
 
     const handleMultiSelect = selected => {
@@ -60,7 +59,6 @@ function LoanCollections({branches, currencies}) {
             const report = (data.length === 1) ? {...data[0]} : {...data[0], ...data[1]};
             pageNum.current = report.next_page_num;
             isFirstRun.current = false;
-            setAllLoansCollections(report)
             return report
         }catch(error) {
             console.log(error);
@@ -146,6 +144,10 @@ function LoanCollections({branches, currencies}) {
 
                     <div className="book-value-section">
 
+                        <div className='book-value-section dashboard-section-title' style={{marginBottom:'20px'}}>
+                            Loan Collections                        
+                        </div>
+
                         <div className="book-value-select-section">
                             <div className="fields-container-select select_container_width">
                                 <select value={currencyId} onChange={changeCurrency} className="custom-select-form select_width" style={{padding:"0.5125rem 0.9rem"}}>
@@ -166,121 +168,6 @@ function LoanCollections({branches, currencies}) {
                                     onChange={selected => handleMultiSelect(selected)}
                                     styles={style}
                                 />
-                            </div>
-                        </div>
-
-                        <div className="book-value-update-section">
-                            <div className="book-value-info-box">
-                                <p className="dashboard-section-title">Loan Collections</p>
-                                <p className="dashboard-section-amount-or-number">{currency} {allloanscollections['loans_collections_total_sum_amount']}</p>
-                            </div>
-                            <div className="book-value-info-box">
-                                <p className="dashboard-section-sub-title">Daily Change</p>
-                                {allloanscollections['loans_collections_yesterday_change'] > 0 &&
-                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
-                                        <span>{allloanscollections['loans_collections_yesterday_change']}%</span> 
-                                        <i className="uil uil-arrow-growth"></i>
-                                    </p>
-                                }
-                                {allloanscollections['loans_collections_yesterday_change'] == 0 &&
-                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
-                                        <span>{allloanscollections['loans_collections_yesterday_change']}%</span> 
-                                        <i className="uil uil-arrows-h-alt"></i>
-                                    </p>
-                                }
-                                {allloanscollections['loans_collections_yesterday_change'] < 0 &&
-                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
-                                        <span>{allloanscollections['loans_collections_yesterday_change']}%</span> 
-                                        <i className="uil uil-chart-down"></i>
-                                    </p>
-                                }
-                                {allloanscollections['loans_collections_yesterday_change'] == null &&
-                                    <p className="dashboard-section-amount-or-number no-change">
-                                        <span></span> 
-                                        <i className="uil uil-arrows-h-alt"></i>
-                                    </p>
-                                }
-                            </div>
-                            <div className="book-value-info-box">
-                                <p className="dashboard-section-sub-title">Weekly Change</p>
-                                {allloanscollections['loans_collections_last_week_change'] > 0 &&
-                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
-                                        <span>{allloanscollections['loans_collections_last_week_change']}%</span> 
-                                        <i className="uil uil-arrow-growth"></i>
-                                    </p>
-                                }
-                                {allloanscollections['loans_collections_last_week_change'] == 0 &&
-                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
-                                        <span>{allloanscollections['loans_collections_last_week_change']}%</span> 
-                                        <i className="uil uil-arrows-h-alt"></i>
-                                    </p>
-                                }
-                                {allloanscollections['loans_collections_last_week_change'] < 0 &&
-                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
-                                        <span>{allloanscollections['loans_collections_last_week_change']}%</span> 
-                                        <i className="uil uil-chart-down"></i>
-                                    </p>
-                                }
-                                {allloanscollections['loans_collections_last_week_change'] == null &&
-                                    <p className="dashboard-section-amount-or-number no-change">
-                                        <span></span> 
-                                        <i className="uil uil-arrows-h-alt"></i>
-                                    </p>
-                                }
-                            </div>
-                            <div className="book-value-info-box">
-                                <p className="dashboard-section-sub-title">Monthly Change</p>
-                                {allloanscollections['loans_collections_last_month_change'] > 0 &&
-                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
-                                        <span>{allloanscollections['loans_collections_last_month_change']}%</span> 
-                                        <i className="uil uil-arrow-growth"></i>
-                                    </p>
-                                }
-                                {allloanscollections['loans_collections_last_month_change'] == 0 &&
-                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
-                                        <span>{allloanscollections['loans_collections_last_month_change']}%</span> 
-                                        <i className="uil uil-arrows-h-alt"></i>
-                                    </p>
-                                }
-                                {allloanscollections['loans_collections_last_month_change'] < 0 &&
-                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
-                                        <span>{allloanscollections['loans_collections_last_month_change']}%</span> 
-                                        <i className="uil uil-chart-down"></i>
-                                    </p>
-                                }
-                                {allloanscollections['loans_collections_last_month_change'] == null &&
-                                    <p className="dashboard-section-amount-or-number no-change">
-                                        <span></span> 
-                                        <i className="uil uil-arrows-h-alt"></i>
-                                    </p>
-                                }
-                            </div>
-                            <div className="book-value-info-box">
-                                <p className="dashboard-section-sub-title">Yearly Change</p>
-                                {allloanscollections['loans_collections_last_year_change'] > 0 &&
-                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
-                                        <span>{allloanscollections['loans_collections_last_year_change']}%</span> 
-                                        <i className="uil uil-arrow-growth"></i>
-                                    </p>
-                                }
-                                {allloanscollections['loans_collections_last_year_change'] == 0 &&
-                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
-                                        <span>{allloanscollections['loans_collections_last_year_change']}%</span> 
-                                        <i className="uil uil-arrows-h-alt"></i>
-                                    </p>
-                                }
-                                {allloanscollections['loans_collections_last_year_change'] < 0 &&
-                                    <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
-                                        <span>{allloanscollections['loans_collections_last_year_change']}%</span> 
-                                        <i className="uil uil-chart-down"></i>
-                                    </p>
-                                }
-                                {allloanscollections['loans_collections_last_year_change'] == null &&
-                                    <p className="dashboard-section-amount-or-number no-change">
-                                        <span></span> 
-                                        <i className="uil uil-arrows-h-alt"></i>
-                                    </p>
-                                }
                             </div>
                         </div>
 

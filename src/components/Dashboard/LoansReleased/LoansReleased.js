@@ -18,8 +18,8 @@ function LoansReleased({branches, currencies}) {
   const [allloansreleased, setAllLoansReleased]= useState([])
 
   const handleMultiSelect = selected => {
-      setOptionSelected(selected);
-      setSelectedBranchesIds(selected.map(branch => branch.id));
+    setOptionSelected(selected);
+    setSelectedBranchesIds(selected.map(branch => branch.id));
   }
 
   useEffect(() => {
@@ -102,167 +102,56 @@ function LoansReleased({branches, currencies}) {
 
   return (
     <>
-          <div className="card">
-          <div className="card-body">
+      <div className="card">
+        <div className="card-body">
 
-              <div className="book-value-section">
+          <div className="book-value-section">
 
-                  <div className="book-value-select-section">
-                      <div className="fields-container-select select_container_width">
-                          <select value={currencyId} onChange={changeCurrency} className="custom-select-form select_width" style={{padding:"0.5125rem 0.9rem"}}>
-                            {currencies.map(currency => {
-                                return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
-                            })}
-                          </select>
-                      </div>
-                      <div className="fields-container-select select_container_width branch">
-                          <Select
-                            isMulti
-                            name='branches'
-                            options={branches}
-                            value={optionSelected}
-                            classNamePrefix='select'
-                            className='basic-multi-select'
-                            placeholder='Select Branches'
-                            onChange={selected => handleMultiSelect(selected)}
-                            styles={style}
-                          />
-                      </div>
-                  </div>
+            <div className='book-value-section dashboard-section-title' style={{marginBottom:'20px'}}>
+              Loans Released
+            </div>
 
-                  <div className="book-value-update-section">
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-title">Loans Released</p>
-                          <p className="dashboard-section-amount-or-number">{currency} {allloansreleased['loans_released_total_sum_amount']}</p>
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Daily Change</p>
-                          {allloansreleased['loans_released_yesterday_change'] > 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
-                                <span>{allloansreleased['loans_released_yesterday_change']}%</span> 
-                                <i className="uil uil-arrow-growth"></i>
-                            </p>
-                          }
-                          {allloansreleased['loans_released_yesterday_change'] == 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
-                                <span>{allloansreleased['loans_released_yesterday_change']}%</span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                          {allloansreleased['loans_released_yesterday_change'] < 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
-                                <span>{allloansreleased['loans_released_yesterday_change']}%</span> 
-                                <i className="uil uil-chart-down"></i>
-                            </p>
-                          }
-                          {allloansreleased['loans_released_yesterday_change'] == null &&
-                            <p className="dashboard-section-amount-or-number no-change">
-                                <span></span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Weekly Change</p>
-                          {allloansreleased['loans_released_last_week_change'] > 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
-                                <span>{allloansreleased['loans_released_last_week_change']}%</span> 
-                                <i className="uil uil-arrow-growth"></i>
-                            </p>
-                          }
-                          {allloansreleased['loans_released_last_week_change'] == 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
-                                <span>{allloansreleased['loans_released_last_week_change']}%</span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                          {allloansreleased['loans_released_last_week_change'] < 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
-                                <span>{allloansreleased['loans_released_last_week_change']}%</span> 
-                                <i className="uil uil-chart-down"></i>
-                            </p>
-                          }
-                          {allloansreleased['loans_released_last_week_change'] == null &&
-                            <p className="dashboard-section-amount-or-number no-change">
-                                <span></span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Monthly Change</p>
-                          {allloansreleased['loans_released_last_month_change'] > 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
-                                <span>{allloansreleased['loans_released_last_month_change']}%</span> 
-                                <i className="uil uil-arrow-growth"></i>
-                            </p>
-                          }
-                          {allloansreleased['loans_released_last_month_change'] == 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
-                                <span>{allloansreleased['loans_released_last_month_change']}%</span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                          {allloansreleased['loans_released_last_month_change'] < 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
-                                <span>{allloansreleased['loans_released_last_month_change']}%</span> 
-                                <i className="uil uil-chart-down"></i>
-                            </p>
-                          }
-                          {allloansreleased['loans_released_last_month_change'] == null &&
-                            <p className="dashboard-section-amount-or-number no-change">
-                                <span></span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Yearly Change</p>
-                          {allloansreleased['loans_released_last_year_change'] > 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
-                                <span>{allloansreleased['loans_released_last_year_change']}%</span> 
-                                <i className="uil uil-arrow-growth"></i>
-                            </p>
-                          }
-                          {allloansreleased['loans_released_last_year_change'] == 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
-                                <span>{allloansreleased['loans_released_last_year_change']}%</span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                          {allloansreleased['loans_released_last_year_change'] < 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
-                                <span>{allloansreleased['loans_released_last_year_change']}%</span> 
-                                <i className="uil uil-chart-down"></i>
-                            </p>
-                          }
-                          {allloansreleased['loans_released_last_year_change'] == null &&
-                            <p className="dashboard-section-amount-or-number no-change">
-                                <span></span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                      </div>
-                  </div>
-
-                  <div className="chart-section">
-                      <div className="chart-container">
-                        <div className='chart'>
-                          {(labels===null || dataSets===null) ?
-                          <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"115px"}}>
-                            <Loader/>
-                          </div> :
-                          <LineChart data={{labels: labels, datasets: dataSets}}/>}
-                        </div>
-                      </div>
-                      <div className="chart-scroller bottom">
-                          <i onClick={loadMore} className="uil uil-arrow-circle-left" style={{cursor:"pointer"}}></i>
-                      </div>
-                  </div>
-
+            <div className="book-value-select-section">
+              <div className="fields-container-select select_container_width">
+                <select value={currencyId} onChange={changeCurrency} className="custom-select-form select_width" style={{padding:"0.5125rem 0.9rem"}}>
+                  {currencies.map(currency => {
+                    return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
+                  })}
+                </select>
               </div>
+              <div className="fields-container-select select_container_width branch">
+                <Select
+                  isMulti
+                  name='branches'
+                  options={branches}
+                  value={optionSelected}
+                  classNamePrefix='select'
+                  className='basic-multi-select'
+                  placeholder='Select Branches'
+                  onChange={selected => handleMultiSelect(selected)}
+                  styles={style}
+                />
+              </div>
+            </div>
+
+            <div className="chart-section">
+              <div className="chart-container">
+                <div className='chart'>
+                  {(labels===null || dataSets===null) ?
+                  <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"115px"}}>
+                    <Loader/>
+                  </div> :
+                    <LineChart data={{labels: labels, datasets: dataSets}}/>}
+                </div>
+              </div>
+              <div className="chart-scroller bottom">
+                <i onClick={loadMore} className="uil uil-arrow-circle-left" style={{cursor:"pointer"}}></i>
+              </div>
+            </div>
 
           </div>
+
+        </div>
       </div>
     </>
   )
