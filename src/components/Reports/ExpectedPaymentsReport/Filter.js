@@ -62,7 +62,7 @@ const Filter = ({setReport, setParams}) => {
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'70%'}}>
+                  <div style={{width:'75%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
@@ -71,7 +71,7 @@ const Filter = ({setReport, setParams}) => {
                       required
                     />
                   </div>
-                  <div className='row-payments-container' style={{width:'20%'}}>
+                  <div className='row-payments-container' style={{width:'15%'}}>
                     <CustomSelectFilter label='Mode' name='file_format' required>
                       <option value='html'>Screen (HTML)</option>
                       <option value='xlsx'>Excel</option>
