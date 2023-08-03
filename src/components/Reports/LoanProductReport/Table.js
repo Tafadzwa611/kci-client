@@ -1,128 +1,91 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-const Table = ({report, intValues, loggedInUser}) => {
-    
-    const getFileName = () => {
-        if (intValues.min_date != '' && intValues.max_date != '') {
-            return `Loan Product Report for ${loggedInUser.company_name} from ${intValues.min_date} to ${intValues.max_date}`
-        }
-        if (intValues.min_date == '' && intValues.max_date != '') {
-            return `Loan Product Report for ${loggedInUser.company_name} upto ${intValues.max_date}`
-        }
-        if (intValues.min_date != '' && intValues.max_date == '') {
-            return `Loan Product Report for ${loggedInUser.company_name} from ${intValues.min_date}`
-        }
-        return `Loan Product Report for ${loggedInUser.company_name} all time.`
-    }
-
-    return (
-        <>
-            <div style={{display:"flex", justifyContent:"flex-end", marginTop:"2rem"}}>
-                <ReactHTMLTableToExcel
-                    id='test-table-xls-button'
-                    className='btn btn-default'
-                    table='lp-report'
-                    filename={getFileName()}
-                    sheet='tablexls'
-                    buttonText='Download as XLS'
-                />
-            </div>
-            <div className="table-container" style={{padding:"0", paddingTop:"1.5rem", border:"none"}}>
-                <div className="table-responsive font-12" style={{maxHeight:"600px"}}>
-                    <table className="table" style={{width:"100%"}} id="lp-report">
-                        <thead className="clients-report-table">
-                            <tr className="journal-details fees__report_thead">
-                                <th style={{textAlign:"right"}}>Total_Loans_Released</th>
-                                <th style={{textAlign:"right"}}>Total_Principal_Released</th>
-                                <th style={{textAlign:"right"}}>Current_Principal_At_Risk</th>
-                                <th></th>
-                                <th style={{textAlign:"right"}}>Principal</th>
-                                <th style={{textAlign:"right"}}>Interest</th>
-                                <th style={{textAlign:"right"}}>Fees</th>
-                                <th style={{textAlign:"right"}}>Penalty</th>
-                                <th style={{textAlign:"right"}}>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colSpan={9}>Loan Product Report</td>
-                            </tr>
-                            <tr>
-                                <td title={getFileName()} colSpan={9} style={{whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden'}}>
-                                {getFileName()}
-                                </td>
-                            </tr>
-                            {/* <tr>
-                                <td
-                                    title={selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)}
-                                    colSpan={9}
-                                    style={{whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden'}}
-                                    >Branches: {selectedBranches.length == 0 ? 'All Branches' : selectedBranches.map(branch => ` ${branch.name}`)}
-                                </td>
-                            </tr> */}
-                            <tr>
-                                <td colSpan={9}>{`Extracted On: ${new Date()}`}</td>
-                            </tr>
-                            {report.map(lp => {
-                                return (
-                                    <Fragment key={lp.id}>
-                                        <tr>
-                                            <td colSpan={12}>Currency: {lp.currency}</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="text-bold journal-details header text-left" colSpan="9">{ lp.name } - { lp.interest_method }</td>
-                                            <td style={{display:"none"}}></td>
-                                            <td style={{display:"none"}}></td>
-                                            <td style={{display:"none"}}></td>
-                                            <td style={{display:"none"}}></td>
-                                            <td style={{display:"none"}}></td>
-                                            <td style={{display:"none"}}></td>
-                                            <td style={{display:"none"}}></td>
-                                            <td style={{display:"none"}}></td>
-                                        </tr>
-                                        <tr>
-                                            <td style={{textAlign:"right"}}>{ lp.loan_count }</td>
-                                            <td style={{textAlign: 'right'}}>{lp.sum_principal}</td>
-                                            <td style={{textAlign: 'right'}}>{lp.sum_principal_due}</td>
-                                            <td className="text-bold text-red text-right">Amount:</td>
-                                            <td className='text-bold text-red text-right'>{lp.sum_principal}</td>
-                                            <td className='text-bold text-red text-right'>{lp.sum_interest}</td>
-                                            <td className='text-bold text-red text-right'>{lp.sum_fees}</td>
-                                            <td className='text-bold text-red text-right'>{lp.sum_penalty}</td>
-                                            <td className="text-bold text-red text-right ">{lp.total_amount}</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td className="text-bold text-green" style={{textAlign:"right"}}>Total_Payments:</td>
-                                            <td className='text-bold text-green' style={{textAlign: 'right'}}>{lp.sum_principal_paid}</td>
-                                            <td className='text-bold text-green' style={{textAlign: 'right'}}>{lp.sum_interest_paid}</td>
-                                            <td className='text-bold text-green' style={{textAlign: 'right'}}>{lp.sum_fees_paid}</td>
-                                            <td className='text-bold text-green' style={{textAlign: 'right'}}>{lp.sum_penalty_paid}</td>
-                                            <td className="text-bold text-green " style={{textAlign:"right"}}>{lp.total_paid}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style={{textAlign:"right"}}  className="last__row__border"></td>
-                                            <td style={{textAlign:"right"}} className="last__row__border"></td>
-                                            <td style={{textAlign:"right"}} className="last__row__border"></td>
-                                            <td className="text-bold last__row__border" style={{textAlign:"right", width:"9%"}}>Net_Due:</td>
-                                            <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{lp.sum_principal_due}</td>
-                                            <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{lp.sum_interest_amount_due}</td>
-                                            <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{lp.sum_fees_due}</td>
-                                            <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{lp.sum_penalty_due}</td>
-                                            <td className="text-bold last__row__border" style={{textAlign:"right", fontWeight:"bold"}}>{lp.total_due}</td>
-                                        </tr>
-                                    </Fragment>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </>
-    )
+const Table = ({report}) => {
+  return (
+    <>
+      <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '2rem'}}>
+        <ReactHTMLTableToExcel
+          id='test-table-xls-button'
+          className='btn btn-default'
+          table='lp-report'
+          filename='Product Report'
+          sheet='tablexls'
+          buttonText='Download as XLS'
+        />
+      </div>
+      <div className='table-container' style={{padding:'0', paddingTop:'1.5rem', border:'none'}}>
+        <div className='table-responsive font-12' style={{maxHeight:'600px'}}>
+          <table className='table' style={{width:'100%'}} id='lp-report'>
+            <thead className='clients-report-table'>
+              <tr className='journal-details fees__report_thead'>
+                <th style={{textAlign:'right'}}>Product_Name</th>
+                <th style={{textAlign:'right'}}>Interest_Method</th>
+                <th style={{textAlign:'right'}}>Client_Type</th>
+                <th style={{textAlign:'right'}}>Currency</th>
+                <th style={{textAlign:'right'}}>Total_Loans_Released</th>
+                <th style={{textAlign:'right'}}>Total_Principal_Released</th>
+                <th style={{textAlign:'right'}}>Current_Principal_At_Risk</th>
+                <th></th>
+                <th style={{textAlign:'right'}}>Principal</th>
+                <th style={{textAlign:'right'}}>Interest</th>
+                <th style={{textAlign:'right'}}>Fees</th>
+                <th style={{textAlign:'right'}}>Penalty</th>
+                <th style={{textAlign:'right'}}>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style={{textAlign:'right'}}>{report.name}</td>
+                <td style={{textAlign:'right'}}>{report.interest_method}</td>
+                <td style={{textAlign:'right'}}>{report.client_type}</td>
+                <td style={{textAlign:'right'}}>{report.currency}</td>
+                <td style={{textAlign:'right'}}>{report.loan_count}</td>
+                <td style={{textAlign: 'right'}}>{report.sum_principal}</td>
+                <td style={{textAlign: 'right'}}>{report.sum_principal_due}</td>
+                <td className='text-bold text-red text-right'>Amount:</td>
+                <td className='text-bold text-red text-right'>{report.sum_principal}</td>
+                <td className='text-bold text-red text-right'>{report.sum_interest}</td>
+                <td className='text-bold text-red text-right'>{report.sum_fees}</td>
+                <td className='text-bold text-red text-right'>{report.sum_penalty}</td>
+                <td className='text-bold text-red text-right '>{report.total_amount}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td className='text-bold text-green' style={{textAlign:'right'}}>Total_Payments:</td>
+                <td className='text-bold text-green' style={{textAlign: 'right'}}>{report.sum_principal_paid}</td>
+                <td className='text-bold text-green' style={{textAlign: 'right'}}>{report.sum_interest_paid}</td>
+                <td className='text-bold text-green' style={{textAlign: 'right'}}>{report.sum_fees_paid}</td>
+                <td className='text-bold text-green' style={{textAlign: 'right'}}>{report.sum_penalty_paid}</td>
+                <td className='text-bold text-green ' style={{textAlign:'right'}}>{report.total_paid}</td>
+              </tr>
+              <tr>
+                <td style={{textAlign:'right'}}  className='last__row__border'></td>
+                <td style={{textAlign:'right'}}  className='last__row__border'></td>
+                <td style={{textAlign:'right'}}  className='last__row__border'></td>
+                <td style={{textAlign:'right'}}  className='last__row__border'></td>
+                <td style={{textAlign:'right'}}  className='last__row__border'></td>
+                <td style={{textAlign:'right'}} className='last__row__border'></td>
+                <td style={{textAlign:'right'}} className='last__row__border'></td>
+                <td className='text-bold last__row__border' style={{textAlign:'right', width:'9%'}}>Net_Due:</td>
+                <td className='text-bold last__row__border' style={{textAlign:'right', fontWeight:'bold'}}>{report.sum_principal_due}</td>
+                <td className='text-bold last__row__border' style={{textAlign:'right', fontWeight:'bold'}}>{report.sum_interest_amount_due}</td>
+                <td className='text-bold last__row__border' style={{textAlign:'right', fontWeight:'bold'}}>{report.sum_fees_due}</td>
+                <td className='text-bold last__row__border' style={{textAlign:'right', fontWeight:'bold'}}>{report.sum_penalty_due}</td>
+                <td className='text-bold last__row__border' style={{textAlign:'right', fontWeight:'bold'}}>{report.total_due}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </>
+  )
 }
 
 export default Table;
