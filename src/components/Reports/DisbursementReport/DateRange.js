@@ -21,7 +21,7 @@ const DateRange = ({setReport, setParams}) => {
     try {
       const params = getParams(values);
       setParams(params);
-      if (values.mode === 'html') {
+      if (values.file_format === 'html') {
         const response = await axios.get('/reportsapi/disbursement-report/', {params: params});
         setReport(response.data);
       }else {
@@ -60,7 +60,7 @@ const DateRange = ({setReport, setParams}) => {
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'60%'}}>
+                  <div style={{width:'70%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
@@ -69,14 +69,14 @@ const DateRange = ({setReport, setParams}) => {
                       required
                     />
                   </div>
-                  <div className='row-payments-container' style={{width:'15%'}}>
+                  <div className='row-payments-container' style={{width:'10%'}}>
                     <CustomSelectFilter label='Mode' name='file_format' required>
                       <option value='html'>Screen (HTML)</option>
                       <option value='xlsx'>Excel</option>
                       <option value='csv'>CSV</option>
                     </CustomSelectFilter>
                   </div>
-                  <div className='row-payments-container' style={{width:'15%'}}>
+                  <div className='row-payments-container' style={{width:'10%'}}>
                     <CustomSelectFilter label='Order' name='order' required>
                       <option value={'DESC'}>Show newest first</option>
                       <option value={'ASC'}>Show oldest first</option>
