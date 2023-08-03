@@ -2,33 +2,15 @@ import React, {useState} from 'react';
 import DateRange from './DateRange';
 import Table from './Table';
 
-function DisbursementReport({loggedInUser}) {
+function DisbursementReport() {
   const [params, setParams] = useState(null);
-  const [disbursementData, setDisbursementData] = useState({total_count: 0, next_page_num: 0, report: []});
-  const [intValues, setIntValues] = useState([])
-  const [currency, setCurrency] = useState(null);
+  const [report, setReport] = useState(null);
 
   return (
     <>
-        <>
-            <DateRange 
-                setDisbursementData={setDisbursementData} 
-                setParams={setParams} 
-                setIntValues={setIntValues}
-                setCurrency={setCurrency}
-            />
-            <div style={{paddingTop: '2rem'}}></div>
-            {disbursementData.report &&
-                <Table
-                    report={disbursementData} 
-                    loggedInUser={loggedInUser}
-                    intValues={intValues}
-                    currency={currency}
-                    setDisbursementData={setDisbursementData}
-                    params={params}
-                />
-            }
-        </>
+      <DateRange setReport={setReport} setParams={setParams}/>
+      <div style={{paddingTop: '2rem'}}></div>
+      {report ? <Table report={report} setReport={setReport} params={params}/> : null}
     </>
   )
 }
