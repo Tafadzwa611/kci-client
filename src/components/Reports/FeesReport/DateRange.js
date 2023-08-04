@@ -2,56 +2,34 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import {
   NonFieldErrors,
-} from '../../../common';
-import {
-    CustomInputFilter,
-    CustomDatePickerFilter,
-    CustomSelectFilter,
-    CustomMultiSelectFilter,
-    SubmitButtonFilter
+  CustomDatePickerFilter,
+  CustomSelectFilter,
+  CustomMultiSelectFilter,
+  SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
 import { useBranches } from '../../../contexts/BranchesContext';
 import axios from 'axios';
-import { removeEmptyValues } from '../../../utils/utils';
+import { getParams } from '../../../utils/utils';
 
-const DateRange = ({setFeesReportData, setParams, setIntValues, setCurrency, setSummary}) => {
-  const initialValues = {
-    branch_ids: [],
-    page_num: 1,
-    min_date: '',
-    max_date: '',
-    order: '',
-  };
+const DateRange = ({setReport, setParams}) => {
+  const initialValues = {branch_ids: [], page_num: 1, min_date: '', max_date: '', order: '-id', file_format: 'html'};
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
-  const getParams = (values) => {
-    const params = new URLSearchParams();
-    for (const [key, value] of Object.entries(values)) {
-      if (Array.isArray(value)) {
-        value.forEach(el => params.append(key, el));
-      }else {
-        params.append(key, value);
-      }
-    }
-    return params
-  }
-
   const onSubmit = async (values, actions) => {
     try {
-      const data = removeEmptyValues(values);
-      const params = getParams(data);
-      console.log(params)
+      const params = getParams(values);
       setParams(params);
-      setIntValues(values);
-      const response = await axios.get('/reportsapi/loans-fees-report/', {params: params});
-      setFeesReportData(response.data);
-      setCurrency(response.data.currency);
-      setSummary(response.data.summary);
+      if (values.file_format === 'html') {
+        const response = await axios.get('/reportsapi/loans-fees-report/', {params: params});
+        setReport(response.data);
+      }else {
+        await axios.get('/reportsapi/loans-fees-report-export/', {params: params});
+      }
     } catch (error) {
-      if (error.message === "Network Error") {
-        actions.setErrors({responseStatus: "Network Error"});
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
       } else if (error.response.status >= 400 && error.response.status < 500) {
         actions.setErrors({responseStatus: error.response.status, ...error.response.data});
       } else {
@@ -63,50 +41,56 @@ const DateRange = ({setFeesReportData, setParams, setIntValues, setCurrency, set
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors}) => (
-          <div className="search_background">
-            <div className="row-containers" style={{border:"none"}}>
-                <Form>
-                    <NonFieldErrors errors={errors}>
-                        <div className="row row-payments row-loans" style={{marginTop:"1rem"}}>
-                            <div className="row-payments-container" style={{width:"24%"}}>
-                                <CustomDatePickerFilter label='Min Date' name='min_date' setFieldValue={setFieldValue} required/>
-                            </div>
-                            <div className="row-payments-container" style={{width:"24%"}}>
-                                <CustomDatePickerFilter label='Max Date' name='max_date' setFieldValue={setFieldValue} required/>
-                            </div>
-                            <div className="row-payments-container" style={{width:"24%"}}>
-                                <CustomSelectFilter label='Order' name='order' required>
-                                    <option value=''>------</option>
-                                    <option value={'-id'}>Show newest first</option>
-                                    <option value={'id'}>Show oldest first</option>
-                                </CustomSelectFilter>
-                            </div>
-                            <div className="row-payments-container" style={{width:"24%"}}>
-                                <CustomSelectFilter label='Currency' name='currency_id' required>
-                                    <option value=''>------</option>
-                                    {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-                                </CustomSelectFilter>
-                            </div>
-                        </div>
-                        <div style={{marginTop:"1rem", display:"flex", justifyContent:"space-between"}}>
-                            <div style={{width:"90%"}}>
-                                <CustomMultiSelectFilter
-                                    label='Branches'
-                                    name='branch_ids'
-                                    options={branches.map(br => ({label: br.name, value:br.id}))}
-                                    setFieldValue={setFieldValue}
-                                    required
-                                />
-                            </div>
-                            <SubmitButtonFilter isSubmitting={isSubmitting}/>
-                        </div>
-                    </NonFieldErrors>
-                </Form>
-            </div>
+        <div className='search_background'>
+          <div className='row-containers' style={{border:'none'}}>
+            <Form>
+              <NonFieldErrors errors={errors}>
+                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
+                  <div className='row-payments-container' style={{width:'24%'}}>
+                    <CustomDatePickerFilter label='Min Date' name='min_date' setFieldValue={setFieldValue} required/>
+                  </div>
+                  <div className='row-payments-container' style={{width:'24%'}}>
+                    <CustomDatePickerFilter label='Max Date' name='max_date' setFieldValue={setFieldValue} required/>
+                  </div>
+                  <div className='row-payments-container' style={{width:'24%'}}>
+                    <CustomSelectFilter label='Order' name='order' required>
+                      <option value={'-id'}>Show newest first</option>
+                      <option value={'id'}>Show oldest first</option>
+                    </CustomSelectFilter>
+                  </div>
+                  <div className='row-payments-container' style={{width:'24%'}}>
+                    <CustomSelectFilter label='Currency' name='currency_id' required>
+                      <option value=''>------</option>
+                      {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+                    </CustomSelectFilter>
+                  </div>
+                </div>
+                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
+                  <div style={{width:'75%'}}>
+                    <CustomMultiSelectFilter
+                      label='Branches'
+                      name='branch_ids'
+                      options={branches.map(br => ({label: br.name, value:br.id}))}
+                      setFieldValue={setFieldValue}
+                      required
+                    />
+                  </div>
+                  <div className='row-payments-container' style={{width:'15%'}}>
+                    <CustomSelectFilter label='Mode' name='file_format' required>
+                      <option value='html'>Screen (HTML)</option>
+                      <option value='xlsx'>Excel</option>
+                      <option value='csv'>CSV</option>
+                    </CustomSelectFilter>
+                  </div>
+                  <SubmitButtonFilter isSubmitting={isSubmitting}/>
+                </div>
+              </NonFieldErrors>
+            </Form>
+          </div>
         </div>
       )}
     </Formik>
-  );
+  )
 }
 
 export default DateRange;

@@ -3,41 +3,28 @@ import DateRange from './DateRange';
 import Table from './Table';
 import Summary from './Summary';
 
-function FeesReport({loggedInUser}) {
+function FeesReport() {
   const [params, setParams] = useState(null);
-  const [feesReportData, setFeesReportData] = useState({count: 0, next_page_num: 0, report: []});
-  const [intValues, setIntValues] = useState([])
-  const [currency, setCurrency] = useState(null)
-  const [summary, setSummary] = useState(null);
+  const [report, setReport] = useState(null);
+  const [tab, setTab] = useState('summary');
 
   return (
     <>
-        <>
-          <DateRange 
-            setFeesReportData={setFeesReportData} 
-            setParams={setParams} 
-            setIntValues={setIntValues} 
-            setCurrency={setCurrency}
-            setSummary={setSummary}
-          />
-          <div style={{paddingTop: '2rem'}}></div>
-          {summary &&
-            <Summary 
-              summary={summary} 
-              currency={currency} 
-              intValues={intValues} 
-              loggedInUser={loggedInUser} 
-            />
-          }
-          <Table
-            feesReportData={feesReportData} 
-            setFeesReportData={setFeesReportData}
-            params={params}
-            loggedInUser={loggedInUser}
-            intValues={intValues}
-            currency={currency}
-          />
-        </>
+      <DateRange setReport={setReport} setParams={setParams}/>
+      <div style={{paddingTop: '2rem'}}></div>
+      {report ?
+      <>
+        <div className='bloc-tabs'>
+          <button className={tab === 'summary' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('summary')}>Summary</button>
+          <button className={tab === 'list' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('list')}>List</button>
+        </div>
+        <div className='tab-content font-12' style={{marginTop: '3rem'}}>
+          {{
+            summary: <Summary summary={report.totals}/>,
+            list: <Table report={report} setReport={setReport} params={params}/>
+          }[tab]}
+        </div>
+      </> : null}
     </>
   )
 }
