@@ -56,7 +56,7 @@ const Filter = ({setBorrowersData, setCurrency}) => {
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'75%'}}>
+                  <div style={{width:'90%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'

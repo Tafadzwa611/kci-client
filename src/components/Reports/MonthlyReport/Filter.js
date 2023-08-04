@@ -58,7 +58,7 @@ const Filter = ({setMonthlyReportData}) => {
                 <Form>
                     <NonFieldErrors errors={errors}>
                         <div style={{display:"flex", justifyContent:"space-between"}}>
-                            <div style={{width:"75%"}}>
+                            <div style={{width:"80%"}}>
                                 <CustomMultiSelectFilter
                                     label='Branches'
                                     name='branch_ids'
@@ -67,7 +67,7 @@ const Filter = ({setMonthlyReportData}) => {
                                     required
                                 />
                             </div>
-                            <div className="row-payments-container" style={{width:"15%"}}>
+                            <div className="row-payments-container" style={{width:"10%"}}>
                               <CustomSelectFilter label='Currency' name='currency_id' required>
                                     <option value=''>------</option>
                                     {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}

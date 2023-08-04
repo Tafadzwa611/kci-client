@@ -8,7 +8,7 @@ const Table = ({ report, params, setReport }) => {
       <TableHeader report={report} params={params} setReport={setReport}/>
       <div className='table-container' style={{padding:'0', border:'none'}}>
         <div className='table-responsive font-12' style={{maxHeight:'600px'}}>
-          <table className='table' id='clients-report' style={{width:'100%'}}>
+          <table className='table' id='payments-report' style={{width:'100%'}}>
             <thead className='clients-report-table'>
               <tr className='journal-details fees__report_thead'> 
                 <th style={{textAlign:'right'}}>Client_Name</th>
@@ -76,8 +76,8 @@ const TableHeader = ({report, params, setReport}) => {
           <ReactHTMLTableToExcel
             id='test-table-xls-button'
             className='btn btn-default'
-            table='clients-report'
-            filename='clients-report'
+            table='payments-report'
+            filename='payments-report'
             sheet='tablexls'
             buttonText='Download as XLS'
           />
