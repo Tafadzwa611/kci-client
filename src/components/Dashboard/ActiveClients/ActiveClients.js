@@ -175,7 +175,7 @@ function ActiveClients({div4, showDiv4, branches, currencies}) {
 
                         <div className="loans__clients__data">
                             <div className="loan_client_summary__titles">
-                                <h3 className="loan_client_item_name">Active Company/Co-operative Clients</h3>
+                                <h3 className="loan_client_item_name">Active Groups</h3>
                                 <span className="loan_client_item_number" style={{display:"flex", columnGap:"5px"}}>
                                   {allactiveclients['group_active_count']} ( {allactiveclients['group_active_percentage']}% ) 
                                 </span>
