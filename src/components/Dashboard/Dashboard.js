@@ -94,7 +94,7 @@ export default function Dashboard() {
 
                     <div className="book-value-section">
 
-                        <AllLoans branches={branches} currencies={currencies} div1={div1} showDiv1={showDiv1} />
+                        {/* <AllLoans branches={branches} currencies={currencies} div1={div1} showDiv1={showDiv1} /> */}
                         <AllClients branches={branches} div2={div2} showDiv2={showDiv2} />
 
                     </div>
