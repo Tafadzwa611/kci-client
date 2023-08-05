@@ -2562,6 +2562,10 @@ small {
   cursor: pointer;
 }
 
+.loans_clients_summary_container-header.total__all_clients {
+  border-bottom: 1px solid var(--border-color);
+}
+
 .uil.uil-angle-down.arrow_rotate.loans_clients_summary-arrow {
   transform: rotate(-180deg);
 }
