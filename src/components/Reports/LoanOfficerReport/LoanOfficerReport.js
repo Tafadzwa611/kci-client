@@ -2,24 +2,14 @@ import React, {useState} from 'react';
 import DateRange from './DateRange';
 import Table from './Table';
 
-function LoanOfficerReport({loggedInUser}) {
-  const [params, setParams] = useState(null);
-  const [currency, setCurrency] = useState(null);
-  const [report, setReport] = useState([]);
-  const [intValues, setIntValues] = useState([]);
+function LoanOfficerReport() {
+  const [report, setReport] = useState(null);
 
   return (
     <>
-        <DateRange 
-            setReport={setReport} 
-            setParams={setParams} 
-            setIntValues={setIntValues}
-            setCurrency={setCurrency}
-        />
-        <div style={{paddingTop: '2rem'}}></div>
-        {report.length > 0  &&
-            <Table report={report} currency={currency} intValues={intValues} loggedInUser={loggedInUser}/>
-        }
+      <DateRange setReport={setReport}/>
+      <div style={{paddingTop: '2rem'}}></div>
+      {report ? <Table report={report}/> : null}
     </>
   )
 }
