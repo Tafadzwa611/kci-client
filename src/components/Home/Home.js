@@ -8,7 +8,7 @@ function Home() {
   return (
     <div className='card'>
       <div className='info-box'>
-        <span>You can use sidebar for navigation.</span>
+        <span>You can use topbar for navigation.</span>
       </div>
     </div>
   )
