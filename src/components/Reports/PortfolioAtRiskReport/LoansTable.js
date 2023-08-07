@@ -29,7 +29,7 @@ function LoansTable({loans, currency, params, setLoans}) {
                 {loans.loans_in_arrears.map(loan => {
                   return (
                     <tr className='tr-class' key={loan.loan_id}>
-                      <td>{loan.loan_id}</td>
+                      <td>{loan.loan_num}</td>
                       <td>{loan.client_fullname}</td>
                       <td>{loan.client_phone_number}</td>
                       <td>{loan.group_name}</td>
