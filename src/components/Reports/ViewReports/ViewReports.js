@@ -30,17 +30,17 @@ const ViewReports = () => {
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
-        <Route index element={<ClientsReport loggedInUser={loggedInUser} />} />
-        <Route path='loansreport' element={<LoansReport loggedInUser={loggedInUser} />} />
+        <Route index element={<ClientsReport />} />
+        <Route path='loansreport' element={<LoansReport />} />
         <Route path='paymentsreport' element={<PaymentsReport />} />
         <Route path='expectedpaymentsreport' element={<ExpectedPaymentsReport />} />
-        <Route path='monthlyreport' element={<MonthlyReport loggedInUser={loggedInUser} />} />
-        <Route path='topborrowersreport' element={<TopBorrowers loggedInUser={loggedInUser} />} />
-        <Route path='disbursementreport' element={<DisbursementReport loggedInUser={loggedInUser} />} />
-        <Route path='loanproductreport' element={<LoanProductReport loggedInUser={loggedInUser} />} />
-        <Route path='feesreport' element={<FeesReport loggedInUser={loggedInUser} />} />
-        <Route path='loanofficerreport' element={<LoanOfficerReport loggedInUser={loggedInUser} />} />
-        <Route path='dailyreport' element={<DailyReport loggedInUser={loggedInUser} />} />
+        <Route path='monthlyreport' element={<MonthlyReport />} />
+        <Route path='topborrowersreport' element={<TopBorrowers />} />
+        <Route path='disbursementreport' element={<DisbursementReport />} />
+        <Route path='loanproductreport' element={<LoanProductReport />} />
+        <Route path='feesreport' element={<FeesReport />} />
+        <Route path='loanofficerreport' element={<LoanOfficerReport />} />
+        <Route path='dailyreport' element={<DailyReport />} />
         <Route path='portofolioatriskreport' element={<PortfolioAtRiskReport loggedInUser={loggedInUser} />} />
       </Route>
     </Routes>
