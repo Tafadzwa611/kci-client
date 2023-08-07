@@ -49,7 +49,7 @@ const AllClients = ({showDiv2, div2, branches}) => {
     
     return (
 
-        <div className="loans_clients_summary_container" style={{marginTop:"20px"}}>
+        <div className="loans_clients_summary_container">
 
             <div className="loans_clients_summary_container-header" onClick={showDiv2}>
                 <div>

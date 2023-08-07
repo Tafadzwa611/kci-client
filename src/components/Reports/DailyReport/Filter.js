@@ -41,7 +41,7 @@ const Filter = ({setReport}) => {
             <Form>
               <NonFieldErrors errors={errors}>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'35%'}}>
+                  <div className='row-payments-container' style={{width:'49%'}}>
                     <CustomDatePickerFilter label='Date' name='date_of_report' setFieldValue={setFieldValue} required/>
                   </div>
                   <div className='row-payments-container' style={{width:'49%'}}>

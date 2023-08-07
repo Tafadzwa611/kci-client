@@ -130,122 +130,14 @@ function ActiveClients({div4, showDiv4, branches, currencies}) {
                       </div>
                   </div>
 
-                  <div className="book-value-update-section">
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-title">Active Clients</p>
-                          <p className="dashboard-section-amount-or-number">{allactiveclients['total_active_clients']}</p>
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Daily Change</p>
-                          {allactiveclients['active_daily_change'] > 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
-                                <span>{allactiveclients['active_daily_change']}%</span> 
-                                <i className="uil uil-arrow-growth"></i>
-                            </p>
-                          }
-                          {allactiveclients['active_daily_change'] == 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
-                                <span>{allactiveclients['active_daily_change']}%</span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                          {allactiveclients['active_daily_change'] < 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
-                                <span>{allactiveclients['active_daily_change']}%</span> 
-                                <i className="uil uil-chart-down"></i>
-                            </p>
-                          }
-                          {allactiveclients['active_daily_change'] == null &&
-                            <p className="dashboard-section-amount-or-number no-change">
-                                <span></span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Weekly Change</p>
-                          {allactiveclients['active_weekly_change'] > 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
-                                <span>{allactiveclients['active_weekly_change']}%</span> 
-                                <i className="uil uil-arrow-growth"></i>
-                            </p>
-                          }
-                          {allactiveclients['active_weekly_change'] == 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
-                                <span>{allactiveclients['active_weekly_change']}%</span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                          {allactiveclients['active_weekly_change'] < 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
-                                <span>{allactiveclients['active_weekly_change']}%</span> 
-                                <i className="uil uil-chart-down"></i>
-                            </p>
-                          }
-                          {allactiveclients['active_weekly_change'] == null &&
-                            <p className="dashboard-section-amount-or-number no-change">
-                                <span></span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Monthly Change</p>
-                          {allactiveclients['active_monthly_change'] > 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
-                                <span>{allactiveclients['active_monthly_change']}%</span> 
-                                <i className="uil uil-arrow-growth"></i>
-                            </p>
-                          }
-                          {allactiveclients['active_monthly_change'] == 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
-                                <span>{allactiveclients['active_monthly_change']}%</span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                          {allactiveclients['active_monthly_change'] < 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
-                                <span>{allactiveclients['active_monthly_change']}%</span> 
-                                <i className="uil uil-chart-down"></i>
-                            </p>
-                          }
-                          {allactiveclients['active_monthly_change'] == null &&
-                            <p className="dashboard-section-amount-or-number no-change">
-                                <span></span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                      </div>
-                      <div className="book-value-info-box">
-                          <p className="dashboard-section-sub-title">Yearly Change</p>
-                          {allactiveclients['active_yearly_change'] > 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number upward-change">
-                                <span>{allactiveclients['active_yearly_change']}%</span> 
-                                <i className="uil uil-arrow-growth"></i>
-                            </p>
-                          }
-                          {allactiveclients['active_yearly_change'] == 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number no-change">
-                                <span>{allactiveclients['active_yearly_change']}%</span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                          {allactiveclients['active_yearly_change'] < 0 &&
-                            <p style={{display:"flex", alignItems:"center", columnGap:"5px"}} className="dashboard-section-amount-or-number downward-change">
-                                <span>{allactiveclients['active_yearly_change']}%</span> 
-                                <i className="uil uil-chart-down"></i>
-                            </p>
-                          }
-                          {allactiveclients['active_yearly_change'] == null &&
-                            <p className="dashboard-section-amount-or-number no-change">
-                                <span></span> 
-                                <i className="uil uil-arrows-h-alt"></i>
-                            </p>
-                          }
-                      </div>
-                  </div>
-
                   <div className="loans_clients_summary_container" style={{marginTop:"20px"}}>
+
+                    <div className="loans_clients_summary_container-header total__all_clients">
+                      <div style={{display:'flex', alignItems:'center', columnGap:'10px'}}>
+                        <p className="dashboard-section-title">Active Clients</p>
+                        <p className="dashboard-section-amount-or-number">{allactiveclients['total_active_clients']}</p>
+                      </div>
+                    </div>
 
                     <div className="loans_clients_summary_container-header" onClick={showDiv4}>
                         <div>
@@ -261,11 +153,7 @@ function ActiveClients({div4, showDiv4, branches, currencies}) {
                             <div className="loan_client_summary__titles">
                                 <h3 className="loan_client_item_name">Active Female Individual Clients</h3>
                                 <span className="loan_client_item_number" style={{display:"flex", columnGap:"5px"}}>
-                                    {allactiveclients['female_active_clients_count']} ( {allactiveclients['female_active_clients_percentage']}% ) /
-                                    <div className="tooltip">
-                                        <span className="link">{currency} {allactiveclients['sum_female_active_clients_loans']}</span>
-                                        <span className="tooltiptext">Total amount disbursed</span>
-                                    </div>
+                                  {allactiveclients['female_active_clients_count']} ( {allactiveclients['female_active_clients_percentage']}% ) 
                                 </span>
                             </div>
                             <div className="loan_client_item__bar">
@@ -277,11 +165,7 @@ function ActiveClients({div4, showDiv4, branches, currencies}) {
                             <div className="loan_client_summary__titles">
                                 <h3 className="loan_client_item_name">Active Male Individual Clients</h3>
                                 <span className="loan_client_item_number" style={{display:"flex", columnGap:"5px"}}>
-                                    {allactiveclients['male_active_clients_count']} ( {allactiveclients['male_active_clients_percentage']}% ) / 
-                                    <div className="tooltip">
-                                        <span className="link">{currency} {allactiveclients['sum_male_active_clients_loans']}</span>
-                                        <span className="tooltiptext">Total amount disbursed</span>
-                                    </div>
+                                  {allactiveclients['male_active_clients_count']} ( {allactiveclients['male_active_clients_percentage']}% ) 
                                 </span>
                             </div>
                             <div className="loan_client_item__bar">
@@ -291,13 +175,9 @@ function ActiveClients({div4, showDiv4, branches, currencies}) {
 
                         <div className="loans__clients__data">
                             <div className="loan_client_summary__titles">
-                                <h3 className="loan_client_item_name">Active Company/Co-operative Clients</h3>
+                                <h3 className="loan_client_item_name">Active Groups</h3>
                                 <span className="loan_client_item_number" style={{display:"flex", columnGap:"5px"}}>
-                                    {allactiveclients['group_active_count']} ( {allactiveclients['group_active_percentage']}% ) / 
-                                    <div className="tooltip">
-                                        <span className="link">{currency} {allactiveclients['sum_groups_active_clients_loans']}</span>
-                                        <span className="tooltiptext">Total amount disbursed</span>
-                                    </div>
+                                  {allactiveclients['group_active_count']} ( {allactiveclients['group_active_percentage']}% ) 
                                 </span>
                             </div>
                             <div className="loan_client_item__bar">

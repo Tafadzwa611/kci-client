@@ -293,7 +293,7 @@ function LoanBook({div3, showDiv3, branches, currencies}) {
 
                         </div>
 
-                        <div className="chart-section">
+                        {/* <div className="chart-section">
                             <div className="chart-container">
                                 <div className='chart'>
                                 {(labels===null || dataSets===null) ?
@@ -306,7 +306,7 @@ function LoanBook({div3, showDiv3, branches, currencies}) {
                             <div className="chart-scroller bottom">
                                 <i onClick={loadMore} className="uil uil-arrow-circle-left" style={{cursor:"pointer"}}></i>
                             </div>
-                        </div>
+                        </div> */}
 
                     </div>
 
