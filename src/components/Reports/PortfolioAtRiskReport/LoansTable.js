@@ -12,7 +12,7 @@ function LoansTable({loans, currency, params, setLoans}) {
             <table className='table' id='ageing_analyis_report'>
               <thead>
                 <tr className="journal-details header">
-                  <th>Loan #</th>
+                  <th>Loan_#</th>
                   <th>Client</th>
                   <th>Client_Phone_Number</th>
                   <th>Group</th>
