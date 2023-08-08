@@ -14,6 +14,8 @@ const Filter = ({setParams, setLoans, par}) => {
     currency_id: par.currency_id,
     lower_limit: par.lower_limit,
     upper_limit: par.upper_limit,
+    client_type: par.client_type,
+    group_type: par.group_type,
     branch_ids: par.selectedBIds
   };
 
