@@ -8,7 +8,7 @@ function DeleteFee({setOpenModal, close, setFees, feeId}) {
   const onSubmit = async (_, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      await axios.delete(`/loansapi/delete_product_group/${feeId}/`, CONFIG);
+      await axios.delete(`/loansapi/delete_loan_fee/${feeId}/`, CONFIG);
       close();
       setOpenModal(false);
       setFees(curr => curr.filter(cat => cat.id !== feeId));

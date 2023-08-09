@@ -11,7 +11,7 @@ import DailyReport from '../DailyReport/DailyReport';
 import PaymentsReport from '../PaymentsReport/PaymentsReport';
 import PortfolioAtRiskReport from '../PortfolioAtRiskReport/PortfolioAtRiskReport';
 import ExpectedPaymentsReport from '../ExpectedPaymentsReport/ExpectedPaymentsReport';
-import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
+import AuditTrail from '../AuditTrail/AuditTrail';
 import {
   Routes,
   Route,
@@ -21,8 +21,6 @@ import {
 } from 'react-router-dom';
 
 const ViewReports = () => {
-  const {loggedInUser} = useLoggedInUser()
-
   useEffect(() => {
     document.title = 'View Reports';
   }, []);
@@ -41,7 +39,8 @@ const ViewReports = () => {
         <Route path='feesreport' element={<FeesReport />} />
         <Route path='loanofficerreport' element={<LoanOfficerReport />} />
         <Route path='dailyreport' element={<DailyReport />} />
-        <Route path='portofolioatriskreport' element={<PortfolioAtRiskReport loggedInUser={loggedInUser} />} />
+        <Route path='portofolioatriskreport' element={<PortfolioAtRiskReport />} />
+        <Route path='audittrail' element={<AuditTrail />} />
       </Route>
     </Routes>
   )
@@ -92,6 +91,9 @@ function Layout() {
             </Link>
             <Link to='/reports/viewreports/portofolioatriskreport' className={location.pathname === '/reports/viewreports/portofolioatriskreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Par Report
+            </Link>
+            <Link to='/reports/viewreports/audittrail' className={location.pathname === '/reports/viewreports/audittrail' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Audit Trail
             </Link>
           </div>
           <div className='tab-content font-12' style={{marginTop:'3rem'}}>
