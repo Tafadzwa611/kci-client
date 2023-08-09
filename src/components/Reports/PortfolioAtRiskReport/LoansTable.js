@@ -11,8 +11,8 @@ function LoansTable({loans, currency, params, setLoans}) {
           <div className='table-responsive p-0' style={{maxHeight: '600px', marginTop:"1rem"}}>
             <table className='table' id='ageing_analyis_report'>
               <thead>
-                <tr className="journal-details header">
-                  <th>Loan #</th>
+                <tr className="journal-details header" style={{position:'sticky', top:'0'}}>
+                  <th>Loan_#</th>
                   <th>Client</th>
                   <th>Client_Phone_Number</th>
                   <th>Group</th>
