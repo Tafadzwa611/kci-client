@@ -59,7 +59,7 @@ function Table({trail, params, setTrail, setTrailId, trailID, selectedTrail}) {
                         <td>{entry.event_timestamp}</td>
                         <td>{entry.actor_name}</td>
                         {entry.data_changes ?
-                          <td><span onClick={handleClick} id={entry.id} style={{cursor:'pointer'}} className='link'>Click here to see change</span></td>:
+                          <td><span onClick={handleClick} id={entry.id} style={{cursor:'pointer'}} className='link'>Click here to see changes</span></td>:
                           <td></td>
                         }
                       </>
