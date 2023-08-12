@@ -74,7 +74,7 @@ function Filter({setTrail, setParams}) {
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div className='row-payments-container' style={{width:'40%'}}>
+                  <div className='row-payments-container' style={{width:'45%'}}>
                     <CustomSelectFilter label='Entity Type' name='content_type_id'>
                       <option value=''>-----</option>
                       <option value='7'>Client</option>
@@ -82,7 +82,7 @@ function Filter({setTrail, setParams}) {
                       <option value='12'>Loan Product</option>
                     </CustomSelectFilter>
                   </div>
-                  <div className='row-payments-container' style={{width:'40%'}}>
+                  <div className='row-payments-container' style={{width:'45%'}}>
                     <CustomSelectFilter label='Action' name='action'>
                       <option value=''>-----</option>
                       <option value='0'>Create</option>

@@ -1,38 +1,100 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-function Table({trail, params, setTrail}) {
+function Table({trail, params, setTrail, setTrailId, trailID, selectedTrail}) {
+  const [details, setDetails] = useState(false);
+
+  const handleClick = (e) => {
+    setDetails(true)
+    setTrailId(e.target.id);
+  }
+
   return (
     <>
       <TableHeader trail={trail} params={params} setTrail={setTrail}/>
-      <div className='table-container' style={{padding:'0', border:'none'}}>
-        <div className='table-responsive font-12' style={{maxHeight:'600px'}}>
-          <table className='table' id='clients-report' style={{width:'100%'}}>
-            <thead className='clients-report-table'>
-              <tr className='journal-details fees__report_thead'> 
-                <th>Action</th>
-                <th>Entity</th>
-                <th>Entity Name/ID</th>
-                <th>Perfomed At</th>
-                <th>Perfomed By</th>
-                <th>Changes</th>
-              </tr>
-            </thead>
-            <tbody>
-              {trail.entries.map(entry => (
-                <tr key={entry.id}>
-                  <td>{entry.action_type} {entry.action_name}</td>
-                  <td>{entry.entity}</td>
-                  <td>{entry.object_repr}</td>
-                  <td>{entry.event_timestamp}</td>
-                  <td>{entry.actor_name}</td>
-                  <td>{entry.data_changes}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <div style={details ? {display:"grid", gridTemplateColumns:"1fr 2fr", columnGap:"1rem"} : {display:"block"}}>
+        <div style={{padding:"0", border:"none"}}>
+          <div style={{width:"100%", overflowX:"auto"}}>
+            <div className="table__height">
+              <table className='table' id='clients-report' style={{width:'100%'}}>
+                <thead>
+                  <tr className='journal-details header' style={{position:'sticky', top:'0'}}> 
+                    {details ? 
+                      <>
+                        <th>Action</th>
+                        <th>Perfomed By</th>
+                      </>:
+                      <>
+                        <th>Action</th>
+                        <th>Entity</th>
+                        <th>Entity Name/ID</th>
+                        <th>Perfomed At</th>
+                        <th>Perfomed By</th>
+                        <th>Changes</th>
+                      </>
+                    }
+                  </tr>
+                </thead>
+                <tbody>
+                  {trail.entries.map(entry => (
+                    <tr key={entry.id}>
+                      {details ?
+                      <>
+                        {(trailID == entry.id) ?
+                          <>
+                            <td style={{fontSize:'0.75rem', cursor:'pointer', color: 'red'}}>{entry.action_type} {entry.action_name}</td>
+                            <td style={{fontSize:'0.75rem', cursor:'pointer', color: 'red'}}>{entry.actor_name}</td>
+                          </>:
+                          <>
+                            <td>{entry.action_type} {entry.action_name}</td>
+                            <td>{entry.actor_name}</td>
+                          </>
+                        }
+                      </>:
+                      <>
+                        <td>{entry.action_type} {entry.action_name}</td>
+                        <td>{entry.entity}</td>
+                        <td>{entry.object_repr}</td>
+                        <td>{entry.event_timestamp}</td>
+                        <td>{entry.actor_name}</td>
+                        {entry.data_changes ?
+                          <td><span onClick={handleClick} id={entry.id} style={{cursor:'pointer'}} className='link'>Click here to see changes</span></td>:
+                          <td></td>
+                        }
+                      </>
+                      }
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
+        {details && (
+          <>
+          {selectedTrail && (
+            <>
+          <div style={{position:"sticky", top:"0", width:"100%"}}>
+            <div style={{display:'flex', flexDirection:'column', padding:'1.5rem'}} className='j-details-container'>
+
+              <div style={{marginBottom:'1rem'}}>
+                <div style={{marginBottom:'1rem', display:'flex', justifyContent:'space-between'}}>
+                  <button className='btn btn-default client__details' onClick={() => setDetails(null)}>Close</button>
+                </div>
+              </div>
+
+              <div>
+                {selectedTrail.data_changes}
+              </div>
+              
+            </div>
+          </div>
+          )
+          </>
+          )}
+          </>
+        )}
       </div>
     </>
   )
