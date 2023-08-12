@@ -1,201 +1,100 @@
-import React, { useEffect, useRef, useState } from 'react';
-import LineChart from '../LoansReleased/LineChart';
-import { makeRequest } from '../../../utils/utils';
-import Select from 'react-select';
+import React, { useState, useEffect, useRef } from 'react';
+import { removeEmptyValues, getParams } from '../../../utils/utils';
+import axios from 'axios';
 import Loader from '../../Loader/loader';
+import LineChart from '../LineChart';
 
-function LoanCollections({branches, currencies}) {
-    const [labels, setLabels] = useState(null);
-    const [dataSets, setDataSets] = useState(null);
-    const [showDisbursements, setShowDisbursements] = useState(false);
-    const [selectedBranchesIds, setSelectedBranchesIds] = useState([]);
-    const zwlId = currencies.filter(currency => currency.shortname === 'ZWL')[0].id;
-    const [currencyId, setCurrencyId] = useState(zwlId);
-    const pageNum = useRef(1);
-    const isFirstRun = useRef(true);
-    const months = {0: 'Jan', 1: 'Feb', 2: 'Mar', 3: 'Apr', 4: 'May', 5: 'Jun', 6: 'Jul', 7: 'Aug', 8: 'Sep', 9: 'Oct', 10: 'Nov', 11: 'Dec'};
-    const [optionSelected, setOptionSelected] = useState([]);
-    const [currency, setCurrency] = useState('ZWL');
+function LoanCollections({currencyId, branchIds}) {
+  const [data, setData] = useState(null);
+  const [err, setErr] = useState(false);
+  const pageNum = useRef(1);
 
-    const handleMultiSelect = selected => {
-        setOptionSelected(selected);
-        setSelectedBranchesIds(selected.map(branch => branch.id));
+  useEffect(() => {
+    getData();
+  }, [currencyId, branchIds]);
+
+  const getData = async () => {
+    try {
+      pageNum.current = 1;
+      const data = removeEmptyValues({currency_id: currencyId, branch_ids: branchIds, page_num: pageNum.current});
+      const params = getParams(data);
+      const response = await axios.get('/dashboardapi/dashboard-collections/', {params: params});
+      setData(response.data);
+    } catch (error) {
+      console.log(error);
+      setErr(true);
     }
+  }
 
-    useEffect(() => {
-        getReport();
-    }, []);
+  if (err) {
+    return (
+      <div className='card'>
+        <div className='card-body'>
+          <div className='book-value-section'>
+            Error Please Try Again.
+          </div>
+        </div>
+      </div>
+    )
+  }
 
-    const getReport = async () => {
-        const report = await getData();
-        updateUi(report);
+  if (!data) {
+    return (
+      <div className='card'>
+        <div className='card-body'>
+          <div className='book-value-section'>
+            <Loader/>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  const dataSet = {
+    labels: data.map(month => `${month.month} ${month.year}`),
+    datasets: [
+      {
+        label: 'Monthly Collections',
+        data: data.map(month => month.total_amount_paid),
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+    ],
+  };
+
+  const viewMore = async () => {
+    try {
+      const data = removeEmptyValues({currency_id: currencyId, branch_ids: branchIds, page_num: pageNum.current+1});
+      const params = getParams(data);
+      const response = await axios.get('/dashboardapi/dashboard-collections/', {params: params});
+      pageNum.current += 1;
+      setData(curr => [...response.data, ...curr]);
+    } catch (error) {
+      console.log(error);
     }
-
-    useEffect(() => {
-        getDataCollections();
-    }, [selectedBranchesIds, showDisbursements, currencyId]);
-
-    const getDataCollections = async () => {
-        if (!isFirstRun.current) {
-            pageNum.current = 1;
-            const newCurrency = currencies.filter(currency => currency.id == currencyId)[0].shortname;
-            setCurrency(newCurrency);
-            const report = await getData();
-            updateUi(report);
-        }
-    } 
-
-    async function getData() {
-        try {
-            let url1 = `/dashboardapi/dashboard-collections/?page_num=${pageNum.current}&currency_id=${currencyId}&components=Principal&components=Interest&components=Penalties&components=Fees`;
-            let url2 = `/dashboardapi/dashboard-loans-released/?page_num=${pageNum.current}&currency_id=${currencyId}`;
-            selectedBranchesIds.forEach(id => {
-                url1 += `&branch_ids=${id}`;
-                url2 += `&branch_ids=${id}`;
-            });
-            const urlArray = [url1]
-            if (showDisbursements) {urlArray.push(url2)}
-            const data = await fetchData(urlArray);
-            const report = (data.length === 1) ? {...data[0]} : {...data[0], ...data[1]};
-            pageNum.current = report.next_page_num;
-            isFirstRun.current = false;
-            return report
-        }catch(error) {
-            console.log(error);
-        }
-    }
-
-    async function fetchData(urlArray) {
-        let data = [];
-        for (let i = 0; i < urlArray.length; i++) {
-            const response = await makeRequest.get(urlArray[i], {timeout: 8000});
-            if (response.ok) {
-                const report = await response.json();
-                data.push(report);
-            }else {
-                const error = await response.json();
-                console.log(error);
-            }
-        }
-        return data
-    }
-
-    function updateUi(newReport, extendReport=false) {
-        const [newCollections, newDisbursements] = getDatasets(newReport);
-        const newLabels = newReport.monthly_collections.reverse().map(month => {
-            const d = new Date(month.month_of_year);
-            return `${months[d.getMonth()]} ${d.getFullYear()}`
-        });
-        const collectionsOpts = {borderColor: '#ADF1BC', cubicInterpolationMode: 'monotone'};
-        const disbursementsOpts = {borderColor: '#637FEA', cubicInterpolationMode: 'monotone'};
-    
-        if (extendReport) {
-            setLabels(curr => [...newLabels, ...curr]);
-            setDataSets(curr => [
-                {...collectionsOpts, data: [...newCollections, ...curr[0].data]},
-                {...disbursementsOpts, data: [...newDisbursements, ...curr[1].data]}
-            ]);
-            // setWrapperWidth(curr => curr + (12*60));
-        }else {
-            setLabels(newLabels);
-            setDataSets([
-                {...collectionsOpts, data: newCollections},
-                {...disbursementsOpts, data: newDisbursements}
-            ]);
-        }
-    }
-
-    const changeCurrency = (evt) => {
-        setCurrencyId(evt.target.value);
-    }
-
-    function getDatasets(newReport) {
-        const newCollections = newReport.monthly_collections.map(month => month.amount_collected);
-        let newDisbursements = [];
-        if (showDisbursements) {
-            newDisbursements = newReport.loans_released.map(month => month.amount_released);
-        }
-        return [newCollections.reverse(), newDisbursements.reverse()]
-    }
-
-    async function loadMore () {
-        const report = await getData();
-        updateUi(report, true);
-    }
-    
-    function toggleDisbursements() {
-        setShowDisbursements(curr => !curr);
-    }
-
-    const style = {
-        control: base => ({
-            ...base,
-            border: '1px solid #dee2e6',
-            boxShadow: "none",
-            '&:hover':'1px solid #dee2e6',
-        })
-    };
-
+  }
 
   return (
-        <>
-            <div className="card">
-                <div className="card-body">
-
-                    <div className="book-value-section">
-
-                        <div className='book-value-section dashboard-section-title' style={{marginBottom:'20px'}}>
-                            Loan Collections                        
-                        </div>
-
-                        <div className="book-value-select-section">
-                            <div className="fields-container-select select_container_width">
-                                <select value={currencyId} onChange={changeCurrency} className="custom-select-form select_width" style={{padding:"0.5125rem 0.9rem"}}>
-                                    {currencies.map(currency => {
-                                        return <option key={currency.id} value={currency.id}>{currency.shortname}</option>
-                                    })}
-                                </select>
-                            </div>
-                            <div className="fields-container-select select_container_width branch">
-                                <Select
-                                    isMulti
-                                    name='branches'
-                                    options={branches}
-                                    value={optionSelected}
-                                    classNamePrefix='select'
-                                    className='basic-multi-select'
-                                    placeholder='Select Branches'
-                                    onChange={selected => handleMultiSelect(selected)}
-                                    styles={style}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="chart-section">
-                            <div className="chart-container" style={{height:"355px"}}>
-                                <div style={{display:"flex", columnGap:"5px", marginBottom:"10px"}}>
-                                    <input type='checkbox' checked={showDisbursements} onChange={toggleDisbursements}/>
-                                    <span style={{marginTop:"3px"}}>Show Amount Disbursed</span>
-                                </div>
-                                <div className='chart'>
-                                    {(labels===null || dataSets===null) ?
-                                    <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"115px"}}>
-                                        <Loader/>
-                                    </div> :
-                                    <LineChart data={{labels: labels, datasets: dataSets}}/>}
-                                </div>
-                            </div>
-                            <div className="chart-scroller bottom">
-                                <i onClick={loadMore} className="uil uil-arrow-circle-left" style={{cursor:"pointer"}}></i>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
+    <div className='card'>
+      <div className='card-body'>
+        <div className='book-value-section'>
+          <div className='book-value-section dashboard-section-title' style={{marginBottom:'20px'}}>
+            Monthly Collections
+          </div>
+          <div className='chart-section'>
+            <div className='chart-container'>
+              <div className='chart'>
+                <LineChart data={dataSet}/>
+              </div>
             </div>
-        </>
-    )
+            <div className='chart-scroller bottom'>
+              <i onClick={viewMore} className='uil uil-arrow-circle-left' style={{cursor:'pointer'}}></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default LoanCollections;

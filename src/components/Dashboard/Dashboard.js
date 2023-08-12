@@ -1,108 +1,87 @@
-import React, {useState, useEffect} from 'react';
-import { makeRequest } from '../../utils/utils';
+import React, {useEffect, useState} from 'react';
+import Select from 'react-select';
+import { useCurrencies } from '../../contexts/CurrenciesContext';
+import { useBranches } from '../../contexts/BranchesContext';
+import LoanBook from './LoanBook/LoanBook';
+import Par from './Par/Par';
+import ClientNumbers from './ClientNumbers/ClientNumbers';
+import GroupNumbers from './GroupNumbers/GroupNumbers';
 import LoansReleased from './LoansReleased/LoansReleased';
 import LoanCollections from './LoanCollections/LoanCollections';
-import AllLoans from './AllLoans/AllLoans';
-import AllClients from './AllClients/AllClients';
-import Status from './Status/Status';
-import ActiveClients from './ActiveClients/ActiveClients';
-import LoanBook from './LoanBook/LoanBook';
-import Loader from '../Loader/loader';
 
 export default function Dashboard() {
+  useEffect(() => {
+    document.title = 'Dashboard';
+  }, []);
 
-    const [div1, setDiv1] = useState(false);
-    const showDiv1 = () => setDiv1(!div1)
-    const [div2, setDiv2] = useState(false);
-    const showDiv2 = () => setDiv2(!div2)
-    const [div3, setDiv3] = useState(false);
-    const showDiv3 = () => setDiv3(!div3)
-    const [div4, setDiv4] = useState(false);
-    const showDiv4 = () => setDiv4(!div4)
+  const {currencies} = useCurrencies();
 
-    const [branches, setBranches] = useState(null);
-    const [currencies, setCurrencies] = useState(null);
+  let initCurrencyId = '';
+  if (currencies.length > 0) {
+    initCurrencyId = currencies[0].id;
+  }
 
-    useEffect(() => {
-        document.title = 'Dashboard';
-    })
+  const [currencyId, setCurrencyId] = useState(initCurrencyId);
+  const [branchIds, setBranchIds] = useState(null);
 
-    useEffect(() => {
-        getBranchCurrencyData();
-    }, []);
-
-    const getBranchCurrencyData = async () => {
-        await fetchBranches();
-        await fetchCurrencies();
-    }
-
-    async function fetchBranches() {
-        try {
-            const response = await makeRequest.get('/usersapi/get-branches/', {timeout: 8000});
-            if (response.ok) {
-                const data = await response.json();
-                return setBranches([...data.results.map(result => ({...result, label: result.name, value:result.id}))]);
-            }else {
-                const error = await response.json();
-                console.log(error);
-            }
-        }catch(error) {
-            console.log(error);
-        }
-    }
-
-    async function fetchCurrencies() {
-        try {
-            const response = await makeRequest.get('/usersapi/list_currencies/', {timeout: 8000});
-            if (response.ok) {
-                const data = await response.json();
-                return setCurrencies([...data.map(result => ({...result, label: result.shortname, value:result.id}))]);
-            }else {
-                const error = await response.json();
-                console.log(error);
-            }
-        }catch(error) {
-            console.log(error);
-        }
-    }
-
-    if (branches === null || currencies === null) {
-        return (
-            <div style={{display:"flex", justifyContent:"center", alignItems:"center", minHeight:"100vh"}}>
-                <Loader />
-            </div>
-        )
-    }
-  
   return (
-        <div className="font-13">
-            
-            <div style={{padding:"24px", paddingBottom:"0"}}>
-                <h3>Dashboard</h3>
-            </div>
+    <div className='font-13'>
+      <div style={{padding:'24px', paddingBottom:'0'}}>
+        <h3>Dashboard</h3>
+      </div>
+      <Filter currencyId={currencyId} setCurrencyId={setCurrencyId} setBranchIds={setBranchIds}/>
+      {currencyId ?
+        <>
+          <LoanBook currencyId={currencyId} branchIds={branchIds}/>
+          <Par currencyId={currencyId} branchIds={branchIds}/>
+          <ClientNumbers branchIds={branchIds}/>
+          <GroupNumbers branchIds={branchIds}/>
+          <LoansReleased currencyId={currencyId} branchIds={branchIds}/>
+          <LoanCollections currencyId={currencyId} branchIds={branchIds}/>
+        </> :
+      null}
+    </div>
+  )
+}
 
-            <LoanBook branches={branches} currencies={currencies} div3={div3} showDiv3={showDiv3}/>
 
-            <ActiveClients branches={branches} currencies={currencies} div4={div4} showDiv4={showDiv4} /> 
+const Filter = ({currencyId, setCurrencyId, setBranchIds}) => {
+  const {currencies} = useCurrencies();
+  const {branches} = useBranches();
+  const [optionSelected, setOptionSelected] = useState([]);
 
-            <LoansReleased branches={branches} currencies={currencies}/>
+  const style = {
+    control: base => ({...base, border: '1px solid #dee2e6', boxShadow: 'none', '&:hover': '1px solid #dee2e6'})
+  };
 
-            <LoanCollections branches={branches} currencies={currencies}/>
-
-            <div className="card">
-                <div className="card-body">
-
-                    <div className="book-value-section">
-
-                        {/* <AllLoans branches={branches} currencies={currencies} div1={div1} showDiv1={showDiv1} /> */}
-                        <AllClients branches={branches} div2={div2} showDiv2={showDiv2} />
-
-                    </div>
-
-                </div>
-            </div>
-
-            <Status branches={branches} currencies={currencies}/>
+  return (
+    <div className='card'>
+      <div className='card-body'>
+        <div className='book-value-select-section'>
+          <div className='fields-container-select select_container_width'>
+            <select value={currencyId} onChange={evt => setCurrencyId(Number(evt.target.value))} className='custom-select-form select_width' style={{padding:'0.5125rem 0.9rem'}}>
+              <option value=''>Select Currency</option>
+              {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.shortname}</option>)}
+            </select>
+          </div>
+          <div className='fields-container-select select_container_width branch'>
+            <Select
+              isMulti
+              name='branches'
+              options={branches.map(branch => ({label: branch.name, value: branch.id}))}
+              value={optionSelected}
+              classNamePrefix='select'
+              className='basic-multi-select'
+              placeholder='Select Branches'
+              onChange={selected => {
+                setOptionSelected(selected);
+                setBranchIds(selected.map(branch => branch.value));
+              }}
+              styles={style}
+            />
+          </div>
         </div>
-    )
+      </div>
+    </div>
+  )
 }
