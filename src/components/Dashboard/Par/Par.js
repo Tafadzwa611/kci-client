@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
 import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
-import Loader from '../../Loader/loader';
+import Loader from '../../Loader/MiniLoader';
 
 const endpoints = [1, 30, 60, 90];
 
@@ -38,26 +38,22 @@ function Par({currencyId, branchIds}) {
 
   if (!par) {
     return (
-      <div className='card'>
-        <div className='card-body'>
-          <div className='book-value-section'>
-            <Loader/>
-          </div>
+      <div className='card-body'>
+        <div className='book-value-section'>
+          <Loader/>
         </div>
       </div>
     )
   }
 
   return (
-    <div className='card'>
-      <div className='card-body'>
-        <div className='book-value-section'>
-          <div className='book-value-update-section'>
-            <ParInfoBox par_val={1} par={par} currency={currency}/>
-            <ParInfoBox par_val={30} par={par} currency={currency}/>
-            <ParInfoBox par_val={60} par={par} currency={currency}/>
-            <ParInfoBox par_val={90} par={par} currency={currency}/>
-          </div>
+    <div className='card-body'>
+      <div className='book-value-section'>
+        <div className='book-value-update-section'>
+          <ParInfoBox par_val={1} par={par} currency={currency}/>
+          <ParInfoBox par_val={30} par={par} currency={currency}/>
+          <ParInfoBox par_val={60} par={par} currency={currency}/>
+          <ParInfoBox par_val={90} par={par} currency={currency}/>
         </div>
       </div>
     </div>
@@ -66,13 +62,15 @@ function Par({currencyId, branchIds}) {
 
 const ParInfoBox = ({par_val, par, currency}) => {
   return (
-    <div className='book-value-info-box'>
-      <p className='dashboard-section-title'>PAR {par_val} ({currency.shortname})</p>
-      <p className='dashboard-section-amount-or-number'>PAR VALUE {par[par_val].par_value}%</p>
-      <p className='dashboard-section-amount-or-number'>PRINCIPAL AT RISK {par[par_val].principal_at_risk}</p>
-      <p className='dashboard-section-amount-or-number'>LOAN COUNT {par[par_val].loans_in_arrears_count}</p>
+    <div className='book-value-info-box loan__book'>
+      <p className='dashboard-section-title'>Par {par_val} ({currency.shortname})</p>
+      <p>Par Value {par[par_val].par_value}%</p>
+      <p>Principal at Risk {par[par_val].principal_at_risk}</p>
+      <p>Loan Count {par[par_val].loans_in_arrears_count}</p>
     </div>
   )
 }
 
 export default Par;
+
+// dashboard-section-amount-or-number

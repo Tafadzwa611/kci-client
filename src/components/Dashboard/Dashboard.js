@@ -29,17 +29,19 @@ export default function Dashboard() {
       <div style={{padding:'24px', paddingBottom:'0'}}>
         <h3>Dashboard</h3>
       </div>
-      <Filter currencyId={currencyId} setCurrencyId={setCurrencyId} setBranchIds={setBranchIds}/>
-      {currencyId ?
-        <>
-          <LoanBook currencyId={currencyId} branchIds={branchIds}/>
-          <Par currencyId={currencyId} branchIds={branchIds}/>
-          <ClientNumbers branchIds={branchIds}/>
-          <GroupNumbers branchIds={branchIds}/>
-          <LoansReleased currencyId={currencyId} branchIds={branchIds}/>
-          <LoanCollections currencyId={currencyId} branchIds={branchIds}/>
-        </> :
-      null}
+      <div className='card'>
+        <Filter currencyId={currencyId} setCurrencyId={setCurrencyId} setBranchIds={setBranchIds}/>
+        {currencyId ?
+          <>
+            <LoanBook currencyId={currencyId} branchIds={branchIds}/>
+            <Par currencyId={currencyId} branchIds={branchIds}/>
+            <ClientNumbers branchIds={branchIds}/>
+            <GroupNumbers branchIds={branchIds}/>
+            <LoansReleased currencyId={currencyId} branchIds={branchIds}/>
+            <LoanCollections currencyId={currencyId} branchIds={branchIds}/>
+          </> :
+        null}
+      </div>
     </div>
   )
 }
@@ -55,9 +57,9 @@ const Filter = ({currencyId, setCurrencyId, setBranchIds}) => {
   };
 
   return (
-    <div className='card'>
-      <div className='card-body'>
-        <div className='book-value-select-section'>
+    <div className='card-body'>
+      <div className='book-value-section'>
+        <div className='book-value-select-section' style={{marginBottom:'0'}}>
           <div className='fields-container-select select_container_width'>
             <select value={currencyId} onChange={evt => setCurrencyId(Number(evt.target.value))} className='custom-select-form select_width' style={{padding:'0.5125rem 0.9rem'}}>
               <option value=''>Select Currency</option>

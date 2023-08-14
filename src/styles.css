@@ -2485,14 +2485,29 @@ small {
   row-gap: 1rem;
 }
 
+.book-value-info-box.loan__book {
+  flex: 0 0 24%;
+  max-width: 24%;
+}
+
+.book-value-info-box.client__type {
+  flex: 0 0 49%;
+  max-width: 49%;
+}
+
+.book-value-info-box.group__type {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
 .dashboard-section-title {
   font-size: 1rem;
   font-weight: 600;
 }
 
 .dashboard-section-amount-or-number {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1rem;
+  /* font-weight: 600; */
   color: var(--info);
 }
 
@@ -3617,3 +3632,7 @@ input[type=number] {
   font-size: 0.75rem;
 }
 
+.dashboard__text {
+  font-size: 0.9375rem;
+  color: var(--info);
+}
