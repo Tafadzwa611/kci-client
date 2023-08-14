@@ -70,31 +70,35 @@ function GroupNumbers({branchIds}) {
   };
 
   return (
-    <div className='card-body'>
-      <div className='book-value-section'>
-        <div style={{display: 'flex', justifyContent: 'space-between', columnGap: '1%'}}>
-          <div style={{width:'49%', flex: '1'}} className='book-value-section'>
-            <div style={{display:'flex', justifyContent:'space-around'}}>
-              <div style={{width: '48%'}}>
-                <Pie data={statusDataSet} />
+    <>
+      {data.group_types.length > 0 ?
+        <div className='card-body'>
+          <div className='book-value-section'>
+            <div style={{display: 'flex', justifyContent: 'space-between', columnGap: '1%'}}>
+              <div style={{width:'49%', flex: '1'}} className='book-value-section'>
+                <div style={{display:'flex', justifyContent:'space-around'}}>
+                  <div style={{width: '48%'}}>
+                    <Pie data={statusDataSet} />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div style={{width: '49%', flex: '1'}} className='book-value-section'>
-            <div className='book-value-update-section'>
-              <div className='book-value-info-box group__type'>
-                <div style={{overflowY:'auto', height:'268px'}}>
-                  <p className='dashboard-section-title j-details-container' style={{position:'sticky', top:'0', padding:'10px'}}>Group Types</p>
-                  {data.group_types.map((gt, idx) => (
-                    <p key={idx} style={{marginBottom:'0.625rem'}}>{gt.group_type__name} {gt.count}</p>
-                  ))}
+              <div style={{width: '49%', flex: '1'}} className='book-value-section'>
+                <div className='book-value-update-section'>
+                  <div className='book-value-info-box group__type'>
+                    <div style={{overflowY:'auto', height:'268px'}}>
+                      <p className='dashboard-section-title j-details-container' style={{position:'sticky', top:'0', padding:'10px', fontWeight:'normal'}}>Group Types</p>
+                      {data.group_types.map((gt, idx) => (
+                        <p key={idx} style={{marginBottom:'0.625rem'}}>{gt.group_type__name} {gt.count}</p>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </div>:
+        null}
+    </>
   )
 }
 

@@ -99,7 +99,7 @@ const ClientNumbers = ({branchIds}) => {
             <div className='book-value-update-section'>
               <div className='book-value-info-box client__type'>
                 <div style={{overflowY:'auto', height:'268px'}}>
-                  <p className='dashboard-section-title j-details-container' style={{position:'sticky', top:'0', padding:'10px'}}>Male Client Types</p>
+                  <p className='dashboard-section-title j-details-container' style={{position:'sticky', top:'0', padding:'10px', fontWeight:'normal'}}>Male Client Types</p>
                   {data.client_types.filter(ct => ct.gender === 'MALE').map(
                     (ct, idx) => <p key={idx} style={{marginBottom:'0.625rem'}}>{ct.client_type__name} - {ct.count}</p>
                   )}
@@ -107,7 +107,7 @@ const ClientNumbers = ({branchIds}) => {
               </div>
               <div className='book-value-info-box client__type'>
                 <div style={{overflowY:'auto', height:'268px'}}>
-                  <p className='dashboard-section-title j-details-container' style={{position:'sticky', top:'0', padding:'10px'}}>Female Client Types</p>
+                  <p className='dashboard-section-title j-details-container' style={{position:'sticky', top:'0', padding:'10px', fontWeight:'normal'}}>Female Client Types</p>
                   {data.client_types.filter(ct => ct.gender === 'FEMALE').map(
                     (ct, idx) => <p key={idx} style={{marginBottom:'0.625rem'}}>{ct.client_type__name} - {ct.count}</p>
                   )}
