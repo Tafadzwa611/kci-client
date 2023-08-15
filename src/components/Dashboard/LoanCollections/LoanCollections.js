@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 import axios from 'axios';
-import Loader from '../../Loader/loader';
+import Loader from '../../Loader/MiniLoader';
 import LineChart from '../LineChart';
 
 function LoanCollections({currencyId, branchIds}) {
@@ -28,11 +28,9 @@ function LoanCollections({currencyId, branchIds}) {
 
   if (err) {
     return (
-      <div className='card'>
-        <div className='card-body'>
-          <div className='book-value-section'>
-            Error Please Try Again.
-          </div>
+      <div className='card-body'>
+        <div className='book-value-section'>
+          Error Please Try Again.
         </div>
       </div>
     )
@@ -40,11 +38,9 @@ function LoanCollections({currencyId, branchIds}) {
 
   if (!data) {
     return (
-      <div className='card'>
-        <div className='card-body'>
-          <div className='book-value-section'>
-            <Loader/>
-          </div>
+      <div className='card-body'>
+        <div className='book-value-section'>
+          <Loader/>
         </div>
       </div>
     )
@@ -56,8 +52,9 @@ function LoanCollections({currencyId, branchIds}) {
       {
         label: 'Monthly Collections',
         data: data.map(month => month.total_amount_paid),
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: '#ADF1BC',
+        backgroundColor: '#ADF1BC',
+        cubicInterpolationMode:'monotone'
       },
     ],
   };
@@ -75,21 +72,19 @@ function LoanCollections({currencyId, branchIds}) {
   }
 
   return (
-    <div className='card'>
-      <div className='card-body'>
-        <div className='book-value-section'>
-          <div className='book-value-section dashboard-section-title' style={{marginBottom:'20px'}}>
-            Monthly Collections
+    <div className='card-body'>
+      <div className='book-value-section'>
+        <div className='book-value-section dashboard-section-title' style={{marginBottom:'20px'}}>
+          Monthly Collections
+        </div>
+        <div className='chart-section'>
+          <div className='chart-container'>
+            <div className='chart'>
+              <LineChart data={dataSet}/>
+            </div>
           </div>
-          <div className='chart-section'>
-            <div className='chart-container'>
-              <div className='chart'>
-                <LineChart data={dataSet}/>
-              </div>
-            </div>
-            <div className='chart-scroller bottom'>
-              <i onClick={viewMore} className='uil uil-arrow-circle-left' style={{cursor:'pointer'}}></i>
-            </div>
+          <div className='chart-scroller bottom'>
+            <i onClick={viewMore} className='uil uil-arrow-circle-left' style={{cursor:'pointer'}}></i>
           </div>
         </div>
       </div>

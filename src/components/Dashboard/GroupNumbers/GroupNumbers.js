@@ -3,7 +3,7 @@ import { removeEmptyValues, getParams } from '../../../utils/utils';
 import axios from 'axios';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import Loader from '../../Loader/loader';
+import Loader from '../../Loader/MiniLoader';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -29,11 +29,9 @@ function GroupNumbers({branchIds}) {
 
   if (!data) {
     return (
-      <div className='card'>
-        <div className='card-body'>
-          <div className='book-value-section'>
-            <Loader/>
-          </div>
+      <div className='card-body'>
+        <div className='book-value-section'>
+          <Loader/>
         </div>
       </div>
     )
@@ -41,11 +39,9 @@ function GroupNumbers({branchIds}) {
 
   if (err) {
     return (
-      <div className='card'>
-        <div className='card-body'>
-          <div className='book-value-section'>
-            Error Please Try Again.
-          </div>
+      <div className='card-body'>
+        <div className='book-value-section'>
+          Error Please Try Again.
         </div>
       </div>
     )
@@ -74,27 +70,35 @@ function GroupNumbers({branchIds}) {
   };
 
   return (
-    <div className='card'>
-      <div className='card-body'>
-        <div style={{display: 'flex', justifyContent: 'space-between', columnGap: '10px'}}>
-          <div style={{width: '24%'}}>
-            <Pie data={statusDataSet} />
-          </div>
-          <div style={{width: '48%'}}>
-            <div className='book-value-section'>
-              <div className='book-value-update-section'>
-                <div className='book-value-info-box'>
-                  <p className='dashboard-section-title'>Group Types</p>
-                  {data.group_types.map((gt, idx) => (
-                    <p key={idx} className='dashboard-section-amount-or-number'>{gt.group_type__name} {gt.count}</p>
-                  ))}
+    <>
+      {data.group_types.length > 0 ?
+        <div className='card-body'>
+          <div className='book-value-section'>
+            <div style={{display: 'flex', justifyContent: 'space-between', columnGap: '1%'}}>
+              <div style={{width:'49%', flex: '1'}} className='book-value-section'>
+                <div style={{display:'flex', justifyContent:'space-around'}}>
+                  <div style={{width: '48%'}}>
+                    <Pie data={statusDataSet} />
+                  </div>
+                </div>
+              </div>
+              <div style={{width: '49%', flex: '1'}} className='book-value-section'>
+                <div className='book-value-update-section'>
+                  <div className='book-value-info-box group__type'>
+                    <div style={{overflowY:'auto', height:'268px'}}>
+                      <p className='dashboard-section-title j-details-container' style={{position:'sticky', top:'0', padding:'10px', fontWeight:'normal'}}>Group Types</p>
+                      {data.group_types.map((gt, idx) => (
+                        <p key={idx} style={{marginBottom:'0.625rem'}}>{gt.group_type__name} {gt.count}</p>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </div>:
+        null}
+    </>
   )
 }
 

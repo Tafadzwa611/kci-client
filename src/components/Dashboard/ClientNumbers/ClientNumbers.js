@@ -3,7 +3,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
-import Loader from '../../Loader/loader';
+import Loader from '../../Loader/MiniLoader';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -29,11 +29,9 @@ const ClientNumbers = ({branchIds}) => {
 
   if (!data) {
     return (
-      <div className='card'>
-        <div className='card-body'>
-          <div className='book-value-section'>
-            <Loader/>
-          </div>
+      <div className='card-body'>
+        <div className='book-value-section'>
+          <Loader/>
         </div>
       </div>
     )
@@ -41,11 +39,9 @@ const ClientNumbers = ({branchIds}) => {
 
   if (err) {
     return (
-      <div className='card'>
-        <div className='card-body'>
-          <div className='book-value-section'>
-            Error Please Try Again.
-          </div>
+      <div className='card-body'>
+        <div className='book-value-section'>
+          Error Please Try Again.
         </div>
       </div>
     )
@@ -86,28 +82,34 @@ const ClientNumbers = ({branchIds}) => {
   };
 
   return (
-    <div className='card'>
-      <div className='card-body'>
-        <div style={{display: 'flex', justifyContent: 'space-between', columnGap: '10px'}}>
-          <div style={{width: '24%'}}>
-            <Pie data={maleStatusDataSet} />
+    <div className='card-body'>
+      <div className='book-value-section'>
+        <div style={{display: 'flex', justifyContent: 'space-between', columnGap: '1%'}}>
+          <div style={{width:'49%', flex: '1'}} className='book-value-section'>
+            <div style={{display:'flex', justifyContent:'space-around'}}>
+              <div style={{width: '48%'}}>
+                <Pie data={maleStatusDataSet} />
+              </div>
+              <div style={{width: '48%'}}>
+                <Pie data={femaleStatusDataSet} />
+              </div>
+            </div>
           </div>
-          <div style={{width: '24%'}}>
-            <Pie data={femaleStatusDataSet} />
-          </div>
-          <div style={{width: '48%'}}>
-            <div className='book-value-section'>
-              <div className='book-value-update-section'>
-                <div className='book-value-info-box'>
-                  <p className='dashboard-section-title'>Male Client Types</p>
+          <div style={{width: '49%', flex: '1'}} className='book-value-section'>
+            <div className='book-value-update-section'>
+              <div className='book-value-info-box client__type'>
+                <div style={{overflowY:'auto', height:'268px'}}>
+                  <p className='dashboard-section-title j-details-container' style={{position:'sticky', top:'0', padding:'10px', fontWeight:'normal'}}>Male Client Types</p>
                   {data.client_types.filter(ct => ct.gender === 'MALE').map(
-                    (ct, idx) => <p key={idx} className='dashboard-section-amount-or-number'>{ct.gender} {ct.client_type__name} {ct.count}</p>
+                    (ct, idx) => <p key={idx} style={{marginBottom:'0.625rem'}}>{ct.client_type__name} - {ct.count}</p>
                   )}
                 </div>
-                <div className='book-value-info-box'>
-                  <p className='dashboard-section-title'>Female Client Types</p>
+              </div>
+              <div className='book-value-info-box client__type'>
+                <div style={{overflowY:'auto', height:'268px'}}>
+                  <p className='dashboard-section-title j-details-container' style={{position:'sticky', top:'0', padding:'10px', fontWeight:'normal'}}>Female Client Types</p>
                   {data.client_types.filter(ct => ct.gender === 'FEMALE').map(
-                    (ct, idx) => <p key={idx} className='dashboard-section-amount-or-number'>{ct.gender} {ct.client_type__name} {ct.count}</p>
+                    (ct, idx) => <p key={idx} style={{marginBottom:'0.625rem'}}>{ct.client_type__name} - {ct.count}</p>
                   )}
                 </div>
               </div>

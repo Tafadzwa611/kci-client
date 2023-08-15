@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
-import Loader from '../../Loader/loader';
+import Loader from '../../Loader/MiniLoader';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
 
 function LoanBook({currencyId, branchIds}) {
@@ -28,11 +28,9 @@ function LoanBook({currencyId, branchIds}) {
 
   if (!loanBook) {
     return (
-      <div className='card'>
-        <div className='card-body'>
-          <div className='book-value-section'>
-            <Loader/>
-          </div>
+      <div className='card-body'>
+        <div className='book-value-section'>
+          <Loader/>
         </div>
       </div>
     )
@@ -40,41 +38,37 @@ function LoanBook({currencyId, branchIds}) {
 
   if (err) {
     return (
-      <div className='card'>
-        <div className='card-body'>
-          <div className='book-value-section'>
-            Error Please Try Again.
-          </div>
+      <div className='card-body'>
+        <div className='book-value-section'>
+          Error Please Try Again.
         </div>
       </div>
     )
   }
 
   return (
-    <div className='card'>
-      <div className='card-body'>
-        <div className='book-value-section'>
-          <div className='book-value-update-section'>
-            <div className='book-value-info-box'>
-              <p className='dashboard-section-title'>Loan Book Value</p>
-              <p className='dashboard-section-amount-or-number'>{currency.shortname} {loanBook.principal_balance} (P)</p>
-              <p className='dashboard-section-amount-or-number'>{currency.shortname} {loanBook.principal_interest_balance} (P+I)</p>
-            </div>
-            <div className='book-value-info-box'>
-              <p className='dashboard-section-title'>Loan Book Value Categories (P)</p>
-              <p className='dashboard-section-amount-or-number'>{currency.shortname} {loanBook.principal_balance_of_open_loans} (Open)</p>
-              <p className='dashboard-section-amount-or-number'>{currency.shortname} {loanBook.principal_balance_of_arrears_loans} (Arrears)</p>
-            </div>
-            <div className='book-value-info-box'>
-              <p className='dashboard-section-title'>Loan Book Value Categories (P+I)</p>
-              <p className='dashboard-section-amount-or-number'>{currency.shortname} {loanBook.principal_interest_balance_of_open_loans} (Open)</p>
-              <p className='dashboard-section-amount-or-number'>{currency.shortname} {loanBook.principal_interest_balance_of_arrears_loans} (Arrears)</p>
-            </div>
-            <div className='book-value-info-box'>
-              <p className='dashboard-section-title'>Loan Book Categories Count</p>
-              <p className='dashboard-section-amount-or-number'>{loanBook.num_of_open_loans} (Open)</p>
-              <p className='dashboard-section-amount-or-number'>{loanBook.num_of_arrears_loans} (Arrears)</p>
-            </div>
+    <div className='card-body'>
+      <div className='book-value-section'>
+        <div className='book-value-update-section'>
+          <div className='book-value-info-box loan__book'>
+            <p className='dashboard-section-title'>Loan Book Value</p>
+            <p><span className='dashboard__text'>{currency.shortname} {loanBook.principal_balance}</span> (P)</p>
+            <p><span className='dashboard__text'>{currency.shortname} {loanBook.principal_interest_balance}</span> (P+I)</p>
+          </div>
+          <div className='book-value-info-box loan__book'>
+            <p className='dashboard-section-title'>Loan Book Value Categories (P)</p>
+            <p><span className='dashboard__text'>{currency.shortname} {loanBook.principal_balance_of_open_loans}</span> (Open)</p>
+            <p><span className='dashboard__text'>{currency.shortname} {loanBook.principal_balance_of_arrears_loans}</span> (Arrears)</p>
+          </div>
+          <div className='book-value-info-box loan__book'>
+            <p className='dashboard-section-title'>Loan Book Value Categories (P+I)</p>
+            <p><span className='dashboard__text'>{currency.shortname} {loanBook.principal_interest_balance_of_open_loans}</span> (Open)</p>
+            <p><span className='dashboard__text'>{currency.shortname} {loanBook.principal_interest_balance_of_arrears_loans}</span> (Arrears)</p>
+          </div>
+          <div className='book-value-info-box loan__book'>
+            <p className='dashboard-section-title'>Loan Book Categories Count</p>
+            <p><span className='dashboard__text'>{loanBook.num_of_open_loans}</span> (Open)</p>
+            <p><span className='dashboard__text'>{loanBook.num_of_arrears_loans}</span> (Arrears)</p>
           </div>
         </div>
       </div>
