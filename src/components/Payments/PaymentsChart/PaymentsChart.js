@@ -4,7 +4,7 @@ import { useCurrencies } from '../../../contexts/CurrenciesContext';
 import Select from 'react-select';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 import axios from 'axios';
-import Loader from '../../Loader/loader';
+import Loader from '../../Loader/MiniLoader';
 import LineChart from './LineChart';
 
 function PaymentsChart() {
