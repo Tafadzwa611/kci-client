@@ -24,10 +24,10 @@ ChartJS.register(
   Filler
 );
 
-function LineChart({ data, wrapperWidth }) {
-  
+function LineChart({ data }) {
   const options = {
     maintainAspectRatio: false,
+    responsive: true,
     scales: {
       y: {
         display: true,
@@ -39,13 +39,17 @@ function LineChart({ data, wrapperWidth }) {
     },
     plugins: {
       legend: {
-        display: false,
-      },           
+        position: 'top'
+      },
+      title: {
+        display: true,
+        text: 'Payments Chart',
+      },
     }
   };
 
   return (
-    <div style={{maxWidth:"100%", overflowX:"auto"}}>
+    <div style={{maxWidth: '100%', overflowX: 'auto'}}>
       <div style={{width: '100vw', height: '280px'}}>
         <Line options={options} data={data}/>
       </div>

@@ -3617,3 +3617,9 @@ input[type=number] {
   font-size: 0.75rem;
 }
 
+.file-uploader-input {
+  background: var(--card-secondary);
+  border: none;
+  outline: none;
+  color: var(--card-secondary);
+}
