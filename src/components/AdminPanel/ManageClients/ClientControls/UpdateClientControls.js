@@ -2,7 +2,8 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import { Modal, CustomInput, CustomCheckbox, CustomSelect, NonFieldErrors, ModalSubmit } from '../../../../common';
 import {controlSchema} from './schemas';
-import {onModalSubmit} from './utils';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const DUPLICATE_CHECKS = {'Do Not Check': '', 'Warning': 'Warning', 'Reject': 'Reject'};
 
@@ -13,6 +14,7 @@ const getPayload = (values) => {
     pry_phone_duplicate_level_type: values.pry_phone_duplicate_level_type == '' ? null : values.pry_phone_duplicate_level_type,
     sec_phone_duplicate_level_type: values.sec_phone_duplicate_level_type == '' ? null : values.sec_phone_duplicate_level_type,
     home_phone_duplicate_level_type: values.home_phone_duplicate_level_type == '' ? null : values.home_phone_duplicate_level_type,
+    whatsapp_duplicate_level_type: values.whatsapp_duplicate_level_type == '' ? null : values.whatsapp_duplicate_level_type,
     email_duplicate_level_type: values.email_duplicate_level_type == '' ? null : values.email_duplicate_level_type,
     fullname_duplicate_level_type: values.fullname_duplicate_level_type == '' ? null : values.fullname_duplicate_level_type,
     min_client_age: values.min_client_age == '' ? null : values.min_client_age,
@@ -22,6 +24,7 @@ const getPayload = (values) => {
     client_officer_required: values.client_officer_required,
     group_officer_required: values.group_officer_required,
     allow_multi_groups_per_client: values.allow_multi_groups_per_client,
+    client_id_format: values.client_id_format,
   };
 }
 
@@ -32,6 +35,7 @@ const UpdateClientControls = ({open, setOpen, clientControls, setClientControls}
     pry_phone_duplicate_level_type: clientControls.pry_phone_duplicate_level_type ?? '',
     sec_phone_duplicate_level_type: clientControls.sec_phone_duplicate_level_type ?? '',
     home_phone_duplicate_level_type: clientControls.home_phone_duplicate_level_type ?? '',
+    whatsapp_duplicate_level_type: clientControls.whatsapp_duplicate_level_type ?? '',
     email_duplicate_level_type: clientControls.email_duplicate_level_type ?? '',
     fullname_duplicate_level_type: clientControls.fullname_duplicate_level_type ?? '',
     min_client_age: clientControls.min_client_age ?? '',
@@ -41,13 +45,27 @@ const UpdateClientControls = ({open, setOpen, clientControls, setClientControls}
     client_officer_required: clientControls.client_officer_required,
     group_officer_required: clientControls.group_officer_required,
     allow_multi_groups_per_client: clientControls.allow_multi_groups_per_client,
+    client_id_format: clientControls.client_id_format,
   };
 
   const onSubmit = async (values, actions) => {
-    const sideEffect = () => setClientControls(values);
-    const data = getPayload(values);
-    const url = '/clientsapi/update_client_control/';
-    onModalSubmit(data, 'put', url, actions.resetForm, setOpen, actions.setErrors, sideEffect);
+    try {
+      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+      const data = getPayload(values);
+      await axios.put('/clientsapi/update_client_control/', data, CONFIG);
+      setClientControls(values);
+      setOpen(false);
+      actions.resetForm();
+    } catch (error) {
+      console.log(error);
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+      } else {
+        actions.setErrors({responseStatus: error.response.status});
+      }
+    }
   }
 
   return (
@@ -74,6 +92,9 @@ const UpdateClientControls = ({open, setOpen, clientControls, setClientControls}
                   <CustomSelect label='Home Phone Duplicate Check Level' name='home_phone_duplicate_level_type'>
                     {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
                   </CustomSelect>
+                  <CustomSelect label='Whatsapp Duplicate Check Level' name='whatsapp_duplicate_level_type'>
+                    {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
+                  </CustomSelect>
                   <CustomSelect label='Email Duplicate Check Level' name='email_duplicate_level_type'>
                     {Object.keys(DUPLICATE_CHECKS).map(key => <option key={key} value={DUPLICATE_CHECKS[key]}>{key}</option>)}
                   </CustomSelect>
@@ -87,6 +108,10 @@ const UpdateClientControls = ({open, setOpen, clientControls, setClientControls}
                   <CustomCheckbox label='Client Officer Required' name='client_officer_required'/>
                   <CustomCheckbox label='Group Officer Required' name='group_officer_required'/>
                   <CustomCheckbox label='Allow multi groups per client' name='allow_multi_groups_per_client'/>
+                  <CustomSelect label='Client Number Format' name='client_id_format'>
+                    <option value='CNCC'>BRANCH CLIENT COUNT</option>
+                    <option value='BR-DT-RN'>BRANCH-DATE-RANDOM</option>
+                  </CustomSelect>
                 </div>
               <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
               </div>

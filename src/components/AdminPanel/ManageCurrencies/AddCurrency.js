@@ -20,6 +20,7 @@ function AddCurrency() {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.post('/usersapi/add_currency/', values, CONFIG);
       navigate({pathname: '/users/admin'});
+      window.location.reload();
     } catch (error) {
       console.log(error);
       if (error.message === 'Network Error') {

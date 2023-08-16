@@ -21,7 +21,7 @@ const List = ({data}) => {
     setTypeId(evt.target.attributes.id.value);
   }
 
-  const headers = ['Name', 'Allow opening accounts', 'Allow as guarantor', 'Action'];
+  const headers = ['Name', 'Allow opening accounts', 'Allow as guarantor', 'Active', 'Action'];
   const rows = getTableRows(types, openEditModal, openDeleteModal);
 
   return (
@@ -60,6 +60,7 @@ const getTableRows = (types, openEditModal, openDeleteModal) => {
         <td>{type.name}</td>
         <td>{type.allow_opening_loan_accounts ? 'Yes': 'No'}</td>
         <td>{type.allow_as_guarantor ? 'Yes': 'No'}</td>
+        <td>{type.is_active ? 'Yes': 'No'}</td>
         <td>
           <EditBtn id={type.id} handler={openEditModal}/>
           <DeleteBtn id={type.id} handler={openDeleteModal}/>

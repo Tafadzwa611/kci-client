@@ -7,6 +7,7 @@ const CONTROL_NAMES = {
   id_duplicate_level_type: 'Id Duplicate Check Level',
   pry_phone_duplicate_level_type: 'Primary Phone Duplicate Check Level',
   sec_phone_duplicate_level_type: 'Secondary Phone Duplicate Check Level',
+  whatsapp_duplicate_level_type: 'Whatsapp Duplicate Check Level',
   email_duplicate_level_type: 'Email Duplicate Check Level',
   fullname_duplicate_level_type: 'Fullname Duplicate Check Level',
   home_phone_duplicate_level_type: 'Home Phone Duplicate Check Level',
@@ -16,7 +17,8 @@ const CONTROL_NAMES = {
   allow_clients_without_id: 'Allow Clients Without Identification',
   client_officer_required: 'Client Officer Required',
   group_officer_required: 'Group Officer Required',
-  allow_multi_groups_per_client: 'Allow multi groups per client'
+  allow_multi_groups_per_client: 'Allow multi groups per client',
+  client_id_format: 'Client Number Format',
 };
 
 const List = ({initControls}) => {

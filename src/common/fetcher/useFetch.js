@@ -3,10 +3,11 @@ import { makeRequest } from '../../utils';
 
 const useFetch = (urls) => {
   const [data, setData] = React.useState([]);
-  const [error, setError] = React.useState();
+  const [error, setError] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
+    setError(null);
     setLoading(true);
     const fetchData = async () => {
       const promises = urls.map(url => makeRequest.get(url).then(response => {

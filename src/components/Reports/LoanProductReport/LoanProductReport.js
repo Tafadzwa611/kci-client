@@ -7,17 +7,15 @@ function LoanProductReport() {
   const [report, setReport] = useState(null);
 
   return (
-    <>
-      <Fetcher urls={[`/loansapi/loan_products_list/`]}>
-        {({data}) => (
-          <>
-            <DateRange setReport={setReport} products={data[0]}/>
-            <div style={{paddingTop: '2rem'}}></div>
-            {report ? <Table report={report}/> : null}
-          </>
-        )}
-      </Fetcher>
-    </>
+    <Fetcher urls={['/loansapi/loan_products/?allowed_in_user_branch_only=1']}>
+      {({data}) => (
+        <>
+          <DateRange setReport={setReport} products={data[0].loan_products}/>
+          <div style={{paddingTop: '2rem'}}></div>
+          {report ? <Table report={report}/> : null}
+        </>
+      )}
+    </Fetcher>
   )
 }
 

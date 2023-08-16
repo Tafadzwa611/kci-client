@@ -48,7 +48,7 @@ function FullLoanDetails() {
 
 const AddLoanComponent = () => {
   return (
-    <Fetcher urls={['/loansapi/loan_products_list/']}>
+    <Fetcher urls={['/loansapi/loan_products_list/?allowed_in_user_branch_only=1']}>
       {({data}) => <AddLoan products={data[0]}/>}
     </Fetcher>
   )

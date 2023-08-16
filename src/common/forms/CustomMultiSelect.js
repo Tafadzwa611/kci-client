@@ -15,8 +15,14 @@ function CustomMultiSelect({label, options, initVals, setFieldValue, ...props}) 
   }, []);
 
   const handleMultiSelect = selected => {
-    setOptionSelected(selected);
-    setFieldValue(field.name, selected);
+    let selectedOpts;
+    if (selected !== null && selected.length > 0 && selected[selected.length - 1].value === '*') {
+      selectedOpts = options;
+    }else {
+      selectedOpts = selected;
+    }
+    setOptionSelected(selectedOpts);
+    setFieldValue(field.name, selectedOpts);
     const el = document.getElementById(inputId);
     if (selected === null) {
       el.required = props.required;
@@ -45,7 +51,7 @@ function CustomMultiSelect({label, options, initVals, setFieldValue, ...props}) 
         <Select
           isMulti
           name='multi-select'
-          options={options}
+          options={[{label: 'Select all', value: '*'}, ...options]}
           value={optionSelected}
           className='basic-multi-select'
           classNamePrefix='select'

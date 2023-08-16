@@ -11,7 +11,6 @@ import {
   CustomMultiSelect,
   SubmitButton
 } from '../../../../common';
-import { useBranches } from '../../../../contexts/BranchesContext';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
@@ -20,15 +19,14 @@ function EditStaff() {
   const params = useParams();
 
   return (
-    <Fetcher urls={[`/usersapi/user_details/${params.staffId}/`, '/usersapi/staffroles/']}>
-      {({data}) => <EditStaffForm staff={data[0]} roles={data[1]}/>}
+    <Fetcher urls={[`/usersapi/user_details/${params.staffId}/`, '/usersapi/staffroles/', '/usersapi/branch-list/']}>
+      {({data}) => <EditStaffForm staff={data[0]} roles={data[1]} branches={data[2]}/>}
     </Fetcher>
   )
 }
 
-const EditStaffForm = ({staff, roles}) => {
+const EditStaffForm = ({staff, roles, branches}) => {
   const navigate = useNavigate();
-  const {branches} = useBranches();
 
   const initialValues = {
     first_name: staff.first_name,
@@ -60,12 +58,10 @@ const EditStaffForm = ({staff, roles}) => {
   }
 
   return (
-    <>
-      <div style={{marginBottom:'20px'}}>
-        <button type='button' className='btn btn-default max'>
-          <Link to={`/users/admin/staff/staffdetails/${staff.id}`}>Back</Link>
-        </button>
-      </div>
+    <div style={{marginBottom:'20px'}}>
+      <button type='button' className='btn btn-default max'>
+        <Link to={`/users/admin/staff/staffdetails/${staff.id}`}>Back</Link>
+      </button>
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {({ isSubmitting, errors, setFieldValue}) => (
           <Form>
@@ -101,7 +97,7 @@ const EditStaffForm = ({staff, roles}) => {
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   )
 }
 

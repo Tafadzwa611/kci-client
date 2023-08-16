@@ -21,8 +21,8 @@ const ViewOtherIncome = () => {
 
 const AddOtherIncomeComponent = () => {
   return (
-    <Fetcher urls={['/otherincomeapi/otherincometypeslist/', '/acc-api/cash-and-cash-equivalents-sub-accs/']}>
-      {({data}) => <AddOtherIncome incometypes={data[0]} fundaccounts={data[1]} />}
+    <Fetcher urls={['/otherincomeapi/otherincometypeslist/', '/acc-api/cash-accounts-list/']}>
+      {({data}) => <AddOtherIncome incometypes={data[0]} fundaccounts={data[1].accounts} />}
     </Fetcher>
   )
 }

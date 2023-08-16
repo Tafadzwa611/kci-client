@@ -21,8 +21,8 @@ const ViewExpenses = () => {
 
 const AddExpenseComponent = () => {
   return (
-    <Fetcher urls={['/expensesapi/expensetypeslist/', '/acc-api/cash-and-cash-equivalents-sub-accs/']}>
-      {({data}) => <AddExpense expensetypes={data[0]} fundaccounts={data[1]} />}
+    <Fetcher urls={['/expensesapi/expensetypeslist/', '/acc-api/cash-accounts-list/']}>
+      {({data}) => <AddExpense expensetypes={data[0]} fundaccounts={data[1].accounts} />}
     </Fetcher>
   )
 }

@@ -6,7 +6,6 @@ import { Form, Formik } from 'formik';
 import {
   NonFieldErrors,
   CustomInput,
-  CustomDatePicker,
   Fetcher,
   SubmitButton,
   CustomMultiSelect
@@ -70,7 +69,6 @@ function EditBranchForm({loanProducts, branch}) {
               <CustomInput label='Name' name='name' type='text' required/>
               <CustomInput label='Geographical Location' name='geographical_location' type='text'/>
               <CustomInput label='Branch Code' name='branch_code' type='text' maxLength='5' required/>
-              <CustomDatePicker label='Date of Opening' name='date_of_opening' setFieldValue={setFieldValue} required/>
               <CustomMultiSelect
                 label='Loan Products'
                 setFieldValue={setFieldValue}

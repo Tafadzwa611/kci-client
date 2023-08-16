@@ -17,10 +17,6 @@ import EditStaff from './Staff/EditStaff';
 import UpdatePerms from './Staff/UpdatePerms';
 
 const ManageStaff = () => {
-  useEffect(() => {
-    document.title = 'Manage Users';
-  }, []);
-
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
