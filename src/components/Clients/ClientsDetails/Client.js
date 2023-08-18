@@ -20,21 +20,34 @@ import Loans from './Loans';
 import ClientFiles from './ClientFiles';
 import Groups from './Groups';
 
-function Client({clientData, close}) {
+function Client({clientData, clientControls, staff, close}) {
   const [client, setClient] = useState(clientData);
   const [modal, setModal] = useState();
 
   return (
     <div style={{position:'sticky', top:'0', width:'100%'}}>
       <div className='j-details-container' style={{padding:'1.5rem'}}>
-        <ModalSelector modal={modal} client={client} setModal={setModal} setClient={setClient}/>
-        <Actions modal={modal} setModal={setModal} client={client} close={close} setClient={setClient}/>
+        <ModalSelector
+          staff={staff}
+          clientControls={clientControls}
+          modal={modal}
+          client={client}
+          setModal={setModal}
+          setClient={setClient}
+        />
+        <Actions
+          modal={modal}
+          setModal={setModal}
+          client={client}
+          close={close}
+          setClient={setClient}
+        />
       </div>
     </div>
   )
 }
 
-const Actions = ({modal, setModal, client, close, setClient}) => {
+const Actions = ({modal, setModal, client, close, setClient, staff, clientControls}) => {
   const [tab, setTab] = useState('details');
 
   const customViews = {};
@@ -133,7 +146,7 @@ const Actions = ({modal, setModal, client, close, setClient}) => {
   )
 }
 
-const ModalSelector = ({modal, client, setClient, setModal}) => {
+const ModalSelector = ({modal, staff, clientControls, client, setClient, setModal}) => {
   return {
     null: null,
     undoBlacklist: <UndoClientBlackList clientId={client.id} setClient={setClient} setOpen={setModal}/>,
@@ -144,7 +157,7 @@ const ModalSelector = ({modal, client, setClient, setModal}) => {
     reject: <RejectClient clientId={client.id} setClient={setClient} setOpen={setModal}/>,
     approve: <ApproveClient clientId={client.id} setClient={setClient} setOpen={setModal} />,
     undoReject: <UndoClientRejection clientId={client.id} setClient={setClient} setOpen={setModal} />,
-    updateInfo: <UpdatePersonalInfo client={client} setClient={setClient} setOpen={setModal} />,
+    updateInfo: <UpdatePersonalInfo client={client} staff={staff} clientControls={clientControls} setClient={setClient} setOpen={setModal} />,
     changeType: <ChangeClientType client={client} setClient={setClient} setOpen={setModal} />,
   }[modal]
 }

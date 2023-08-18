@@ -24,6 +24,7 @@ function PersonalInfo({client, setModal}) {
             <li>Date of Birth: {client.date_of_birth} <em>({client.age_year} years, {client.age_month} month(s))</em></li>
             <li>Client Registration Date: {client.registration_date}</li>
             <li>Branch: {client.branch}</li>
+            <li>Client Officer: {client.client_manager ? client.client_manager : 'None'}</li>
           </ul>
         </div>
 

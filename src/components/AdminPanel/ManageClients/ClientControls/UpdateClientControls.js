@@ -104,7 +104,7 @@ const UpdateClientControls = ({open, setOpen, clientControls, setClientControls}
                   <CustomInput label='Minimum Client Age In Years' name='min_client_age' step='1' type='number'/>
                   <CustomInput label='Maximum group size' name='maximum_group_size' step='1' type='number'/>
                   <CustomInput label='Minimum group size' name='minimum_group_size' step='1' type='number'/>
-                  <CustomCheckbox label='Allow Clients Without Identification' name='allow_clients_without_id'/>
+                  {/* <CustomCheckbox label='Allow Clients Without Identification' name='allow_clients_without_id'/> */}
                   <CustomCheckbox label='Client Officer Required' name='client_officer_required'/>
                   <CustomCheckbox label='Group Officer Required' name='group_officer_required'/>
                   <CustomCheckbox label='Allow multi groups per client' name='allow_multi_groups_per_client'/>

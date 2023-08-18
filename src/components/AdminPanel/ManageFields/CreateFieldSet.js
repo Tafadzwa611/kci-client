@@ -5,7 +5,7 @@ import { createFieldSetSchema } from './schemas';
 import {Modal, CustomInput, CustomSelect, CustomTextField, ModalSubmit, NonFieldErrors} from '../../../common';
 
 function CreateFieldSet({open, setOpen, setFieldSets, entityType, clientTypes}) {
-  const initialValues = {name: '', entity_type: entityType, field_set_type: '', description: '', client_type_id: ''};
+  const initialValues = {name: '', entity_type: entityType, field_set_type: 'SINGLE', description: '', client_type_id: ''};
 
   const getPayload = (values) => {
     return {
@@ -37,16 +37,12 @@ function CreateFieldSet({open, setOpen, setFieldSets, entityType, clientTypes}) 
                     <option value='CLIENT'>Clients</option>
                     <option value='LOAN'>Loans</option>
                   </CustomSelect>
-                  {values.entity_type === 'CLIENT' && <CustomSelect label='Client type' name='client_type_id'>
+                  {values.entity_type === 'CLIENT' ?
+                  <CustomSelect label='Client type' name='client_type_id'>
                     <option value=''>------</option>
                     {clientTypes.map(type => <option key={type.id} value={type.id}>{type.name}</option>)}
-                  </CustomSelect>}
+                  </CustomSelect> : null}
                   <CustomInput label='Form Name' name='name' type='text'/>
-                  <CustomSelect label='Form Type' name='field_set_type'>
-                    <option value=''>------</option>
-                    <option value='SINGLE'>Single</option>
-                    <option value='MULTIPLE'>Multiple</option>
-                  </CustomSelect>
                   <CustomTextField label='Description' name='description'/>
                 </div>
                 <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>

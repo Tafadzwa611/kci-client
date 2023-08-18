@@ -56,7 +56,7 @@ const initValidationSchema = yup.object().shape({
   }))
 });
 
-function AddClientForm({customForms, clientTypes, idTemplates}) {
+function AddClientForm({customForms, clientTypes, idTemplates, clientControls, staff}) {
   const [validationSchema, setValidationSchema] = useState(initValidationSchema);
   const [showIgnore, setShowIgnore] = useState(false);
 
@@ -82,6 +82,7 @@ function AddClientForm({customForms, clientTypes, idTemplates}) {
   }
   const initialValues = {
     client_type_id: '',
+    client_manager_id: '',
     first_name: '',
     last_name: '',
     gender: '',
@@ -117,8 +118,7 @@ function AddClientForm({customForms, clientTypes, idTemplates}) {
         actions.setErrors({responseStatus: 'Network Error'});
       } else if (error.response.status >= 400 && error.response.status < 500) {
         setShowIgnore(true);
-        console.log(processErrors(error.response.data));
-        actions.setErrors({responseStatus: error.response.status, detail: processErrors(error.response.data)});
+        actions.setErrors({responseStatus: error.response.status, detail: processErrors(error.response.data, customForms)});
       } else {
         actions.setErrors({responseStatus: error.response.status});
       }
@@ -137,7 +137,7 @@ function AddClientForm({customForms, clientTypes, idTemplates}) {
               <option value=''>------</option>
               {clientTypes.map(ct => <option key={ct.id} value={ct.id}>{ct.name}</option>)}
             </CustomSelect>
-            <ClientInformation clientTypes={clientTypes} setFieldValue={setFieldValue}/>
+            <ClientInformation setFieldValue={setFieldValue} clientControls={clientControls} staff={staff}/>
             <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
             <ClientId id_nums={values.id_nums} setFieldValue={setFieldValue} idTemplates={idTemplates}/>
             <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
@@ -190,6 +190,7 @@ const processValues = (values, customForms) => {
 }
 
 const processErrors = (errors, customForms) => {
+  console.log(customForms);
   let {detail} = errors;
 
   if (typeof detail === 'string') {

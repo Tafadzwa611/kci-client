@@ -18,7 +18,7 @@ function ClientId({id_nums, idTemplates}) {
 function ClientIdForm({index, idTemplates}) {
   return (
     <>
-      <CustomSelect label='Id Number Template' name={`id_nums[${index}].id_template_id`}>
+      <CustomSelect label='Id Number Template' name={`id_nums[${index}].id_template_id`} required>
         <option value=''>------</option>
         {idTemplates.map((tmp, index) => (
           <option key={index} value={tmp.id}>
@@ -26,7 +26,7 @@ function ClientIdForm({index, idTemplates}) {
           </option>
         ))}
       </CustomSelect>
-      <CustomInput label='Id Number' name={`id_nums[${index}].id_number`} type='text'/>
+      <CustomInput label='Id Number' name={`id_nums[${index}].id_number`} type='text' required/>
     </>
   )
 }

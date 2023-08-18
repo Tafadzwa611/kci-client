@@ -20,14 +20,19 @@ const validationSchema = yup.object().shape({
   email: yup.string().email('Must be a valid email address.'),
 });
 
-function UpdatePersonalInfo({setOpen, client, setClient}) {
+function UpdatePersonalInfo({setOpen, staff, clientControls, client, setClient}) {
   const onSubmit = async (values, actions) => {
     let data = processValues(values);
     data = removeEmptyValues(data);
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.put(`/clientsapi/update_client_personal/${client.id}/`, data, CONFIG);
-      setClient(curr => ({...curr,...data}));
+      let client_manager = null;
+      const clientManagerObj = staff.find(s => s.id === Number(values.client_manager_id));
+      if (clientManagerObj) {
+        client_manager = `${clientManagerObj.first_name} ${clientManagerObj.last_name}`;
+      }
+      setClient(curr => ({...curr, ...data, client_manager: client_manager, client_manager_id: values.client_manager_id}));
       setOpen(null);
     } catch (error) {
       console.log(error);
@@ -44,6 +49,7 @@ function UpdatePersonalInfo({setOpen, client, setClient}) {
   const initialValues = {
     ...client,
     email: client.email || '',
+    client_manager_id: client.client_manager_id || '',
     home_phone: client.home_phone || '',
     mobile_number: {countryCode: client.mobile_number.split(' ')[0], phoneNumber: client.mobile_number.split(' ')[1]},
     phone_number_secondary: {
@@ -62,7 +68,7 @@ function UpdatePersonalInfo({setOpen, client, setClient}) {
             <NonFieldErrors errors={errors}>
               <div className='create_modal_container'>
                 <div>
-                  <ClientInformation setFieldValue={setFieldValue}/>
+                  <ClientInformation staff={staff} clientControls={clientControls} setFieldValue={setFieldValue}/>
                 </div>
                 <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
               </div>

@@ -3,10 +3,18 @@ import Client from '../ClientsDetails/Client';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { Fetcher } from '../../../common';
 import Pager from './Pager';
+import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
 
 function ClientsTable({clientId, setClientId, clientsData, params, setClientsData}) {
   const handleClick = (e) => setClientId(e.target.id);
   const close = () => setClientId(null);
+  const {loggedInUser} = useLoggedInUser();
+
+  const urls = [
+    `/clientsapi/get_client/${clientId}/`,
+    '/clientsapi/client_controls/',
+    `/usersapi/staff/?branch_id=${loggedInUser.branch_id}&loan_officers_only=1`
+  ];
 
   return (
     <>
@@ -15,8 +23,8 @@ function ClientsTable({clientId, setClientId, clientsData, params, setClientsDat
         <div style={{padding:'0', border:'none'}} className='table-container journal__table font-12'>
           <div className='table-responsive journal__table-container-journals'>
             <MiniTable clients={clientsData.clients} handleClick={handleClick} clientId={clientId}/>
-            <Fetcher urls={[`/clientsapi/get_client/${clientId}/`]} extra={{close}}>
-              {({data, extra}) => <Client clientData={data[0]} close={extra.close}/>}
+            <Fetcher urls={urls} extra={{close}}>
+              {({data, extra}) => <Client clientData={data[0]} clientControls={data[1]} staff={data[2]} close={extra.close}/>}
             </Fetcher>
           </div>
         </div> :
