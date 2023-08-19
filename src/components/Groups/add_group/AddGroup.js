@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { removeEmptyValues } from '../../../utils/utils';
 
-function AddGroup({groupTypes, loanOfficers, groupRoles}) {
+function AddGroup({groupTypes, loanOfficers, groupRoles, clientControls}) {
   const navigate = useNavigate();
 
   const initialValues = {
@@ -29,14 +29,14 @@ function AddGroup({groupTypes, loanOfficers, groupRoles}) {
       }
       let dataValues = {...values, ...phoneNumbers};
       const data = removeEmptyValues(dataValues);
-      data.members = data.members.map(member => ({client_id: member.client_id, role_id: member.role_id}))
+      data.members = values.members.map(member => ({client_id: member.client_id, role_id: member.role_id}))
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/clientsapi/add_group/', data, CONFIG);
-      console.log(response)
       navigate({pathname: '/groups/viewgroups', search: `?group_id=${response.data.id}`});
     } catch (error) {
-      if (error.message === "Network Error") {
-        actions.setErrors({responseStatus: "Network Error"});
+      console.log(error);
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
       } else if (error.response.status >= 400 && error.response.status < 500) {
         actions.setErrors({responseStatus: error.response.status, ...error.response.data});
       } else {
@@ -49,6 +49,7 @@ function AddGroup({groupTypes, loanOfficers, groupRoles}) {
     <GroupForm
       groupTypes={groupTypes}
       loanOfficers={loanOfficers}
+      clientControls={clientControls}
       validationSchema={createGroupSchema}
       onSubmit={onSubmit}
       initialValues={initialValues}

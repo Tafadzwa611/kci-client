@@ -29,9 +29,10 @@ const ViewGroups = () => {
 }
 
 const AddGroupComponent = () => {
+  const urls = ['/clientsapi/group_types/', '/usersapi/staff/?branch_id=33&loan_officers_only=1', '/clientsapi/group_roles/', '/clientsapi/client_controls/'];
   return (
-    <Fetcher urls={['/clientsapi/group_types/', '/usersapi/staff/', '/clientsapi/group_roles/']}>
-      {({data}) => <AddGroup groupTypes={data[0]} loanOfficers={data[1]} groupRoles={data[2]} />}
+    <Fetcher urls={urls}>
+      {({data}) => <AddGroup groupTypes={data[0]} loanOfficers={data[1]} groupRoles={data[2]} clientControls={data[3]}/>}
     </Fetcher>
   )
 }
