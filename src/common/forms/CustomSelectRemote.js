@@ -10,12 +10,10 @@ function CustomSelectRemote({url, label, selected, queryParamName, params, setFi
   const inputId = uuidv4();
 
   useEffect(() => {
-    const el = document.getElementById(inputId);
-    el.required = props.required;
+    setIsRequired(selected);
   }, []);
 
-  const onChange = selected => {
-    setFieldValue(field.name, selected);
+  const setIsRequired = (selected) => {
     const el = document.getElementById(inputId);
     if (selected === null) {
       el.required = props.required;
@@ -24,6 +22,11 @@ function CustomSelectRemote({url, label, selected, queryParamName, params, setFi
     }else {
       el.required = false;
     }
+  }
+
+  const onChange = selected => {
+    setFieldValue(field.name, selected);
+    setIsRequired(selected);
   }
 
   const loadOptions = (inputValue, callback) => {

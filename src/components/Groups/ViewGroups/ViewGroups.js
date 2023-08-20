@@ -4,32 +4,33 @@ import AddGroup from '../add_group/AddGroup';
 import EditGroup from '../edit_group/EditGroup';
 import { Fetcher } from '../../../common';
 import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
+import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
 
 const ViewGroups = () => {
   useEffect(() => {
     document.title = 'View Groups';
   }, []);
+  const {loggedInUser} = useLoggedInUser();
+  const urls = ['/clientsapi/group_types/', `/usersapi/staff/?branch_id=${loggedInUser.branch_id}&loan_officers_only=1`, '/clientsapi/group_roles/', '/clientsapi/client_controls/'];
 
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
-        <Route index element={<GroupListComponent />} />
-        <Route path='addgroup' element={<AddGroupComponent />} />
+        <Route index element={<GroupListComponent />}/>
+        <Route path='addgroup' element={<AddGroupComponent urls={urls}/>}/>
         <Route
           path='editgroup/:groupId'
           element={
-            <Fetcher urls={['/clientsapi/group_types/', '/usersapi/staff/', '/clientsapi/group_roles/']}>
-              {({data}) => <EditGroup groupTypes={data[0]} loanOfficers={data[1]} groupRoles={data[2]} />}
-            </Fetcher>
-          } 
+            <Fetcher urls={urls}>
+              {({data}) => <EditGroup groupTypes={data[0]} loanOfficers={data[1]} groupRoles={data[2]} clientControls={data[3]}/>}
+            </Fetcher>} 
         />
       </Route>
     </Routes>
   )
 }
 
-const AddGroupComponent = () => {
-  const urls = ['/clientsapi/group_types/', '/usersapi/staff/?branch_id=33&loan_officers_only=1', '/clientsapi/group_roles/', '/clientsapi/client_controls/'];
+const AddGroupComponent = ({urls}) => {
   return (
     <Fetcher urls={urls}>
       {({data}) => <AddGroup groupTypes={data[0]} loanOfficers={data[1]} groupRoles={data[2]} clientControls={data[3]}/>}
