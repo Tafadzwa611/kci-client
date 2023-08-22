@@ -52,6 +52,7 @@ export const scheduleStrategies = {
 export const statusValues = [
   'Processing',
   'Open',
+  'Approved',
   'Arrears',
   'Fully Paid',
   'Over Paid',

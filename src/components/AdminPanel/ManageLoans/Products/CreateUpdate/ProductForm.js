@@ -16,14 +16,7 @@ import { useCurrencies } from '../../../../../contexts/CurrenciesContext';
 import { scheduleStrategies } from './data';
 import {Fee, AddFee} from './Fees';
 
-function ProductForm({
-  productGrps,
-  loanFees,
-  initialValues,
-  validationSchema,
-  onSubmit,
-  back
-}) {
+function ProductForm({loanFees, initialValues, validationSchema, onSubmit, back}) {
   const {branches} = useBranches();
   const selectBranches = branches.map(br => ({label: br.name, value:br.id}));
   const {currencies} = useCurrencies();
@@ -41,10 +34,6 @@ function ProductForm({
               <CustomInput label='Name' name='name' type='text' required/>
               <CustomInput label='Product ID' name='loan_product_id' type='text'/>
               <CustomTextField label='Description' name='description'/>
-              <CustomSelect label='Product Category' name='product_category_id' required>
-                <option value=''>------</option>
-                {productGrps.filter(grp => grp.is_active).map(grp => <option key={grp.id} value={grp.id}>{grp.name}</option>)}
-              </CustomSelect>
               <CustomSelect label='Product Type' name='product_type' required>
                 <option value=''>------</option>
                 <option value='Fixed Term Loan'>Fixed Term Loan</option>
@@ -59,7 +48,6 @@ function ProductForm({
                 {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
               </CustomSelect>
               <CustomInput label='Minimum Principal Amount' name='minimum_principal_amount' type='number' required/>
-              <CustomInput label='Default Principal Amount' name='default_principal_amount' type='number' required/>
               <CustomInput label='Maximum Principal Amount' name='maximum_principal_amount' type='number' required/>
               <div className='divider divider-info'>
                 <span>Interest Settings</span>
@@ -78,7 +66,6 @@ function ProductForm({
                 <option value='/Year'>Per Year</option>
               </CustomSelect>
               <CustomInput label='Minimum Loan Interest' name='minimum_interest_rate' type='number' required/>
-              <CustomInput label='Default Loan Interest' name='default_interest_rate' type='number' required/>
               <CustomInput label='Maximum Loan Interest' name='maximum_interest_rate' type='number' required/>
               <div className='divider divider-info'>
                 <span>Tenure Settings</span>
@@ -102,7 +89,6 @@ function ProductForm({
                 <option value='Years'>Annually</option>
               </CustomSelect>
               <CustomInput label='Minimum Number of Repayments' name='minimum_loan_duration' type='number' required/>
-              <CustomInput label='Default Number of Repayments' name='default_loan_duration' type='number' required/>
               <CustomInput label='Maximum Number of Repayments' name='maximum_loan_duration' type='number' required/>
               <CustomSelect label='Default Loan Schedule Strategy' name='schedule_strategy' required>
                 <option value=''>------</option>

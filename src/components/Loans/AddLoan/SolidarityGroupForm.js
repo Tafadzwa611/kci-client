@@ -24,7 +24,7 @@ function SolidarityGroupForm({product, isSubmitting, setFieldValue, values}) {
       </div>
       <CustomSelectRemote
         label='Group'
-        selected={values.group ? values.group : ''}
+        selected={values.group || ''}
         url='/clientsapi/search_group/'
         setFieldValue={(fieldName, newValue) => {
           setFieldValue('group', newValue);
@@ -37,7 +37,7 @@ function SolidarityGroupForm({product, isSubmitting, setFieldValue, values}) {
         required
       />
       <CustomSelectRemote
-        selected={values.guarantor}
+        selected={values.guarantor || ''}
         label='Client Guarantor'
         url='/clientsapi/search_client/'
         setFieldValue={(fieldName, selected) => {
@@ -50,7 +50,7 @@ function SolidarityGroupForm({product, isSubmitting, setFieldValue, values}) {
         name='guarantor_id'
       />
       <CustomSelectRemote
-        selected={values.group_guarantor}
+        selected={values.group_guarantor || ''}
         label='Group Guarantor'
         url='/clientsapi/search_group/'
         setFieldValue={(fieldName, selected) => {

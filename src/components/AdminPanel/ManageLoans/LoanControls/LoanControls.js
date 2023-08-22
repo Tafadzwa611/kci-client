@@ -75,6 +75,15 @@ const List = ({initControls}) => {
                       })}
                     </td>
                   </tr>
+                  <tr>
+                    <td>Groups Maximum Exposure</td>
+                    <td>
+                      {loanControls.group_max_currencies_exposure.map(exp => {
+                        const currency = currencies.find(currency => currency.id == exp.currency_id);
+                        return <div key={exp.currency_id}>{currency.fullname} {currency.shortname} {exp.max_exposure}</div>
+                      })}
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -97,6 +106,11 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
       const exp = loanControls.max_currencies_exposure.find(exp => exp.currency_id == currency.id);
       const max_exposure = exp ? exp.max_exposure: '';
       return {currency_id: currency.id, max_exposure: max_exposure}
+    }),
+    group_max_currencies_exposure: currencies.map(currency => {
+      const exp = loanControls.group_max_currencies_exposure.find(exp => exp.currency_id == currency.id);
+      const max_exposure = exp ? exp.max_exposure: '';
+      return {currency_id: currency.id, max_exposure: max_exposure}
     })
   };
 
@@ -107,11 +121,16 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
       ...(values.max_num_of_loans && {max_num_of_loans: values.max_num_of_loans}),
       ...(values.max_num_of_group_loans && {max_num_of_group_loans: values.max_num_of_group_loans}),
       ...(values.max_currencies_exposure && {currency_exposures: values.max_currencies_exposure.filter(exp => exp.max_exposure)}),
+      ...(values.group_max_currencies_exposure && {group_currency_exposures: values.group_max_currencies_exposure.filter(exp => exp.max_exposure)}),
     };
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.put('/loansapi/update_loan_controls/', data, CONFIG);
-      setLoanControls({...values, max_currencies_exposure: values.max_currencies_exposure.filter(exp => exp.max_exposure)});
+      setLoanControls({
+        ...values,
+        max_currencies_exposure: values.max_currencies_exposure.filter(exp => exp.max_exposure),
+        group_max_currencies_exposure: values.group_max_currencies_exposure.filter(exp => exp.max_exposure),
+      });
       setOpen(false);
     } catch (error) {
       if (error.message === 'Network Error') {
@@ -149,6 +168,9 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
                   />
                   {currencies.map((currency, idx) => (
                     <CustomInput key={idx} label={`${currency.fullname} Max Exposure`} name={`max_currencies_exposure[${idx}].max_exposure`} type='number'/>
+                  ))}
+                  {currencies.map((currency, idx) => (
+                    <CustomInput key={idx} label={`${currency.fullname} Group Max Exposure`} name={`group_max_currencies_exposure[${idx}].max_exposure`} type='number'/>
                   ))}
                 </div>
                 <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>

@@ -31,7 +31,6 @@ function ProductDetails({product, close, setView, setProducts}) {
                     <li>Product ID: {product.loan_product_id}</li>
                     <li>Product Type: {product.product_type}</li>
                     <li>Product Description: {product.description}</li>
-                    <li>Product Category: {product.product_category}</li>
                     {product.is_active ?
                       <li>Status: <span className="badge badge-success">Active</span></li>:
                       <li>Status: <span className="badge badge-danger">Inactive</span></li>
@@ -45,7 +44,6 @@ function ProductDetails({product, close, setView, setProducts}) {
                     <li style={{marginBottom: '1rem'}}><b>Principal Settings</b></li>
                     <li>Product Currency: {product.currency}</li>
                     <li>Minimum Principal Amount: {product.minimum_principal_amount}</li>
-                    <li>Default Principal Amount: {product.default_principal_amount}</li>
                     <li>Maximum Principal Amount: {product.maximum_principal_amount}</li>
                   </ul>
                 </div>
@@ -54,7 +52,6 @@ function ProductDetails({product, close, setView, setProducts}) {
                     <li style={{marginBottom: '1rem'}}><b>Interest Settings</b></li>
                     <li>Interest Method: {product.interest_method}</li>
                     <li>Minimum Interest Rate: {product.minimum_interest_rate}%{product.interest_interval}</li>
-                    <li>Default Interest Rate: {product.default_interest_rate}%{product.interest_interval}</li>
                     <li>Maximum Interest Rate: {product.maximum_interest_rate}%{product.interest_interval}</li>
                   </ul>
                 </div>
@@ -64,7 +61,6 @@ function ProductDetails({product, close, setView, setProducts}) {
                   <ul style={{paddingRight:"1rem"}}>
                     <li style={{marginBottom: '1rem'}}><b>Tenure Settings</b></li>
                     <li>Minimum Number of Repayments: {getTenure(product.minimum_loan_duration, product.loan_duration_time_unit)}</li>
-                    <li>Default Number of Repayments: {getTenure(product.default_loan_duration, product.loan_duration_time_unit)}</li>
                     <li>Maximum Number of Repayments: {getTenure(product.maximum_loan_duration, product.loan_duration_time_unit)}</li>
                     <li>Loan Schedule Strategy: {product.schedule_strategy}</li>
                     <li>Non Working Days Rescheduling: {getActionOnHoliday(product.action_on_holiday)}</li>

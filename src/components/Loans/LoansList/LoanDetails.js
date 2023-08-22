@@ -5,7 +5,7 @@ import BlocTabs from './BlocTabs';
 
 function LoanDetails({loanApiData}) {
   const [loan, setLoan] = useState(loanApiData);
-  const loanType = loan.client_type === 'Clients' ? 'cli' : 'sol';
+  const loanType = loan.client_type === 'Clients' || loan.client_type === 'Groups' ? 'cli' : 'sol';
 
   return (
     <div id='loan-details'>

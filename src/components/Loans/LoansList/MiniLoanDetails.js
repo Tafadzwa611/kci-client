@@ -7,7 +7,7 @@ import {statusClasses} from './data';
 function MiniLoanDetails({loanData, extra}) {
   const {setLoanId, setLoanData} = extra;
   const [loan, setLoan] = useState(loanData);
-  const loanType = loan.client_type === 'Clients' ? 'cli' : 'sol';
+  const loanType = loan.client_type === 'Clients' || loan.client_type === 'Groups' ? 'cli' : 'sol';
 
   return (
   

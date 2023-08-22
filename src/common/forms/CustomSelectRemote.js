@@ -15,7 +15,7 @@ function CustomSelectRemote({url, label, selected, queryParamName, params, setFi
 
   const setIsRequired = (selected) => {
     const el = document.getElementById(inputId);
-    if (selected === null) {
+    if (selected === null || selected === '') {
       el.required = props.required;
     }else if (selected.length === 0) {
       el.required = props.required;

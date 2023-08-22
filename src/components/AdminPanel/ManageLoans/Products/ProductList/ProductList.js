@@ -5,8 +5,8 @@ import EditProduct from '../CreateUpdate/EditProduct';
 import AddProduct from '../CreateUpdate/AddProduct';
 import { Fetcher, SuccessBtn } from '../../../../../common';
 
-function ProductList({data, extra}) {
-  const {productId, setProductId} = extra;
+function ProductList({data}) {
+  const [productId, setProductId] = useState(null);
   const [view, setView] = useState('list');
   const [selectedPrdct, setSelectedPrdct] = useState(null);
   const [products, setProducts] = useState(data);
@@ -22,6 +22,8 @@ function ProductList({data, extra}) {
     const product = products.find(prd => prd.id == e.target.id);
     setSelectedPrdct(product);
   }
+
+  const urls = ['/loansapi/list_fees/'];
 
   if (view === 'list') {
     return (
@@ -39,31 +41,14 @@ function ProductList({data, extra}) {
     )
   }else if (view === 'edit') {
     return (
-      <Fetcher urls={['/loansapi/product_groups/', '/loansapi/list_fees/']} extra={{setView, productId}}>
-        {({data, extra}) =>
-          <EditProduct
-            productGrps={data[0]}
-            loanFees={data[1]}
-            initialValues={selectedPrdct}
-            setView={extra.setView}
-            setSelectedPrdct={setSelectedPrdct}
-            setProducts={setProducts}
-          />}
+      <Fetcher urls={urls}>
+        {({data}) => <EditProduct loanFees={data[0]} initialValues={selectedPrdct} setView={setView} setSelectedPrdct={setSelectedPrdct} setProducts={setProducts}/>}
       </Fetcher>
     )
   }
   return (
-    <Fetcher urls={['/loansapi/product_groups/', '/loansapi/list_fees/']} extra={{setView, setProductId}}>
-      {({data, extra}) => 
-        <AddProduct
-          productGrps={data[0]}
-          loanFees={data[1]}
-          setProducts={setProducts}
-          setSelectedPrdct={setSelectedPrdct}
-          setView={extra.setView}
-          setProductId={extra.setProductId}
-          reRenderProducts={extra.reRenderProducts}
-        />}
+    <Fetcher urls={urls}>
+      {({data}) => <AddProduct loanFees={data[0]} setProducts={setProducts} setSelectedPrdct={setSelectedPrdct} setView={setView} setProductId={setProductId}/>}
     </Fetcher>
   )
 }

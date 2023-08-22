@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import SolidarityGroupForm from './SolidarityGroupForm';
-import { NonFieldErrors } from '../../../common';
-import { CustomSelect } from '../../../common';
+import { NonFieldErrors, CustomSelect } from '../../../common';
 import { Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -41,8 +40,7 @@ function AddLoan({products}) {
     }
     const prevProduct = products.find(prod => prod.id == prevProductId);
     if (prevProduct) {
-      if (prevProduct.client_type !== product.client_type) {
-        console.log(prevProduct.client_type);
+      if (!product || prevProduct.client_type !== product.client_type) {
         setFieldValue('client_id', '');
         setFieldValue('group_id', '');
       }
@@ -76,22 +74,15 @@ function AddLoan({products}) {
             <div className='divider divider-info'>
               <span>Loan Product</span>
             </div>
-            <CustomSelect
-              label='Loan Product'
-              name='loan_product_id'
-              value={product ? product.id : ''}
-              onChange={(evt) => onChange(evt, setFieldValue, values.loan_product_id)}
-              required
-            >
+            <CustomSelect label='Loan Product' name='loan_product_id' value={product ? product.id : ''} onChange={(evt) => onChange(evt, setFieldValue, values.loan_product_id)} required>
               <option value=''>------</option>
               {products.map(product => (
-                  <option key={product.id} value={product.id}>
-                    ({product.currency})-{product.name}-{product.client_type}
-                  </option>
-                )
-              )}
+                <option key={product.id} value={product.id}>
+                  ({product.currency})-{product.name}-{product.client_type}
+                </option>
+              ))}
             </CustomSelect>
-            {product && {
+            {product ? {
               'Groups': <ClientFormFields
                 product={product}
                 isSubmitting={isSubmitting}
@@ -110,7 +101,7 @@ function AddLoan({products}) {
                 setFieldValue={setFieldValue}
                 values={values}
               />
-            }[product.client_type]}
+            }[product.client_type] : null}
           </NonFieldErrors>
         </Form>
       )}

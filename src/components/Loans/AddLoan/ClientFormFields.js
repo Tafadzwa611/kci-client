@@ -18,7 +18,7 @@ function ClientFormFields({product, isSubmitting, setFieldValue, values}) {
       {product.client_type === 'Clients' ?
         <CustomSelectRemote
           key={product.client_type}
-          selected={values.client ? values.client : ''}
+          selected={values.client  || ''}
           label='Client'
           url='/clientsapi/search_client/'
           setFieldValue={(fieldName, selected) => {
@@ -32,7 +32,7 @@ function ClientFormFields({product, isSubmitting, setFieldValue, values}) {
         /> :
         <CustomSelectRemote
           key={product.client_type}
-          selected={values.group ? values.group : ''}
+          selected={values.group || ''}
           label='Group'
           url='/clientsapi/search_group/'
           setFieldValue={(fieldName, selected) => {
@@ -46,7 +46,7 @@ function ClientFormFields({product, isSubmitting, setFieldValue, values}) {
         />
       }
       <CustomSelectRemote
-        selected={values.guarantor}
+        selected={values.guarantor || ''}
         label='Client Guarantor'
         url='/clientsapi/search_client/'
         setFieldValue={(fieldName, selected) => {
@@ -59,7 +59,7 @@ function ClientFormFields({product, isSubmitting, setFieldValue, values}) {
         name='guarantor_id'
       />
       <CustomSelectRemote
-        selected={values.group_guarantor}
+        selected={values.group_guarantor || ''}
         label='Group Guarantor'
         url='/clientsapi/search_group/'
         setFieldValue={(fieldName, selected) => {

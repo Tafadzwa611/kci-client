@@ -45,7 +45,7 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
 
   return (
     <Modal open={true} setOpen={setOpen} title={'Disburse Loan'}>
-      <Fetcher urls={['/acc-api/cash-and-cash-equivalents/', '/usersapi/staff/']}>
+      <Fetcher urls={['/acc-api/cash-and-cash-equivalents/', `/usersapi/staff/?loan_officers_only=1`]}>
         {({data}) => (
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ errors, isSubmitting, setFieldValue }) => (
@@ -75,7 +75,7 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
                       </CustomSelect>
                       <CustomSelect label='Loan Officer & Branch' name='loan_officer_id'>
                         <option value=''>------</option>
-                        {data[1].map(user => <option key={user.id} value={user.id}>{`${user.first_name} ${user.last_name} - ${user.branch}`}</option>)}
+                        {data[1].map(user => <option key={user.id} value={user.id}>{`${user.first_name} ${user.last_name} - ${user.branch__name}`}</option>)}
                       </CustomSelect>
                     </div>
                     <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>

@@ -7,7 +7,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { uuidv4 } from '../../../../../utils';
 
-function EditProduct({productGrps, loanFees, initialValues, setView, setSelectedPrdct, setProducts}) {
+function EditProduct({loanFees, initialValues, setView, setSelectedPrdct, setProducts}) {
   const {currencies} = useCurrencies();
   initialValues.fees = initialValues.fees.map(fee => ({...fee, id: uuidv4()}));
   removeNull(initialValues);
@@ -21,9 +21,7 @@ function EditProduct({productGrps, loanFees, initialValues, setView, setSelected
         return curr.map(prod => {
           if (prod.id === values.id) {
             const currency = currencies.find(currency => currency.id == values.currency_id);
-            const group = productGrps.find(group => group.id == values.product_category_id);
             values.currency = currency.fullname;
-            values.product_category = group.name;
             values.fees = values.fees.map(fee => {
               const lf = loanFees.find(lf => lf.id == fee.loanfee_id);
               return {
@@ -60,7 +58,6 @@ function EditProduct({productGrps, loanFees, initialValues, setView, setSelected
   return (
     <ProductForm
       loanFees={loanFees}
-      productGrps={productGrps}
       initialValues={initialValues}
       validationSchema={editLoanProductSchema}
       onSubmit={onSubmit}

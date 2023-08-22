@@ -12,8 +12,6 @@ const AddCollateralType = lazy(() => import('../Loans/LoanDetails/AddCollateralT
 const CollateralTypes = lazy(() => import('../Loans/LoanDetails/CollateralTypes'));
 const LoanProducts = lazy(() => import('../Loans/LoanProducts/LoanProducts'));
 const AddLoanProduct = lazy(() => import('../Loans/LoanProducts/AddLoanProduct'));
-const LoanFees = lazy(() => import('../Loans/LoanFees/LoanFees'));
-const AddLoanFee = lazy(() => import('../Loans/LoanFees/AddLoanFee'));
 const ViewGuarantors = lazy(() => import('../Loans/Guarantors/ViewGuarantors'));
 const AddGuarantor = lazy(() => import('../Loans/Guarantors/AddGuarantor'));
 
@@ -22,9 +20,7 @@ const LoanRoutes =
   <>
     <Route exact path='/loans/viewrefunds' element={<ViewRefunds/>}/>
     <Route exact path='/loans/collateraltypes' element={<CollateralTypes/>}/>
-    <Route exact path='/loans/loanfees' element={<LoanFees/>}/>
     <Route exact path='/loans/addcollateraltype' element={<AddCollateralType/>}/>
-    <Route exact path='/loans/addloanfee' element={<AddLoanFee/>}/>
     <Route exact path='/loans/addloanproduct' element={<AddLoanProduct/>}/>
     <Route exact path='/loans/loanproducts' element={<LoanProducts/>}/>
     <Route exact path='/loans/viewguarantors' element={<ViewGuarantors/>}/>

@@ -5,18 +5,10 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { removeEmptyValues } from '../../../../../utils/utils';
 
-function AddProduct({
-  productGrps,
-  loanFees,
-  setView,
-  setProductId,
-  setProducts,
-  setSelectedPrdct
-}) {
+function AddProduct({loanFees, setView, setProductId, setProducts, setSelectedPrdct}) {
   const initialValues = {
     name: '',
     description: '',
-    product_category_id: '',
     product_type: '',
     loan_product_id: '',
     minimum_principal_amount: '',
@@ -54,15 +46,20 @@ function AddProduct({
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
+      data.default_principal_amount = data.minimum_principal_amount;
+      data.default_interest_rate = data.minimum_interest_rate;
+      data.default_loan_duration = data.minimum_loan_duration;
+      data.allowed_branches_ids = values.allowed_branches_ids.map(allowed_branches_id => allowed_branches_id.value);
+      console.log(data.allowed_branches_ids);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post('/loansapi/add_loan_product/', {...data, fees: values.fees, allowed_branches_ids: values.allowed_branches_ids}, CONFIG);
+      const response = await axios.post('/loansapi/add_loan_product/', {...data, fees: values.fees}, CONFIG);
       setProductId(response.data.id);
       setProducts(curr => [response.data, ...curr]);
       setSelectedPrdct(response.data);
       setView('list');
     } catch (error) {
-      if (error.message === "Network Error") {
-        actions.setErrors({responseStatus: "Network Error"});
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
       } else if (error.response.status >= 400 && error.response.status < 500) {
         actions.setErrors({responseStatus: error.response.status, ...error.response.data});
       } else {
@@ -73,7 +70,6 @@ function AddProduct({
 
   return (
     <ProductForm
-      productGrps={productGrps}
       initialValues={initialValues}
       validationSchema={createLoanProductSchema}
       onSubmit={onSubmit}
