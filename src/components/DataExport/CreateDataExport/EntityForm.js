@@ -106,7 +106,9 @@ function EntityForm({fields}) {
   return (
     <>
       <div className='divider divider-info' style={{marginTop:'0'}}><span>Fields</span></div>
-      {errors.detail ? <div className='error'>{JSON.stringify(errors.detail)}</div> : null}
+      {errors.detail ? <div className='col-12' style={{color:"red", padding:"1.75rem 1rem", border:"1px solid red", backgroundColor: "#ffe5e5"}}>
+        {JSON.stringify(errors.detail)}
+      </div> : null}
       <div className='row custom-background'>
         <label className='form-label'>Data Export Name<span style={{color: 'red'}}>&#42;</span></label>
         <div className='col-9'>

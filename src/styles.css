@@ -771,6 +771,10 @@ span {
   font-size: 20px;
 }
 
+.home-content-header-float-right a .uil-bell.bell__color {
+  color: var(--info);
+}
+
 .home-section .home-content .home-content-header-right-list {
   margin: 0 var(--m-1-5);
 }
