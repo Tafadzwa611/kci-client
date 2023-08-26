@@ -72,7 +72,7 @@ const DictError = ({error}) => {
       Error Type: {error.level}<br/>
       Field Name: {error.field_name}<br/>
       Error Message: {error.msg}<br/>
-      <hr style={{borderTop: '3px solid #ff0000'}}></hr>
+      <hr style={{borderTop: '1px solid #ff0000'}}></hr>
     </div>
   )
 }

@@ -79,8 +79,10 @@ const Navbar = (props) => {
       <div className='home-content-header-float-right' style={{paddingRight:'1.5rem', display:'flex', alignItems:'center'}}>
         <i className={props.theme === 'light' ? 'uil uil-moon toggle-theme' : 'uil uil-sun toggle-theme'} onClick={props.toggleTheme}></i>
         <NavLink to='/users/notifications' className='first-atag notifications-icon'>
+          {unreadNotifs ? 
+          <i className='uil uil-bell bell__color'></i>:
           <i className='uil uil-bell'></i>
-          {/* Nested Tenary Operators */}
+          }
           {unreadNotifs ?
           unreadNotifs > 9 ? '9+' : unreadNotifs :
           null}
