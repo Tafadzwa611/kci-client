@@ -21,6 +21,7 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
     branch_ids: [],
     status: [],
     page_num: 1,
+    page_size: 10,
     min_loan_added_on: '',
     max_loan_added_on: '',
     min_principal_amount_due: '',
@@ -39,7 +40,6 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
     const {value} = evt.target;
     setLoanId(null);
     setLoanDetails(null);
-    // setLoanData({count: 0, next_page_num: 0, loans: []});
     setFieldValue('client_type', value);
   }
 
@@ -111,11 +111,7 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
                     </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomSelectFilter
-                      label='Client Type'
-                      name='client_type'
-                      onChange={(evt) => changeClientType(evt, setFieldValue)}
-                    >
+                    <CustomSelectFilter label='Client Type' name='client_type' onChange={(evt) => changeClientType(evt, setFieldValue)}>
                       <option value=''>-----</option>
                       <option value='Clients'>Client</option>
                       <option value='Groups'>Group</option>
@@ -137,13 +133,22 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'85%'}}>
+                  <div style={{width:'70%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
                       options={branches.map(br => ({label: br.name, value:br.id}))}
                       setFieldValue={setFieldValue}
                     />
+                  </div>
+                  <div className='row-payments-container' style={{width:'15%'}}>
+                    <CustomSelectFilter label='Page Size' name='page_size' required>
+                      <option value='10'>10</option>
+                      <option value='25'>25</option>
+                      <option value='50'>50</option>
+                      <option value='75'>75</option>
+                      <option value='100'>100</option>
+                    </CustomSelectFilter>
                   </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>
