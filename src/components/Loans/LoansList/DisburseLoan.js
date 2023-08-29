@@ -11,20 +11,22 @@ import {
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { scheduleStrategies } from './data';
+import { removeEmptyValues } from '../../../utils/utils';
 
 function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLoanData}) {
   const initialValues = {
     disbursement_date: '',
     fund_account_id: '',
-    loan_officer_id: '',
+    loan_officer_id: loan.client_officer_id || '',
     first_repayment_date: loan.first_payment_date,
     schedule_strategy: loan.default_schedule_strategy
   };
 
   const onSubmit = async (values, actions) => {
     try {
+      const data = removeEmptyValues(values);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.patch(url, values, CONFIG);
+      const response = await axios.patch(url, data, CONFIG);
       const newLoan = response.data;
       setLoanDetails(newLoan);
       setOpen(false);
