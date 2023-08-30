@@ -18,6 +18,9 @@ import { removeEmptyValues } from '../../../utils/utils';
 const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType, updateLoanList, setLoanData}) => {
   const onSubmit = async (values, actions) => {
     const data = removeEmptyValues(values);
+    if (data.sub_loan_ids) {
+      data.sub_loan_ids = data.sub_loan_ids.map(sub_loan_id => sub_loan_id.value);
+    }
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(`/loansapi/add_payment/${loanId}/`, data, CONFIG);
@@ -46,7 +49,7 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
     payment_type: 'Installment',
     payment_date: '',
     amount_paid: '',
-    sub_loan_ids: '',
+    sub_loan_ids: [],
     receipt_number: '',
     notes: '',
   };

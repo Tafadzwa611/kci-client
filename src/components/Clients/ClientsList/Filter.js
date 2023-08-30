@@ -15,6 +15,7 @@ import axios from 'axios';
 const Filter = ({ setClientsData, clientTypes, setParams }) => {
   const initialValues = {
     page_num: 1,
+    page_size: 10,
     branch_ids: [],
     search_str: '',
     min_reg_date: '',
@@ -97,13 +98,22 @@ const Filter = ({ setClientsData, clientTypes, setParams }) => {
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'85%'}}>
+                  <div style={{width:'70%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
                       setFieldValue={setFieldValue}
                       options={branches.map(br => ({value: br.id, label: br.name}))}
                     />
+                  </div>
+                  <div className='row-payments-container' style={{width:'15%'}}>
+                    <CustomSelectFilter label='Page Size' name='page_size' required>
+                      <option value='10'>10</option>
+                      <option value='25'>25</option>
+                      <option value='50'>50</option>
+                      <option value='75'>75</option>
+                      <option value='100'>100</option>
+                    </CustomSelectFilter>
                   </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>
