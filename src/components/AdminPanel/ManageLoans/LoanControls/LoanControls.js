@@ -117,7 +117,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
   const onSubmit = async (values, actions) => {
     const data = {
       allow_group_member_as_guarantor: values.allow_group_member_as_guarantor,
-      two_man_rules: values.two_man_rules,
+      two_man_rules: values.two_man_rules.map(rule => rule.value),
       ...(values.max_num_of_loans && {max_num_of_loans: values.max_num_of_loans}),
       ...(values.max_num_of_group_loans && {max_num_of_group_loans: values.max_num_of_group_loans}),
       ...(values.max_currencies_exposure && {currency_exposures: values.max_currencies_exposure.filter(exp => exp.max_exposure)}),
@@ -128,6 +128,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
       await axios.put('/loansapi/update_loan_controls/', data, CONFIG);
       setLoanControls({
         ...values,
+        two_man_rules: values.two_man_rules.map(rule => rule.value),
         max_currencies_exposure: values.max_currencies_exposure.filter(exp => exp.max_exposure),
         group_max_currencies_exposure: values.group_max_currencies_exposure.filter(exp => exp.max_exposure),
       });
