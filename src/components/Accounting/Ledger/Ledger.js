@@ -10,7 +10,7 @@ function Ledger() {
   return (
     <>
       {queue.map((msg, idx) => (
-        <div key={idx} className='success__submit' style={{display:'flex', columnGap:'5px'}}>
+        <div key={idx} className='success__submit' style={{display:'flex', marginBottom:'1.5rem'}}>
           <div>
             {msg}
           </div>

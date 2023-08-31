@@ -81,59 +81,78 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
             <Form>
               <NonFieldErrors errors={errors}>
                 <div style={{display:'flex', justifyContent:'space-between'}}>
-                  <div style={{display:'flex', justifyContent:'space-between', width:'32%', columnGap:'1rem'}}>
-                    <CustomDatePickerFilter label='Min Disbursement Date' name='min_loan_added_on' setFieldValue={setFieldValue}/>
-                    <CustomDatePickerFilter label='Max Disbursement Date' name='max_loan_added_on' setFieldValue={setFieldValue}/>
+                  <div style={{display:'flex', justifyContent:'space-between', width:'32%'}}>
+                    <div style={{width: '49%'}}>
+                      <CustomDatePickerFilter label='Min Disbursement Date' name='min_loan_added_on' setFieldValue={setFieldValue}/>
+                    </div>
+                    <div style={{width: '49%'}}>
+                      <CustomDatePickerFilter label='Max Disbursement Date' name='max_loan_added_on' setFieldValue={setFieldValue}/>
+                    </div>
                   </div>
-                  <div style={{display:'flex', justifyContent:'space-between', width:'32%', columnGap:'1rem'}}>
-                    <CustomInputFilter label='Min Principal Outstanding' name='min_principal_amount_due' type='number'/>
-                    <CustomInputFilter label='Max Principal Outstanding' name='max_principal_amount_due' type='number'/>
+                  <div style={{display:'flex', justifyContent:'space-between', width:'32%'}}>
+                    <div style={{width: '49%'}}>
+                      <CustomInputFilter label='Min Principal Outstanding' name='min_principal_amount_due' type='number'/>
+                    </div>
+                    <div style={{width: '49%'}}>
+                      <CustomInputFilter label='Max Principal Outstanding' name='max_principal_amount_due' type='number'/>
+                    </div>
                   </div>
-                  <div style={{display:'flex', justifyContent:'space-between', width:'32%', columnGap:'1rem'}}>
-                    <CustomInputFilter label='Min Amount Paid' name='min_total_amount_paid' type='number'/>
-                    <CustomInputFilter label='Max Amount Paid' name='max_total_amount_paid' type='number'/>
+                  <div style={{display:'flex', justifyContent:'space-between', width:'32%'}}>
+                    <div style={{width: '49%'}}>
+                      <CustomInputFilter label='Min Amount Paid' name='min_total_amount_paid' type='number'/>
+                    </div>
+                    <div style={{width: '49%'}}>
+                      <CustomInputFilter label='Max Amount Paid' name='max_total_amount_paid' type='number'/>
+                    </div>
                   </div>
                 </div>
+
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomSelectFilter label='Loan Product' name='loan_product_id'>
-                      <option value=''>------</option>
-                      {products.map(product => <option key={product.id} value={product.id}>{product.name}</option>)}
-                    </CustomSelectFilter>
+                  <div className='row-payments-container' style={{flexDirection:'row', justifyContent:'space-between', width:'32%'}}>
+                    <div style={{width: '49%'}}>
+                      <CustomSelectFilter label='Loan Product' name='loan_product_id'>
+                        <option value=''>------</option>
+                        {products.map(product => <option key={product.id} value={product.id}>{product.name}</option>)}
+                      </CustomSelectFilter>
+                    </div>
+                    <div style={{width: '49%'}}>
+                      <CustomSelectFilter label='Client Type' name='client_type' onChange={(evt) => changeClientType(evt, setFieldValue)}>
+                        <option value=''>-----</option>
+                        <option value='Clients'>Client</option>
+                        <option value='Groups'>Group</option>
+                        <option value='Groups (solidarity)'>Groups (solidarity)</option>
+                      </CustomSelectFilter>
+                    </div>
                   </div>
-                  <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomInputFilter label='Client Name' name='client'/>
+                  <div className='row-payments-container' style={{flexDirection:'row', justifyContent:'space-between', width:'32%'}}>
+                    <div style={{width: '49%'}}>
+                      <CustomSelectFilter label='Currency' name='currency_id' required>
+                        <option value=''>------</option>
+                        {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+                      </CustomSelectFilter>
+                    </div>
+                    <div style={{width: '49%'}}>
+                      <CustomSelectFilter label='Page Size' name='page_size' required>
+                        <option value='10'>10</option>
+                        <option value='25'>25</option>
+                        <option value='50'>50</option>
+                        <option value='75'>75</option>
+                        <option value='100'>100</option>
+                      </CustomSelectFilter>
+                    </div>
                   </div>
-                  <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomSelectFilter label='Currency' name='currency_id' required>
-                      <option value=''>------</option>
-                      {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-                    </CustomSelectFilter>
-                  </div>
-                  <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomSelectFilter label='Client Type' name='client_type' onChange={(evt) => changeClientType(evt, setFieldValue)}>
-                      <option value=''>-----</option>
-                      <option value='Clients'>Client</option>
-                      <option value='Groups'>Group</option>
-                      <option value='Groups (solidarity)'>Groups (solidarity)</option>
-                    </CustomSelectFilter>
+                  <div className='row-payments-container' style={{flexDirection:'row', justifyContent:'space-between', width:'32%'}}>
+                    <div style={{width: '49%'}}>
+                      <CustomInputFilter label='Client Name' name='client'/>
+                    </div>
+                    <div style={{width: '49%'}}>
+                      <CustomInputFilter label='Group Name' name='group'/>
+                    </div>
                   </div>
                 </div>
+                
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div style={{width:'70%'}}>
-                    <CustomMultiSelectFilter
-                      label='Status'
-                      name='status'
-                      options={statusValues.map(val => ({label: val, value: val}))}
-                      setFieldValue={setFieldValue}
-                    />
-                  </div>
-                  <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomInputFilter label='Group Name' name='group'/>
-                  </div>
-                </div>
-                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'70%'}}>
+                  <div style={{width:'100%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
@@ -141,14 +160,15 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
                       setFieldValue={setFieldValue}
                     />
                   </div>
-                  <div className='row-payments-container' style={{width:'15%'}}>
-                    <CustomSelectFilter label='Page Size' name='page_size' required>
-                      <option value='10'>10</option>
-                      <option value='25'>25</option>
-                      <option value='50'>50</option>
-                      <option value='75'>75</option>
-                      <option value='100'>100</option>
-                    </CustomSelectFilter>
+                </div>
+                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
+                  <div style={{width:'85%'}}>
+                    <CustomMultiSelectFilter
+                      label='Status'
+                      name='status'
+                      options={statusValues.map(val => ({label: val, value: val}))}
+                      setFieldValue={setFieldValue}
+                    />
                   </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>

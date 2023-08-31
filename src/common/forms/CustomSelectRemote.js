@@ -46,8 +46,37 @@ function CustomSelectRemote({url, label, selected, queryParamName, params, setFi
       <div className='col-9'>
         <div style={{width:"50%"}}>
           {isMulti ?
-          <AsyncSelect onChange={onChange} value={selected} loadOptions={loadOptions} placeholder={placeholder} inputId={inputId} isMulti isClearable /> :
-          <AsyncSelect onChange={onChange} value={selected} loadOptions={loadOptions} placeholder={placeholder} inputId={inputId} isClearable />}
+          <AsyncSelect 
+            onChange={onChange} 
+            value={selected} 
+            loadOptions={loadOptions} 
+            placeholder={placeholder} 
+            inputId={inputId} 
+            isMulti 
+            isClearable 
+            theme={(theme) => ({
+              ...theme,
+              colors: {
+                ...theme.colors,
+                primary25: '',
+              },
+            })}
+          /> :
+          <AsyncSelect 
+            onChange={onChange} 
+            value={selected} 
+            loadOptions={loadOptions} 
+            placeholder={placeholder} 
+            inputId={inputId} 
+            isClearable 
+            theme={(theme) => ({
+              ...theme,
+              colors: {
+                ...theme.colors,
+                primary25: '',
+              },
+            })}
+          />}
           {meta.error && <div className='error'>{meta.error}</div>}
         </div>
       </div>
