@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { useNotifications } from '../../contexts/NotificationsContext';
@@ -6,6 +6,7 @@ import { useNotifications } from '../../contexts/NotificationsContext';
 const MINUTE_MS = 15000;
 const Navbar = (props) => {
   const {unreadNotifs, setUnreadNotifs} = useNotifications(0);
+  const [showLogout, setShowLogout] = useState(false);
 
   const checkNotifs = async () => {
     try {
@@ -26,6 +27,10 @@ const Navbar = (props) => {
     }, MINUTE_MS);
     return () => clearInterval(interval);
   }, []);
+
+  const showLogoutDiv= () => {
+    setShowLogout(!showLogout)
+  }
 
   return (
     <div className='home-content'>
@@ -88,10 +93,20 @@ const Navbar = (props) => {
           null}
         </NavLink>
         <div className='nav-logout'>
-          <span className='user_name'>{props.loggedInUser.first_name} {props.loggedInUser.last_name}</span>
-          <a href='/users/logout/'>
-            <i className='uil uil-sign-out-alt nav-right'></i>
-          </a>
+          <span onClick={showLogoutDiv} style={{cursor:'pointer'}} className='user_name'>{props.loggedInUser.first_name['0']} {props.loggedInUser.last_name['0']}</span>
+          {showLogout &&
+          <div className='logout__info'>
+            <div className='logout__info__sub'>
+              <div className='logout_text'>
+                <span className='user_name'>{props.loggedInUser.first_name} {props.loggedInUser.last_name}</span>
+              </div>
+              <div className='logout_text' style={{marginTop:'0.5rem'}}>
+                <a style={{fontSize:'0.8125rem'}} href='/users/logout/'>Logout
+                </a>
+              </div>
+            </div>
+          </div>
+          }
         </div>
       </div>
     </div>
