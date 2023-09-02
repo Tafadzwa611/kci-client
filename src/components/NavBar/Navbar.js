@@ -50,14 +50,7 @@ const Navbar = (props) => {
   return (
     <div className='home-content'>
       {open ? <Search setOpen={setOpen} /> : null}
-      <div className='home-content-header-left' style={{display:'flex', columnGap:'3rem'}}>
-        <div>
-          <NavLink to='/home' className='logo'>
-            <div className='logo-details'>
-              <i className='uil uil-10-plus'></i>
-            </div>
-          </NavLink>
-        </div>
+      <div className='home-content-header-left' style={{display:'flex', columnGap:'3rem', paddingLeft:'1.5rem'}}>
 
         <div style={{display:'flex'}}>
           <NavLink to='/dashboard' className='btn btn-default dashboard'>
@@ -112,6 +105,9 @@ const Navbar = (props) => {
           <div className='logout__info'>
             <div className='logout__info__sub'>
               <div className='logout_text'>
+                <span className='user_name'>{props.loggedInUser.company_name}</span>
+              </div>
+              <div className='logout_text' style={{marginTop:'0.5rem'}}>
                 <span className='user_name'>{props.loggedInUser.first_name} {props.loggedInUser.last_name}</span>
               </div>
               <div className='logout_text' style={{marginTop:'0.5rem'}}>
@@ -162,30 +158,32 @@ const Search = ({setOpen}) => {
           <Form onChange={handleOnChange}>
             <NonFieldErrors errors={errors}>
               <div className='create_modal_container'>
-                <div>
-                  <CustomSelect label='Search' name='entity' required>
-                    <option value='clients'>Search Clients</option>
-                    <option value='groups'>Search Groups</option>
-                  </CustomSelect>
-                  <CustomInput label='Search text' name='query' type='text' required/>
-                </div>
-                <div style={{display:'flex', columnGap:'1%'}}>
-                  <div style={{width:'100%'}}>
-                    <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom: '2rem'}}>
-                    <div style={{width:'48%'}}>
-                      <ul style={{paddingRight:'1rem'}}>
-                        {results.map(result => (
-                          <li key={result.value} style={{marginBottom: '0.25rem'}}>
-                          <Link
-                            onClick={() => setOpen(false)}
-                            to={values.entity === 'clients' ? `/clients/viewclients/clientdetails/${result.value}` : `/groups/viewgroups?group_id=${result.value}`}
-                          >
-                            {result.label}
-                          </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                <div style={{display:'flex', flexDirection:'column', rowGap:'1.5rem'}}>
+                  <div>
+                    <CustomSelect label='Search' name='entity' required>
+                      <option value='clients'>Search Clients</option>
+                      <option value='groups'>Search Groups</option>
+                    </CustomSelect>
+                    <CustomInput label='Search text' name='query' type='text' required/>
+                  </div>
+                  <div style={{display:'flex', columnGap:'1%'}}>
+                    <div style={{width:'100%'}}>
+                      <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom: '2rem'}}>
+                        <div style={{width:'48%'}}>
+                          <ul style={{paddingRight:'1rem'}}>
+                            {results.map(result => (
+                              <li className="search__a" key={result.value} style={{marginBottom: '0.25rem'}}>
+                              <Link
+                                onClick={() => setOpen(false)}
+                                to={values.entity === 'clients' ? `/clients/viewclients/clientdetails/${result.value}` : `/groups/viewgroups?group_id=${result.value}`}
+                              >
+                                {result.label}
+                              </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
