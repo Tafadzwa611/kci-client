@@ -3,7 +3,7 @@ import useFetch from './useFetch';
 import MiniLoader from '../../components/Loader/MiniLoader';
 
 const Fetcher = ({urls, children, extra}) => {
-  const {data, error, loading} = useFetch(urls);
+  const {data, error, setError, loading} = useFetch(urls);
 
   if (loading) {
     return <div className='bloc-tabs'><MiniLoader /></div>
@@ -11,7 +11,7 @@ const Fetcher = ({urls, children, extra}) => {
 
   if (error !== null) {
     if (!error.status){
-      return <Error errorMessage={'Network Error'} />
+      return <Error errorMessage={'Network Error'} setError={setError} />
     }
     let errorMessage;
     if (error.status == 403){
@@ -23,16 +23,19 @@ const Fetcher = ({urls, children, extra}) => {
     }else {
       errorMessage = 'Server Error'
     }
-    return <Error errorMessage={errorMessage} />
+    return <Error errorMessage={errorMessage} setError={setError}/>
   }
 
   return children({data, extra})
 }
 
-function Error({errorMessage}) {
+function Error({errorMessage, setError}) {
   return (
     <div className='col-12' style={{color:"red", border:"1px solid red", backgroundColor: "#ffe5e5", height:'75px'}}>
-      <div style={{fontSize: 12, color: 'red', display:'flex', alignItems:'center', height:'100%', paddingLeft:'20px'}}>{errorMessage}</div>
+      <div style={{fontSize: 12, color: 'red', display:'flex', alignItems:'center', height:'100%', paddingLeft:'20px'}}>
+        {errorMessage}
+        <button className='btn btn-olive'onClick={() => setError(null)}>Retry</button>
+      </div>
     </div>
   )
 }

@@ -14,7 +14,7 @@ import { useCurrencies } from '../../../contexts/CurrenciesContext';
 import { useBranches } from '../../../contexts/BranchesContext';
 import { statusValues } from './data';
 import axios from 'axios';
-import { removeEmptyValues } from '../../../utils/utils';
+import { removeEmptyValues, getParams } from '../../../utils/utils';
 
 const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) => {
   const initialValues = {
@@ -41,18 +41,6 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
     setLoanId(null);
     setLoanDetails(null);
     setFieldValue('client_type', value);
-  }
-
-  const getParams = (values) => {
-    const params = new URLSearchParams();
-    for (const [key, value] of Object.entries(values)) {
-      if (Array.isArray(value)) {
-        value.forEach(el => params.append(key, el));
-      }else {
-        params.append(key, value);
-      }
-    }
-    return params
   }
 
   const onSubmit = async (values, actions) => {
