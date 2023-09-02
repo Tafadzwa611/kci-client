@@ -3647,3 +3647,20 @@ input[type=number] {
   font-size: 0.9375rem;
   color: var(--info);
 }
+
+.logout__info {
+  position: absolute;
+  top: 100%;
+  right: 1.5rem;
+  min-width: 160px;
+}
+.logout__info__sub {
+  background-color: var(--white);
+  box-shadow:  0 0 35px 0 rgba(154,161,171,.15);
+  padding: 20px;
+  margin-top: 1.5rem;
+}
+.logout_text {
+  display: flex;
+  align-items: center;
+}
