@@ -15,13 +15,15 @@ function EditProduct({loanFees, initialValues, setView, setSelectedPrdct, setPro
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
+      const allowed_branches_ids = values.allowed_branches_ids.map(allowed_branches_id => allowed_branches_id.value);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      await axios.put(`/loansapi/edit_loan_product/${data.id}/`, {...data, fees: values.fees, allowed_branches_ids: values.allowed_branches_ids}, CONFIG);
+      await axios.put(`/loansapi/edit_loan_product/${data.id}/`, {...data, fees: values.fees, allowed_branches_ids}, CONFIG);
       setProducts(curr => {
         return curr.map(prod => {
           if (prod.id === values.id) {
             const currency = currencies.find(currency => currency.id == values.currency_id);
             values.currency = currency.fullname;
+            values.allowed_branches_ids = allowed_branches_ids;
             values.fees = values.fees.map(fee => {
               const lf = loanFees.find(lf => lf.id == fee.loanfee_id);
               return {
@@ -43,8 +45,8 @@ function EditProduct({loanFees, initialValues, setView, setSelectedPrdct, setPro
       setView('list');
     } catch (error) {
       console.log(error);
-      if (error.message === "Network Error") {
-        actions.setErrors({responseStatus: "Network Error"});
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
       } else if (error.response.status >= 400 && error.response.status < 500) {
         actions.setErrors({responseStatus: error.response.status, ...error.response.data});
       } else {

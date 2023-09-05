@@ -5,7 +5,6 @@ import {
   CustomInput,
   CustomTextField,
   CustomSelect,
-  CustomMultiSelect,
   CustomDatePicker,
   Fetcher,
   ModalSubmit,
@@ -42,14 +41,14 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
     }
   }
 
-  const selectOpts = subLoans.filter(loan => loan.id !== null).map(loan => ({value: loan.id, label: loan.fullname}));
+  const selectOpts = subLoans.filter(loan => loan.id !== null);
 
   const initialValues = {
     cash_account_id: '',
     payment_type: 'Installment',
     payment_date: '',
     amount_paid: '',
-    sub_loan_ids: [],
+    sub_loan_id: '',
     receipt_number: '',
     notes: '',
   };
@@ -70,7 +69,11 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
                       <option value=''>------</option>
                       {data[0].filter(acc => acc.currency_id == currencyId).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_name}</option>)}
                     </CustomSelect>
-                    {clientType === 'Groups (solidarity)' && <CustomMultiSelect label='Sub Loan(s)' name='sub_loan_ids' options={selectOpts} setFieldValue={setFieldValue} required/>}
+                    {clientType === 'Groups (solidarity)' ?
+                    <CustomSelect label='Sub Loan' name='sub_loan_id' required>
+                      <option value=''>------</option>
+                      {selectOpts.map(subLoan => <option key={subLoan.id} value={subLoan.id}>{subLoan.fullname}</option>)}
+                    </CustomSelect> : null}
                     <CustomInput label='Receipt Number' name='receipt_number' type='text'/>
                     <CustomTextField label='Description' name='notes' type='text'/>
                   </div>

@@ -19,6 +19,7 @@ import {Fee, AddFee} from './Fees';
 function ProductForm({loanFees, initialValues, validationSchema, onSubmit, back}) {
   const {branches} = useBranches();
   const selectBranches = branches.map(br => ({label: br.name, value:br.id}));
+  initialValues.allowed_branches_ids = selectBranches.filter(br => initialValues.allowed_branches_ids.includes(br.value))
   const {currencies} = useCurrencies();
 
   return (
@@ -131,7 +132,7 @@ function ProductForm({loanFees, initialValues, validationSchema, onSubmit, back}
               </CustomSelect>
               <CustomMultiSelect
                 label='Branches'
-                initVals={selectBranches.filter(br => values.allowed_branches_ids.includes(br.value))}
+                initVals={values.allowed_branches_ids}
                 options={selectBranches}
                 setFieldValue={setFieldValue}
                 name='allowed_branches_ids'

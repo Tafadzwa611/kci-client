@@ -50,7 +50,6 @@ function AddProduct({loanFees, setView, setProductId, setProducts, setSelectedPr
       data.default_interest_rate = data.minimum_interest_rate;
       data.default_loan_duration = data.minimum_loan_duration;
       data.allowed_branches_ids = values.allowed_branches_ids.map(allowed_branches_id => allowed_branches_id.value);
-      console.log(data.allowed_branches_ids);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/loansapi/add_loan_product/', {...data, fees: values.fees}, CONFIG);
       setProductId(response.data.id);
