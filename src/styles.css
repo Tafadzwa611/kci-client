@@ -3667,3 +3667,8 @@ input[type=number] {
 .search__a a{
   font-size: 0.8125rem;
 }
+.retry__span {
+  color: var(--info);
+  padding-left: 0.5rem;
+  cursor: pointer;
+}

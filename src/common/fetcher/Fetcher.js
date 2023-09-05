@@ -34,7 +34,7 @@ function Error({errorMessage, setError}) {
     <div className='col-12' style={{color:"red", border:"1px solid red", backgroundColor: "#ffe5e5", height:'75px'}}>
       <div style={{fontSize: 12, color: 'red', display:'flex', alignItems:'center', height:'100%', paddingLeft:'20px'}}>
         {errorMessage}
-        <button className='btn btn-olive'onClick={() => setError(null)}>Retry</button>
+        <span className="retry__span" onClick={() => setError(null)}>Retry</span>
       </div>
     </div>
   )
