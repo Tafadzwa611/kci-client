@@ -47,7 +47,7 @@ function Client({clientData, clientControls, staff, close}) {
   )
 }
 
-const Actions = ({modal, setModal, client, close, setClient, staff, clientControls}) => {
+const Actions = ({modal, setModal, client, close, setClient}) => {
   const [tab, setTab] = useState('details');
 
   const customViews = {};
