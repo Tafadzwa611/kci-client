@@ -18,10 +18,9 @@ const useFetch = (urls) => {
       isInit.current = false;
       return
     }
-    if (error) return;
-    setLoading(true);
+    if (!loading)return;
     fetchData();
-  }, [error]);
+  }, [loading]);
 
   const fetchData = async () => {
     const promises = urls.map(url => makeRequest.get(url).then(response => {
@@ -29,12 +28,12 @@ const useFetch = (urls) => {
       throw response;
     }));
 
-    Promise.all(promises).then(
-      (json) => setData(json)
-    ).catch((e) => setError(e)).finally(() => setLoading(false));
+    Promise.all(promises).then((json) => {
+      setData(json);
+      setError(null);
+    }).catch((e) => setError(e)).finally(() => setLoading(false));
   }
-
-  return {data, error, setError, loading}
+  return {data, error, loading, setLoading}
 }
 
 export default useFetch;

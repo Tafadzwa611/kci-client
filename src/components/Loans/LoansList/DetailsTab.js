@@ -20,6 +20,7 @@ function DetailsTab({loan}) {
               <li style={{marginBottom: '0.25rem'}}>First Repayment Date: {loan.first_payment_date}</li>
               <li style={{marginBottom: '0.25rem'}}>Maturity Date: {loan.mat_date}</li>
               <li style={{marginBottom: '0.25rem'}}>Product: {loan.product_name}</li>
+              <li style={{marginBottom: '0.25rem'}}>Applied Amount: {loan.currency_name} {loan.org_principal}</li>
               <li style={{marginBottom: '0.25rem'}}>Loan Amount: {loan.currency_name} {loan.principal}</li>
               <li style={{marginBottom: '0.25rem'}}>Interest Rate: {loan.interest_rate}%{loan.interest_interval}</li>
               <li style={{marginBottom: '0.25rem'}}>Interest Method: {loan.interest_method}</li>
