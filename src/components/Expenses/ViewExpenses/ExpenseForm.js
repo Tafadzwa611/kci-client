@@ -5,8 +5,7 @@ import {
   NonFieldErrors,
   SubmitButton,
   CustomSelect,
-  CustomDatePicker,
-  CustomSelectRemote
+  CustomDatePicker
 } from '../../../common';
 
 function ExpenseForm({expensetypes, fundaccounts, initialValues, validationSchema, onSubmit}) {
@@ -16,7 +15,9 @@ function ExpenseForm({expensetypes, fundaccounts, initialValues, validationSchem
         const exp_type = expensetypes.find(et => et.id == newValue);
         seCurrencyId(exp_type.currency_id)
     }
-    const newFundAccountArray = fundaccounts.filter(fa => fa.currency ==  currencyId);
+    const newFundAccountArray = fundaccounts.filter(fa => fa.currency_id ==  currencyId);
+
+    console.log(newFundAccountArray)
 
     return (
         <>

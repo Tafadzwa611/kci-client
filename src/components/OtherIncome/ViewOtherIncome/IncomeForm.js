@@ -5,8 +5,7 @@ import {
   NonFieldErrors,
   SubmitButton,
   CustomSelect,
-  CustomDatePicker,
-  CustomSelectRemote
+  CustomDatePicker
 } from '../../../common';
 
 function IncomeForm({incometypes, fundaccounts, initialValues, validationSchema, onSubmit}) {
@@ -16,7 +15,7 @@ function IncomeForm({incometypes, fundaccounts, initialValues, validationSchema,
         const inc_type = incometypes.find(inc => inc.id == newValue);
         seCurrencyId(inc_type.currency_id)
     }
-    const newFundAccountArray = fundaccounts.filter(fa => fa.currency ==  currencyId);
+    const newFundAccountArray = fundaccounts.filter(fa => fa.currency_id ==  currencyId);
 
     return (
         <>
