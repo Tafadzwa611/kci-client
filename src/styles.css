@@ -909,7 +909,7 @@ span {
 @media screen and (min-width: 1600px){
 
   .input-group input {
-      max-width: 600px;
+      max-width: 100%;
   }
 
 }
