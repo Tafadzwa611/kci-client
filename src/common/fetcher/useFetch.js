@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import { makeRequest } from '../../utils';
 
 const useFetch = (urls) => {
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState(null);
   const [error, setError] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const isInit = React.useRef(true);
@@ -18,7 +18,7 @@ const useFetch = (urls) => {
       isInit.current = false;
       return
     }
-    if (!loading)return;
+    if (!loading || !error)return;
     fetchData();
   }, [loading]);
 
