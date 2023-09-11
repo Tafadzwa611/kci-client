@@ -27,7 +27,7 @@ export default function Dashboard() {
   return (
     <div className='font-13'>
       <div style={{padding:'24px', paddingBottom:'0'}}>
-        <h3>Dashboard</h3>
+        <h5 className='table-heading'>Dashboard</h5>
       </div>
       <div className='card'>
         <Filter currencyId={currencyId} setCurrencyId={setCurrencyId} setBranchIds={setBranchIds}/>
