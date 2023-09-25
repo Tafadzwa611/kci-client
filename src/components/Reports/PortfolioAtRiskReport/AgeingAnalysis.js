@@ -83,7 +83,7 @@ const ModalBody = ({par, branches}) => {
         </div>
       </div>
       <AgeingAnalysisFilter setParams={setParams} setLoans={setLoans} par={par}/>
-      {loans ? <LoansTable currency={par.currency} loans={loans} params={params} setLoans={setLoans}/> : null}
+      {loans ? <LoansTable loans={loans} params={params} setLoans={setLoans}/> : null}
     </div>
   )
 }

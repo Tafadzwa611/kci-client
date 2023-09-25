@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import axios from 'axios';
 
-function LoansTable({loans, currency, params, setLoans}) {
+function LoansTable({loans, params, setLoans}) {
   return (
     <div className='row'>
       <div className='col-12'>
@@ -20,8 +20,12 @@ function LoansTable({loans, currency, params, setLoans}) {
                   <th>Branch</th>
                   <th>Last_Default_Date</th>
                   <th>Days_In_Arrears</th>
-                  <th>Principal_At_Risk ({currency})</th>
-                  <th>Overdue_Balance ({currency})</th>
+                  <th>Principal_At_Risk</th>
+                  <th>Overdue_Principal</th>
+                  <th>Overdue_Interest</th>
+                  <th>Overdue_Fees</th>
+                  <th>Penalty</th>
+                  <th>Overdue_Balance</th>
                   <th>Status</th>
                 </tr>
               </thead>
@@ -38,6 +42,10 @@ function LoansTable({loans, currency, params, setLoans}) {
                       <td>{loan.last_default_date}</td>
                       <td>{loan.days_in_arrears}</td>
                       <td>{loan.principal_at_risk}</td>
+                      <td>{loan.overdue_principal}</td>
+                      <td>{loan.overdue_interest}</td>
+                      <td>{loan.overdue_fees}</td>
+                      <td>{loan.overdue_penalty}</td>
                       <td>{loan.overdue_balance}</td>
                       <td><small className={statusClasses[loan.status]} style={{margin: '3px'}}>{loan.status}</small></td>
                     </tr>

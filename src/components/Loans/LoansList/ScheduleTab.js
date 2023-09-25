@@ -79,7 +79,13 @@ function ScheduleTab({installments, client_name, loanId, currencyId, setLoan, se
                 <td className='schedule__table schedule__installment schedule__installment__right'>{installment.installment_date}</td>
                 {expected &&
                 <>
-                  <td className='schedule__table schedule__installment'>{installment.principal}</td>
+                  <td className='schedule__table schedule__installment'>
+                    {installment.principal_on_settlement && installment.principal_on_settlement != installment.principal ?
+                    <>
+                      <del>{`${installment.principal}`}</del>
+                      {` ${installment.principal_on_settlement}`}
+                    </> : `${installment.principal}`}
+                  </td>
                   <td className='schedule__table schedule__installment'>
                     {installment.interest_on_settlement && installment.interest_on_settlement != installment.interest ?
                     <>

@@ -101,7 +101,8 @@ function DetailsTab({loan}) {
               <li style={{marginBottom: '0.25rem'}}>Total Principal Paid: {loan.currency_name} {loan.principal_amount_paid}</li>
               <li style={{marginBottom: '0.25rem'}}>Total Interest Paid: {loan.currency_name} {loan.interest_amount_paid}</li>
               <li style={{marginBottom: '0.25rem'}}>Total Fees Paid: {loan.currency_name} {loan.fees_amount_paid}</li>
-              <li style={{marginBottom: '1rem'}}>Total Penalty Paid: {loan.currency_name} {loan.penalty_amount_paid}</li>
+              <li style={{marginBottom: '0.25rem'}}>Total Penalty Paid: {loan.currency_name} {loan.penalty_amount_paid}</li>
+              <li style={{marginBottom: '1rem'}}>Amount To Be Refunded: {loan.currency_name} {loan.money_to_be_refunded}</li>
             </ul>
           </div>
         </div>
