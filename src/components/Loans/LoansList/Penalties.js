@@ -8,13 +8,14 @@ import {
   ActionModal,
   ActionModalDialog,
   SubmitButton,
+  CustomSelect,
   OliveBtn
 } from '../../../common';
 import { Form, Formik } from 'formik';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-function Penalties({penalties, penalty, client_name, loanId, setLoan, locked, status}) {
+function Penalties({penalties, penalty, client_name, loanId, setLoan, locked, status, subLoans, clientType}) {
   const [form, setForm] = useState(null);
   const [showDelete, setDelete] = useState(false);
   const [showLock, setLock] = useState(false);
@@ -39,8 +40,8 @@ function Penalties({penalties, penalty, client_name, loanId, setLoan, locked, st
               <SuccessBtn handler={() => setForm('reduce')} value={'Change Balance'}/>
             </div>
           </div>
-          {form === 'add' ?  <PenaltyForm loanId={loanId} setLoan={setLoan} /> : null}
-          {form === 'reduce' ? <ReducePenaltyForm loanId={loanId} orgPenalty={penalty} setLoan={setLoan} /> : null}
+          {form === 'add' ?  <PenaltyForm loanId={loanId} setLoan={setLoan} subLoans={subLoans} clientType={clientType} /> : null}
+          {form === 'reduce' ? <ReducePenaltyForm loanId={loanId} orgPenalty={penalty} setLoan={setLoan} subLoans={subLoans} clientType={clientType}/> : null}
           {showDelete ? <DeletePenalty penaltyId={penId.current} setLoan={setLoan} setOpenModal={setDelete} /> : null}
         </div>
       }
@@ -92,11 +93,12 @@ function Penalties({penalties, penalty, client_name, loanId, setLoan, locked, st
   )
 }
 
-const PenaltyForm = ({loanId, setLoan}) => {
+const PenaltyForm = ({loanId, setLoan, subLoans, clientType}) => {
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post(`/loansapi/add_loan_penalty/${loanId}/`, values, CONFIG);
+      const url = clientType === 'Groups (solidarity)' ? `/loansapi/add_loan_penalty/${loanId}/${values.sub_loan_id}/` : `/loansapi/add_loan_penalty/${loanId}/`;
+      const response = await axios.post(url, {description: values.description, penalty_amount: values.penalty_amount}, CONFIG);
       setLoan(response.data);
       actions.resetForm();
     } catch (error) {
@@ -111,10 +113,15 @@ const PenaltyForm = ({loanId, setLoan}) => {
   }
 
   return (
-    <Formik initialValues={{description: '', penalty_amount: ''}} onSubmit={onSubmit}>
+    <Formik initialValues={{description: '', penalty_amount: '', sub_loan_id: ''}} onSubmit={onSubmit}>
       {({ isSubmitting, errors }) => (
         <Form>
           <NonFieldErrors errors={errors}>
+            {clientType === 'Groups (solidarity)' ?
+            <CustomSelect label='Sub Loan' name='sub_loan_id' required>
+              <option value=''>------</option>
+              {subLoans.filter(subLoan => subLoan.status === 'Arrears').map(subLoan => <option key={subLoan.id} value={subLoan.id}>{subLoan.fullname} {subLoan.status}</option>)}
+            </CustomSelect> : null}
             <CustomInput label='Amount' name='penalty_amount' type='number' required/>
             <CustomTextField label='Description' name='description' type='text' required/>
             <div style={{display:'flex', justifyContent: 'flex-end', paddingBottom:'1.5rem'}}> 
@@ -127,11 +134,12 @@ const PenaltyForm = ({loanId, setLoan}) => {
   )
 }
 
-const ReducePenaltyForm = ({loanId, orgPenalty, setLoan}) => {
+const ReducePenaltyForm = ({loanId, orgPenalty, setLoan, subLoans, clientType}) => {
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post(`/loansapi/reduce_penalty/${loanId}/`, values, CONFIG);
+      const url = clientType === 'Groups (solidarity)' ? `/loansapi/reduce_penalty/${loanId}/${values.sub_loan_id}/` : `/loansapi/reduce_penalty/${loanId}/`;
+      const response = await axios.post(url, values, CONFIG);
       setLoan(response.data);
       actions.resetForm();
     } catch (error) {
@@ -146,11 +154,16 @@ const ReducePenaltyForm = ({loanId, orgPenalty, setLoan}) => {
   }
 
   return (
-    <Formik initialValues={{new_balance: ''}} onSubmit={onSubmit}>
+    <Formik initialValues={{new_balance: '', sub_loan_id: ''}} onSubmit={onSubmit}>
       {({ isSubmitting, errors }) => (
         <Form>
           <NonFieldErrors errors={errors}>
             <div>Original Balance {orgPenalty}</div>
+            {clientType === 'Groups (solidarity)' ?
+            <CustomSelect label='Sub Loan' name='sub_loan_id' required>
+              <option value=''>------</option>
+              {subLoans.filter(subLoan => subLoan.status === 'Arrears').map(subLoan => <option key={subLoan.id} value={subLoan.id}>{subLoan.fullname} {subLoan.status}</option>)}
+            </CustomSelect> : null}
             <CustomInput label='New Balance' name='new_balance' type='number' required/>
             <div style={{display:'flex', justifyContent: 'flex-end', paddingBottom:'1.5rem'}}> 
               <SubmitButton isSubmitting={isSubmitting}/>

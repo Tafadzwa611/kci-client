@@ -53,6 +53,8 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
         'txns': <Txns txns={loan.txns} client_name={client_name} />,
         'penalties': <Penalties
           penalties={loan.penalties}
+          subLoans={loan.sub_loans_list}
+          clientType={loan.client_type}
           status={loan.status}
           client_name={client_name}
           loanId={loan.id}

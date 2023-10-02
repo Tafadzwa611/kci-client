@@ -31,6 +31,8 @@ function SubLoans({loans, client_name}) {
             <th className="schedule__table"><b>Loan ID</b></th>
             <th className="schedule__table"><b>Principal</b></th>
             <th className="schedule__table"><b>Interest</b></th>
+            <th className="schedule__table"><b>Penalty</b></th>
+            <th className="schedule__table"><b>Fees</b></th>
             <th className="schedule__table"><b>Status</b></th>
           </tr>
         </thead>
@@ -42,11 +44,13 @@ function SubLoans({loans, client_name}) {
                 <td className="schedule__table">{loan.loan_id}</td>
                 <td className="schedule__table">{loan.principal}</td>
                 <td className="schedule__table">{loan.interest}</td>
+                <td className="schedule__table">{loan.penalty}</td>
+                <td className="schedule__table">{loan.fees}</td>
                 <td className="schedule__table">{loan.status}</td>
               </tr>:
             <tr key={loan.client_id}>
               <td className="schedule__table">{loan.fullname}</td>
-              <td className="schedule__table" colSpan={4} >Unallocated</td>
+              <td className="schedule__table" colSpan={6} >Unallocated</td>
             </tr>
           ))}
         </tbody>
