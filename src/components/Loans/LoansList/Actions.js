@@ -136,7 +136,7 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
           setOpen={setModal}
           loanId={loan.id}
           setLoan={setLoanDetails}
-          currencyId={loan.currency_id}
+          clientType={loan.client_type}
           subLoans={loan.sub_loans_list}
           manualFees={loan.manual_fees}
           updateLoanList={updateLoanList}

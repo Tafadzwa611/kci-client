@@ -11,7 +11,7 @@ import { Form, Formik } from 'formik';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-function AddFee({loanId, manualFees, setOpen, setLoan, updateLoanList, setLoanData}) {
+function AddFee({loanId, manualFees, setOpen, subLoans, clientType, setLoan, updateLoanList, setLoanData}) {
   const onSubmit = async (values, actions) => {
     const data = values.fee_type === 'Manual' ?
     {manual_fee_id: values.manual_fee_id} :
@@ -19,7 +19,8 @@ function AddFee({loanId, manualFees, setOpen, setLoan, updateLoanList, setLoanDa
 
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post(`/loansapi/add_manual_fee/${loanId}/`, data, CONFIG);
+      const url = clientType === 'Groups (solidarity)' ? `/loansapi/add_manual_fee/${loanId}/${values.sub_loan_id}/` : `/loansapi/add_manual_fee/${loanId}/`;
+      const response = await axios.post(url, data, CONFIG);
       const newLoan = response.data;
       setLoan(newLoan);
       setOpen(false);
@@ -38,7 +39,8 @@ function AddFee({loanId, manualFees, setOpen, setLoan, updateLoanList, setLoanDa
     }
   }
 
-  const initialValues = {fee_type: 'Manual', manual_fee_id: '', arbitrary_amount: '', description: ''};
+  const initialValues = {fee_type: 'Manual', sub_loan_id: '', manual_fee_id: '', arbitrary_amount: '', description: ''};
+  const subLoanOpts = subLoans.filter(loan => loan.id !== null);
   return (
     <Modal open={true} setOpen={setOpen} title={'Add Fee'}>
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
@@ -47,6 +49,11 @@ function AddFee({loanId, manualFees, setOpen, setLoan, updateLoanList, setLoanDa
             <NonFieldErrors errors={errors}>
               <div className='create_modal_container'>
                 <div>
+                  {clientType === 'Groups (solidarity)' ?
+                  <CustomSelect label='Sub Loan' name='sub_loan_id' required>
+                    <option value=''>------</option>
+                    {subLoanOpts.map(subLoan => <option key={subLoan.id} value={subLoan.id}>{subLoan.fullname}</option>)}
+                  </CustomSelect> : null}
                   <CustomSelect label='Fee Type' name='fee_type' required>
                     <option value='Manual'>Manual</option>
                     <option value='Arbitrary'>Arbitrary</option>
