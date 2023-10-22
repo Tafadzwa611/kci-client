@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import LoansList from '../LoansList/LoansList';
 import AddLoan from '../AddLoan/AddLoan';
 import EditLoan from '../AddLoan/EditLoan';
+import Calculator from '../Calculator/Calculator';
 import { Fetcher } from '../../../common';
 import LoanDetails from '../LoansList/LoanDetails';
 import { useParams } from 'react-router-dom';
@@ -23,6 +24,7 @@ const ViewLoans = () => {
       <Route path='/' element={<Layout />}>
         <Route index element={<LoanListComponent />} />
         <Route path='addloan' element={<AddLoanComponent />} />
+        <Route path='calculator' element={<Calculator />} />
         <Route
           path='editloan/:loanType/:loanId'
           element={
@@ -75,6 +77,9 @@ function Layout() {
             </Link>
             <Link to='/loans/viewloans/addloan' id='add' className={location.pathname === '/loans/viewloans/addloan' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Add Loan
+            </Link>
+            <Link to='/loans/viewloans/calculator' id='calculator' className={location.pathname === '/loans/viewloans/calculator' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Loan Calculator
             </Link>
           </div>
           <div className='tab-content font-12' style={{marginTop:'3rem'}}>
