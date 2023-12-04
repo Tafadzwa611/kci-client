@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import OnlineApplications from '../OnlineApplications/OnlineApplications';
 import LoansList from '../LoansList/LoansList';
 import AddLoan from '../AddLoan/AddLoan';
 import EditLoan from '../AddLoan/EditLoan';
@@ -24,6 +25,7 @@ const ViewLoans = () => {
       <Route path='/' element={<Layout />}>
         <Route index element={<LoanListComponent />} />
         <Route path='addloan' element={<AddLoanComponent />} />
+        <Route path='onlineapplications' element={<OnlineApplications />} />
         <Route path='calculator' element={<Calculator />} />
         <Route
           path='editloan/:loanType/:loanId'
@@ -77,6 +79,9 @@ function Layout() {
             </Link>
             <Link to='/loans/viewloans/addloan' id='add' className={location.pathname === '/loans/viewloans/addloan' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Add Loan
+            </Link>
+            <Link to='/loans/viewloans/onlineapplications' id='onlineapplications' className={location.pathname === '/loans/viewloans/onlineapplications' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+             Online Applications
             </Link>
             <Link to='/loans/viewloans/calculator' id='calculator' className={location.pathname === '/loans/viewloans/calculator' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Loan Calculator
