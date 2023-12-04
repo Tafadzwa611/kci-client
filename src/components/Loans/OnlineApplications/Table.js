@@ -34,7 +34,10 @@ function Table({apps, params, setApps}) {
                             <td>{application.app_date}</td>
                             <td>{application.status}</td>
                             <td>
-                              <Link to={{pathname: '/loans/viewloans/addloan', search: `?application_id=${application.id}&application_id=${application.id}`}}>
+                              <Link to={{
+                                  pathname: '/loans/viewloans/addloan',
+                                  search: `?application_id=${application.id}&client_id=${application.client_id}&client_name=${application.client__fullname}&loan_product_id=${application.loan_product_id}&principal=${application.amount}`
+                                }}>
                                 <button className='btn btn-olive' onClick={() => console.log('approve')}>
                                   Create Loan
                                 </button>

@@ -9,42 +9,28 @@ import {
 import { scheduleStrategies } from './data';
 import Fee from './Fee';
 
-function ClientFormFields({product, isSubmitting, setFieldValue, values}) {
+function ClientFormFields({
+  product,
+  isSubmitting,
+  setFieldValue,
+  clientName,
+  values
+}) {
   return (
     <>
       <div className='divider divider-info'>
         <span>Loan Details</span>
       </div>
-      {product.client_type === 'Clients' ?
-        <CustomSelectRemote
-          key={product.client_type}
-          selected={values.client  || ''}
-          label='Client'
-          url='/clientsapi/search_client/'
-          setFieldValue={(fieldName, selected) => {
-            setFieldValue('client', selected);
-            setFieldValue(fieldName, selected.value);
-          }}
-          queryParamName='query'
-          placeholder='Search Client'
-          name='client_id'
-          required
-        /> :
-        <CustomSelectRemote
-          key={product.client_type}
-          selected={values.group || ''}
-          label='Group'
-          url='/clientsapi/search_group/'
-          setFieldValue={(fieldName, selected) => {
-            setFieldValue('group', selected);
-            setFieldValue(fieldName, selected.value);
-          }}
-          queryParamName='query'
-          placeholder='Search Group'
-          name='group_id'
-          required
-        />
-      }
+      {clientName ?
+        <div className='row custom-background'>
+          <label className='form-label'>Client <span style={{color: 'red'}}>&#42;</span></label>
+          <div className='col-9'>
+            <div style={{width: '50%'}}>
+              {clientName}
+            </div>
+          </div>
+        </div> : 
+        <ClientSelect values={values} product={product} setFieldValue={setFieldValue}/>}
       <CustomSelectRemote
         selected={values.guarantor || ''}
         label='Client Guarantor'
@@ -132,6 +118,43 @@ function ClientFormFields({product, isSubmitting, setFieldValue, values}) {
         <SubmitButton isSubmitting={isSubmitting}/>
       </div>
     </>
+  )
+}
+
+const ClientSelect = ({values, product, setFieldValue}) => {
+  if (product.client_type === 'Clients') {
+    return (
+      <CustomSelectRemote
+        key={product.client_type}
+        selected={values.client  || ''}
+        label='Client'
+        url='/clientsapi/search_client/'
+        setFieldValue={(fieldName, selected) => {
+          setFieldValue('client', selected);
+          setFieldValue(fieldName, selected.value);
+        }}
+        queryParamName='query'
+        placeholder='Search Client'
+        name='client_id'
+        required
+      />
+    )
+  }
+  return (
+    <CustomSelectRemote
+      key={product.client_type}
+      selected={values.group || ''}
+      label='Group'
+      url='/clientsapi/search_group/'
+      setFieldValue={(fieldName, selected) => {
+        setFieldValue('group', selected);
+        setFieldValue(fieldName, selected.value);
+      }}
+      queryParamName='query'
+      placeholder='Search Group'
+      name='group_id'
+      required
+    />
   )
 }
 

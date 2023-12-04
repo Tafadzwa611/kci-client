@@ -152,6 +152,10 @@ const removeNull = (object) => {
   }
 };
 
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
 export {
   makeRequest,
   useAuth,
@@ -161,5 +165,6 @@ export {
   isDate,
   removeEmptyValues,
   removeNull,
-  getParams
+  getParams,
+  isNumeric
 };

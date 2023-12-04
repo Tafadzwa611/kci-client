@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SolidarityGroupForm from './SolidarityGroupForm';
 import { NonFieldErrors, CustomSelect } from '../../../common';
 import { Form, Formik } from 'formik';
@@ -6,18 +6,37 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import ClientFormFields from './ClientFormFields';
-import { removeEmptyValues } from '../../../utils/utils';
+import { removeEmptyValues, isNumeric } from '../../../utils/utils';
 
 function AddLoan({products}) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const application_id = searchParams.get('application_id');
-  const [product, setProduct] = useState(null);
+  const loan_product_id = searchParams.get('loan_product_id') || '';
+  const client_id = searchParams.get('client_id') || '';
+  const client_name = searchParams.get('client_name') || '';
+  let princ = searchParams.get('principal');
   products = products.filter(prod => prod.is_active);
+  const [product, setProduct] = useState(null);
+  const [clientId, setClientId] = useState('');
+  const [clientName, setClientName] = useState('');
+  const [principal, setPrincipal] = useState('');
+
+  useEffect(() => {
+    const prod = products.find(prod => prod.id.toString() === loan_product_id) || null;
+    setProduct(prod);
+    setClientId(client_id);
+    setClientName(client_name);
+    if (isNumeric(princ)) {
+      setPrincipal(princ);
+    }else {
+      setPrincipal('');
+    }
+  }, [princ, loan_product_id, client_id, client_name]);
 
   const initialValues = {
-    loan_product_id: '',
-    principal: '',
+    loan_product_id: loan_product_id,
+    principal: principal,
     interest_rate: '',
     application_date: '',
     number_of_repayments: '',
@@ -27,7 +46,8 @@ function AddLoan({products}) {
     fees: [],
     files: [],
     principal_distribution: [],
-    client_id: '',
+    client_id: clientId,
+    client_name: clientName,
     group_id: '',
     ...(application_id && {application_id})
   };
@@ -94,6 +114,7 @@ function AddLoan({products}) {
               />,
               'Clients': <ClientFormFields
                 product={product}
+                clientName={clientName}
                 isSubmitting={isSubmitting}
                 setFieldValue={setFieldValue}
                 values={values}
