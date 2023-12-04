@@ -15,7 +15,7 @@ function AddLoan({products}) {
   const loan_product_id = searchParams.get('loan_product_id') || '';
   const client_id = searchParams.get('client_id') || '';
   const client_name = searchParams.get('client_name') || '';
-  let princ = searchParams.get('principal');
+  let princ = searchParams.get('principal') || '';
   products = products.filter(prod => prod.is_active);
   const [product, setProduct] = useState(null);
   const [clientId, setClientId] = useState('');
@@ -90,7 +90,7 @@ function AddLoan({products}) {
   }
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+    <Formik key={JSON.stringify(initialValues)} initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors, values}) => (
         <Form>
           <NonFieldErrors errors={errors}>
