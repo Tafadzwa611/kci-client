@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import SolidarityGroupForm from './SolidarityGroupForm';
 import { NonFieldErrors, CustomSelect } from '../../../common';
 import { Form, Formik } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import ClientFormFields from './ClientFormFields';
@@ -10,6 +10,8 @@ import { removeEmptyValues } from '../../../utils/utils';
 
 function AddLoan({products}) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const application_id = searchParams.get('application_id');
   const [product, setProduct] = useState(null);
   products = products.filter(prod => prod.is_active);
 
@@ -26,7 +28,8 @@ function AddLoan({products}) {
     files: [],
     principal_distribution: [],
     client_id: '',
-    group_id: ''
+    group_id: '',
+    ...(application_id && {application_id})
   };
 
   const onChange = (evt, setFieldValue, prevProductId) => {

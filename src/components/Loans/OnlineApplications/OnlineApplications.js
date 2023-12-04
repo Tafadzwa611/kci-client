@@ -1,26 +1,30 @@
 import React, {useState} from 'react';
 import Filter from './Filter';
 import { Fetcher } from '../../../common';
+import Table from './Table';
 
 function OnlineApplications() {
-  const [applications, setApplications] = useState({
+  const [apps, setApps] = useState({
     count: 0,
     next_page_num: null,
     prev_page_num: null,
     number: null,
     num_of_pages: null,
-    loans: []
+    applications: []
   });
   const [params, setParams] = useState(null);
 
   return (
     <Fetcher urls={['/loansapi/loan_products/']}>
       {({data}) => (
-        <Filter
-          products={data[0].loan_products}
-          setApplications={setApplications}
-          setParams={setParams}
-        />
+        <>
+          <Filter
+            products={data[0].loan_products}
+            setApps={setApps}
+            setParams={setParams}
+          />
+          <Table apps={apps} params={params} setApps={setApps}/>
+        </>
       )}
     </Fetcher>
   )

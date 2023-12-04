@@ -10,7 +10,7 @@ import {
 import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
-function Filter({products, setApplications, setParams}) {
+function Filter({products, setApps, setParams}) {
   const initialValues = {
     page_num: 1,
     page_size: 10,
@@ -29,7 +29,7 @@ function Filter({products, setApplications, setParams}) {
       const params = getParams(data);
       setParams(params);
       const response = await axios.get('/loansapi/applications/', {params: params});
-      setApplications(response.data);
+      setApps(response.data);
     } catch (error) {
       if (error.message === 'Network Error') {
         actions.setErrors({responseStatus: 'Network Error'});
