@@ -34,15 +34,16 @@ function Table({apps, params, setApps}) {
                             <td>{application.app_date}</td>
                             <td>{application.status}</td>
                             <td>
+                              {application.status === 'Pending' ?
                               <Link to={{
                                   pathname: '/loans/viewloans/addloan',
                                   search: `?application_id=${application.id}&client_id=${application.client_id}&client_name=${application.client__fullname}&loan_product_id=${application.loan_product_id}&principal=${application.amount}`
                                 }}>
-                                <button className='btn btn-olive' onClick={() => console.log('approve')}>
+                                <button className='btn btn-olive'>
                                   Create Loan
                                 </button>
                               </Link>
-                              <button className='btn btn-danger' onClick={() => console.log('approve')}>Reject</button>
+                              : null}
                             </td>
                           </tr>
                       )})}
