@@ -3,7 +3,8 @@ import {
   CustomInput,
   CustomSelect,
   CustomDatePicker,
-  CustomPhoneNumber
+  CustomPhoneNumber,
+  CustomCheckbox
 } from '../../../common';
 
 const ClientInformation = ({clientControls, setFieldValue, staff}) => {
@@ -21,6 +22,7 @@ const ClientInformation = ({clientControls, setFieldValue, staff}) => {
       <CustomPhoneNumber label='Mobile Number' name='mobile_number' setFieldValue={setFieldValue} required/>
       <CustomPhoneNumber label='Secondary Mobile Number (Optional)' name='phone_number_secondary' setFieldValue={setFieldValue}/>
       <CustomPhoneNumber label='Whatsapp Number (Optional)' name='whatsapp_number' setFieldValue={setFieldValue}/>
+      <CustomCheckbox label='Activate Whatsapp Banking' name='whatsapp_banking_active'/>
       <CustomInput label='Home Phone (Optional)' name='home_phone' type='text'/>
       <CustomInput label='Email (Optional)' name='email' type='text'/>
       {clientControls.client_officer_required ? 

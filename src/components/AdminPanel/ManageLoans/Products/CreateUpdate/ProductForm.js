@@ -17,6 +17,7 @@ import { scheduleStrategies } from './data';
 import {Fee, AddFee} from './Fees';
 
 function ProductForm({loanFees, initialValues, validationSchema, onSubmit, back}) {
+  console.log(initialValues);
   const {branches} = useBranches();
   const selectBranches = branches.map(br => ({label: br.name, value:br.id}));
   initialValues.allowed_branches_ids = selectBranches.filter(br => initialValues.allowed_branches_ids.includes(br.value))
@@ -33,6 +34,9 @@ function ProductForm({loanFees, initialValues, validationSchema, onSubmit, back}
                 <span>Name & Description</span>
               </div>
               <CustomInput label='Name' name='name' type='text' required/>
+              {initialValues.ext_name ?
+                <CustomInput label='External Name' name='ext_name' type='text' required/> :
+                <CustomInput label='External Name' name='ext_name' type='text'/>}
               <CustomInput label='Product ID' name='loan_product_id' type='text'/>
               <CustomTextField label='Description' name='description'/>
               <CustomSelect label='Product Type' name='product_type' required>

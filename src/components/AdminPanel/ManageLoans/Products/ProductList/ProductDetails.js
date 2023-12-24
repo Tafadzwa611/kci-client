@@ -28,6 +28,7 @@ function ProductDetails({product, close, setView, setProducts}) {
                   <ul style={{paddingRight:"1rem"}}>
                     <li style={{marginBottom: '1rem'}}><b>Product Information</b></li>
                     <li>Product Name: {product.name}</li>
+                    <li>External Name: {product.ext_name}</li>
                     <li>Product ID: {product.loan_product_id}</li>
                     <li>Product Type: {product.product_type}</li>
                     <li>Product Description: {product.description}</li>

@@ -33,6 +33,7 @@ function PersonalInfo({client, setModal}) {
             <li>Phone Number: {client.mobile_number}</li>
             <li>Secondary Phone Number: {client.phone_number_secondary ? client.phone_number_secondary : 'Not provided'}</li>
             <li>Whatsapp Number: {client.whatsapp_number ? client.whatsapp_number : 'Not provided'}</li>
+            <li>Whatsapp Banking: {client.whatsapp_banking_active ? 'Active' : 'Not Active'}</li>
             <li>Home Phone: {client.home_phone ? client.home_phone : 'Not provided'}</li>
             <li>Email: {client.email ? client.email : 'Not provided'}</li>
           </ul>

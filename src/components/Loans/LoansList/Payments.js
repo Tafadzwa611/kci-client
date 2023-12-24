@@ -18,6 +18,7 @@ function Payments({
   setLoan,
   currencyName,
   accountId,
+  currencyId
 }) {
   const {reverse, edit, refund, none } = MODAL_STATES;
   const [modal, setModal] = useState(none);
@@ -40,7 +41,7 @@ function Payments({
     <>
       {modal == reverse && <DeletePayment paymentId={payId} setOpen={setModal} setLoan={setLoan} setPayId={setPayId}/>}
       {modal == edit && <EditPayment selectedPayment={paymentRef.current} setOpen={setModal} setLoan={setLoan} setSelectedPayment={setSelectedPayment}/>}
-      {modal == refund && <Refund selectedPayment={paymentRef.current} setOpen={setModal} setLoan={setLoan} payId={payId} setSelectedPayment={setSelectedPayment}/>}
+      {modal == refund && <Refund currencyId={currencyId} selectedPayment={paymentRef.current} setOpen={setModal} setLoan={setLoan} payId={payId} setSelectedPayment={setSelectedPayment}/>}
       <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'1rem'}}>
         <ReactHTMLTableToExcel
           id='test-table-xls-button'

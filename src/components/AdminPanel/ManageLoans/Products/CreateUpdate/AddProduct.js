@@ -8,6 +8,7 @@ import { removeEmptyValues } from '../../../../../utils/utils';
 function AddProduct({loanFees, setView, setProductId, setProducts, setSelectedPrdct}) {
   const initialValues = {
     name: '',
+    ext_name: '',
     description: '',
     product_type: '',
     loan_product_id: '',

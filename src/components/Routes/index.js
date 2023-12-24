@@ -10,6 +10,7 @@ import PaymentRoutes from './PaymentRoutes';
 import ReportRoutes from './ReportRoutes';
 import DataRoutes from './DataRoutes';
 import UserRoutes from './UserRoutes';
+import LocalExportRoutes from './LocalExportsRoutes';
 import {useLoggedInUser} from '../../contexts/LoggedInUserContext';
 import { useBranches } from '../../contexts/BranchesContext';
 import { useCurrencies } from '../../contexts/CurrenciesContext';
@@ -17,7 +18,6 @@ import { Routes as ReactRoutes, Route } from 'react-router-dom';
 
 const Home = lazy(() => import('../Home/Home'));
 const Dashboard = lazy(() => import('../Dashboard/Dashboard'));
-const CreateFile = lazy(() => import('../CreateFile/CreateFile'));
 
 const Routes = ({loggedInUser, branches, currencies}) => {
   const {setLoggedInUser} = useLoggedInUser();
@@ -36,7 +36,6 @@ const Routes = ({loggedInUser, branches, currencies}) => {
         <Route exact path='/' element={<Home/>} />
         <Route exact path='/home' element={<Home/>} />
         <Route exact path='/dashboard' element={<Dashboard/>}/>
-        <Route exact path='/create_file' element={<CreateFile/>}/>
         {AccountingRoutes}
         {AssetRoutes}
         {ClientRoutes}
@@ -48,6 +47,7 @@ const Routes = ({loggedInUser, branches, currencies}) => {
         {ReportRoutes}
         {UserRoutes}
         {DataRoutes}
+        {LocalExportRoutes}
       </ReactRoutes>
     </Suspense>
   )

@@ -1,10 +1,18 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
-import { Modal, ModalSubmit, NonFieldErrors, CustomInput } from '../../../common';
+import {
+  Modal,
+  ModalSubmit,
+  NonFieldErrors,
+  CustomInput,
+  Fetcher,
+  CustomDatePicker,
+  CustomSelect
+} from '../../../common';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const Refund = ({setOpen, selectedPayment, setLoan, payId, setSelectedPayment}) => {
+const Refund = ({setOpen, selectedPayment, setLoan, payId, setSelectedPayment, currencyId}) => {
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
@@ -25,20 +33,29 @@ const Refund = ({setOpen, selectedPayment, setLoan, payId, setSelectedPayment}) 
 
   return (
     <Modal open={true} setOpen={setOpen} title={'Refund'}>
-      <Formik initialValues={{refund_amount: ''}} onSubmit={onSubmit}>
-        {({ errors, isSubmitting }) => (
-          <Form>
-            <NonFieldErrors errors={errors}>
-              <div className='create_modal_container'>
-                <div>
-                  <CustomInput label='Refund Amount' name='refund_amount' type='number' required/>
-                </div>
-                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
-              </div>
-            </NonFieldErrors>
-          </Form>
+      <Fetcher urls={['/acc-api/cash-and-cash-equivalents/']}>
+        {({data}) => (
+          <Formik initialValues={{refund_amount: '', value_date: '', cash_account_id: ''}} onSubmit={onSubmit}>
+            {({ errors, setFieldValue, isSubmitting }) => (
+              <Form>
+                <NonFieldErrors errors={errors}>
+                  <div className='create_modal_container'>
+                    <div>
+                      <CustomInput label='Refund Amount' name='refund_amount' type='number' required/>
+                      <CustomDatePicker label='Refund Date' name='value_date' setFieldValue={setFieldValue} required/>
+                      <CustomSelect label='Fund Account' name='cash_account_id' required>
+                        <option value=''>------</option>
+                        {data[0].filter(acc => acc.currency_id == currencyId).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_name}</option>)}
+                      </CustomSelect>
+                    </div>
+                    <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+                  </div>
+                </NonFieldErrors>
+              </Form>
+            )}
+          </Formik>
         )}
-      </Formik>
+      </Fetcher>
     </Modal>
   )
 }

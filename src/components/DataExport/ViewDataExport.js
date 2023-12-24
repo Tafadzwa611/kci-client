@@ -27,10 +27,7 @@ const ViewDataExport = () => {
             {({data}) => <EntityForm fields={data[0]} />}
           </Fetcher>}
         />
-        <Route
-          path='dataexport/:dataexportId'
-          element={<DataExportElement/>}
-        />
+        <Route path='dataexport/:dataexportId' element={<DataExportElement/>}/>
       </Route>
     </Routes>
   )
