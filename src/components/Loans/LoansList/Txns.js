@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-function Txns({txns, client_name}) {
+function Txns({loanId, txns, client_name}) {
   return (
     <>
       <div style={{display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem'}}>
@@ -13,6 +13,9 @@ function Txns({txns, client_name}) {
           sheet='tablexls'
           buttonText='Download as XLS'
         />
+        <a className='btn btn-default client__details' href={`/loans/loan_statement_pdf/${loanId}/`} target="_blank" rel="noreferrer">
+          Download as PDF
+        </a>
       </div>
       <div style={{padding: '1.5rem'}} className='miniLoanDetails-container'>
         <div style={{width: '100%', overflowX: 'auto'}}>
