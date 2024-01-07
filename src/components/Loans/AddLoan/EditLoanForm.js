@@ -11,11 +11,13 @@ const EditLoanFoam = ({loan, loanProducts}) => {
   const navigate = useNavigate();
   const [product, setProduct] = useState(loanProducts.find(prod => prod.id == loan.loan_product_id));
   const products = loanProducts.filter(prod => prod.client_type === loan.client_type && prod.is_active && prod.id !== product.id);
-  
+  const interestRate = product.calculate_using_installment ? '' : loan.interest_rate;
+
   const initialValues = {
     loan_product_id: product.id,
     principal: loan.org_principal,
-    interest_rate: loan.interest_rate,
+    interest_rate: interestRate,
+    installment: '',
     application_date: loan.app_date,
     number_of_repayments: loan.number_of_repayments,
     first_repayment_date: loan.first_payment_date,

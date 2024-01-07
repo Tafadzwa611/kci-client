@@ -38,6 +38,7 @@ function AddLoan({products}) {
     loan_product_id: loan_product_id,
     principal: principal,
     interest_rate: '',
+    installment: '',
     application_date: '',
     number_of_repayments: '',
     first_repayment_date: '',

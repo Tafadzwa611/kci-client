@@ -67,6 +67,15 @@ function ClientFormFields({
         required
       />
       <small><em>Minimum = {product.minimum_principal_amount} Maximum = {product.maximum_principal_amount}</em></small>
+      {product.calculate_using_installment ? 
+        <CustomInput
+          label='Installment Amount'
+          name='installment'
+          type='number'
+          step={product.number_of_decimal_places}
+          required
+        />
+      : <>
       <CustomInput
         label='Interest Rate'
         name='interest_rate'
@@ -77,6 +86,7 @@ function ClientFormFields({
         required
       />
       <small><em>Minimum = {product.minimum_interest_rate} Maximum = {product.maximum_interest_rate}</em></small>
+      </>}
       <CustomDatePicker label='Application Date' name='application_date' setFieldValue={setFieldValue} required/>
       <CustomInput
         label='Number of Repayments'
