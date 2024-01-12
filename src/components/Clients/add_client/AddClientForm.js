@@ -83,7 +83,7 @@ function AddClientForm({customForms, clientTypes, idTemplates, clientControls, s
   const initialValues = {
     client_type_id: '',
     client_manager_id: '',
-    whatsapp_banking_active: '',
+    whatsapp_banking_active: false,
     first_name: '',
     last_name: '',
     gender: '',
