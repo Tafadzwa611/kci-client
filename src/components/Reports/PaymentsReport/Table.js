@@ -68,7 +68,7 @@ const TableHeader = ({report, params, setReport}) => {
     <div className='table-header'>
       <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
         <Pager nextPageNumber={report.next_page_num} params={params} prevPageNumber={report.prev_page_num} setReport={setReport}/>
-        <div style={{marginTop:'6px'}}>Showing {report.payments.length} of {report.count} clients.</div>
+        <div style={{marginTop:'6px'}}>Showing {report.payments.length} of {report.count} payments.</div>
       </div>
       <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
         <div style={{marginTop:'6px'}}>Page {report.number} of {report.num_of_pages}</div>

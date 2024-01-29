@@ -4,7 +4,8 @@ import {
   CustomDatePickerFilter,
   CustomSelectFilter,
   SubmitButtonFilter,
-  NonFieldErrors
+  NonFieldErrors,
+  CustomInputFilter
 } from '../../../common';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
@@ -77,7 +78,7 @@ const Filter = ({setReport, accounts, setParams, branches}) => {
                     <CustomDatePickerFilter label='End Value Date' name='max_date' setFieldValue={setFieldValue} required/>
                   </div>
                   <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomDatePickerFilter label='Loan Number' name='loan_number' setFieldValue={setFieldValue}/>
+                    <CustomInputFilter label='Loan Number' name='loan_number' type='text'/>
                   </div>
                 </div>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
