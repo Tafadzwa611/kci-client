@@ -10,6 +10,7 @@ import {
 const ClientInformation = ({clientControls, setFieldValue, staff}) => {
   return (
     <>
+      {clientControls.client_id_format === 'MAN' ? <CustomInput label='Client Number' name='client_num' type='text' required/> : null}
       <CustomInput label='Forenames' name='first_name' type='text' required/>
       <CustomInput label='Lastnames' name='last_name' type='text' required/>
       <CustomSelect label='Gender' name='gender' required>

@@ -32,7 +32,13 @@ function UpdatePersonalInfo({setOpen, staff, clientControls, client, setClient})
       if (clientManagerObj) {
         client_manager = `${clientManagerObj.first_name} ${clientManagerObj.last_name}`;
       }
-      setClient(curr => ({...curr, ...data, client_manager: client_manager, client_manager_id: values.client_manager_id}));
+      setClient(curr => ({
+        ...curr,
+        ...data,
+        client_manager: client_manager,
+        client_manager_id: values.client_manager_id,
+        client_id: values.client_num
+      }));
       setOpen(null);
     } catch (error) {
       console.log(error);
@@ -48,6 +54,7 @@ function UpdatePersonalInfo({setOpen, staff, clientControls, client, setClient})
 
   const initialValues = {
     ...client,
+    client_num: client.client_id,
     email: client.email || '',
     client_manager_id: client.client_manager_id || '',
     home_phone: client.home_phone || '',
@@ -100,6 +107,7 @@ const processErrors = (errors) => {
 
   const fieldNames = {
     first_name: 'First Name',
+    client_id: 'Client Number',
     last_name: 'Last Name',
     full_name: 'Full Name',
     gender: 'Gender',

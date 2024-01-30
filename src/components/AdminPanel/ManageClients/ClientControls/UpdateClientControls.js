@@ -111,6 +111,7 @@ const UpdateClientControls = ({open, setOpen, clientControls, setClientControls}
                   <CustomSelect label='Client Number Format' name='client_id_format'>
                     <option value='CNCC'>BRANCH CLIENT COUNT</option>
                     <option value='BR-DT-RN'>BRANCH-DATE-RANDOM</option>
+                    <option value='MAN'>MANUAL</option>
                   </CustomSelect>
                 </div>
               <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>

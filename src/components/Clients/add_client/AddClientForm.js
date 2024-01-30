@@ -82,6 +82,7 @@ function AddClientForm({customForms, clientTypes, idTemplates, clientControls, s
   }
   const initialValues = {
     client_type_id: '',
+    client_num: '',
     client_manager_id: '',
     whatsapp_banking_active: false,
     first_name: '',
@@ -214,6 +215,7 @@ const processErrors = (errors, customForms) => {
 const getFieldName = (fieldName, fieldSetId, customForms) => {
   if (!fieldSetId) {
     return {
+      client_id: 'Client Number',
       first_name: 'First Name',
       last_name: 'Last Name',
       full_name: 'Full Name',

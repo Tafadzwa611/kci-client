@@ -5,11 +5,6 @@ function PersonalInfo({client, setModal}) {
   return (
     <div>
       <div style={{display:'flex', justifyContent:'space-between', marginTop:'1.5rem'}}>
-        {/* {client.status == 'Inactive' &&
-          <div style={{display:'flex', columnGap:'10px'}}>
-            <button className='btn btn-default client__details'>Add loan</button>
-            <button className='btn btn-default client__details'>Transfer Client</button>
-          </div>} */}
         <div>
           <button className='btn btn-success' onClick={() => setModal(MODAL_STATES.updateInfo)}>Update Personal Details</button>
         </div>
