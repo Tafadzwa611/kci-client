@@ -14,11 +14,11 @@ const CONTROL_NAMES = {
   min_client_age: 'Minimum Client Age',
   maximum_group_size: 'Maximum group size',
   minimum_group_size: 'Minimum group size',
-  // allow_clients_without_id: 'Allow Clients Without Identification',
   client_officer_required: 'Client Officer Required',
   group_officer_required: 'Group Officer Required',
   allow_multi_groups_per_client: 'Allow multi groups per client',
   client_id_format: 'Client Number Format',
+  allow_clients_without_id: 'Allow Clients Without ID'
 };
 
 const List = ({initControls}) => {
@@ -44,7 +44,7 @@ const List = ({initControls}) => {
 }
 
 const getTableRows = (clientControls) => {
-  return Object.keys(clientControls).map(key => {
+  return Object.keys(clientControls).sort().map(key => {
     return (
       <tr key={key}>
         <td>{CONTROL_NAMES[key]}</td>
