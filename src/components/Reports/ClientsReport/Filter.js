@@ -14,7 +14,7 @@ import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
 const Filter = ({setClientsReportData, setParams}) => {
-  const initialValues = {branch_ids: [], page_num: 1, min_date: '', max_date: '', client_str: '', order: '', mode: 'html'};
+  const initialValues = {branch_ids: [], page_num: 1, min_date: '', max_date: '', client_str: '', order: '-id', mode: 'html'};
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
@@ -50,34 +50,38 @@ const Filter = ({setClientsReportData, setParams}) => {
               <NonFieldErrors errors={errors}>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
                   <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomDatePickerFilter label='Min Reg Date' name='min_date' setFieldValue={setFieldValue} required/>
+                    <CustomDatePickerFilter label='Min Client Reg Date' name='min_date' setFieldValue={setFieldValue}/>
                   </div>
                   <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomDatePickerFilter label='Max Reg Date' name='max_date' setFieldValue={setFieldValue} required/>
+                    <CustomDatePickerFilter label='Max Client Reg Date' name='max_date' setFieldValue={setFieldValue}/>
                   </div>
                   <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomInputFilter label='Search Client' name='client_str' type='text'/>
+                    <CustomDatePickerFilter label='Min Loan DB Date' name='min_db_date' setFieldValue={setFieldValue}/>
                   </div>
                   <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomSelectFilter label='Currency' name='currency_id' required>
-                      <option value=''>------</option>
-                      {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-                    </CustomSelectFilter>
+                    <CustomDatePickerFilter label='Max Loan DB Date' name='max_db_date' setFieldValue={setFieldValue}/>
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'70%'}}>
+                  <div style={{width:'40%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
                       options={branches.map(br => ({label: br.name, value:br.id}))}
                       setFieldValue={setFieldValue}
-                      required
                     />
+                  </div>
+                  <div className='row-payments-container' style={{width:'20%'}}>
+                    <CustomInputFilter label='Search Client' name='client_str' type='text'/>
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomSelectFilter label='Currency' name='currency_id' required>
+                      <option value=''>------</option>
+                      {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+                    </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'10%'}}>
                     <CustomSelectFilter label='Order' name='order' required>
-                      <option value=''>------</option>
                       <option value={'-id'}>Show newest first</option>
                       <option value={'id'}>Show oldest first</option>
                     </CustomSelectFilter>
