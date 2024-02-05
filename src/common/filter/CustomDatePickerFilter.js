@@ -3,6 +3,7 @@ import { useLoggedInUser } from '../../contexts/LoggedInUserContext';
 import { useField } from 'formik';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 
+
 function CustomDatePickerFilter({ setFieldValue, label, ...props }) {
   const [field, meta] = useField(props);
   const {loggedInUser} = useLoggedInUser();
@@ -15,21 +16,26 @@ function CustomDatePickerFilter({ setFieldValue, label, ...props }) {
     }
   }
 
+  const clear = (evt) => {
+    evt.preventDefault();
+    handleChange(undefined);
+  }
+
+  const dateFormat =  loggedInUser.date_format.toUpperCase();
+  const renderComponent = <CustomInput required={props.required} touched={meta.touched} error={meta.error} />;
+
   return (
-    <>
-      <div>
-        <label className='form-label row-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
-        <div className="input-group" style={{margin:"0", display:"flex", flexDirection:"column"}}>
-          <DatePicker
-            value={field.value}
-            format={loggedInUser.date_format.toUpperCase()}
-            onChange={handleChange}
-            render={<CustomInput required={props.required} touched={meta.touched} error={meta.error} />}
-          />
-          {meta.touched && meta.error && <div className='error'>{meta.error}</div>}
-        </div>
+    <div>
+      <label className='form-label row-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
+      <div className='input-group' style={{margin:'0', display:'flex', flexDirection:'column'}}>
+        <DatePicker value={field.value} format={dateFormat} onChange={handleChange} render={renderComponent}>
+          <button onClick={clear}>
+            Clear
+          </button>
+        </DatePicker>
+        {meta.touched && meta.error && <div className='error'>{meta.error}</div>}
       </div>
-    </>
+    </div>
   )
 }
 
