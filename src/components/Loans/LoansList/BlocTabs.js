@@ -10,6 +10,7 @@ import DetailsTab from './DetailsTab';
 import SubLoans from './SubLoans';
 import Audit from './Audit';
 import Fees from './Fees';
+import TopUpList from './TopUpList';
 
 function BlocTabs({loan, setLoan, client_name, setLoanData}) {
   const [tab, setTab] = useState('details');
@@ -24,14 +25,15 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
         <button className={tab === 'payments' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('payments')}>Payments</button>
         <button className={tab === 'fees' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('fees')}>Fees</button>
         <button className={tab === 'penalties' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('penalties')}>Penalties</button>
+        <button className={tab === 'topup' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('topup')}>Top-Ups</button>
         <button className={tab === 'securities' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('securities')}>Collateral</button>
         <button className={tab === 'comments' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('comments')}>Comments</button>
         <button className={tab === 'files' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('files')}>Attachments</button>
         {/* <button className={tab === 'audit' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('audit')}>Audit</button> */}
       </div>
       {{
-        'details': <DetailsTab loan={loan}/>,
-        'payments': <Payments
+        details: <DetailsTab loan={loan}/>,
+        payments: <Payments
           payments={loan.payments}
           currencyId={loan.currency_id}
           setLoan={setLoan}
@@ -40,9 +42,9 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
           accountId={loan.loan_id}
           clientName={loan.client_fullname ? loan.client_fullname : loan.group_name}
         />,
-        'securities': <Securities collaterals={loan.collaterals} setLoan={setLoan} loanId={loan.id} />,
-        'loans': <SubLoans loans={loan.sub_loans_list} client_name={client_name} />,
-        'schedule': <ScheduleTab
+        securities: <Securities collaterals={loan.collaterals} setLoan={setLoan} loanId={loan.id} />,
+        loans: <SubLoans loans={loan.sub_loans_list} client_name={client_name} />,
+        schedule: <ScheduleTab
           loanId={loan.id}
           setLoan={setLoan}
           client_name={client_name}
@@ -50,8 +52,8 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
           currencyId={loan.currency_id}
           installments={loan.installments}
         />,
-        'txns': <Txns loanId={loan.id} txns={loan.txns} client_name={client_name} />,
-        'penalties': <Penalties
+        txns: <Txns loanId={loan.id} txns={loan.txns} client_name={client_name} />,
+        penalties: <Penalties
           penalties={loan.penalties}
           subLoans={loan.sub_loans_list}
           clientType={loan.client_type}
@@ -62,10 +64,11 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
           setLoan={setLoan}
           locked={loan.penalties_locked}
         />,
-        'fees': <Fees setLoan={setLoan} fees={loan.applied_fees}/>,
-        'comments': <Comments comments={loan.comments} setLoan={setLoan} loanId={loan.id}/>,
-        'files': <LoanFiles loanId={loan.id} files={loan.files} setLoan={setLoan} />,
-        'audit': <Audit loanId={loan.id}/>,
+        fees: <Fees setLoan={setLoan} fees={loan.applied_fees}/>,
+        comments: <Comments comments={loan.comments} setLoan={setLoan} loanId={loan.id}/>,
+        files: <LoanFiles loanId={loan.id} files={loan.files} setLoan={setLoan} />,
+        audit: <Audit loanId={loan.id}/>,
+        topup: <TopUpList topups={loan.topups}/>
       }[tab]}
     </div>
   )

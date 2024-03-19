@@ -10,6 +10,7 @@ import AddPayment from './AddPayment';
 import AddFee from './AddFee';
 import WriteOff from './WriteOff';
 import UndoWriteOff from './UndoWriteOff';
+import TopUp from './TopUp';
 
 const MODAL_STATES = {
   approve: 'approve',
@@ -22,6 +23,7 @@ const MODAL_STATES = {
   addFee: 'addFee',
   writeOff: 'writeOff',
   undoWriteOff: 'undoWriteOff',
+  topup: 'topup',
   none: false
 };
 
@@ -37,6 +39,7 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
     addFee,
     writeOff,
     undoWriteOff,
+    topup,
     none
   } = MODAL_STATES;
   const [modal, setModal] = useState(none);
@@ -165,9 +168,17 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
           updateLoanList={updateLoanList}
           setLoanData={setLoanData}
         />}
+        {modal === topup && <TopUp
+          setOpen={setModal}
+          loan={loan}
+          setLoanDetails={setLoanDetails}
+          updateLoanList={updateLoanList}
+          setLoanData={setLoanData}
+        />}
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setModal(addPayment)}>Add Payment</button>
           <button className='btn btn-olive' onClick={() => setModal(addFee)}>Add Fee</button>
+          <button className='btn btn-olive' onClick={() => setModal(topup)}>Top-Up</button>
           {loan.status == 'Written-Off' ?
           <button className='btn btn-olive' onClick={() => setModal(undoWriteOff)}>Undo Write Off</button> :
           <button className='btn btn-olive' onClick={() => setModal(writeOff)}>Write Off</button>}

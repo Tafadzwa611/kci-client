@@ -23,6 +23,7 @@ function OnlineApplications() {
             setApps={setApps}
             setParams={setParams}
           />
+          <div style={{paddingTop: '2rem'}}></div>
           <Table apps={apps} params={params} setApps={setApps}/>
         </>
       )}

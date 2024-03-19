@@ -89,7 +89,7 @@ function ProductDetails({product, close, setView, setProducts}) {
                 </div>
               </div>
               <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-              <div style={{width:"33%"}}>
+                <div style={{width:"33%"}}>
                   <ul style={{paddingRight:"1rem"}}>
                     <li style={{marginBottom: '1rem'}}><b>Decimal Places, Rounding Off and Repayment Order</b></li>
                     <li>Decimal Places: {getDecimalPlaces(product.number_of_decimal_places)}</li>
@@ -97,6 +97,15 @@ function ProductDetails({product, close, setView, setProducts}) {
                     <li>Repayment Order: {product.repayment_order.first}, {product.repayment_order.second}, {product.repayment_order.third}, {product.repayment_order.fourth}</li>
                   </ul>
                 </div>
+                <div style={{width:"33%"}}>
+                  <ul style={{paddingRight:"1rem"}}>
+                    <li style={{marginBottom: '1rem'}}><b>Top-Up Settings</b></li>
+                    <li>Top-Up Window Period In Days: {product.topup_window_period} days</li>
+                    <li>Number Of Topups Allowed Per Loan: {product.number_of_topups_allowed}</li>
+                    <li>Maximum Top-Up Amount As A Percentage: {product.topup_limit}%</li>
+                  </ul>
+                </div>
+                <div style={{width:"33%"}}></div>
               </div>
             </div>
             <div style={{width:"25%"}}>

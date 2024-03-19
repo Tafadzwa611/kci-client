@@ -17,7 +17,6 @@ import { scheduleStrategies } from './data';
 import {Fee, AddFee} from './Fees';
 
 function ProductForm({loanFees, initialValues, validationSchema, onSubmit, back}) {
-  console.log(initialValues);
   const {branches} = useBranches();
   const selectBranches = branches.map(br => ({label: br.name, value:br.id}));
   initialValues.allowed_branches_ids = selectBranches.filter(br => initialValues.allowed_branches_ids.includes(br.value))
@@ -72,6 +71,12 @@ function ProductForm({loanFees, initialValues, validationSchema, onSubmit, back}
               </CustomSelect>
               <CustomInput label='Minimum Loan Interest' name='minimum_interest_rate' type='number' required/>
               <CustomInput label='Maximum Loan Interest' name='maximum_interest_rate' type='number' required/>
+              <div className='divider divider-info'>
+                <span>Top-Up Settings</span>
+              </div>
+              <CustomInput label='Topup Window Period In Days' name='topup_window_period' type='number' required/>
+              <CustomInput label='Number Of Topups Allowed Per Loan' name='number_of_topups_allowed' type='number' required/>
+              <CustomInput label='Maximum Top-Up Amount As A Percentage' name='topup_limit' type='number' required/>
               <div className='divider divider-info'>
                 <span>Tenure Settings</span>
               </div>

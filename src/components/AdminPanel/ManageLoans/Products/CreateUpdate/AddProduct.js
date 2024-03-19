@@ -40,6 +40,9 @@ function AddProduct({loanFees, setView, setProductId, setProducts, setSelectedPr
     penalty_charged_per: '',
     late_repayment_penalty_percentage: '',
     grace_period: '',
+    topup_window_period: 0,
+    number_of_topups_allowed: 0,
+    topup_limit: 0
   };
 
   const back = () => setView('list');
