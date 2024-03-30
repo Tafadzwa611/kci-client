@@ -76,6 +76,9 @@ function ProductDetails({product, close, setView, setProducts}) {
                         <li>Apply Penalty On: {product.apply_late_repayment_penalty_on}</li>
                         <li>Penalty Rate: {product.late_repayment_penalty_percentage}%{product.penalty_charged_per}</li>
                         <li>Penalty Tolerance Period In Days: {getTenure(product.grace_period, 'Days')}</li>
+                        {product.send_sms_on_default ?
+                          <li>Send SMS Alert On Default: <span className="badge badge-success">Active</span></li>:
+                          <li>Send SMS Alert On Default: <span className="badge badge-danger">Inactive</span></li>}
                       </>
                     }
                   </ul>
