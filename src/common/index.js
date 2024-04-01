@@ -16,7 +16,8 @@ export {
   CustomMultiSelect,
   CustomSortableSelect,
   CustomSelectRemote,
-  CustomPhoneNumber
+  CustomPhoneNumber,
+  CustomTimePicker
 } from './forms';
 export {
   DeleteBtn,
