@@ -6,10 +6,12 @@ import {
   Modal,
   NonFieldErrors,
   CustomSelect,
+  CustomInput,
   CustomTimePicker,
   ModalSubmit
 } from '../../../common';
 import { Form, Formik } from 'formik';
+import { removeEmptyValues } from '../../../utils/utils';
 
 function Notifications() {
   return (
@@ -18,6 +20,9 @@ function Notifications() {
     </Fetcher>
   )
 }
+
+const TARGETS_MAP = {user: 'Users', client: 'Clients'};
+const NOTIFICATIONS_MAP = {arrears: 'Loan Default', reminder: 'Installment Reminder'};
 
 const Table = ({initTasks}) => {
   const [tasks, setTasks] = useState(initTasks);
@@ -51,13 +56,15 @@ const Table = ({initTasks}) => {
             <tr className='journal-details header'>
               <th>Target</th>
               <th>Notification</th>
+              <th>Description</th>
               <th>Time</th>
               <th>Action</th>
             </tr>
             {tasks.map(task => (
               <tr key={task.id} className='table-row'>
-                <td>{task.target}</td>
-                <td>{task.notification}</td>
+                <td>{TARGETS_MAP[task.target]}</td>
+                <td>{NOTIFICATIONS_MAP[task.notification]}</td>
+                <td>{task.description}</td>
                 <td>{task.time}</td>
                 <td>
                   <DeleteBtn id={task.id} handler={del_task} />
@@ -75,15 +82,20 @@ const CreatePeriodicTask = ({setTasks, setOpen}) => {
   const initialValues = {
     target: '',
     notification: '',
-    schedule_time: ''
+    schedule_time: '',
+    num_of_days_from_installment: ''
   };
 
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post('/usersapi/schedule_notification/', values, CONFIG);
+      const cleanValues = removeEmptyValues(values);
+      const {target, notification, schedule_time, ...rest} = cleanValues;
+      const data = {target, notification, schedule_time, extra_data: rest};
+      const response = await axios.post('/usersapi/schedule_notification/', data, CONFIG);
       const newTask = response.data;
-      setTasks(curr => [newTask, ...curr.filter((task) => `${task.target}${task.notification}` !== `${newTask.target}${newTask.notification}`)]);
+      const newTaskStr = `${newTask.target}${newTask.notification}${newTask.time}`;
+      setTasks(curr => [newTask, ...curr.filter((task) => `${task.target}${task.notification}${task.time}` !== newTaskStr)]);
       setOpen(false);
     } catch (error) {
       console.log(error);
@@ -100,7 +112,7 @@ const CreatePeriodicTask = ({setTasks, setOpen}) => {
   return (
     <Modal open={true} setOpen={setOpen} title='Create Notification'>
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        {({ setFieldValue, isSubmitting, errors }) => (
+        {({ setFieldValue, isSubmitting, errors, values }) => (
           <Form autoComplete='off'>
             <NonFieldErrors errors={errors}>
               <div className='create_modal_container'>
@@ -113,7 +125,9 @@ const CreatePeriodicTask = ({setTasks, setOpen}) => {
                   <CustomSelect label='Notification' name='notification' required>
                     <option value=''>------</option>
                     <option value='arrears'>Loan Default</option>
+                    <option value='reminder'>Installment Reminder</option>
                   </CustomSelect>
+                  {values.notification === 'reminder' ? <CustomInput label='Days From Installment' type='number' min='1' step='1' name='num_of_days_from_installment' required/> : null}
                   <CustomTimePicker setFieldValue={setFieldValue} label='Time' name='schedule_time' required/>
                 </div>
                 <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
