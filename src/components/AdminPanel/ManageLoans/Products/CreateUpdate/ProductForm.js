@@ -161,7 +161,7 @@ function ProductForm({loanFees, initialValues, validationSchema, onSubmit, back}
                 <span>Defaults & Penalties</span>
               </div>
               <CustomCheckbox label='Allow Early Settlement On Loans With Unpaid Penalties' name='allow_early_settlement_on_penalties'/>
-              <CustomCheckbox label='Send SMS Alert On Loan Default' name='send_sms_on_default'/>
+              <CustomCheckbox label='Send SMS Alert On Loan Default/Installment Reminders' name='send_sms_on_default'/>
               <CustomSelect label='Action On Default' name='action_on_loan_default'>
                 <option value='Do Nothing'>Do Nothing</option>
                 <option value='Add Penalty'>Add Penalty</option>
