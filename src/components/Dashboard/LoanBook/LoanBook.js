@@ -54,6 +54,7 @@ function LoanBook({currencyId, branchIds}) {
             <p className='dashboard-section-title'>Loan Book Value</p>
             <p><span className='dashboard__text'>{currency.shortname} {loanBook.principal_balance}</span> (P)</p>
             <p><span className='dashboard__text'>{currency.shortname} {loanBook.principal_interest_balance}</span> (P+I)</p>
+            <p><span className='dashboard__text'>{currency.shortname} {loanBook.principal_interest_penalty_balance}</span> (P+I+P)</p>
           </div>
           <div className='book-value-info-box loan__book'>
             <p className='dashboard-section-title'>Loan Book Value Categories (P)</p>
