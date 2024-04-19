@@ -12,6 +12,7 @@ import PaymentsReport from '../PaymentsReport/PaymentsReport';
 import PortfolioAtRiskReport from '../PortfolioAtRiskReport/PortfolioAtRiskReport';
 import ExpectedPaymentsReport from '../ExpectedPaymentsReport/ExpectedPaymentsReport';
 import AuditTrail from '../AuditTrail/AuditTrail';
+import CreditReport from '../CreditReport/CreditReport';
 import {
   Routes,
   Route,
@@ -41,6 +42,7 @@ const ViewReports = () => {
         <Route path='dailyreport' element={<DailyReport />} />
         <Route path='portofolioatriskreport' element={<PortfolioAtRiskReport />} />
         <Route path='audittrail' element={<AuditTrail />} />
+        <Route path='creditreport' element={<CreditReport />} />
       </Route>
     </Routes>
   )
@@ -61,6 +63,9 @@ function Layout() {
             </Link>
             <Link to='/reports/viewreports/loansreport' className={location.pathname === '/reports/viewreports/loansreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Loans Report
+            </Link>
+            <Link to='/reports/viewreports/creditreport' className={location.pathname === '/reports/viewreports/creditreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Credit Report
             </Link>
             <Link to='/reports/viewreports/paymentsreport' className={location.pathname === '/reports/viewreports/paymentsreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Payments
