@@ -191,7 +191,12 @@ function EntityForm({fields}) {
 
 const processFields = (fields) => {
   const native_fields = fields.filter(field => field.type === 'native').map(field => field.field_name);
-  const custom_fields = fields.filter(field => field.type === 'custom').map(field => ({field_set_id: field.custom_field_set_id, field_name: field.field_name.slice(7)}));
+  const custom_fields = fields.filter(field => field.type === 'custom').map(field => {
+    const startIndex = 7;
+    const endIndex = field.field_name.lastIndexOf('_');
+    let field_name = field.field_name.slice(startIndex, endIndex);
+    return {field_set_id: field.custom_field_set_id, field_name: field_name};
+  })
   const annotated_fields = fields.filter(field => field.type === 'annotation').map(field => field.field_name);
   return {native_fields, custom_fields, annotated_fields}
 }
