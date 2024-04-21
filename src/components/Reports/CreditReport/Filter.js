@@ -94,7 +94,7 @@ const Filter = ({setReport, setParams}) => {
                   </div>
                 </div>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div style={{width:'60%'}}>
+                  <div style={{width:'85%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
