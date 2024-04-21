@@ -14,20 +14,23 @@ import LocalExportRoutes from './LocalExportsRoutes';
 import {useLoggedInUser} from '../../contexts/LoggedInUserContext';
 import { useBranches } from '../../contexts/BranchesContext';
 import { useCurrencies } from '../../contexts/CurrenciesContext';
+import { useLoanControls } from '../../contexts/LoanControlsContext';
 import { Routes as ReactRoutes, Route } from 'react-router-dom';
 
 const Home = lazy(() => import('../Home/Home'));
 const Dashboard = lazy(() => import('../Dashboard/Dashboard'));
 
-const Routes = ({loggedInUser, branches, currencies}) => {
+const Routes = ({loggedInUser, branches, currencies, loanControls}) => {
   const {setLoggedInUser} = useLoggedInUser();
   const {setBranches} = useBranches();
   const {setCurrencies} = useCurrencies();
+  const {setLoanControls} = useLoanControls();
 
   useEffect(() => {
     setLoggedInUser(loggedInUser);
     setBranches(branches.results);
     setCurrencies(currencies);
+    setLoanControls(loanControls);
   }, []);
 
   return (

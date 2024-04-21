@@ -7,6 +7,7 @@ import {LoggedInUserProvider} from '../contexts/LoggedInUserContext';
 import { BranchesProvider } from '../contexts/BranchesContext';
 import { CurrenciesProvider } from '../contexts/CurrenciesContext';
 import { NotificationsProvider } from '../contexts/NotificationsContext';
+import { LoanControlsProvider } from '../contexts/LoanControlsContext';
 
 export const ThemeContext = createContext(null);
 
@@ -28,7 +29,7 @@ function App() {
 
   return (
     <>
-      <Fetcher urls={['/usersapi/logged_in_user/', '/usersapi/get-branches/', '/usersapi/list_currencies/']}>
+      <Fetcher urls={['/usersapi/logged_in_user/', '/usersapi/get-branches/', '/usersapi/list_currencies/', '/loansapi/loan_controls/']}>
         {({data}) => {
           return (
             <ThemeContext.Provider value={{theme, toggleTheme}}>
@@ -36,16 +37,18 @@ function App() {
                 <CurrenciesProvider>
                   <BranchesProvider>
                     <NotificationsProvider>
-                      <Router>
-                        <div id={theme}>
-                          <section className='home-section'>
-                            <Navbar theme={theme} loggedInUser={data[0]} toggleTheme={toggleTheme}/>
-                            <div className='app'>
-                              <Routes loggedInUser={data[0]} branches={data[1]} currencies={data[2]}/>
-                            </div>
-                          </section>
-                        </div>
-                      </Router>
+                      <LoanControlsProvider>
+                        <Router>
+                          <div id={theme}>
+                            <section className='home-section'>
+                              <Navbar theme={theme} loggedInUser={data[0]} toggleTheme={toggleTheme}/>
+                              <div className='app'>
+                                <Routes loggedInUser={data[0]} branches={data[1]} currencies={data[2]} loanControls={data[3]}/>
+                              </div>
+                            </section>
+                          </div>
+                        </Router>
+                      </LoanControlsProvider>
                     </NotificationsProvider>
                   </BranchesProvider>
                 </CurrenciesProvider>

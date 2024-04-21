@@ -56,6 +56,7 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
           url={approveUrl}
           setLoanDetails={setLoanDetails}
           setLoanData={setLoanData}
+          loanId={loan.id}
         />}
         {modal === reject && <RejectLoan setOpen={setModal} url={rejectUrl} setLoanDetails={setLoanDetails} updateLoanList={updateLoanList} setLoanData={setLoanData}/>}
         {modal === deleteLoan && <DeleteLoan
