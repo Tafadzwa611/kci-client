@@ -3,6 +3,7 @@ import ClientsList from '../ClientsList/ClientsList';
 import NewAddClient from '../add_client/NewAddClient';
 import Sms from '../Sms/Sms';
 import Client from '../ClientsDetails/Client';
+import OnlineApps from '../OnlineApps/OnlineApps';
 import {
   Routes,
   Route,
@@ -25,6 +26,7 @@ const ViewClients = () => {
         <Route index element={<ClientsList />} />
         <Route path='addclient' element={<NewAddClient />} />
         <Route path='sms' element={<Sms />} />
+        <Route path='apps' element={<OnlineApps />} />
         <Route path='clientdetails/:clientId' element={<FullClientDetails/>}/>
       </Route>
     </Routes>
@@ -62,8 +64,11 @@ function Layout() {
             <Link to='/clients/viewclients/addclient' id='add' className={location.pathname === '/clients/viewclients/addclient' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Add Client
             </Link>
-            <Link to='/clients/viewclients/sms' id='add' className={location.pathname === '/clients/viewclients/sms' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+            <Link to='/clients/viewclients/sms' id='sms' className={location.pathname === '/clients/viewclients/sms' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               SmS
+            </Link>
+            <Link to='/clients/viewclients/apps' id='apps' className={location.pathname === '/clients/viewclients/apps' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Online Applications
             </Link>
           </div>
           <div className='tab-content font-12' style={{marginTop:'3rem'}}>

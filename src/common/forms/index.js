@@ -16,6 +16,7 @@ import CustomSortableSelect from './CustomSortableSelect';
 import CustomSelectRemote from './CustomSelectRemote';
 import CustomPhoneNumber from './CustomPhoneNumber';
 import CustomTimePicker from './CustomTimePicker';
+import { countryPhoneCodes } from './data';
 
 export {
     CustomRadio,
@@ -35,5 +36,6 @@ export {
     CustomSortableSelect,
     CustomSelectRemote,
     CustomPhoneNumber,
-    CustomTimePicker
+    CustomTimePicker,
+    countryPhoneCodes
 };

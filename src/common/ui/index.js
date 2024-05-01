@@ -11,6 +11,7 @@ import ButtonSuccess from './ButtonSuccess';
 import CheckBox from './CheckBox';
 import DefaultBtn from './DefaultBtn';
 import OliveBtn from './OliveBtn';
+import Pager from './Pager';
 
 export {
   CheckBox,
@@ -26,4 +27,5 @@ export {
   ButtonSuccess,
   DefaultBtn,
   OliveBtn,
+  Pager
 };
