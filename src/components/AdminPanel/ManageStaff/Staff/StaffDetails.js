@@ -28,7 +28,7 @@ function StaffDetails() {
                   </button>
                 </>
               </div>
-              <div style={{display:'grid', gridTemplateColumns:'1fr 1fr'}}>
+              <div style={{display:'grid', gridTemplateColumns:'1fr 1fr 1fr'}}>
                 <div>
                   <div style={{margin:'1rem 0', display:'flex', justifyContent:'space-between'}}>
                     <div style={{display:'flex', alignItems:'center'}}>
@@ -55,6 +55,14 @@ function StaffDetails() {
                     </div>
                   </div>
                   {data[0].branch_access.map(branch => <div key={branch.id} style={{marginRight:'5px'}}>{branch.name}</div>)}
+                </div>
+                <div>
+                  <div style={{margin:'1rem 0', display:'flex', justifyContent:'space-between'}}>
+                    <div style={{display:'flex', alignItems:'center'}}>
+                      <span style={{marginRight:'5px'}}><b>Notifications</b></span>
+                    </div>
+                  </div>
+                  {data[0].notification_types.map(notification_type => <div key={notification_type} style={{marginRight:'5px'}}>{notification_type}</div>)}
                 </div>
               </div>
             </div>
