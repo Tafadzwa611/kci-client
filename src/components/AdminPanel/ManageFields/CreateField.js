@@ -14,7 +14,15 @@ import {
 } from '../../../common';
 
 const CreateField = ({open, setOpen, setFields, fieldSetId}) => {
-  const initialValues = {name: '', data_type: '', text_format: '', select_opts: [], is_required: false, is_unique: false};
+  const initialValues = {
+    name: '',
+    data_type: '',
+    text_format: '',
+    select_opts: [],
+    is_required: false,
+    is_searchable: false,
+    is_unique: false
+  };
 
   const getPayload = (values) => {
     return {
@@ -22,6 +30,7 @@ const CreateField = ({open, setOpen, setFields, fieldSetId}) => {
       data_type: values.data_type,
       is_required: values.is_required,
       is_unique: values.is_unique,
+      is_searchable: values.is_searchable,
       field_set_id: fieldSetId,
       ...(values.text_format != '') && {text_format: values.text_format},
       ...(values.select_opts.length > 0) && {select_opts: values.select_opts}
@@ -50,6 +59,7 @@ const CreateField = ({open, setOpen, setFields, fieldSetId}) => {
                   </CustomSelect>
                   <CustomCheckbox label='Is Mandatory' name='is_required'/>
                   {values.data_type === 'free_text' && <CustomCheckbox label='Is Unique' name='is_unique'/>}
+                  {values.data_type === 'free_text' && <CustomCheckbox label='Is Searchable' name='is_searchable'/>}
                   {values.data_type === 'free_text' && <CustomInput label='Text Format' name='text_format' type='text'/>}
                   {values.data_type === 'select' &&
                     <CustomTypeAndAdd
