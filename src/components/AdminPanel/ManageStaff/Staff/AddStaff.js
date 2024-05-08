@@ -28,7 +28,12 @@ function AddStaff({roles, branches}) {
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const data = {...values, access_branch_ids: values.access_branches.map(branch => branch.value)};
+      const data = {
+        ...values,
+        access_branch_ids: values.access_branches.map(branch => branch.value),
+        notification_types: values.notification_types.map(notification => notification.value)
+      };
+      console.log(data);
       const response = await axios.post('/usersapi/add_staff/', data, CONFIG);
       navigate({pathname: `/users/admin/staff/staffdetails/${response.data.id}`});
     } catch (error) {
@@ -43,10 +48,19 @@ function AddStaff({roles, branches}) {
     }
   }
 
-  const initialValues = {first_name: '', last_name: '', email: '', branch_id: '', role_id: '', access_branches: [], is_loan_officer: false};
+  const initialValues = {
+    first_name: '',
+    last_name: '',
+    email: '',
+    branch_id: '',
+    role_id: '',
+    access_branches: [],
+    notification_types: [],
+    is_loan_officer: false
+  };
 
   return (
-    <Fetcher urls={['/usersapi/staffroles/', '/usersapi/branch-list/']}>
+    <Fetcher urls={['/usersapi/staffroles/', '/usersapi/branch-list/', '/usersapi/notification_types/']}>
       {({data}) => (
         <div>
           <button type='button' className='btn btn-default max'>
@@ -75,6 +89,12 @@ function AddStaff({roles, branches}) {
                     setFieldValue={setFieldValue}
                     name='access_branches'
                     options={data[1].map(branch => ({value: branch.id, label: branch.name}))}
+                  />
+                  <CustomMultiSelect
+                    label='Notifications'
+                    setFieldValue={setFieldValue}
+                    name='notification_types'
+                    options={data[2].map(notification => ({value: notification, label: notification}))}
                   />
                   <CustomCheckbox label='Is Loan Officer' name='is_loan_officer'/>
                   <div className='divider divider-default' style={{padding: '1.25rem'}}></div>

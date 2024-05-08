@@ -19,13 +19,13 @@ function EditStaff() {
   const params = useParams();
 
   return (
-    <Fetcher urls={[`/usersapi/user_details/${params.staffId}/`, '/usersapi/staffroles/', '/usersapi/branch-list/']}>
-      {({data}) => <EditStaffForm staff={data[0]} roles={data[1]} branches={data[2]}/>}
+    <Fetcher urls={[`/usersapi/user_details/${params.staffId}/`, '/usersapi/staffroles/', '/usersapi/branch-list/', '/usersapi/notification_types/']}>
+      {({data}) => <EditStaffForm staff={data[0]} roles={data[1]} branches={data[2]} notificationTypes={data[3]}/>}
     </Fetcher>
   )
 }
 
-const EditStaffForm = ({staff, roles, branches}) => {
+const EditStaffForm = ({staff, roles, branches, notificationTypes}) => {
   const navigate = useNavigate();
 
   const initialValues = {
@@ -36,13 +36,18 @@ const EditStaffForm = ({staff, roles, branches}) => {
     role_id: staff.role_id,
     is_active: staff.is_active,
     is_loan_officer: staff.is_loan_officer,
-    access_branches: staff.branch_access.map(branch => ({value: branch.id, label: branch.name}))
+    access_branches: staff.branch_access.map(branch => ({value: branch.id, label: branch.name})),
+    notification_types: staff.branch_access.map(notification => ({value: notification, label: notification}))
   };
 
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const data = {...values, access_branch_ids: values.access_branches.map(branch => branch.value)};
+      const data = {
+        ...values,
+        access_branch_ids: values.access_branches.map(branch => branch.value),
+        notification_types: values.notification_types.map(notification => notification.value)
+      };
       await axios.put(`/usersapi/update_user/${staff.id}/`, data, CONFIG);
       navigate({pathname: `/users/admin/staff/staffdetails/${staff.id}`});
     } catch (error) {
@@ -86,6 +91,13 @@ const EditStaffForm = ({staff, roles, branches}) => {
                 setFieldValue={setFieldValue}
                 name='access_branches'
                 options={branches.map(branch => ({value: branch.id, label: branch.name}))}
+              />
+              <CustomMultiSelect
+                label='Notifications'
+                initVals={staff.notification_types.map(notification => ({value: notification, label: notification}))}
+                setFieldValue={setFieldValue}
+                name='notification_types'
+                options={notificationTypes.map(notification => ({value: notification, label: notification}))}
               />
               <CustomCheckbox label='Is Active' name='is_active'/>
               <CustomCheckbox label='Is Loan Officer' name='is_loan_officer'/>
