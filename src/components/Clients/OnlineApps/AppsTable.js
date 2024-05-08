@@ -61,6 +61,11 @@ const MainTable = ({appsData, handleClick}) => {
               <thead>
                 <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
                   <th style={{textAlign:'start'}}>Full_Name</th>
+                  <th style={{textAlign:'start'}}>Type_Of_Client</th>
+                  <th style={{textAlign:'start'}}>ID Number</th>
+                  <th style={{textAlign:'start'}}>Contact</th>
+                  <th style={{textAlign:'start'}}>Gender</th>
+                  <th style={{textAlign:'start'}}>Date_Of_Birth</th>
                   <th style={{textAlign:'start'}}>Status</th>
                 </tr>
               </thead>
@@ -70,9 +75,14 @@ const MainTable = ({appsData, handleClick}) => {
                     <tr key={app.id}>
                       <td>
                         <span onClick={handleClick} id={app.id} style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>
-                          {app.first_name} {app.last_name}
+                          {app.fullname}
                         </span>
                       </td>
+                      <td>{app.ctype}</td>
+                      <td>{app.identification_number}</td>
+                      <td>{app.phone_number}</td>
+                      <td>{app.gender}</td>
+                      <td>{app.dob} <em>({app.age_year} years, {app.age_month} month(s))</em></td>
                       <td>{app.status}</td>
                     </tr>
                   )
@@ -104,7 +114,7 @@ const MiniTable = ({apps, handleClick, appId}) => {
                     <tr key={app.id}>
                       <td>
                         <span onClick={handleClick} id={app.id} style={{fontSize:'0.75rem', cursor:'pointer', ...(appId == app.id && {color: 'red'})}} className='link'>
-                          {app.first_name} {app.last_name}
+                          {app.fullname}
                         </span>
                       </td>
                     </tr>
