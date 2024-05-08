@@ -4,6 +4,7 @@ import NewAddClient from '../add_client/NewAddClient';
 import Sms from '../Sms/Sms';
 import Client from '../ClientsDetails/Client';
 import OnlineApps from '../OnlineApps/OnlineApps';
+import DiyLink from '../DiyLink/DiyLink';
 import {
   Routes,
   Route,
@@ -27,6 +28,7 @@ const ViewClients = () => {
         <Route path='addclient' element={<NewAddClient />} />
         <Route path='sms' element={<Sms />} />
         <Route path='apps' element={<OnlineApps />} />
+        <Route path='link' element={<DiyLink />} />
         <Route path='clientdetails/:clientId' element={<FullClientDetails/>}/>
       </Route>
     </Routes>
@@ -69,6 +71,9 @@ function Layout() {
             </Link>
             <Link to='/clients/viewclients/apps' id='apps' className={location.pathname === '/clients/viewclients/apps' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Online Applications
+            </Link>
+            <Link to='/clients/viewclients/link' id='link' className={location.pathname === '/clients/viewclients/link' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Diy Link
             </Link>
           </div>
           <div className='tab-content font-12' style={{marginTop:'3rem'}}>
