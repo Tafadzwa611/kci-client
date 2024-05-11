@@ -3672,3 +3672,13 @@ input[type=number] {
   padding-left: 0.5rem;
   cursor: pointer;
 }
+.diy__link {
+  margin-left: 10px;
+  cursor: pointer;
+}
+.diy__link span:active {
+  color: var(--info);
+}
+.diy__link span:focus {
+  color: var(--info);
+}

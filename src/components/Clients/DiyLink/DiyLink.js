@@ -29,7 +29,7 @@ function DiyLink() {
               <>
                 <div className='row custom-background'>
                   <label className='form-label'>Link</label>
-                  <div className='col-9'>
+                  <div className='col-9' style={{display:'flex', alignItems:'center'}}>
                     <input
                       type='text'
                       value={`${window.location.origin}/self_reg/?type_id=${values.client_type_id}&branch_id=${values.branch_id}`}
@@ -37,7 +37,9 @@ function DiyLink() {
                       id='diy-link'
                       readOnly
                     />
-                    <button onClick={copyFunc}>Copy Link</button>
+                    <div className='diy__link'>
+                      <span onClick={copyFunc}>Copy Link</span>
+                    </div>
                   </div>
                 </div>
               </> :

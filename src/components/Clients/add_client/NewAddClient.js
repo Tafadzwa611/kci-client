@@ -7,7 +7,7 @@ const NewAddClient = () => {
   const {loggedInUser} = useLoggedInUser();
 
   const urls = [
-    '/usersapi/list_field_sets/?entity_type=CLIENT',
+    '/usersapi/list_field_sets/?entity_type=CLIENT&active=1',
     '/clientsapi/client_types/',
     '/clientsapi/client_id_templates/',
     '/clientsapi/client_controls/',
