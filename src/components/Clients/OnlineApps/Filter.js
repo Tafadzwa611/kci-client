@@ -56,10 +56,10 @@ function Filter({clientTypes, setParams, setAppsData}) {
               <NonFieldErrors errors={errors}>
                 <div style={{display:'flex', justifyContent:'space-between'}}>
                   <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomDatePickerFilter label='Min Reg Date' name='min_reg_date' setFieldValue={setFieldValue}/>
+                    <CustomDatePickerFilter label='Min Application Date' name='min_app_date' setFieldValue={setFieldValue}/>
                   </div>
                   <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomDatePickerFilter label='Max Reg Date' name='max_reg_date' setFieldValue={setFieldValue}/>
+                    <CustomDatePickerFilter label='Max Application Date' name='max_app_date' setFieldValue={setFieldValue}/>
                   </div>
                   <div className='row-payments-container' style={{width:'24%'}}>
                     <CustomDatePickerFilter label='Min Date Of Birth' name='min_dob' setFieldValue={setFieldValue}/>
@@ -76,7 +76,7 @@ function Filter({clientTypes, setParams, setAppsData}) {
                     </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomInputFilter label='Search Client' name='search_str'/>
+                    <CustomInputFilter label='Search' name='search_str'/>
                   </div>
                   <div className='row-payments-container' style={{width:'24%'}}>
                     <CustomSelectFilter label='Gender' name='gender'>
@@ -88,12 +88,9 @@ function Filter({clientTypes, setParams, setAppsData}) {
                   <div className='row-payments-container' style={{width:'24%'}}>
                     <CustomSelectFilter label='Status' name='status'>
                       <option value=''>------</option>
-                      <option value='Pending Approval'>Pending Approval</option>
-                      <option value='Inactive'>Inactive</option>
-                      <option value='Active'>Active</option>
+                      <option value='Pending'>Pending</option>
                       <option value='Rejected'>Rejected</option>
-                      <option value='Blacklisted'>Blacklisted</option>
-                      <option value='Left'>Left</option>
+                      <option value='Approved'>Approved</option>
                     </CustomSelectFilter>
                   </div>
                 </div>
