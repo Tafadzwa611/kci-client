@@ -27,21 +27,21 @@ const ClientNumbers = ({branchIds}) => {
     }
   }
 
-  if (!data) {
-    return (
-      <div className='card-body'>
-        <div className='book-value-section'>
-          <Loader/>
-        </div>
-      </div>
-    )
-  }
-
   if (err) {
     return (
       <div className='card-body'>
         <div className='book-value-section'>
           Error Please Try Again.
+        </div>
+      </div>
+    )
+  }
+
+  if (!data) {
+    return (
+      <div className='card-body'>
+        <div className='book-value-section'>
+          <Loader/>
         </div>
       </div>
     )

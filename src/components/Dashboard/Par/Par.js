@@ -8,6 +8,7 @@ const endpoints = [1, 30, 60, 90];
 
 function Par({currencyId, branchIds}) {
   const [par, setPar] = useState(null);
+  const [err, setErr] = useState(false);
   const {currencies} = useCurrencies();
   const currency = currencies.find(currency => currency.id === currencyId);
 
@@ -33,7 +34,18 @@ function Par({currencyId, branchIds}) {
       );
     } catch (error) {
       console.log(error);
+      setErr(true);
     }
+  }
+
+  if (err) {
+    return (
+      <div className='card-body'>
+        <div className='book-value-section'>
+          Error Please Try Again.
+        </div>
+      </div>
+    )
   }
 
   if (!par) {
