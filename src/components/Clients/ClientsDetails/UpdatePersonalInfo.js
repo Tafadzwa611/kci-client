@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import { ModalSubmit, NonFieldErrors, Modal } from '../../../common';
 import { removeEmptyValues } from '../../../utils/utils';
 import * as yup from 'yup';
+import { useBranches } from '../../../contexts/BranchesContext';
 
 const validationSchema = yup.object().shape({
   first_name: yup.string().required('Required').max(300),
@@ -21,6 +22,8 @@ const validationSchema = yup.object().shape({
 });
 
 function UpdatePersonalInfo({setOpen, staff, clientControls, client, setClient}) {
+  const {branches} = useBranches();
+
   const onSubmit = async (values, actions) => {
     let data = processValues(values);
     data = removeEmptyValues(data);
@@ -32,9 +35,12 @@ function UpdatePersonalInfo({setOpen, staff, clientControls, client, setClient})
       if (clientManagerObj) {
         client_manager = `${clientManagerObj.first_name} ${clientManagerObj.last_name}`;
       }
+
+      const branch = branches.find((br) => br.id == values.branch_id);
       setClient(curr => ({
         ...curr,
         ...data,
+        branch: branch.name,
         client_manager: client_manager,
         client_manager_id: values.client_manager_id,
         client_id: values.client_num

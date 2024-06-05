@@ -17,6 +17,7 @@ import Cookies from 'js-cookie';
 import { removeEmptyValues } from '../../../utils/utils';
 import { useNavigate } from 'react-router-dom';
 import { uuidv4 } from '../../../utils';
+import { useBranches } from '../../../contexts/BranchesContext';
 
 const initValidationSchema = yup.object().shape({
   client_type_id: yup.number().required('Required'),
@@ -80,6 +81,10 @@ function AddClientForm({customForms, clientTypes, idTemplates, clientControls, s
     });
     setValidationSchema(newSchema);
   }
+
+  const {branches} = useBranches();
+  const userBranch = branches.find((br) => br.is_user_branch);
+
   const initialValues = {
     client_type_id: '',
     client_num: '',
@@ -98,6 +103,7 @@ function AddClientForm({customForms, clientTypes, idTemplates, clientControls, s
     address_list: [],
     next_of_kin_list: [],
     ignore_warnings: false,
+    branch_id: userBranch.id,
     id_nums: [{id: uuidv4(), id_number: '', id_template_id: ''}],
   };
 
