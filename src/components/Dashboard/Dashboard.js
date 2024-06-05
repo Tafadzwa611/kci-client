@@ -51,7 +51,7 @@ const Filter = ({currencyId, setCurrencyId, setBranchIds}) => {
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
   const [optionSelected, setOptionSelected] = useState([]);
-
+  const options = branches.map(branch => ({label: branch.name, value: branch.id}))
   const style = {
     control: base => ({...base, border: '1px solid #dee2e6', boxShadow: 'none', '&:hover': '1px solid #dee2e6'})
   };
@@ -70,14 +70,20 @@ const Filter = ({currencyId, setCurrencyId, setBranchIds}) => {
             <Select
               isMulti
               name='branches'
-              options={branches.map(branch => ({label: branch.name, value: branch.id}))}
+              options={[{label: 'Select all', value: '*'}, ...options]}
               value={optionSelected}
               classNamePrefix='select'
               className='basic-multi-select'
               placeholder='Select Branches'
               onChange={selected => {
-                setOptionSelected(selected);
-                setBranchIds(selected.map(branch => branch.value));
+                let selectedOpts;
+                if (selected !== null && selected.length > 0 && selected[selected.length - 1].value === '*') {
+                  selectedOpts = options;
+                }else {
+                  selectedOpts = selected;
+                }
+                setOptionSelected(selectedOpts);
+                setBranchIds(selectedOpts.map(branch => branch.value));
               }}
               styles={style}
             />

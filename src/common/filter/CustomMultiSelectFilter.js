@@ -10,8 +10,14 @@ function CustomMultiSelectFilter({label, options, initVals, setFieldValue, ...pr
   const inputId = uuidv4();
 
   const handleMultiSelect = selected => {
-    setOptionSelected(selected);
-    const newVals = selected.map(val => val.value);
+    let selectedOpts;
+    if (selected !== null && selected.length > 0 && selected[selected.length - 1].value === '*') {
+      selectedOpts = options;
+    }else {
+      selectedOpts = selected;
+    }
+    setOptionSelected(selectedOpts);
+    const newVals = selectedOpts.map(val => val.value);
     setFieldValue(field.name, newVals);
     const el = document.getElementById(inputId);
     if (selected.length === 0) {
@@ -33,7 +39,7 @@ function CustomMultiSelectFilter({label, options, initVals, setFieldValue, ...pr
         <Select
           isMulti
           name='multi-select'
-          options={options}
+          options={[{label: 'Select all', value: '*'}, ...options]}
           value={optionSelected}
           className='basic-multi-select'
           classNamePrefix='select'
