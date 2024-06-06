@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
-const minAmount = 0.0000000001;
-const minMsg = 'Minimum allowed value is 0.0000000001.'
+const minAmount = 0;
+const minMsg = 'Minimum allowed value is 0.'
 const minInt = 1;
 const minIntMsg = 'Minimum allowed value is 1.';
 

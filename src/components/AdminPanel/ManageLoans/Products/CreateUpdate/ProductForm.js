@@ -69,8 +69,8 @@ function ProductForm({loanFees, initialValues, validationSchema, onSubmit, back}
                 <option value='/Month'>Per Month</option>
                 <option value='/Year'>Per Year</option>
               </CustomSelect>
-              <CustomInput label='Minimum Loan Interest' name='minimum_interest_rate' type='number' required/>
-              <CustomInput label='Maximum Loan Interest' name='maximum_interest_rate' type='number' required/>
+              <CustomInput label='Minimum Loan Interest' name='minimum_interest_rate' min='0' type='number' required/>
+              <CustomInput label='Maximum Loan Interest' name='maximum_interest_rate' min='0' type='number' required/>
               <div className='divider divider-info'>
                 <span>Top-Up Settings</span>
               </div>
