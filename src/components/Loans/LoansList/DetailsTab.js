@@ -31,8 +31,13 @@ function DetailsTab({loan}) {
               <>
                 <li style={{marginBottom: '0.25rem'}}>Penalty Tolerance Period In Days: {loan.grace_period} {loan.grace_period == 1 ? 'Day' : 'Days'}</li>
                 <li style={{marginBottom: '0.25rem'}}>Penalty Rate: {loan.late_repayment_penalty_percentage}%{loan.penalty_charged_per}</li>
-                <li style={{marginBottom: '0.25rem'}}>Apply Penalty On: {loan.apply_late_repayment_penalty_on}</li>
+                <li style={{marginBottom: '0.25rem'}}>Apply Penalty/Interest On: {loan.apply_late_repayment_penalty_on}</li>
               </>}
+              {loan.action_on_loan_default == 'Add Interest' ? (
+                <li style={{marginBottom: '0.25rem'}}>
+                  Default Interest: {loan.lock_interest ? 'Locked' : 'Unlocked'} 
+                </li>
+              ) : null}
               <li style={{marginBottom: '0.25rem'}}>Repayment Cycle: {loan.repayment_cycle}</li>
               <li style={{marginBottom: '0.25rem'}}>Number Of Installments: {loan.number_of_repayments} {loan.number_of_repayments == 1 ? 'Installment' : 'Installments'}</li>
             </ul>
