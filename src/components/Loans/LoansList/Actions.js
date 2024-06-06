@@ -11,8 +11,10 @@ import AddFee from './AddFee';
 import WriteOff from './WriteOff';
 import UndoWriteOff from './UndoWriteOff';
 import TopUp from './TopUp';
+import LockInterest from './LockInterest';
 
 const MODAL_STATES = {
+  lockInt: 'lockInt',
   approve: 'approve',
   reject: 'reject',
   deleteLoan: 'deleteLoan',
@@ -29,6 +31,7 @@ const MODAL_STATES = {
 
 const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
   const {
+    lockInt,
     approve,
     reject,
     deleteLoan,
@@ -176,9 +179,15 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
           updateLoanList={updateLoanList}
           setLoanData={setLoanData}
         />}
+        {modal === lockInt && <LockInterest setOpen={setModal} loanId={loan.id} setLoanDetails={setLoanDetails}/>}
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setModal(addPayment)}>Add Payment</button>
           <button className='btn btn-olive' onClick={() => setModal(addFee)}>Add Fee</button>
+          {(loan.action_on_loan_default == 'Add Interest' && !loan.lock_interest) ? (
+            <button className='btn btn-olive' onClick={() => setModal(lockInt)}>
+              Lock Interest
+            </button>
+          ): null}
           <button className='btn btn-olive' onClick={() => setModal(topup)}>Top-Up</button>
           {loan.status == 'Written-Off' ?
           <button className='btn btn-olive' onClick={() => setModal(undoWriteOff)}>Undo Write Off</button> :

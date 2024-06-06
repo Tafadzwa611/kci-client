@@ -6,8 +6,11 @@ import {
   CustomPhoneNumber,
   CustomCheckbox
 } from '../../../common';
+import { useBranches } from '../../../contexts/BranchesContext';
 
 const ClientInformation = ({clientControls, setFieldValue, staff}) => {
+  const {branches} = useBranches();
+
   return (
     <>
       {clientControls.client_id_format === 'MAN' ? <CustomInput label='Client Number' name='client_num' type='text' required/> : null}
@@ -35,6 +38,9 @@ const ClientInformation = ({clientControls, setFieldValue, staff}) => {
         <option value=''>------</option>
         {staff.map(s => <option key={s.id} value={s.id}>{s.first_name} {s.last_name}</option>)}
       </CustomSelect>}
+      <CustomSelect label='Branch' name='branch_id' required>
+        {branches.map(br => <option key={br.id} value={br.id}>{br.name}</option>)}
+      </CustomSelect>
     </>
   )
 }
