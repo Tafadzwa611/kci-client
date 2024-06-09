@@ -108,7 +108,17 @@ function ProductDetails({product, close, setView, setProducts}) {
                     <li>Maximum Top-Up Amount As A Percentage: {product.topup_limit}%</li>
                   </ul>
                 </div>
-                <div style={{width:"33%"}}></div>
+                <div style={{width:"33%"}}>
+                  <ul style={{paddingRight:"1rem"}}>
+                    <li style={{marginBottom: '1rem'}}><b>Auto Restructure Settings</b></li>
+                    {product.auto_restructure ?
+                      <li>Status: <span className="badge badge-success">Active</span></li>:
+                      <li>Status: <span className="badge badge-danger">Inactive</span></li>
+                    }
+                    <li>Auto Restructure Interest: {product.auto_restructure_interest ? `${product.auto_restructure_interest}%${product.interest_interval}` : 'Not set'}</li>
+                    <li>Auto Restructure Number Of Installments: {product.auto_restructure_installments ? product.auto_restructure_installments : 'Not set'}</li>
+                  </ul>
+                </div>
               </div>
             </div>
             <div style={{width:"25%"}}>

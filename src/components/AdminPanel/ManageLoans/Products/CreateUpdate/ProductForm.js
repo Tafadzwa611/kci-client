@@ -158,6 +158,16 @@ function ProductForm({loanFees, initialValues, validationSchema, onSubmit, back}
               })}
               <AddFee fees={values.fees} setFieldValue={setFieldValue} />
               <div className='divider divider-info'>
+                <span>Auto Restructure Settings</span>
+              </div>
+              <CustomCheckbox label='Enable Auto Restructure' name='auto_restructure'/>
+              {values.auto_restructure && (
+                <>
+                  <CustomInput label='Auto Restructure Interest' name='auto_restructure_interest' type='number' required/>
+                  <CustomInput label='Auto Restructure Installments' name='auto_restructure_installments' type='number' required/>
+                </>
+              )}
+              <div className='divider divider-info'>
                 <span>Defaults & Penalties</span>
               </div>
               <CustomCheckbox label='Allow Early Settlement On Loans With Unpaid Penalties' name='allow_early_settlement_on_penalties'/>
