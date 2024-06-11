@@ -17,7 +17,9 @@ function LoanDetails({loanApiData}) {
                 <span style={{marginRight:'5px'}}><b>{loan.client_fullname ? loan.client_fullname : loan.group_name}&apos;s</b> Loan Details</span> /
                 <span style={{margin: "0 5px"}}><b>{loan.loan_id}</b></span> /          
                 <div style={{marginLeft:'5px'}}>
-                  <button className={statusClasses[loan.status]}>{loan.status}</button>
+                  <button className={statusClasses[loan.status]}>
+                    {loan.status} {loan.auto_restructured && '(Auto Restructured)'}
+                  </button>
                 </div>
               </div>
               <Actions loan={loan} setLoanDetails={setLoan} loanType={loanType}/>
