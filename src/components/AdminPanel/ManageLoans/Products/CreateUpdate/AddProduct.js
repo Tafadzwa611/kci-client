@@ -43,7 +43,10 @@ function AddProduct({loanFees, setView, setProductId, setProducts, setSelectedPr
     topup_window_period: 0,
     number_of_topups_allowed: 0,
     topup_limit: 0,
-    send_sms_on_default: false
+    send_sms_on_default: false,
+    auto_restructure: false,
+    auto_restructure_interest: '',
+    auto_restructure_installments: '',
   };
 
   const back = () => setView('list');
