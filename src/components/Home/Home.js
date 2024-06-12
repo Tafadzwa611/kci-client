@@ -13,7 +13,7 @@ function Home() {
       <div className='info-box'>
         <span>You can use topbar for navigation.</span>
       </div>
-      <UserStream open={open} setOpen={setOpen} />
+      {/* <UserStream open={open} setOpen={setOpen} />
       <div className='card-body'>
         <h5 className='table-heading' style={{marginBottom:'20px'}}>User Activity Stream</h5>
         <div style={{overflowX: 'auto'}}>
@@ -167,7 +167,7 @@ function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
