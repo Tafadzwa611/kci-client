@@ -8,14 +8,18 @@ import {
 } from '../../../common';
 import { scheduleStrategies } from './data';
 import Fee from './Fee';
+import { useBranches } from '../../../contexts/BranchesContext';
 
 function ClientFormFields({
   product,
+  lcontrols,
   isSubmitting,
   setFieldValue,
   clientName,
   values
 }) {
+  const {branches} = useBranches();
+
   return (
     <>
       <div className='divider divider-info'>
@@ -119,6 +123,11 @@ function ClientFormFields({
         <option value='COMMERCIAL - Vendors'>COMMERCIAL - Vendors</option>
         <option value='OTHER'>OTHER</option>
       </CustomSelect>
+      {lcontrols.select_branch_on_loan_creation && 
+      <CustomSelect label='Branch' name='branch_id' required>
+        <option value=''>------</option>
+        {branches.map(br => <option key={br.id} value={br.id}>{br.name}</option>)}
+      </CustomSelect>}
       <div className='divider divider-info'>
         <span>Loan Fees</span>
       </div>
@@ -143,6 +152,7 @@ const ClientSelect = ({values, product, setFieldValue}) => {
           setFieldValue('client', selected);
           setFieldValue(fieldName, selected.value);
         }}
+        params={[{key: 'all_branches', value: 1}]}
         queryParamName='query'
         placeholder='Search Client'
         name='client_id'
