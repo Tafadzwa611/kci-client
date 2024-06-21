@@ -7,7 +7,7 @@ import { NonFieldErrors, CustomSelect } from '../../../common';
 import ClientFormFields from './ClientFormFields';
 import { Form, Formik } from 'formik';
 
-const EditLoanFoam = ({loan, loanProducts}) => {
+const EditLoanFoam = ({loan, loanProducts, lcontrols}) => {
   const navigate = useNavigate();
   const [product, setProduct] = useState(loanProducts.find(prod => prod.id == loan.loan_product_id));
   const products = loanProducts.filter(prod => prod.client_type === loan.client_type && prod.is_active && prod.id !== product.id);
@@ -89,9 +89,11 @@ const EditLoanFoam = ({loan, loanProducts}) => {
             </CustomSelect>
             <ClientFormFields
               product={product}
+              lcontrols={lcontrols}
               isSubmitting={isSubmitting}
               setFieldValue={setFieldValue}
               values={values}
+              edit={true}
             />
           </NonFieldErrors>
         </Form>

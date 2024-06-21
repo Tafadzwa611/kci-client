@@ -15,8 +15,8 @@ function EditLoan({products}) {
     )
   }
   return (
-    <Fetcher urls={[`/loansapi/get_loan/${params.loanId}/`]}>
-      {({data}) => <EditLoanFoam loan={data[0]} loanProducts={products} />}
+    <Fetcher urls={[`/loansapi/get_loan/${params.loanId}/`, '/loansapi/loan_controls/']}>
+      {({data}) => <EditLoanFoam loan={data[0]} loanProducts={products} lcontrols={data[1]}/>}
     </Fetcher>
   )
 }

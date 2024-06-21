@@ -16,7 +16,8 @@ function ClientFormFields({
   isSubmitting,
   setFieldValue,
   clientName,
-  values
+  values,
+  edit
 }) {
   const {branches} = useBranches();
 
@@ -123,7 +124,7 @@ function ClientFormFields({
         <option value='COMMERCIAL - Vendors'>COMMERCIAL - Vendors</option>
         <option value='OTHER'>OTHER</option>
       </CustomSelect>
-      {lcontrols.select_branch_on_loan_creation && 
+      {(lcontrols.select_branch_on_loan_creation && !edit) && 
       <CustomSelect label='Branch' name='branch_id' required>
         <option value=''>------</option>
         {branches.map(br => <option key={br.id} value={br.id}>{br.name}</option>)}
