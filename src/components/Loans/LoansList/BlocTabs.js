@@ -45,6 +45,7 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
         securities: <Securities collaterals={loan.collaterals} setLoan={setLoan} loanId={loan.id} />,
         loans: <SubLoans loans={loan.sub_loans_list} client_name={client_name} />,
         schedule: <ScheduleTab
+          loan={loan}
           loanId={loan.id}
           setLoan={setLoan}
           client_name={client_name}
