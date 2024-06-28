@@ -13,11 +13,21 @@ import Cookies from 'js-cookie';
 import { Form, Formik } from 'formik';
 import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
 
-function EarlySettlement({setLoan, setOpen, loanId, currencyId, setLoanData}) {
+function EarlySettlement({loan, setLoan, setOpen, loanId, currencyId, setLoanData}) {
   const {loggedInUser} = useLoggedInUser();
   const today = new Date();
   const dt = loggedInUser.date_format.replace('dd', today.getDate()).replace('mm', today.getMonth()+1).replace('yyyy', today.getFullYear());
   const [interestDate, setInterestDate] = useState(dt);
+
+  if (!['Open', 'Arrears'].includes(loan.status)) {
+    return (
+      <Modal open={true} setOpen={setOpen} title={'Early Settlement'}>
+        <div>
+          Loan needs to be a running loan.
+        </div>
+      </Modal>
+    )
+  }
 
   const onSubmit = async (values, actions) => {
     try {

@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 import ClientFormFields from './ClientFormFields';
 import { removeEmptyValues, isNumeric } from '../../../utils/utils';
 
-function AddLoan({products}) {
+function AddLoan({products, lcontrols}) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const application_id = searchParams.get('application_id');
@@ -109,12 +109,14 @@ function AddLoan({products}) {
             {product ? {
               'Groups': <ClientFormFields
                 product={product}
+                lcontrols={lcontrols}
                 isSubmitting={isSubmitting}
                 setFieldValue={setFieldValue}
                 values={values}
               />,
               'Clients': <ClientFormFields
                 product={product}
+                lcontrols={lcontrols}
                 clientName={clientName}
                 isSubmitting={isSubmitting}
                 setFieldValue={setFieldValue}
