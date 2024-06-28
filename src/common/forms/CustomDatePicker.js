@@ -22,7 +22,7 @@ function CustomDatePicker({ setFieldValue, label, ...props }) {
   }
 
   const dateFormat =  loggedInUser.date_format.toUpperCase();
-  const renderComponent = <CustomInput required={props.required} touched={meta.touched} error={meta.error} />;
+  const renderComponent = <CustomInput required={props.required} touched={meta.touched} error={meta.error} allowKeyDown={props.allowKeyDown}/>;
 
   return (
     <div className='row custom-background'>
@@ -40,6 +40,17 @@ function CustomDatePicker({ setFieldValue, label, ...props }) {
 }
 
 function CustomInput(props) {
+  if (props.allowKeyDown) {
+    return (
+      <input
+        className={`custom-select-form ${props.touched && props.error ? 'input-error' : ''}`}
+        onFocus={props.openCalendar}
+        value={props.value}
+        onChange={props.handleValueChange}
+        required={props.required}
+      />
+    )
+  }
   return (
     <input
       onKeyDown={(e) => e.preventDefault()}

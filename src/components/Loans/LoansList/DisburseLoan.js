@@ -70,6 +70,7 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
                         name='disbursement_date'
                         setFieldValue={setFieldValue}
                         required
+                        allowKeyDown
                       />
                       <CustomSelect label='Fund Account' name='fund_account_id' required>
                         <option value=''>------</option>
