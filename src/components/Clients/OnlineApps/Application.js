@@ -6,6 +6,7 @@ import Identity from './Identity';
 import Addresses from './Addresses';
 import Nok from './Nok';
 import ClientFiles from './ClientFiles';
+import { Fetcher } from '../../../common';
 
 const StatusClasses = {
   'Approved': 'badge badge-success',
@@ -102,9 +103,26 @@ function CustomData({fieldset}) {
 }
 
 const ModalSelector = ({modal, setModal, app, setApp}) => {
+  const ApproveModal = () => {
+    return (
+      <Fetcher urls={[`/usersapi/staff/?loan_officers_only=1`, '/clientsapi/client_controls/', '/clientsapi/client_types/', '/usersapi/list_field_sets/?entity_type=CLIENT&active=1']}>
+        {({data}) => (
+          <Approve
+            loanOfficers={data[0]}
+            clientControls={data[1]}
+            clientTypes={data[2]}
+            fieldSets={data[3]}
+            app={app}
+            setOpen={setModal}
+          />
+        )}
+      </Fetcher>
+    )
+  }
+
   return {
     null: null,
-    Approve: <Approve appId={app.id} setOpen={setModal}/>,
+    Approve: <ApproveModal />,
     Reject: <Reject app={app} setApp={setApp} setOpen={setModal}/>
   }[modal]
 }

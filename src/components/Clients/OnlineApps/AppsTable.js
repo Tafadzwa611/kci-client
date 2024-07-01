@@ -61,7 +61,6 @@ const MainTable = ({appsData, handleClick}) => {
               <thead>
                 <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
                   <th style={{textAlign:'start'}}>Full_Name</th>
-                  <th style={{textAlign:'start'}}>Type_Of_Client</th>
                   <th style={{textAlign:'start'}}>ID Number</th>
                   <th style={{textAlign:'start'}}>Contact</th>
                   <th style={{textAlign:'start'}}>Gender</th>
@@ -78,7 +77,6 @@ const MainTable = ({appsData, handleClick}) => {
                           {app.fullname}
                         </span>
                       </td>
-                      <td>{app.ctype}</td>
                       <td>{app.identification_number}</td>
                       <td>{app.phone_number}</td>
                       <td>{app.gender}</td>
