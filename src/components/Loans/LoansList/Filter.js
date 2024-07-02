@@ -31,7 +31,8 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
     client: '',
     group: '',
     loan_product_id: '',
-    client_type: ''
+    client_type: '',
+    order_by: '-application_date'
   };
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
@@ -140,7 +141,25 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
                 </div>
                 
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div style={{width:'100%'}}>
+                  <div style={{width: '25%'}}>
+                    <CustomSelectFilter label='Order By' name='order_by' required>
+                      <option value='-loan_id'>Order By ID DESC</option>
+                      <option value='loan_id'>Show Oldest ID ASC</option>
+                      <option value='-date_created'>Order By Date Entered DESC</option>
+                      <option value='date_created'>Order By Date Entered ASC</option>
+                      <option value='-loan_added_on'>Order By Date Disbursed DESC</option>
+                      <option value='loan_added_on'>Order By Date Disbursed ASC</option>
+                      <option value='-approval_date'>Order By Date Approved DESC</option>
+                      <option value='approval_date'>Order By Date Approved ASC</option>
+                      <option value='-application_date'>Order By Application Date DESC</option>
+                      <option value='application_date'>Order By Application Date ASC</option>
+                      <option value='-maturity_date'>Order By Maturity Date DESC</option>
+                      <option value='maturity_date'>Order By Maturity Date ASC</option>
+                      <option value='-client__fullname'>Order By Client Fullname DESC</option>
+                      <option value='client__fullname'>Order By Client Fullname ASC</option>
+                    </CustomSelectFilter>
+                  </div>
+                  <div style={{width:'73%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
