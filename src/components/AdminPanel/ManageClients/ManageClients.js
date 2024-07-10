@@ -10,7 +10,7 @@ const ManageClients = () => {
   return (
     <>
       <div className='bloc-tabs'>
-        <button className={tab === 'clientcontrls' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('clientcontrls')}>Client Controls</button>
+        <button className={tab === 'clientcontrls' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('clientcontrls')}>Client / Group Controls</button>
         <button className={tab === 'templates' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('templates')}>Client ID Templates</button>
         <button className={tab === 'types' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('types')}>Client Types</button>
         <button className={tab === 'gtypes' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('gtypes')}>Group Types</button>

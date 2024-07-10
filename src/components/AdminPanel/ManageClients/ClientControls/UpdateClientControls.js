@@ -69,14 +69,14 @@ const UpdateClientControls = ({open, setOpen, clientControls, setClientControls}
   }
 
   return (
-    <Modal open={open} setOpen={setOpen} title={'Update Client Controls'}>
+    <Modal open={open} setOpen={setOpen} title={'Update Client / Group Controls'}>
       <Formik initialValues={initialValues} validationSchema={controlSchema} onSubmit={onSubmit}>
         {({ isSubmitting, errors }) => (
           <Form>
             <NonFieldErrors errors={errors}>
               <div className="create_modal_container">
                 <div>
-                  <CustomSelect label='New Client Initial Status' name='client_initial_status'>
+                  <CustomSelect label='New Client / Group Initial Status' name='client_initial_status'>
                     <option value='Pending Approval'>Pending Approval</option>
                     <option value='Inactive'>Inactive</option>
                   </CustomSelect>
