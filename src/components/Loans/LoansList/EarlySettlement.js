@@ -54,6 +54,7 @@ function EarlySettlement({loan, setLoan, setOpen, loanId, currencyId, setLoanDat
   const initialValues ={
     date_of_settlement: interestDate,
     cash_account_id: '',
+    principal_amount_paid: loan.principal_amount_due,
     interest_amount_paid: '',
     fees_amount_paid: '',
     penalty_amount_paid: '',
@@ -79,13 +80,21 @@ function EarlySettlement({loan, setLoan, setOpen, loanId, currencyId, setLoanDat
                         required
                       />
                       <CustomInput
+                        label='Principal Amount Paid'
+                        name='principal_amount_paid'
+                        type='number'
+                        required
+                        disabled
+                      />
+                      <CustomInput
                         label='Interest Amount Paid'
                         name='interest_amount_paid'
                         type='number'
                         required
                       />
-                      <div>Pro Rata Interest: {data[1].pro_rata_interest}</div>
-                      <div>Pro Rata Interest Balance: {data[1].pro_rata_interest_balance}</div>
+                      <div>Interest Balance Until Next Installment {data[1].next_installment_date}: {data[1].interest_until_next_installment}</div>
+                      <div>Daily Pro Rata Interest: {data[1].pro_rata_interest}</div>
+                      <div>Daily Pro Rata Interest Balance: {data[1].pro_rata_interest_balance}</div>
                       <CustomInput
                         label='Fees Amount Paid'
                         name='fees_amount_paid'
