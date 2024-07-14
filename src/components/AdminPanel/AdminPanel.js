@@ -61,7 +61,7 @@ function Layout() {
               id='manageclients' 
               className={location.pathname === '/users/admin/manageclients' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
             >
-              Manage Clients
+              Manage Clients / Groups
             </Link>
             <Link 
               to='/users/admin/manageloans'

@@ -3,7 +3,7 @@ import {SuccessBtn, Table} from '../../../../common';
 import UpdateClientControls from './UpdateClientControls';
 
 const CONTROL_NAMES = {
-  client_initial_status: 'New Client Initial Status',
+  client_initial_status: 'New Client / Group Initial Status',
   id_duplicate_level_type: 'Id Duplicate Check Level',
   pry_phone_duplicate_level_type: 'Primary Phone Duplicate Check Level',
   sec_phone_duplicate_level_type: 'Secondary Phone Duplicate Check Level',
