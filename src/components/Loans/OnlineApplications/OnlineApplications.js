@@ -15,7 +15,7 @@ function OnlineApplications() {
   const [params, setParams] = useState(null);
 
   return (
-    <Fetcher urls={['/loansapi/loan_products/']}>
+    <Fetcher urls={['/loansapi/loan_products/', '/loansapi/loan_controls/']}>
       {({data}) => (
         <>
           <Filter
@@ -24,7 +24,7 @@ function OnlineApplications() {
             setParams={setParams}
           />
           <div style={{paddingTop: '2rem'}}></div>
-          <Table apps={apps} params={params} setApps={setApps}/>
+          <Table apps={apps} params={params} setApps={setApps} loanControls={data[1]}/>
         </>
       )}
     </Fetcher>

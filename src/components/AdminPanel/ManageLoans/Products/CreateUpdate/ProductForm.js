@@ -175,6 +175,7 @@ function ProductForm({loanFees, initialValues, validationSchema, onSubmit, back}
               <CustomSelect label='Action On Default' name='action_on_loan_default'>
                 <option value='Do Nothing'>Do Nothing</option>
                 <option value='Add Penalty'>Add Penalty</option>
+                <option value='Add Interest'>Add Interest Fees</option>
               </CustomSelect>
               {values.action_on_loan_default === 'Add Penalty' &&
                 <>
@@ -192,8 +193,23 @@ function ProductForm({loanFees, initialValues, validationSchema, onSubmit, back}
                   </CustomSelect>
                   <CustomInput label='Penalty Rate' name='late_repayment_penalty_percentage' type='number' required/>
                   <CustomInput label='Penalty Tolerance Period In Days' name='grace_period' type='number' required/>
-                </>
-              }
+                </>}
+              {values.action_on_loan_default === 'Add Interest' &&
+                <>
+                  <CustomSelect label='Apply Interest On' name='apply_late_repayment_penalty_on' required>
+                    <option value=''>------</option>
+                    <option value='Principal'>Missed Installment Principal Balance</option>
+                    <option value='Org Principal'>Original Principal</option>
+                    <option value='Interest'>Missed Installment Interest Balance</option>
+                    <option value='Org Interest'>Original Balance</option>
+                    <option value='Principal + Interest'>Missed Installment Principal + Interest</option>
+                    <option value='Principal + Penalty'>Missed Installment Principal + Penalty</option>
+                    <option value='Principal + Interest + Fees + Penalty'>Missed Installment Principal + Interest + Fees + Penalty</option>
+                  </CustomSelect>
+                  <CustomInput label='Interest Rate' name='on_default_rate' type='number' required/>
+                  <CustomCheckbox label='Is recurring' name='is_default_interest_recurring'/>
+                  <CustomCheckbox label='Add On Last Installment Only' name='add_on_last_installment_only'/>
+                </>}
               <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
               <div style={{display:'flex', justifyContent: 'flex-end'}}> 
               <SubmitButton isSubmitting={isSubmitting}/>

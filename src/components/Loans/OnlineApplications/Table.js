@@ -3,7 +3,7 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-function Table({apps, params, setApps}) {
+function Table({apps, params, setApps, loanControls}) {
   return (
     <>
       <TableHeader data={apps} params={params} setApps={setApps}/>
@@ -17,7 +17,7 @@ function Table({apps, params, setApps}) {
                     <thead>
                       <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
                         <th>Client_Name</th>
-                        <th>Loan_Product</th>
+                        {loanControls.allow_product_selection && <th>Loan_Product</th>}
                         <th>Amount</th>
                         <th>Date</th>
                         <th>Status</th>
@@ -29,7 +29,7 @@ function Table({apps, params, setApps}) {
                         return (
                           <tr className='tr-class' key={application.id}>
                             <td>{application.client__fullname}</td>
-                            <td>{application.loan_product__name}</td>
+                            {loanControls.allow_product_selection && <td>{application.loan_product__name}</td>}
                             <td>{application.loan_product__currency__shortname}{application.amount}</td>
                             <td>{application.app_date}</td>
                             <td>{application.status}</td>
