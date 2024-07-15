@@ -206,7 +206,7 @@ function ProductForm({loanFees, initialValues, validationSchema, onSubmit, back}
                     <option value='Principal + Penalty'>Missed Installment Principal + Penalty</option>
                     <option value='Principal + Interest + Fees + Penalty'>Missed Installment Principal + Interest + Fees + Penalty</option>
                   </CustomSelect>
-                  <CustomInput label='Interest Rate' name='on_default_rate' type='number' required/>
+                  <CustomInput label='Default Interest Rate' name='on_default_rate' type='number' required/>
                   <CustomCheckbox label='Is recurring' name='is_default_interest_recurring'/>
                   <CustomCheckbox label='Add On Last Installment Only' name='add_on_last_installment_only'/>
                 </>}
