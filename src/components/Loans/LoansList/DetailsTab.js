@@ -40,6 +40,13 @@ function DetailsTab({loan}) {
               ) : null}
               <li style={{marginBottom: '0.25rem'}}>Repayment Cycle: {loan.repayment_cycle}</li>
               <li style={{marginBottom: '0.25rem'}}>Number Of Installments: {loan.number_of_repayments} {loan.number_of_repayments == 1 ? 'Installment' : 'Installments'}</li>
+              {loan.auto_restructure &&
+                <>
+                  <li style={{marginBottom: '1rem'}}><b>Auto Restructure Settings</b></li>
+                  <li style={{marginBottom: '0.25rem'}}>Auto Restructure Interest: {loan.auto_restructure_interest}%{loan.interest_interval}</li>
+                  <li style={{marginBottom: '0.25rem'}}>Number of Installments: {loan.auto_restructure_installments}</li>
+                </>
+              }
             </ul>
           </div>
           <div style={{width:'48%'}}>

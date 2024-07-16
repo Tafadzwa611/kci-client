@@ -5,6 +5,7 @@ import {
   ModalSubmit,
   CustomInput,
   CustomTextField,
+  CustomDatePicker,
   Modal
 } from '../../../common';
 import { Form, Formik } from 'formik';
@@ -15,7 +16,7 @@ function AddFee({loanId, manualFees, setOpen, subLoans, clientType, setLoan, upd
   const onSubmit = async (values, actions) => {
     const data = values.fee_type === 'Manual' ?
     {manual_fee_id: values.manual_fee_id} :
-    {arbitrary_amount: values.arbitrary_amount, description: values.description};
+    {arbitrary_amount: values.arbitrary_amount, description: values.description, fee_date: values.fee_date};
 
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
@@ -44,11 +45,12 @@ function AddFee({loanId, manualFees, setOpen, subLoans, clientType, setLoan, upd
   return (
     <Modal open={true} setOpen={setOpen} title={'Add Fee'}>
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        {({ errors, isSubmitting, values }) => (
+        {({ errors, isSubmitting, values, setFieldValue }) => (
           <Form>
             <NonFieldErrors errors={errors}>
               <div className='create_modal_container'>
                 <div>
+                  <CustomDatePicker label='Fee Date' name='fee_date' setFieldValue={setFieldValue} required/>
                   {clientType === 'Groups (solidarity)' ?
                   <CustomSelect label='Sub Loan' name='sub_loan_id' required>
                     <option value=''>------</option>

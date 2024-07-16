@@ -19,7 +19,7 @@ const Filter = ({setReport, setParams}) => {
     currency_id: '',
     file_format: 'html',
     order: '-id',
-    page_size: '100',
+    page_size: '500',
     min_db_date: '',
     max_db_date: ''
   };
