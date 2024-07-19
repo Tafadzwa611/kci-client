@@ -131,7 +131,7 @@ const Search = ({setOpen}) => {
   const [results, setResults] = useState([]);
 
   const onSubmit = async (values, actions) => {
-    const url = values.entity === 'clients' ? '/clientsapi/search_client/' : '/clientsapi/search_group/';
+    const url = values.entity === 'clients' ? '/clientsapi/search_client/?all_branches=1' : '/clientsapi/search_group/';
     try {
       const params = getParams(values);
       const response = await axios.get(url, {params: params});
