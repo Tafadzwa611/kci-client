@@ -41,6 +41,9 @@ function Journal({journalID, setJournalID}) {
                   <li>Created By: {data[0].created_by}</li>
                   <li>Reference: {data[0].transaction_id}</li>
                   <li>Narrative: {data[0].description}</li>
+                  <li>Value Date: {data[0].value_date}</li>
+                  <li>Date Logged: {data[0].date_added}</li>
+                  <li>Created By: {data[0].created_by}</li>
                 </ul>
               </div>
             </div>
