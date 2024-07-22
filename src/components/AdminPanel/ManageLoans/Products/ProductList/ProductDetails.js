@@ -69,9 +69,9 @@ function ProductDetails({product, close, setView, setProducts}) {
                 </div>
                 <div style={{width:"33%"}}>
                   <ul style={{paddingRight:"1rem"}}>
-                    <li style={{marginBottom: '1rem'}}><b>Penalty Settings</b></li>
+                    <li style={{marginBottom: '1rem'}}><b>Arrears Settings</b></li>
                     <li>Action On Default: {product.action_on_loan_default}</li>
-                    {product.action_on_loan_default === 'Add Penalty' && 
+                    {product.action_on_loan_default === 'Add Penalty' &&
                       <>
                         <li>Apply Penalty On: {product.apply_late_repayment_penalty_on}</li>
                         <li>Penalty Rate: {product.late_repayment_penalty_percentage}%{product.penalty_charged_per}</li>
@@ -79,8 +79,17 @@ function ProductDetails({product, close, setView, setProducts}) {
                         {product.send_sms_on_default ?
                           <li>Send SMS Alert On Default: <span className="badge badge-success">Active</span></li>:
                           <li>Send SMS Alert On Default: <span className="badge badge-danger">Inactive</span></li>}
-                      </>
-                    }
+                      </>}
+                    {product.action_on_loan_default === 'Add Interest' &&
+                      <>
+                        <li>Apply Interest On: {product.apply_late_repayment_penalty_on}</li>
+                        <li>Interest Rate: {product.on_default_rate}%</li>
+                        <li>Is Recurring: {product.is_default_interest_recurring ? 'Yes' : 'No'}</li>
+                        <li>Add After Last Installment Only: {product.add_on_last_installment_only ? 'Yes' : 'No'}</li>
+                        {product.send_sms_on_default ?
+                          <li>Send SMS Alert On Default: <span className="badge badge-success">Active</span></li>:
+                          <li>Send SMS Alert On Default: <span className="badge badge-danger">Inactive</span></li>}
+                      </>}
                   </ul>
                 </div>
                 <div style={{width:"33%"}}>
