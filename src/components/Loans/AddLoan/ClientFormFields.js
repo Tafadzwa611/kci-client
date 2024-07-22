@@ -45,7 +45,7 @@ function ClientFormFields({
           setFieldValue(fieldName, selected.value);
         }}
         queryParamName='query'
-        params={[{key: 'guarantors_only', value: 1}]}
+        params={[{key: 'guarantors_only', value: 1}, {key: 'all_branches', value: 1}]}
         placeholder='Search Client Guarantor'
         name='guarantor_id'
       />
@@ -58,7 +58,7 @@ function ClientFormFields({
           setFieldValue(fieldName, selected.value);
         }}
         queryParamName='query'
-        params={[{key: 'guarantors_only', value: 1}]}
+        params={[{key: 'guarantors_only', value: 1}, {key: 'all_branches', value: 1}]}
         placeholder='Search Group Guarantor'
         name='group_guarantor_id'
       />
