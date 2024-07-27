@@ -32,17 +32,17 @@ function CreateFieldSet({open, setOpen, setFieldSets, entityType, clientTypes}) 
             <NonFieldErrors errors={errors}>
               <div className="create_modal_container">
                 <div>
-                  <CustomSelect label='Associated with' name='entity_type' disabled={true}>
+                  <CustomSelect label='Associated with' name='entity_type' required>
                     <option value=''>------</option>
                     <option value='CLIENT'>Clients</option>
                     <option value='LOAN'>Loans</option>
                   </CustomSelect>
                   {values.entity_type === 'CLIENT' ?
-                  <CustomSelect label='Client type' name='client_type_id'>
+                  <CustomSelect label='Client type' name='client_type_id' required>
                     <option value=''>------</option>
                     {clientTypes.map(type => <option key={type.id} value={type.id}>{type.name}</option>)}
                   </CustomSelect> : null}
-                  <CustomInput label='Form Name' name='name' type='text'/>
+                  <CustomInput label='Form Name' name='name' type='text' required/>
                   <CustomTextField label='Description' name='description'/>
                 </div>
                 <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>

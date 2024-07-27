@@ -136,7 +136,7 @@ const Actions = ({modal, setModal, client, close, setClient}) => {
           id: <Identity client={client} setModal={setModal} modal={modal} setClient={setClient}/>,
           addresses: <Addresses client={client} modal={modal} setModal={setModal} setClient={setClient}/>,
           nok: <Nok client={client} modal={modal} setModal={setModal} setClient={setClient}/>,
-          files: <ClientFiles client={client}/>,
+          files: <ClientFiles client={client} setClient={setClient}/>,
           loans: <Loans client={client} setClient={setClient}/>,
           groups: <Groups client={client} />,
           ...customViews

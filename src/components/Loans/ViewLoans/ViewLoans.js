@@ -52,8 +52,8 @@ function FullLoanDetails() {
 
 const AddLoanComponent = () => {
   return (
-    <Fetcher urls={['/loansapi/loan_products_list/?allowed_in_user_branch_only=1', '/loansapi/loan_controls/']}>
-      {({data}) => <AddLoan products={data[0]} lcontrols={data[1]}/>}
+    <Fetcher urls={['/loansapi/loan_products_list/?allowed_in_user_branch_only=1', '/loansapi/loan_controls/', '/usersapi/list_field_sets/?entity_type=LOAN&active=1']}>
+      {({data}) => <AddLoan products={data[0]} lcontrols={data[1]} customForms={data[2]}/>}
     </Fetcher>
   )
 }

@@ -7,11 +7,13 @@ import { NonFieldErrors, CustomSelect } from '../../../common';
 import ClientFormFields from './ClientFormFields';
 import { Form, Formik } from 'formik';
 
-const EditLoanFoam = ({loan, loanProducts, lcontrols}) => {
+const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms}) => {
   const navigate = useNavigate();
   const [product, setProduct] = useState(loanProducts.find(prod => prod.id == loan.loan_product_id));
   const products = loanProducts.filter(prod => prod.client_type === loan.client_type && prod.is_active && prod.id !== product.id);
   const interestRate = product.calculate_using_installment ? '' : loan.interest_rate;
+  const productFormIds = product.custom_forms.filter(form => form.required_on === 'CREATION').map(form => form.custom_field_set_id);
+  const [formIds, setFormIds] = useState(productFormIds);
 
   const initialValues = {
     loan_product_id: product.id,
@@ -35,24 +37,24 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols}) => {
     group_guarantor: loan.group_guarantor_id ? {value: loan.group_guarantor_id, label: `${loan.group_guarantor_name}`} : '',
   };
 
-  const onChange = (evt, setFieldValue, prevProductId) => {
+  loan.custom_data.forEach(form => form.values.forEach(val => initialValues[`custom_${val.id}`] = val.data || ''));
+
+  const onChange = (evt, setFieldValue) => {
     const {value} = evt.target;
     const product = products.find(prod => prod.id == value);
-    const prevProduct = products.find(prod => prod.id == prevProductId);
     setProduct(product);
     setFieldValue('fees', product.fees);
     setFieldValue('loan_product_id', value);
-    if (prevProduct.client_type !== product.client_type) {
-      setFieldValue('client_id', '');
-      setFieldValue('group_id', '');
-    }
+    const productFormIds = product.custom_forms.filter(form => form.required_on === 'CREATION').map(form => form.custom_field_set_id);
+    setFormIds(productFormIds);
   }
 
   const onSubmit = async (values, actions) => {
     try {
+      const custom_data = processValues(values, customForms, formIds);
       const data = removeEmptyValues(values);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      await axios.put(`/loansapi/update_loan_api/${loan.id}/`, {...data, fees: values.fees}, CONFIG);
+      await axios.put(`/loansapi/update_loan_api/${loan.id}/`, {...data, fees: values.fees, custom_data_list: custom_data}, CONFIG);
       navigate({pathname: `/loans/viewloans/loandetails/cli/${loan.id}`});
     } catch (error) {
       if (error.message === 'Network Error') {
@@ -77,7 +79,7 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols}) => {
               label='Loan Product'
               name='loan_product_id'
               value={product.id}
-              onChange={(evt) => onChange(evt, setFieldValue, values.loan_product_id)}
+              onChange={(evt) => onChange(evt, setFieldValue)}
               required
             >
               {[product, ...products].map(product => (
@@ -94,12 +96,28 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols}) => {
               setFieldValue={setFieldValue}
               values={values}
               edit={true}
+              customForms={customForms}
+              formIds={formIds}
             />
           </NonFieldErrors>
         </Form>
       )}
     </Formik>
   )
+}
+
+const processValues = (values, customForms, formIds) => {
+  const applicableForms = customForms.filter(form => formIds.includes(form.id));
+  const custom_data = applicableForms.map(form => {
+    const fields = [];
+    form.fields.forEach(field => {
+      if (values[`custom_${field.id}`]) {
+        fields.push({'field_id': field.id, [field.data_type]: values[`custom_${field.id}`]});
+      }
+    });
+    return {'field_set_id': form.id, 'fields': fields}
+  });
+  return custom_data
 }
 
 export default EditLoanFoam;

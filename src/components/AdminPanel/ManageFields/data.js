@@ -11,4 +11,4 @@ export const dataTypes = {
   user_id: 'User'
 };
 
-export const entityTypes = ['CLIENT'];
+export const entityTypes = ['CLIENT', 'LOAN'];

@@ -5,7 +5,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { removeEmptyValues } from '../../../../../utils/utils';
 
-function AddProduct({loanFees, setView, setProductId, setProducts, setSelectedPrdct}) {
+function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, setSelectedPrdct}) {
   const initialValues = {
     name: '',
     ext_name: '',
@@ -35,6 +35,7 @@ function AddProduct({loanFees, setView, setProductId, setProducts, setSelectedPr
     allowed_branches_ids: [],
     repayment_order: {first: 'penalty', second: 'fees', third: 'interest', fourth: 'principal'},
     fees: [],
+    custom_forms: [],
     action_on_loan_default: 'Do Nothing',
     apply_late_repayment_penalty_on: '',
     penalty_charged_per: '',
@@ -85,6 +86,7 @@ function AddProduct({loanFees, setView, setProductId, setProducts, setSelectedPr
       onSubmit={onSubmit}
       back={back}
       loanFees={loanFees}
+      fieldSets={fieldSets}
     />
   )
 }

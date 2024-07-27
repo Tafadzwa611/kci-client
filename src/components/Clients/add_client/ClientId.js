@@ -20,7 +20,7 @@ function ClientIdForm({index, idTemplates}) {
     <>
       <CustomSelect label='Id Number Template' name={`id_nums[${index}].id_template_id`} required>
         <option value=''>------</option>
-        {idTemplates.map((tmp, index) => (
+        {idTemplates.filter(tmp => tmp.is_active).map((tmp, index) => (
           <option key={index} value={tmp.id}>
             {`${tmp.id_type}-${tmp.issuer}-${tmp.template}`}
           </option>

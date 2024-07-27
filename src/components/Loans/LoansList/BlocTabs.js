@@ -11,9 +11,15 @@ import SubLoans from './SubLoans';
 import Audit from './Audit';
 import Fees from './Fees';
 import TopUpList from './TopUpList';
+import CustomData from './CustomData';
 
 function BlocTabs({loan, setLoan, client_name, setLoanData}) {
   const [tab, setTab] = useState('details');
+
+  const customViews = {};
+  loan.custom_data.forEach(fs => {
+    customViews[fs.field_set_id] = <CustomData fieldset={fs}/>;
+  });
 
   return (
     <div>
@@ -28,6 +34,11 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
         <button className={tab === 'topup' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('topup')}>Top-Ups</button>
         <button className={tab === 'securities' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('securities')}>Collateral</button>
         <button className={tab === 'comments' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('comments')}>Comments</button>
+        {loan.custom_data.map(fs => (
+          <button key={fs.field_set_id} className={tab === fs.field_set_id ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab(fs.field_set_id)}>
+            {fs.field_set}
+          </button>
+        ))}
         <button className={tab === 'files' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('files')}>Attachments</button>
         {/* <button className={tab === 'audit' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('audit')}>Audit</button> */}
       </div>
@@ -69,7 +80,8 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
         comments: <Comments comments={loan.comments} setLoan={setLoan} loanId={loan.id}/>,
         files: <LoanFiles loanId={loan.id} files={loan.files} setLoan={setLoan} />,
         audit: <Audit loanId={loan.id}/>,
-        topup: <TopUpList topups={loan.topups}/>
+        topup: <TopUpList topups={loan.topups}/>,
+        ...customViews
       }[tab]}
     </div>
   )
