@@ -13,6 +13,7 @@ const EditBtn = ({handler, id}) => {
         cursor:"pointer", 
         padding:".2rem .25rem",
         fontSize: "0.75rem",
+        marginLeft:"5px",
       }}
       >
         Edit
