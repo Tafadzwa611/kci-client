@@ -18,6 +18,9 @@ import { removeEmptyValues } from '../../../utils/utils';
 const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType, updateLoanList, setLoanData}) => {
   const onSubmit = async (values, actions) => {
     const data = removeEmptyValues(values);
+    if (!values.manually_allocate) {
+      delete data.manual_allocation
+    }
     if (data.sub_loan_ids) {
       data.sub_loan_ids = data.sub_loan_ids.map(sub_loan_id => sub_loan_id.value);
     }
