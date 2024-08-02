@@ -123,6 +123,38 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
         </div>
       </div>
     )
+  } else if (loan.status == 'Written-Off'){
+    return (
+      <div style={{display:'flex', columnGap:'3px'}}>
+        {modal === undoWriteOff &&
+        <UndoWriteOff
+          loanId={loan.id}
+          setOpen={setModal}
+          setLoan={setLoanDetails}
+          updateLoanList={updateLoanList}
+          setLoanData={setLoanData}
+        />}
+        <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
+          <button className='btn btn-olive' onClick={() => setModal(undoWriteOff)}>Undo Write Off</button>
+        </div>
+      </div>
+    )
+  } else if (loan.status == 'Early Settlement'){
+    const undoDisburseUrl = loanType === 'cli' ? `/loansapi/undo_loan_disbursement/${loan.id}/` : `/loansapi/undo_sloan_disbursement/${loan.id}/`;
+    return (
+      <div style={{display:'flex', columnGap:'3px'}}>
+        {modal === undoDisburse && <UndoDisbursement
+          setOpen={setModal}
+          url={undoDisburseUrl}
+          setLoanDetails={setLoanDetails}
+          updateLoanList={updateLoanList}
+          setLoanData={setLoanData}
+        />}
+        <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
+          <button className='btn btn-olive' onClick={() => setModal(undoDisburse)}>Undo Disbursement</button>
+        </div>
+      </div>
+    )  
   }else {
     const undoDisburseUrl = loanType === 'cli' ? `/loansapi/undo_loan_disbursement/${loan.id}/` : `/loansapi/undo_sloan_disbursement/${loan.id}/`;
     return (
