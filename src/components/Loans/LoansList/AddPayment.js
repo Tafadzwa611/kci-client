@@ -6,6 +6,7 @@ import {
   CustomTextField,
   CustomSelect,
   CustomDatePicker,
+  CustomCheckbox,
   Fetcher,
   ModalSubmit,
   Modal
@@ -17,6 +18,9 @@ import { removeEmptyValues } from '../../../utils/utils';
 const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType, updateLoanList, setLoanData}) => {
   const onSubmit = async (values, actions) => {
     const data = removeEmptyValues(values);
+    if (!values.manually_allocate) {
+      delete data.manual_allocation
+    }
     if (data.sub_loan_ids) {
       data.sub_loan_ids = data.sub_loan_ids.map(sub_loan_id => sub_loan_id.value);
     }
@@ -48,6 +52,8 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
     payment_type: 'Installment',
     payment_date: '',
     amount_paid: '',
+    manually_allocate: false,
+    manual_allocation: {principal: '', interest: '', fees: '', penalty: ''},
     sub_loan_id: '',
     receipt_number: '',
     notes: '',
@@ -58,12 +64,19 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
       <Fetcher urls={['/acc-api/cash-and-cash-equivalents/']}>
         {({data}) => (
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
-            {({ errors, isSubmitting, setFieldValue }) => (
+            {({ values, errors, isSubmitting, setFieldValue }) => (
               <Form>
                 <NonFieldErrors errors={errors}>
                 <div className='create_modal_container'>
                   <div>
                     <CustomInput label='Amount Paid' name='amount_paid' type='number' required/>
+                    <CustomCheckbox label='Manually Allocate' name='manually_allocate'/>
+                    {values.manually_allocate && <>
+                      <CustomInput label='Principal Paid' name='manual_allocation.principal' type='number' required/>
+                      <CustomInput label='Interest Paid' name='manual_allocation.interest' type='number' required/>
+                      <CustomInput label='Fees Paid' name='manual_allocation.fees' type='number' required/>
+                      <CustomInput label='Penalty Paid' name='manual_allocation.penalty' type='number' required/>
+                    </>}
                     <CustomDatePicker label='Payment Date' name='payment_date' setFieldValue={setFieldValue} required/>
                     <CustomSelect label='Fund Account' name='cash_account_id' required>
                       <option value=''>------</option>

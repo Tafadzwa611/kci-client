@@ -23,7 +23,7 @@ function ProductList({data}) {
     setSelectedPrdct(product);
   }
 
-  const urls = ['/loansapi/list_fees/'];
+  const urls = ['/loansapi/list_fees/', '/usersapi/list_field_sets/?entity_type=LOAN'];
 
   if (view === 'list') {
     return (
@@ -42,13 +42,31 @@ function ProductList({data}) {
   }else if (view === 'edit') {
     return (
       <Fetcher urls={urls}>
-        {({data}) => <EditProduct loanFees={data[0]} initialValues={selectedPrdct} setView={setView} setSelectedPrdct={setSelectedPrdct} setProducts={setProducts}/>}
+        {({data}) => (
+          <EditProduct
+            loanFees={data[0]}
+            fieldSets={data[1]}
+            initialValues={selectedPrdct}
+            setView={setView}
+            setSelectedPrdct={setSelectedPrdct}
+            setProducts={setProducts}
+          />
+        )}
       </Fetcher>
     )
   }
   return (
     <Fetcher urls={urls}>
-      {({data}) => <AddProduct loanFees={data[0]} setProducts={setProducts} setSelectedPrdct={setSelectedPrdct} setView={setView} setProductId={setProductId}/>}
+      {({data}) => (
+        <AddProduct
+          loanFees={data[0]}
+          fieldSets={data[1]}
+          setProducts={setProducts}
+          setSelectedPrdct={setSelectedPrdct}
+          setView={setView}
+          setProductId={setProductId}
+        />
+      )}
     </Fetcher>
   )
 }

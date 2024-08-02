@@ -7,9 +7,10 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { uuidv4 } from '../../../../../utils';
 
-function EditProduct({loanFees, initialValues, setView, setSelectedPrdct, setProducts}) {
+function EditProduct({loanFees, fieldSets, initialValues, setView, setSelectedPrdct, setProducts}) {
   const {currencies} = useCurrencies();
   initialValues.fees = initialValues.fees.map(fee => ({...fee, id: uuidv4()}));
+  initialValues.custom_forms = initialValues.custom_forms.map(custom_form => ({...custom_form, id: uuidv4()}));
   removeNull(initialValues);
 
   const onSubmit = async (values, actions) => {
@@ -17,10 +18,11 @@ function EditProduct({loanFees, initialValues, setView, setSelectedPrdct, setPro
       const data = removeEmptyValues(values);
       const allowed_branches_ids = values.allowed_branches_ids.map(allowed_branches_id => allowed_branches_id.value);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      await axios.put(`/loansapi/edit_loan_product/${data.id}/`, {...data, fees: values.fees, allowed_branches_ids}, CONFIG);
+      await axios.put(`/loansapi/edit_loan_product/${data.id}/`, {...data, fees: values.fees, custom_forms: values.custom_forms, allowed_branches_ids}, CONFIG);
       setProducts(curr => {
         return curr.map(prod => {
           if (prod.id === values.id) {
+            console.log(values.custom_forms);
             const currency = currencies.find(currency => currency.id == values.currency_id);
             values.currency = currency.fullname;
             values.allowed_branches_ids = allowed_branches_ids;
@@ -34,6 +36,16 @@ function EditProduct({loanFees, initialValues, setView, setSelectedPrdct, setPro
                 loanfee_id: fee.loanfee_id,
                 value: fee.value,
                 id: fee.id,
+              }
+            });
+            values.custom_forms = values.custom_forms.map(custom_form => {
+              const fieldSet = fieldSets.find(fs => fs.id == custom_form.custom_field_set_id);
+              return {
+                id: custom_form.id,
+                required_on: custom_form.required_on,
+                custom_field_set_name: fieldSet.name,
+                custom_field_set_id: custom_form.custom_field_set_id,
+                ask_in_clients_portal: custom_form.ask_in_clients_portal
               }
             });
             return values
@@ -60,6 +72,7 @@ function EditProduct({loanFees, initialValues, setView, setSelectedPrdct, setPro
   return (
     <ProductForm
       loanFees={loanFees}
+      fieldSets={fieldSets}
       initialValues={initialValues}
       validationSchema={editLoanProductSchema}
       onSubmit={onSubmit}

@@ -15,8 +15,9 @@ import { useBranches } from '../../../../../contexts/BranchesContext';
 import { useCurrencies } from '../../../../../contexts/CurrenciesContext';
 import { scheduleStrategies } from './data';
 import {Fee, AddFee} from './Fees';
+import {CustomLoanForm, AddCustomLoanForm} from './Forms';
 
-function ProductForm({loanFees, initialValues, validationSchema, onSubmit, back}) {
+function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSubmit, back}) {
   const {branches} = useBranches();
   const selectBranches = branches.map(br => ({label: br.name, value:br.id}));
   initialValues.allowed_branches_ids = selectBranches.filter(br => initialValues.allowed_branches_ids.includes(br.value))
@@ -157,6 +158,23 @@ function ProductForm({loanFees, initialValues, validationSchema, onSubmit, back}
                 )
               })}
               <AddFee fees={values.fees} setFieldValue={setFieldValue} />
+              <div className='divider divider-info'>
+                <span>Custom Forms</span>
+              </div>
+              {values.custom_forms.map((customForm, index) => {
+                return(
+                  <React.Fragment key={index}>
+                    <CustomLoanForm
+                      customForm={customForm}
+                      index={index}
+                      custom_forms={values.custom_forms}
+                      setFieldValue={setFieldValue}
+                      fieldSets={fieldSets}
+                    />
+                  </React.Fragment>
+                )
+              })}
+              <AddCustomLoanForm custom_forms={values.custom_forms} setFieldValue={setFieldValue}/>
               <div className='divider divider-info'>
                 <span>Auto Restructure Settings</span>
               </div>

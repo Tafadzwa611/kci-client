@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 import ClientFormFields from './ClientFormFields';
 import { removeEmptyValues, isNumeric } from '../../../utils/utils';
 
-function AddLoan({products, lcontrols}) {
+function AddLoan({products, lcontrols, customForms}) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const application_id = searchParams.get('application_id');
@@ -21,6 +21,7 @@ function AddLoan({products, lcontrols}) {
   const [clientId, setClientId] = useState('');
   const [clientName, setClientName] = useState('');
   const [principal, setPrincipal] = useState('');
+  const [formIds, setFormIds] = useState([]);
 
   useEffect(() => {
     const prod = products.find(prod => prod.id.toString() === loan_product_id) || null;
@@ -59,6 +60,8 @@ function AddLoan({products, lcontrols}) {
     setProduct(product);
     setFieldValue('loan_product_id', value);
     if (product) {
+      const productFormIds = product.custom_forms.filter(form => form.required_on === 'CREATION').map(form => form.custom_field_set_id);
+      setFormIds(productFormIds);
       setFieldValue('schedule_strategy', product.schedule_strategy);
       setFieldValue('fees', product.fees);
     }
@@ -72,11 +75,12 @@ function AddLoan({products, lcontrols}) {
   }
 
   const onSubmit = async (values, actions) => {
+    const custom_data = processValues(values, customForms, formIds);
     try {
       const data = removeEmptyValues(values);
       const url = product.client_type === 'Groups (solidarity)' ? '/loansapi/add_soloan_api/' : '/loansapi/add_loan_api/';
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post(url, {...data, fees: values.fees}, CONFIG);
+      const response = await axios.post(url, {...data, fees: values.fees, custom_data_list: custom_data}, CONFIG);
       navigate({pathname: `/loans/viewloans/loandetails/cli/${response.data.loan_id}`});
     } catch (error) {
       console.log(error);
@@ -113,6 +117,8 @@ function AddLoan({products, lcontrols}) {
                 isSubmitting={isSubmitting}
                 setFieldValue={setFieldValue}
                 values={values}
+                formIds={formIds}
+                customForms={customForms}
               />,
               'Clients': <ClientFormFields
                 product={product}
@@ -121,6 +127,8 @@ function AddLoan({products, lcontrols}) {
                 isSubmitting={isSubmitting}
                 setFieldValue={setFieldValue}
                 values={values}
+                formIds={formIds}
+                customForms={customForms}
               />,
               'Groups (solidarity)': <SolidarityGroupForm
                 product={product}
@@ -134,6 +142,20 @@ function AddLoan({products, lcontrols}) {
       )}
     </Formik>
   )
+}
+
+const processValues = (values, customForms, formIds) => {
+  const applicableForms = customForms.filter(form => formIds.includes(form.id));
+  const custom_data = applicableForms.map(form => {
+    const fields = [];
+    form.fields.forEach(field => {
+      if (values[`custom_${field.id}`]) {
+        fields.push({'field_id': field.id, [field.data_type]: values[`custom_${field.id}`]});
+      }
+    });
+    return {'field_set_id': form.id, 'fields': fields}
+  });
+  return custom_data
 }
 
 export default AddLoan;

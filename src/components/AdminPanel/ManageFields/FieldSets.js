@@ -3,6 +3,7 @@ import CreateFieldSet from './CreateFieldSet';
 import EditFieldSet from './EditFieldSet';
 import DeleteFieldSet from './DeleteFieldSet';
 import FieldList from './FieldList';
+import ChangeListingOrder from './ChangeListingOrder';
 import { Fetcher, SuccessBtn, DeleteBtn, EditBtn, Select } from '../../../common';
 
 const FieldSets = ({data, entityType, clientTypes}) => {
@@ -11,6 +12,7 @@ const FieldSets = ({data, entityType, clientTypes}) => {
   const [openCreateFieldSetModal, setOpenCreateFieldSetModal] = useState(false);
   const [openEditFieldSetModal, setOpenEditFieldSetModal] = useState(false);
   const [openDeleteFieldSetModal, setOpenDeleteFieldSetModal] = useState(false);
+  const [openChangeModal, setOpenChangeModal] = useState(false);
 
   return (
     <>
@@ -25,9 +27,21 @@ const FieldSets = ({data, entityType, clientTypes}) => {
       {fieldSets.some(fs => fs.id == fieldSetId) != '' &&
         <>
           <div style={{marginTop:"20px"}}>
+            <button
+              onClick={() => setOpenChangeModal(true)} 
+              style={{background: "#1bbf5f", color:"#fff", border:"none", borderRadius:".15rem", cursor:"pointer", padding:".2rem .25rem", fontSize: "0.75rem"}}
+            >
+              Change Listing Order
+            </button>
             <EditBtn handler={() => setOpenEditFieldSetModal(true)}/>
             <DeleteBtn handler={() => setOpenDeleteFieldSetModal(true)}/>
           </div>
+          {openChangeModal &&
+          <Fetcher urls={[`/usersapi/list_fields/?field_set_id=${fieldSetId}`]}>
+            {({data}) => (
+              <ChangeListingOrder fields={data[0]} open={openChangeModal} setOpen={setOpenChangeModal} fieldSetId={fieldSetId}/>
+            )}
+          </Fetcher>}
           <EditFieldSet
             key={JSON.stringify(fieldSets.find(fs => fs.id == fieldSetId))}
             open={openEditFieldSetModal}

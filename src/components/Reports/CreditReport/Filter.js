@@ -19,6 +19,7 @@ const Filter = ({setReport, setParams}) => {
     currency_id: '',
     file_format: 'html',
     order: '-id',
+    status: 'running',
     page_size: '500',
     min_db_date: '',
     max_db_date: ''
@@ -94,7 +95,7 @@ const Filter = ({setReport, setParams}) => {
                   </div>
                 </div>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div style={{width:'85%'}}>
+                  <div style={{width:'75%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
@@ -102,6 +103,13 @@ const Filter = ({setReport, setParams}) => {
                       setFieldValue={setFieldValue}
                       required
                     />
+                  </div>
+                  <div className='row-payments-container' style={{width:'16%'}}>
+                    <CustomSelectFilter label='Status' name='status' required>
+                      <option value='running'>Running</option>
+                      <option value='not_running'>Not Running</option>
+                      <option value='all'>Both</option>
+                    </CustomSelectFilter>
                   </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>

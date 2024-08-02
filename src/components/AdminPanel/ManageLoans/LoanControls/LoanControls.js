@@ -65,6 +65,14 @@ const List = ({initControls}) => {
                     <td>{loanControls.request_otp_on_approval ? 'Yes' : 'No'}</td>
                   </tr>
                   <tr>
+                    <td>Allow Clients With Running Loans To Guarantee</td>
+                    <td>{loanControls.allow_clients_with_running_loans_to_guarantee ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
+                    <td>Allow Groups With Running Loans To Guarantee</td>
+                    <td>{loanControls.allow_groups_with_running_loans_to_guarantee ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
                     <td>Two Man Rules</td>
                     <td>
                       {loanControls.two_man_rules.map(rule => <div key={rule}>{rule}</div>)}
@@ -106,6 +114,8 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
     max_num_of_group_loans: loanControls.max_num_of_group_loans || '',
     allow_group_member_as_guarantor: loanControls.allow_group_member_as_guarantor,
     request_otp_on_approval: loanControls.request_otp_on_approval,
+    allow_clients_with_running_loans_to_guarantee: loanControls.allow_clients_with_running_loans_to_guarantee,
+    allow_groups_with_running_loans_to_guarantee: loanControls.allow_groups_with_running_loans_to_guarantee,
     two_man_rules: loanControls.two_man_rules,
     max_currencies_exposure: currencies.map(currency => {
       const exp = loanControls.max_currencies_exposure.find(exp => exp.currency_id == currency.id);
@@ -123,6 +133,8 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
     const data = {
       allow_group_member_as_guarantor: values.allow_group_member_as_guarantor,
       request_otp_on_approval: values.request_otp_on_approval,
+      allow_clients_with_running_loans_to_guarantee: values.allow_clients_with_running_loans_to_guarantee,
+      allow_groups_with_running_loans_to_guarantee: values.allow_groups_with_running_loans_to_guarantee,
       two_man_rules: values.two_man_rules.map(rule => rule.value),
       ...(values.max_num_of_loans && {max_num_of_loans: values.max_num_of_loans}),
       ...(values.max_num_of_group_loans && {max_num_of_group_loans: values.max_num_of_group_loans}),
@@ -162,6 +174,8 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
                   <CustomInput label='Maximum Number Of Running Loans Allowed Per Group' name='max_num_of_group_loans' step='1' type='number'/>
                   <CustomCheckbox label='Allow Group Members To Guarantee Group Loan' name='allow_group_member_as_guarantor'/>
                   <CustomCheckbox label='Request OTP On Loan Approval' name='request_otp_on_approval'/>
+                  <CustomCheckbox label='Allow Clients With Running Loans To Guarantee' name='allow_clients_with_running_loans_to_guarantee'/>
+                  <CustomCheckbox label='Allow Groups With Running Loans To Guarantee' name='allow_groups_with_running_loans_to_guarantee'/>
                   <CustomMultiSelect
                     label='Two Man Rules'
                     name='two_man_rules'

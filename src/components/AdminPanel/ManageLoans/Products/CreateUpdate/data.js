@@ -12,10 +12,15 @@ export const scheduleStrategies = {
 };
 
 export const initialFeeValues = {
-  id: null,
   fee_name: '',
   fee_type: '',
   fee_payment: '',
   value: '',
   is_mandatory: false,
+};
+
+export const initialFormValues = {
+  custom_field_set_id: '',
+  required_on: '',
+  ask_in_clients_portal: false
 };

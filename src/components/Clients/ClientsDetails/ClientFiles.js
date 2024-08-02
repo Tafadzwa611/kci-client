@@ -40,6 +40,7 @@ function ClientFiles({client, setClient}) {
         postXHR.send(formData);
         postXHR.onload = () => {
           const jsonResponse = JSON.parse(postXHR.responseText);
+          jsonResponse.name = jsonResponse.filename;
           setClient(curr => ({...curr, files: [...curr.files, jsonResponse]}));
           setProgress(curr => ({...curr, [file.path]: {...curr[file.path], status: 'Uploaded'}}));
           res();

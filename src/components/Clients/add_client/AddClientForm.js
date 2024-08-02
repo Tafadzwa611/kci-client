@@ -146,17 +146,16 @@ function AddClientForm({customForms, clientTypes, idTemplates, clientControls, s
               {clientTypes.map(ct => <option key={ct.id} value={ct.id}>{ct.name}</option>)}
             </CustomSelect>
             <ClientInformation setFieldValue={setFieldValue} clientControls={clientControls} staff={staff}/>
-            <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
+            <div className='divider divider-info'>Identification</div>
             <ClientId id_nums={values.id_nums} setFieldValue={setFieldValue} idTemplates={idTemplates}/>
-            <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
+            <div className='divider divider-info'>Address</div>
             <Addresses address_list={values.address_list} setFieldValue={setFieldValue}/>
-            <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
+            <div className='divider divider-info'>Next Of Kin</div>
             <NextOfKin next_of_kin_list={values.next_of_kin_list} setFieldValue={setFieldValue}/>
-            <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
             {customForms.filter(form => form.client_type_id == values.client_type_id).map(form => (
               <React.Fragment key={form.id}>
+                <div className='divider divider-info'>{form.name}</div>
                 <CustomForm form={form} setFieldValue={setFieldValue}/>
-                <div className='divider divider-info' style={{padding: '1.25rem'}}></div>
               </React.Fragment>
             ))}
             {showIgnore ? <CustomCheckbox label='Ignore Warnings' name='ignore_warnings'/>: null}

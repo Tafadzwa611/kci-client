@@ -9,6 +9,7 @@ import {
 import { scheduleStrategies } from './data';
 import Fee from './Fee';
 import { useBranches } from '../../../contexts/BranchesContext';
+import CustomForm from './CustomForm';
 
 function ClientFormFields({
   product,
@@ -17,7 +18,9 @@ function ClientFormFields({
   setFieldValue,
   clientName,
   values,
-  edit
+  edit,
+  customForms,
+  formIds
 }) {
   const {branches} = useBranches();
 
@@ -45,7 +48,7 @@ function ClientFormFields({
           setFieldValue(fieldName, selected.value);
         }}
         queryParamName='query'
-        params={[{key: 'guarantors_only', value: 1}]}
+        params={[{key: 'guarantors_only', value: 1}, {key: 'all_branches', value: 1}]}
         placeholder='Search Client Guarantor'
         name='guarantor_id'
       />
@@ -58,7 +61,7 @@ function ClientFormFields({
           setFieldValue(fieldName, selected.value);
         }}
         queryParamName='query'
-        params={[{key: 'guarantors_only', value: 1}]}
+        params={[{key: 'guarantors_only', value: 1}, {key: 'all_branches', value: 1}]}
         placeholder='Search Group Guarantor'
         name='group_guarantor_id'
       />
@@ -129,12 +132,18 @@ function ClientFormFields({
         <option value=''>------</option>
         {branches.map(br => <option key={br.id} value={br.id}>{br.name}</option>)}
       </CustomSelect>}
+      {customForms.filter(form => formIds.includes(form.id)).map(form => (
+        <React.Fragment key={form.id}>
+          <div className='divider divider-info' style={{padding: '1.25rem'}}><span>{form.name}</span></div>
+          <CustomForm form={form} setFieldValue={setFieldValue}/>
+        </React.Fragment>
+      ))}
       <div className='divider divider-info'>
         <span>Loan Fees</span>
       </div>
       {values.fees.map((fee, index) => <Fee key={index} setFieldValue={setFieldValue} fee={fee} values={values}/>)}
       <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
-      <div style={{display:'flex', justifyContent: 'flex-end'}}> 
+      <div style={{display:'flex', justifyContent: 'flex-end'}}>
         <SubmitButton isSubmitting={isSubmitting}/>
       </div>
     </>

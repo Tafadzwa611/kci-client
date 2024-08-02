@@ -37,7 +37,7 @@ const EditStaffForm = ({staff, roles, branches, notificationTypes}) => {
     is_active: staff.is_active,
     is_loan_officer: staff.is_loan_officer,
     access_branches: staff.branch_access.map(branch => ({value: branch.id, label: branch.name})),
-    notification_types: staff.branch_access.map(notification => ({value: notification, label: notification}))
+    notification_types: staff.notification_types.map(notification => ({value: notification, label: notification}))
   };
 
   const onSubmit = async (values, actions) => {

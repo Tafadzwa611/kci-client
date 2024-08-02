@@ -32,8 +32,10 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
     group: '',
     loan_product_id: '',
     client_type: '',
-    order_by: '-application_date'
+    order_by: '-application_date',
+    currency_id: ''
   };
+
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
@@ -115,7 +117,7 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
                   </div>
                   <div className='row-payments-container' style={{flexDirection:'row', justifyContent:'space-between', width:'32%'}}>
                     <div style={{width: '49%'}}>
-                      <CustomSelectFilter label='Currency' name='currency_id' required>
+                      <CustomSelectFilter label='Currency' name='currency_id'>
                         <option value=''>------</option>
                         {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
                       </CustomSelectFilter>
