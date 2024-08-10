@@ -4,7 +4,7 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 function Txns({loanId, txns, client_name}) {
   return (
     <>
-      <div style={{display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem'}}>
+      <div style={{display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem', columnGap:'3px'}}>
         <ReactHTMLTableToExcel
           id='test-table-xls-button'
           className='btn btn-default client__details'
