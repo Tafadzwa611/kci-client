@@ -113,11 +113,9 @@ function Refinance({setOpen, loan}) {
                         label='Top Up Amount'
                         name='top_up_amount'
                         type='number'
-                        min={product.minimum_principal_amount}
-                        max={product.maximum_principal_amount}
+                        min='0'
                         required
                       />
-                      <small><em>Minimum = {product.minimum_principal_amount} Maximum = {product.maximum_principal_amount}</em></small>
                       <CustomInput
                         label='Number Of Repayments'
                         name='num_of_installments'
