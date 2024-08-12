@@ -29,9 +29,21 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
         <button className={tab === 'schedule' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('schedule')}>Schedule</button>
         <button className={tab === 'txns' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('txns')}>Transactions</button>
         <button className={tab === 'payments' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('payments')}>Payments</button>
-        <button className={tab === 'fees' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('fees')}>Fees</button>
-        <button className={tab === 'penalties' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('penalties')}>Penalties</button>
-        <button className={tab === 'topup' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('topup')}>Top-Ups</button>
+        {loan.product_type == 'Fixed Term Loan' && (
+          <button className={tab === 'fees' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('fees')}>
+            Fees
+          </button>
+        )}
+        {loan.product_type == 'Fixed Term Loan' && (
+          <button className={tab === 'penalties' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('penalties')}>
+            Penalties
+          </button>
+        )}
+        {loan.product_type == 'Fixed Term Loan' && (
+          <button className={tab === 'topup' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('topup')}>
+            Top-Ups
+          </button>
+        )}
         <button className={tab === 'securities' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('securities')}>Collateral</button>
         <button className={tab === 'comments' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('comments')}>Comments</button>
         {loan.custom_data.map(fs => (
@@ -40,7 +52,6 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
           </button>
         ))}
         <button className={tab === 'files' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('files')}>Attachments</button>
-        {/* <button className={tab === 'audit' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('audit')}>Audit</button> */}
       </div>
       {{
         details: <DetailsTab loan={loan}/>,
@@ -64,7 +75,7 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
           currencyId={loan.currency_id}
           installments={loan.installments}
         />,
-        txns: <Txns loanId={loan.id} txns={loan.txns} client_name={client_name} />,
+        txns: <Txns loan={loan} setLoan={setLoan} txns={loan.txns} client_name={client_name} />,
         penalties: <Penalties
           penalties={loan.penalties}
           subLoans={loan.sub_loans_list}

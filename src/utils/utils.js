@@ -156,6 +156,10 @@ function isNumeric(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
+const isObjectEmpty = (objectName) => {
+  return Object.keys(objectName).length === 0
+}
+
 export {
   makeRequest,
   useAuth,
@@ -166,5 +170,6 @@ export {
   removeEmptyValues,
   removeNull,
   getParams,
-  isNumeric
+  isNumeric,
+  isObjectEmpty
 };

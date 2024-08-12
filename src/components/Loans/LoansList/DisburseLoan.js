@@ -16,6 +16,7 @@ import { removeEmptyValues } from '../../../utils/utils';
 function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLoanData}) {
   const initialValues = {
     disbursement_date: '',
+    interest_start_date: '',
     fund_account_id: '',
     loan_officer_id: loan.client_officer_id || '',
     first_repayment_date: loan.first_payment_date,
@@ -72,6 +73,15 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
                         required
                         allowKeyDown
                       />
+                      {loan.product_type === 'Dynamic Term Loan' && (
+                        <CustomDatePicker
+                          label='Interest Start Date'
+                          name='interest_start_date'
+                          setFieldValue={setFieldValue}
+                          required
+                          allowKeyDown
+                        />
+                      )}
                       <CustomSelect label='Fund Account' name='fund_account_id' required>
                         <option value=''>------</option>
                         {data[0].filter(acc => acc.currency_id == loan.currency_id).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_name}</option>)}

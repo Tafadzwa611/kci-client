@@ -17,14 +17,15 @@ function EditProduct({loanFees, fieldSets, initialValues, setView, setSelectedPr
     try {
       const data = removeEmptyValues(values);
       const allowed_branches_ids = values.allowed_branches_ids.map(allowed_branches_id => allowed_branches_id.value);
+      data.interest_application = values.product_type === 'Dynamic Term Loan' ? 'On Installment Date' : 'Upfront';
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.put(`/loansapi/edit_loan_product/${data.id}/`, {...data, fees: values.fees, custom_forms: values.custom_forms, allowed_branches_ids}, CONFIG);
       setProducts(curr => {
         return curr.map(prod => {
           if (prod.id === values.id) {
-            console.log(values.custom_forms);
             const currency = currencies.find(currency => currency.id == values.currency_id);
             values.currency = currency.fullname;
+            values.interest_application = data.interest_application;
             values.allowed_branches_ids = allowed_branches_ids;
             values.fees = values.fees.map(fee => {
               const lf = loanFees.find(lf => lf.id == fee.loanfee_id);

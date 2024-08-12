@@ -14,7 +14,7 @@ export const createLoanProductSchema = yup.object().shape({
   name: yup.string().required('Required'),
   loan_product_id: yup.string(),
   description: yup.string(),
-  product_type: yup.string().oneOf(['Fixed Term Loan', 'Interest-Free Loan'], 'Invalid').required('Required'),
+  product_type: yup.string().oneOf(['Fixed Term Loan', 'Interest-Free Loan', 'Dynamic Term Loan'], 'Invalid').required('Required'),
   is_active: yup.boolean(),
   currency_id: yup.number().integer().required('Required'),
   minimum_principal_amount: yup.number().min(minAmount, minMsg).required('Required'),

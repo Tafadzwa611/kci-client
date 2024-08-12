@@ -141,7 +141,7 @@ function AddClientForm({customForms, clientTypes, idTemplates, clientControls, s
             <div className='divider divider-info'>
               <span>Client Information</span>
             </div>
-            <CustomSelect label='Client Type' name='client_type_id'>
+            <CustomSelect label='Client Type' name='client_type_id' required>
               <option value=''>------</option>
               {clientTypes.map(ct => <option key={ct.id} value={ct.id}>{ct.name}</option>)}
             </CustomSelect>
