@@ -44,13 +44,13 @@ function Txns({loan, setLoan, txns, client_name}) {
                   <tr key={txn.id}>
                     <td className='schedule__table'></td>
                     <td className='schedule__table'>{txn.cvalue_date}</td>
-                    <td className='schedule__table'>{txn.description}</td>
+                    <td className='schedule__table'>{txn.reversed ? `${txn.description} (Reversed)` : txn.description}</td>
                     <td className='schedule__table'>{txn.entry_type === 'Dr' && txn.amount}</td>
                     <td className='schedule__table'>{txn.entry_type === 'Cr' && txn.amount}</td>
                     <td className='schedule__table'>{txn.balance}</td>
                     {loan.product_type == 'Dynamic Term Loan' && (
                       <td className='schedule__table'>
-                        {txn.txn_type === 'Interest Applied' ? <ReverseBtn id={txn.id} setTxnID={setTxnID}/> : null}
+                        {txn.txn_type === 'Interest Applied' && !txn.reversed ? <ReverseBtn id={txn.id} setTxnID={setTxnID}/> : null}
                       </td>
                     )}
                   </tr>
