@@ -2,6 +2,8 @@ import React, {useEffect} from 'react';
 import OnlineApplications from '../OnlineApplications/OnlineApplications';
 import LoansList from '../LoansList/LoansList';
 import AddLoan from '../AddLoan/AddLoan';
+import BatchApproval from '../BatchApproval/BatchApproval';
+import Report from '../BatchApproval/Report';
 import EditLoan from '../AddLoan/EditLoan';
 import Calculator from '../Calculator/Calculator';
 import { Fetcher } from '../../../common';
@@ -25,6 +27,8 @@ const ViewLoans = () => {
       <Route path='/' element={<Layout />}>
         <Route index element={<LoanListComponent />} />
         <Route path='addloan' element={<AddLoanComponent />} />
+        <Route path='approval' element={<BatchApproval />} />
+        <Route path='approval-report/:reportId' element={<Report />} />
         <Route path='onlineapplications' element={<OnlineApplications />} />
         <Route path='calculator' element={<Calculator />} />
         <Route
@@ -79,6 +83,9 @@ function Layout() {
             </Link>
             <Link to='/loans/viewloans/addloan' id='add' className={location.pathname === '/loans/viewloans/addloan' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Add Loan
+            </Link>
+            <Link to='/loans/viewloans/approval' id='add' className={location.pathname === '/loans/viewloans/approval' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Batch Approval
             </Link>
             <Link to='/loans/viewloans/onlineapplications' id='onlineapplications' className={location.pathname === '/loans/viewloans/onlineapplications' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
              Online Applications
