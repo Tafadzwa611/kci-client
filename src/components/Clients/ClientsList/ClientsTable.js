@@ -3,17 +3,15 @@ import Client from '../ClientsDetails/Client';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { Fetcher } from '../../../common';
 import Pager from './Pager';
-import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
 
 function ClientsTable({clientId, setClientId, clientsData, params, setClientsData}) {
   const handleClick = (e) => setClientId(e.target.id);
   const close = () => setClientId(null);
-  const {loggedInUser} = useLoggedInUser();
 
   const urls = [
     `/clientsapi/get_client/${clientId}/`,
     '/clientsapi/client_controls/',
-    `/usersapi/staff/?branch_id=${loggedInUser.branch_id}&loan_officers_only=1`
+    '/usersapi/staff/?loan_officers_only=1'
   ];
 
   return (

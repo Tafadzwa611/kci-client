@@ -42,6 +42,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
               <CustomSelect label='Product Type' name='product_type' required>
                 <option value=''>------</option>
                 <option value='Fixed Term Loan'>Fixed Term Loan</option>
+                <option value='Dynamic Term Loan'>Dynamic Term Loan</option>
                 <option value='Interest-Free Loan'>Interest-Free Loan</option>
               </CustomSelect>
               <CustomCheckbox label='Is Active' name='is_active'/>
@@ -72,6 +73,22 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
               </CustomSelect>
               <CustomInput label='Minimum Loan Interest' name='minimum_interest_rate' min='0' type='number' required/>
               <CustomInput label='Maximum Loan Interest' name='maximum_interest_rate' min='0' type='number' required/>
+              {values.product_type === 'Dynamic Term Loan' && (
+                <>
+                  <CustomSelect label='Apply Dynamic Interest On' name='dynamic_interest_applied_on' required>
+                    <option value=''>------</option>
+                    <option value='Principal'>Missed Installment Principal Balance</option>
+                    <option value='Org Principal'>Original Principal</option>
+                    <option value='Interest'>Missed Installment Interest Balance</option>
+                    <option value='Org Interest'>Original Balance</option>
+                    <option value='Principal + Interest'>Missed Installment Principal + Interest</option>
+                    <option value='Principal + Penalty'>Missed Installment Principal + Penalty</option>
+                    <option value='Principal + Interest + Fees + Penalty'>Missed Installment Principal + Interest + Fees + Penalty</option>
+                  </CustomSelect>
+                  <CustomCheckbox label='Add Interest After Maturity' name='add_interest_after_maturity'/>
+                  {values.add_interest_after_maturity && <CustomInput label='Interest rate after maturity' name='dynamic_default_interest_rate' type='number' required/>}
+                </>
+              )}
               <div className='divider divider-info'>
                 <span>Top-Up Settings</span>
               </div>

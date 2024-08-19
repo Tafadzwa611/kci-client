@@ -19,7 +19,12 @@ const Refund = ({setOpen, selectedPayment, setLoan, payId, setSelectedPayment, c
       const response = await axios.post(`/loansapi/refund/${selectedPayment.id}/`, values, CONFIG);
       setLoan(response.data);
       setOpen(false);
-      setSelectedPayment(response.data.payments.find(payment => payment.id == payId));
+      const payment = response.data.payments.find(payment => payment.id == payId);
+      if (payment) {
+        setSelectedPayment(payment);
+      }else {
+        setSelectedPayment(null);
+      }
     } catch (error) {
       if (error.message === 'Network Error') {
         actions.setErrors({responseStatus: 'Network Error'});

@@ -19,6 +19,7 @@ import { MODAL_STATES } from './data';
 import Loans from './Loans';
 import ClientFiles from './ClientFiles';
 import Groups from './Groups';
+import Profile from './Profile';
 
 function Client({clientData, clientControls, staff, close}) {
   const [client, setClient] = useState(clientData);
@@ -99,6 +100,7 @@ const Actions = ({modal, setModal, client, close, setClient}) => {
             </>
           }
         </div>
+        <Profile client={client} setClient={setClient}/>
         <div style={{margin:'1rem 0', display:'flex', justifyContent:'space-between'}}>
           <div style={{display:'flex', alignItems:'center'}}>
             <span style={{marginRight:'5px'}}><b>{client.first_name} {client.last_name}</b></span> /

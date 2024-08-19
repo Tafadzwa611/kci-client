@@ -14,7 +14,6 @@ import {
   useLocation
 } from 'react-router-dom';
 import { Fetcher } from '../../../common';
-import { useLoggedInUser } from '../../../contexts/LoggedInUserContext';
 
 const ViewClients = () => {
   useEffect(() => {
@@ -37,12 +36,11 @@ const ViewClients = () => {
 
 function FullClientDetails() {
   const params = useParams();
-  const {loggedInUser} = useLoggedInUser();
 
   const urls = [
     `/clientsapi/get_client/${params.clientId}/`,
     '/clientsapi/client_controls/',
-    `/usersapi/staff/?branch_id=${loggedInUser.branch_id}&loan_officers_only=1`
+    '/usersapi/staff/?loan_officers_only=1'
   ];
 
   return (

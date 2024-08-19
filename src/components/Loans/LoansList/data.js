@@ -1,5 +1,6 @@
 export const statusClasses = {
   'Fully Paid': 'badge badge-success',
+  'Refinanced': 'badge badge-success',
   'Early Settlement': 'badge badge-success',
   'Restructured': 'badge badge-dark',
   'Processing': 'badge badge-info-lighter',
@@ -55,6 +56,7 @@ export const statusValues = [
   'Approved',
   'Arrears',
   'Fully Paid',
+  'Refinanced',
   'Over Paid',
   'Rejected',
   'Written-Off',

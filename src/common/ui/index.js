@@ -12,6 +12,7 @@ import CheckBox from './CheckBox';
 import DefaultBtn from './DefaultBtn';
 import OliveBtn from './OliveBtn';
 import Pager from './Pager';
+import ModalLarge from './ModalLarge';
 
 export {
   CheckBox,
@@ -27,5 +28,6 @@ export {
   ButtonSuccess,
   DefaultBtn,
   OliveBtn,
-  Pager
+  Pager,
+  ModalLarge
 };

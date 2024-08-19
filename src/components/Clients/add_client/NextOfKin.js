@@ -39,7 +39,7 @@ function NokForm({index, setFieldValue, noks, nok}) {
         <option value='FEMALE'>FEMALE</option>
       </CustomSelect>
       <CustomInput label='Relationship' name={`next_of_kin_list[${index}].relationship`} type='text'/>
-      <CustomPhoneNumber label='Phone Number' name={`next_of_kin_list[${index}].phone_number`} setFieldValue={setFieldValue}/>
+      <CustomPhoneNumber label='Phone Number' name={`next_of_kin_list[${index}].phoneNumber`} setFieldValue={setFieldValue}/>
       <CustomInput label='Address' name={`next_of_kin_list[${index}].address`} type='text'/>
       <CustomInput label='City' name={`next_of_kin_list[${index}].city`} type='text'/>
       <CustomInput label='Country' name={`next_of_kin_list[${index}].country`} type='text'/>
@@ -66,7 +66,7 @@ function AddNok({setFieldValue, next_of_kin_list}) {
       gender: '',
       relationship: '',
       mobile_number_code: '',
-      phone_number: '',
+      phoneNumber: '',
       ownership: '',
       address: '',
       city: '',

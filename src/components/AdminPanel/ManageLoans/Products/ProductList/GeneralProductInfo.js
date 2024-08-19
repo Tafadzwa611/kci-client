@@ -36,9 +36,17 @@ function GeneralProductInfo({product, close, setView}) {
           <div style={{width:"33%"}}>
             <ul style={{paddingRight:"1rem"}}>
               <li style={{marginBottom: '1rem'}}><b>Interest Settings</b></li>
+              <li>Interest Application: {product.interest_application}</li>
               <li>Interest Method: {product.interest_method}</li>
               <li>Minimum Interest Rate: {product.minimum_interest_rate}%{product.interest_interval}</li>
               <li>Maximum Interest Rate: {product.maximum_interest_rate}%{product.interest_interval}</li>
+              {product.product_type === 'Dynamic Term Loan' && (
+                <>
+                  <li>Interest Applied On: {product.dynamic_interest_applied_on}</li>
+                  <li>Default Interest Applied On: {product.dynamic_default_interest_rate}%{product.interest_interval}</li>
+                  <li>Add Interest After Maturity: {product.add_interest_after_maturity ? 'Yes' : 'No'}</li>
+                </>
+              )}
             </ul>
           </div>
         </div>

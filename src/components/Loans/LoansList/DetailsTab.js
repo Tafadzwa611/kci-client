@@ -20,6 +20,8 @@ function DetailsTab({loan}) {
               <li style={{marginBottom: '0.25rem'}}>First Repayment Date: {loan.first_payment_date}</li>
               <li style={{marginBottom: '0.25rem'}}>Maturity Date: {loan.mat_date}</li>
               <li style={{marginBottom: '0.25rem'}}>Product: {loan.product_name}</li>
+              <li style={{marginBottom: '0.25rem'}}>Product Type: {loan.product_type}</li>
+              <li style={{marginBottom: '0.25rem'}}>Interest Application: {loan.interest_application}</li>
               <li style={{marginBottom: '0.25rem'}}>Applied Amount: {loan.currency_name} {loan.org_principal}</li>
               <li style={{marginBottom: '0.25rem'}}>Loan Amount: {loan.currency_name} {loan.principal}</li>
               <li style={{marginBottom: '0.25rem'}}>Interest Rate: {loan.interest_rate}%{loan.interest_interval}</li>
@@ -47,6 +49,18 @@ function DetailsTab({loan}) {
                   <li style={{marginBottom: '0.25rem'}}>Number of Installments: {loan.auto_restructure_installments}</li>
                 </>
               }
+              {loan.product_type === 'Dynamic Term Loan' && (
+                <>
+                  <li style={{marginTop: '1rem', marginBottom: '0.5rem'}}><b>Dynamic Term Interest Settings</b></li>
+                  <li style={{marginBottom: '0.25rem'}}>Interest Applied On: {loan.dynamic_interest_applied_on}</li>
+                  <li style={{marginBottom: '0.25rem'}}>Add Interest After Maturity: {loan.add_interest_after_maturity ? 'Yes' : 'No'}</li>
+                  {loan.add_interest_after_maturity && (
+                    <li style={{marginBottom: '0.25rem'}}>
+                      Default Interest Rate: {loan.dynamic_default_interest_rate}%{loan.interest_interval}
+                    </li>
+                  )}
+                </>
+              )}
             </ul>
           </div>
           <div style={{width:'48%'}}>
@@ -107,6 +121,11 @@ function DetailsTab({loan}) {
 
               <li style={{marginBottom: '0.25rem'}}>Total Principal Balance: {loan.currency_name} {loan.principal_amount_due}</li>
               <li style={{marginBottom: '0.25rem'}}>Total Interest Balance: {loan.currency_name} {loan.interest_amount_due}</li>
+              {loan.product_type === 'Dynamic Term Loan' && (
+                <li style={{marginBottom: '0.25rem'}}>
+                  Daily Pro-Rata Interest Balance: {loan.currency_name} {loan.pro_rata_interest_bal}
+                </li>
+              )}
               <li style={{marginBottom: '0.25rem'}}>Total Fees Balance: {loan.currency_name} {loan.non_deductable_fees}</li>
               <li style={{marginBottom: '1rem'}}>Total Penalty Balance: {loan.currency_name} {loan.penalty}</li>
 

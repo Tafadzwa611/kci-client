@@ -34,7 +34,8 @@ export {
   CheckBox,
   DefaultBtn,
   OliveBtn,
-  Pager
+  Pager,
+  ModalLarge
 } from './ui'
 export {
   CustomInputFilter,

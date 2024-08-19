@@ -36,7 +36,7 @@ const initValidationSchema = yup.object().shape({
     last_name: yup.string().required('Required'),
     gender: yup.string().required('Required').oneOf(['MALE', 'FEMALE']),
     relationship: yup.string().required('Required'),
-    phone_number: yup.object().shape({
+    phoneNumber: yup.object().shape({
       countryCode: yup.string().required(),
       phoneNumber: yup.string().required('Required'),
     }),
@@ -141,7 +141,7 @@ function AddClientForm({customForms, clientTypes, idTemplates, clientControls, s
             <div className='divider divider-info'>
               <span>Client Information</span>
             </div>
-            <CustomSelect label='Client Type' name='client_type_id'>
+            <CustomSelect label='Client Type' name='client_type_id' required>
               <option value=''>------</option>
               {clientTypes.map(ct => <option key={ct.id} value={ct.id}>{ct.name}</option>)}
             </CustomSelect>
@@ -180,7 +180,7 @@ const processValues = (values, customForms) => {
     });
     return {'field_set_id': form.id, 'data': data}
   });
-  values.next_of_kin_list = values.next_of_kin_list.map(nok => ({...nok, phone_number: `${nok.phone_number.countryCode} ${nok.phone_number.phoneNumber}`}));
+  values.next_of_kin_list = values.next_of_kin_list.map(nok => ({...nok, phone_number: `${nok.phoneNumber.countryCode} ${nok.phoneNumber.phoneNumber}`}));
   const phoneNumbers = {mobile_number: '', phone_number_secondary: '', whatsapp_number: ''};
   if (values.mobile_number.phoneNumber) {
     phoneNumbers.mobile_number = `${values.mobile_number.countryCode} ${values.mobile_number.phoneNumber}`;

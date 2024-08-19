@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ButtonDefault = ({handler, value}) => {
+const ButtonDefault = ({id, handler, value}) => {
   return (
-    <button className="btn btn-default" onClick={handler}>
+    <button id={id} className="btn btn-default" onClick={handler}>
       {value}
     </button>
   )

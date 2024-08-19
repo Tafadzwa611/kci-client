@@ -82,7 +82,7 @@ function Payments({
                       {payId ?
                         <>
                           <td className='schedule__table'>
-                            {(selectedPayment.id==payment.id) ?
+                            {(selectedPayment.id == payment.id) ?
                               <span onClick={handleClick} id={payment.id} style={{fontSize:'0.75rem', cursor:'pointer', color:'red'}} className='link'>
                                 {payment.date_recorded}
                               </span>:
