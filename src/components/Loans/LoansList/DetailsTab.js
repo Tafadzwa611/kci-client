@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
+import ChangeAccruedInterest from './ChangeAccruedInterest';
 
-function DetailsTab({loan}) {
+function DetailsTab({loan, setLoan}) {
+  const [openModal, setOpenModal] = useState(false);
+
   return (
     <div style={{display:'flex', columnGap:'1%'}}>
+      {openModal && <ChangeAccruedInterest loan={loan} setOpen={setOpenModal} setLoan={setLoan}/>}
       <div style={{width:'100%'}}>
         <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom: '2rem'}}>
           <div style={{width:'48%'}}>
@@ -122,9 +126,15 @@ function DetailsTab({loan}) {
               <li style={{marginBottom: '0.25rem'}}>Total Principal Balance: {loan.currency_name} {loan.principal_amount_due}</li>
               <li style={{marginBottom: '0.25rem'}}>Total Interest Balance: {loan.currency_name} {loan.interest_amount_due}</li>
               {loan.product_type === 'Dynamic Term Loan' && (
-                <li style={{marginBottom: '0.25rem'}}>
-                  Daily Pro-Rata Interest Balance: {loan.currency_name} {loan.pro_rata_interest_bal}
-                </li>
+                <>
+                  <li style={{marginBottom: '0.25rem'}}>
+                    Daily Pro-Rata Interest Balance: {loan.currency_name} {loan.pro_rata_interest_bal}
+                  </li>
+                  <li style={{marginBottom: '0.25rem'}}>
+                    Daily Accrued But Not Applied Interest: {loan.currency_name} {loan.accrued_daily_interest} 
+                    <a style={{cursor: 'pointer'}} onClick={() => setOpenModal(true)}><small>Change</small></a>
+                  </li>
+                </>
               )}
               <li style={{marginBottom: '0.25rem'}}>Total Fees Balance: {loan.currency_name} {loan.non_deductable_fees}</li>
               <li style={{marginBottom: '1rem'}}>Total Penalty Balance: {loan.currency_name} {loan.penalty}</li>
