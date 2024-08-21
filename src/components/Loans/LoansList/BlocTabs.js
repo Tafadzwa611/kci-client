@@ -29,11 +29,9 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
         <button className={tab === 'schedule' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('schedule')}>Schedule</button>
         <button className={tab === 'txns' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('txns')}>Transactions</button>
         <button className={tab === 'payments' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('payments')}>Payments</button>
-        {loan.product_type == 'Fixed Term Loan' && (
-          <button className={tab === 'fees' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('fees')}>
+        <button className={tab === 'fees' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('fees')}>
             Fees
           </button>
-        )}
         {loan.product_type == 'Fixed Term Loan' && (
           <button className={tab === 'penalties' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('penalties')}>
             Penalties
@@ -54,7 +52,7 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
         <button className={tab === 'files' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('files')}>Attachments</button>
       </div>
       {{
-        details: <DetailsTab loan={loan}/>,
+        details: <DetailsTab loan={loan} setLoan={setLoan}/>,
         payments: <Payments
           payments={loan.payments}
           currencyId={loan.currency_id}
