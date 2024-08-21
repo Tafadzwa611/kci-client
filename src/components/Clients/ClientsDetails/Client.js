@@ -77,44 +77,48 @@ const Actions = ({modal, setModal, client, close, setClient}) => {
     )
   }
 
-  const statusClasses = {
-    'Active': 'badge badge-success',
-    'Blacklisted': 'badge badge-dark',
-    'Processing': 'badge badge-info-lighter',
-    'Pending Approval': 'badge badge-info-light',
-    'Inactive': 'badge badge-info',
-    'Left': 'badge badge-semi-dark',
-    'Rejected': 'badge badge-danger',
-  }
+  // const statusClasses = {
+  //   'Active': 'badge badge-success',
+  //   'Blacklisted': 'badge badge-dark',
+  //   'Processing': 'badge badge-info-lighter',
+  //   'Pending Approval': 'badge badge-info-light',
+  //   'Inactive': 'badge badge-info',
+  //   'Left': 'badge badge-semi-dark',
+  //   'Rejected': 'badge badge-danger',
+  // }
 
   return (
     <>
       <div>
-        <div style={{display:'flex', justifyContent:'space-between'}}>
-          {close &&
+        {close &&
+          <div style={{display:'flex', justifyContent:'space-between', marginBottom:'1.5rem'}}>
             <>
               <button className='btn btn-default client__details' onClick={close}>Close</button>
               <button className='btn btn-default client__details'>
                 <Link to={`clientdetails/${client.id}`}>Expand</Link>
               </button>
             </>
-          }
-        </div>
-        <Profile client={client} setClient={setClient}/>
-        <div style={{margin:'1rem 0', display:'flex', justifyContent:'space-between'}}>
-          <div style={{display:'flex', alignItems:'center'}}>
-            <span style={{marginRight:'5px'}}><b>{client.first_name} {client.last_name}</b></span> /
-            <span style={{marginLeft:'5px'}} className={statusClasses[client.status]}>{client.status}</span>
           </div>
-          <div className='client-state-btns' style={{display: 'flex', columnGap: '3px'}}>
-            {{
-              'Blacklisted': <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.undoBlacklist)}>Undo Blacklist</button>,
-              'Left': <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.undoLeft)}>Undo Left</button>,
-              'Active': <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.blacklist)}>Blacklist</button>,
-              'Inactive': <Inactive />,
-              'Pending Approval': <PendingApproval />,
-              'Rejected': <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.undoReject)}>Undo Rejection</button>,
-            }[client.status]}
+        }
+        <div className='profile__container'>
+          <div>
+            <Profile client={client} setClient={setClient}/>
+            {/* <div style={{display:'flex', alignItems:'center'}}>
+              <span style={{marginRight:'5px'}}><b>{client.first_name} {client.last_name}</b></span> /
+              <span style={{marginLeft:'5px'}} className={statusClasses[client.status]}>{client.status}</span>
+            </div> */}
+          </div>
+          <div style={{display:'flex', justifyContent:'space-between'}}>
+            <div className='client-state-btns' style={{display: 'flex', columnGap: '3px'}}>
+              {{
+                'Blacklisted': <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.undoBlacklist)}>Undo Blacklist</button>,
+                'Left': <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.undoLeft)}>Undo Left</button>,
+                'Active': <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.blacklist)}>Blacklist</button>,
+                'Inactive': <Inactive />,
+                'Pending Approval': <PendingApproval />,
+                'Rejected': <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.undoReject)}>Undo Rejection</button>,
+              }[client.status]}
+            </div>
           </div>
         </div>
       </div>

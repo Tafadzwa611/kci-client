@@ -1900,6 +1900,12 @@ small {
   color: var(--white);
 }
 
+.badge-default {
+  border-color: var(--home-section-color);
+  background-color: var(--home-section-color);
+  color: var(--color);
+}
+
 .badge-danger,
 .badge-bg-danger {
   background-color: var(--danger);
@@ -3685,4 +3691,13 @@ input[type=number] {
 .timeline__section {
   padding: 0.5rem 0;
   border-top: 1px solid var(--border-color);
+}
+
+.profile__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 1.5rem;
+  background: var(--white);
+  padding: 1.5rem;
 }
