@@ -48,6 +48,7 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
   const selectOpts = subLoans.filter(loan => loan.id !== null);
 
   const initialValues = {
+    send_sms_notification: false,
     cash_account_id: '',
     payment_type: 'Installment',
     payment_date: '',
@@ -89,6 +90,7 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
                     </CustomSelect> : null}
                     <CustomInput label='Receipt Number' name='receipt_number' type='text'/>
                     <CustomTextField label='Description' name='notes' type='text'/>
+                    <CustomCheckbox label='Send SMS notification to client' name='send_sms_notification'/>
                   </div>
                   <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
                 </div>
