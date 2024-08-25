@@ -25,8 +25,8 @@ function Summary({summary}) {
           </thead>
           <tbody>
             {summary.map(lf => (
-              <tr key={lf.loanfee__id}>
-                <td>{ lf.loanfee__name }</td>
+              <tr key={lf.fee_name}>
+                <td>{ lf.fee_name }</td>
                 <td>{lf.amount__sum}</td>
               </tr>
             ))}

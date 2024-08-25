@@ -22,6 +22,7 @@ function DetailsTab({loan, setLoan}) {
               <li style={{marginBottom: '0.25rem'}}>Disbursement Date: {loan.db_date}</li>
               <li style={{marginBottom: '0.25rem'}}>Approval Date: {loan.approv_date}</li>
               <li style={{marginBottom: '0.25rem'}}>First Repayment Date: {loan.first_payment_date}</li>
+              <li style={{marginBottom: '0.25rem'}}>Entry Date: {loan.date_logged}</li>
               <li style={{marginBottom: '0.25rem'}}>Maturity Date: {loan.mat_date}</li>
               <li style={{marginBottom: '0.25rem'}}>Product: {loan.product_name}</li>
               <li style={{marginBottom: '0.25rem'}}>Product Type: {loan.product_type}</li>

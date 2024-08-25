@@ -6,6 +6,7 @@ import {
   NonFieldErrors,
   CustomDatePicker,
   CustomSelect,
+  CustomCheckbox,
   Fetcher
 } from '../../../common';
 import axios from 'axios';
@@ -15,6 +16,7 @@ import { removeEmptyValues } from '../../../utils/utils';
 
 function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLoanData}) {
   const initialValues = {
+    send_sms_notification: false,
     disbursement_date: '',
     interest_start_date: '',
     fund_account_id: '',
@@ -90,6 +92,7 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
                         <option value=''>------</option>
                         {data[1].map(user => <option key={user.id} value={user.id}>{`${user.first_name} ${user.last_name} - ${user.branch__name}`}</option>)}
                       </CustomSelect>
+                      <CustomCheckbox label='Send SMS notification to client' name='send_sms_notification'/>
                     </div>
                     <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
                   </div>
