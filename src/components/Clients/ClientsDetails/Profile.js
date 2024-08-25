@@ -8,19 +8,12 @@ import 'react-medium-image-zoom/dist/styles.css';
 const thumbsContainer = {
   display: 'flex',
   flexDirection: 'row',
-  // flexWrap: 'wrap',
-  // marginTop: 16
 };
 
 const thumb = {
   display: 'inline-flex',
-  // borderRadius: 2,
-  // border: '1px solid #eaeaea',
-  // marginBottom: 8,
-  // marginRight: 8,
   width: 100,
   height: 80,
-  // padding: 4,
   boxSizing: 'border-box'
 };
 

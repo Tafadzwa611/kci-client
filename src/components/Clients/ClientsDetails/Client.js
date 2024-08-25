@@ -77,16 +77,6 @@ const Actions = ({modal, setModal, client, close, setClient}) => {
     )
   }
 
-  // const statusClasses = {
-  //   'Active': 'badge badge-success',
-  //   'Blacklisted': 'badge badge-dark',
-  //   'Processing': 'badge badge-info-lighter',
-  //   'Pending Approval': 'badge badge-info-light',
-  //   'Inactive': 'badge badge-info',
-  //   'Left': 'badge badge-semi-dark',
-  //   'Rejected': 'badge badge-danger',
-  // }
-
   return (
     <>
       <div>
@@ -103,10 +93,6 @@ const Actions = ({modal, setModal, client, close, setClient}) => {
         <div className='profile__container'>
           <div>
             <Profile client={client} setClient={setClient}/>
-            {/* <div style={{display:'flex', alignItems:'center'}}>
-              <span style={{marginRight:'5px'}}><b>{client.first_name} {client.last_name}</b></span> /
-              <span style={{marginLeft:'5px'}} className={statusClasses[client.status]}>{client.status}</span>
-            </div> */}
           </div>
           <div style={{display:'flex', justifyContent:'space-between'}}>
             <div className='client-state-btns' style={{display: 'flex', columnGap: '3px'}}>
