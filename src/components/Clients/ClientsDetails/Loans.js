@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 export const statusClasses = {
   'Fully Paid': 'badge badge-success',
   'Early Settlement': 'badge badge-success',
+  'Refinanced': 'badge badge-success',
   'Restructured': 'badge badge-dark',
   'Processing': 'badge badge-info-lighter',
   'Arrears': 'badge badge-danger',
