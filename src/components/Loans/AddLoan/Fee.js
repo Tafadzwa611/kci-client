@@ -1,14 +1,16 @@
 import React from 'react';
 import {
-  ButtonDefault
+  ButtonDefault,
+  CustomInput
 } from '../../../common';
 
-function Fee({fee, setFieldValue, values}) {
+function Fee({index, fee, setFieldValue, values}) {
   return (
     <div>
       <div>Fee Name: {fee.name}</div>
       <div>Fee Type: {fee.fee_type}</div>
       <div> Fee Payment: {fee.value} {fee.fee_calculation}</div>
+      <CustomInput label='Fee Value' name={`fees[${index}].value`} type='number' required/>
       {!fee.is_mandatory ?
         <div style={{marginTop:'10px'}}>
           <ButtonDefault
@@ -22,6 +24,7 @@ function Fee({fee, setFieldValue, values}) {
         </div> :
         null
       }
+      <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
     </div>
   )
 }
