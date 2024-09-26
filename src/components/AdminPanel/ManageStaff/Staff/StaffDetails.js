@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 function StaffDetails() {
-  const [tab, setTab] = useState('clients__client');
+  const [tab, setTab] = useState('users__toplevelperms');
 
   const params = useParams();
   return (
@@ -72,6 +72,7 @@ function StaffDetails() {
               </div>
             </div>
             <div className='bloc-tabs'>
+              <button className={tab === 'users__toplevelperms' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('users__toplevelperms')}>Module Level Permissions</button>
               <button className={tab === 'clients__client' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('clients__client')}>Clients</button>
               <button className={tab === 'clients__group' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('clients__group')}>Groups</button>
               <button className={tab === 'loans__loan' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('loans__loan')}>Loans</button>
