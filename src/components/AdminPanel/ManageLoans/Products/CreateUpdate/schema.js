@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 const minAmount = 0;
 const minMsg = 'Minimum allowed value is 0.'
-const minInt = 1;
+const minInt = 0.0000001;
 const minIntMsg = 'Minimum allowed value is 1.';
 
 export const feeSchema = yup.object().shape({
