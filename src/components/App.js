@@ -29,7 +29,7 @@ function App() {
 
   return (
     <>
-      <Fetcher urls={['/usersapi/logged_in_user/', '/usersapi/get-branches/', '/usersapi/list_currencies/', '/loansapi/loan_controls/']}>
+      <Fetcher urls={['/usersapi/logged_in_user/', '/usersapi/get-branches/', '/usersapi/list_currencies/', '/loansapi/loan_controls/', '/usersapi/staff_toplevel_perms/']}>
         {({data}) => {
           return (
             <ThemeContext.Provider value={{theme, toggleTheme}}>
@@ -41,9 +41,9 @@ function App() {
                         <Router>
                           <div id={theme}>
                             <section className='home-section'>
-                              <Navbar theme={theme} loggedInUser={data[0]} toggleTheme={toggleTheme}/>
+                              <Navbar theme={theme} loggedInUser={data[0]} toggleTheme={toggleTheme} stafftoplevelperms={data[4]}/>
                               <div className='app'>
-                                <Routes loggedInUser={data[0]} branches={data[1]} currencies={data[2]} loanControls={data[3]}/>
+                                <Routes loggedInUser={data[0]} branches={data[1]} currencies={data[2]} loanControls={data[3]} stafftoplevelperms={data[4]}/>
                               </div>
                             </section>
                           </div>

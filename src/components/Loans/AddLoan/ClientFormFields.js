@@ -141,8 +141,7 @@ function ClientFormFields({
       <div className='divider divider-info'>
         <span>Loan Fees</span>
       </div>
-      {values.fees.map((fee, index) => <Fee key={index} setFieldValue={setFieldValue} fee={fee} values={values}/>)}
-      <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+      {values.fees.map((fee, index) => <Fee key={index} index={index} setFieldValue={setFieldValue} fee={fee} values={values}/>)}
       <div style={{display:'flex', justifyContent: 'flex-end'}}>
         <SubmitButton isSubmitting={isSubmitting}/>
       </div>

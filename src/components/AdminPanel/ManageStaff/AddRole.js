@@ -34,6 +34,7 @@ function AddRoleForm({perms}) {
     accounting__generalledgeraccount: 'Ledger Accounts Permissions',
     reports__rightssupport: 'Reports Permissions',
     admin_perms: 'Admin Permissions',
+    users__toplevelperms: 'Module Level Permissions'
   };
 
   const initialValues = {
@@ -75,6 +76,11 @@ function AddRoleForm({perms}) {
     }
   }
 
+  const newIndex = 0;
+  const oldIndex = 9;
+  const permNamesArray = Object.keys(perms);
+  permNamesArray.splice(newIndex, 0, permNamesArray.splice(oldIndex, 1)[0]);
+
   return (
     <>
       <div>
@@ -90,7 +96,7 @@ function AddRoleForm({perms}) {
                 <span>Role Information</span>
               </div>
               <CustomInput label='Role' name='role' type='text' required/>
-              {Object.keys(perms).map(key => {
+              {permNamesArray.map(key => {
                 return (
                   <CustomMultiSelect
                     key={key}

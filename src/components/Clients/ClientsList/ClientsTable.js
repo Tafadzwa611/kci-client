@@ -11,7 +11,8 @@ function ClientsTable({clientId, setClientId, clientsData, params, setClientsDat
   const urls = [
     `/clientsapi/get_client/${clientId}/`,
     '/clientsapi/client_controls/',
-    '/usersapi/staff/?loan_officers_only=1'
+    '/usersapi/staff/?loan_officers_only=1',
+    '/usersapi/staff_toplevel_perms/',
   ];
 
   return (
@@ -22,7 +23,7 @@ function ClientsTable({clientId, setClientId, clientsData, params, setClientsDat
           <div className='table-responsive journal__table-container-journals'>
             <MiniTable clients={clientsData.clients} handleClick={handleClick} clientId={clientId}/>
             <Fetcher urls={urls} extra={{close}}>
-              {({data, extra}) => <Client clientData={data[0]} clientControls={data[1]} staff={data[2]} close={extra.close}/>}
+              {({data, extra}) => <Client clientData={data[0]} clientControls={data[1]} staff={data[2]} staffTopLevelPerm={data[3]} close={extra.close}/>}
             </Fetcher>
           </div>
         </div> :

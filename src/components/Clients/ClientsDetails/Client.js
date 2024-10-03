@@ -21,9 +21,11 @@ import ClientFiles from './ClientFiles';
 import Groups from './Groups';
 import Profile from './Profile';
 
-function Client({clientData, clientControls, staff, close}) {
+function Client({clientData, clientControls, staff, staffTopLevelPerm, close}) {
   const [client, setClient] = useState(clientData);
   const [modal, setModal] = useState();
+
+  console.log(staffTopLevelPerm)
 
   return (
     <div style={{position:'sticky', top:'0', width:'100%'}}>
@@ -42,13 +44,14 @@ function Client({clientData, clientControls, staff, close}) {
           client={client}
           close={close}
           setClient={setClient}
+          staffTopLevelPerm={staffTopLevelPerm}
         />
       </div>
     </div>
   )
 }
 
-const Actions = ({modal, setModal, client, close, setClient}) => {
+const Actions = ({modal, setModal, client, close, setClient, staffTopLevelPerm}) => {
   const [tab, setTab] = useState('details');
 
   const customViews = {};
@@ -119,7 +122,9 @@ const Actions = ({modal, setModal, client, close, setClient}) => {
           </button>
         ))}
         <button className={tab === 'files' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('files')}>Files</button>
-        <button className={tab === 'loans' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('loans')}>Loans</button>
+        {staffTopLevelPerm.can_view_loan_module &&
+          <button className={tab === 'loans' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('loans')}>Loans</button>
+        }
         <button className={tab === 'groups' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('groups')}>Groups</button>
       </div>
       <div className='tab-content font-12' style={{marginTop: '3rem'}}>

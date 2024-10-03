@@ -53,45 +53,66 @@ const Navbar = (props) => {
       <div className='home-content-header-left' style={{display:'flex', columnGap:'3rem', paddingLeft:'1.5rem'}}>
 
         <div style={{display:'flex'}}>
-          {/* <NavLink to='/' className='btn btn-default dashboard'>
-            <span>Home</span>
-          </NavLink> */}
-          <NavLink to='/dashboard' className='btn btn-default dashboard'>
-            <span>Dashboard</span>
-          </NavLink>
-          <NavLink to='/clients/viewclients' className='btn btn-default dashboard'>
-            <span>Clients</span>
-          </NavLink>
-          <NavLink to='/groups/viewgroups' className='btn btn-default dashboard'>
-            <span>Groups</span>
-          </NavLink>
-          <NavLink to='/loans/viewloans' className='btn btn-default dashboard'>
-            <span>Loans</span>
-          </NavLink>
-          <NavLink to='/payments/viewpayments' className='btn btn-default dashboard'>
-            <span>Payments</span>
-          </NavLink>
-          <NavLink to='/otherincome/viewotherincome' className='btn btn-default dashboard'>
-            <span>Other Income</span>
-          </NavLink>
-          <NavLink to='/expenses/viewexpenses' className='btn btn-default dashboard'>
-            <span>Expenses</span>
-          </NavLink>
-          <NavLink to='/reports/viewreports' className='btn btn-default dashboard'>
-            <span>Reports</span>
-          </NavLink>
-          <NavLink to='/accounting/viewaccounting' className='btn btn-default dashboard'>
-            <span>Accounting</span>
-          </NavLink>
-          <NavLink to='/data/viewdata' className='btn btn-default dashboard'>
-            <span>Data Export</span>
-          </NavLink>
-          <NavLink to='/users/admin' className='btn btn-default dashboard'>
-            <span>Admin</span>
-          </NavLink>
-          <NavLink to='/search' onClick={openSearch} className='btn btn-default dashboard'>
-            <span>Search</span>
-          </NavLink>
+          {props.stafftoplevelperms.can_view_dashboard_module && (
+            <NavLink to='/dashboard' className='btn btn-default dashboard'>
+              <span>Dashboard</span>
+            </NavLink>
+          )}
+          {props.stafftoplevelperms.can_view_client_module && (
+            <NavLink to='/clients/viewclients' className='btn btn-default dashboard'>
+              <span>Clients</span>
+            </NavLink>
+          )}
+          {props.stafftoplevelperms.can_view_group_module && (
+            <NavLink to='/groups/viewgroups' className='btn btn-default dashboard'>
+              <span>Groups</span>
+            </NavLink>
+          )}
+          {props.stafftoplevelperms.can_view_loan_module && (
+            <NavLink to='/loans/viewloans' className='btn btn-default dashboard'>
+              <span>Loans</span>
+            </NavLink>
+          )}
+          {props.stafftoplevelperms.can_view_payment_module && (
+            <NavLink to='/payments/viewpayments' className='btn btn-default dashboard'>
+              <span>Payments</span>
+            </NavLink>
+          )}
+          {props.stafftoplevelperms.can_view_otherincome_module && (
+            <NavLink to='/otherincome/viewotherincome' className='btn btn-default dashboard'>
+              <span>Other Income</span>
+            </NavLink>
+          )}
+          {props.stafftoplevelperms.can_view_expense_module && (
+            <NavLink to='/expenses/viewexpenses' className='btn btn-default dashboard'>
+              <span>Expenses</span>
+            </NavLink>
+          )}
+          {props.stafftoplevelperms.can_view_report_module && (
+            <NavLink to='/reports/viewreports' className='btn btn-default dashboard'>
+              <span>Reports</span>
+            </NavLink>
+          )}
+          {props.stafftoplevelperms.can_view_accounting_module && (
+            <NavLink to='/accounting/viewaccounting' className='btn btn-default dashboard'>
+              <span>Accounting</span>
+            </NavLink>
+          )}
+          {props.stafftoplevelperms.can_view_dataexport_module && (
+            <NavLink to='/data/viewdata' className='btn btn-default dashboard'>
+              <span>Data Export</span>
+            </NavLink>
+          )}
+          {props.stafftoplevelperms.can_view_admin_module && (
+            <NavLink to='/users/admin' className='btn btn-default dashboard'>
+              <span>Admin</span>
+            </NavLink>
+          )}
+          {props.stafftoplevelperms.can_view_search_module && (
+            <NavLink to='/search' onClick={openSearch} className='btn btn-default dashboard'>
+              <span>Search</span>
+            </NavLink>
+          )}
         </div>
         <div></div>
       </div>

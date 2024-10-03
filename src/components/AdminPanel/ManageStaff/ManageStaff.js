@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Staff from './Staff/Staff';
 import AddRole from './AddRole';
 import ClientRoles from './ClientRoles';
