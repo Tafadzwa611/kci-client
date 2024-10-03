@@ -41,7 +41,9 @@ function Tile({ par }) {
             <span>{par.currency} PAR {par.par_name}</span>
             <span>Number of loans {par.par_name} days late: <b>{par.loans_in_arrears_count}</b></span>
             <span>Total Loan Count: <b>{par.total_loan_count}</b></span>
-            <span>Principal At Risk: <b>{par.currency} {par.principal_at_risk}</b></span>
+            <span>
+              Principal At Risk: <b>{par.currency} {par.principal_at_risk}</b>  <em>(Interest Balance - {par.currency} {par.interest_at_risk},  Fees Balance - {par.currency} {par.fees_at_risk})</em>
+            </span>
             <span>Total Loan Portfolio: <b>{par.currency} {par.total_loan_portfolio}</b></span>
           </div>
         </div>
