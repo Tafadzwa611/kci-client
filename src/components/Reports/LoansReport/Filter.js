@@ -14,7 +14,16 @@ import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
 const Filter = ({setReport, setParams}) => {
-  const initialValues = {branch_ids: [], page_num: 1, min_date: '', max_date: '', client_str: '', order: '-id', mode: 'html'};
+  const initialValues = {
+    branch_ids: [],
+    page_num: 1,
+    min_date: '',
+    max_date: '',
+    client_str: '',
+    reason: '',
+    order: '-id',
+    mode: 'html'
+  };
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
@@ -66,7 +75,7 @@ const Filter = ({setReport, setParams}) => {
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'70%'}}>
+                  <div style={{width:'60%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
@@ -74,6 +83,25 @@ const Filter = ({setReport, setParams}) => {
                       setFieldValue={setFieldValue}
                       required
                     />
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomSelectFilter label='Reason For Borrowing' name='reason'>
+                      <option value=''>-----</option>
+                      <option value='CONSUMER'>CONSUMER</option>
+                      <option value='COMMERCIAL - Agriculture'>COMMERCIAL - Agriculture</option>
+                      <option value='COMMERCIAL - Manufacturing'>COMMERCIAL - Manufacturing</option>
+                      <option value='COMMERCIAL - Mining'>COMMERCIAL - Mining</option>
+                      <option value='COMMERCIAL - Housing'>COMMERCIAL - Housing</option>
+                      <option value='COMMERCIAL - Distribution & Services'>COMMERCIAL - Distribution & Services</option>
+                      <option value='COMMERCIAL - Retail'>COMMERCIAL - Retail</option>
+                      <option value='COMMERCIAL - Transport'>COMMERCIAL - Transport</option>
+                      <option value='COMMERCIAL - Health'>COMMERCIAL - Health</option>
+                      <option value='COMMERCIAL - Education'>COMMERCIAL - Education</option>
+                      <option value='COMMERCIAL - Cross Border Traders'>COMMERCIAL - Cross Border Traders</option>
+                      <option value='COMMERCIAL - Construction'>COMMERCIAL - Construction</option>
+                      <option value='COMMERCIAL - Vendors'>COMMERCIAL - Vendors</option>
+                      <option value='OTHER'>OTHER</option>
+                    </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'10%'}}>
                     <CustomSelectFilter label='Mode' name='mode' required>
