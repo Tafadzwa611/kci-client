@@ -53,8 +53,8 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 <option value=''>------</option>
                 {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
               </CustomSelect>
-              <CustomInput label='Minimum Principal Amount' name='minimum_principal_amount' type='number' required/>
-              <CustomInput label='Maximum Principal Amount' name='maximum_principal_amount' type='number' required/>
+              <CustomInput label='Minimum Principal Amount' name='minimum_principal_amount' step='0.00001' type='number' required/>
+              <CustomInput label='Maximum Principal Amount' name='maximum_principal_amount' step='0.00001' type='number' required/>
               <div className='divider divider-info'>
                 <span>Interest Settings</span>
               </div>
@@ -71,8 +71,8 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 <option value='/Month'>Per Month</option>
                 <option value='/Year'>Per Year</option>
               </CustomSelect>
-              <CustomInput label='Minimum Loan Interest' name='minimum_interest_rate' min='0' type='number' required/>
-              <CustomInput label='Maximum Loan Interest' name='maximum_interest_rate' min='0' type='number' required/>
+              <CustomInput label='Minimum Loan Interest' name='minimum_interest_rate' min='0' step='0.00001' type='number' required/>
+              <CustomInput label='Maximum Loan Interest' name='maximum_interest_rate' min='0' step='0.00001' type='number' required/>
               {values.product_type === 'Dynamic Term Loan' && (
                 <>
                   <CustomSelect label='Apply Dynamic Interest On' name='dynamic_interest_applied_on' required>
