@@ -230,7 +230,7 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
               Add Fee
             </button>
           )}
-          {(loan.action_on_loan_default == 'Add Interest' && !loan.lock_interest) ? (
+          {(loan.product_type == 'Dynamic Term Loan' && !loan.lock_interest) ? (
             <button className='btn btn-olive' onClick={() => setModal(lockInt)}>
               Lock Interest
             </button>

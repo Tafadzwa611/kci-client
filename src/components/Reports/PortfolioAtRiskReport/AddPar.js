@@ -16,7 +16,7 @@ import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
 const AddPar = ({open, setOpen, setPars}) => {
-  const initialValues = {branch_ids: [], currency_id: '', lower_limit: '', upper_limit: '', client_type: '', group_type: ''};
+  const initialValues = {branch_ids: [], currency_id: '', lower_limit: '', upper_limit: '', client_type: '', group_type: '', reason: ''};
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
@@ -25,7 +25,16 @@ const AddPar = ({open, setOpen, setPars}) => {
       const data = removeEmptyValues(values);
       const params = getParams(data);
       const response = await axios.get('/reportsapi/par-report/', {params: params});
-      const par = {...response.data, selectedBIds: values.branch_ids, currency_id: values.currency_id, lower_limit: values.lower_limit, upper_limit: values.upper_limit, client_type: values.client_type, group_type: values.group_type}
+      const par = {
+        ...response.data,
+        selectedBIds: values.branch_ids,
+        currency_id: values.currency_id,
+        lower_limit: values.lower_limit,
+        upper_limit: values.upper_limit,
+        client_type: values.client_type,
+        group_type: values.group_type,
+        reason: values.reason
+      };
       setPars(curr => [...curr, par]);
       setOpen(false);
     } catch (error) {
@@ -69,6 +78,12 @@ const AddPar = ({open, setOpen, setPars}) => {
                       <CustomSelectFilter label='Group Type' name='group_type'>
                         <option value=''>------</option>
                         {data[1].map(grouptype => <option key={grouptype.id} value={grouptype.name}>{grouptype.name}</option>)}
+                      </CustomSelectFilter>
+                      <CustomSelectFilter label='Reason For Borrowing' name='reason'>
+                        <option value=''>------</option>
+                        <option value='CONSUMER'>CONSUMER</option>
+                        <option value='COMMERCIAL'>COMMERCIAL</option>
+                        <option value='OTHER'>OTHER</option>
                       </CustomSelectFilter>
                     </div>
                     <div style={{display:'flex', justifyContent:'flex-end'}}>

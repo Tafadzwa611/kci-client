@@ -36,6 +36,7 @@ function Tile({ par }) {
             </span>
           </div>
           <div style={{display: 'flex', flexDirection: 'column', rowGap: '5px'}}>
+            {par.reason && <span><b>Reason for borrowing: {par.reason}</b></span>}
             <span><b>Par Value: {par.par_value}%</b></span>
             <span>{par.currency} PAR {par.par_name}</span>
             <span>Number of loans {par.par_name} days late: <b>{par.loans_in_arrears_count}</b></span>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+// import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import axios from 'axios';
 
 function LoansTable({loans, params, setLoans}) {
@@ -83,7 +83,7 @@ const TableHeader = ({loans, params, setLoans}) => {
       </div>
       <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
         <div style={{marginTop:'6px'}}>Page {loans.number} of {loans.num_of_pages}</div>
-        <div>
+        {/* <div>
           <ReactHTMLTableToExcel
             id='test-table-xls-button'
             className='btn btn-default'
@@ -92,7 +92,7 @@ const TableHeader = ({loans, params, setLoans}) => {
             sheet='tablexls'
             buttonText='Download as XLS'
           />
-        </div>
+        </div> */}
       </div>
     </div>
   )
