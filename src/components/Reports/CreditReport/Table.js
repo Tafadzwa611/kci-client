@@ -47,7 +47,7 @@ function Table({report, setReport, params}) {
                       <td>{loan.app_date}</td>
                       <td>{loan.disbursement_date}</td>
                       <td>{loan.first_installment_date}</td>
-                      <td>{loan.maturity_date}</td>
+                      <td>{loan.loan_maturity_date}</td>
                       <td>{loan.last_payment_date}</td>
                       <td>{loan.last_payment_amount}</td>
                       <td>{loan.total_amount_due}</td>
