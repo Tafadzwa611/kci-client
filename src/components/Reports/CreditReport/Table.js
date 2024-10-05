@@ -28,6 +28,8 @@ function Table({report, setReport, params}) {
                 <th>Installment_Amount</th>
                 <th>Number_Of_Installments</th>
                 <th>Installment_Cycle</th>
+                <th>Original Principal</th>
+                <th>Total Interest</th>
               </tr>
             </thead>
             <tbody>
@@ -52,6 +54,8 @@ function Table({report, setReport, params}) {
                       <td>{loan.installment_amount}</td>
                       <td>{loan.number_of_repayments}</td>
                       <td>{loan.repayment_cycle}</td>
+                      <td>{loan.org_principal}</td>
+                      <td>{loan.interest}</td>
                     </tr>
                   </Fragment>
                 )

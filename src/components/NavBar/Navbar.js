@@ -88,7 +88,7 @@ const Navbar = (props) => {
               <span>Expenses</span>
             </NavLink>
           )}
-          {props.stafftoplevelperms.can_view_report_module && (
+          {props.stafftoplevelperms.can_view_reports_module && (
             <NavLink to='/reports/viewreports' className='btn btn-default dashboard'>
               <span>Reports</span>
             </NavLink>
