@@ -116,7 +116,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
     request_otp_on_approval: loanControls.request_otp_on_approval,
     allow_clients_with_running_loans_to_guarantee: loanControls.allow_clients_with_running_loans_to_guarantee,
     allow_groups_with_running_loans_to_guarantee: loanControls.allow_groups_with_running_loans_to_guarantee,
-    two_man_rules: loanControls.two_man_rules,
+    two_man_rules: loanControls.two_man_rules.map(rule => ({label: rule, value: rule})),
     max_currencies_exposure: currencies.map(currency => {
       const exp = loanControls.max_currencies_exposure.find(exp => exp.currency_id == currency.id);
       const max_exposure = exp ? exp.max_exposure: '';
@@ -180,7 +180,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
                     label='Two Man Rules'
                     name='two_man_rules'
                     setFieldValue={setFieldValue}
-                    initVals={values.two_man_rules.map(rule => ({label: rule, value: rule}))}
+                    initVals={values.two_man_rules}
                     options={[
                       {label: 'Loan Approval', value: 'Loan Approval'},
                       {label: 'Loan Disbursement', value: 'Loan Disbursement'},
