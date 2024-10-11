@@ -13,12 +13,15 @@ function Table({report, setReport, params}) {
               <tr className='journal-details fees__report_thead'>
                 <th>Loan_Num</th>
                 <th>Client_ID</th>
+                <th>Client_Name</th>
+                <th>Group_Name</th>
                 {report.custom_field_names.map((field_name, idx) => <th key={idx}>{field_name}</th>)}
                 <th>Loan_Product</th>
                 <th>Branch</th>
                 <th>Application_Date</th>
                 <th>Disbursement_Date</th>
                 <th>First_Installment_Date</th>
+                <th>Maturity_Date</th>
                 <th>Last_Payment_Date</th>
                 <th>Last_Payment_Amount</th>
                 <th>Total_Amount_Due</th>
@@ -36,12 +39,15 @@ function Table({report, setReport, params}) {
                     <tr>
                       <td>{loan.loan_id}</td>
                       <td>{loan.identification_number}</td>
+                      <td>{loan.client_name}</td>
+                      <td>{loan.group_name}</td>
                       {report.custom_field_names.map((field_name, idx) => <td key={idx}>{loan[field_name]}</td>)}
                       <td>{loan.product_name}</td>
                       <td>{loan.branch_name}</td>
                       <td>{loan.app_date}</td>
                       <td>{loan.disbursement_date}</td>
                       <td>{loan.first_installment_date}</td>
+                      <td>{loan.loan_maturity_date}</td>
                       <td>{loan.last_payment_date}</td>
                       <td>{loan.last_payment_amount}</td>
                       <td>{loan.total_amount_due}</td>

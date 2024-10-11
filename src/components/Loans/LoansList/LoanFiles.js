@@ -11,7 +11,10 @@ const LoanFiles = ({loanId, files, setLoan}) => {
       progress[file.path] = {progress: 0, status: 'In Progress'};
     });
     setProgress(progress);
-    const urls = Array(acceptedFiles.length).fill('/usersapi/get_signed_url/?client_method=put_object&bucket=lenda-client-files');
+    const urls = acceptedFiles.map(acceptedFile => {
+      const ext = acceptedFile.name.split('.').pop();
+      return `/usersapi/get_signed_url/?client_method=put_object&bucket=lenda-client-files&ext=${ext}`
+    });
     const signedUrls = await axios.all(urls.map(url => axios.get(url)));
     Promise.all(
       signedUrls.map((url, idx) => {
@@ -61,18 +64,11 @@ const LoanFiles = ({loanId, files, setLoan}) => {
   const dowloadFile = async (evt) => {
     const response = await axios.get(`/usersapi/get_signed_url/?client_method=get_object&bucket=lenda-client-files&filename=${evt.target.id}`);
     const signedUrl = response.data.url;
-    axios({
-      url: signedUrl,
-      method: 'GET',
-      responseType: 'blob',
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', evt.target.name);
-      document.body.appendChild(link);
-      link.click();
-    });
+    const link = document.createElement('a');
+    link.download = evt.target.attributes.name.value;
+    link.href = signedUrl;
+    document.body.appendChild(link);
+    link.click();
   }
 
   const deleteFile = async (evt) => {
