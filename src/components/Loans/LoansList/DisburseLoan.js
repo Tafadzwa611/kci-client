@@ -92,7 +92,7 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
                         <option value=''>------</option>
                         {data[1].map(user => <option key={user.id} value={user.id}>{`${user.first_name} ${user.last_name} - ${user.branch__name}`}</option>)}
                       </CustomSelect>
-                      <CustomCheckbox label='Send SMS notification to client' name='send_sms_notification'/>
+                      <CustomCheckbox label='Notify client/group via SMS' name='send_sms_notification'/>
                     </div>
                     <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
                   </div>
