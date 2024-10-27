@@ -210,6 +210,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
               <CustomSelect label='Action On Default' name='action_on_loan_default'>
                 <option value='Do Nothing'>Do Nothing</option>
                 <option value='Add Penalty'>Add Penalty</option>
+                <option value='Add Fixed Penalty'>Add Fixed Penalty</option>
                 <option value='Add Interest'>Add Interest Fees</option>
               </CustomSelect>
               {values.action_on_loan_default === 'Add Penalty' &&
@@ -245,6 +246,15 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                   <CustomCheckbox label='Is recurring' name='is_default_interest_recurring'/>
                   <CustomCheckbox label='Add On Last Installment Only' name='add_on_last_installment_only'/>
                 </>}
+              {values.action_on_loan_default === 'Add Fixed Penalty' &&
+                <>
+                  <CustomInput label='Fixed Penalty Amount' name='fixed_penalty_amount' type='number' required/>
+                  <CustomSelect label='Penalty Rate Interval' name='penalty_charged_per' required>
+                    <option value=''>------</option>
+                    <option value='/Day'>Per Day</option>
+                  </CustomSelect>
+                </>
+              }
               <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
               <div style={{display:'flex', justifyContent: 'flex-end'}}> 
               <SubmitButton isSubmitting={isSubmitting}/>

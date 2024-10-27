@@ -35,7 +35,10 @@ function DetailsTab({loan, setLoan}) {
               <li style={{marginBottom: '0.25rem'}}>Reason For Loan: {loan.reason_for_borrowing}</li>
               <li style={{marginBottom: '0.25rem'}}>Fund Account Name: {loan.fund_account_name}</li>
               <li style={{marginBottom: '0.25rem'}}>Action On Default: {loan.action_on_loan_default}</li>
-              {loan.action_on_loan_default !== 'Do Nothing' &&
+              {loan.action_on_loan_default === 'Add Fixed Penalty' && (
+                <li style={{marginBottom: '0.25rem'}}>Penalty Amount: {loan.currency_name} {loan.fixed_penalty_amount}</li>
+              )}
+              {loan.action_on_loan_default === 'Add Penalty' &&
               <>
                 <li style={{marginBottom: '0.25rem'}}>Penalty Tolerance Period In Days: {loan.grace_period} {loan.grace_period == 1 ? 'Day' : 'Days'}</li>
                 <li style={{marginBottom: '0.25rem'}}>Penalty Rate: {loan.late_repayment_penalty_percentage}%{loan.penalty_charged_per}</li>

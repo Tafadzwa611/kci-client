@@ -55,7 +55,7 @@ export const createLoanProductSchema = yup.object().shape({
   client_type: yup.string().oneOf(['Clients', 'Groups', 'Groups (solidarity)'], 'Invalid').required('Required'),
   allowed_branches: yup.array().of(yup.number().integer()),
   fees: yup.array().of(feeSchema),
-  action_on_loan_default: yup.string().oneOf(['Do Nothing', 'Add Penalty', 'Add Interest'], 'Invalid').required('Required'),
+  action_on_loan_default: yup.string().oneOf(['Do Nothing', 'Add Penalty', 'Add Interest', 'Add Fixed Penalty'], 'Invalid').required('Required'),
   apply_late_repayment_penalty_on: yup
     .string()
     .oneOf([
