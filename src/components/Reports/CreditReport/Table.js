@@ -13,8 +13,6 @@ function Table({report, setReport, params}) {
               <tr className='journal-details fees__report_thead'>
                 <th>Loan_Num</th>
                 <th>Client_ID</th>
-                <th>Client_Name</th>
-                <th>Group_Name</th>
                 {report.custom_field_names.map((field_name, idx) => <th key={idx}>{field_name}</th>)}
                 <th>Loan_Product</th>
                 <th>Branch</th>
@@ -30,6 +28,8 @@ function Table({report, setReport, params}) {
                 <th>Installment_Cycle</th>
                 <th>Original Principal</th>
                 <th>Total Interest</th>
+                <th>Client_Name</th>
+                <th>Group_Name</th>
               </tr>
             </thead>
             <tbody>
@@ -39,8 +39,6 @@ function Table({report, setReport, params}) {
                     <tr>
                       <td>{loan.loan_id}</td>
                       <td>{loan.identification_number}</td>
-                      <td>{loan.client_name}</td>
-                      <td>{loan.group_name}</td>
                       {report.custom_field_names.map((field_name, idx) => <td key={idx}>{loan[field_name]}</td>)}
                       <td>{loan.product_name}</td>
                       <td>{loan.branch_name}</td>
@@ -56,6 +54,8 @@ function Table({report, setReport, params}) {
                       <td>{loan.repayment_cycle}</td>
                       <td>{loan.org_principal}</td>
                       <td>{loan.interest}</td>
+                      <td>{loan.client_name}</td>
+                      <td>{loan.group_name}</td>
                     </tr>
                   </Fragment>
                 )
