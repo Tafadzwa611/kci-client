@@ -1,17 +1,24 @@
 import React, {useState} from 'react';
 import ChangeAccruedInterest from './ChangeAccruedInterest';
+import ChangeLoanNumber from './ChangeLoanNumber';
 
 function DetailsTab({loan, setLoan}) {
   const [openModal, setOpenModal] = useState(false);
+  const [openLoanNumberModal, setOpenLoanNumberModal] = useState(false);
 
   return (
     <div style={{display:'flex', columnGap:'1%'}}>
       {openModal && <ChangeAccruedInterest loan={loan} setOpen={setOpenModal} setLoan={setLoan}/>}
+      {openLoanNumberModal && <ChangeLoanNumber loan={loan} setOpen={setOpenLoanNumberModal} setLoan={setLoan}/>}
       <div style={{width:'100%'}}>
         <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom: '2rem'}}>
           <div style={{width:'48%'}}>
             <ul style={{paddingRight:'1rem'}}>
               <li style={{marginBottom: '1rem'}}><b>General</b></li>
+              <li style={{marginBottom: '0.25rem'}}>
+                Loan Number: {loan.loan_id} 
+                <a style={{cursor: 'pointer'}} onClick={() => setOpenLoanNumberModal(true)}><small>Change</small></a>
+              </li>
               <li style={{marginBottom: '0.25rem'}}>Assigned to Branch: {loan.branch}</li>
               <li style={{marginBottom: '0.25rem'}}>Assigned to Loan Officer: {loan.loan_officer_name}</li>
               <li style={{marginBottom: '0.25rem'}}>Loan Created By: {loan.loan_created_by}</li>
