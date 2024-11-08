@@ -21,6 +21,7 @@ const Filter = ({setReport, setParams}) => {
     max_date: '',
     client_str: '',
     reason: '',
+    status: '',
     order: '-id',
     mode: 'html'
   };
@@ -75,7 +76,7 @@ const Filter = ({setReport, setParams}) => {
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'60%'}}>
+                  <div style={{width:'50%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
@@ -83,6 +84,19 @@ const Filter = ({setReport, setParams}) => {
                       setFieldValue={setFieldValue}
                       required
                     />
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomSelectFilter label='Status' name='status' required>
+                      <option value=''>-----</option>
+                      <option value='Open'>Open</option>
+                      <option value='Arrears'>Arrears</option>
+                      <option value='Fully Paid'>Fully Paid</option>
+                      <option value='Over Paid'>Over Paid</option>
+                      <option value='Written-Off'>Written-Off</option>
+                      <option value='Restructured'>Restructured</option>
+                      <option value='Refinanced'>Refinanced</option>
+                      <option value='Early Settlement'>Early Settlement</option>
+                    </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'10%'}}>
                     <CustomSelectFilter label='Reason For Borrowing' name='reason'>
