@@ -71,9 +71,11 @@ function SingleAccount({loan, interestDate, setLoan, setOpen, setInterestDate, d
                 />
                 <CustomInput label='Principal Amount Paid' name='principal_amount_paid' type='number' required disabled/>
                 <CustomInput label='Interest Amount Paid' name='interest_amount_paid' type='number' required/>
-                <div>Interest Balance Until Next Installment {data[1].next_installment_date}: {data[1].interest_until_next_installment}</div>
-                <div>Daily Pro Rata Interest: {data[1].pro_rata_interest}</div>
-                <div>Daily Pro Rata Interest Balance: {data[1].pro_rata_interest_balance}</div>
+                <div style={{marginTop:'1.5rem', display:'grid', rowGap:'0.25rem'}}>
+                  <div>Interest Balance Until Next Installment {data[1].next_installment_date}: {data[1].interest_until_next_installment}</div>
+                  <div>Daily Pro Rata Interest: {data[1].pro_rata_interest}</div>
+                  <div>Daily Pro Rata Interest Balance: {data[1].pro_rata_interest_balance}</div>
+                </div>
                 <CustomInput label='Fees Amount Paid' name='fees_amount_paid' type='number' required/>
                 <CustomInput label='Penalty Amount Paid' name='penalty_amount_paid' type='number' required/>
                 <CustomSelect label='Fund Account' name='cash_account_id' required>
