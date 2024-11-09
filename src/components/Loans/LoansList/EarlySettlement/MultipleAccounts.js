@@ -48,12 +48,14 @@ function MultipleAccounts({data, loan, setLoan, interestDate, setInterestDate, s
           <NonFieldErrors errors={errors}>
             <div className='create_modal_container'>
               <div>
-                <div>Principal Balance: {loan.principal_amount_due}</div>
-                <div>Fees Balance: {loan.non_deductable_fees}</div>
-                <div>Penalty Balance: {loan.penalty}</div>
-                <div>Interest Balance Until Next Installment {data[1].next_installment_date}: {data[1].interest_until_next_installment}</div>
-                <div>Daily Pro Rata Interest: {data[1].pro_rata_interest}</div>
-                <div>Daily Pro Rata Interest Balance: {data[1].pro_rata_interest_balance}</div>
+                <div style={{display:'grid', rowGap:'0.25rem'}}>
+                  <div>Principal Balance: {loan.principal_amount_due}</div>
+                  <div>Fees Balance: {loan.non_deductable_fees}</div>
+                  <div>Penalty Balance: {loan.penalty}</div>
+                  <div>Interest Balance Until Next Installment {data[1].next_installment_date}: {data[1].interest_until_next_installment}</div>
+                  <div>Daily Pro Rata Interest: {data[1].pro_rata_interest}</div>
+                  <div>Daily Pro Rata Interest Balance: {data[1].pro_rata_interest_balance}</div>
+                </div>
                 <CustomDatePicker
                   label='Early Settlement'
                   name='date_of_settlement'
