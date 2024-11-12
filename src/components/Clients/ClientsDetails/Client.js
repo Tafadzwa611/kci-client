@@ -20,12 +20,11 @@ import ClientFiles from './ClientFiles';
 import Groups from './Groups';
 import Profile from './Profile';
 import Cloans from './Cloans';
+import Comms from './Comms';
 
 function Client({clientData, clientControls, staff, staffTopLevelPerm, close}) {
   const [client, setClient] = useState(clientData);
   const [modal, setModal] = useState();
-
-  console.log(staffTopLevelPerm)
 
   return (
     <div style={{position:'sticky', top:'0', width:'100%'}}>
@@ -126,7 +125,7 @@ const Actions = ({modal, setModal, client, close, setClient, staffTopLevelPerm})
           <button className={tab === 'loans' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('loans')}>Loans</button>
         }
         <button className={tab === 'groups' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('groups')}>Groups</button>
-        {/* <button className={tab === 'comms' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('comms')}>Comms</button> */}
+        <button className={tab === 'comms' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('comms')}>Comms</button>
       </div>
       <div className='tab-content font-12' style={{marginTop: '3rem'}}>
         {{
@@ -137,7 +136,7 @@ const Actions = ({modal, setModal, client, close, setClient, staffTopLevelPerm})
           files: <ClientFiles client={client} setClient={setClient}/>,
           loans: <Cloans client={client}/>,
           groups: <Groups client={client} />,
-          // comms: <Comms client={client} />,
+          comms: <Comms client={client} />,
           ...customViews
         }[tab]}
       </div>
