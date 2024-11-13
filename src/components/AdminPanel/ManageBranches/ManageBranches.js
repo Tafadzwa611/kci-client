@@ -5,6 +5,7 @@ import NonWorkingDays from './NonWorkingDays/NonWorkingDays';
 import AddBranch from './Branches/AddBranch';
 import BranchDetails from './Branches/BranchDetails';
 import EditBranch from './Branches/EditBranch';
+import Units from './Units/Units';
 import {
   Routes,
   Route,
@@ -23,6 +24,7 @@ const ManageBranches = () => {
         <Route path='addbranch' element={<AddBranch />} />
         <Route path='holidays' element={<Holidays />} />
         <Route path='nonworkingDays' element={<NonWorkingDays />} />
+        <Route path='units' element={<Units />} />
       </Route>
     </Routes>
   )
@@ -41,6 +43,9 @@ function Layout() {
         </Link>
         <Link to='/users/admin/managebranches/nonworkingDays' id='add' className={location.pathname === '/users/admin/managebranches/nonworkingDays' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
           Non-Working Days
+        </Link>
+        <Link to='/users/admin/managebranches/units' id='add' className={location.pathname === '/users/admin/managebranches/units' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+          Units
         </Link>
       </div>
       <div className='tab-content font-12' style={{marginTop:'3rem'}}>

@@ -31,6 +31,7 @@ function AddStaff({roles, branches}) {
       const data = {
         ...values,
         access_branch_ids: values.access_branches.map(branch => branch.value),
+        user_access_units_ids: values.access_units.map(unit => unit.value),
         notification_types: values.notification_types.map(notification => notification.value)
       };
       console.log(data);
@@ -55,12 +56,13 @@ function AddStaff({roles, branches}) {
     branch_id: '',
     role_id: '',
     access_branches: [],
+    access_units: [],
     notification_types: [],
     is_loan_officer: false
   };
 
   return (
-    <Fetcher urls={['/usersapi/staffroles/', '/usersapi/branch-list/', '/usersapi/notification_types/']}>
+    <Fetcher urls={['/usersapi/staffroles/', '/usersapi/branch-list/', '/usersapi/notification_types/', '/usersapi/list_units/']}>
       {({data}) => (
         <div>
           <button type='button' className='btn btn-default max'>
@@ -95,6 +97,12 @@ function AddStaff({roles, branches}) {
                     setFieldValue={setFieldValue}
                     name='notification_types'
                     options={data[2].map(notification => ({value: notification, label: notification}))}
+                  />
+                  <CustomMultiSelect
+                    label='Unit Access'
+                    setFieldValue={setFieldValue}
+                    name='access_units'
+                    options={data[3].map(unit => ({value: unit.id, label: unit.name}))}
                   />
                   <CustomCheckbox label='Is Loan Officer' name='is_loan_officer'/>
                   <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
