@@ -51,8 +51,10 @@ const Navbar = (props) => {
     <div className='home-content'>
       {open ? <Search setOpen={setOpen} /> : null}
       <div className='home-content-header-left' style={{display:'flex', columnGap:'3rem', paddingLeft:'1.5rem'}}>
-
         <div style={{display:'flex'}}>
+          <NavLink to='/' className='btn btn-default dashboard'>
+            <span>Home</span>
+          </NavLink>
           {props.stafftoplevelperms.can_view_dashboard_module && (
             <NavLink to='/dashboard' className='btn btn-default dashboard'>
               <span>Dashboard</span>
