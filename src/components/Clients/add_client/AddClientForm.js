@@ -57,7 +57,7 @@ const initValidationSchema = yup.object().shape({
   }))
 });
 
-function AddClientForm({customForms, clientTypes, idTemplates, clientControls, staff}) {
+function AddClientForm({customForms, clientTypes, idTemplates, clientControls, staff, units}) {
   const [validationSchema, setValidationSchema] = useState(initValidationSchema);
   const [showIgnore, setShowIgnore] = useState(false);
 
@@ -104,6 +104,7 @@ function AddClientForm({customForms, clientTypes, idTemplates, clientControls, s
     next_of_kin_list: [],
     ignore_warnings: false,
     branch_id: userBranch.id,
+    unit_id: '',
     id_nums: [{id: uuidv4(), id_number: '', id_template_id: ''}],
   };
 
@@ -145,7 +146,7 @@ function AddClientForm({customForms, clientTypes, idTemplates, clientControls, s
               <option value=''>------</option>
               {clientTypes.map(ct => <option key={ct.id} value={ct.id}>{ct.name}</option>)}
             </CustomSelect>
-            <ClientInformation setFieldValue={setFieldValue} clientControls={clientControls} staff={staff}/>
+            <ClientInformation setFieldValue={setFieldValue} clientControls={clientControls} staff={staff} units={units}/>
             <div className='divider divider-info'>Identification</div>
             <ClientId id_nums={values.id_nums} setFieldValue={setFieldValue} idTemplates={idTemplates}/>
             <div className='divider divider-info'>Address</div>

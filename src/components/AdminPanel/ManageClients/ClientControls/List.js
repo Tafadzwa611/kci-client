@@ -18,7 +18,8 @@ const CONTROL_NAMES = {
   group_officer_required: 'Group Officer Required',
   allow_multi_groups_per_client: 'Allow multi groups per client',
   client_id_format: 'Client Number Format',
-  allow_clients_without_id: 'Allow Clients Without ID'
+  allow_clients_without_id: 'Allow Clients Without ID',
+  use_client_units: 'Use Client Units'
 };
 
 const List = ({initControls}) => {
@@ -57,6 +58,7 @@ const getTableRows = (clientControls) => {
           {key === 'client_officer_required' &&  (clientControls[key] ? 'Yes' : 'No')}
           {key === 'group_officer_required' &&  (clientControls[key] ? 'Yes' : 'No')}
           {key === 'allow_multi_groups_per_client' &&  (clientControls[key] ? 'Yes' : 'No')}
+          {key === 'use_client_units' &&  (clientControls[key] ? 'Yes' : 'No')}
         </td>
       </tr>
     )

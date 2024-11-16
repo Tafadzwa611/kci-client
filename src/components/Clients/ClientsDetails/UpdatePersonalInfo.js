@@ -21,7 +21,8 @@ const validationSchema = yup.object().shape({
   email: yup.string().email('Must be a valid email address.'),
 });
 
-function UpdatePersonalInfo({setOpen, staff, clientControls, client, setClient}) {
+function UpdatePersonalInfo({setOpen, staff, clientControls, client, setClient, units}) {
+
   const {branches} = useBranches();
 
   const onSubmit = async (values, actions) => {
@@ -36,6 +37,12 @@ function UpdatePersonalInfo({setOpen, staff, clientControls, client, setClient})
         client_manager = `${clientManagerObj.first_name} ${clientManagerObj.last_name}`;
       }
 
+      let unit = null;
+      const unitObj = units.find(u => u.id === Number(values.unit_id));
+      if (unitObj) {
+        unit = unitObj.name;
+      }
+
       const branch = branches.find((br) => br.id == values.branch_id);
       setClient(curr => ({
         ...curr,
@@ -43,7 +50,9 @@ function UpdatePersonalInfo({setOpen, staff, clientControls, client, setClient})
         branch: branch.name,
         client_manager: client_manager,
         client_manager_id: values.client_manager_id,
-        client_id: values.client_num
+        client_id: values.client_num,
+        unit: unit,
+        unit_id: values.unit_id
       }));
       setOpen(null);
     } catch (error) {
@@ -63,6 +72,7 @@ function UpdatePersonalInfo({setOpen, staff, clientControls, client, setClient})
     client_num: client.client_id,
     email: client.email || '',
     client_manager_id: client.client_manager_id || '',
+    unit_id: client.unit_id || '',
     home_phone: client.home_phone || '',
     mobile_number: {countryCode: client.mobile_number.split(' ')[0], phoneNumber: client.mobile_number.split(' ')[1]},
     phone_number_secondary: {
@@ -81,7 +91,7 @@ function UpdatePersonalInfo({setOpen, staff, clientControls, client, setClient})
             <NonFieldErrors errors={errors}>
               <div className='create_modal_container'>
                 <div>
-                  <ClientInformation staff={staff} clientControls={clientControls} setFieldValue={setFieldValue}/>
+                  <ClientInformation staff={staff} clientControls={clientControls} setFieldValue={setFieldValue} units={units}/>
                 </div>
                 <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
               </div>

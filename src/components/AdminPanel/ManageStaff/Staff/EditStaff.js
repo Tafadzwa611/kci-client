@@ -37,7 +37,7 @@ const EditStaffForm = ({staff, roles, branches, notificationTypes, units}) => {
     is_active: staff.is_active,
     is_loan_officer: staff.is_loan_officer,
     access_branches: staff.branch_access.map(branch => ({value: branch.id, label: branch.name})),
-    access_units: staff.access_units.map(unit => ({value: unit.id, label: unit.name})),
+    access_units: staff.user_access_units.map(unit => ({value: unit.id, label: unit.name})),
     notification_types: staff.notification_types.map(notification => ({value: notification, label: notification}))
   };
 
@@ -103,10 +103,10 @@ const EditStaffForm = ({staff, roles, branches, notificationTypes, units}) => {
               />
               <CustomMultiSelect
                 label='Unit Access'
-                initVals={staff.access_units.map(unit => ({value: unit, label: unit}))}
+                initVals={staff.user_access_units.map(unit => ({value: unit.id, label: unit.name}))}
                 setFieldValue={setFieldValue}
                 name='access_units'
-                options={units.map(unit => ({value: unit, label: unit}))}
+                options={units.map(unit => ({value: unit.id, label: unit.name}))}
               />
               <CustomCheckbox label='Is Active' name='is_active'/>
               <CustomCheckbox label='Is Loan Officer' name='is_loan_officer'/>
