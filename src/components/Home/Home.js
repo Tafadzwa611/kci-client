@@ -11,7 +11,7 @@ function Home() {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const response = await axios.get("/reportsapi/audit-trail/?page_num=1&page_size=25");
+        const response = await axios.get("/reportsapi/audit-trail/?page_num=1&page_size=100");
         setLogs(response.data.entries);
       } catch(err) {
         console.log(err);
@@ -21,36 +21,20 @@ function Home() {
   }, []);
 
   return (
-    <div className='card'>
-      <div className='info-box'>
-        <span>You can use topbar for navigation.</span>
-      </div>
-      <div className='card-body'>
-        <h5 className='table-heading' style={{marginBottom:'20px'}}>User Activity Stream</h5>
-        <div style={{display:"block"}}>
-          <div style={{padding:"0", border:"none"}}>
-            <div style={{width:"100%", overflowX:"auto"}}>
-              <div className="table__height">
-                <table className='table' id='clients-report' style={{width:'100%'}}>
-                  <thead>
-                    <tr className='journal-details header' style={{position:'sticky', top:'0'}}> 
-                      <th>Action</th>
-                      <th>Entity</th>
-                      <th>Performed At</th>
-                      <th>Performed By</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {logs.map(log => (
-                      <tr key={log.id}>
-                        <td>{log.action_name || log.action_type}</td>
-                        <td>{log.entity}</td>
-                        <td>{log.event_timestamp}</td>
-                        <td>{log.actor_name}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+    <div style={{width:'50%'}}>
+      <div style={{width:'100%'}} className='book-value-section card'>
+        <p>Activity Stream</p>
+        <div style={{overflowX: 'auto'}}>
+          <div style={{maxHeight:'150vh'}}>
+            <div style={{maxHeight:'145vh'}}>
+              <div style={{position:'sticky', top:0}}>
+                {logs.map(log => (
+                <div className='timeline__section' key={log.id}>
+                  <span>
+                    <span>Action: {log.action_name || log.action_type} | Entity: {log.entity} | Performed At: {log.event_timestamp} | Performed By: {log.actor_name}</span>
+                  </span>
+                </div>
+                ))}
               </div>
             </div>
           </div>
