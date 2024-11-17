@@ -19,7 +19,7 @@ const CONTROL_NAMES = {
   allow_multi_groups_per_client: 'Allow multi groups per client',
   client_id_format: 'Client Number Format',
   allow_clients_without_id: 'Allow Clients Without ID',
-  use_client_units: 'Use Client Units'
+  use_client_units: 'Client / Group Units Required'
 };
 
 const List = ({initControls}) => {

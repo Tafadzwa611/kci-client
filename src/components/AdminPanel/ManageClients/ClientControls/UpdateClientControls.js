@@ -110,7 +110,7 @@ const UpdateClientControls = ({open, setOpen, clientControls, setClientControls}
                   <CustomCheckbox label='Client Officer Required' name='client_officer_required'/>
                   <CustomCheckbox label='Group Officer Required' name='group_officer_required'/>
                   <CustomCheckbox label='Allow multi groups per client' name='allow_multi_groups_per_client'/>
-                  <CustomCheckbox label='Use Client Units' name='use_client_units'/>
+                  <CustomCheckbox label='Client / Group Units Required' name='use_client_units'/>
                   <CustomSelect label='Client Number Format' name='client_id_format'>
                     <option value='CNCC'>BRANCH CLIENT COUNT</option>
                     <option value='BR-DT-RN'>BRANCH-DATE-RANDOM</option>
