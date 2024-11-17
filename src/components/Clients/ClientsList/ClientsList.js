@@ -15,7 +15,7 @@ function ClientsList() {
   const [clientId, setClientId] = useState(null);
 
   return (
-    <Fetcher urls={['/clientsapi/client_types/']}>
+    <Fetcher urls={['/clientsapi/client_types/', '/usersapi/list_units/']}>
       {({data}) => (
         <>
           <Filter setParams={setParams} setClientsData={setClientsData} clientTypes={data[0]}/>
@@ -26,6 +26,7 @@ function ClientsList() {
             clientsData={clientsData}
             setClientId={setClientId}
             setClientsData={setClientsData}
+            units={data[1]}
           />
         </>
       )}
