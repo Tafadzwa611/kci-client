@@ -7,7 +7,7 @@ function EditGroup({groupTypes, loanOfficers, groupRoles, clientControls}) {
   const params = useParams();
 
   return (
-    <Fetcher urls={[`/clientsapi/group/${params.groupId}/`]}>
+    <Fetcher urls={[`/clientsapi/group/${params.groupId}/`, '/usersapi/list_units/']}>
       {({data}) => (
         <EditGroupForm
           group={data[0]}
@@ -15,6 +15,7 @@ function EditGroup({groupTypes, loanOfficers, groupRoles, clientControls}) {
           loanOfficers={loanOfficers}
           groupRoles={groupRoles}
           clientControls={clientControls}
+          units={data[1]}
         />
       )}
     </Fetcher>

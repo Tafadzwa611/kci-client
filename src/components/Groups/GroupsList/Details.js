@@ -11,6 +11,7 @@ function Details({groupDetails}) {
                         <li>Group Phone Number: {groupDetails.group_phone_number}</li>
                         <li>Branch: {groupDetails.branch}</li>
                         <li>Group Type: {groupDetails.grp_type}</li>
+                        <li>Group Unit: {groupDetails.unit ? groupDetails.unit : 'Not provided'}</li>
                     </ul>
                 </div>
 
