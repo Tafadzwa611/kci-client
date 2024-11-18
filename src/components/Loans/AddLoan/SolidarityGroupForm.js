@@ -10,7 +10,7 @@ import { scheduleStrategies } from './data';
 import Fee from './Fee';
 import axios from 'axios';
 
-function SolidarityGroupForm({product, isSubmitting, setFieldValue, values}) {
+function SolidarityGroupForm({product, isSubmitting, setFieldValue, values, clientControls, units}) {
   const fetchMembers = async (group, setFieldValue) => {
     const response = await axios.get(`/clientsapi/group_members/${group.value}/`);
     const principal_distribution = response.data.map(member => ({...member, client_id: member.id, principal: 0}));
@@ -87,6 +87,16 @@ function SolidarityGroupForm({product, isSubmitting, setFieldValue, values}) {
         <option value=''>------</option>
         {scheduleStrategies[product.loan_duration_time_unit].map(strategy => <option key={strategy} value={strategy}>{strategy}</option>)}
       </CustomSelect>
+      {clientControls.use_client_units ? 
+        <CustomSelect label='Unit' name='unit_id' required>
+          <option value=''>------</option>
+          {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+        </CustomSelect>:
+        <CustomSelect label='Unit' name='unit_id'>
+          <option value=''>------</option>
+          {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+        </CustomSelect>
+      }
       <CustomSelect label='Reason For Loan' name='reason_for_loan' required>
         <option value=''>------</option>
         <option value='CONSUMER'>CONSUMER</option>

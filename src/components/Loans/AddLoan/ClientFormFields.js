@@ -20,7 +20,9 @@ function ClientFormFields({
   values,
   edit,
   customForms,
-  formIds
+  formIds,
+  units,
+  clientControls
 }) {
   const {branches} = useBranches();
 
@@ -110,6 +112,16 @@ function ClientFormFields({
         <option value=''>------</option>
         {scheduleStrategies[product.loan_duration_time_unit].map(strategy => <option key={strategy} value={strategy}>{strategy}</option>)}
       </CustomSelect>
+      {clientControls.use_client_units ? 
+        <CustomSelect label='Unit' name='unit_id' required>
+          <option value=''>------</option>
+          {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+        </CustomSelect>:
+        <CustomSelect label='Unit' name='unit_id'>
+          <option value=''>------</option>
+          {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+        </CustomSelect>
+      }
       <CustomSelect label='Reason For Loan' name='reason_for_loan' required>
         <option value=''>------</option>
         <option value='CONSUMER'>CONSUMER</option>
