@@ -64,6 +64,14 @@ function StaffDetails() {
                   </div>
                   {data[0].notification_types.map(notification_type => <div key={notification_type} style={{marginRight:'5px'}}>{notification_type}</div>)}
                 </div>
+                <div>
+                  <div style={{margin:'1rem 0', display:'flex', justifyContent:'space-between'}}>
+                    <div style={{display:'flex', alignItems:'center'}}>
+                      <span style={{marginRight:'5px'}}><b>Unit Access</b></span>
+                    </div>
+                  </div>
+                  {data[0].user_access_units.map(unit => <div key={unit.id} style={{marginRight:'5px'}}>{unit.name}</div>)}
+                </div>
               </div>
             </div>
             <div style={{margin:'1rem 0', display:'flex', justifyContent:'space-between'}}>

@@ -22,7 +22,7 @@ import Profile from './Profile';
 import Cloans from './Cloans';
 import Comms from './Comms';
 
-function Client({clientData, clientControls, staff, staffTopLevelPerm, close}) {
+function Client({clientData, clientControls, staff, staffTopLevelPerm, close, units}) {
   const [client, setClient] = useState(clientData);
   const [modal, setModal] = useState();
 
@@ -36,6 +36,7 @@ function Client({clientData, clientControls, staff, staffTopLevelPerm, close}) {
           client={client}
           setModal={setModal}
           setClient={setClient}
+          units={units}
         />
         <Actions
           modal={modal}
@@ -144,7 +145,7 @@ const Actions = ({modal, setModal, client, close, setClient, staffTopLevelPerm})
   )
 }
 
-const ModalSelector = ({modal, staff, clientControls, client, setClient, setModal}) => {
+const ModalSelector = ({modal, staff, clientControls, client, setClient, setModal, units}) => {
   return {
     null: null,
     undoBlacklist: <UndoClientBlackList clientId={client.id} setClient={setClient} setOpen={setModal}/>,
@@ -155,7 +156,7 @@ const ModalSelector = ({modal, staff, clientControls, client, setClient, setModa
     reject: <RejectClient clientId={client.id} setClient={setClient} setOpen={setModal}/>,
     approve: <ApproveClient clientId={client.id} setClient={setClient} setOpen={setModal} />,
     undoReject: <UndoClientRejection clientId={client.id} setClient={setClient} setOpen={setModal} />,
-    updateInfo: <UpdatePersonalInfo client={client} staff={staff} clientControls={clientControls} setClient={setClient} setOpen={setModal} />,
+    updateInfo: <UpdatePersonalInfo client={client} staff={staff} clientControls={clientControls} setClient={setClient} setOpen={setModal} units={units} />,
     changeType: <ChangeClientType client={client} setClient={setClient} setOpen={setModal} />,
   }[modal]
 }

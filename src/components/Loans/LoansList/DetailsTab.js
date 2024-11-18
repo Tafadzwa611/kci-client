@@ -20,6 +20,7 @@ function DetailsTab({loan, setLoan}) {
                 <a style={{cursor: 'pointer'}} onClick={() => setOpenLoanNumberModal(true)}><small>Change</small></a>
               </li>
               <li style={{marginBottom: '0.25rem'}}>Assigned to Branch: {loan.branch}</li>
+              <li style={{marginBottom: '0.25rem'}}>Assigned to Unit: {loan.unit ? loan.unit : 'Not provided'}</li>
               <li style={{marginBottom: '0.25rem'}}>Assigned to Loan Officer: {loan.loan_officer_name}</li>
               <li style={{marginBottom: '0.25rem'}}>Loan Created By: {loan.loan_created_by}</li>
               <li style={{marginBottom: '0.25rem'}}>Loan Approved By: {loan.loan_approved_by}</li>

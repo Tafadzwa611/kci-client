@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 import ClientFormFields from './ClientFormFields';
 import { removeEmptyValues, isNumeric } from '../../../utils/utils';
 
-function AddLoan({products, lcontrols, customForms}) {
+function AddLoan({products, lcontrols, customForms, units, clientControls}) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const application_id = searchParams.get('application_id');
@@ -51,6 +51,7 @@ function AddLoan({products, lcontrols, customForms}) {
     client_id: clientId,
     client_name: clientName,
     group_id: '',
+    unit_id: '',
     ...(application_id && {application_id})
   };
 
@@ -119,6 +120,8 @@ function AddLoan({products, lcontrols, customForms}) {
                 values={values}
                 formIds={formIds}
                 customForms={customForms}
+                units={units}
+                clientControls={clientControls}
               />,
               'Clients': <ClientFormFields
                 product={product}
@@ -129,12 +132,16 @@ function AddLoan({products, lcontrols, customForms}) {
                 values={values}
                 formIds={formIds}
                 customForms={customForms}
+                units={units}
+                clientControls={clientControls}
               />,
               'Groups (solidarity)': <SolidarityGroupForm
                 product={product}
                 isSubmitting={isSubmitting}
                 setFieldValue={setFieldValue}
                 values={values}
+                units={units}
+                clientControls={clientControls}
               />
             }[product.client_type] : null}
           </NonFieldErrors>

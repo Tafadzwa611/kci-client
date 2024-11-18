@@ -8,7 +8,8 @@ const NewAddClient = () => {
     '/clientsapi/client_types/',
     '/clientsapi/client_id_templates/',
     '/clientsapi/client_controls/',
-    '/usersapi/staff/?loan_officers_only=1'
+    '/usersapi/staff/?loan_officers_only=1',
+    '/usersapi/list_units/'
   ];
 
   return (
@@ -20,6 +21,7 @@ const NewAddClient = () => {
           idTemplates={data[2]}
           clientControls={data[3]}
           staff={data[4]}
+          units={data[5]}
         />
       )}
     </Fetcher>

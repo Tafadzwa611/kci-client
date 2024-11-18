@@ -25,6 +25,7 @@ function PersonalInfo({client, setModal}) {
 
         <div>
           <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
+            <li>Client Unit: {client.unit ? client.unit : 'Not provided'}</li>
             <li>Phone Number: {client.mobile_number}</li>
             <li>Secondary Phone Number: {client.phone_number_secondary ? client.phone_number_secondary : 'Not provided'}</li>
             <li>Whatsapp Number: {client.whatsapp_number ? client.whatsapp_number : 'Not provided'}</li>
