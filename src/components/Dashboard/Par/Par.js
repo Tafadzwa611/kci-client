@@ -6,7 +6,7 @@ import Loader from '../../Loader/MiniLoader';
 
 const endpoints = [1, 30, 60, 90];
 
-function Par({currencyId, branchIds}) {
+function Par({currencyId, branchIds, unitId}) {
   const [par, setPar] = useState(null);
   const [err, setErr] = useState(false);
   const {currencies} = useCurrencies();
@@ -14,11 +14,11 @@ function Par({currencyId, branchIds}) {
 
   useEffect(() => {
     getData();
-  }, [currencyId, branchIds]);
+  }, [currencyId, branchIds, unitId]);
 
   const getData = async () => {
     try {
-      const data = removeEmptyValues({currency_id: currencyId, branch_ids: branchIds});
+      const data = removeEmptyValues({currency_id: currencyId, branch_ids: branchIds, unit_id: unitId});
       await axios.all(endpoints.map((endpoint) => {
         data.lower_limit = endpoint;
         const params = getParams(data);

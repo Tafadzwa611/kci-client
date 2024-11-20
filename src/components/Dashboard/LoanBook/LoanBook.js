@@ -4,7 +4,7 @@ import { removeEmptyValues, getParams } from '../../../utils/utils';
 import Loader from '../../Loader/MiniLoader';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
 
-function LoanBook({currencyId, branchIds}) {
+function LoanBook({currencyId, branchIds, unitId}) {
   const [loanBook, setLoanBook] = useState(null);
   const [err, setErr] = useState(false);
   const {currencies} = useCurrencies();
@@ -12,11 +12,11 @@ function LoanBook({currencyId, branchIds}) {
 
   useEffect(() => {
     getData();
-  }, [currencyId, branchIds]);
+  }, [currencyId, branchIds, unitId]);
 
   const getData = async () => {
     try {
-      const data = removeEmptyValues({currency_id: currencyId, branch_ids: branchIds});
+      const data = removeEmptyValues({currency_id: currencyId, branch_ids: branchIds, unit_id: unitId});
       const params = getParams(data);
       const response = await axios.get('/dashboardapi/dashboard-loan-book/', {params: params});
       setLoanBook(response.data);

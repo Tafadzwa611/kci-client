@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Filter from './Filter';
 import LoansReportTable from './LoansReportTable';
 import Summary from './Summary';
+import { Fetcher } from '../../../common';
 
 function LoansReport() {
   const [params, setParams] = useState(null);
@@ -9,8 +10,16 @@ function LoansReport() {
   const [tab, setTab] = useState('summary');
 
   return (
+    <Fetcher urls={['/usersapi/list_units/']}>
+      {({data}) => <LoansReportSection units={data[0]} params={params} setParams={setParams} report={report} setReport={setReport} tab={tab} setTab={setTab}/>}
+    </Fetcher>
+  )
+}
+
+const LoansReportSection = ({params, setParams, report, setReport, tab, setTab, units}) => {
+  return (
     <>
-      <Filter setReport={setReport} setParams={setParams}/>
+      <Filter setReport={setReport} setParams={setParams} units={units}/>
       <div style={{paddingTop: '2rem'}}></div>
       {report ?
       <>

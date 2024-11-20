@@ -5,7 +5,7 @@ import GroupDetails from './GroupDetails';
 import { useSearchParams } from 'react-router-dom';
 import { Fetcher } from '../../../common';
 
-function GroupsList() {
+function GroupsList({units}) {
   const [searchParams] = useSearchParams();
   const [params, setParams] = useState(null);
   const [groupData, setGroupsData] = useState({count: 0, next_page_num: 0, groups: []});
@@ -27,6 +27,7 @@ function GroupsList() {
             setGroupId={setGroupId} 
             setGroupDetails={setGroupDetails}
             setParams={setParams}
+            units={units}
           />
           <div style={{paddingTop: '2rem'}}></div>
           <GroupsTable

@@ -18,7 +18,7 @@ function ClientsList() {
     <Fetcher urls={['/clientsapi/client_types/', '/usersapi/list_units/']}>
       {({data}) => (
         <>
-          <Filter setParams={setParams} setClientsData={setClientsData} clientTypes={data[0]}/>
+          <Filter setParams={setParams} setClientsData={setClientsData} clientTypes={data[0]} units={data[1]}/>
           <div style={{paddingTop: '2rem'}}></div>
           <ClientsTable
             params={params}

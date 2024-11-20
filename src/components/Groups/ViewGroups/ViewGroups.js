@@ -46,7 +46,9 @@ const AddGroupComponent = ({urls}) => {
 
 const GroupListComponent = () => {
   return (
-    <GroupsList />
+    <Fetcher urls={['/usersapi/list_units']}>
+      {({data}) => <GroupsList units={data[0]} />}
+    </Fetcher>
   )
 }
 

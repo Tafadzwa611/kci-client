@@ -12,7 +12,7 @@ import {
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 import axios from 'axios';
 
-const Filter = ({ setClientsData, clientTypes, setParams }) => {
+const Filter = ({ setClientsData, clientTypes, setParams, units }) => {
   const initialValues = {
     page_num: 1,
     page_size: 10,
@@ -23,6 +23,7 @@ const Filter = ({ setClientsData, clientTypes, setParams }) => {
     min_dob: '',
     max_dob: '',
     client_type_id: '',
+    unit_id: '',
     gender: '',
     status: '',
   };
@@ -106,13 +107,19 @@ const Filter = ({ setClientsData, clientTypes, setParams }) => {
                       options={branches.map(br => ({value: br.id, label: br.name}))}
                     />
                   </div>
-                  <div className='row-payments-container' style={{width:'15%'}}>
+                  <div className='row-payments-container' style={{width:'10%'}}>
                     <CustomSelectFilter label='Page Size' name='page_size' required>
                       <option value='10'>10</option>
                       <option value='25'>25</option>
                       <option value='50'>50</option>
                       <option value='75'>75</option>
                       <option value='100'>100</option>
+                    </CustomSelectFilter>
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomSelectFilter label='Units' name='unit_id'>
+                      <option value=''>------</option>
+                      {units.map(ut => (<option key={ut.id} value={ut.id}>{ut.name}</option>))}
                     </CustomSelectFilter>
                   </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>

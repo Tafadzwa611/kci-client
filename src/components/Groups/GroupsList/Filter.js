@@ -12,7 +12,7 @@ import { useBranches } from '../../../contexts/BranchesContext';
 import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
-const Filter = ({setGroupsData, setGroupId, setGroupDetails, setParams}) => {
+const Filter = ({setGroupsData, setGroupId, setGroupDetails, setParams, units}) => {
   const initialValues = {
     branch_ids: [],
     page_num: 1,
@@ -22,6 +22,7 @@ const Filter = ({setGroupsData, setGroupId, setGroupDetails, setParams}) => {
     min_grp_date: '',
     max_grp_date: '',
     status: '',
+    unit_id: '',
   };
   const {branches} = useBranches();
 
@@ -85,13 +86,19 @@ const Filter = ({setGroupsData, setGroupId, setGroupDetails, setParams}) => {
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'85%'}}>
+                  <div style={{width:'80%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
                       options={branches.map(br => ({label: br.name, value:br.id}))}
                       setFieldValue={setFieldValue}
                     />
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomSelectFilter label='Units' name='unit_id'>
+                      <option value=''>------</option>
+                      {units.map(ut => (<option key={ut.id} value={ut.id}>{ut.name}</option>))}
+                    </CustomSelectFilter>
                   </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>

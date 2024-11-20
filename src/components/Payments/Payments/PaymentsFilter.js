@@ -13,8 +13,8 @@ import { useBranches } from '../../../contexts/BranchesContext';
 import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
-const Filter = ({setData, setParams}) => {
-  const initialValues = {branch_ids: [], page_num: 1, client_name: '', min_date_created: '', max_date_created: ''};
+const Filter = ({setData, setParams, units}) => {
+  const initialValues = {branch_ids: [], page_num: 1, client_name: '', min_date_created: '', max_date_created: '', unit_id: ''};
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
@@ -63,10 +63,16 @@ const Filter = ({setData, setParams}) => {
                       setFieldValue={setFieldValue}
                     />
                   </div>
-                  <div style={{width:'20%'}}>
+                  <div style={{width:'10%'}}>
                     <CustomSelectFilter label='Currency' name='currency_id' required>
                       <option value=''>------</option>
                       {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+                    </CustomSelectFilter>
+                  </div>
+                  <div style={{width:'10%'}}>
+                    <CustomSelectFilter label='Units' name='unit_id'>
+                      <option value=''>------</option>
+                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
                     </CustomSelectFilter>
                   </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>

@@ -10,10 +10,10 @@ function PaymentsReport() {
   const [tab, setTab] = useState('summary');
 
   return (
-    <Fetcher urls={[`/acc-api/cash-accounts-list/`, `/usersapi/branch-list/`]}>
+    <Fetcher urls={[`/acc-api/cash-accounts-list/`, `/usersapi/branch-list/`, '/usersapi/list_units/']}>
       {({data}) => (
         <>
-          <Filter setReport={setReport} setParams={setParams} accounts={data[0]} branches={data[1]}/>
+          <Filter setReport={setReport} setParams={setParams} accounts={data[0]} branches={data[1]} units={data[2]}/>
           <div style={{paddingTop: '2rem'}}></div>
           {report ?
           <>

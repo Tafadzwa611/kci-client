@@ -13,8 +13,8 @@ import { useBranches } from '../../../contexts/BranchesContext';
 import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
-const Filter = ({setClientsReportData, setParams}) => {
-  const initialValues = {branch_ids: [], page_num: 1, min_date: '', max_date: '', client_str: '', order: '-id', mode: 'html'};
+const Filter = ({setClientsReportData, setParams, units}) => {
+  const initialValues = {branch_ids: [], page_num: 1, min_date: '', max_date: '', client_str: '', order: '-id', mode: 'html', unit_id: ''};
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
@@ -49,17 +49,23 @@ const Filter = ({setClientsReportData, setParams}) => {
             <Form>
               <NonFieldErrors errors={errors}>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'24%'}}>
+                  <div className='row-payments-container' style={{width:'19%'}}>
                     <CustomDatePickerFilter label='Min Client Reg Date' name='min_date' setFieldValue={setFieldValue}/>
                   </div>
-                  <div className='row-payments-container' style={{width:'24%'}}>
+                  <div className='row-payments-container' style={{width:'19%'}}>
                     <CustomDatePickerFilter label='Max Client Reg Date' name='max_date' setFieldValue={setFieldValue}/>
                   </div>
-                  <div className='row-payments-container' style={{width:'24%'}}>
+                  <div className='row-payments-container' style={{width:'19%'}}>
                     <CustomDatePickerFilter label='Min Loan DB Date' name='min_db_date' setFieldValue={setFieldValue}/>
                   </div>
-                  <div className='row-payments-container' style={{width:'24%'}}>
+                  <div className='row-payments-container' style={{width:'19%'}}>
                     <CustomDatePickerFilter label='Max Loan DB Date' name='max_db_date' setFieldValue={setFieldValue}/>
+                  </div>
+                  <div className='row-payments-container' style={{width:'19%'}}>
+                    <CustomSelectFilter label='Units' name='unit_id'>
+                      <option value=''>------</option>
+                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+                    </CustomSelectFilter>
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>

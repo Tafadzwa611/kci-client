@@ -11,7 +11,7 @@ import { removeEmptyValues, getParams } from '../../../utils/utils';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
 import axios from 'axios';
 
-const Filter = ({setReport, accounts, setParams, branches}) => {
+const Filter = ({setReport, accounts, setParams, branches, units}) => {
   const initialValues = {
     page_num: 1,
     loan_branch_id: '',
@@ -21,6 +21,7 @@ const Filter = ({setReport, accounts, setParams, branches}) => {
     loan_number: '',
     payment_fund_account_id: '',
     loan_fund_account_id: '',
+    unit_id: '',
     mode: 'html'
   };
   const {currencies} = useCurrencies();
@@ -108,11 +109,17 @@ const Filter = ({setReport, accounts, setParams, branches}) => {
                   </div>
                 </div>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div className='row-payments-container' style={{width:'24%'}}>
+                  <div className='row-payments-container' style={{width:'45%'}}>
                     <CustomSelectFilter label='Mode' name='mode' required>
                       <option value='html'>Screen (HTML)</option>
                       <option value='xlsx'>Excel</option>
                       <option value='csv'>CSV</option>
+                    </CustomSelectFilter>
+                  </div>
+                  <div className='row-payments-container' style={{width:'45%'}}>
+                    <CustomSelectFilter label='Units' name='unit_id'>
+                      <option value=''>------</option>
+                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
                     </CustomSelectFilter>
                   </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
