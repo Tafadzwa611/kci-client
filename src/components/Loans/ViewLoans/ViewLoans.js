@@ -71,8 +71,8 @@ const AddLoanComponent = () => {
 
 const LoanListComponent = () => {
   return (
-    <Fetcher urls={['/loansapi/loan_products/']}>
-      {({data}) => <LoansList products={data[0].loan_products}/>}
+    <Fetcher urls={['/loansapi/loan_products/', '/usersapi/list_units/']}>
+      {({data}) => <LoansList products={data[0].loan_products} units={data[1]}/>}
     </Fetcher>
   )
 }

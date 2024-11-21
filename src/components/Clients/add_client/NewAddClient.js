@@ -9,7 +9,7 @@ const NewAddClient = () => {
     '/clientsapi/client_id_templates/',
     '/clientsapi/client_controls/',
     '/usersapi/staff/?loan_officers_only=1',
-    '/usersapi/list_units/'
+    '/usersapi/list_units/?active_only=1'
   ];
 
   return (

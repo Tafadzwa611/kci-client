@@ -16,7 +16,7 @@ const ViewGroups = () => {
     `/usersapi/staff/?branch_id=${loggedInUser.branch_id}&loan_officers_only=1`, 
     '/clientsapi/group_roles/', 
     '/clientsapi/client_controls/',
-    '/usersapi/list_units/'
+    '/usersapi/list_units/?active_only=1'
   ];
 
   return (

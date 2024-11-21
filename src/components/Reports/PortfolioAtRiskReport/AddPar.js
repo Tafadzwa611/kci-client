@@ -86,7 +86,7 @@ const AddPar = ({open, setOpen, setPars}) => {
                         <option value='COMMERCIAL'>COMMERCIAL</option>
                         <option value='OTHER'>OTHER</option>
                       </CustomSelectFilter>
-                      <CustomSelectFilter label='Units' name='unit_id'>
+                      <CustomSelectFilter label='Unit' name='unit_id'>
                         <option value=''>------</option>
                         {data[2].map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
                       </CustomSelectFilter>

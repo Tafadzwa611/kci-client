@@ -16,7 +16,7 @@ import { statusValues } from './data';
 import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
-const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) => {
+const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDetails}) => {
   const initialValues = {
     branch_ids: [],
     status: [],
@@ -32,6 +32,7 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
     group: '',
     loan_product_id: '',
     client_type: '',
+    unit_id: '',
     order_by: '-application_date',
     currency_id: ''
   };
@@ -171,13 +172,19 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'85%'}}>
+                  <div style={{width:'80%'}}>
                     <CustomMultiSelectFilter
                       label='Status'
                       name='status'
                       options={statusValues.map(val => ({label: val, value: val}))}
                       setFieldValue={setFieldValue}
                     />
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomSelectFilter label='Unit' name='unit_id'>
+                      <option value=''>------</option>
+                      {units.map(ut => (<option key={ut.id} value={ut.id}>{ut.name}</option>))}
+                    </CustomSelectFilter>
                   </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>

@@ -117,7 +117,7 @@ const Filter = ({setReport, accounts, setParams, branches, units}) => {
                     </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'45%'}}>
-                    <CustomSelectFilter label='Units' name='unit_id'>
+                    <CustomSelectFilter label='Unit' name='unit_id'>
                       <option value=''>------</option>
                       {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
                     </CustomSelectFilter>

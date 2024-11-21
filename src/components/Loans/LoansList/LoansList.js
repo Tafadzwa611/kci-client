@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Filter from './Filter';
 import LoansTable from './LoansTable';
 
-function LoansList({products}) {
+function LoansList({products, units}) {
   const [loanData, setLoanData] = useState({
     count: 0,
     next_page_num: null,
@@ -18,6 +18,7 @@ function LoansList({products}) {
   return (
     <>
       <Filter
+        units={units}
         products={products}
         setLoanData={setLoanData}
         setLoanId={setLoanId}
