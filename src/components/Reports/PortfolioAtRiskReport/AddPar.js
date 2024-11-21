@@ -16,7 +16,7 @@ import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
 const AddPar = ({open, setOpen, setPars}) => {
-  const initialValues = {branch_ids: [], currency_id: '', lower_limit: '', upper_limit: '', client_type: '', group_type: '', reason: ''};
+  const initialValues = {branch_ids: [], currency_id: '', lower_limit: '', upper_limit: '', client_type: '', group_type: '', reason: '', unit_id: ''};
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
@@ -33,7 +33,8 @@ const AddPar = ({open, setOpen, setPars}) => {
         upper_limit: values.upper_limit,
         client_type: values.client_type,
         group_type: values.group_type,
-        reason: values.reason
+        reason: values.reason,
+        unit_id: values.unit_id
       };
       setPars(curr => [...curr, par]);
       setOpen(false);
@@ -50,7 +51,7 @@ const AddPar = ({open, setOpen, setPars}) => {
 
   return (
     <Modal open={open} setOpen={setOpen} title={'Add Par'}>
-      <Fetcher urls={['/clientsapi/client_types/', '/clientsapi/group_types/']}>
+      <Fetcher urls={['/clientsapi/client_types/', '/clientsapi/group_types/', '/usersapi/list_units/']}>
         {({data}) => (
           <Formik initialValues={initialValues} validationSchema={addSchema} onSubmit={onSubmit}>
             {({ isSubmitting, setFieldValue, errors }) => (
@@ -84,6 +85,10 @@ const AddPar = ({open, setOpen, setPars}) => {
                         <option value='CONSUMER'>CONSUMER</option>
                         <option value='COMMERCIAL'>COMMERCIAL</option>
                         <option value='OTHER'>OTHER</option>
+                      </CustomSelectFilter>
+                      <CustomSelectFilter label='Units' name='unit_id'>
+                        <option value=''>------</option>
+                        {data[2].map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
                       </CustomSelectFilter>
                     </div>
                     <div style={{display:'flex', justifyContent:'flex-end'}}>
