@@ -93,7 +93,7 @@ const Filter = ({setReport, setParams, units}) => {
                     />
                   </div>
                   <div className='row-payments-container' style={{width:'10%'}}>
-                    <CustomSelectFilter label='Status' name='status' required>
+                    <CustomSelectFilter label='Status' name='status'>
                       <option value=''>-----</option>
                       <option value='Open'>Open</option>
                       <option value='Arrears'>Arrears</option>
