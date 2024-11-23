@@ -6,6 +6,7 @@ import BatchApproval from '../BatchApproval/BatchApproval';
 import Report from '../BatchApproval/Report';
 import EditLoan from '../AddLoan/EditLoan';
 import Calculator from '../Calculator/Calculator';
+import CollectionHome from '../CollectionSheet/CollectionHome';
 import { Fetcher } from '../../../common';
 import LoanDetails from '../LoansList/LoanDetails';
 import { useParams } from 'react-router-dom';
@@ -31,6 +32,7 @@ const ViewLoans = () => {
         <Route path='approval-report/:reportId' element={<Report />} />
         <Route path='onlineapplications' element={<OnlineApplications />} />
         <Route path='calculator' element={<Calculator />} />
+        <Route path='/collection_sheet/*' element={<CollectionHome />} />
         <Route
           path='editloan/:loanType/:loanId'
           element={
@@ -99,6 +101,9 @@ function Layout() {
             </Link>
             <Link to='/loans/viewloans/calculator' id='calculator' className={location.pathname === '/loans/viewloans/calculator' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Loan Calculator
+            </Link>
+            <Link to='/loans/viewloans/collection_sheet' id='calculator' className={location.pathname === '/loans/viewloans/collection_sheet' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Collection Sheet
             </Link>
           </div>
           <div className='tab-content font-12' style={{marginTop:'3rem'}}>
