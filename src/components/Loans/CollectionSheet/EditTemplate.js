@@ -75,7 +75,10 @@ const EditTemplate = ({data}) => {
               setFieldValue={setFieldValue}
               options={columns.map(column => ({label: COLUMNS[column], value: column}))}
             />
-            <SubmitButton isSubmitting={isSubmitting}/>
+            <div style={{paddingTop: '1rem'}}></div>
+            <div style={{display:'flex', justifyContent: 'flex-end'}}>
+              <SubmitButton isSubmitting={isSubmitting}/>
+            </div>
           </NonFieldErrors>
         </Form>
       )}

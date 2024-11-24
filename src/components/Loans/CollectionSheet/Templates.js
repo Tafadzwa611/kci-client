@@ -16,23 +16,25 @@ const Templates = ({data}) => {
           <div className='table-responsive'>
             <div className='table__height'>
               <table className='table'>
-                <tbody>
+                <thead className='clients-report-table'>
                   <tr className='journal-details header' style={{position:'sticky', top: 0}}>
                     <th>Template Name</th>
                     <th>Date Created</th>
                     <th>Action</th>
                   </tr>
-                  {templates.map(template => {
+                </thead>
+                <tbody>
+                  {templates.map((template, index) => {
                     return (
-                      <tr key={template.id}>
+                      <tr key={index}>
                         <td>{template.report_name}</td>
                         <td>{template.entry_date}</td>
-                        <td>
-                          <span className='delete_button'>
-                            <Link to={`/loans/viewloans/collection_sheet/delete_template/${template.id}`}>Delete</Link>
+                        <td style={{display: 'flex', columnGap: '5px'}}>
+                          <span>
+                            <Link className='badge badge-success' to={`/loans/viewloans/collection_sheet/edit_template/${template.id}`}>Edit</Link>
                           </span>
-                          <span className='edit_button'>
-                            <Link to={`/loans/viewloans/collection_sheet/edit_template/${template.id}`}>Edit</Link>
+                          <span>
+                            <Link className='badge badge-danger' to={`/loans/viewloans/collection_sheet/delete_template/${template.id}`}>Delete</Link>
                           </span>
                         </td>
                       </tr>

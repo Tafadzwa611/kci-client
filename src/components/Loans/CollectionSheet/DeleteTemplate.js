@@ -31,11 +31,14 @@ const DeleteTemplate = () => {
 
   return (
     <Formik initialValues={{}} onSubmit={onSubmit}>
-      {({ values, isSubmitting, setFieldValue, errors }) => (
+      {({ isSubmitting, errors }) => (
         <Form>
           <NonFieldErrors errors={errors}>
-            <div>DeleteTemplate</div>
-            <SubmitButton isSubmitting={isSubmitting}/>
+            <div>Are you sure you want delete this template?</div>
+            <div style={{paddingTop: '1rem'}}></div>
+            <div style={{display:'flex', justifyContent: 'flex-end'}}>
+              <SubmitButton isSubmitting={isSubmitting}/>
+            </div>
           </NonFieldErrors>
         </Form>
       )}

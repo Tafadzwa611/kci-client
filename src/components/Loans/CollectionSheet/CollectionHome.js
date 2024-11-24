@@ -27,6 +27,14 @@ const CollectionHome = () => {
           )}
         />
         <Route
+          path='templates'
+          element={(
+            <Fetcher urls={['/usersapi/list_report_templates/']}>
+              {({data}) => <Templates data={data}/>}
+            </Fetcher>
+          )}
+        />
+        <Route
           path='edit_template/:templateId'
           element={(
             <Fetcher urls={['/usersapi/list_template_columns/?report_type=COLLECTION_SHEET']}>
@@ -35,14 +43,6 @@ const CollectionHome = () => {
           )}
         />
         <Route path='delete_template/:templateId' element={<DeleteTemplate />} />
-        <Route
-          path='templates'
-          element={(
-            <Fetcher urls={['/usersapi/list_report_templates/']}>
-              {({data}) => <Templates data={data}/>}
-            </Fetcher>
-          )}
-        />
       </Route>
     </Routes>
   )

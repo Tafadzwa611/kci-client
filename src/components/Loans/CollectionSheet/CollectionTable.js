@@ -1,6 +1,7 @@
 import React from 'react';
+import TableHeader from './TableHeader';
 
-const CollectionTable = ({sheet}) => {
+const CollectionTable = ({sheet, setSheet, params}) => {
   if (!sheet || !sheet?.installments) {
     return <div></div>
   }
@@ -8,28 +9,42 @@ const CollectionTable = ({sheet}) => {
   const columnHeaders = Object.keys(sheet.installments[0]);
 
   return (
-    <div className='table-container' style={{padding:'0', border:'none'}}>
-      <div className='table-responsive font-12' style={{maxHeight:'600px'}}>
-        <table className='table' style={{width:'100%'}} id='loans-report'>
-          <thead className='clients-report-table'>
-            <tr className='journal-details fees__report_thead'>
-              {columnHeaders.map(header => (
-                <th key={header}>{COLUMNS[header]}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {sheet.installments.map((installment, index) => {
-              return (
-                <tr key={index}>
-                  {columnHeaders.map(header => <td key={header}>{installment[header]}</td>)}
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+    <>
+      <TableHeader
+        tableName='Collection Sheet'
+        length={sheet.installments.length}
+        totalCount={sheet.count}
+        pageNum={sheet.number}
+        numOfpages={sheet.num_of_pages}
+        nextPage={sheet.next_page_num}
+        params={params}
+        prevPage={sheet.prev_page_num}
+        setData={setSheet}
+        url='/reportsapi/collection_sheet/'
+      />
+      <div className='table-container' style={{padding:'0', border:'none'}}>
+        <div className='table-responsive font-12' style={{maxHeight:'600px'}}>
+          <table className='table' style={{width:'100%'}} id='loans-report'>
+            <thead className='clients-report-table'>
+              <tr className='journal-details fees__report_thead'>
+                {columnHeaders.map(header => (
+                  <th key={header}>{COLUMNS[header]}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {sheet.installments.map((installment, index) => {
+                return (
+                  <tr key={index}>
+                    {columnHeaders.map(header => <td key={header}>{installment[header]}</td>)}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

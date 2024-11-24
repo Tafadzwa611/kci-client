@@ -18,7 +18,8 @@ const CollectionSheet = () => {
       <Fetcher urls={urls}>
         {({data}) => <Filter data={data} setParams={setParams} setSheet={setSheet}/>}
       </Fetcher>
-      <CollectionTable sheet={sheet}/>
+      <div style={{paddingTop: '2rem'}}></div>
+      <CollectionTable sheet={sheet} params={params} setSheet={setSheet} />
     </div>
   )
 }

@@ -28,7 +28,7 @@ const Filter = ({data, setParams, setSheet}) => {
     unit_id: '',
     include_overdue: false,
     loan_officer_id: '',
-    mode: 'html'
+    file_format: 'html'
   }
 
   const onSubmit = async (values, actions) => {
@@ -36,7 +36,8 @@ const Filter = ({data, setParams, setSheet}) => {
     const params = getParams(data);
     setParams(params);
     try {
-      const response = await axios.get('/reportsapi/collection_sheet/', {params: params});
+      const url = values.file_format === 'html' ? '/reportsapi/collection_sheet/' : '/reportsapi/collection_sheet_export/';
+      const response = await axios.get(url, {params: params});
       setSheet(response.data);
     } catch (error) {
       if (error.message === 'Network Error') {
@@ -106,7 +107,7 @@ const Filter = ({data, setParams, setSheet}) => {
                     </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'19%'}}>
-                    <CustomSelectFilter label='Mode' name='mode' required>
+                    <CustomSelectFilter label='Mode' name='file_format' required>
                       <option value='html'>Screen (HTML)</option>
                       <option value='xlsx'>Excel</option>
                       <option value='csv'>CSV</option>
