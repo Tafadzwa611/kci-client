@@ -91,6 +91,9 @@ const COLUMNS = {
   maturity_date: 'Maturity_Date',
   loan_status: 'Loan_Status',
 
+  total_installment_amount: 'Total Installment Amount',
+  total_arrears_amount: 'Total Installment Amount',
+  total_payment: 'Total Payment',
 }
 
 export default CollectionTable;
