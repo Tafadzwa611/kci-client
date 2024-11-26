@@ -6,6 +6,10 @@ const CollectionTable = ({sheet, setSheet, params}) => {
     return <div></div>
   }
 
+  if (sheet.installments.length === 0) {
+    return <div>No installments on selected date.</div>
+  }
+
   const columnHeaders = Object.keys(sheet.installments[0]);
 
   return (
