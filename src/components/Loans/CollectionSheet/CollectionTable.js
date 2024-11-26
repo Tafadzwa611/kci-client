@@ -92,8 +92,8 @@ const COLUMNS = {
   loan_status: 'Loan_Status',
 
   total_installment_amount: 'Total Installment Amount',
-  total_arrears_amount: 'Total Installment Amount',
-  total_payment: 'Total Payment',
+  total_arrears_amount: 'Total Arrears Amount',
+  total_payment: 'Total Payment'
 }
 
 export default CollectionTable;
