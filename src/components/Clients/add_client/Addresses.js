@@ -45,7 +45,7 @@ function AddressForm({index, setFieldValue, addresses, address}) {
 function AddAddress({setFieldValue, address_list}) {
   const add = (evt) => {
     evt.preventDefault();
-    const address = {id: uuidv4(), ownership: '', address: '', city: '', country: ''};
+    const address = {id: uuidv4(), ownership: '', address: '', city: '', country: 'Zimbabwe'};
     setFieldValue('address_list', [...address_list, address]);
   }
 

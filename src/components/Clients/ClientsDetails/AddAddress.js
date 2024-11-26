@@ -27,7 +27,7 @@ function AddAddress({setOpen, setClient, clientId}) {
     ownership: '',
     address: '',
     city: '',
-    country: ''
+    country: 'Zimbabwe'
   };
 
   return (
