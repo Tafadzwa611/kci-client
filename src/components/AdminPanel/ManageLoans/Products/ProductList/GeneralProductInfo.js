@@ -22,6 +22,10 @@ function GeneralProductInfo({product}) {
                 <li>Status: <span className="badge badge-danger">Inactive</span></li>
               }
               <li>Date Created: {product.date_created}</li>
+              {product.calculate_using_installment ?
+                <li>Calculate Using Installment: Active</li>:
+                <li>Calculate Using Installment: Inactive</li>
+              }
               <li>Created By: {product.created_by}</li>
             </ul>
           </div>

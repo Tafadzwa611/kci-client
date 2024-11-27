@@ -46,6 +46,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 <option value='Interest-Free Loan'>Interest-Free Loan</option>
               </CustomSelect>
               <CustomCheckbox label='Is Active' name='is_active'/>
+              <CustomCheckbox label='Calculate Using Installment' name='calculate_using_installment'/>
               <div className='divider divider-info'>
                 <span>Principal Settings</span>
               </div>

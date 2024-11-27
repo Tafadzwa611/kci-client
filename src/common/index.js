@@ -43,5 +43,6 @@ export {
   CustomSelectFilter,
   CustomMultiSelectFilter,
   SubmitButtonFilter,
-  CustomSelectRemoteFilter
+  CustomSelectRemoteFilter,
+  CustomCheckBoxfilter
 } from './filter';

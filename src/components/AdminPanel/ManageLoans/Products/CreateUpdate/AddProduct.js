@@ -54,7 +54,8 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
     on_default_rate: '',
     is_default_interest_recurring: '',
     add_on_last_installment_only: '',
-    fixed_penalty_amount: ''
+    fixed_penalty_amount: '',
+    calculate_using_installment: ''
   };
 
   const back = () => setView('list');

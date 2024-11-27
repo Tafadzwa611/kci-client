@@ -4,7 +4,7 @@ import {
   NonFieldErrors,
   CustomDatePickerFilter,
   CustomSelectFilter,
-  CustomCheckbox,
+  CustomCheckBoxfilter,
   SubmitButtonFilter
 } from '../../../common';
 import { useBranches } from '../../../contexts/BranchesContext';
@@ -90,13 +90,13 @@ const Filter = ({data, setParams, setSheet}) => {
                   </div>
                 </div>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'19%'}}>
+                  <div className='row-payments-container' style={{width:'26%'}}>
                     <CustomSelectFilter label='Unit' name='unit_id'>
                       <option value=''>------</option>
                       {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
                     </CustomSelectFilter>
                   </div>
-                  <div className='row-payments-container' style={{width:'19%'}}>
+                  <div className='row-payments-container' style={{width:'26%'}}>
                     <CustomSelectFilter label='Loan Officer' name='loan_officer_id'>
                       <option value=''>------</option>
                       {loanOfficers.map(loanOfficer => (
@@ -106,14 +106,14 @@ const Filter = ({data, setParams, setSheet}) => {
                       ))}
                     </CustomSelectFilter>
                   </div>
-                  <div className='row-payments-container' style={{width:'19%'}}>
+                  <div className='row-payments-container' style={{width:'26%'}}>
                     <CustomSelectFilter label='Mode' name='file_format' required>
                       <option value='html'>Screen (HTML)</option>
                       <option value='xlsx'>Excel</option>
                       <option value='csv'>CSV</option>
                     </CustomSelectFilter>
                   </div>
-                  <CustomCheckbox label='Include Overdue Installments' name='include_overdue'/>
+                  <CustomCheckBoxfilter label='Include Overdue Installments' name='include_overdue'/>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>
               </NonFieldErrors>

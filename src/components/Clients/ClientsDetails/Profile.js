@@ -24,6 +24,8 @@ const thumbInner = {
 };
 
 const PLACEHOLDER_PROFILE_LINK = 'https://cbmstaticfiles.sfo2.cdn.digitaloceanspaces.com/lenda-frontend-files/profile.png';
+// const PLACEHOLDER_PROFILE_LINK = 'https://cbmstaticfiles.sfo2.cdn.digitaloceanspaces.com/profile_placeholder/profile.png';
+
 
 function Profile({client, setClient}) {
   const [fileId, setFileId] = useState(null);
