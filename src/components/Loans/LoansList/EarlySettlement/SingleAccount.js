@@ -5,7 +5,8 @@ import {
   NonFieldErrors,
   CustomDatePicker,
   CustomSelect,
-  CustomInput
+  CustomInput,
+  CustomCheckbox
 } from '../../../../common';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -51,6 +52,7 @@ function SingleAccount({loan, interestDate, setLoan, setOpen, setInterestDate, d
     fees_amount_paid: '',
     penalty_amount_paid: '',
     use_multi_accounts: false,
+    send_sms_notification: false,
   };
 
   return (
@@ -82,6 +84,7 @@ function SingleAccount({loan, interestDate, setLoan, setOpen, setInterestDate, d
                   <option value=''>------</option>
                   {data[0].filter(acc => acc.currency_id == loan.currency_id).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_name}</option>)}
                 </CustomSelect>
+                <CustomCheckbox label='Send SMS notification to client' name='send_sms_notification'/>
               </div>
               <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
             </div>

@@ -7,7 +7,8 @@ import {
   CustomSelect,
   CustomInput,
   ButtonSuccess,
-  ButtonDefault
+  ButtonDefault,
+  CustomCheckbox
 } from '../../../../common';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -38,7 +39,8 @@ function MultipleAccounts({data, loan, setLoan, interestDate, setInterestDate, s
 
   const initialValues = {
     date_of_settlement: interestDate,
-    amount_paid_list: [{'cash_account_id': '', 'amount': '', 'component': ''}]
+    amount_paid_list: [{'cash_account_id': '', 'amount': '', 'component': ''}],
+    send_sms_notification: false,
   };
 
   return (
@@ -77,6 +79,7 @@ function MultipleAccounts({data, loan, setLoan, interestDate, setInterestDate, s
                   />
                 ))}
                 <AddComponent amount_paid_list={values.amount_paid_list} setFieldValue={setFieldValue}/>
+                <CustomCheckbox label='Send SMS notification to client' name='send_sms_notification'/>
               </div>
               <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
             </div>
