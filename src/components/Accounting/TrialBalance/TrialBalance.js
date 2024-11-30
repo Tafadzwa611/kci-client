@@ -4,6 +4,7 @@ import TrialBalanceTable from './TrialBalanceTable';
 
 function TrialBalance() {
   const [trialBalanceData, setTrialBalanceData] = useState(null);
+  console.log(trialBalanceData)
 
   return (
     <>

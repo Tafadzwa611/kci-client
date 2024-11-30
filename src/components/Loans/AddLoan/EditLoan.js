@@ -7,8 +7,6 @@ import EditSolidarityLoanForm from './EditSolidarityLoanForm';
 function EditLoan({products, clientControls, units}) {
   const params = useParams();
 
-  console.log(clientControls)
-
   if (params.loanType === 'sol') {
     return (
       <Fetcher urls={[`/loansapi/get_loan/${params.loanId}/`]}>

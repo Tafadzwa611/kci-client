@@ -39,13 +39,19 @@ const TrialBalanceTable = ({trialBalance}) => {
                 <th>Account</th>
                 <th>Branch</th>
                 <th>Account Type</th>
-                <th>Debit({trialBalance.currency} {trialBalance.total_debits})</th>
-                <th>Credit({trialBalance.currency} {trialBalance.total_credits})</th>
+                <th>Opening Balance</th>
+                <th>Debits({trialBalance.currency} {trialBalance.total_debits})</th>
+                <th>Credits({trialBalance.currency} {trialBalance.total_credits})</th>
+                <th>Net Change</th>
+                <th>Closing Balance</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td><b>{trialBalance.currency} Trial Balance</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -57,6 +63,9 @@ const TrialBalanceTable = ({trialBalance}) => {
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
               {accounts.map(account => {
                 return (
@@ -64,10 +73,15 @@ const TrialBalanceTable = ({trialBalance}) => {
                     <td>{account.account_name}</td>
                     <td>{account.branch_name}</td>
                     <td>{account.account_type}</td>
-                    {Number(account.balance) >= 0 ?
-                    <td className='trial-balance-text-color' style={{background: 'rgb(127, 255, 0) none repeat scroll 0% 0%', textAlign: 'center'}}>{account.balance}</td> : <td></td>}
-                    {Number(account.balance) < 0 ?
-                    <td className='trial-balance-text-color' style={{background: 'rgb(255, 182, 193) none repeat scroll 0% 0%', textAlign: 'center'}}>{account.balance}</td> : <td></td>}
+                    <td className='trial-balance-text-color' style={Number(account.balance_at_opening) >= 0 ? {background: 'rgb(127, 255, 0) none repeat scroll 0% 0%', textAlign: 'center'}: {background: 'rgb(255, 182, 193) none repeat scroll 0% 0%', textAlign: 'center'}}>
+                      {account.balance_at_opening}
+                    </td>
+                    <td>{account.debits}</td>
+                    <td>{account.credits}</td>
+                    <td>{account.net_change}</td>
+                    <td className='trial-balance-text-color' style={Number(account.balance_at_closing) >= 0 ? {background: 'rgb(127, 255, 0) none repeat scroll 0% 0%', textAlign: 'center'}: {background: 'rgb(255, 182, 193) none repeat scroll 0% 0%', textAlign: 'center'}}>
+                      {account.balance_at_closing}
+                    </td>
                   </tr>
                 )
               })}
