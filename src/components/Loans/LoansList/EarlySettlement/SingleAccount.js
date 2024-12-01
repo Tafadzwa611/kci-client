@@ -22,7 +22,8 @@ function SingleAccount({loan, interestDate, setLoan, setOpen, setInterestDate, d
             {'cash_account_id': values.cash_account_id, 'amount': values.interest_amount_paid, 'component': 'interest'},
             {'cash_account_id': values.cash_account_id, 'amount': values.penalty_amount_paid, 'component': 'penalty'},
             {'cash_account_id': values.cash_account_id, 'amount': values.fees_amount_paid, 'component': 'fees'},
-        ]
+        ],
+        'send_sms_notification': values.send_sms_notification
       }
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(`/loansapi/early_settlement/${loan.id}/`, payload, CONFIG);
