@@ -33,6 +33,7 @@ const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDeta
     loan_product_id: '',
     client_type: '',
     unit_id: '',
+    sector: '',
     order_by: '-application_date',
     currency_id: ''
   };
@@ -172,13 +173,32 @@ const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDeta
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'80%'}}>
+                  <div style={{width:'70%'}}>
                     <CustomMultiSelectFilter
                       label='Status'
                       name='status'
                       options={statusValues.map(val => ({label: val, value: val}))}
                       setFieldValue={setFieldValue}
                     />
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomSelectFilter label='Sector' name='sector'>
+                      <option value=''>-----</option>
+                      <option value='CONSUMER'>CONSUMER</option>
+                      <option value='COMMERCIAL - Agriculture'>Agriculture</option>
+                      <option value='COMMERCIAL - Manufacturing'>Manufacturing</option>
+                      <option value='COMMERCIAL - Mining'>Mining</option>
+                      <option value='COMMERCIAL - Housing'>Housing</option>
+                      <option value='COMMERCIAL - Distribution & Services'>Distribution & Services</option>
+                      <option value='COMMERCIAL - Retail'>Retail</option>
+                      <option value='COMMERCIAL - Transport'>Transport</option>
+                      <option value='COMMERCIAL - Health'>Health</option>
+                      <option value='COMMERCIAL - Education'>Education</option>
+                      <option value='COMMERCIAL - Cross Border Traders'>Cross Border Traders</option>
+                      <option value='COMMERCIAL - Construction'>Construction</option>
+                      <option value='COMMERCIAL - Vendors'>Vendors</option>
+                      <option value='OTHER'>OTHER</option>
+                    </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'10%'}}>
                     <CustomSelectFilter label='Unit' name='unit_id'>
