@@ -1,15 +1,18 @@
 import React, {useState} from 'react';
 import ChangeAccruedInterest from './ChangeAccruedInterest';
 import ChangeLoanNumber from './ChangeLoanNumber';
+import ChangeLoanNextInstallmentDate from './ChangeLoanNextInstallmentDate';
 
 function DetailsTab({loan, setLoan}) {
   const [openModal, setOpenModal] = useState(false);
   const [openLoanNumberModal, setOpenLoanNumberModal] = useState(false);
+  const [openLoanNextInterestDateModal, setOpenLoanNextInterestDateModal] = useState(false);
 
   return (
     <div style={{display:'flex', columnGap:'1%'}}>
       {openModal && <ChangeAccruedInterest loan={loan} setOpen={setOpenModal} setLoan={setLoan}/>}
       {openLoanNumberModal && <ChangeLoanNumber loan={loan} setOpen={setOpenLoanNumberModal} setLoan={setLoan}/>}
+      {openLoanNextInterestDateModal && <ChangeLoanNextInstallmentDate loan={loan} setOpen={setOpenLoanNextInterestDateModal} setLoan={setLoan}/>}
       <div style={{width:'100%'}}>
         <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom: '2rem'}}>
           <div style={{width:'48%'}}>
@@ -69,6 +72,10 @@ function DetailsTab({loan, setLoan}) {
               {loan.product_type === 'Dynamic Term Loan' && (
                 <>
                   <li style={{marginTop: '1rem', marginBottom: '0.5rem'}}><b>Dynamic Term Interest Settings</b></li>
+                  <li style={{marginBottom: '0.25rem', display:'flex', columnGap:'5px'}}>
+                    Next Interest Date: {loan.next_interest_date}
+                    <a style={{cursor: 'pointer'}} onClick={() => setOpenLoanNextInterestDateModal(true)}><small>Change</small></a>
+                  </li>
                   <li style={{marginBottom: '0.25rem'}}>Interest Applied On: {loan.dynamic_interest_applied_on}</li>
                   <li style={{marginBottom: '0.25rem'}}>Add Interest After Maturity: {loan.add_interest_after_maturity ? 'Yes' : 'No'}</li>
                   {loan.add_interest_after_maturity && (
