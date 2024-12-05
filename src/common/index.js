@@ -18,7 +18,8 @@ export {
   CustomSelectRemote,
   CustomPhoneNumber,
   CustomTimePicker,
-  countryPhoneCodes
+  countryPhoneCodes, 
+  CustomPasswordInput
 } from './forms';
 export {
   DeleteBtn,

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNotifications } from '../../contexts/NotificationsContext';
@@ -8,26 +8,37 @@ import {
   ModalSubmit,
   NonFieldErrors,
   CustomInput,
+  CustomPasswordInput,
   CustomSelect
 } from '../../common';
 import { getParams } from '../../utils/utils';
+import Cookies from 'js-cookie';
 
-const MINUTE_MS = 15000;
+const MINUTE_MS = 5000;
+
+const MODAL_STATES = {
+  search: 'search',
+  login: 'login'
+};
+
 const Navbar = (props) => {
+  const modalRef = useRef(null);
+  const [modal, setModal] = useState(false);
+  const [showLogout, setShowLogout] = useState(false);
   const {unreadNotifs, setUnreadNotifs} = useNotifications(0);
-  const [open, setOpen] = useState(false);
 
   const openSearch = (evt) => {
     evt.preventDefault();
-    setOpen(true);
+    setModal(MODAL_STATES.search);
   }
-  const [showLogout, setShowLogout] = useState(false);
 
   const checkNotifs = async () => {
+    if (modalRef.current === MODAL_STATES.login){return};
     try {
       const response = await axios.get('/usersapi/check_new_notifications/');
       if (response.request.responseURL.includes('users/login')) {
-        window.location.reload();
+        modalRef.current = MODAL_STATES.login;
+        setModal(MODAL_STATES.login);
       }
       setUnreadNotifs(response.data.count);
     } catch (error) {
@@ -36,7 +47,6 @@ const Navbar = (props) => {
   }
 
   useEffect(() => {
-    checkNotifs();
     const interval = setInterval(() => {
       checkNotifs();
     }, MINUTE_MS);
@@ -49,7 +59,8 @@ const Navbar = (props) => {
 
   return (
     <div className='home-content'>
-      {open ? <Search setOpen={setOpen} /> : null}
+      {modal === MODAL_STATES.search ? <Search setOpen={setModal} /> : null}
+      {modal === MODAL_STATES.login ? <Login modalRef={modalRef} email={props.loggedInUser.email} setOpen={setModal} /> : null}
       <div className='home-content-header-left' style={{display:'flex', columnGap:'3rem', paddingLeft:'1.5rem'}}>
         <div style={{display:'flex'}}>
           <NavLink to='/' className='btn btn-default dashboard'>
@@ -220,6 +231,67 @@ const Search = ({setOpen}) => {
         )}
       </Formik>
     </Modal>
+  )
+}
+
+const Login = ({email, setOpen, modalRef}) => {
+  const onSubmit = async (values, actions) => {
+    try {
+      const response = await axios.post(
+        '/users/login/',
+        {username: email, password: values.password},
+        {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Content-Type': 'multipart/form-data'}}
+      );
+      if (response.data.includes('Please enter a correct email and password. Note that both fields may be case-sensitive.')) {
+        actions.setErrors({responseStatus: 400, detail: 'Please enter a correct password. Note that the field may be case-sensitive.'});
+        return
+      }
+      modalRef.current = null;
+      setOpen(null);
+    } catch (error) {
+      console.log(error);
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+      } else {
+        actions.setErrors({responseStatus: error.response.status});
+      }
+    }
+  }
+
+  return (
+    <>
+    <div className={open ? 'modal fade show' : 'modal fade'} style={{top: '4rem', display: open ? 'block' : 'none'}}>
+      <div className='modal-dialog modal-lg modal-dialog-scrollable' style={{height:"calc(100% - 7rem)"}}>
+        <div className='modal-content'>
+          <div className='modal-body text-light'>
+          <Formik initialValues={{password: ''}} onSubmit={onSubmit}>
+            {({ errors, isSubmitting }) => (
+              <Form>
+                <NonFieldErrors errors={errors}>
+                  <div></div>
+                </NonFieldErrors>
+                <div className='create_modal_container'>
+                  <div style={{display:'flex', flexDirection:'column', rowGap:'1.5rem', position:'relative', top:'33%', alignItems:'center'}}>
+                    <div style={{display:'flex', flexDirection:"column", rowGap:'1rem'}}>
+                      <div className='row custom-background'>
+                        <CustomPasswordInput label='Password' name='password' type='password' placeholder='Password' required/>
+                      </div>
+                      <div style={{display:'grid'}}>
+                        <button className='btn btn-info' type='submit'>Login</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Form>
+            )}
+          </Formik>
+          </div>
+        </div>
+      </div>
+    </div>
+    </>
   )
 }
 
