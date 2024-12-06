@@ -35,7 +35,8 @@ const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDeta
     unit_id: '',
     sector: '',
     order_by: '-application_date',
-    currency_id: ''
+    currency_id: '',
+    gender: ''
   };
 
   const {currencies} = useCurrencies();
@@ -173,13 +174,20 @@ const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDeta
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'70%'}}>
+                  <div style={{width:'60%'}}>
                     <CustomMultiSelectFilter
                       label='Status'
                       name='status'
                       options={statusValues.map(val => ({label: val, value: val}))}
                       setFieldValue={setFieldValue}
                     />
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomSelectFilter label='Gender' name='gender'>
+                      <option value=''>------</option>
+                      <option value='MALE'>Male</option>
+                      <option value='FEMALE'>Female</option>
+                    </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'10%'}}>
                     <CustomSelectFilter label='Sector' name='sector'>

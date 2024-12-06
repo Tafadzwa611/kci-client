@@ -14,6 +14,7 @@ import ExpectedPaymentsReport from '../ExpectedPaymentsReport/ExpectedPaymentsRe
 import AuditTrail from '../AuditTrail/AuditTrail';
 import CreditReport from '../CreditReport/CreditReport';
 import LoanDistribution from '../LoanDistribution/LoanDistribution';
+import GenderDistribution from '../GenderDistribution/GenderDistribution';
 import {
   Routes,
   Route,
@@ -45,6 +46,7 @@ const ViewReports = () => {
         <Route path='audittrail' element={<AuditTrail />} />
         <Route path='creditreport' element={<CreditReport />} />
         <Route path='loandistribution' element={<LoanDistribution />} />
+        <Route path='genderdistribution' element={<GenderDistribution />} />
       </Route>
     </Routes>
   )
@@ -64,6 +66,9 @@ function Layout() {
             </Link>
             <Link to='/reports/viewreports/loandistribution' className={location.pathname === '/reports/viewreports/loandistribution' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Loan Distribution Report
+            </Link>
+            <Link to='/reports/viewreports/genderdistribution' className={location.pathname === '/reports/viewreports/genderdistribution' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Gender Distribution Report
             </Link>
             <Link to='/reports/viewreports/loansreport' className={location.pathname === '/reports/viewreports/loansreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Loans Report
