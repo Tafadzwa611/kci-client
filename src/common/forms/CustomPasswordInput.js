@@ -6,7 +6,7 @@ const CustomPasswordInput = ({ label, ...props }) => {
 
   return (
     <div style={{width: '100%'}}>
-      <input style={{width:'100%', fontSize:'10px'}} {...field} {...props} className='custom-select-form' autoComplete='new-password'/>
+      <input style={{width:'100%', fontSize:'12px'}} {...field} {...props} className='custom-select-form' autoComplete='new-password'/>
       {meta.touched && meta.error && <div className='error'>{meta.error}</div>}
     </div>
   )
