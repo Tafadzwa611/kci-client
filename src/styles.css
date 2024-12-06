@@ -3701,3 +3701,10 @@ input[type=number] {
   background: var(--white);
   padding: 1.5rem;
 }
+
+.login__session__message {
+  font-size: 10px;
+  padding: .75rem;
+  border: 1px solid var(--border-color);
+  border-radius: .25rem;
+}

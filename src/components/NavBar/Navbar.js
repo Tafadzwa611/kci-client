@@ -275,11 +275,20 @@ const Login = ({email, setOpen, modalRef}) => {
                 <div className='create_modal_container'>
                   <div style={{display:'flex', flexDirection:'column', rowGap:'1.5rem', position:'relative', top:'33%', alignItems:'center'}}>
                     <div style={{display:'flex', flexDirection:"column", rowGap:'1rem'}}>
+                      <div className='login__session__message'>Session expired. Please enter your password to continue.</div>
                       <div className='row custom-background'>
                         <CustomPasswordInput label='Password' name='password' type='password' placeholder='Password' required/>
                       </div>
                       <div style={{display:'grid'}}>
-                        <button className='btn btn-info' type='submit'>Login</button>
+                        {isSubmitting ? (
+                            <button className='btn btn-info' type='submit' style={{pointerEvents: 'none', opacity: '0.7'}} disabled={true}>
+                              <i className='fa fa-spinner fa-spin'></i> Please wait..
+                            </button>
+                          ) : (
+                            <button className='btn btn-info' type='submit'>
+                              Login
+                            </button>
+                        )}
                       </div>
                     </div>
                   </div>
