@@ -14,23 +14,24 @@ import {
 
 const statusValues = [
     'Open',
-    'Arrears',
-    'Fully Paid',
-    'Refinanced',
-    'Over Paid',
-    'Written-Off',
-    'Early Settlement'
+    'Arrears'
 ];
 
 const Filter = ({setReport}) => {
     const {currencies} = useCurrencies();
     const {branches} = useBranches();
-    const initialValues = {status_list: [], branch_ids: [], currency_id: '', min_date: '', max_date: ''};
+
+    const initialValues = {
+        status_list: [],
+        branch_ids: [],
+        currency_id: '',
+        report_date: ''
+    };
 
     const onSubmit = async (values, actions) => {
         try {
             const params = getParams(values);
-            const response = await axios.get('/reportsapi/distribution_by_sector/', {params: params});
+            const response = await axios.get('/reportsapi/maturity_profile/', {params: params});
             setReport(response.data);
         } catch (error) {
             if (error.message === 'Network Error') {
@@ -51,13 +52,10 @@ const Filter = ({setReport}) => {
                         <Form>
                             <NonFieldErrors errors={errors}>
                                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                                    <div className='row-payments-container' style={{width:'32%'}}>
-                                        <CustomDatePickerFilter label='Min Date' name='min_date' setFieldValue={setFieldValue} required/>
+                                    <div className='row-payments-container' style={{width:'45%'}}>
+                                        <CustomDatePickerFilter label='Report Date' name='report_date' setFieldValue={setFieldValue} required/>
                                     </div>
-                                    <div className='row-payments-container' style={{width:'32%'}}>
-                                        <CustomDatePickerFilter label='Max Date' name='max_date' setFieldValue={setFieldValue} required/>
-                                    </div>
-                                    <div className='row-payments-container' style={{width:'32%'}}>
+                                    <div className='row-payments-container' style={{width:'45%'}}>
                                         <CustomSelectFilter label='Currency' name='currency_id' required>
                                             <option value=''>------</option>
                                             {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
@@ -93,4 +91,4 @@ const Filter = ({setReport}) => {
     )
 }
 
-export default Filter;
+export default Filter

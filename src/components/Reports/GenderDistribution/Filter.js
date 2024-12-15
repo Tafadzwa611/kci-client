@@ -51,10 +51,10 @@ const Filter = ({setReport}) => {
                         <Form>
                             <NonFieldErrors errors={errors}>
                                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                                    <div className='row-payments-container' style={{width:'25%'}}>
+                                    <div className='row-payments-container' style={{width:'32%'}}>
                                         <CustomDatePickerFilter label='Min Date' name='min_date' setFieldValue={setFieldValue} required/>
                                     </div>
-                                    <div className='row-payments-container' style={{width:'25%'}}>
+                                    <div className='row-payments-container' style={{width:'32%'}}>
                                         <CustomDatePickerFilter label='Max Date' name='max_date' setFieldValue={setFieldValue} required/>
                                     </div>
                                     <div className='row-payments-container' style={{width:'32%'}}>
@@ -65,7 +65,7 @@ const Filter = ({setReport}) => {
                                     </div>
                                 </div>
                                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                                    <div style={{width:'40%'}}>
+                                    <div style={{width:'45%'}}>
                                         <CustomMultiSelectFilter
                                             label='Status'
                                             name='status_list'
@@ -74,7 +74,7 @@ const Filter = ({setReport}) => {
                                             required
                                         />
                                     </div>
-                                    <div style={{width:'40%'}}>
+                                    <div style={{width:'45%'}}>
                                         <CustomMultiSelectFilter
                                             label='Branches'
                                             name='branch_ids'
