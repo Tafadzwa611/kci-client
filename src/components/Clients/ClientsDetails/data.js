@@ -12,6 +12,7 @@ const MODAL_STATES = {
   deleteAddr: 'deleteAddr',
   addAddr: 'addAddr',
   addNok: 'addNok',
+  editNok: 'editNok',
   deleteNok: 'deleteNok',
   editId: 'editId',
   editCustom: 'editCustom',

@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import DeleteNok from './DeleteNok';
 import AddNok from './AddNok';
+import EditNok from './EditNok';
 import { MODAL_STATES } from './data';
 
 function Nok({client, setClient, modal, setModal}) {
@@ -9,6 +10,7 @@ function Nok({client, setClient, modal, setModal}) {
   return (
     <div style={{display:'block'}}>
       {modal === MODAL_STATES.addNok && <AddNok clientId={client.id} setOpen={setModal} setClient={setClient}/>}
+      {modal === MODAL_STATES.editNok && <EditNok client={client} setOpen={setModal} setClient={setClient} nokId={nokId.current}/>}
       {modal === MODAL_STATES.deleteNok && <DeleteNok nokId={nokId.current} setOpen={setModal} setClient={setClient}/>}
       <div style={{margin: '20px 0'}}>
         <button type='button' className='btn btn-success' onClick={() => setModal(MODAL_STATES.addNok)}>Add Next Of Kin</button>
@@ -45,9 +47,19 @@ function Nok({client, setClient, modal, setModal}) {
                           <td>{nok.gender}</td>
                           <td>
                             <button
-                            style={{cursor:'pointer'}}
-                            className='badge badge-danger'                              
-                            onClick={() => {
+                              style={{cursor:'pointer'}}
+                              className='badge badge-success'                              
+                              onClick={() => {
+                                nokId.current = nok.id;
+                                setModal(MODAL_STATES.editNok);
+                              }}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              style={{cursor:'pointer'}}
+                              className='badge badge-danger'                              
+                              onClick={() => {
                                 nokId.current = nok.id;
                                 setModal(MODAL_STATES.deleteNok);
                               }}
