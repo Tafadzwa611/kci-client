@@ -24,11 +24,16 @@ const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDeta
     page_size: 10,
     min_loan_added_on: '',
     max_loan_added_on: '',
+    min_approval_date: '',
+    max_approval_date: '',
+    min_application_date: '',
+    max_application_date: '',
     min_principal_amount_due: '',
     max_principal_amount_due: '',
     min_total_amount_paid: '',
     max_total_amount_paid: '',
     client: '',
+    loan_num: '',
     group: '',
     loan_product_id: '',
     client_type: '',
@@ -94,6 +99,33 @@ const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDeta
                   <div style={{display:'flex', justifyContent:'space-between', width:'32%'}}>
                     <div style={{width: '49%'}}>
                       <CustomInputFilter label='Min Amount Paid' name='min_total_amount_paid' type='number'/>
+                    </div>
+                    <div style={{width: '49%'}}>
+                      <CustomInputFilter label='Max Amount Paid' name='max_total_amount_paid' type='number'/>
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{display:'flex', justifyContent:'space-between'}}>
+                  <div style={{display:'flex', justifyContent:'space-between', width:'32%'}}>
+                    <div style={{width: '49%'}}>
+                      <CustomDatePickerFilter label='Min Approval Date' name='min_approval_date' setFieldValue={setFieldValue}/>
+                    </div>
+                    <div style={{width: '49%'}}>
+                      <CustomDatePickerFilter label='Max Approval Date' name='max_approval_date' setFieldValue={setFieldValue}/>
+                    </div>
+                  </div>
+                  <div style={{display:'flex', justifyContent:'space-between', width:'32%'}}>
+                    <div style={{width: '49%'}}>
+                      <CustomInputFilter label='Min Application Date' name='min_application_date' type='number'/>
+                    </div>
+                    <div style={{width: '49%'}}>
+                      <CustomInputFilter label='Max Application Date' name='max_application_date' type='number'/>
+                    </div>
+                  </div>
+                  <div style={{display:'flex', justifyContent:'space-between', width:'32%'}}>
+                    <div style={{width: '49%'}}>
+                      <CustomInputFilter label='Loan Number' name='loan_num' type='number'/>
                     </div>
                     <div style={{width: '49%'}}>
                       <CustomInputFilter label='Max Amount Paid' name='max_total_amount_paid' type='number'/>

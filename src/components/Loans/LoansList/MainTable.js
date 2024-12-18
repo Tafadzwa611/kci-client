@@ -20,6 +20,7 @@ function MainTable({loanData, handleClick}) {
                     <th>Date_Disbursed</th>
                     <th>Interest_Rate</th>
                     <th>Loan_Duration</th>
+                    <th>Applied_Amount</th>
                     <th>Principal</th>
                     <th>Interest</th>
                     <th>Penalty</th>
@@ -47,6 +48,7 @@ function MainTable({loanData, handleClick}) {
                         <td>{loan.db_date}</td>
                         <td>{loan.interest_rate}%{loan.interest_interval}</td>
                         <td>{getDuration(loan.repayment_cycle, loan.number_of_repayments)}</td>
+                        <td>{parseFloat(loan.org_principal).toFixed(2)}</td>
                         <td>{parseFloat(loan.principal).toFixed(2)}</td>
                         <td>{parseFloat(loan.total_loan_interest).toFixed(2)}</td>
                         <td>{parseFloat(loan.total_loan_penalty).toFixed(2)}</td>
