@@ -127,9 +127,6 @@ const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDeta
                     <div style={{width: '49%'}}>
                       <CustomInputFilter label='Loan Number' name='loan_num' type='number'/>
                     </div>
-                    <div style={{width: '49%'}}>
-                      <CustomInputFilter label='Max Amount Paid' name='max_total_amount_paid' type='number'/>
-                    </div>
                   </div>
                 </div>
 
