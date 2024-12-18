@@ -117,10 +117,10 @@ const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDeta
                   </div>
                   <div style={{display:'flex', justifyContent:'space-between', width:'32%'}}>
                     <div style={{width: '49%'}}>
-                      <CustomInputFilter label='Min Application Date' name='min_application_date' type='number'/>
+                      <CustomDatePickerFilter label='Min Application Date' name='min_application_date' setFieldValue={setFieldValue}/>
                     </div>
                     <div style={{width: '49%'}}>
-                      <CustomInputFilter label='Max Application Date' name='max_application_date' type='number'/>
+                      <CustomDatePickerFilter label='Max Application Date' name='max_application_date' setFieldValue={setFieldValue}/>
                     </div>
                   </div>
                   <div style={{display:'flex', justifyContent:'space-between', width:'32%'}}>
