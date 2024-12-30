@@ -32,6 +32,7 @@ function BranchDetails() {
                   <li>Geographical Location: {data[0].geographical_location}</li>
                   <li>Branch Code: {data[0].branch_code}</li>
                   <li>Date Of Opening: {data[0].date_of_opening}</li>
+                  <li>Is Rural Branch: {data[0].is_rural ? 'Yes' : 'No'}</li>
                   <li>Loan Products:{data[0].products.map(br => ` ${br.name},`)}</li>
                 </ul>
               </div>
