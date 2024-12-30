@@ -16,6 +16,7 @@ import CreditReport from '../CreditReport/CreditReport';
 import LoanDistribution from '../LoanDistribution/LoanDistribution';
 import GenderDistribution from '../GenderDistribution/GenderDistribution';
 import MaturityProfile from '../MaturityProfile/MaturityProfile';
+import PortfolioMgt from '../PortfolioMgt/PortfolioMgt';
 import {
   Routes,
   Route,
@@ -49,6 +50,7 @@ const ViewReports = () => {
         <Route path='loandistribution' element={<LoanDistribution />} />
         <Route path='genderdistribution' element={<GenderDistribution />} />
         <Route path='maturityprofile' element={<MaturityProfile />} />
+        <Route path='portfoliomgt' element={<PortfolioMgt />} />
       </Route>
     </Routes>
   )
@@ -74,6 +76,9 @@ function Layout() {
             </Link>
             <Link to='/reports/viewreports/maturityprofile' className={location.pathname === '/reports/viewreports/maturityprofile' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Maturity Profile
+            </Link>
+            <Link to='/reports/viewreports/portfoliomgt' className={location.pathname === '/reports/viewreports/portfoliomgt' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Portfolio Management
             </Link>
             <Link to='/reports/viewreports/loansreport' className={location.pathname === '/reports/viewreports/loansreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Loans Report
