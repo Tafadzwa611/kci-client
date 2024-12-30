@@ -52,7 +52,8 @@ function AddLoan({products, lcontrols, customForms, units, clientControls}) {
     client_name: clientName,
     group_id: '',
     unit_id: '',
-    ...(application_id && {application_id})
+    ...(application_id && {application_id}),
+    ...(!lcontrols.auto_generate_loan_id && {loan_id: ''})
   };
 
   const onChange = (evt, setFieldValue, prevProductId) => {

@@ -67,6 +67,14 @@ function ClientFormFields({
         placeholder='Search Group Guarantor'
         name='group_guarantor_id'
       />
+      {!lcontrols.auto_generate_loan_id && (
+        <CustomInput
+          label='Loan ID'
+          name='loan_id'
+          type='text'
+          required
+        />
+      )}
       <CustomInput
         label='Principal'
         name='principal'
