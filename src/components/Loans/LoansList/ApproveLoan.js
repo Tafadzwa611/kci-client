@@ -1,6 +1,13 @@
 import React, {useState} from 'react';
 import { Form, Formik } from 'formik';
-import { Modal, ModalSubmit, NonFieldErrors, CustomDatePicker, CustomInput } from '../../../common';
+import {
+  Modal,
+  ModalSubmit,
+  NonFieldErrors,
+  CustomDatePicker,
+  CustomInput,
+  CustomCheckbox
+} from '../../../common';
 import * as yup from 'yup';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -36,6 +43,7 @@ const ApproveLoan = ({setOpen, url, setLoanDetails, updateLoanList, setLoanData,
 
   const initialValues = {
     expected_disbursement_date: '',
+    send_sms_notification: true,
     ...(loanControls.request_otp_on_approval && {otp: ''})
   };
 
@@ -53,6 +61,7 @@ const ApproveLoan = ({setOpen, url, setLoanDetails, updateLoanList, setLoanData,
                     setFieldValue={setFieldValue}
                     required
                   />
+                  <CustomCheckbox label='Notify client/group via SMS' name='send_sms_notification'/>
                   {loanControls.request_otp_on_approval && <CustomInput label='OTP' name='otp' type='number' required/>}
                 </div>
                 {loanControls.request_otp_on_approval ?
@@ -71,26 +80,15 @@ const ModalSubmitOTP = ({isSubmitting, setOpen, loanId}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const requestOtp = async () => {
-    try {
-      setIsLoading(true);
-      await axios.get(`/loansapi/request_approval_otp/${loanId}/`);
-    } catch (error) {
-      if (error.message === 'Network Error') {
-        actions.setErrors({responseStatus: 'Network Error'});
-      } else if (error.response.status >= 400 && error.response.status < 500) {
-        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
-      } else {
-        actions.setErrors({responseStatus: error.response.status});
-      }
-    }finally {
-      setIsLoading(false);
-    }
+    setIsLoading(true);
+    await axios.get(`/loansapi/request_approval_otp/${loanId}/`);
+    setIsLoading(false);
   }
 
   if (isSubmitting) {
     return (
       <div className="modal-footer justify-content-between" style={{padding: "1rem 0", marginTop:"1rem"}}>
-        <span className='btn btn-default' onClick={(e) => setOpen(false)}>Close</span>
+        <span className='btn btn-default' onClick={() => setOpen(false)}>Close</span>
         <button className='btn btn-info' type='submit' style={{pointerEvents: 'none', opacity: '0.7'}} disabled={true}>
           <i className='fa fa-spinner fa-spin'></i> Please wait..
         </button>
@@ -100,7 +98,7 @@ const ModalSubmitOTP = ({isSubmitting, setOpen, loanId}) => {
 
   return (
     <div className="modal-footer justify-content-between" style={{padding: "1rem 0", marginTop:"1rem"}}>
-      <span className='btn btn-default' onClick={(e) => setOpen(false)}>Close</span>
+      <span className='btn btn-default' onClick={() => setOpen(false)}>Close</span>
       <div style={{display: 'flex', columnGap: '5px'}}>
         <button className='btn btn-default' type='button' onClick={requestOtp}>
           {isLoading ?

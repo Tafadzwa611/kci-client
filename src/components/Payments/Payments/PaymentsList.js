@@ -29,6 +29,8 @@ function Table({data}) {
                   <th style={{textAlign:'start'}}>Collected_By</th>
                   <th style={{textAlign:'start'}}>Branch</th>
                   <th style={{textAlign:'start'}}>Client</th>
+                  <th style={{textAlign:'start'}}>Group</th>
+                  <th style={{textAlign:'start'}}>Sub Loan</th>
                   <th style={{textAlign:'start'}}>Amount_Paid</th>
                 </tr>
               </thead>
@@ -41,6 +43,8 @@ function Table({data}) {
                       <td style={{verticalAlign:'middle'}}>{payment.collected_by_username}</td>
                       <td style={{verticalAlign:'middle'}}>{payment.branch_name}</td>
                       <td style={{verticalAlign:'middle'}}>{payment.client}</td>
+                      <td style={{verticalAlign:'middle'}}>{payment.group}</td>
+                      <td style={{verticalAlign:'middle'}}>{payment.sub_loan_name}</td>
                       <td style={{verticalAlign:'middle'}}>{payment.amount_paid}</td>
                     </tr>
                   )

@@ -8,6 +8,7 @@ import axios from 'axios';
 import { getParams } from '../../../utils/utils';
 
 const Filter = ({setParams, setLoans, par}) => {
+  console.log(par);
   const initialValues = {
     page_num: 1,
     file_format: 'html',
@@ -16,7 +17,8 @@ const Filter = ({setParams, setLoans, par}) => {
     upper_limit: par.upper_limit,
     client_type: par.client_type,
     group_type: par.group_type,
-    branch_ids: par.selectedBIds
+    branch_ids: par.selectedBIds,
+    reason: par.reason
   };
 
   const onSubmit = async (values, actions) => {

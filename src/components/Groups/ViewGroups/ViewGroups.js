@@ -11,7 +11,13 @@ const ViewGroups = () => {
     document.title = 'View Groups';
   }, []);
   const {loggedInUser} = useLoggedInUser();
-  const urls = ['/clientsapi/group_types/', `/usersapi/staff/?branch_id=${loggedInUser.branch_id}&loan_officers_only=1`, '/clientsapi/group_roles/', '/clientsapi/client_controls/'];
+  const urls = [
+    '/clientsapi/group_types/', 
+    `/usersapi/staff/?branch_id=${loggedInUser.branch_id}&loan_officers_only=1`, 
+    '/clientsapi/group_roles/', 
+    '/clientsapi/client_controls/',
+    '/usersapi/list_units/?active_only=1'
+  ];
 
   return (
     <Routes>
@@ -33,14 +39,16 @@ const ViewGroups = () => {
 const AddGroupComponent = ({urls}) => {
   return (
     <Fetcher urls={urls}>
-      {({data}) => <AddGroup groupTypes={data[0]} loanOfficers={data[1]} groupRoles={data[2]} clientControls={data[3]}/>}
+      {({data}) => <AddGroup groupTypes={data[0]} loanOfficers={data[1]} groupRoles={data[2]} clientControls={data[3]} units={data[4]}/>}
     </Fetcher>
   )
 }
 
 const GroupListComponent = () => {
   return (
-    <GroupsList />
+    <Fetcher urls={['/usersapi/list_units']}>
+      {({data}) => <GroupsList units={data[0]} />}
+    </Fetcher>
   )
 }
 

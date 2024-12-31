@@ -19,13 +19,13 @@ function EditStaff() {
   const params = useParams();
 
   return (
-    <Fetcher urls={[`/usersapi/user_details/${params.staffId}/`, '/usersapi/staffroles/', '/usersapi/branch-list/', '/usersapi/notification_types/']}>
-      {({data}) => <EditStaffForm staff={data[0]} roles={data[1]} branches={data[2]} notificationTypes={data[3]}/>}
+    <Fetcher urls={[`/usersapi/user_details/${params.staffId}/`, '/usersapi/staffroles/', '/usersapi/branch-list/', '/usersapi/notification_types/', '/usersapi/list_units/']}>
+      {({data}) => <EditStaffForm staff={data[0]} roles={data[1]} branches={data[2]} notificationTypes={data[3]} units={data[4]} />}
     </Fetcher>
   )
 }
 
-const EditStaffForm = ({staff, roles, branches, notificationTypes}) => {
+const EditStaffForm = ({staff, roles, branches, notificationTypes, units}) => {
   const navigate = useNavigate();
 
   const initialValues = {
@@ -37,6 +37,7 @@ const EditStaffForm = ({staff, roles, branches, notificationTypes}) => {
     is_active: staff.is_active,
     is_loan_officer: staff.is_loan_officer,
     access_branches: staff.branch_access.map(branch => ({value: branch.id, label: branch.name})),
+    access_units: staff.user_access_units.map(unit => ({value: unit.id, label: unit.name})),
     notification_types: staff.notification_types.map(notification => ({value: notification, label: notification}))
   };
 
@@ -46,6 +47,7 @@ const EditStaffForm = ({staff, roles, branches, notificationTypes}) => {
       const data = {
         ...values,
         access_branch_ids: values.access_branches.map(branch => branch.value),
+        user_access_units_ids: values.access_units.map(unit => unit.value),
         notification_types: values.notification_types.map(notification => notification.value)
       };
       await axios.put(`/usersapi/update_user/${staff.id}/`, data, CONFIG);
@@ -98,6 +100,13 @@ const EditStaffForm = ({staff, roles, branches, notificationTypes}) => {
                 setFieldValue={setFieldValue}
                 name='notification_types'
                 options={notificationTypes.map(notification => ({value: notification, label: notification}))}
+              />
+              <CustomMultiSelect
+                label='Unit Access'
+                initVals={staff.user_access_units.map(unit => ({value: unit.id, label: unit.name}))}
+                setFieldValue={setFieldValue}
+                name='access_units'
+                options={units.map(unit => ({value: unit.id, label: unit.name}))}
               />
               <CustomCheckbox label='Is Active' name='is_active'/>
               <CustomCheckbox label='Is Loan Officer' name='is_loan_officer'/>

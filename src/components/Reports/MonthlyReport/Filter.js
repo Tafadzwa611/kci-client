@@ -13,10 +13,11 @@ import { useBranches } from '../../../contexts/BranchesContext';
 import axios from 'axios';
 import { removeEmptyValues } from '../../../utils/utils';
 
-const Filter = ({setMonthlyReportData}) => {
+const Filter = ({setMonthlyReportData, units}) => {
   const initialValues = {
     branch_ids: [],
     page_num: 1,
+    unit_id: '',
   };
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
@@ -58,7 +59,7 @@ const Filter = ({setMonthlyReportData}) => {
                 <Form>
                     <NonFieldErrors errors={errors}>
                         <div style={{display:"flex", justifyContent:"space-between"}}>
-                            <div style={{width:"80%"}}>
+                            <div style={{width:"70%"}}>
                                 <CustomMultiSelectFilter
                                     label='Branches'
                                     name='branch_ids'
@@ -71,6 +72,12 @@ const Filter = ({setMonthlyReportData}) => {
                               <CustomSelectFilter label='Currency' name='currency_id' required>
                                     <option value=''>------</option>
                                     {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+                                </CustomSelectFilter>
+                            </div>
+                            <div className="row-payments-container" style={{width:"10%"}}>
+                              <CustomSelectFilter label='Unit' name='unit_id'>
+                                    <option value=''>------</option>
+                                    {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
                                 </CustomSelectFilter>
                             </div>
                             <SubmitButtonFilter isSubmitting={isSubmitting}/>

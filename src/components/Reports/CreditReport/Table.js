@@ -19,12 +19,17 @@ function Table({report, setReport, params}) {
                 <th>Application_Date</th>
                 <th>Disbursement_Date</th>
                 <th>First_Installment_Date</th>
+                <th>Maturity_Date</th>
                 <th>Last_Payment_Date</th>
                 <th>Last_Payment_Amount</th>
                 <th>Total_Amount_Due</th>
                 <th>Installment_Amount</th>
                 <th>Number_Of_Installments</th>
                 <th>Installment_Cycle</th>
+                <th>Original Principal</th>
+                <th>Total Interest</th>
+                <th>Client_Name</th>
+                <th>Group_Name</th>
               </tr>
             </thead>
             <tbody>
@@ -40,12 +45,17 @@ function Table({report, setReport, params}) {
                       <td>{loan.app_date}</td>
                       <td>{loan.disbursement_date}</td>
                       <td>{loan.first_installment_date}</td>
+                      <td>{loan.loan_maturity_date}</td>
                       <td>{loan.last_payment_date}</td>
                       <td>{loan.last_payment_amount}</td>
                       <td>{loan.total_amount_due}</td>
                       <td>{loan.installment_amount}</td>
                       <td>{loan.number_of_repayments}</td>
                       <td>{loan.repayment_cycle}</td>
+                      <td>{loan.org_principal}</td>
+                      <td>{loan.interest}</td>
+                      <td>{loan.client_name}</td>
+                      <td>{loan.group_name}</td>
                     </tr>
                   </Fragment>
                 )

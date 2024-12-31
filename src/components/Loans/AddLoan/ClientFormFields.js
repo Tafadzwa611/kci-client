@@ -20,7 +20,9 @@ function ClientFormFields({
   values,
   edit,
   customForms,
-  formIds
+  formIds,
+  units,
+  clientControls
 }) {
   const {branches} = useBranches();
 
@@ -65,6 +67,14 @@ function ClientFormFields({
         placeholder='Search Group Guarantor'
         name='group_guarantor_id'
       />
+      {!lcontrols.auto_generate_loan_id && (
+        <CustomInput
+          label='Loan ID'
+          name='loan_id'
+          type='text'
+          required
+        />
+      )}
       <CustomInput
         label='Principal'
         name='principal'
@@ -110,6 +120,16 @@ function ClientFormFields({
         <option value=''>------</option>
         {scheduleStrategies[product.loan_duration_time_unit].map(strategy => <option key={strategy} value={strategy}>{strategy}</option>)}
       </CustomSelect>
+      {clientControls.use_client_units ? 
+        <CustomSelect label='Unit' name='unit_id' required>
+          <option value=''>------</option>
+          {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+        </CustomSelect>:
+        <CustomSelect label='Unit' name='unit_id'>
+          <option value=''>------</option>
+          {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+        </CustomSelect>
+      }
       <CustomSelect label='Reason For Loan' name='reason_for_loan' required>
         <option value=''>------</option>
         <option value='CONSUMER'>CONSUMER</option>
@@ -141,8 +161,7 @@ function ClientFormFields({
       <div className='divider divider-info'>
         <span>Loan Fees</span>
       </div>
-      {values.fees.map((fee, index) => <Fee key={index} setFieldValue={setFieldValue} fee={fee} values={values}/>)}
-      <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+      {values.fees.map((fee, index) => <Fee key={index} index={index} setFieldValue={setFieldValue} fee={fee} values={values}/>)}
       <div style={{display:'flex', justifyContent: 'flex-end'}}>
         <SubmitButton isSubmitting={isSubmitting}/>
       </div>

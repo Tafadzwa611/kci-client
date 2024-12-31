@@ -1,7 +1,7 @@
 import React from 'react';
 import { useBranches } from '../../../../../contexts/BranchesContext';
 
-function GeneralProductInfo({product, close, setView}) {
+function GeneralProductInfo({product}) {
   const {branches} = useBranches();
   const allowedBranches = branches.filter(br => product.allowed_branches_ids.includes(br.id));
 
@@ -22,6 +22,10 @@ function GeneralProductInfo({product, close, setView}) {
                 <li>Status: <span className="badge badge-danger">Inactive</span></li>
               }
               <li>Date Created: {product.date_created}</li>
+              {product.calculate_using_installment ?
+                <li>Calculate Using Installment: Active</li>:
+                <li>Calculate Using Installment: Inactive</li>
+              }
               <li>Created By: {product.created_by}</li>
             </ul>
           </div>
@@ -64,6 +68,8 @@ function GeneralProductInfo({product, close, setView}) {
             <ul style={{paddingRight:"1rem"}}>
               <li style={{marginBottom: '1rem'}}><b>Arrears Settings</b></li>
               <li>Action On Default: {product.action_on_loan_default}</li>
+              {product.action_on_loan_default === 'Add Fixed Penalty' &&
+              <><li>Penalty Amount: {product.fixed_penalty_amount}</li></>}
               {product.action_on_loan_default === 'Add Penalty' &&
                 <>
                   <li>Apply Penalty On: {product.apply_late_repayment_penalty_on}</li>

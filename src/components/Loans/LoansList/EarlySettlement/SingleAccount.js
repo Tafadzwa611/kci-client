@@ -5,7 +5,8 @@ import {
   NonFieldErrors,
   CustomDatePicker,
   CustomSelect,
-  CustomInput
+  CustomInput,
+  CustomCheckbox
 } from '../../../../common';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -21,7 +22,8 @@ function SingleAccount({loan, interestDate, setLoan, setOpen, setInterestDate, d
             {'cash_account_id': values.cash_account_id, 'amount': values.interest_amount_paid, 'component': 'interest'},
             {'cash_account_id': values.cash_account_id, 'amount': values.penalty_amount_paid, 'component': 'penalty'},
             {'cash_account_id': values.cash_account_id, 'amount': values.fees_amount_paid, 'component': 'fees'},
-        ]
+        ],
+        'send_sms_notification': values.send_sms_notification
       }
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(`/loansapi/early_settlement/${loan.id}/`, payload, CONFIG);
@@ -51,6 +53,7 @@ function SingleAccount({loan, interestDate, setLoan, setOpen, setInterestDate, d
     fees_amount_paid: '',
     penalty_amount_paid: '',
     use_multi_accounts: false,
+    send_sms_notification: false,
   };
 
   return (
@@ -71,7 +74,7 @@ function SingleAccount({loan, interestDate, setLoan, setOpen, setInterestDate, d
                 />
                 <CustomInput label='Principal Amount Paid' name='principal_amount_paid' type='number' required disabled/>
                 <CustomInput label='Interest Amount Paid' name='interest_amount_paid' type='number' required/>
-                <div style={{marginTop:'1.5rem' ,display:'flex', flexDirection:'column', rowGap:'0.25rem'}}>
+                <div style={{marginTop:'1.5rem', display:'grid', rowGap:'0.25rem'}}>
                   <div>Interest Balance Until Next Installment {data[1].next_installment_date}: {data[1].interest_until_next_installment}</div>
                   <div>Daily Pro Rata Interest: {data[1].pro_rata_interest}</div>
                   <div>Daily Pro Rata Interest Balance: {data[1].pro_rata_interest_balance}</div>
@@ -82,6 +85,7 @@ function SingleAccount({loan, interestDate, setLoan, setOpen, setInterestDate, d
                   <option value=''>------</option>
                   {data[0].filter(acc => acc.currency_id == loan.currency_id).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_name}</option>)}
                 </CustomSelect>
+                <CustomCheckbox label='Send SMS notification to client' name='send_sms_notification'/>
               </div>
               <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
             </div>

@@ -7,17 +7,17 @@ import Loader from '../../Loader/MiniLoader';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const ClientNumbers = ({branchIds}) => {
+const ClientNumbers = ({branchIds, unitId}) => {
   const [data, setData] = useState(null);
   const [err, setErr] = useState(false);
 
   useEffect(() => {
     getData();
-  }, [branchIds]);
+  }, [branchIds, unitId]);
 
   const getData = async () => {
     try {
-      const data = removeEmptyValues({branch_ids: branchIds});
+      const data = removeEmptyValues({branch_ids: branchIds, unit_id: unitId});
       const params = getParams(data);
       const response = await axios.get('/dashboardapi/client-numbers/', {params: params});
       setData(response.data);

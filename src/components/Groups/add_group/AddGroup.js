@@ -22,7 +22,7 @@ const createGroupSchema = yup.object().shape({
   group_phone_number: yup.object().shape({countryCode: yup.string().required(), phoneNumber: yup.string().required('Required')}),
 });
 
-function AddGroup({groupTypes, loanOfficers, groupRoles, clientControls}) {
+function AddGroup({groupTypes, loanOfficers, groupRoles, clientControls, units}) {
   const navigate = useNavigate();
 
   const initialValues = {
@@ -35,6 +35,7 @@ function AddGroup({groupTypes, loanOfficers, groupRoles, clientControls}) {
     group_account_number: '',
     group_bank_name: '',
     group_officer_id: '',
+    unit_id: '',
   };
 
   const onSubmit = async (values, actions) => {
@@ -84,6 +85,16 @@ function AddGroup({groupTypes, loanOfficers, groupRoles, clientControls}) {
               <option value=''>------</option>
               {loanOfficers.map(officer => <option key={officer.id} value={officer.id}>{officer.first_name} {officer.last_name}</option>)}
             </CustomSelect>}
+            {clientControls.use_client_units ? 
+              <CustomSelect label='Unit' name='unit_id' required>
+                <option value=''>------</option>
+                {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+              </CustomSelect>:
+              <CustomSelect label='Unit' name='unit_id'>
+                <option value=''>------</option>
+                {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+              </CustomSelect>
+            }
             <div className='divider divider-info'>
               <span>Members</span>
             </div>

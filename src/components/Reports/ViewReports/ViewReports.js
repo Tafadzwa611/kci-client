@@ -13,6 +13,10 @@ import PortfolioAtRiskReport from '../PortfolioAtRiskReport/PortfolioAtRiskRepor
 import ExpectedPaymentsReport from '../ExpectedPaymentsReport/ExpectedPaymentsReport';
 import AuditTrail from '../AuditTrail/AuditTrail';
 import CreditReport from '../CreditReport/CreditReport';
+import LoanDistribution from '../LoanDistribution/LoanDistribution';
+import GenderDistribution from '../GenderDistribution/GenderDistribution';
+import MaturityProfile from '../MaturityProfile/MaturityProfile';
+import PortfolioMgt from '../PortfolioMgt/PortfolioMgt';
 import {
   Routes,
   Route,
@@ -43,11 +47,14 @@ const ViewReports = () => {
         <Route path='portofolioatriskreport' element={<PortfolioAtRiskReport />} />
         <Route path='audittrail' element={<AuditTrail />} />
         <Route path='creditreport' element={<CreditReport />} />
+        <Route path='loandistribution' element={<LoanDistribution />} />
+        <Route path='genderdistribution' element={<GenderDistribution />} />
+        <Route path='maturityprofile' element={<MaturityProfile />} />
+        <Route path='portfoliomgt' element={<PortfolioMgt />} />
       </Route>
     </Routes>
   )
 }
-
 
 function Layout() {
   const location = useLocation();
@@ -60,6 +67,18 @@ function Layout() {
           <div className='bloc-tabs'>
             <Link to='/reports/viewreports' className={location.pathname === '/reports/viewreports' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Client Reports
+            </Link>
+            <Link to='/reports/viewreports/loandistribution' className={location.pathname === '/reports/viewreports/loandistribution' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Loan Distribution Report
+            </Link>
+            <Link to='/reports/viewreports/genderdistribution' className={location.pathname === '/reports/viewreports/genderdistribution' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Gender Distribution Report
+            </Link>
+            <Link to='/reports/viewreports/maturityprofile' className={location.pathname === '/reports/viewreports/maturityprofile' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Maturity Profile
+            </Link>
+            <Link to='/reports/viewreports/portfoliomgt' className={location.pathname === '/reports/viewreports/portfoliomgt' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Portfolio Management
             </Link>
             <Link to='/reports/viewreports/loansreport' className={location.pathname === '/reports/viewreports/loansreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Loans Report

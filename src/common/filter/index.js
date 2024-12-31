@@ -1,4 +1,4 @@
-// import CustomCheckbox from './CustomCheckbox';
+import CustomCheckBoxfilter from './CustomCheckBoxfilter';
 import CustomInputFilter from './CustomInputFilter';
 import CustomSelectFilter from './CustomSelectFilter';
 // import CustomTextField from './CustomTextField';
@@ -19,7 +19,7 @@ import CustomMultiSelectFilter from './CustomMultiSelectFilter';
 export {
     // CustomRadio,
     // DeleteDialog,
-    // CustomCheckbox,
+    CustomCheckBoxfilter,
     CustomInputFilter,
     CustomSelectFilter,
     // CustomTextField,

@@ -16,7 +16,7 @@ import { statusValues } from './data';
 import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
-const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) => {
+const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDetails}) => {
   const initialValues = {
     branch_ids: [],
     status: [],
@@ -24,16 +24,24 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
     page_size: 10,
     min_loan_added_on: '',
     max_loan_added_on: '',
+    min_approval_date: '',
+    max_approval_date: '',
+    min_application_date: '',
+    max_application_date: '',
     min_principal_amount_due: '',
     max_principal_amount_due: '',
     min_total_amount_paid: '',
     max_total_amount_paid: '',
     client: '',
+    loan_num: '',
     group: '',
     loan_product_id: '',
     client_type: '',
+    unit_id: '',
+    sector: '',
     order_by: '-application_date',
-    currency_id: ''
+    currency_id: '',
+    gender: ''
   };
 
   const {currencies} = useCurrencies();
@@ -94,6 +102,30 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
                     </div>
                     <div style={{width: '49%'}}>
                       <CustomInputFilter label='Max Amount Paid' name='max_total_amount_paid' type='number'/>
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{display:'flex', justifyContent:'space-between'}}>
+                  <div style={{display:'flex', justifyContent:'space-between', width:'32%'}}>
+                    <div style={{width: '49%'}}>
+                      <CustomDatePickerFilter label='Min Approval Date' name='min_approval_date' setFieldValue={setFieldValue}/>
+                    </div>
+                    <div style={{width: '49%'}}>
+                      <CustomDatePickerFilter label='Max Approval Date' name='max_approval_date' setFieldValue={setFieldValue}/>
+                    </div>
+                  </div>
+                  <div style={{display:'flex', justifyContent:'space-between', width:'32%'}}>
+                    <div style={{width: '49%'}}>
+                      <CustomDatePickerFilter label='Min Application Date' name='min_application_date' setFieldValue={setFieldValue}/>
+                    </div>
+                    <div style={{width: '49%'}}>
+                      <CustomDatePickerFilter label='Max Application Date' name='max_application_date' setFieldValue={setFieldValue}/>
+                    </div>
+                  </div>
+                  <div style={{display:'flex', justifyContent:'space-between', width:'32%'}}>
+                    <div style={{width: '49%'}}>
+                      <CustomInputFilter label='Loan Number' name='loan_num' type='text'/>
                     </div>
                   </div>
                 </div>
@@ -171,13 +203,45 @@ const Filter = ({products, setLoanData, setLoanId, setParams, setLoanDetails}) =
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'85%'}}>
+                  <div style={{width:'60%'}}>
                     <CustomMultiSelectFilter
                       label='Status'
                       name='status'
                       options={statusValues.map(val => ({label: val, value: val}))}
                       setFieldValue={setFieldValue}
                     />
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomSelectFilter label='Gender' name='gender'>
+                      <option value=''>------</option>
+                      <option value='MALE'>Male</option>
+                      <option value='FEMALE'>Female</option>
+                    </CustomSelectFilter>
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomSelectFilter label='Sector' name='sector'>
+                      <option value=''>-----</option>
+                      <option value='CONSUMER'>CONSUMER</option>
+                      <option value='COMMERCIAL - Agriculture'>Agriculture</option>
+                      <option value='COMMERCIAL - Manufacturing'>Manufacturing</option>
+                      <option value='COMMERCIAL - Mining'>Mining</option>
+                      <option value='COMMERCIAL - Housing'>Housing</option>
+                      <option value='COMMERCIAL - Distribution & Services'>Distribution & Services</option>
+                      <option value='COMMERCIAL - Retail'>Retail</option>
+                      <option value='COMMERCIAL - Transport'>Transport</option>
+                      <option value='COMMERCIAL - Health'>Health</option>
+                      <option value='COMMERCIAL - Education'>Education</option>
+                      <option value='COMMERCIAL - Cross Border Traders'>Cross Border Traders</option>
+                      <option value='COMMERCIAL - Construction'>Construction</option>
+                      <option value='COMMERCIAL - Vendors'>Vendors</option>
+                      <option value='OTHER'>OTHER</option>
+                    </CustomSelectFilter>
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomSelectFilter label='Unit' name='unit_id'>
+                      <option value=''>------</option>
+                      {units.map(ut => (<option key={ut.id} value={ut.id}>{ut.name}</option>))}
+                    </CustomSelectFilter>
                   </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>

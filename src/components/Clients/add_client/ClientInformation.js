@@ -8,7 +8,7 @@ import {
 } from '../../../common';
 import { useBranches } from '../../../contexts/BranchesContext';
 
-const ClientInformation = ({clientControls, setFieldValue, staff}) => {
+const ClientInformation = ({clientControls, setFieldValue, staff, units}) => {
   const {branches} = useBranches();
 
   return (
@@ -41,6 +41,16 @@ const ClientInformation = ({clientControls, setFieldValue, staff}) => {
       <CustomSelect label='Branch' name='branch_id' required>
         {branches.map(br => <option key={br.id} value={br.id}>{br.name}</option>)}
       </CustomSelect>
+      {clientControls.use_client_units ? 
+        <CustomSelect label='Unit' name='unit_id' required>
+          <option value=''>------</option>
+          {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+        </CustomSelect>:
+        <CustomSelect label='Unit' name='unit_id'>
+          <option value=''>------</option>
+          {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+        </CustomSelect>
+      }
     </>
   )
 }

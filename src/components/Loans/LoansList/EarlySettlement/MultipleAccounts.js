@@ -7,7 +7,8 @@ import {
   CustomSelect,
   CustomInput,
   ButtonSuccess,
-  ButtonDefault
+  ButtonDefault,
+  CustomCheckbox
 } from '../../../../common';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -38,7 +39,8 @@ function MultipleAccounts({data, loan, setLoan, interestDate, setInterestDate, s
 
   const initialValues = {
     date_of_settlement: interestDate,
-    amount_paid_list: [{'cash_account_id': '', 'amount': '', 'component': ''}]
+    amount_paid_list: [{'cash_account_id': '', 'amount': '', 'component': ''}],
+    send_sms_notification: false,
   };
 
   return (
@@ -48,12 +50,14 @@ function MultipleAccounts({data, loan, setLoan, interestDate, setInterestDate, s
           <NonFieldErrors errors={errors}>
             <div className='create_modal_container'>
               <div>
-                <div>Principal Balance: {loan.principal_amount_due}</div>
-                <div>Fees Balance: {loan.non_deductable_fees}</div>
-                <div>Penalty Balance: {loan.penalty}</div>
-                <div>Interest Balance Until Next Installment {data[1].next_installment_date}: {data[1].interest_until_next_installment}</div>
-                <div>Daily Pro Rata Interest: {data[1].pro_rata_interest}</div>
-                <div>Daily Pro Rata Interest Balance: {data[1].pro_rata_interest_balance}</div>
+                <div style={{display:'grid', rowGap:'0.25rem'}}>
+                  <div>Principal Balance: {loan.principal_amount_due}</div>
+                  <div>Fees Balance: {loan.non_deductable_fees}</div>
+                  <div>Penalty Balance: {loan.penalty}</div>
+                  <div>Interest Balance Until Next Installment {data[1].next_installment_date}: {data[1].interest_until_next_installment}</div>
+                  <div>Daily Pro Rata Interest: {data[1].pro_rata_interest}</div>
+                  <div>Daily Pro Rata Interest Balance: {data[1].pro_rata_interest_balance}</div>
+                </div>
                 <CustomDatePicker
                   label='Early Settlement'
                   name='date_of_settlement'
@@ -75,6 +79,7 @@ function MultipleAccounts({data, loan, setLoan, interestDate, setInterestDate, s
                   />
                 ))}
                 <AddComponent amount_paid_list={values.amount_paid_list} setFieldValue={setFieldValue}/>
+                <CustomCheckbox label='Send SMS notification to client' name='send_sms_notification'/>
               </div>
               <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
             </div>

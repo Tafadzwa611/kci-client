@@ -62,6 +62,7 @@ function Penalties({penalties, penalty, client_name, loanId, setLoan, locked, st
               <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
                 <th className='schedule__table'>Penalty Date</th>
                 <th className='schedule__table'>Reason for Penalty</th>
+                <th className='schedule__table'>Sub Loan</th>
                 <th className='schedule__table'>Amount</th>
                 <th className='schedule__table'>Amount Paid</th>
                 <th className='schedule__table'>Amount Due</th>
@@ -74,6 +75,7 @@ function Penalties({penalties, penalty, client_name, loanId, setLoan, locked, st
                 <tr key={penalty.id}>
                   <td className='schedule__table'>{penalty.cdate_created}</td>
                   <td className='schedule__table'>{penalty.description}</td>
+                  <td className='schedule__table'>{penalty.sub_loan_name}</td>
                   <td className='schedule__table'>{penalty.amount_for_fixed_amount_penalty}</td>
                   <td className='schedule__table'>{penalty.amount_paid}</td>
                   <td className='schedule__table'>{penalty.amount_due}</td>

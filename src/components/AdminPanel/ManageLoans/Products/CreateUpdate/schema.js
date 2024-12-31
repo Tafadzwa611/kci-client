@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 const minAmount = 0;
 const minMsg = 'Minimum allowed value is 0.'
-const minInt = 1;
+const minInt = 0.0000001;
 const minIntMsg = 'Minimum allowed value is 1.';
 
 export const feeSchema = yup.object().shape({
@@ -55,7 +55,7 @@ export const createLoanProductSchema = yup.object().shape({
   client_type: yup.string().oneOf(['Clients', 'Groups', 'Groups (solidarity)'], 'Invalid').required('Required'),
   allowed_branches: yup.array().of(yup.number().integer()),
   fees: yup.array().of(feeSchema),
-  action_on_loan_default: yup.string().oneOf(['Do Nothing', 'Add Penalty', 'Add Interest'], 'Invalid').required('Required'),
+  action_on_loan_default: yup.string().oneOf(['Do Nothing', 'Add Penalty', 'Add Interest', 'Add Fixed Penalty'], 'Invalid').required('Required'),
   apply_late_repayment_penalty_on: yup
     .string()
     .oneOf([

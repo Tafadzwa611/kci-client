@@ -31,9 +31,11 @@ const UpdatePermsForm = ({user, allPerms}) => {
     accounting__generalledgeraccount: 'Ledger Accounts Permissions',
     reports__rightssupport: 'Reports Permissions',
     admin_perms: 'Admin Permissions',
+    users__toplevelperms: 'Module Level Permissions'
   };
 
   const initialValues = {
+    users__toplevelperms: user.perms.users__toplevelperms ? user.perms.users__toplevelperms.map(perm => ({value: perm.id, label: perm.name})) : [],
     clients__client: user.perms.clients__client ? user.perms.clients__client.map(perm => ({value: perm.id, label: perm.name})) : [],
     clients__group: user.perms.clients__group ? user.perms.clients__group.map(perm => ({value: perm.id, label: perm.name})) : [],
     loans__loan: user.perms.loans__loan ? user.perms.loans__loan.map(perm => ({value: perm.id, label: perm.name})) : [],
@@ -70,6 +72,10 @@ const UpdatePermsForm = ({user, allPerms}) => {
       }
     }
   }
+  const newIndex = 0;
+  const oldIndex = 9;
+  const permNamesArray = Object.keys(allPerms);
+  permNamesArray.splice(newIndex, 0, permNamesArray.splice(oldIndex, 1)[0]);
 
   return (
     <>
@@ -85,7 +91,7 @@ const UpdatePermsForm = ({user, allPerms}) => {
               <div className='divider divider-info'>
                 <span>Role Information</span>
               </div>
-              {Object.keys(allPerms).map(key => {
+              {permNamesArray.map(key => {
                 return (
                   <CustomMultiSelect
                     key={key}

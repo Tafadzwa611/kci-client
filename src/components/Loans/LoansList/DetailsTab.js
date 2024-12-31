@@ -1,14 +1,29 @@
-import React from 'react';
+import React, {useState} from 'react';
+import ChangeAccruedInterest from './ChangeAccruedInterest';
+import ChangeLoanNumber from './ChangeLoanNumber';
+import ChangeLoanNextInstallmentDate from './ChangeLoanNextInstallmentDate';
 
-function DetailsTab({loan}) {
+function DetailsTab({loan, setLoan}) {
+  const [openModal, setOpenModal] = useState(false);
+  const [openLoanNumberModal, setOpenLoanNumberModal] = useState(false);
+  const [openLoanNextInterestDateModal, setOpenLoanNextInterestDateModal] = useState(false);
+
   return (
     <div style={{display:'flex', columnGap:'1%'}}>
+      {openModal && <ChangeAccruedInterest loan={loan} setOpen={setOpenModal} setLoan={setLoan}/>}
+      {openLoanNumberModal && <ChangeLoanNumber loan={loan} setOpen={setOpenLoanNumberModal} setLoan={setLoan}/>}
+      {openLoanNextInterestDateModal && <ChangeLoanNextInstallmentDate loan={loan} setOpen={setOpenLoanNextInterestDateModal} setLoan={setLoan}/>}
       <div style={{width:'100%'}}>
         <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom: '2rem'}}>
           <div style={{width:'48%'}}>
             <ul style={{paddingRight:'1rem'}}>
               <li style={{marginBottom: '1rem'}}><b>General</b></li>
+              <li style={{marginBottom: '0.25rem', display:'flex', columnGap:'5px'}}>
+                Loan Number: {loan.loan_id} 
+                <a style={{cursor: 'pointer'}} onClick={() => setOpenLoanNumberModal(true)}><small>Change</small></a>
+              </li>
               <li style={{marginBottom: '0.25rem'}}>Assigned to Branch: {loan.branch}</li>
+              <li style={{marginBottom: '0.25rem'}}>Assigned to Unit: {loan.unit ? loan.unit : 'Not provided'}</li>
               <li style={{marginBottom: '0.25rem'}}>Assigned to Loan Officer: {loan.loan_officer_name}</li>
               <li style={{marginBottom: '0.25rem'}}>Loan Created By: {loan.loan_created_by}</li>
               <li style={{marginBottom: '0.25rem'}}>Loan Approved By: {loan.loan_approved_by}</li>
@@ -18,7 +33,12 @@ function DetailsTab({loan}) {
               <li style={{marginBottom: '0.25rem'}}>Disbursement Date: {loan.db_date}</li>
               <li style={{marginBottom: '0.25rem'}}>Approval Date: {loan.approv_date}</li>
               <li style={{marginBottom: '0.25rem'}}>First Repayment Date: {loan.first_payment_date}</li>
+              <li style={{marginBottom: '0.25rem'}}>Entry Date: {loan.date_logged}</li>
+              {loan.es_date && <li style={{marginBottom: '0.25rem'}}>Early Settlement Date: {loan.es_date}</li>}
               <li style={{marginBottom: '0.25rem'}}>Maturity Date: {loan.mat_date}</li>
+              {loan.clearance_date && (
+                <li style={{marginBottom: '0.25rem'}}>Loan Cleared On: {loan.clearance_date}</li>
+              )}
               <li style={{marginBottom: '0.25rem'}}>Product: {loan.product_name}</li>
               <li style={{marginBottom: '0.25rem'}}>Product Type: {loan.product_type}</li>
               <li style={{marginBottom: '0.25rem'}}>Interest Application: {loan.interest_application}</li>
@@ -29,7 +49,10 @@ function DetailsTab({loan}) {
               <li style={{marginBottom: '0.25rem'}}>Reason For Loan: {loan.reason_for_borrowing}</li>
               <li style={{marginBottom: '0.25rem'}}>Fund Account Name: {loan.fund_account_name}</li>
               <li style={{marginBottom: '0.25rem'}}>Action On Default: {loan.action_on_loan_default}</li>
-              {loan.action_on_loan_default !== 'Do Nothing' &&
+              {loan.action_on_loan_default === 'Add Fixed Penalty' && (
+                <li style={{marginBottom: '0.25rem'}}>Penalty Amount: {loan.currency_name} {loan.fixed_penalty_amount}</li>
+              )}
+              {loan.action_on_loan_default === 'Add Penalty' &&
               <>
                 <li style={{marginBottom: '0.25rem'}}>Penalty Tolerance Period In Days: {loan.grace_period} {loan.grace_period == 1 ? 'Day' : 'Days'}</li>
                 <li style={{marginBottom: '0.25rem'}}>Penalty Rate: {loan.late_repayment_penalty_percentage}%{loan.penalty_charged_per}</li>
@@ -52,6 +75,10 @@ function DetailsTab({loan}) {
               {loan.product_type === 'Dynamic Term Loan' && (
                 <>
                   <li style={{marginTop: '1rem', marginBottom: '0.5rem'}}><b>Dynamic Term Interest Settings</b></li>
+                  <li style={{marginBottom: '0.25rem', display:'flex', columnGap:'5px'}}>
+                    Next Interest Date: {loan.next_interest_date}
+                    <a style={{cursor: 'pointer'}} onClick={() => setOpenLoanNextInterestDateModal(true)}><small>Change</small></a>
+                  </li>
                   <li style={{marginBottom: '0.25rem'}}>Interest Applied On: {loan.dynamic_interest_applied_on}</li>
                   <li style={{marginBottom: '0.25rem'}}>Add Interest After Maturity: {loan.add_interest_after_maturity ? 'Yes' : 'No'}</li>
                   {loan.add_interest_after_maturity && (
@@ -110,7 +137,7 @@ function DetailsTab({loan}) {
                 </> :
                 `${loan.currency_name} ${loan.non_deductable_fees_reference}`}
               </li>
-              <li style={{marginBottom: '1rem'}}>
+              <li style={{marginBottom: '0.25rem'}}>
                 Total Penalty: {loan.penalty_reference_settlement && loan.penalty_reference_settlement != loan.penalty_reference ?
                 <>
                   <del>{`${loan.currency_name} ${loan.penalty_reference}`}</del>
@@ -118,22 +145,31 @@ function DetailsTab({loan}) {
                 </> :
                 `${loan.currency_name} ${loan.penalty_reference}`}
               </li>
+              <li style={{marginBottom: '1rem'}}>Total Loan Amount: {loan.currency_name} {loan.total_loan_amount}</li>
 
               <li style={{marginBottom: '0.25rem'}}>Total Principal Balance: {loan.currency_name} {loan.principal_amount_due}</li>
               <li style={{marginBottom: '0.25rem'}}>Total Interest Balance: {loan.currency_name} {loan.interest_amount_due}</li>
               {loan.product_type === 'Dynamic Term Loan' && (
-                <li style={{marginBottom: '0.25rem'}}>
-                  Daily Pro-Rata Interest Balance: {loan.currency_name} {loan.pro_rata_interest_bal}
-                </li>
+                <>
+                  <li style={{marginBottom: '0.25rem'}}>
+                    Daily Pro-Rata Interest Balance: {loan.currency_name} {loan.pro_rata_interest_bal}
+                  </li>
+                  <li style={{marginBottom: '0.25rem'}}>
+                    Daily Accrued But Not Applied Interest: {loan.currency_name} {loan.accrued_daily_interest} 
+                    <a style={{cursor: 'pointer'}} onClick={() => setOpenModal(true)}><small>Change</small></a>
+                  </li>
+                </>
               )}
               <li style={{marginBottom: '0.25rem'}}>Total Fees Balance: {loan.currency_name} {loan.non_deductable_fees}</li>
-              <li style={{marginBottom: '1rem'}}>Total Penalty Balance: {loan.currency_name} {loan.penalty}</li>
+              <li style={{marginBottom: '0.25rem'}}>Total Penalty Balance: {loan.currency_name} {loan.penalty}</li>
+              <li style={{marginBottom: '1rem'}}>Total Balance: {loan.currency_name} {loan.total_balance}</li>
 
               <li style={{marginBottom: '0.25rem'}}>Total Principal Paid: {loan.currency_name} {loan.principal_amount_paid}</li>
               <li style={{marginBottom: '0.25rem'}}>Total Interest Paid: {loan.currency_name} {loan.interest_amount_paid}</li>
               <li style={{marginBottom: '0.25rem'}}>Total Fees Paid: {loan.currency_name} {loan.fees_amount_paid}</li>
               <li style={{marginBottom: '0.25rem'}}>Total Penalty Paid: {loan.currency_name} {loan.penalty_amount_paid}</li>
-              <li style={{marginBottom: '1rem'}}>Amount To Be Refunded: {loan.currency_name} {loan.money_to_be_refunded}</li>
+              <li style={{marginBottom: '0.25rem'}}>Amount To Be Refunded: {loan.currency_name} {loan.money_to_be_refunded}</li>
+              <li style={{marginBottom: '1rem'}}>Total Amount Paid: {loan.currency_name} {loan.total_amount_paid}</li>
             </ul>
           </div>
         </div>

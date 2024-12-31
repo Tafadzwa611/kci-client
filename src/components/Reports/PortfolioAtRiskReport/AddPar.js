@@ -16,7 +16,7 @@ import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
 const AddPar = ({open, setOpen, setPars}) => {
-  const initialValues = {branch_ids: [], currency_id: '', lower_limit: '', upper_limit: '', client_type: '', group_type: ''};
+  const initialValues = {branch_ids: [], currency_id: '', lower_limit: '', upper_limit: '', client_type: '', group_type: '', reason: '', unit_id: ''};
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
@@ -25,7 +25,17 @@ const AddPar = ({open, setOpen, setPars}) => {
       const data = removeEmptyValues(values);
       const params = getParams(data);
       const response = await axios.get('/reportsapi/par-report/', {params: params});
-      const par = {...response.data, selectedBIds: values.branch_ids, currency_id: values.currency_id, lower_limit: values.lower_limit, upper_limit: values.upper_limit, client_type: values.client_type, group_type: values.group_type}
+      const par = {
+        ...response.data,
+        selectedBIds: values.branch_ids,
+        currency_id: values.currency_id,
+        lower_limit: values.lower_limit,
+        upper_limit: values.upper_limit,
+        client_type: values.client_type,
+        group_type: values.group_type,
+        reason: values.reason,
+        unit_id: values.unit_id
+      };
       setPars(curr => [...curr, par]);
       setOpen(false);
     } catch (error) {
@@ -41,7 +51,7 @@ const AddPar = ({open, setOpen, setPars}) => {
 
   return (
     <Modal open={open} setOpen={setOpen} title={'Add Par'}>
-      <Fetcher urls={['/clientsapi/client_types/', '/clientsapi/group_types/']}>
+      <Fetcher urls={['/clientsapi/client_types/', '/clientsapi/group_types/', '/usersapi/list_units/']}>
         {({data}) => (
           <Formik initialValues={initialValues} validationSchema={addSchema} onSubmit={onSubmit}>
             {({ isSubmitting, setFieldValue, errors }) => (
@@ -69,6 +79,16 @@ const AddPar = ({open, setOpen, setPars}) => {
                       <CustomSelectFilter label='Group Type' name='group_type'>
                         <option value=''>------</option>
                         {data[1].map(grouptype => <option key={grouptype.id} value={grouptype.name}>{grouptype.name}</option>)}
+                      </CustomSelectFilter>
+                      <CustomSelectFilter label='Reason For Borrowing' name='reason'>
+                        <option value=''>------</option>
+                        <option value='CONSUMER'>CONSUMER</option>
+                        <option value='COMMERCIAL'>COMMERCIAL</option>
+                        <option value='OTHER'>OTHER</option>
+                      </CustomSelectFilter>
+                      <CustomSelectFilter label='Unit' name='unit_id'>
+                        <option value=''>------</option>
+                        {data[2].map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
                       </CustomSelectFilter>
                     </div>
                     <div style={{display:'flex', justifyContent:'flex-end'}}>

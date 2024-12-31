@@ -46,6 +46,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 <option value='Interest-Free Loan'>Interest-Free Loan</option>
               </CustomSelect>
               <CustomCheckbox label='Is Active' name='is_active'/>
+              <CustomCheckbox label='Calculate Using Installment' name='calculate_using_installment'/>
               <div className='divider divider-info'>
                 <span>Principal Settings</span>
               </div>
@@ -53,8 +54,8 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 <option value=''>------</option>
                 {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
               </CustomSelect>
-              <CustomInput label='Minimum Principal Amount' name='minimum_principal_amount' type='number' required/>
-              <CustomInput label='Maximum Principal Amount' name='maximum_principal_amount' type='number' required/>
+              <CustomInput label='Minimum Principal Amount' name='minimum_principal_amount' step='0.00001' type='number' required/>
+              <CustomInput label='Maximum Principal Amount' name='maximum_principal_amount' step='0.00001' type='number' required/>
               <div className='divider divider-info'>
                 <span>Interest Settings</span>
               </div>
@@ -71,8 +72,8 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 <option value='/Month'>Per Month</option>
                 <option value='/Year'>Per Year</option>
               </CustomSelect>
-              <CustomInput label='Minimum Loan Interest' name='minimum_interest_rate' min='0' type='number' required/>
-              <CustomInput label='Maximum Loan Interest' name='maximum_interest_rate' min='0' type='number' required/>
+              <CustomInput label='Minimum Loan Interest' name='minimum_interest_rate' min='0' step='0.00001' type='number' required/>
+              <CustomInput label='Maximum Loan Interest' name='maximum_interest_rate' min='0' step='0.00001' type='number' required/>
               {values.product_type === 'Dynamic Term Loan' && (
                 <>
                   <CustomSelect label='Apply Dynamic Interest On' name='dynamic_interest_applied_on' required>
@@ -210,6 +211,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
               <CustomSelect label='Action On Default' name='action_on_loan_default'>
                 <option value='Do Nothing'>Do Nothing</option>
                 <option value='Add Penalty'>Add Penalty</option>
+                <option value='Add Fixed Penalty'>Add Fixed Penalty</option>
                 <option value='Add Interest'>Add Interest Fees</option>
               </CustomSelect>
               {values.action_on_loan_default === 'Add Penalty' &&
@@ -245,6 +247,15 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                   <CustomCheckbox label='Is recurring' name='is_default_interest_recurring'/>
                   <CustomCheckbox label='Add On Last Installment Only' name='add_on_last_installment_only'/>
                 </>}
+              {values.action_on_loan_default === 'Add Fixed Penalty' &&
+                <>
+                  <CustomInput label='Fixed Penalty Amount' name='fixed_penalty_amount' type='number' required/>
+                  <CustomSelect label='Penalty Rate Interval' name='penalty_charged_per' required>
+                    <option value=''>------</option>
+                    <option value='/Day'>Per Day</option>
+                  </CustomSelect>
+                </>
+              }
               <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
               <div style={{display:'flex', justifyContent: 'flex-end'}}> 
               <SubmitButton isSubmitting={isSubmitting}/>

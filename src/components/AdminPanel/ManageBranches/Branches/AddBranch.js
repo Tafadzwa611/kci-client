@@ -9,12 +9,20 @@ import {
   CustomDatePicker,
   Fetcher,
   SubmitButton,
-  CustomMultiSelect
+  CustomMultiSelect,
+  CustomCheckbox
 } from '../../../../common';
 import { useNavigate } from 'react-router-dom';
 
 function AddBranch() {
-  const initialValues = {name: '', geographical_location: '', branch_code: '', date_of_opening: '', loan_products: []};
+  const initialValues = {
+    name: '',
+    geographical_location: '',
+    branch_code: '',
+    date_of_opening: '',
+    is_rural: false,
+    loan_products: []
+  };
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
@@ -61,6 +69,7 @@ function AddBranch() {
                       name='loan_products'
                       options={data[0].map(loanProduct => ({value: loanProduct.id, label: loanProduct.name}))}
                     />
+                    <CustomCheckbox label='Is Rural' name='is_rural'/>
                     <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
                     <div style={{display:'flex', justifyContent: 'flex-end'}}> 
                       <SubmitButton isSubmitting={isSubmitting}/>

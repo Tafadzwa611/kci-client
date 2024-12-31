@@ -8,19 +8,12 @@ import 'react-medium-image-zoom/dist/styles.css';
 const thumbsContainer = {
   display: 'flex',
   flexDirection: 'row',
-  flexWrap: 'wrap',
-  marginTop: 16
 };
 
 const thumb = {
   display: 'inline-flex',
-  borderRadius: 2,
-  border: '1px solid #eaeaea',
-  marginBottom: 8,
-  marginRight: 8,
   width: 100,
-  height: 100,
-  padding: 4,
+  height: 80,
   boxSizing: 'border-box'
 };
 
@@ -31,6 +24,8 @@ const thumbInner = {
 };
 
 const PLACEHOLDER_PROFILE_LINK = 'https://cbmstaticfiles.sfo2.cdn.digitaloceanspaces.com/lenda-frontend-files/profile.png';
+// const PLACEHOLDER_PROFILE_LINK = 'https://cbmstaticfiles.sfo2.cdn.digitaloceanspaces.com/profile_placeholder/profile.png';
+
 
 function Profile({client, setClient}) {
   const [fileId, setFileId] = useState(null);
@@ -134,23 +129,50 @@ function Profile({client, setClient}) {
     }
   }
 
+  const statusClasses = {
+    'Active': 'badge badge-success',
+    'Blacklisted': 'badge badge-dark',
+    'Processing': 'badge badge-info-lighter',
+    'Pending Approval': 'badge badge-info-light',
+    'Inactive': 'badge badge-info',
+    'Left': 'badge badge-semi-dark',
+    'Rejected': 'badge badge-danger',
+  }
+
   return (
     <section>
-      <div {...getRootProps({className: ''})}>
-        <input {...getInputProps()} />
-        <p>Add</p>
-      </div>
-      {fileId && <button onClick={deleteFile}>Delete</button>}
-      {progress && <div>{progress}%</div>}
-      <aside style={thumbsContainer}>
-        <div style={thumb}>
-          <div style={thumbInner}>
-            <ControlledZoom isZoomed={isZoomed} onZoomChange={handleZoomChange}>
-              <img id='output' width='100'/>
-            </ControlledZoom>
+      <div style={{display:'flex', columnGap:'10px', alignItems:'start'}}>
+
+        <div>
+          <aside style={thumbsContainer}>
+            <div style={thumb}>
+              <div style={thumbInner}>
+                <ControlledZoom isZoomed={isZoomed} onZoomChange={handleZoomChange}>
+                  <img id='output' width='100' height='110'/>
+                </ControlledZoom>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <div style={{display:'flex', flexDirection:'column'}}>
+          <div>
+            <span style={{marginRight:'5px'}}><b>{client.first_name} {client.last_name}</b></span> /
+            <span style={{marginLeft:'5px'}} className={statusClasses[client.status]}>{client.status}</span>
+          </div>
+          <div style={{display:'flex', columnGap:'5px', paddingTop:'10px'}}>
+            <div {...getRootProps({className: ''})}>
+              <input {...getInputProps()} />
+              <p className='badge badge-default'>Add</p>
+            </div>
+            <div>
+              {fileId && <button onClick={deleteFile} className='badge badge-default'>Delete</button>}
+              {progress && <div>{progress}%</div>}
+            </div>
           </div>
         </div>
-      </aside>
+
+      </div>
     </section>
   )
 }

@@ -40,12 +40,14 @@ function FullClientDetails() {
   const urls = [
     `/clientsapi/get_client/${params.clientId}/`,
     '/clientsapi/client_controls/',
-    '/usersapi/staff/?loan_officers_only=1'
+    '/usersapi/staff/?loan_officers_only=1',
+    '/usersapi/staff_toplevel_perms/',
+    '/usersapi/list_units/?active_only=1'
   ];
 
   return (
     <Fetcher urls={urls}>
-      {({data}) => <Client clientData={data[0]} clientControls={data[1]} staff={data[2]}/>}
+      {({data}) => <Client clientData={data[0]} clientControls={data[1]} staff={data[2]} staffTopLevelPerm={data[3]} units={data[4]}/>}
     </Fetcher>
   )
 }

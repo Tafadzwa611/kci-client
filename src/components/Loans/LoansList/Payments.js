@@ -67,6 +67,7 @@ function Payments({
                       <th className='schedule__table'>Date_Recorded</th>
                       <th className='schedule__table'>Collection_Date</th>
                       <th className='schedule__table'>Collected_by</th>
+                      <th className='schedule__table'>Sub_Loan</th>
                       <th className='schedule__table'>Principal Paid</th>
                       <th className='schedule__table'>Interest Paid</th>
                       <th className='schedule__table'>Penalty Paid</th>
@@ -101,6 +102,7 @@ function Payments({
                           </td>
                           <td className='schedule__table'>{payment.cdate_created}</td>
                           <td className='schedule__table'>{payment.user_name}</td>
+                          <td className='schedule__table'>{payment.sub_loan_name}</td>
                           <td className='schedule__table'>{payment.principal_amount_paid}</td>
                           <td className='schedule__table'>{payment.interest_amount_paid}</td>
                           <td className='schedule__table'>{payment.penalty}</td>

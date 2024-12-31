@@ -12,8 +12,8 @@ import { useBranches } from '../../../contexts/BranchesContext';
 import axios from 'axios';
 import { getParams } from '../../../utils/utils';
 
-const Filter = ({setReport}) => {
-  const initialValues = {branch_ids: [], currency_id: '', date_of_report: ''};
+const Filter = ({setReport, units}) => {
+  const initialValues = {branch_ids: [], currency_id: '', date_of_report: '', unit_id: ''};
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
@@ -41,13 +41,19 @@ const Filter = ({setReport}) => {
             <Form>
               <NonFieldErrors errors={errors}>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'49%'}}>
+                  <div className='row-payments-container' style={{width:'32%'}}>
                     <CustomDatePickerFilter label='Date' name='date_of_report' setFieldValue={setFieldValue} required/>
                   </div>
-                  <div className='row-payments-container' style={{width:'49%'}}>
+                  <div className='row-payments-container' style={{width:'32%'}}>
                     <CustomSelectFilter label='Currency' name='currency_id' required>
                       <option value=''>------</option>
                       {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+                    </CustomSelectFilter>
+                  </div>
+                  <div className='row-payments-container' style={{width:'32%'}}>
+                    <CustomSelectFilter label='Unit' name='unit_id'>
+                      <option value=''>------</option>
+                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
                     </CustomSelectFilter>
                   </div>
                 </div>

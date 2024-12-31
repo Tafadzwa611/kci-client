@@ -4,14 +4,15 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { Fetcher } from '../../../common';
 import Pager from './Pager';
 
-function ClientsTable({clientId, setClientId, clientsData, params, setClientsData}) {
+function ClientsTable({clientId, setClientId, clientsData, params, setClientsData, units}) {
   const handleClick = (e) => setClientId(e.target.id);
   const close = () => setClientId(null);
 
   const urls = [
     `/clientsapi/get_client/${clientId}/`,
     '/clientsapi/client_controls/',
-    '/usersapi/staff/?loan_officers_only=1'
+    '/usersapi/staff/?loan_officers_only=1',
+    '/usersapi/staff_toplevel_perms/',
   ];
 
   return (
@@ -22,13 +23,13 @@ function ClientsTable({clientId, setClientId, clientsData, params, setClientsDat
           <div className='table-responsive journal__table-container-journals'>
             <MiniTable clients={clientsData.clients} handleClick={handleClick} clientId={clientId}/>
             <Fetcher urls={urls} extra={{close}}>
-              {({data, extra}) => <Client clientData={data[0]} clientControls={data[1]} staff={data[2]} close={extra.close}/>}
+              {({data, extra}) => <Client clientData={data[0]} clientControls={data[1]} staff={data[2]} staffTopLevelPerm={data[3]} units={units} close={extra.close}/>}
             </Fetcher>
           </div>
         </div> :
         <div style={{padding: '0', border: 'none'}} className='table-container full__width font-12'>
           <div className='table-responsive full__table'>
-            <MainTable clientsData={clientsData} handleClick={handleClick}/>
+            <MainTable clientsData={clientsData} handleClick={handleClick} />
           </div>
         </div>}
     </>

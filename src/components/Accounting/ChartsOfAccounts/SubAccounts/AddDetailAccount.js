@@ -92,6 +92,7 @@ function AddDetailAccount() {
                     {data[0].map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_code}-{acc.general_ledger_name}-{acc.account_type}</option>)}
                   </CustomSelect>
                   <CustomCheckbox label='Is Cash Account' name='is_cash_account'/>
+                  <CustomCheckbox label='Add in all Branches' name='add_in_all_branches'/>
                   <CustomTextField label='Description' name='description'/>
                   <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
                   <div style={{display:'flex', justifyContent: 'flex-end'}}> 

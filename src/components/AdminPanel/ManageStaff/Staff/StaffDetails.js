@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 function StaffDetails() {
-  const [tab, setTab] = useState('clients__client');
+  const [tab, setTab] = useState('users__toplevelperms');
 
   const params = useParams();
   return (
@@ -64,6 +64,14 @@ function StaffDetails() {
                   </div>
                   {data[0].notification_types.map(notification_type => <div key={notification_type} style={{marginRight:'5px'}}>{notification_type}</div>)}
                 </div>
+                <div>
+                  <div style={{margin:'1rem 0', display:'flex', justifyContent:'space-between'}}>
+                    <div style={{display:'flex', alignItems:'center'}}>
+                      <span style={{marginRight:'5px'}}><b>Unit Access</b></span>
+                    </div>
+                  </div>
+                  {data[0].user_access_units.map(unit => <div key={unit.id} style={{marginRight:'5px'}}>{unit.name}</div>)}
+                </div>
               </div>
             </div>
             <div style={{margin:'1rem 0', display:'flex', justifyContent:'space-between'}}>
@@ -72,6 +80,7 @@ function StaffDetails() {
               </div>
             </div>
             <div className='bloc-tabs'>
+              <button className={tab === 'users__toplevelperms' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('users__toplevelperms')}>Module Level Permissions</button>
               <button className={tab === 'clients__client' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('clients__client')}>Clients</button>
               <button className={tab === 'clients__group' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('clients__group')}>Groups</button>
               <button className={tab === 'loans__loan' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('loans__loan')}>Loans</button>

@@ -18,7 +18,8 @@ export {
   CustomSelectRemote,
   CustomPhoneNumber,
   CustomTimePicker,
-  countryPhoneCodes
+  countryPhoneCodes, 
+  CustomPasswordInput
 } from './forms';
 export {
   DeleteBtn,
@@ -43,5 +44,6 @@ export {
   CustomSelectFilter,
   CustomMultiSelectFilter,
   SubmitButtonFilter,
-  CustomSelectRemoteFilter
+  CustomSelectRemoteFilter,
+  CustomCheckBoxfilter
 } from './filter';

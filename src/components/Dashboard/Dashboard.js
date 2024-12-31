@@ -8,6 +8,7 @@ import ClientNumbers from './ClientNumbers/ClientNumbers';
 import GroupNumbers from './GroupNumbers/GroupNumbers';
 import LoansReleased from './LoansReleased/LoansReleased';
 import LoanCollections from './LoanCollections/LoanCollections';
+import { Fetcher } from '../../common';
 
 export default function Dashboard() {
   useEffect(() => {
@@ -22,23 +23,51 @@ export default function Dashboard() {
   }
 
   const [currencyId, setCurrencyId] = useState(initCurrencyId);
+  const [unitId, setUnitId] = useState('');
   const [branchIds, setBranchIds] = useState(null);
 
+  return (
+    <Fetcher urls={['/usersapi/list_units/']}>
+      {({data}) => (
+        <>
+          <DashboardSections 
+            setCurrencyId={setCurrencyId}
+            currencyId={currencyId}
+            unitId={unitId}
+            setUnitId={setUnitId}
+            branchIds={branchIds}
+            setBranchIds={setBranchIds}
+            units={data[0]}
+          />
+        </>
+      )}
+    </Fetcher>
+  )
+}
+
+const DashboardSections = ({setCurrencyId, currencyId, setBranchIds, setUnitId, branchIds, units, unitId}) => {
   return (
     <div className='font-13'>
       <div style={{padding:'24px', paddingBottom:'0'}}>
         <h5 className='table-heading'>Dashboard</h5>
       </div>
       <div className='card'>
-        <Filter currencyId={currencyId} setCurrencyId={setCurrencyId} setBranchIds={setBranchIds}/>
+        <Filter 
+          currencyId={currencyId} 
+          setCurrencyId={setCurrencyId} 
+          setBranchIds={setBranchIds}
+          setUnitId={setUnitId}
+          units={units}
+          unitId={unitId}
+        />
         {currencyId ?
           <>
-            <LoanBook currencyId={currencyId} branchIds={branchIds}/>
-            <Par currencyId={currencyId} branchIds={branchIds}/>
-            <ClientNumbers branchIds={branchIds}/>
-            <GroupNumbers branchIds={branchIds}/>
-            <LoansReleased currencyId={currencyId} branchIds={branchIds}/>
-            <LoanCollections currencyId={currencyId} branchIds={branchIds}/>
+            <LoanBook currencyId={currencyId} branchIds={branchIds} unitId={unitId}/>
+            <Par currencyId={currencyId} branchIds={branchIds} unitId={unitId}/>
+            <ClientNumbers branchIds={branchIds} unitId={unitId}/>
+            <GroupNumbers branchIds={branchIds} unitId={unitId}/>
+            <LoansReleased currencyId={currencyId} branchIds={branchIds} unitId={unitId}/>
+            <LoanCollections currencyId={currencyId} branchIds={branchIds} unitId={unitId}/>
           </> :
         null}
       </div>
@@ -47,7 +76,7 @@ export default function Dashboard() {
 }
 
 
-const Filter = ({currencyId, setCurrencyId, setBranchIds}) => {
+const Filter = ({currencyId, setCurrencyId, setBranchIds, setUnitId, units, unitId}) => {
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
   const [optionSelected, setOptionSelected] = useState([]);
@@ -64,6 +93,12 @@ const Filter = ({currencyId, setCurrencyId, setBranchIds}) => {
             <select value={currencyId} onChange={evt => setCurrencyId(Number(evt.target.value))} className='custom-select-form select_width' style={{padding:'0.5125rem 0.9rem'}}>
               <option value=''>Select Currency</option>
               {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.shortname}</option>)}
+            </select>
+          </div>
+          <div className='fields-container-select select_container_width'>
+            <select value={unitId} onChange={evt => setUnitId(Number(evt.target.value))} className='custom-select-form select_width' style={{padding:'0.5125rem 0.9rem'}}>
+              <option value=''>Units</option>
+              {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
             </select>
           </div>
           <div className='fields-container-select select_container_width branch'>

@@ -6,6 +6,7 @@ import BatchApproval from '../BatchApproval/BatchApproval';
 import Report from '../BatchApproval/Report';
 import EditLoan from '../AddLoan/EditLoan';
 import Calculator from '../Calculator/Calculator';
+import CollectionHome from '../CollectionSheet/CollectionHome';
 import { Fetcher } from '../../../common';
 import LoanDetails from '../LoansList/LoanDetails';
 import { useParams } from 'react-router-dom';
@@ -31,11 +32,12 @@ const ViewLoans = () => {
         <Route path='approval-report/:reportId' element={<Report />} />
         <Route path='onlineapplications' element={<OnlineApplications />} />
         <Route path='calculator' element={<Calculator />} />
+        <Route path='/collection_sheet/*' element={<CollectionHome />} />
         <Route
           path='editloan/:loanType/:loanId'
           element={
-            <Fetcher urls={['/loansapi/loan_products_list/']}>
-              {({data}) => <EditLoan products={data[0]}/>}
+            <Fetcher urls={['/loansapi/loan_products_list/', '/clientsapi/client_controls/', '/usersapi/list_units/', ]}>
+              {({data}) => <EditLoan products={data[0]} clientControls={data[1]} units={data[2]}/>}
             </Fetcher>
           } 
         />
@@ -55,17 +57,24 @@ function FullLoanDetails() {
 }
 
 const AddLoanComponent = () => {
+  const urls = [
+    '/loansapi/loan_products_list/?allowed_in_user_branch_only=1', 
+    '/loansapi/loan_controls/', 
+    '/usersapi/list_field_sets/?entity_type=LOAN&active=1', 
+    '/usersapi/list_units/',
+    '/clientsapi/client_controls/',
+  ];
   return (
-    <Fetcher urls={['/loansapi/loan_products_list/?allowed_in_user_branch_only=1', '/loansapi/loan_controls/', '/usersapi/list_field_sets/?entity_type=LOAN&active=1']}>
-      {({data}) => <AddLoan products={data[0]} lcontrols={data[1]} customForms={data[2]}/>}
+    <Fetcher urls={urls}>
+        {({data}) => <AddLoan products={data[0]} lcontrols={data[1]} customForms={data[2]} units={data[3]} clientControls={data[4]}/>}
     </Fetcher>
   )
 }
 
 const LoanListComponent = () => {
   return (
-    <Fetcher urls={['/loansapi/loan_products/']}>
-      {({data}) => <LoansList products={data[0].loan_products}/>}
+    <Fetcher urls={['/loansapi/loan_products/', '/usersapi/list_units/']}>
+      {({data}) => <LoansList products={data[0].loan_products} units={data[1]}/>}
     </Fetcher>
   )
 }
@@ -92,6 +101,9 @@ function Layout() {
             </Link>
             <Link to='/loans/viewloans/calculator' id='calculator' className={location.pathname === '/loans/viewloans/calculator' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Loan Calculator
+            </Link>
+            <Link to='/loans/viewloans/collection_sheet' id='calculator' className={location.pathname === '/loans/viewloans/collection_sheet' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Collection Sheet
             </Link>
           </div>
           <div className='tab-content font-12' style={{marginTop:'3rem'}}>

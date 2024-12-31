@@ -59,6 +59,7 @@ const groupFields = [
 
 const loanFields = [
   {name: 'client__name', label: 'Client Name', datatype: 'text'},
+  {name: 'client__gender', label: 'Client Gender', datatype: 'text'},
   {name: 'group__group_name', label: 'Group Name', datatype: 'text'},
   {name: 'loan_id', label: 'Loan ID', datatype: 'text'},
   {name: 'loan_added_on', label: 'Disbursement Date', datatype: 'date'},

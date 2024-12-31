@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 export const statusClasses = {
   'Fully Paid': 'badge badge-success',
   'Early Settlement': 'badge badge-success',
+  'Refinanced': 'badge badge-success',
   'Restructured': 'badge badge-dark',
   'Processing': 'badge badge-info-lighter',
   'Arrears': 'badge badge-danger',
@@ -15,13 +16,13 @@ export const statusClasses = {
   'Written-Off': 'badge badge-dark',
 };
 
-function Loans({client}) {
+function Loans({group}) {
   return (
     <div style={{padding:'1.5rem'}} className='miniLoanDetails-container'>
       <div style={{border:'none'}}>
         <div style={{width:'100%', overflowX:'auto'}}>
           <div className='table__height'>
-            <table className='table' id='clients'>
+            <table className='table' id='groups'>
               <thead>
                 <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
                   <th style={{textAlign:'start'}}>Account Number</th>
@@ -34,7 +35,7 @@ function Loans({client}) {
                 </tr>
               </thead>
               <tbody>
-                {client.loans.map(loan => {
+                {group.loans.map(loan => {
                   return (
                     <tr key={loan.id}>
                       <td>

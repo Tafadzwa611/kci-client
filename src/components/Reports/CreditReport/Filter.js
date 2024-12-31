@@ -12,7 +12,7 @@ import { useBranches } from '../../../contexts/BranchesContext';
 import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
-const Filter = ({setReport, setParams}) => {
+const Filter = ({setReport, setParams, units}) => {
   const initialValues = {
     branch_ids: [],
     page_num: 1,
@@ -22,7 +22,8 @@ const Filter = ({setReport, setParams}) => {
     status: 'running',
     page_size: '500',
     min_db_date: '',
-    max_db_date: ''
+    max_db_date: '',
+    unit_id: ''
   };
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
@@ -95,7 +96,7 @@ const Filter = ({setReport, setParams}) => {
                   </div>
                 </div>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div style={{width:'75%'}}>
+                  <div style={{width:'73%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
@@ -104,11 +105,17 @@ const Filter = ({setReport, setParams}) => {
                       required
                     />
                   </div>
-                  <div className='row-payments-container' style={{width:'16%'}}>
+                  <div className='row-payments-container' style={{width:'10%'}}>
                     <CustomSelectFilter label='Status' name='status' required>
                       <option value='running'>Running</option>
                       <option value='not_running'>Not Running</option>
                       <option value='all'>Both</option>
+                    </CustomSelectFilter>
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomSelectFilter label='Unit' name='unit_id'>
+                      <option value=''>------</option>
+                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
                     </CustomSelectFilter>
                   </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>

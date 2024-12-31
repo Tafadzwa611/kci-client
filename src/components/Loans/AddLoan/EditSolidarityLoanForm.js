@@ -7,7 +7,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
-function EditSolidarityLoanForm({loan, loanProducts}) {
+function EditSolidarityLoanForm({loan, loanProducts, clientControls, units}) {
   const navigate = useNavigate();
   const [product, setProduct] = useState(loanProducts.find(prod => prod.id == loan.loan_product_id));
   const products = loanProducts.filter(prod => prod.client_type === 'Groups (solidarity)' && prod.is_active && prod.id !== product.id);
@@ -25,6 +25,7 @@ function EditSolidarityLoanForm({loan, loanProducts}) {
     files: [],
     principal_distribution: loan.sub_loans_list.map(sub_loan => ({...sub_loan, principal: sub_loan.org_principal})),
     group_id: loan.group_id,
+    unit_id: loan.unit_id,
     group: {value: loan.group_id, label: `${loan.group_name} - ${loan.group_branch}`},
     guarantor_id: loan.guarantor_id,
     guarantor: loan.guarantor_id ? {value: loan.guarantor_id, label: `${loan.guarantor}`} : '',
@@ -86,6 +87,8 @@ function EditSolidarityLoanForm({loan, loanProducts}) {
               isSubmitting={isSubmitting}
               setFieldValue={setFieldValue}
               values={values}
+              clientControls={clientControls}
+              units={units}
             />
           </NonFieldErrors>
         </Form>

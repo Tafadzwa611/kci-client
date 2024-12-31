@@ -43,8 +43,8 @@ function ApplyInterest({setOpen, setLoan, loan}) {
               <div className='create_modal_container'>
                 <div>
                   <CustomInput label='Interest Amount' name='interest_amount' type='number' required/>
-                  <CustomDatePicker label='Interest Date' name='interest_date' setFieldValue={setFieldValue} required/>
-                  <CustomDatePicker label='Interest Due Date' name='interest_due_date' setFieldValue={setFieldValue} required/>
+                  <CustomDatePicker label='Interest Date' name='interest_date' setFieldValue={setFieldValue} allowKeyDown required/>
+                  <CustomDatePicker label='Interest Due Date' name='interest_due_date' setFieldValue={setFieldValue} allowKeyDown required/>
                 </div>
                 <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
               </div>

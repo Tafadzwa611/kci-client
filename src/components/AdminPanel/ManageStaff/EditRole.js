@@ -37,10 +37,12 @@ const EditRoleForm = ({role, allPerms}) => {
     accounting__generalledgeraccount: 'Ledger Accounts Permissions',
     reports__rightssupport: 'Reports Permissions',
     admin_perms: 'Admin Permissions',
+    users__toplevelperms: 'Module Level Permissions'
   };
 
   const initialValues = {
     role: role.name,
+    users__toplevelperms: role.perms.users__toplevelperms ? role.perms.users__toplevelperms.map(perm => ({value: perm.id, label: perm.name})) : [],
     clients__client: role.perms.clients__client ? role.perms.clients__client.map(perm => ({value: perm.id, label: perm.name})) : [],
     clients__group: role.perms.clients__group ? role.perms.clients__group.map(perm => ({value: perm.id, label: perm.name})) : [],
     loans__loan: role.perms.loans__loan ? role.perms.loans__loan.map(perm => ({value: perm.id, label: perm.name})) : [],
@@ -78,6 +80,11 @@ const EditRoleForm = ({role, allPerms}) => {
     }
   }
 
+  const newIndex = 0;
+  const oldIndex = 9;
+  const permNamesArray = Object.keys(allPerms);
+  permNamesArray.splice(newIndex, 0, permNamesArray.splice(oldIndex, 1)[0]);
+
   return (
     <>
       <div style={{marginBottom:'20px'}}>
@@ -93,7 +100,7 @@ const EditRoleForm = ({role, allPerms}) => {
                 <span>Role Information</span>
               </div>
               <CustomInput label='Role' name='role' type='text' required/>
-              {Object.keys(allPerms).map(key => {
+              {permNamesArray.map(key => {
                 return (
                   <CustomMultiSelect
                     key={key}

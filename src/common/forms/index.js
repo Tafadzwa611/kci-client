@@ -1,5 +1,6 @@
 import CustomCheckbox from './CustomCheckbox';
 import CustomInput from './CustomInput';
+import CustomPasswordInput from './CustomPasswordInput';
 import CustomSelect from './CustomSelect';
 import CustomTextField from './CustomTextField';
 import CustomTypeAndAdd from './CustomTypeAndAdd';
@@ -37,5 +38,6 @@ export {
     CustomSelectRemote,
     CustomPhoneNumber,
     CustomTimePicker,
-    countryPhoneCodes
+    countryPhoneCodes,
+    CustomPasswordInput
 };

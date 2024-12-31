@@ -4,19 +4,19 @@ import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 import Loader from '../../Loader/MiniLoader';
 
-function LoansReleased({currencyId, branchIds}) {
+function LoansReleased({currencyId, branchIds, unitId}) {
   const [data, setData] = useState(null);
   const [err, setErr] = useState(false);
   const pageNum = useRef(1);
 
   useEffect(() => {
     getData();
-  }, [currencyId, branchIds]);
+  }, [currencyId, branchIds, unitId]);
 
   const getData = async () => {
     try {
       pageNum.current = 1;
-      const data = removeEmptyValues({currency_id: currencyId, branch_ids: branchIds, page_num: pageNum.current});
+      const data = removeEmptyValues({currency_id: currencyId, branch_ids: branchIds, page_num: pageNum.current, unit_id: unitId});
       const params = getParams(data);
       const response = await axios.get('/dashboardapi/dashboard-loans-released/', {params: params});
       setData(response.data);

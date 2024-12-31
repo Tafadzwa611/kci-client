@@ -78,20 +78,6 @@ function Layout() {
               Manage Branches
             </Link>
             <Link 
-              to='/users/admin/otherincome'
-              id='otherincome' 
-              className={location.pathname === '/users/admin/otherincome' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
-            >
-              Manage Other Income
-            </Link>
-            <Link 
-              to='/users/admin/expensetypes'
-              id='expensetypes' 
-              className={location.pathname === '/users/admin/expensetypes' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
-            >
-              Manage Expenses
-            </Link>
-            <Link 
               to='/users/admin/managefields'
               id='managefields' 
               className={location.pathname === '/users/admin/managefields' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
