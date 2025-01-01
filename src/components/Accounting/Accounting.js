@@ -20,7 +20,7 @@ const ViewAccounting = () => {
   const {loggedInUser} = useLoggedInUser()
 
   useEffect(() => {
-    document.title = 'View Accounts';
+    document.title = 'View Accounting';
   }, []);
 
   return (
@@ -45,7 +45,7 @@ function Layout() {
   return (
     <div className='card'>
       <div className='card-body'>
-        <h5 className='table-heading' style={{marginBottom:'20px'}}>View Reports</h5>
+        <h5 className='table-heading' style={{marginBottom:'20px'}}>View Accounting</h5>
         <>
           <div className='bloc-tabs'>
             <Link to='/accounting/viewaccounting' className={location.pathname === '/accounting/viewaccounting' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
