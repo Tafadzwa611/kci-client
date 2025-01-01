@@ -64,6 +64,7 @@ function Payments({
                       <th className='schedule__table'>Collection_Date</th>
                     </tr>:
                     <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
+                      <th className='schedule__table'>Payment_ID</th>
                       <th className='schedule__table'>Date_Recorded</th>
                       <th className='schedule__table'>Collection_Date</th>
                       <th className='schedule__table'>Collected_by</th>
@@ -95,6 +96,7 @@ function Payments({
                           <td className='schedule__table'>{payment.cdate_created}</td>
                         </>:
                         <>
+                          <td className='schedule__table'>{payment.id}</td>
                           <td className='schedule__table'>
                             <span onClick={handleClick} id={payment.id} style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>
                               {payment.date_recorded}
@@ -138,6 +140,7 @@ function Payments({
                 <div style={{display:'flex', width:'100%', justifyContent:'space-between'}}>
                   <div style={{width:"32%"}}>
                     <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
+                      <li>Payment ID: {selectedPayment.id}</li>
                       <li>Date Recorded: {selectedPayment.date_recorded}</li>
                       <li>Collection Date: {selectedPayment.cdate_created}</li>
                       <li>Collected by: {selectedPayment.user_name}</li>

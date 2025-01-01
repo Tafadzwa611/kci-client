@@ -125,7 +125,7 @@ const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDeta
                   </div>
                   <div style={{display:'flex', justifyContent:'space-between', width:'32%'}}>
                     <div style={{width: '49%'}}>
-                      <CustomInputFilter label='Loan Number' name='loan_num' type='number'/>
+                      <CustomInputFilter label='Loan Number' name='loan_num' type='text'/>
                     </div>
                     <div style={{width:'49%'}}>
                       <CustomSelectFilter label='Gender' name='gender'>

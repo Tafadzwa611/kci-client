@@ -8,7 +8,8 @@ import {
   CustomInput,
   Fetcher,
   SubmitButton,
-  CustomMultiSelect
+  CustomMultiSelect,
+  CustomCheckbox
 } from '../../../../common';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -29,6 +30,7 @@ function EditBranchForm({loanProducts, branch}) {
     geographical_location: branch.geographical_location || '',
     branch_code: branch.branch_code,
     date_of_opening: branch.date_of_opening,
+    is_rural: branch.is_rural,
     loan_products: branch.products.map(lp => ({value: lp.id, label: lp.name}))
   };
 
@@ -76,6 +78,7 @@ function EditBranchForm({loanProducts, branch}) {
                 name='loan_products'
                 options={loanProducts.map(loanProduct => ({value: loanProduct.id, label: loanProduct.name}))}
               />
+              <CustomCheckbox label='Is Rural' name='is_rural'/>
               <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
               <div style={{display:'flex', justifyContent: 'flex-end'}}> 
                 <SubmitButton isSubmitting={isSubmitting}/>

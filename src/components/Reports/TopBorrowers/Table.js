@@ -25,6 +25,7 @@ const Table = ({report, currency}) => {
                 <th className='text-right'>Branch Client</th>
                 <th className='text-right'>Total Principal Borrowed ({currency})</th>
                 <th className='text-right'>Oustanding Principal ({currency})</th>
+                <th className='text-right'>Maturity Date</th>
               </tr>
             </thead>
             <tbody>
@@ -36,6 +37,7 @@ const Table = ({report, currency}) => {
                     <td style={{textAlign: 'right'}}>{client.branch}</td>
                     <td style={{textAlign: 'right'}}>{client.sum_principal}</td>
                     <td style={{textAlign: 'right'}}>{client.sum_principal_amount_due}</td>
+                    <td style={{textAlign: 'right'}}>{client.maturity_date}</td>
                   </tr>
                   {showLoans ? client.loans.map((loan, loanIdx) => {
                     return (
@@ -45,6 +47,7 @@ const Table = ({report, currency}) => {
                         <td style={{textAlign: 'right'}}>{loan.loan_id} <small className={statusClasses[loan.status]} style={{margin: '3px'}}>{loan.status}</small></td>
                         <td style={{textAlign: 'right'}}>{loan.principal}</td>
                         <td style={{textAlign: 'right'}}>{loan.principal_amount_due}</td>
+                        <td style={{textAlign: 'right'}}>{loan.maturity_date}</td>
                       </tr>
                     )
                   }) : null}
