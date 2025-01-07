@@ -128,22 +128,26 @@ function GeneralProductInfo({product}) {
             </ul>
           </div>
         </div>
-      </div>
-      {/* <div style={{width:"25%"}}>
-        <div className='fees-container'>
-          <li style={{marginBottom: '1rem'}}><b>Loan Product Fees</b></li>
-          {product.fees.length > 0 ? product.fees.map((fee, idx) => 
-            <ul key={idx} style={{marginBottom: '1rem'}}>
-              <li><b>Fee Name: {fee.name}</b></li>
-              <li className='fees-item'>Fee Type: {fee.fee_type}</li>
-              <li className='fees-item'>Is Mandatory: {fee.is_mandatory ? 'Yes' : 'No'}</li>
-              <li className='fees-item'>Fee Payment: {fee.fee_calculation}</li>
-              <li className='fees-item'>Value: {fee.value}</li>
-            </ul> 
-          ):
-          <li className='fees-item'>No fees were setup for this product.</li>}
+        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", marginBottom: '2rem'}}>
+          <div style={{width:"33%"}}>
+            <ul style={{paddingRight:"1rem"}}>
+              <li style={{marginBottom: '1rem'}}><b>Auto Write-Off Settings</b></li>
+              {product.allow_auto_write_off ? (
+                <>
+                  <li>
+                    Auto Write-Off Status: <span className="badge badge-success">Active</span>
+                  </li>
+                  <li>Auto Write-Off Grace Period In Days: {product.auto_write_off_grace_period} days</li>
+                </>
+              ): (
+                <li>
+                  Auto Write-Off Status: <span className="badge badge-danger">Inactive</span>
+                </li>
+              )}
+            </ul>
+          </div>
         </div>
-      </div> */}
+      </div>
     </div>
   )
 }

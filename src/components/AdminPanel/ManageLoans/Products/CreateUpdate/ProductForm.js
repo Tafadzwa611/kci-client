@@ -247,7 +247,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                   <CustomCheckbox label='Is recurring' name='is_default_interest_recurring'/>
                   <CustomCheckbox label='Add On Last Installment Only' name='add_on_last_installment_only'/>
                 </>}
-              {values.action_on_loan_default === 'Add Fixed Penalty' &&
+              {values.action_on_loan_default === 'Add Fixed Penalty' && (
                 <>
                   <CustomInput label='Fixed Penalty Amount' name='fixed_penalty_amount' type='number' required/>
                   <CustomSelect label='Penalty Rate Interval' name='penalty_charged_per' required>
@@ -255,7 +255,16 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                     <option value='/Day'>Per Day</option>
                   </CustomSelect>
                 </>
-              }
+              )}
+              <CustomCheckbox label='Enable Auto Write-Off' name='allow_auto_write_off'/>
+              {values.allow_auto_write_off && (
+                <CustomInput
+                  label='Auto Write-Off Grace Period In Days'
+                  name='auto_write_off_grace_period'
+                  type='number'
+                  required
+                />
+              )}
               <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
               <div style={{display:'flex', justifyContent: 'flex-end'}}> 
               <SubmitButton isSubmitting={isSubmitting}/>

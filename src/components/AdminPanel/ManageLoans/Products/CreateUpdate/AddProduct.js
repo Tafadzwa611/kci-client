@@ -55,7 +55,9 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
     is_default_interest_recurring: '',
     add_on_last_installment_only: '',
     fixed_penalty_amount: '',
-    calculate_using_installment: ''
+    calculate_using_installment: '',
+    allow_auto_write_off: false,
+    auto_write_off_grace_period: 1
   };
 
   const back = () => setView('list');
