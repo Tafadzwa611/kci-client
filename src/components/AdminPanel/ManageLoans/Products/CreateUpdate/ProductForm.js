@@ -74,6 +74,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
               </CustomSelect>
               <CustomInput label='Minimum Loan Interest' name='minimum_interest_rate' min='0' step='0.00001' type='number' required/>
               <CustomInput label='Maximum Loan Interest' name='maximum_interest_rate' min='0' step='0.00001' type='number' required/>
+              <CustomInput label='Default Loan Interest' name='default_interest_rate' min='0' step='0.00001' type='number'/>
               {values.product_type === 'Dynamic Term Loan' && (
                 <>
                   <CustomSelect label='Apply Dynamic Interest On' name='dynamic_interest_applied_on' required>
@@ -119,6 +120,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
               </CustomSelect>
               <CustomInput label='Minimum Number of Repayments' name='minimum_loan_duration' type='number' required/>
               <CustomInput label='Maximum Number of Repayments' name='maximum_loan_duration' type='number' required/>
+              <CustomInput label='Default Number of Repayments' name='default_loan_duration' type='number'/>
               <CustomSelect label='Default Loan Schedule Strategy' name='schedule_strategy' required>
                 <option value=''>------</option>
                 {scheduleStrategies[values.loan_duration_time_unit].map(strategy => <option key={strategy} value={strategy}>{strategy}</option>)}
@@ -149,6 +151,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                   values.repayment_order.fourth
                 ]}
               />
+              <CustomCheckbox label='Apply Overpayment To Future Installments' name='apply_overpayment_to_future_installments'/>
               <div className='divider divider-info'>
                 <span>Product Availability</span>
               </div>

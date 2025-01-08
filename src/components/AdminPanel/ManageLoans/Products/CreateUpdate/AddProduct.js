@@ -57,7 +57,8 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
     fixed_penalty_amount: '',
     calculate_using_installment: '',
     allow_auto_write_off: false,
-    auto_write_off_grace_period: 1
+    auto_write_off_grace_period: 1,
+    apply_overpayment_to_future_installments: true
   };
 
   const back = () => setView('list');
@@ -66,8 +67,7 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
     try {
       const data = removeEmptyValues(values);
       data.default_principal_amount = data.minimum_principal_amount;
-      data.default_interest_rate = data.minimum_interest_rate;
-      data.default_loan_duration = data.minimum_loan_duration;
+      console.log(data);
       data.allowed_branches_ids = values.allowed_branches_ids.map(allowed_branches_id => allowed_branches_id.value);
       data.interest_application = values.product_type === 'Dynamic Term Loan' ? 'On Installment Date' : 'Upfront';
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};

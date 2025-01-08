@@ -1,7 +1,7 @@
 import React from 'react';
 import ProductForm from './ProductForm';
 import {editLoanProductSchema} from './schema';
-import { removeNull,removeEmptyValues } from '../../../../../utils/utils';
+import { removeNull, removeEmptyValues } from '../../../../../utils/utils';
 import { useCurrencies } from '../../../../../contexts/CurrenciesContext';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -12,6 +12,7 @@ function EditProduct({loanFees, fieldSets, initialValues, setView, setSelectedPr
   initialValues.fees = initialValues.fees.map(fee => ({...fee, id: uuidv4()}));
   initialValues.custom_forms = initialValues.custom_forms.map(custom_form => ({...custom_form, id: uuidv4()}));
   removeNull(initialValues);
+  console.log(initialValues);
 
   const onSubmit = async (values, actions) => {
     try {

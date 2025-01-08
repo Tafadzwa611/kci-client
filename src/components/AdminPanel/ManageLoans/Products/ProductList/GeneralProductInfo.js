@@ -44,6 +44,9 @@ function GeneralProductInfo({product}) {
               <li>Interest Method: {product.interest_method}</li>
               <li>Minimum Interest Rate: {product.minimum_interest_rate}%{product.interest_interval}</li>
               <li>Maximum Interest Rate: {product.maximum_interest_rate}%{product.interest_interval}</li>
+              {product.default_interest_rate && (
+                <li>Default Interest Rate: {product.default_interest_rate}%{product.interest_interval}</li>
+              )}
               {product.product_type === 'Dynamic Term Loan' && (
                 <>
                   <li>Interest Applied On: {product.dynamic_interest_applied_on}</li>
@@ -60,6 +63,9 @@ function GeneralProductInfo({product}) {
               <li style={{marginBottom: '1rem'}}><b>Tenure Settings</b></li>
               <li>Minimum Number of Repayments: {getTenure(product.minimum_loan_duration, product.loan_duration_time_unit)}</li>
               <li>Maximum Number of Repayments: {getTenure(product.maximum_loan_duration, product.loan_duration_time_unit)}</li>
+              {product.default_loan_duration && (
+                <li>Default Number of Repayments: {getTenure(product.default_loan_duration, product.loan_duration_time_unit)}</li>
+              )}
               <li>Loan Schedule Strategy: {product.schedule_strategy}</li>
               <li>Non Working Days Rescheduling: {getActionOnHoliday(product.action_on_holiday)}</li>
             </ul>
@@ -99,13 +105,22 @@ function GeneralProductInfo({product}) {
             </ul>
           </div>
         </div>
-        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", marginBottom: '2rem'}}>
           <div style={{width:"33%"}}>
             <ul style={{paddingRight:"1rem"}}>
               <li style={{marginBottom: '1rem'}}><b>Decimal Places, Rounding Off and Repayment Order</b></li>
               <li>Decimal Places: {getDecimalPlaces(product.number_of_decimal_places)}</li>
               <li>Rounding Scheme: {getRoundingScheme(product.rounding_scheme)}</li>
               <li>Repayment Order: {product.repayment_order.first}, {product.repayment_order.second}, {product.repayment_order.third}, {product.repayment_order.fourth}</li>
+              {product.apply_overpayment_to_future_installments ? (
+                <li>
+                  Apply Overpayment To Future Installments: <span className="badge badge-success">Yes</span>
+                </li>
+              ): (
+                <li>
+                  Apply Overpayment To Future Installments: <span className="badge badge-danger">No</span>
+                </li>
+              )}
             </ul>
           </div>
           <div style={{width:"33%"}}>
