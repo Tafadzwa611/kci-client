@@ -25,9 +25,10 @@ function ClientFormFields({
   clientControls
 }) {
   const {branches} = useBranches();
-  console.log(product.default_interest_rate);
   const hideInterest = Boolean(product.default_interest_rate);
-  console.log(hideInterest);
+  const hideInstallments = Boolean(product.default_loan_duration);
+  // const hideUnits = Boolean(product.default_loan_duration);
+  console.log(units);
 
   return (
     <>
@@ -98,7 +99,7 @@ function ClientFormFields({
         />
         )
       : (
-        <>
+        <div hidden={hideInterest}>
           <CustomInput
             label='Interest Rate'
             name='interest_rate'
@@ -107,21 +108,22 @@ function ClientFormFields({
             max={product.maximum_interest_rate}
             step={product.number_of_decimal_places}
             required
-            hidden={true}
           />
           <small><em>Minimum = {product.minimum_interest_rate} Maximum = {product.maximum_interest_rate}</em></small>
-        </>
+        </div>
       )}
       <CustomDatePicker label='Application Date' name='application_date' setFieldValue={setFieldValue} required/>
-      <CustomInput
-        label='Number of Repayments'
-        name='number_of_repayments'
-        type='number'
-        min={product.minimum_loan_duration}
-        max={product.maximum_loan_duration}
-        required
-      />
-      <small><em>Minimum = {product.minimum_loan_duration} Maximum = {product.maximum_loan_duration}</em></small>
+      <div hidden={hideInstallments}>
+        <CustomInput
+          label='Number of Repayments'
+          name='number_of_repayments'
+          type='number'
+          min={product.minimum_loan_duration}
+          max={product.maximum_loan_duration}
+          required
+        />
+        <small><em>Minimum = {product.minimum_loan_duration} Maximum = {product.maximum_loan_duration}</em></small>
+      </div>
       <CustomDatePicker label='First Repayment Date' name='first_repayment_date' setFieldValue={setFieldValue} required/>
       <CustomSelect label='Loan Schedule Strategy' name='schedule_strategy' required>
         <option value=''>------</option>
