@@ -27,8 +27,8 @@ function ClientFormFields({
   const {branches} = useBranches();
   const hideInterest = Boolean(product.default_interest_rate);
   const hideInstallments = Boolean(product.default_loan_duration);
-  // const hideUnits = Boolean(product.default_loan_duration);
-  console.log(units);
+  const hideFirstRepayment = Boolean(product.days_to_first_repayment);
+  const hideUnit = units.length === 0;
 
   return (
     <>
@@ -45,32 +45,6 @@ function ClientFormFields({
           </div>
         </div> : 
         <ClientSelect values={values} product={product} setFieldValue={setFieldValue}/>}
-      <CustomSelectRemote
-        selected={values.guarantor || ''}
-        label='Client Guarantor'
-        url='/clientsapi/search_client/'
-        setFieldValue={(fieldName, selected) => {
-          setFieldValue('guarantor', selected);
-          setFieldValue(fieldName, selected.value);
-        }}
-        queryParamName='query'
-        params={[{key: 'guarantors_only', value: 1}, {key: 'all_branches', value: 1}]}
-        placeholder='Search Client Guarantor'
-        name='guarantor_id'
-      />
-      <CustomSelectRemote
-        selected={values.group_guarantor || ''}
-        label='Group Guarantor'
-        url='/clientsapi/search_group/'
-        setFieldValue={(fieldName, selected) => {
-          setFieldValue('group_guarantor', selected);
-          setFieldValue(fieldName, selected.value);
-        }}
-        queryParamName='query'
-        params={[{key: 'guarantors_only', value: 1}, {key: 'all_branches', value: 1}]}
-        placeholder='Search Group Guarantor'
-        name='group_guarantor_id'
-      />
       {!lcontrols.auto_generate_loan_id && (
         <CustomInput
           label='Loan ID'
@@ -99,46 +73,61 @@ function ClientFormFields({
         />
         )
       : (
-        <div hidden={hideInterest}>
-          <CustomInput
-            label='Interest Rate'
-            name='interest_rate'
-            type='number'
-            min={product.minimum_interest_rate}
-            max={product.maximum_interest_rate}
-            step={product.number_of_decimal_places}
-            required
-          />
-          <small><em>Minimum = {product.minimum_interest_rate} Maximum = {product.maximum_interest_rate}</em></small>
+        <div>
+          {!hideInterest && (
+            <>
+              <CustomInput
+                label='Interest Rate'
+                name='interest_rate'
+                type='number'
+                min={product.minimum_interest_rate}
+                max={product.maximum_interest_rate}
+                step={product.number_of_decimal_places}
+                required
+              />
+              <small><em>Minimum = {product.minimum_interest_rate} Maximum = {product.maximum_interest_rate}</em></small>
+            </>
+          )}
         </div>
       )}
       <CustomDatePicker label='Application Date' name='application_date' setFieldValue={setFieldValue} required/>
-      <div hidden={hideInstallments}>
-        <CustomInput
-          label='Number of Repayments'
-          name='number_of_repayments'
-          type='number'
-          min={product.minimum_loan_duration}
-          max={product.maximum_loan_duration}
-          required
-        />
-        <small><em>Minimum = {product.minimum_loan_duration} Maximum = {product.maximum_loan_duration}</em></small>
-      </div>
-      <CustomDatePicker label='First Repayment Date' name='first_repayment_date' setFieldValue={setFieldValue} required/>
-      <CustomSelect label='Loan Schedule Strategy' name='schedule_strategy' required>
-        <option value=''>------</option>
-        {scheduleStrategies[product.loan_duration_time_unit].map(strategy => <option key={strategy} value={strategy}>{strategy}</option>)}
-      </CustomSelect>
-      {clientControls.use_client_units ? 
+      {!hideInstallments && (
+        <>
+          <CustomInput
+            label='Number of Repayments'
+            name='number_of_repayments'
+            type='number'
+            min={product.minimum_loan_duration}
+            max={product.maximum_loan_duration}
+            required
+          />
+          <small><em>Minimum = {product.minimum_loan_duration} Maximum = {product.maximum_loan_duration}</em></small>
+        </>
+      )}
+      {!hideFirstRepayment && (
+        <CustomDatePicker label='First Repayment Date' name='first_repayment_date' setFieldValue={setFieldValue} required/>
+      )}
+      {product.allow_editing_schedule_strategy_on_loan_creation && (
+        <CustomSelect label='Loan Schedule Strategy' name='schedule_strategy' required>
+          <option value=''>------</option>
+          {scheduleStrategies[product.loan_duration_time_unit].map(strategy => <option key={strategy} value={strategy}>{strategy}</option>)}
+        </CustomSelect>
+      )}
+      {clientControls.use_client_units ? (
         <CustomSelect label='Unit' name='unit_id' required>
           <option value=''>------</option>
           {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
-        </CustomSelect>:
-        <CustomSelect label='Unit' name='unit_id'>
-          <option value=''>------</option>
-          {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
         </CustomSelect>
-      }
+      ): (
+        <>
+          {!hideUnit && (
+            <CustomSelect label='Unit' name='unit_id'>
+              <option value=''>------</option>
+              {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+            </CustomSelect>
+          )}
+        </>
+      )}
       <CustomSelect label='Reason For Loan' name='reason_for_loan' required>
         <option value=''>------</option>
         <option value='CONSUMER'>CONSUMER</option>
@@ -167,10 +156,45 @@ function ClientFormFields({
           <CustomForm form={form} setFieldValue={setFieldValue}/>
         </React.Fragment>
       ))}
+      {product.allow_editing_fees_on_loan_creation && (
+        <>
+          <div className='divider divider-info'>
+            <span>Loan Fees</span>
+          </div>
+          <div>
+            {values.fees.map((fee, index) => <Fee key={index} index={index} setFieldValue={setFieldValue} fee={fee} values={values}/>)}
+          </div>
+        </>
+      )}
       <div className='divider divider-info'>
-        <span>Loan Fees</span>
+        <span>Guarantor</span>
       </div>
-      {values.fees.map((fee, index) => <Fee key={index} index={index} setFieldValue={setFieldValue} fee={fee} values={values}/>)}
+      <CustomSelectRemote
+        selected={values.guarantor || ''}
+        label='Client Guarantor (Optional)'
+        url='/clientsapi/search_client/'
+        setFieldValue={(fieldName, selected) => {
+          setFieldValue('guarantor', selected);
+          setFieldValue(fieldName, selected.value);
+        }}
+        queryParamName='query'
+        params={[{key: 'guarantors_only', value: 1}, {key: 'all_branches', value: 1}]}
+        placeholder='Search Client Guarantor'
+        name='guarantor_id'
+      />
+      <CustomSelectRemote
+        selected={values.group_guarantor || ''}
+        label='Group Guarantor (Optional)'
+        url='/clientsapi/search_group/'
+        setFieldValue={(fieldName, selected) => {
+          setFieldValue('group_guarantor', selected);
+          setFieldValue(fieldName, selected.value);
+        }}
+        queryParamName='query'
+        params={[{key: 'guarantors_only', value: 1}, {key: 'all_branches', value: 1}]}
+        placeholder='Search Group Guarantor'
+        name='group_guarantor_id'
+      />
       <div style={{display:'flex', justifyContent: 'flex-end'}}>
         <SubmitButton isSubmitting={isSubmitting}/>
       </div>

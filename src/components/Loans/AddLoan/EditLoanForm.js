@@ -15,14 +15,18 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControl
   const productFormIds = product.custom_forms.filter(form => form.required_on === 'CREATION').map(form => form.custom_field_set_id);
   const [formIds, setFormIds] = useState(productFormIds);
 
+  const hideInterest = Boolean(product.default_interest_rate);
+  const hideInstallments = Boolean(product.default_loan_duration);
+  const hideFirstRepayment = Boolean(product.days_to_first_repayment);
+
   const initialValues = {
     loan_product_id: product.id,
     principal: loan.org_principal,
-    interest_rate: interestRate,
+    interest_rate: hideInterest ? '' : interestRate,
     installment: '',
     application_date: loan.app_date,
-    number_of_repayments: loan.number_of_repayments,
-    first_repayment_date: loan.first_payment_date,
+    number_of_repayments: hideInstallments ? '' : loan.number_of_repayments,
+    first_repayment_date: hideFirstRepayment ? '' : loan.first_payment_date,
     schedule_strategy: loan.schedule_strategy,
     reason_for_loan: loan.reason_for_borrowing,
     fees: product.fees,
@@ -37,6 +41,8 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControl
     group_guarantor_id: loan.group_guarantor_id,
     group_guarantor: loan.group_guarantor_id ? {value: loan.group_guarantor_id, label: `${loan.group_guarantor_name}`} : '',
   };
+
+  console.log(initialValues);
 
   loan.custom_data.forEach(form => form.values.forEach(val => initialValues[`custom_${val.id}`] = val.data || ''));
 

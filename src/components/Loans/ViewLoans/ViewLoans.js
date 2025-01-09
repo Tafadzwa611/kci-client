@@ -61,7 +61,7 @@ const AddLoanComponent = () => {
     '/loansapi/loan_products_list/?allowed_in_user_branch_only=1', 
     '/loansapi/loan_controls/', 
     '/usersapi/list_field_sets/?entity_type=LOAN&active=1', 
-    '/usersapi/list_units/',
+    '/usersapi/list_units/?active_only=1',
     '/clientsapi/client_controls/',
   ];
   return (

@@ -23,8 +23,8 @@ function CustomLoanForm({customForm, fieldSets, index, custom_forms, setFieldVal
       <CustomSelect label='Required On' name={`custom_forms[${index}].required_on`} required>
         <option value=''>------</option>
         <option value='CREATION'>Loan Creation</option>
-        <option value='APPROVAL'>Loan Approval</option>
-        <option value='DISBURSEMENT'>Loan Disbursement</option>
+        {/* <option value='APPROVAL'>Loan Approval</option>
+        <option value='DISBURSEMENT'>Loan Disbursement</option> */}
       </CustomSelect>
       <CustomCheckbox label='Ask In Clients Portal' name={`custom_forms[${index}].ask_in_clients_portal`}/>
       <div style={{marginTop:'10px'}}>

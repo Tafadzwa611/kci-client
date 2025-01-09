@@ -121,10 +121,12 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
               <CustomInput label='Minimum Number of Repayments' name='minimum_loan_duration' type='number' required/>
               <CustomInput label='Maximum Number of Repayments' name='maximum_loan_duration' type='number' required/>
               <CustomInput label='Default Number of Repayments' name='default_loan_duration' type='number'/>
+              <CustomInput label='Grace period' name='days_to_first_repayment' type='number'/>
               <CustomSelect label='Default Loan Schedule Strategy' name='schedule_strategy' required>
                 <option value=''>------</option>
                 {scheduleStrategies[values.loan_duration_time_unit].map(strategy => <option key={strategy} value={strategy}>{strategy}</option>)}
               </CustomSelect>
+              <CustomCheckbox label='Allow Changing Schedule Strategy On Loan Creation' name='allow_editing_schedule_strategy_on_loan_creation'/>
               <div className='divider divider-info'>
                 <span>Decimal Places, Rounding Off and Repayment Order</span>
               </div>
@@ -171,6 +173,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
               <div className='divider divider-info'>
                 <span>Fees</span>
               </div>
+              <CustomCheckbox label='Allow Editing Fees On Loan Creation' name='allow_editing_fees_on_loan_creation'/>
               {values.fees.map((fee, index) => {
                 return(
                   <React.Fragment key={index}>
