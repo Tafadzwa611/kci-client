@@ -7,7 +7,7 @@ import { NonFieldErrors, CustomSelect } from '../../../common';
 import ClientFormFields from './ClientFormFields';
 import { Form, Formik } from 'formik';
 
-const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControls, units}) => {
+const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControls, units, cashAccounts}) => {
   const navigate = useNavigate();
   const [product, setProduct] = useState(loanProducts.find(prod => prod.id == loan.loan_product_id));
   const products = loanProducts.filter(prod => prod.client_type === loan.client_type && prod.is_active && prod.id !== product.id);
@@ -42,8 +42,6 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControl
     group_guarantor: loan.group_guarantor_id ? {value: loan.group_guarantor_id, label: `${loan.group_guarantor_name}`} : '',
   };
 
-  console.log(initialValues);
-
   loan.custom_data.forEach(form => form.values.forEach(val => initialValues[`custom_${val.id}`] = val.data || ''));
 
   const onChange = (evt, setFieldValue) => {
@@ -60,6 +58,9 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControl
     try {
       const custom_data = processValues(values, customForms, formIds);
       const data = removeEmptyValues(values);
+      if (data.fund_account) {
+        data.fund_account_id = data.fund_account.value;
+      }
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.put(`/loansapi/update_loan_api/${loan.id}/`, {...data, fees: values.fees, custom_data_list: custom_data}, CONFIG);
       navigate({pathname: `/loans/viewloans/loandetails/cli/${loan.id}`});
@@ -107,6 +108,7 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControl
               formIds={formIds}
               units={units}
               clientControls={clientControls}
+              cashAccounts={cashAccounts}
             />
           </NonFieldErrors>
         </Form>

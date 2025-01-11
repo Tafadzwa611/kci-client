@@ -65,6 +65,14 @@ const List = ({initControls}) => {
                     <td>{loanControls.request_otp_on_approval ? 'Yes' : 'No'}</td>
                   </tr>
                   <tr>
+                    <td>Disburse Loan On Capture</td>
+                    <td>{loanControls.disburse_loan_on_capture ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
+                    <td>Select Branch On Loan Creation</td>
+                    <td>{loanControls.select_branch_on_loan_creation ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
                     <td>Auto Generate Loan ID</td>
                     <td>{loanControls.auto_generate_loan_id ? 'Yes' : 'No'}</td>
                   </tr>
@@ -118,6 +126,8 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
     max_num_of_group_loans: loanControls.max_num_of_group_loans || '',
     allow_group_member_as_guarantor: loanControls.allow_group_member_as_guarantor,
     request_otp_on_approval: loanControls.request_otp_on_approval,
+    disburse_loan_on_capture: loanControls.disburse_loan_on_capture,
+    select_branch_on_loan_creation: loanControls.select_branch_on_loan_creation,
     auto_generate_loan_id: loanControls.auto_generate_loan_id,
     allow_clients_with_running_loans_to_guarantee: loanControls.allow_clients_with_running_loans_to_guarantee,
     allow_groups_with_running_loans_to_guarantee: loanControls.allow_groups_with_running_loans_to_guarantee,
@@ -138,6 +148,8 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
     const data = {
       allow_group_member_as_guarantor: values.allow_group_member_as_guarantor,
       request_otp_on_approval: values.request_otp_on_approval,
+      disburse_loan_on_capture: values.disburse_loan_on_capture,
+      select_branch_on_loan_creation: values.select_branch_on_loan_creation,
       auto_generate_loan_id: values.auto_generate_loan_id,
       allow_clients_with_running_loans_to_guarantee: values.allow_clients_with_running_loans_to_guarantee,
       allow_groups_with_running_loans_to_guarantee: values.allow_groups_with_running_loans_to_guarantee,
@@ -180,6 +192,8 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
                   <CustomInput label='Maximum Number Of Running Loans Allowed Per Group' name='max_num_of_group_loans' step='1' type='number'/>
                   <CustomCheckbox label='Allow Group Members To Guarantee Group Loan' name='allow_group_member_as_guarantor'/>
                   <CustomCheckbox label='Request OTP On Loan Approval' name='request_otp_on_approval'/>
+                  <CustomCheckbox label='Disburse Loan On Capture' name='disburse_loan_on_capture'/>
+                  <CustomCheckbox label='Select Branch On Loan Creation' name='select_branch_on_loan_creation'/>
                   <CustomCheckbox label='Auto Generate Loan ID' name='auto_generate_loan_id'/>
                   <CustomCheckbox label='Allow Clients With Running Loans To Guarantee' name='allow_clients_with_running_loans_to_guarantee'/>
                   <CustomCheckbox label='Allow Groups With Running Loans To Guarantee' name='allow_groups_with_running_loans_to_guarantee'/>

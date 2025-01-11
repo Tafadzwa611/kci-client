@@ -36,8 +36,15 @@ const ViewLoans = () => {
         <Route
           path='editloan/:loanType/:loanId'
           element={
-            <Fetcher urls={['/loansapi/loan_products_list/', '/clientsapi/client_controls/', '/usersapi/list_units/', ]}>
-              {({data}) => <EditLoan products={data[0]} clientControls={data[1]} units={data[2]}/>}
+            <Fetcher urls={['/loansapi/loan_products_list/', '/clientsapi/client_controls/', '/usersapi/list_units/', '/acc-api/cash-accounts-list/']}>
+              {({data}) => (
+                <EditLoan
+                  products={data[0]}
+                  clientControls={data[1]}
+                  units={data[2]}
+                  cashAccounts={data[3]}
+                />
+              )}
             </Fetcher>
           } 
         />
@@ -63,10 +70,20 @@ const AddLoanComponent = () => {
     '/usersapi/list_field_sets/?entity_type=LOAN&active=1', 
     '/usersapi/list_units/?active_only=1',
     '/clientsapi/client_controls/',
+    '/acc-api/cash-accounts-list/'
   ];
   return (
     <Fetcher urls={urls}>
-        {({data}) => <AddLoan products={data[0]} lcontrols={data[1]} customForms={data[2]} units={data[3]} clientControls={data[4]}/>}
+        {({data}) => (
+          <AddLoan 
+            products={data[0]}
+            lcontrols={data[1]}
+            customForms={data[2]}
+            units={data[3]}
+            clientControls={data[4]}
+            cashAccounts={data[5]}
+          />
+        )}
     </Fetcher>
   )
 }

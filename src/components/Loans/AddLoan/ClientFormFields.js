@@ -4,6 +4,7 @@ import {
   CustomInput,
   CustomDatePicker,
   CustomSelectRemote,
+  CustomMultiSelect,
   SubmitButton
 } from '../../../common';
 import { scheduleStrategies } from './data';
@@ -22,7 +23,8 @@ function ClientFormFields({
   customForms,
   formIds,
   units,
-  clientControls
+  clientControls,
+  cashAccounts
 }) {
   const {branches} = useBranches();
   const hideInterest = Boolean(product.default_interest_rate);
@@ -145,11 +147,28 @@ function ClientFormFields({
         <option value='COMMERCIAL - Vendors'>COMMERCIAL - Vendors</option>
         <option value='OTHER'>OTHER</option>
       </CustomSelect>
-      {(lcontrols.select_branch_on_loan_creation && !edit) && 
-      <CustomSelect label='Branch' name='branch_id' required>
-        <option value=''>------</option>
-        {branches.map(br => <option key={br.id} value={br.id}>{br.name}</option>)}
-      </CustomSelect>}
+      {(lcontrols.select_branch_on_loan_creation && !edit) && (
+        <CustomMultiSelect
+          label='Branch'
+          name='branch'
+          isMulti={false}
+          setFieldValue={setFieldValue}
+          options={branches.map(branch => ({label: branch.name, value: branch.id}))}
+          required
+        />
+      )}
+      {lcontrols.disburse_loan_on_capture && (
+        <CustomMultiSelect
+          label='Fund Account'
+          name='fund_account'
+          isMulti={false}
+          setFieldValue={setFieldValue}
+          options={cashAccounts.accounts.filter(account => !account.suspended).map(account => (
+            {label: `${account.label} - ${account.branch}`, value: account.value}
+          ))}
+          required
+        />
+      )}
       {customForms.filter(form => formIds.includes(form.id)).map(form => (
         <React.Fragment key={form.id}>
           <div className='divider divider-info' style={{padding: '1.25rem'}}><span>{form.name}</span></div>

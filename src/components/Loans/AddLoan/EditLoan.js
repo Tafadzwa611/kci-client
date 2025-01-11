@@ -4,7 +4,7 @@ import { Fetcher } from '../../../common';
 import EditLoanFoam from './EditLoanForm';
 import EditSolidarityLoanForm from './EditSolidarityLoanForm';
 
-function EditLoan({products, clientControls, units}) {
+function EditLoan({products, clientControls, units, cashAccounts}) {
   const params = useParams();
 
   if (params.loanType === 'sol') {
@@ -16,7 +16,17 @@ function EditLoan({products, clientControls, units}) {
   }
   return (
     <Fetcher urls={[`/loansapi/get_loan/${params.loanId}/`, '/loansapi/loan_controls/', '/usersapi/list_field_sets/?entity_type=LOAN&active=1']}>
-      {({data}) => <EditLoanFoam loan={data[0]} loanProducts={products} lcontrols={data[1]} customForms={data[2]} clientControls={clientControls} units={units}/>}
+      {({data}) => (
+        <EditLoanFoam
+          loan={data[0]}
+          loanProducts={products}
+          lcontrols={data[1]}
+          customForms={data[2]}
+          clientControls={clientControls}
+          units={units}
+          cashAccounts={cashAccounts}
+        />
+      )}
     </Fetcher>
   )
 }
