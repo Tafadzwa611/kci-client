@@ -49,36 +49,36 @@ const Filter = ({setClientsReportData, setParams, units}) => {
             <Form>
               <NonFieldErrors errors={errors}>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'19%'}}>
+                  <div className='row-payments-container' style={{width:'16%'}}>
                     <CustomDatePickerFilter label='Min Client Reg Date' name='min_date' setFieldValue={setFieldValue}/>
                   </div>
-                  <div className='row-payments-container' style={{width:'19%'}}>
+                  <div className='row-payments-container' style={{width:'16%'}}>
                     <CustomDatePickerFilter label='Max Client Reg Date' name='max_date' setFieldValue={setFieldValue}/>
                   </div>
-                  <div className='row-payments-container' style={{width:'19%'}}>
+                  <div className='row-payments-container' style={{width:'16%'}}>
                     <CustomDatePickerFilter label='Min Loan DB Date' name='min_db_date' setFieldValue={setFieldValue}/>
                   </div>
-                  <div className='row-payments-container' style={{width:'19%'}}>
+                  <div className='row-payments-container' style={{width:'16%'}}>
                     <CustomDatePickerFilter label='Max Loan DB Date' name='max_db_date' setFieldValue={setFieldValue}/>
                   </div>
-                  <div className='row-payments-container' style={{width:'19%'}}>
+                  <div className='row-payments-container' style={{width:'16%'}}>
                     <CustomSelectFilter label='Unit' name='unit_id'>
                       <option value=''>------</option>
                       {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
                     </CustomSelectFilter>
                   </div>
+                  <div className='row-payments-container' style={{width:'16%'}}>
+                    <CustomInputFilter label='Search Client' name='client_str' type='text'/>
+                  </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'40%'}}>
+                  <div style={{width:'63%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
                       options={branches.map(br => ({label: br.name, value:br.id}))}
                       setFieldValue={setFieldValue}
                     />
-                  </div>
-                  <div className='row-payments-container' style={{width:'20%'}}>
-                    <CustomInputFilter label='Search Client' name='client_str' type='text'/>
                   </div>
                   <div className='row-payments-container' style={{width:'10%'}}>
                     <CustomSelectFilter label='Currency' name='currency_id' required>
