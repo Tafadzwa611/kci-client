@@ -60,30 +60,49 @@ const Filter = ({setReport, setParams, units}) => {
             <Form>
               <NonFieldErrors errors={errors}>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'19%'}}>
+                  <div className='row-payments-container' style={{width:'16%'}}>
                     <CustomDatePickerFilter label='Min Date' name='min_date' setFieldValue={setFieldValue} required/>
                   </div>
-                  <div className='row-payments-container' style={{width:'19%'}}>
+                  <div className='row-payments-container' style={{width:'16%'}}>
                     <CustomDatePickerFilter label='Max Date' name='max_date' setFieldValue={setFieldValue} required/>
                   </div>
-                  <div className='row-payments-container' style={{width:'19%'}}>
+                  <div className='row-payments-container' style={{width:'16%'}}>
                     <CustomInputFilter label='Search Client' name='client_str' type='text'/>
                   </div>
-                  <div className='row-payments-container' style={{width:'19%'}}>
+                  <div className='row-payments-container' style={{width:'16%'}}>
                     <CustomSelectFilter label='Currency' name='currency_id' required>
                       <option value=''>------</option>
                       {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
                     </CustomSelectFilter>
                   </div>
-                  <div className='row-payments-container' style={{width:'19%'}}>
+                  <div className='row-payments-container' style={{width:'16%'}}>
                     <CustomSelectFilter label='Unit' name='unit_id'>
                       <option value=''>------</option>
                       {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
                     </CustomSelectFilter>
                   </div>
+                  <div className='row-payments-container' style={{width:'16%'}}>
+                    <CustomSelectFilter label='Reason For Borrowing' name='reason'>
+                      <option value=''>-----</option>
+                      <option value='CONSUMER'>CONSUMER</option>
+                      <option value='COMMERCIAL - Agriculture'>COMMERCIAL - Agriculture</option>
+                      <option value='COMMERCIAL - Manufacturing'>COMMERCIAL - Manufacturing</option>
+                      <option value='COMMERCIAL - Mining'>COMMERCIAL - Mining</option>
+                      <option value='COMMERCIAL - Housing'>COMMERCIAL - Housing</option>
+                      <option value='COMMERCIAL - Distribution & Services'>COMMERCIAL - Distribution & Services</option>
+                      <option value='COMMERCIAL - Retail'>COMMERCIAL - Retail</option>
+                      <option value='COMMERCIAL - Transport'>COMMERCIAL - Transport</option>
+                      <option value='COMMERCIAL - Health'>COMMERCIAL - Health</option>
+                      <option value='COMMERCIAL - Education'>COMMERCIAL - Education</option>
+                      <option value='COMMERCIAL - Cross Border Traders'>COMMERCIAL - Cross Border Traders</option>
+                      <option value='COMMERCIAL - Construction'>COMMERCIAL - Construction</option>
+                      <option value='COMMERCIAL - Vendors'>COMMERCIAL - Vendors</option>
+                      <option value='OTHER'>OTHER</option>
+                    </CustomSelectFilter>
+                  </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'50%'}}>
+                  <div style={{width:'63%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
@@ -103,25 +122,6 @@ const Filter = ({setReport, setParams, units}) => {
                       <option value='Restructured'>Restructured</option>
                       <option value='Refinanced'>Refinanced</option>
                       <option value='Early Settlement'>Early Settlement</option>
-                    </CustomSelectFilter>
-                  </div>
-                  <div className='row-payments-container' style={{width:'10%'}}>
-                    <CustomSelectFilter label='Reason For Borrowing' name='reason'>
-                      <option value=''>-----</option>
-                      <option value='CONSUMER'>CONSUMER</option>
-                      <option value='COMMERCIAL - Agriculture'>COMMERCIAL - Agriculture</option>
-                      <option value='COMMERCIAL - Manufacturing'>COMMERCIAL - Manufacturing</option>
-                      <option value='COMMERCIAL - Mining'>COMMERCIAL - Mining</option>
-                      <option value='COMMERCIAL - Housing'>COMMERCIAL - Housing</option>
-                      <option value='COMMERCIAL - Distribution & Services'>COMMERCIAL - Distribution & Services</option>
-                      <option value='COMMERCIAL - Retail'>COMMERCIAL - Retail</option>
-                      <option value='COMMERCIAL - Transport'>COMMERCIAL - Transport</option>
-                      <option value='COMMERCIAL - Health'>COMMERCIAL - Health</option>
-                      <option value='COMMERCIAL - Education'>COMMERCIAL - Education</option>
-                      <option value='COMMERCIAL - Cross Border Traders'>COMMERCIAL - Cross Border Traders</option>
-                      <option value='COMMERCIAL - Construction'>COMMERCIAL - Construction</option>
-                      <option value='COMMERCIAL - Vendors'>COMMERCIAL - Vendors</option>
-                      <option value='OTHER'>OTHER</option>
                     </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'10%'}}>

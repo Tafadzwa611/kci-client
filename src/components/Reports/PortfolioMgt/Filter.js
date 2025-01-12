@@ -41,13 +41,13 @@ const Filter = ({setReport}) => {
                         <Form>
                             <NonFieldErrors errors={errors}>
                                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                                    <div className='row-payments-container' style={{width:'32%'}}>
+                                    <div className='row-payments-container' style={{width:'32.5%'}}>
                                         <CustomDatePickerFilter label='Min Date' name='start_date' setFieldValue={setFieldValue} required/>
                                     </div>
-                                    <div className='row-payments-container' style={{width:'32%'}}>
+                                    <div className='row-payments-container' style={{width:'32.5%'}}>
                                         <CustomDatePickerFilter label='Max Date' name='end_date' setFieldValue={setFieldValue} required/>
                                     </div>
-                                    <div className='row-payments-container' style={{width:'32%'}}>
+                                    <div className='row-payments-container' style={{width:'32.5%'}}>
                                         <CustomSelectFilter label='Currency' name='currency_id' required>
                                             <option value=''>------</option>
                                             {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
@@ -55,7 +55,7 @@ const Filter = ({setReport}) => {
                                     </div>
                                 </div>
                                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                                    <div style={{width:'45%'}}>
+                                    <div style={{width:'90%'}}>
                                         <CustomMultiSelectFilter
                                             label='Branches'
                                             name='branch_ids'
