@@ -17,6 +17,7 @@ import LoanDistribution from '../LoanDistribution/LoanDistribution';
 import GenderDistribution from '../GenderDistribution/GenderDistribution';
 import MaturityProfile from '../MaturityProfile/MaturityProfile';
 import PortfolioMgt from '../PortfolioMgt/PortfolioMgt';
+import AssetQuality from '../AssetQuality/AssetQuality';
 import {
   Routes,
   Route,
@@ -51,6 +52,7 @@ const ViewReports = () => {
         <Route path='genderdistribution' element={<GenderDistribution />} />
         <Route path='maturityprofile' element={<MaturityProfile />} />
         <Route path='portfoliomgt' element={<PortfolioMgt />} />
+        <Route path='assetquality' element={<AssetQuality />} />
       </Route>
     </Routes>
   )
@@ -79,6 +81,9 @@ function Layout() {
             </Link>
             <Link to='/reports/viewreports/portfoliomgt' className={location.pathname === '/reports/viewreports/portfoliomgt' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Portfolio Management
+            </Link>
+            <Link to='/reports/viewreports/assetquality' className={location.pathname === '/reports/viewreports/assetquality' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Asset Quality
             </Link>
             <Link to='/reports/viewreports/loansreport' className={location.pathname === '/reports/viewreports/loansreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Loans Report

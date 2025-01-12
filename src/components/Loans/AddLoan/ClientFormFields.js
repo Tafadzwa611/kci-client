@@ -75,7 +75,7 @@ function ClientFormFields({
         />
         )
       : (
-        <div>
+        <>
           {!hideInterest && (
             <>
               <CustomInput
@@ -90,7 +90,7 @@ function ClientFormFields({
               <small><em>Minimum = {product.minimum_interest_rate} Maximum = {product.maximum_interest_rate}</em></small>
             </>
           )}
-        </div>
+        </>
       )}
       <CustomDatePicker label='Application Date' name='application_date' setFieldValue={setFieldValue} required/>
       {!hideInstallments && (
