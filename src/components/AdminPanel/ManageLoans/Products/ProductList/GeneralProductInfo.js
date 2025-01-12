@@ -68,6 +68,14 @@ function GeneralProductInfo({product}) {
               )}
               <li>Loan Schedule Strategy: {product.schedule_strategy}</li>
               <li>Non Working Days Rescheduling: {getActionOnHoliday(product.action_on_holiday)}</li>
+              {product.days_to_first_repayment && (
+                <li>Grace Period: {product.days_to_first_repayment} Days</li>
+              )}
+              {product.allow_editing_schedule_strategy_on_loan_creation ? (
+                <li>Allow Changing Schedule Strategy On Loan Creation: <span className="badge badge-success">Yes</span></li>
+                ): (
+                <li>Allow Changing Schedule Strategy On Loan Creation: <span className="badge badge-danger">No</span></li>
+              )}
             </ul>
           </div>
           <div style={{width:"33%"}}>
@@ -134,10 +142,11 @@ function GeneralProductInfo({product}) {
           <div style={{width:"33%"}}>
             <ul style={{paddingRight:"1rem"}}>
               <li style={{marginBottom: '1rem'}}><b>Auto Restructure Settings</b></li>
-              {product.auto_restructure ?
-                <li>Status: <span className="badge badge-success">Active</span></li>:
+              {product.auto_restructure ? (
+                <li>Status: <span className="badge badge-success">Active</span></li>
+              ): (
                 <li>Status: <span className="badge badge-danger">Inactive</span></li>
-              }
+              )}
               <li>Auto Restructure Interest: {product.auto_restructure_interest ? `${product.auto_restructure_interest}%${product.interest_interval}` : 'Not set'}</li>
               <li>Auto Restructure Number Of Installments: {product.auto_restructure_installments ? product.auto_restructure_installments : 'Not set'}</li>
             </ul>

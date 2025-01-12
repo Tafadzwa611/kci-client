@@ -7,7 +7,7 @@ import { NonFieldErrors, CustomSelect } from '../../../common';
 import ClientFormFields from './ClientFormFields';
 import { Form, Formik } from 'formik';
 
-const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControls, units}) => {
+const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControls, units, cashAccounts}) => {
   const navigate = useNavigate();
   const [product, setProduct] = useState(loanProducts.find(prod => prod.id == loan.loan_product_id));
   const products = loanProducts.filter(prod => prod.client_type === loan.client_type && prod.is_active && prod.id !== product.id);
@@ -15,14 +15,18 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControl
   const productFormIds = product.custom_forms.filter(form => form.required_on === 'CREATION').map(form => form.custom_field_set_id);
   const [formIds, setFormIds] = useState(productFormIds);
 
+  const hideInterest = Boolean(product.default_interest_rate);
+  const hideInstallments = Boolean(product.default_loan_duration);
+  const hideFirstRepayment = Boolean(product.days_to_first_repayment);
+
   const initialValues = {
     loan_product_id: product.id,
     principal: loan.org_principal,
-    interest_rate: interestRate,
+    interest_rate: hideInterest ? '' : interestRate,
     installment: '',
     application_date: loan.app_date,
-    number_of_repayments: loan.number_of_repayments,
-    first_repayment_date: loan.first_payment_date,
+    number_of_repayments: hideInstallments ? '' : loan.number_of_repayments,
+    first_repayment_date: hideFirstRepayment ? '' : loan.first_payment_date,
     schedule_strategy: loan.schedule_strategy,
     reason_for_loan: loan.reason_for_borrowing,
     fees: product.fees,
@@ -54,6 +58,9 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControl
     try {
       const custom_data = processValues(values, customForms, formIds);
       const data = removeEmptyValues(values);
+      if (data.fund_account) {
+        data.fund_account_id = data.fund_account.value;
+      }
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.put(`/loansapi/update_loan_api/${loan.id}/`, {...data, fees: values.fees, custom_data_list: custom_data}, CONFIG);
       navigate({pathname: `/loans/viewloans/loandetails/cli/${loan.id}`});
@@ -101,6 +108,7 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControl
               formIds={formIds}
               units={units}
               clientControls={clientControls}
+              cashAccounts={cashAccounts}
             />
           </NonFieldErrors>
         </Form>

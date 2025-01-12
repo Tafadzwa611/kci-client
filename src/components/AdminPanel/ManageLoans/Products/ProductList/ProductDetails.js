@@ -28,7 +28,7 @@ function ProductDetails({product, close, setView, setProducts}) {
         </div>
         {{
           details: <GeneralProductInfo product={product} close={close} setView={setView}/>,
-          fees: <Fees fees={product.fees}/>,
+          fees: <Fees fees={product.fees} allow_editing_fees_on_loan_creation={product.allow_editing_fees_on_loan_creation}/>,
           forms: <Forms custom_forms={product.custom_forms}/>
         }[tab]}
       </div>

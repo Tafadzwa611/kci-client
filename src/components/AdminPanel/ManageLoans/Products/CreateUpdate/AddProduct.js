@@ -58,7 +58,10 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
     calculate_using_installment: '',
     allow_auto_write_off: false,
     auto_write_off_grace_period: 1,
-    apply_overpayment_to_future_installments: true
+    apply_overpayment_to_future_installments: true,
+    days_to_first_repayment: '',
+    allow_editing_fees_on_loan_creation: true,
+    allow_editing_schedule_strategy_on_loan_creation: true
   };
 
   const back = () => setView('list');

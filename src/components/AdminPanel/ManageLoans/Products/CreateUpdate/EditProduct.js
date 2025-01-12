@@ -12,7 +12,6 @@ function EditProduct({loanFees, fieldSets, initialValues, setView, setSelectedPr
   initialValues.fees = initialValues.fees.map(fee => ({...fee, id: uuidv4()}));
   initialValues.custom_forms = initialValues.custom_forms.map(custom_form => ({...custom_form, id: uuidv4()}));
   removeNull(initialValues);
-  console.log(initialValues);
 
   const onSubmit = async (values, actions) => {
     try {

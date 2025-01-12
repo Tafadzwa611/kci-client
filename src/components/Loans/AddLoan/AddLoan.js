@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 import ClientFormFields from './ClientFormFields';
 import { removeEmptyValues, isNumeric } from '../../../utils/utils';
 
-function AddLoan({products, lcontrols, customForms, units, clientControls}) {
+function AddLoan({products, lcontrols, customForms, units, clientControls, cashAccounts}) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const application_id = searchParams.get('application_id');
@@ -35,7 +35,15 @@ function AddLoan({products, lcontrols, customForms, units, clientControls}) {
     }
   }, [princ, loan_product_id, client_id, client_name]);
 
+  const initialValuesCustomForms = {};
+  customForms.forEach(customForm => {
+    customForm.fields.forEach(field => {
+      initialValuesCustomForms[`custom_${field.id}`] = '';
+    });
+  });
+
   const initialValues = {
+    ...initialValuesCustomForms,
     loan_product_id: loan_product_id,
     principal: principal,
     interest_rate: '',
@@ -80,6 +88,12 @@ function AddLoan({products, lcontrols, customForms, units, clientControls}) {
     const custom_data = processValues(values, customForms, formIds);
     try {
       const data = removeEmptyValues(values);
+      if (data.fund_account) {
+        data.fund_account_id = data.fund_account.value;
+      }
+      if (data.branch) {
+        data.branch_id = data.branch.value;
+      }
       const url = product.client_type === 'Groups (solidarity)' ? '/loansapi/add_soloan_api/' : '/loansapi/add_loan_api/';
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(url, {...data, fees: values.fees, custom_data_list: custom_data}, CONFIG);
@@ -123,6 +137,7 @@ function AddLoan({products, lcontrols, customForms, units, clientControls}) {
                 customForms={customForms}
                 units={units}
                 clientControls={clientControls}
+                cashAccounts={cashAccounts}
               />,
               'Clients': <ClientFormFields
                 product={product}
@@ -135,6 +150,7 @@ function AddLoan({products, lcontrols, customForms, units, clientControls}) {
                 customForms={customForms}
                 units={units}
                 clientControls={clientControls}
+                cashAccounts={cashAccounts}
               />,
               'Groups (solidarity)': <SolidarityGroupForm
                 product={product}
