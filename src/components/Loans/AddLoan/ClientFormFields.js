@@ -31,6 +31,7 @@ function ClientFormFields({
   const hideInstallments = Boolean(product.default_loan_duration);
   const hideFirstRepayment = Boolean(product.days_to_first_repayment);
   const hideUnit = units.length === 0;
+  const hideFees = values.fees.length === 0;
 
   return (
     <>
@@ -175,14 +176,18 @@ function ClientFormFields({
           <CustomForm form={form} setFieldValue={setFieldValue}/>
         </React.Fragment>
       ))}
-      {product.allow_editing_fees_on_loan_creation && (
+      {!hideFees && (
         <>
-          <div className='divider divider-info'>
-            <span>Loan Fees</span>
-          </div>
-          <div>
-            {values.fees.map((fee, index) => <Fee key={index} index={index} setFieldValue={setFieldValue} fee={fee} values={values}/>)}
-          </div>
+          {product.allow_editing_fees_on_loan_creation && (
+            <>
+              <div className='divider divider-info'>
+                <span>Loan Fees</span>
+              </div>
+              <div>
+                {values.fees.map((fee, index) => <Fee key={index} index={index} setFieldValue={setFieldValue} fee={fee} values={values}/>)}
+              </div>
+            </>
+          )}
         </>
       )}
       <div className='divider divider-info'>
