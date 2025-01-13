@@ -73,6 +73,10 @@ const List = ({initControls}) => {
                     <td>{loanControls.select_branch_on_loan_creation ? 'Yes' : 'No'}</td>
                   </tr>
                   <tr>
+                    <td>Request Receipt Number On Disbursement</td>
+                    <td>{loanControls.request_receipt_number ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
                     <td>Auto Generate Loan ID</td>
                     <td>{loanControls.auto_generate_loan_id ? 'Yes' : 'No'}</td>
                   </tr>
@@ -128,6 +132,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
     request_otp_on_approval: loanControls.request_otp_on_approval,
     disburse_loan_on_capture: loanControls.disburse_loan_on_capture,
     select_branch_on_loan_creation: loanControls.select_branch_on_loan_creation,
+    request_receipt_number: loanControls.request_receipt_number,
     auto_generate_loan_id: loanControls.auto_generate_loan_id,
     allow_clients_with_running_loans_to_guarantee: loanControls.allow_clients_with_running_loans_to_guarantee,
     allow_groups_with_running_loans_to_guarantee: loanControls.allow_groups_with_running_loans_to_guarantee,
@@ -150,6 +155,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
       request_otp_on_approval: values.request_otp_on_approval,
       disburse_loan_on_capture: values.disburse_loan_on_capture,
       select_branch_on_loan_creation: values.select_branch_on_loan_creation,
+      request_receipt_number: values.request_receipt_number,
       auto_generate_loan_id: values.auto_generate_loan_id,
       allow_clients_with_running_loans_to_guarantee: values.allow_clients_with_running_loans_to_guarantee,
       allow_groups_with_running_loans_to_guarantee: values.allow_groups_with_running_loans_to_guarantee,
@@ -194,6 +200,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
                   <CustomCheckbox label='Request OTP On Loan Approval' name='request_otp_on_approval'/>
                   <CustomCheckbox label='Disburse Loan On Capture' name='disburse_loan_on_capture'/>
                   <CustomCheckbox label='Select Branch On Loan Creation' name='select_branch_on_loan_creation'/>
+                  <CustomCheckbox label='Request Receipt Number On Disbursement' name='request_receipt_number'/>
                   <CustomCheckbox label='Auto Generate Loan ID' name='auto_generate_loan_id'/>
                   <CustomCheckbox label='Allow Clients With Running Loans To Guarantee' name='allow_clients_with_running_loans_to_guarantee'/>
                   <CustomCheckbox label='Allow Groups With Running Loans To Guarantee' name='allow_groups_with_running_loans_to_guarantee'/>

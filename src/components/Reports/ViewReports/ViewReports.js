@@ -82,9 +82,9 @@ function Layout() {
             <Link to='/reports/viewreports/portfoliomgt' className={location.pathname === '/reports/viewreports/portfoliomgt' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Portfolio Management
             </Link>
-            <Link to='/reports/viewreports/assetquality' className={location.pathname === '/reports/viewreports/assetquality' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+            {/* <Link to='/reports/viewreports/assetquality' className={location.pathname === '/reports/viewreports/assetquality' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Asset Quality
-            </Link>
+            </Link> */}
             <Link to='/reports/viewreports/loansreport' className={location.pathname === '/reports/viewreports/loansreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Loans Report
             </Link>
