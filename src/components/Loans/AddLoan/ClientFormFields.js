@@ -170,6 +170,14 @@ function ClientFormFields({
           required
         />
       )}
+      {lcontrols.request_receipt_number && (
+        <>
+          <div className='divider divider-info'>
+            <span>Receipt Number</span>
+          </div>
+          <CustomInput label='Receipt Number' name='receipt_number' type='text' required/>
+        </>
+      )}
       {customForms.filter(form => formIds.includes(form.id)).map(form => (
         <React.Fragment key={form.id}>
           <div className='divider divider-info' style={{padding: '1.25rem'}}><span>{form.name}</span></div>

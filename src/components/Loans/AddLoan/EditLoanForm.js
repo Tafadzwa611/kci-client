@@ -29,6 +29,7 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControl
     first_repayment_date: hideFirstRepayment ? '' : loan.first_payment_date,
     schedule_strategy: loan.schedule_strategy,
     reason_for_loan: loan.reason_for_borrowing,
+    receipt_number: loan.receipt_number || '',
     fees: product.fees,
     files: [],
     client_id: loan.client_id || '',
@@ -56,6 +57,7 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControl
 
   const onSubmit = async (values, actions) => {
     try {
+      console.log(values);
       const custom_data = processValues(values, customForms, formIds);
       const data = removeEmptyValues(values);
       if (data.fund_account) {

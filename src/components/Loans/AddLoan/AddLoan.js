@@ -60,6 +60,7 @@ function AddLoan({products, lcontrols, customForms, units, clientControls, cashA
     client_name: clientName,
     group_id: '',
     unit_id: '',
+    receipt_number: '',
     ...(application_id && {application_id}),
     ...(!lcontrols.auto_generate_loan_id && {loan_id: ''})
   };
