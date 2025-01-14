@@ -17,19 +17,21 @@ const Table = ({report, setReport, params}) => {
                 <th style={{textAlign:'right'}}>Loan</th>
                 <th style={{textAlign:'right'}}>Branch</th>
                 <th style={{textAlign:'right'}}>Fee Name</th>
+                <th style={{textAlign:'right'}}>Receipt Number</th>
                 <th style={{textAlign:'right'}}>Amount</th>
               </tr>
             </thead>
             <tbody>
               {report.fees_list.map(fee => (
                 <tr key={fee.id} className='table-row'>
-                  <td style={{textAlign:'right'}}>{ fee.payment_date }</td>
-                  <td style={{textAlign:'right'}}>{ fee.client_name }</td>
-                  <td style={{textAlign:'right'}}>{ fee.group_name }</td>
-                  <td style={{textAlign:'right'}}>{ fee.loan_num }</td>
-                  <td style={{textAlign:'right'}}>{ fee.branch_name }</td>
-                  <td style={{textAlign:'right'}}>{ fee.fee_name }</td>
-                  <td style={{textAlign:'right'}}>{ fee.amount }</td>
+                  <td style={{textAlign:'right'}}>{fee.payment_date}</td>
+                  <td style={{textAlign:'right'}}>{fee.client_name}</td>
+                  <td style={{textAlign:'right'}}>{fee.group_name}</td>
+                  <td style={{textAlign:'right'}}>{fee.loan_num}</td>
+                  <td style={{textAlign:'right'}}>{fee.branch_name}</td>
+                  <td style={{textAlign:'right'}}>{fee.fee_name}</td>
+                  <td style={{textAlign:'right'}}>{fee.receipt_number}</td>
+                  <td style={{textAlign:'right'}}>{fee.amount}</td>
                 </tr>
               ))}
             </tbody>

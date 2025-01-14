@@ -18,6 +18,9 @@ function DetailsTab({loan, setLoan}) {
           <div style={{width:'48%'}}>
             <ul style={{paddingRight:'1rem'}}>
               <li style={{marginBottom: '1rem'}}><b>General</b></li>
+              {loan.receipt_number && (
+                <li style={{marginBottom: '0.25rem'}}>Receipt Number: {loan.receipt_number}</li>
+              )}
               <li style={{marginBottom: '0.25rem', display:'flex', columnGap:'5px'}}>
                 Loan Number: {loan.loan_id} 
                 <a style={{cursor: 'pointer'}} onClick={() => setOpenLoanNumberModal(true)}><small>Change</small></a>
