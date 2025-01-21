@@ -219,6 +219,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 <option value='Add Penalty'>Add Penalty</option>
                 <option value='Add Fixed Penalty'>Add Fixed Penalty</option>
                 <option value='Add Interest'>Add Interest Fees</option>
+                <option value='Add Scheduled Penalties After Maturity'>Add Scheduled Penalties After Maturity</option>
               </CustomSelect>
               {values.action_on_loan_default === 'Add Penalty' &&
                 <>

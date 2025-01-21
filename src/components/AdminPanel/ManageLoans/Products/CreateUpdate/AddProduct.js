@@ -61,7 +61,8 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
     apply_overpayment_to_future_installments: true,
     days_to_first_repayment: '',
     allow_editing_fees_on_loan_creation: true,
-    allow_editing_schedule_strategy_on_loan_creation: true
+    allow_editing_schedule_strategy_on_loan_creation: true,
+    schedule_penalties: []
   };
 
   const back = () => setView('list');
