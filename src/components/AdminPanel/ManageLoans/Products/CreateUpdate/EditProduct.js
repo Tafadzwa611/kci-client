@@ -11,6 +11,7 @@ function EditProduct({loanFees, fieldSets, initialValues, setView, setSelectedPr
   const {currencies} = useCurrencies();
   initialValues.fees = initialValues.fees.map(fee => ({...fee, id: uuidv4()}));
   initialValues.custom_forms = initialValues.custom_forms.map(custom_form => ({...custom_form, id: uuidv4()}));
+  initialValues.schedule_penalties = initialValues.schedule_penalties.map(schedule_penalty => ({...schedule_penalty, id: uuidv4()}));
   removeNull(initialValues);
 
   const onSubmit = async (values, actions) => {

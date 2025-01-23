@@ -16,6 +16,7 @@ import { useCurrencies } from '../../../../../contexts/CurrenciesContext';
 import { scheduleStrategies } from './data';
 import {Fee, AddFee} from './Fees';
 import {CustomLoanForm, AddCustomLoanForm} from './Forms';
+import { AddSchedulePenalty, SchedulePenalty } from './SchedulePenalties';
 
 function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSubmit, back}) {
   const {branches} = useBranches();
@@ -221,6 +222,28 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 <option value='Add Interest'>Add Interest Fees</option>
                 <option value='Add Scheduled Penalties After Maturity'>Add Scheduled Penalties After Maturity</option>
               </CustomSelect>
+              {values.action_on_loan_default === 'Add Scheduled Penalties After Maturity' && (
+                <>
+                  <CustomSelect label='Apply Interest On' name='apply_late_repayment_penalty_on' required>
+                    <option value=''>------</option>
+                    <option value='Total Loan Balance'>Total Loan Balance</option>
+                    <option value='Principal Balance'>Principal Balance</option>
+                  </CustomSelect>
+                  {values.schedule_penalties.map((schedule_penalty, index) => {
+                    return(
+                      <React.Fragment key={index}>
+                        <SchedulePenalty
+                          schedule_penalty={schedule_penalty}
+                          index={index}
+                          setFieldValue={setFieldValue}
+                          schedule_penalties={values.schedule_penalties}
+                        />
+                      </React.Fragment>
+                    )
+                  })}
+                  <AddSchedulePenalty schedule_penalties={values.schedule_penalties} setFieldValue={setFieldValue}/>
+                </>
+              )}
               {values.action_on_loan_default === 'Add Penalty' &&
                 <>
                   <CustomSelect label='Apply Penalty On' name='apply_late_repayment_penalty_on' required>

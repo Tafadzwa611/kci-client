@@ -61,6 +61,7 @@ function GeneralProductInfo({product}) {
           <div style={{width:"33%"}}>
             <ul style={{paddingRight:"1rem"}}>
               <li style={{marginBottom: '1rem'}}><b>Tenure Settings</b></li>
+              <li>Repayment Cycle: {product.loan_duration_time_unit}</li>
               <li>Minimum Number of Repayments: {getTenure(product.minimum_loan_duration, product.loan_duration_time_unit)}</li>
               <li>Maximum Number of Repayments: {getTenure(product.maximum_loan_duration, product.loan_duration_time_unit)}</li>
               {product.default_loan_duration && (
@@ -82,9 +83,10 @@ function GeneralProductInfo({product}) {
             <ul style={{paddingRight:"1rem"}}>
               <li style={{marginBottom: '1rem'}}><b>Arrears Settings</b></li>
               <li>Action On Default: {product.action_on_loan_default}</li>
-              {product.action_on_loan_default === 'Add Fixed Penalty' &&
-              <><li>Penalty Amount: {product.fixed_penalty_amount}</li></>}
-              {product.action_on_loan_default === 'Add Penalty' &&
+              {product.action_on_loan_default === 'Add Fixed Penalty' && (
+                <li>Penalty Amount: {product.fixed_penalty_amount}</li>
+              )}
+              {product.action_on_loan_default === 'Add Penalty' && (
                 <>
                   <li>Apply Penalty On: {product.apply_late_repayment_penalty_on}</li>
                   <li>Penalty Rate: {product.late_repayment_penalty_percentage}%{product.penalty_charged_per}</li>
@@ -92,8 +94,9 @@ function GeneralProductInfo({product}) {
                   {product.send_sms_on_default ?
                     <li>Send SMS Alert On Default: <span className="badge badge-success">Active</span></li>:
                     <li>Send SMS Alert On Default: <span className="badge badge-danger">Inactive</span></li>}
-                </>}
-              {product.action_on_loan_default === 'Add Interest' &&
+                </>
+              )}
+              {product.action_on_loan_default === 'Add Interest' && (
                 <>
                   <li>Apply Interest On: {product.apply_late_repayment_penalty_on}</li>
                   <li>Interest Rate: {product.on_default_rate}%</li>
@@ -102,7 +105,15 @@ function GeneralProductInfo({product}) {
                   {product.send_sms_on_default ?
                     <li>Send SMS Alert On Default: <span className="badge badge-success">Active</span></li>:
                     <li>Send SMS Alert On Default: <span className="badge badge-danger">Inactive</span></li>}
-                </>}
+                </>
+              )}
+              {product.action_on_loan_default === 'Add Scheduled Penalties After Maturity' && (
+                product.schedule_penalties.map((sp, idx) => (
+                  <li key={idx}>
+                    Number Of Days: {sp.days}, Penalty Rate: {sp.penalty_rate}%
+                  </li>
+                ))
+              )}
             </ul>
           </div>
           <div style={{width:"33%"}}>

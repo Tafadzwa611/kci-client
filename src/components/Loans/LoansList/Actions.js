@@ -228,11 +228,9 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setModal(addPayment)}>Add Payment</button>
           <button className='btn btn-olive' onClick={() => setModal(refinance)}>Refinance</button>
-          {loan.product_type == 'Dynamic Term Loan' && (
-            <button className='btn btn-olive' onClick={() => setModal(addInterest)}>
-              Add Interest
-            </button>
-          )}
+          <button className='btn btn-olive' onClick={() => setModal(addInterest)}>
+            Add Interest
+          </button>
           {loan.product_type == 'Fixed Term Loan' && (
             <button className='btn btn-olive' onClick={() => setModal(addFee)}>
               Add Fee
