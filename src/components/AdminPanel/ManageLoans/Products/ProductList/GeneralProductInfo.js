@@ -110,7 +110,7 @@ function GeneralProductInfo({product}) {
               {product.action_on_loan_default === 'Add Scheduled Penalties After Maturity' && (
                 product.schedule_penalties.map((sp, idx) => (
                   <li key={idx}>
-                    Number Of Days: {sp.days}, Penalty Rate: {sp.penalty_rate}%
+                    Number Of Days: {sp.days}, Rate: {sp.penalty_rate}%, Type: {sp.charge_type}
                   </li>
                 ))
               )}

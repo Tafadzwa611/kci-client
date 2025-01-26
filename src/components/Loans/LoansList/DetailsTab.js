@@ -52,6 +52,13 @@ function DetailsTab({loan, setLoan}) {
               <li style={{marginBottom: '0.25rem'}}>Reason For Loan: {loan.reason_for_borrowing}</li>
               <li style={{marginBottom: '0.25rem'}}>Fund Account Name: {loan.fund_account_name}</li>
               <li style={{marginBottom: '0.25rem'}}>Action On Default: {loan.action_on_loan_default}</li>
+              {loan.action_on_loan_default === 'Add Scheduled Penalties After Maturity' && (
+                loan.schedule_penalties.map((sp, idx) => (
+                  <li key={idx} style={{paddingLeft: '20px'}}>
+                    Number Of Days: {sp.days}, Rate: {sp.penalty_rate}%, Type: {sp.charge_type}
+                  </li>
+                ))
+              )}
               {loan.action_on_loan_default === 'Add Fixed Penalty' && (
                 <li style={{marginBottom: '0.25rem'}}>Penalty Amount: {loan.currency_name} {loan.fixed_penalty_amount}</li>
               )}
