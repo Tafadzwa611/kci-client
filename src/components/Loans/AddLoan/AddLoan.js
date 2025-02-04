@@ -16,6 +16,9 @@ function AddLoan({products, lcontrols, customForms, units, clientControls, cashA
   const client_id = searchParams.get('client_id') || '';
   const client_name = searchParams.get('client_name') || '';
   let princ = searchParams.get('principal') || '';
+  if (products.length > 1) {
+    products.sort((a, b) => a.loan_product_id.localeCompare(b.loan_product_id));
+  }
   products = products.filter(prod => prod.is_active);
   const [product, setProduct] = useState(null);
   const [clientId, setClientId] = useState('');
@@ -123,7 +126,7 @@ function AddLoan({products, lcontrols, customForms, units, clientControls, cashA
               <option value=''>------</option>
               {products.map(product => (
                 <option key={product.id} value={product.id}>
-                  ({product.currency})-{product.name}-{product.client_type}
+                  ({product.currency})-{product.name} ({product.loan_product_id})-{product.client_type}
                 </option>
               ))}
             </CustomSelect>

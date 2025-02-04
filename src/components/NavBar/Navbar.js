@@ -33,7 +33,7 @@ const Navbar = (props) => {
   }
 
   const checkNotifs = async () => {
-    if (modalRef.current === MODAL_STATES.login){return};
+    if (modalRef.current === MODAL_STATES.login){return}
     try {
       const response = await axios.get('/usersapi/check_new_notifications/');
       if (response.request.responseURL.includes('users/login')) {
@@ -160,14 +160,29 @@ const Navbar = (props) => {
   )
 }
 
+const API_URLS = {
+  LOAN: '/loansapi/search_txn/',
+  PAYMENT: '/loansapi/search_txn/',
+  JOURNAL: '/loansapi/search_txn/',
+  CLIENTS: '/clientsapi/search_client/?all_branches=1',
+  GROUPS: '/clientsapi/search_group/',
+}
+
+const ROUTES = {
+  LOAN: '/loans/viewloans/loandetails/cli/{value}',
+  PAYMENT: '/loans/viewloans/loandetails/cli/{value}',
+  JOURNAL: '/accounting/viewaccounting/journals/journal/{value}',
+  CLIENTS: '/clients/viewclients/clientdetails/{value}',
+  GROUPS: '/groups/viewgroups?group_id={value}',
+}
 
 const Search = ({setOpen}) => {
   const [results, setResults] = useState([]);
 
   const onSubmit = async (values, actions) => {
-    const url = values.entity === 'clients' ? '/clientsapi/search_client/?all_branches=1' : '/clientsapi/search_group/';
+    const url = API_URLS[values.entity];
     try {
-      const params = getParams(values);
+      const params = getParams({...values, entity: values.entity});
       const response = await axios.get(url, {params: params});
       setResults(response.data);
     } catch (error) {
@@ -190,7 +205,7 @@ const Search = ({setOpen}) => {
 
   return (
     <Modal open={true} setOpen={setOpen} title={'Search'}>
-      <Formik initialValues={{query: '', entity: 'clients'}} onSubmit={onSubmit}>
+      <Formik initialValues={{query: '', entity: 'CLIENTS'}} onSubmit={onSubmit}>
         {({ errors, values, isSubmitting }) => (
           <Form onChange={handleOnChange}>
             <NonFieldErrors errors={errors}>
@@ -198,22 +213,22 @@ const Search = ({setOpen}) => {
                 <div style={{display:'flex', flexDirection:'column', rowGap:'1.5rem'}}>
                   <div>
                     <CustomSelect label='Search' name='entity' required>
-                      <option value='clients'>Search Clients</option>
-                      <option value='groups'>Search Groups</option>
+                      <option value='CLIENTS'>Search Clients</option>
+                      <option value='GROUPS'>Search Groups</option>
+                      <option value='LOAN'>Search Loans</option>
+                      <option value='PAYMENT'>Search Payments</option>
+                      <option value='JOURNAL'>Search Journal</option>
                     </CustomSelect>
                     <CustomInput label='Search text' name='query' type='text' required/>
                   </div>
                   <div style={{display:'flex', columnGap:'1%'}}>
                     <div style={{width:'100%'}}>
                       <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom: '2rem'}}>
-                        <div style={{width:'48%'}}>
+                        <div style={{width:'58%'}}>
                           <ul style={{paddingRight:'1rem'}}>
-                            {results.map(result => (
-                              <li className="search__a" key={result.value} style={{marginBottom: '0.25rem'}}>
-                              <Link
-                                onClick={() => setOpen(false)}
-                                to={values.entity === 'clients' ? `/clients/viewclients/clientdetails/${result.value}` : `/groups/viewgroups?group_id=${result.value}`}
-                              >
+                            {results.map((result, index) => (
+                              <li className="search__a" key={index} style={{marginBottom: '0.25rem'}}>
+                              <Link onClick={() => setOpen(false)} to={ROUTES[values.entity].replace('{value}', result.value)}>
                                 {result.label}
                               </Link>
                               </li>
