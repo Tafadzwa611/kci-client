@@ -24,3 +24,9 @@ export const initialFormValues = {
   required_on: '',
   ask_in_clients_portal: false
 };
+
+export const initialPenaltyValues = {
+  charge_type: '',
+  days: '',
+  penalty_rate: ''
+};

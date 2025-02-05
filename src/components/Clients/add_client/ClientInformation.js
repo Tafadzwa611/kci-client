@@ -21,7 +21,7 @@ const ClientInformation = ({clientControls, setFieldValue, staff, units}) => {
         <option value='MALE'>Male</option>
         <option value='FEMALE'>Female</option>
       </CustomSelect>
-      <CustomDatePicker label='Date Of Birth' setFieldValue={setFieldValue} name='date_of_birth' required/>
+      <CustomDatePicker label='Date Of Birth' setFieldValue={setFieldValue} name='date_of_birth' allowKeyDown required/>
       <CustomDatePicker label='Registration Date' setFieldValue={setFieldValue} name='registration_date' required/>
       <CustomPhoneNumber label='Mobile Number' name='mobile_number' setFieldValue={setFieldValue} required/>
       <CustomPhoneNumber label='Secondary Mobile Number (Optional)' name='phone_number_secondary' setFieldValue={setFieldValue}/>

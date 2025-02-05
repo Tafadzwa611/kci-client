@@ -9,7 +9,8 @@ import {
   ActionModalDialog,
   SubmitButton,
   CustomSelect,
-  OliveBtn
+  OliveBtn,
+  CustomDatePicker
 } from '../../../common';
 import { Form, Formik } from 'formik';
 import axios from 'axios';
@@ -100,7 +101,11 @@ const PenaltyForm = ({loanId, setLoan, subLoans, clientType}) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const url = clientType === 'Groups (solidarity)' ? `/loansapi/add_loan_penalty/${loanId}/${values.sub_loan_id}/` : `/loansapi/add_loan_penalty/${loanId}/`;
-      const response = await axios.post(url, {description: values.description, penalty_amount: values.penalty_amount}, CONFIG);
+      const data = {description: values.description, penalty_amount: values.penalty_amount}
+      if (values.penalty_date) {
+        data.penalty_date = values.penalty_date;
+      }
+      const response = await axios.post(url, data, CONFIG);
       setLoan(response.data);
       actions.resetForm();
     } catch (error) {
@@ -115,8 +120,8 @@ const PenaltyForm = ({loanId, setLoan, subLoans, clientType}) => {
   }
 
   return (
-    <Formik initialValues={{description: '', penalty_amount: '', sub_loan_id: ''}} onSubmit={onSubmit}>
-      {({ isSubmitting, errors }) => (
+    <Formik initialValues={{penalty_date: '', description: '', penalty_amount: '', sub_loan_id: ''}} onSubmit={onSubmit}>
+      {({ isSubmitting, errors, setFieldValue }) => (
         <Form>
           <NonFieldErrors errors={errors}>
             {clientType === 'Groups (solidarity)' ?
@@ -125,6 +130,7 @@ const PenaltyForm = ({loanId, setLoan, subLoans, clientType}) => {
               {subLoans.filter(subLoan => subLoan.status === 'Arrears').map(subLoan => <option key={subLoan.id} value={subLoan.id}>{subLoan.fullname} {subLoan.status}</option>)}
             </CustomSelect> : null}
             <CustomInput label='Amount' name='penalty_amount' type='number' required/>
+            <CustomDatePicker label='Penalty Date' name='penalty_date' setFieldValue={setFieldValue} required/>
             <CustomTextField label='Description' name='description' type='text' required/>
             <div style={{display:'flex', justifyContent: 'flex-end', paddingBottom:'1.5rem'}}> 
               <SubmitButton isSubmitting={isSubmitting}/>

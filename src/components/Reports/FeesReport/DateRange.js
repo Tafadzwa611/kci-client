@@ -13,7 +13,15 @@ import axios from 'axios';
 import { getParams } from '../../../utils/utils';
 
 const DateRange = ({setReport, setParams}) => {
-  const initialValues = {branch_ids: [], page_num: 1, min_date: '', max_date: '', order: '-id', file_format: 'html'};
+  const initialValues = {
+    branch_ids: [],
+    page_num: 1,
+    min_date: '',
+    max_date: '',
+    order: '-id',
+    file_format: 'html',
+    fee_type: 'Deducted'
+  };
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
@@ -66,7 +74,7 @@ const DateRange = ({setReport, setParams}) => {
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'75%'}}>
+                  <div style={{width:'60%'}}>
                     <CustomMultiSelectFilter
                       label='Branches'
                       name='branch_ids'
@@ -74,6 +82,16 @@ const DateRange = ({setReport, setParams}) => {
                       setFieldValue={setFieldValue}
                       required
                     />
+                  </div>
+                  <div className='row-payments-container' style={{width:'15%'}}>
+                    <CustomSelectFilter label='Fee Type' name='fee_type'>
+                      <option value=''>------</option>
+                      <option value='Deducted'>Deducted</option>
+                      <option value='Capitalized'>Capitalized</option>
+                      <option value='Upfront Disbursement'>Upfront Disbursement</option>
+                      <option value='Payment due'>Payment due</option>
+                      <option value='Manual fees'>Manual fees</option>
+                    </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'15%'}}>
                     <CustomSelectFilter label='Mode' name='file_format' required>

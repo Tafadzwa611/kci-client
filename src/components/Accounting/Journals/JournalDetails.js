@@ -52,6 +52,8 @@ const JournalDetails = ({journalId, close}) => {
               <div>
                 <ul>
                   <li><b>Additional Details</b></li>
+                  <li>Journal Number: {data[0].id}</li>
+                  <li>Transaction ID: {data[0].transaction_id}</li>
                   <li>Currency: {data[0].currency}</li>
                   <li>Value Date: {data[0].value_date}</li>
                   <li>Date Logged: {data[0].date_added}</li>

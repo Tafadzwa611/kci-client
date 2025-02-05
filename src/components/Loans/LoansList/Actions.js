@@ -15,6 +15,7 @@ import LockInterest from './LockInterest';
 import Refinance from './Refinance/Refinance';
 import ApplyInterest from './ApplyInterest/ApplyInterest';
 import UndoEarlySettlement from './UndoEarlySettlement';
+import { Fetcher } from '../../../common';
 
 const MODAL_STATES = {
   lockInt: 'lockInt',
@@ -101,14 +102,21 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
           url={undoApprovalUrl}
           setLoanDetails={setLoanDetails}
         />}
-        {modal === disburse && <DisburseLoan
-          setOpen={setModal}
-          loan={loan}
-          url={disburseUrl}
-          setLoanDetails={setLoanDetails}
-          updateLoanList={updateLoanList}
-          setLoanData={setLoanData}
-        />}
+        {modal === disburse && (
+          <Fetcher urls={['/loansapi/loan_controls/']}>
+            {({data}) => (
+              <DisburseLoan
+                setOpen={setModal}
+                loan={loan}
+                url={disburseUrl}
+                setLoanDetails={setLoanDetails}
+                updateLoanList={updateLoanList}
+                setLoanData={setLoanData}
+                lcontrols={data[0]}
+              />
+            )}
+          </Fetcher>
+        )}
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setModal(undoApproval)}>Undo Approve</button>
           <button className='btn btn-olive' onClick={() => setModal(disburse)}>Disburse</button>
@@ -220,11 +228,9 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setModal(addPayment)}>Add Payment</button>
           <button className='btn btn-olive' onClick={() => setModal(refinance)}>Refinance</button>
-          {loan.product_type == 'Dynamic Term Loan' && (
-            <button className='btn btn-olive' onClick={() => setModal(addInterest)}>
-              Add Interest
-            </button>
-          )}
+          <button className='btn btn-olive' onClick={() => setModal(addInterest)}>
+            Add Interest
+          </button>
           {loan.product_type == 'Fixed Term Loan' && (
             <button className='btn btn-olive' onClick={() => setModal(addFee)}>
               Add Fee

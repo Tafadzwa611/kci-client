@@ -11,6 +11,9 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControl
   const navigate = useNavigate();
   const [product, setProduct] = useState(loanProducts.find(prod => prod.id == loan.loan_product_id));
   const products = loanProducts.filter(prod => prod.client_type === loan.client_type && prod.is_active && prod.id !== product.id);
+  if (products.length > 1) {
+    products.sort((a, b) => a.loan_product_id.localeCompare(b.loan_product_id));
+  }
   const interestRate = product.calculate_using_installment ? '' : loan.interest_rate;
   const productFormIds = product.custom_forms.filter(form => form.required_on === 'CREATION').map(form => form.custom_field_set_id);
   const [formIds, setFormIds] = useState(productFormIds);
@@ -94,7 +97,7 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControl
             >
               {[product, ...products].map(product => (
                 <option key={product.id} value={product.id}>
-                  ({product.currency})-{product.name}-{product.client_type}
+                  ({product.currency})-{product.name} ({product.loan_product_id})-{product.client_type}
                 </option>
               )
               )}
