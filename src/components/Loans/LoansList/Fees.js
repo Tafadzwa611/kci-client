@@ -37,11 +37,9 @@ function Fees({fees, setLoan}) {
             <thead>
               <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
                 <th className='schedule__table'>Fee Date</th>
-                <th className='schedule__table'>Receipt Number</th>
                 <th className='schedule__table'>Fee Name</th>
-                <th className='schedule__table'>Total Amount</th>
-                <th className='schedule__table'>Amount Due</th>
-                <th className='schedule__table'>Status</th>
+                <th className='schedule__table'>Amount</th>
+                <th className='schedule__table'>Receipt Number</th>
                 <th className='schedule__table'>Action</th>
               </tr>
             </thead>
@@ -49,11 +47,9 @@ function Fees({fees, setLoan}) {
               {fees.map(fee => (
                 <tr key={fee.id}>
                   <td className='schedule__table'>{fee.value_date}</td>
-                  <td className='schedule__table'>{fee.receipt_number}</td>
                   <td className='schedule__table'>{fee.fee_name}</td>
                   <td className='schedule__table'>{fee.amount}</td>
-                  <td className='schedule__table'>{fee.amount_due}</td>
-                  <td className='schedule__table'>{fee.status}</td>
+                  <td className='schedule__table'>{fee.receipt_number}</td>
                   <td className='schedule__table'>
                     <span className='badge badge-danger' id={fee.id} onClick={showDeleteModal} style={{cursor: 'pointer'}}>
                       Reverse

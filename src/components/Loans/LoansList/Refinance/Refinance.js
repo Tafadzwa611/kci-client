@@ -87,7 +87,7 @@ function Refinance({setOpen, loan}) {
 
   return (
     <Modal open={true} title='Refinance' setOpen={setOpen}>
-      <Fetcher urls={['/acc-api/cash-and-cash-equivalents/', '/loansapi/loan_products_list/?allowed_in_user_branch_only=1', '/usersapi/staff/?loan_officers_only=1']}>
+      <Fetcher urls={['/acc-api/cash-accounts-list/', '/loansapi/loan_products_list/?allowed_in_user_branch_only=1', '/usersapi/staff/?loan_officers_only=1']}>
         {({data}) => (
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ values, errors, isSubmitting, setFieldValue }) => (
@@ -105,7 +105,11 @@ function Refinance({setOpen, loan}) {
                       </CustomSelect>
                       <CustomSelect label='Fund Account' name='cash_account_id' required>
                         <option value=''>------</option>
-                        {data[0].filter(acc => acc.currency_id == loan.currency_id).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_name}</option>)}
+                        {data[0].accounts.filter(acc => acc.currency_id == loan.currency_id).map(acc => (
+                          <option key={acc.id} value={acc.id}>
+                            {acc.label}-{acc.branch}
+                          </option>
+                        ))}
                       </CustomSelect>
                       <CustomDatePicker label='Refinance Date' name='db_date' setFieldValue={setFieldValue} required/>
                       <CustomDatePicker label='First Repayment Date' name='first_repayment_date' setFieldValue={setFieldValue} required/>

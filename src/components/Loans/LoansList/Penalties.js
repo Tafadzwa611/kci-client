@@ -65,9 +65,6 @@ function Penalties({penalties, penalty, client_name, loanId, setLoan, locked, st
                 <th className='schedule__table'>Reason for Penalty</th>
                 <th className='schedule__table'>Sub Loan</th>
                 <th className='schedule__table'>Amount</th>
-                <th className='schedule__table'>Amount Paid</th>
-                <th className='schedule__table'>Amount Due</th>
-                <th className='schedule__table'>Status</th>
                 <th className='schedule__table'>Action</th>
               </tr>
             </thead>
@@ -78,9 +75,6 @@ function Penalties({penalties, penalty, client_name, loanId, setLoan, locked, st
                   <td className='schedule__table'>{penalty.description}</td>
                   <td className='schedule__table'>{penalty.sub_loan_name}</td>
                   <td className='schedule__table'>{penalty.amount_for_fixed_amount_penalty}</td>
-                  <td className='schedule__table'>{penalty.amount_paid}</td>
-                  <td className='schedule__table'>{penalty.amount_due}</td>
-                  <td className='schedule__table'>{penalty.status}</td>
                   <td className='schedule__table'>
                     <span className='badge badge-danger' id={penalty.id} onClick={showDeleteModal} style={{cursor: 'pointer'}}>
                       Reverse
