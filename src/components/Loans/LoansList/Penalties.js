@@ -8,9 +8,10 @@ import {
   ActionModal,
   ActionModalDialog,
   SubmitButton,
-  CustomSelect,
   OliveBtn,
-  CustomDatePicker
+  CustomDatePicker,
+  ModalSubmit,
+  Modal
 } from '../../../common';
 import { Form, Formik } from 'formik';
 import axios from 'axios';
@@ -90,16 +91,17 @@ function Penalties({penalties, penalty, client_name, loanId, setLoan, locked, st
   )
 }
 
-const PenaltyForm = ({loanId, setLoan, subLoans, clientType}) => {
+const PenaltyForm = ({loanId, setLoan}) => {
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const url = clientType === 'Groups (solidarity)' ? `/loansapi/add_loan_penalty/${loanId}/${values.sub_loan_id}/` : `/loansapi/add_loan_penalty/${loanId}/`;
-      const data = {description: values.description, penalty_amount: values.penalty_amount}
-      if (values.penalty_date) {
-        data.penalty_date = values.penalty_date;
+      const data = {
+        penalty_amount: values.penalty_amount,
+        penalty_date: values.penalty_date,
+        due_date: values.due_date,
+        description: values.description
       }
-      const response = await axios.post(url, data, CONFIG);
+      const response = await axios.post(`/loansapi/add_loan_penalty/${loanId}/`, data, CONFIG);
       setLoan(response.data);
       actions.resetForm();
     } catch (error) {
@@ -114,17 +116,13 @@ const PenaltyForm = ({loanId, setLoan, subLoans, clientType}) => {
   }
 
   return (
-    <Formik initialValues={{penalty_date: '', description: '', penalty_amount: '', sub_loan_id: ''}} onSubmit={onSubmit}>
+    <Formik initialValues={{penalty_date: '', description: '', penalty_amount: '', due_date: ''}} onSubmit={onSubmit}>
       {({ isSubmitting, errors, setFieldValue }) => (
         <Form>
           <NonFieldErrors errors={errors}>
-            {clientType === 'Groups (solidarity)' ?
-            <CustomSelect label='Sub Loan' name='sub_loan_id' required>
-              <option value=''>------</option>
-              {subLoans.filter(subLoan => subLoan.status === 'Arrears').map(subLoan => <option key={subLoan.id} value={subLoan.id}>{subLoan.fullname} {subLoan.status}</option>)}
-            </CustomSelect> : null}
             <CustomInput label='Amount' name='penalty_amount' type='number' required/>
             <CustomDatePicker label='Penalty Date' name='penalty_date' setFieldValue={setFieldValue} required/>
+            <CustomDatePicker label='Penalty Due Date' name='due_date' setFieldValue={setFieldValue} required/>
             <CustomTextField label='Description' name='description' type='text' required/>
             <div style={{display:'flex', justifyContent: 'flex-end', paddingBottom:'1.5rem'}}> 
               <SubmitButton isSubmitting={isSubmitting}/>
@@ -136,12 +134,11 @@ const PenaltyForm = ({loanId, setLoan, subLoans, clientType}) => {
   )
 }
 
-const ReducePenaltyForm = ({loanId, orgPenalty, setLoan, subLoans, clientType}) => {
+const ReducePenaltyForm = ({loanId, orgPenalty, setLoan}) => {
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const url = clientType === 'Groups (solidarity)' ? `/loansapi/reduce_penalty/${loanId}/${values.sub_loan_id}/` : `/loansapi/reduce_penalty/${loanId}/`;
-      const response = await axios.post(url, values, CONFIG);
+      const response = await axios.post(`/loansapi/reduce_penalty/${loanId}/`, values, CONFIG);
       setLoan(response.data);
       actions.resetForm();
     } catch (error) {
@@ -156,16 +153,11 @@ const ReducePenaltyForm = ({loanId, orgPenalty, setLoan, subLoans, clientType}) 
   }
 
   return (
-    <Formik initialValues={{new_balance: '', sub_loan_id: ''}} onSubmit={onSubmit}>
+    <Formik initialValues={{new_balance: ''}} onSubmit={onSubmit}>
       {({ isSubmitting, errors }) => (
         <Form>
           <NonFieldErrors errors={errors}>
             <div>Original Balance {orgPenalty}</div>
-            {clientType === 'Groups (solidarity)' ?
-            <CustomSelect label='Sub Loan' name='sub_loan_id' required>
-              <option value=''>------</option>
-              {subLoans.filter(subLoan => subLoan.status === 'Arrears').map(subLoan => <option key={subLoan.id} value={subLoan.id}>{subLoan.fullname} {subLoan.status}</option>)}
-            </CustomSelect> : null}
             <CustomInput label='New Balance' name='new_balance' type='number' required/>
             <div style={{display:'flex', justifyContent: 'flex-end', paddingBottom:'1.5rem'}}> 
               <SubmitButton isSubmitting={isSubmitting}/>
@@ -178,10 +170,10 @@ const ReducePenaltyForm = ({loanId, orgPenalty, setLoan, subLoans, clientType}) 
 }
 
 function DeletePenalty({setOpenModal, setLoan, penaltyId}) {
-  const onSubmit = async (_, actions) => {
+  const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.delete(`/loansapi/delete_penalty/${penaltyId}/`, CONFIG);
+      const response = await axios.post(`/loansapi/delete_penalty/${penaltyId}/`, values, CONFIG);
       setLoan(response.data);
       setOpenModal(false);
     } catch (error) {
@@ -196,17 +188,22 @@ function DeletePenalty({setOpenModal, setLoan, penaltyId}) {
   }
 
   return (
-    <ActionModal>
-      <Formik initialValues={{}} onSubmit={onSubmit}>
-        {({isSubmitting, errors}) => (
+    <Modal open={true} setOpen={setOpenModal} title='Reverse Penalty'>
+      <Formik initialValues={{value_date: ''}} onSubmit={onSubmit}>
+        {({isSubmitting, setFieldValue, errors}) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <ActionModalDialog isSubmitting={isSubmitting} act={'Reverse'} msg={'Are you sure you want to reverse this penalty.'} setOpen={setOpenModal}/>
+              <div className='create_modal_container'>
+                <div>
+                  <CustomDatePicker label='Reversal Date' name='value_date' setFieldValue={setFieldValue} required/>
+                </div>
+                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpenModal}/>
+              </div>
             </NonFieldErrors>
           </Form>
         )}
       </Formik>
-    </ActionModal>
+    </Modal>
   )
 }
 

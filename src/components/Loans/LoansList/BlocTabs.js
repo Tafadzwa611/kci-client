@@ -81,7 +81,7 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
           status={loan.status}
           client_name={client_name}
           loanId={loan.id}
-          penalty={loan.penalty}
+          penalty={loan.penalty_reference}
           setLoan={setLoan}
           locked={loan.penalties_locked}
         />,
