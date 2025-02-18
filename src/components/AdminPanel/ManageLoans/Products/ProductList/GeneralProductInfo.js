@@ -107,12 +107,26 @@ function GeneralProductInfo({product}) {
                     <li>Send SMS Alert On Default: <span className="badge badge-danger">Inactive</span></li>}
                 </>
               )}
+              {product.action_on_loan_default === 'Add Scheduled Penalties After Default' && (
+                <>
+                  <li>Apply Penalty On: {product.apply_late_repayment_penalty_on}</li>
+                  {product.schedule_penalties.map((sp, idx) => (
+                    <li key={idx}>
+                      Number Of Days: {sp.days}, Rate: {sp.penalty_rate}%, Type: {sp.charge_type}
+                    </li>
+                  ))}
+                </>
+              )}
               {product.action_on_loan_default === 'Add Scheduled Penalties After Maturity' && (
-                product.schedule_penalties.map((sp, idx) => (
-                  <li key={idx}>
-                    Number Of Days: {sp.days}, Rate: {sp.penalty_rate}%, Type: {sp.charge_type}
-                  </li>
-                ))
+                <>
+                  <li>Apply Penalty On: {product.apply_late_repayment_penalty_on}</li>
+                  <li>Auto Apply Scheduled Penalties When Backdating: {product.auto_apply_scheduled_penalties_on_backdating ? 'Yes' : 'No'}</li>
+                  {product.schedule_penalties.map((sp, idx) => (
+                    <li key={idx}>
+                      Number Of Days: {sp.days}, Rate: {sp.penalty_rate}%, Type: {sp.charge_type}
+                    </li>
+                  ))}
+                </>
               )}
             </ul>
           </div>

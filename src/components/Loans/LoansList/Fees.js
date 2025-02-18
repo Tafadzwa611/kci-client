@@ -2,8 +2,9 @@ import React, { useState, useRef } from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import {
   NonFieldErrors,
-  ActionModal,
-  ActionModalDialog
+  Modal,
+  CustomDatePicker,
+  ModalSubmit
 } from '../../../common';
 import { Form, Formik } from 'formik';
 import axios from 'axios';
@@ -51,9 +52,11 @@ function Fees({fees, setLoan}) {
                   <td className='schedule__table'>{fee.amount}</td>
                   <td className='schedule__table'>{fee.receipt_number}</td>
                   <td className='schedule__table'>
-                    <span className='badge badge-danger' id={fee.id} onClick={showDeleteModal} style={{cursor: 'pointer'}}>
-                      Reverse
-                    </span>
+                    {fee.reversible && (
+                      <span className='badge badge-danger' id={fee.id} onClick={showDeleteModal} style={{cursor: 'pointer'}}>
+                        Reverse
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -66,10 +69,10 @@ function Fees({fees, setLoan}) {
 }
 
 function DeleteFee({setOpenModal, setLoan, feeId}) {
-  const onSubmit = async (_, actions) => {
+  const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.delete(`/loansapi/delete_fee/${feeId}/`, CONFIG);
+      const response = await axios.post(`/loansapi/delete_fee/${feeId}/`, values, CONFIG);
       setLoan(response.data);
       setOpenModal(false);
     } catch (error) {
@@ -84,17 +87,22 @@ function DeleteFee({setOpenModal, setLoan, feeId}) {
   }
 
   return (
-    <ActionModal>
-      <Formik initialValues={{}} onSubmit={onSubmit}>
-        {({isSubmitting, errors}) => (
+    <Modal open={true} setOpen={setOpenModal} title='Reverse Fee'>
+      <Formik initialValues={{value_date: ''}} onSubmit={onSubmit}>
+        {({isSubmitting, setFieldValue, errors}) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <ActionModalDialog isSubmitting={isSubmitting} act={'Reverse'} msg={'Are you sure you want to reverse this fee.'} setOpen={setOpenModal}/>
+            <div className='create_modal_container'>
+                <div>
+                  <CustomDatePicker label='Reversal Date' name='value_date' setFieldValue={setFieldValue} required/>
+                </div>
+                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpenModal}/>
+              </div>
             </NonFieldErrors>
           </Form>
         )}
       </Formik>
-    </ActionModal>
+    </Modal>
   )
 }
 

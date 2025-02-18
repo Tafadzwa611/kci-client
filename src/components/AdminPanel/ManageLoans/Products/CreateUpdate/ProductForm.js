@@ -218,9 +218,10 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
               <CustomSelect label='Action On Default' name='action_on_loan_default'>
                 <option value='Do Nothing'>Do Nothing</option>
                 <option value='Add Penalty'>Add Penalty</option>
+                <option value='Add Scheduled Penalties After Maturity'>Add Scheduled Penalties After Maturity</option>
+                <option value='Add Scheduled Penalties After Default'>Add Scheduled Penalties After Default</option>
                 <option value='Add Fixed Penalty'>Add Fixed Penalty</option>
                 <option value='Add Interest'>Add Interest Fees</option>
-                <option value='Add Scheduled Penalties After Maturity'>Add Scheduled Penalties After Maturity</option>
               </CustomSelect>
               {values.action_on_loan_default === 'Add Scheduled Penalties After Maturity' && (
                 <>
@@ -228,6 +229,35 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                     <option value=''>------</option>
                     <option value='Total Loan Balance'>Total Loan Balance</option>
                     <option value='Principal Balance'>Principal Balance</option>
+                    <option value='Interest'>Interest Balance</option>
+                    <option value='Principal + Interest'>Principal Balance + Interest Balance</option>
+                    <option value='Principal + Penalty'>Principal Balance + Penalty Balance</option>
+                  </CustomSelect>
+                  <CustomCheckbox label='Auto Apply Scheduled Penalties When Backdating' name='auto_apply_scheduled_penalties_on_backdating'/>
+                  {values.schedule_penalties.map((schedule_penalty, index) => {
+                    return(
+                      <React.Fragment key={index}>
+                        <SchedulePenalty
+                          schedule_penalty={schedule_penalty}
+                          index={index}
+                          setFieldValue={setFieldValue}
+                          schedule_penalties={values.schedule_penalties}
+                        />
+                      </React.Fragment>
+                    )
+                  })}
+                  <AddSchedulePenalty schedule_penalties={values.schedule_penalties} setFieldValue={setFieldValue}/>
+                </>
+              )}
+              {values.action_on_loan_default === 'Add Scheduled Penalties After Default' && (
+                <>
+                  <CustomSelect label='Apply Interest On' name='apply_late_repayment_penalty_on' required>
+                    <option value=''>------</option>
+                    <option value='Total Loan Balance'>Total Loan Balance</option>
+                    <option value='Principal Balance'>Principal Balance</option>
+                    <option value='Interest'>Interest Balance</option>
+                    <option value='Principal + Interest'>Principal Balance + Interest Balance</option>
+                    <option value='Principal + Penalty'>Principal Balance + Penalty Balance</option>
                   </CustomSelect>
                   {values.schedule_penalties.map((schedule_penalty, index) => {
                     return(
