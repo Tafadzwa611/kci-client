@@ -13,10 +13,17 @@ const DeletePayment = ({setOpen, paymentId, setLoan, setPayId}) => {
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+      const startTime = performance.now();
       const response = await axios.post(`/loansapi/delete_payment/${paymentId}/`, values, CONFIG);
+      const endTime = performance.now();
+      const elapsedTimeInSeconds = (endTime - startTime) / 1000;
+      console.log(`Execution time: ${elapsedTimeInSeconds} seconds`);
       setLoan(response.data);
       setOpen(false);
       setPayId(null);
+      const endTime2 = performance.now();
+      const elapsedTimeInSeconds2 = (endTime2 - startTime) / 1000;
+      console.log(`Execution time 2: ${elapsedTimeInSeconds2} seconds`);
     } catch (error) {
       if (error.message === 'Network Error') {
         actions.setErrors({responseStatus: 'Network Error'});
