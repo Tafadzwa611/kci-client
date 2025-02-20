@@ -227,11 +227,11 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 <>
                   <CustomSelect label='Apply Interest On' name='apply_late_repayment_penalty_on' required>
                     <option value=''>------</option>
-                    <option value='Total Loan Balance'>Total Loan Balance</option>
-                    <option value='Principal Balance'>Principal Balance</option>
-                    <option value='Interest'>Interest Balance</option>
-                    <option value='Principal + Interest'>Principal Balance + Interest Balance</option>
-                    <option value='Principal + Penalty'>Principal Balance + Penalty Balance</option>
+                    <option value='Total Loan Balance'>Total Loan Balance In Arrears</option>
+                    <option value='Principal Balance'>Principal Balance In Arrears</option>
+                    <option value='Interest'>Interest Balance In Arrears</option>
+                    <option value='Principal + Interest'>Principal Balance In Arrears + Interest Balance In Arrears</option>
+                    <option value='Principal + Penalty'>Principal Balance In Arrears + Penalty Balance In Arrears</option>
                   </CustomSelect>
                   <CustomCheckbox label='Auto Apply Scheduled Penalties When Backdating' name='auto_apply_scheduled_penalties_on_backdating'/>
                   {values.schedule_penalties.map((schedule_penalty, index) => {
@@ -253,11 +253,11 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 <>
                   <CustomSelect label='Apply Interest On' name='apply_late_repayment_penalty_on' required>
                     <option value=''>------</option>
-                    <option value='Total Loan Balance'>Total Loan Balance</option>
-                    <option value='Principal Balance'>Principal Balance</option>
-                    <option value='Interest'>Interest Balance</option>
-                    <option value='Principal + Interest'>Principal Balance + Interest Balance</option>
-                    <option value='Principal + Penalty'>Principal Balance + Penalty Balance</option>
+                    <option value='Total Loan Balance'>Total Loan Balance In Arrears</option>
+                    <option value='Principal Balance'>Principal Balance In Arrears</option>
+                    <option value='Interest'>Interest Balance In Arrears</option>
+                    <option value='Principal + Interest'>Principal Balance In Arrears + Interest Balance In Arrears</option>
+                    <option value='Principal + Penalty'>Principal Balance In Arrears + Penalty Balance In Arrears</option>
                   </CustomSelect>
                   {values.schedule_penalties.map((schedule_penalty, index) => {
                     return(
