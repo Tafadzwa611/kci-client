@@ -21,7 +21,7 @@ function SchedulePenalty({schedule_penalty, index, setFieldValue, schedule_penal
                 <option value='Penalty'>Penalty</option>
                 <option value='Interest'>Interest</option>
             </CustomSelect>
-            <CustomInput label='Elapsed Days' name={`schedule_penalties[${index}].days`} type='number' required/>
+            <CustomInput label='Elapsed Days' name={`schedule_penalties[${index}].days`} type='number' min='1' required/>
             <CustomInput label='Charge Rate' name={`schedule_penalties[${index}].penalty_rate`} type='number' min='0.00001' step='0.00001' required/>
             <div style={{marginTop:'10px'}}>
                 <ButtonDefault value={'Remove Penalty'} handler={remove} />
