@@ -68,33 +68,33 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
             {({ values, errors, isSubmitting, setFieldValue }) => (
               <Form>
                 <NonFieldErrors errors={errors}>
-                <div className='create_modal_container'>
-                  <div>
-                    <CustomInput label='Amount Paid' name='amount_paid' type='number' required/>
-                    <CustomCheckbox label='Manually Allocate' name='manually_allocate'/>
-                    {values.manually_allocate && <>
-                      <CustomInput label='Principal Paid' name='manual_allocation.principal' type='number' required/>
-                      <CustomInput label='Interest Paid' name='manual_allocation.interest' type='number' required/>
-                      <CustomInput label='Fees Paid' name='manual_allocation.fees' type='number' required/>
-                      <CustomInput label='Penalty Paid' name='manual_allocation.penalty' type='number' required/>
-                    </>}
-                    <CustomDatePicker label='Payment Date' name='payment_date' setFieldValue={setFieldValue} required/>
-                    <CustomSelect label='Fund Account' name='cash_account_id' required>
-                      <option value=''>------</option>
-                      {data[0].filter(acc => acc.currency_id == currencyId).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_name}</option>)}
-                    </CustomSelect>
-                    {clientType === 'Groups (solidarity)' ?
-                    <CustomSelect label='Sub Loan' name='sub_loan_id' required>
-                      <option value=''>------</option>
-                      {selectOpts.map(subLoan => <option key={subLoan.id} value={subLoan.id}>{subLoan.fullname}</option>)}
-                    </CustomSelect> : null}
-                    <CustomInput label='Receipt Number' name='receipt_number' type='text'/>
-                    <CustomTextField label='Description' name='notes' type='text'/>
-                    <CustomCheckbox label='Send SMS notification to client' name='send_sms_notification'/>
+                  <div className='create_modal_container'>
+                    <div>
+                      <CustomInput label='Amount Paid' name='amount_paid' type='number' required/>
+                      <CustomCheckbox label='Manually Allocate' name='manually_allocate'/>
+                      {values.manually_allocate && <>
+                        <CustomInput label='Principal Paid' name='manual_allocation.principal' type='number' required/>
+                        <CustomInput label='Interest Paid' name='manual_allocation.interest' type='number' required/>
+                        <CustomInput label='Fees Paid' name='manual_allocation.fees' type='number' required/>
+                        <CustomInput label='Penalty Paid' name='manual_allocation.penalty' type='number' required/>
+                      </>}
+                      <CustomDatePicker label='Payment Date' name='payment_date' setFieldValue={setFieldValue} required/>
+                      <CustomSelect label='Fund Account' name='cash_account_id' required>
+                        <option value=''>------</option>
+                        {data[0].filter(acc => acc.currency_id == currencyId).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_name}</option>)}
+                      </CustomSelect>
+                      {clientType === 'Groups (solidarity)' ?
+                      <CustomSelect label='Sub Loan' name='sub_loan_id' required>
+                        <option value=''>------</option>
+                        {selectOpts.map(subLoan => <option key={subLoan.id} value={subLoan.id}>{subLoan.fullname}</option>)}
+                      </CustomSelect> : null}
+                      <CustomInput label='Receipt Number' name='receipt_number' type='text'/>
+                      <CustomTextField label='Description' name='notes' type='text'/>
+                      <CustomCheckbox label='Send SMS notification to client' name='send_sms_notification'/>
+                    </div>
+                    <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
                   </div>
-                  <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
-                </div>
-              </NonFieldErrors>
+                </NonFieldErrors>
               </Form>
             )}
           </Formik>

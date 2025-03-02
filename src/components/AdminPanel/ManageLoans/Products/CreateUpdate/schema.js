@@ -56,7 +56,7 @@ export const createLoanProductSchema = yup.object().shape({
   allowed_branches: yup.array().of(yup.number().integer()),
   fees: yup.array().of(feeSchema),
   action_on_loan_default: yup.string()
-  .oneOf(['Do Nothing', 'Add Penalty', 'Add Interest', 'Add Fixed Penalty', 'Add Scheduled Penalties After Maturity'], 'Invalid')
+  .oneOf(['Do Nothing', 'Add Penalty', 'Add Interest', 'Add Fixed Penalty', 'Add Scheduled Penalties After Maturity', 'Add Scheduled Penalties After Default'], 'Invalid')
   .required('Required'),
   apply_late_repayment_penalty_on: yup
     .string()

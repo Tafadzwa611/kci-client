@@ -15,6 +15,7 @@ import CustomDatePickerFilter from './CustomDatePickerFilter';
 import CustomMultiSelectFilter from './CustomMultiSelectFilter';
 // import CustomSortableSelect from './CustomSortableSelect';
 // import CustomSelectRemote from './CustomSelectRemote';
+import MultiSelectFilter from './MultiSelectFilter';
 
 export {
     // CustomRadio,
@@ -32,6 +33,7 @@ export {
     CustomDatePickerFilter,
     CustomMultiSelectFilter,
     CustomSelectRemoteFilter,
+    MultiSelectFilter,
     // CustomSortableSelect,
     // CustomSelectRemote
 };

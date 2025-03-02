@@ -18,6 +18,8 @@ import GenderDistribution from '../GenderDistribution/GenderDistribution';
 import MaturityProfile from '../MaturityProfile/MaturityProfile';
 import PortfolioMgt from '../PortfolioMgt/PortfolioMgt';
 import AssetQuality from '../AssetQuality/AssetQuality';
+import DebtorsList from '../DebtorsList/DebtorsList';
+import LoansGranted from '../LoansGranted/LoansGranted';
 import {
   Routes,
   Route,
@@ -53,6 +55,8 @@ const ViewReports = () => {
         <Route path='maturityprofile' element={<MaturityProfile />} />
         <Route path='portfoliomgt' element={<PortfolioMgt />} />
         <Route path='assetquality' element={<AssetQuality />} />
+        <Route path='debtorslist' element={<DebtorsList />} />
+        <Route path='loansgranted' element={<LoansGranted />} />
       </Route>
     </Routes>
   )
@@ -120,6 +124,12 @@ function Layout() {
             </Link>
             <Link to='/reports/viewreports/portofolioatriskreport' className={location.pathname === '/reports/viewreports/portofolioatriskreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Par Report
+            </Link>
+            <Link to='/reports/viewreports/debtorslist' className={location.pathname === '/reports/viewreports/debtorslist' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Debtors List
+            </Link>
+            <Link to='/reports/viewreports/loansgranted' className={location.pathname === '/reports/viewreports/loansgranted' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Loans Granted
             </Link>
             <Link to='/reports/viewreports/audittrail' className={location.pathname === '/reports/viewreports/audittrail' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Audit Trail
