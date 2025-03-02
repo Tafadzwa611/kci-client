@@ -36,7 +36,7 @@ const Filter = ({setReport, setParams}) => {
                 setReport(response.data);
             }else {
                 data.file_format = values.mode;
-                await axios.get('/reportsapi/debtors_list_export/', {params: getParams(data)});
+                await axios.get('/reportsapi/loans_granted_export/', {params: getParams(data)});
             }
         } catch (error) {
             if (error.message === 'Network Error') {
