@@ -4,7 +4,7 @@ import {
   NonFieldErrors,
   CustomDatePickerFilter,
   CustomSelectFilter,
-  CustomMultiSelectFilter,
+  MultiSelectFilter,
   SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
@@ -75,17 +75,17 @@ const DateRange = ({setReport, setParams}) => {
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
                   <div style={{width:'60%'}}>
-                    <CustomMultiSelectFilter
+                    <MultiSelectFilter
                       label='Branches'
                       name='branch_ids'
-                      options={branches.map(br => ({label: br.name, value:br.id}))}
+                      options={branches.map(br => ({label: br.name, value: br.id}))}
                       setFieldValue={setFieldValue}
-                      required
                     />
                   </div>
                   <div className='row-payments-container' style={{width:'15%'}}>
                     <CustomSelectFilter label='Fee Type' name='fee_type'>
-                      <option value=''>------</option>
+                      <option value=''>All</option>
+                      <option value='Arbitrary'>Arbitrary</option>
                       <option value='Deducted'>Deducted</option>
                       <option value='Capitalized'>Capitalized</option>
                       <option value='Upfront Disbursement'>Upfront Disbursement</option>
