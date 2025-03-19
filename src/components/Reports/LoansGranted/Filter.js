@@ -21,7 +21,8 @@ const Filter = ({setReport, setParams}) => {
         client_str: '',
         reason: '',
         status: '',
-        mode: 'html'
+        mode: 'html',
+        level: 'Detailed',
     };
     const {currencies} = useCurrencies();
     const {branches} = useBranches();
@@ -84,13 +85,19 @@ const Filter = ({setReport, setParams}) => {
                                     </div>
                                 </div>
                                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                                    <div style={{width:'85%'}}>
+                                    <div style={{width:'80%'}}>
                                         <MultiSelectFilter
                                             label='Branches'
                                             name='branch_ids'
                                             options={branches.map(br => ({label: br.name, value:br.id}))}
                                             setFieldValue={setFieldValue}
                                         />
+                                    </div>
+                                    <div className='row-payments-container' style={{width:'10%'}}>
+                                        <CustomSelectFilter label='Level' name='level' required>
+                                            <option value='Detailed'>Detailed</option>
+                                            <option value='Summary'>Summary</option>
+                                        </CustomSelectFilter>
                                     </div>
                                     <SubmitButtonFilter isSubmitting={isSubmitting}/>
                                 </div>

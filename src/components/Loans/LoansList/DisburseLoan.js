@@ -8,7 +8,8 @@ import {
   CustomSelect,
   CustomCheckbox,
   Fetcher,
-  CustomInput
+  CustomInput,
+  CustomMultiSelect
 } from '../../../common';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -30,6 +31,7 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
+      data.fund_account_id = data.fund_account.value;
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.patch(url, data, CONFIG);
       const newLoan = response.data;
@@ -52,7 +54,7 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
 
   return (
     <Modal open={true} setOpen={setOpen} title={'Disburse Loan'}>
-      <Fetcher urls={['/acc-api/cash-and-cash-equivalents/', `/usersapi/staff/?loan_officers_only=1`]}>
+      <Fetcher urls={['/acc-api/cash-accounts-list/', `/usersapi/staff/?loan_officers_only=1`]}>
         {({data}) => (
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ errors, isSubmitting, setFieldValue }) => (
@@ -86,10 +88,16 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
                           allowKeyDown
                         />
                       )}
-                      <CustomSelect label='Fund Account' name='fund_account_id' required>
-                        <option value=''>------</option>
-                        {data[0].filter(acc => acc.currency_id == loan.currency_id).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_name}</option>)}
-                      </CustomSelect>
+                      <CustomMultiSelect
+                        label='Fund Account'
+                        name='fund_account'
+                        isMulti={false}
+                        setFieldValue={setFieldValue}
+                        options={data[0].accounts.filter(account => !account.suspended && account.currency_id == loan.currency_id).map(account => (
+                          {label: `${account.label} - ${account.branch}`, value: account.value}
+                        ))}
+                        required
+                      />
                       <CustomSelect label='Loan Officer & Branch' name='loan_officer_id'>
                         <option value=''>------</option>
                         {data[1].map(user => <option key={user.id} value={user.id}>{`${user.first_name} ${user.last_name} - ${user.branch__name}`}</option>)}

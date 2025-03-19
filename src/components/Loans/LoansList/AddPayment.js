@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import {
   NonFieldErrors,
+  CustomMultiSelect,
   CustomInput,
   CustomTextField,
   CustomSelect,
@@ -18,6 +19,7 @@ import { removeEmptyValues } from '../../../utils/utils';
 const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType, updateLoanList, setLoanData}) => {
   const onSubmit = async (values, actions) => {
     const data = removeEmptyValues(values);
+    data.cash_account_id = data.fund_account.value;
     if (!values.manually_allocate) {
       delete data.manual_allocation
     }
@@ -62,7 +64,7 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
 
   return (
     <Modal open={true} setOpen={setOpen} title={'Add Payment'}>
-      <Fetcher urls={['/acc-api/cash-and-cash-equivalents/']}>
+      <Fetcher urls={['/acc-api/cash-accounts-list/']}>
         {({data}) => (
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ values, errors, isSubmitting, setFieldValue }) => (
@@ -79,10 +81,20 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
                         <CustomInput label='Penalty Paid' name='manual_allocation.penalty' type='number' required/>
                       </>}
                       <CustomDatePicker label='Payment Date' name='payment_date' setFieldValue={setFieldValue} required/>
-                      <CustomSelect label='Fund Account' name='cash_account_id' required>
+                      {/* <CustomSelect label='Fund Account' name='cash_account_id' required>
                         <option value=''>------</option>
                         {data[0].filter(acc => acc.currency_id == currencyId).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_name}</option>)}
-                      </CustomSelect>
+                      </CustomSelect> */}
+                      <CustomMultiSelect
+                        label='Fund Account'
+                        name='fund_account'
+                        isMulti={false}
+                        setFieldValue={setFieldValue}
+                        options={data[0].accounts.filter(account => !account.suspended && account.currency_id == currencyId).map(account => (
+                          {label: `${account.label} - ${account.branch}`, value: account.value}
+                        ))}
+                        required
+                      />
                       {clientType === 'Groups (solidarity)' ?
                       <CustomSelect label='Sub Loan' name='sub_loan_id' required>
                         <option value=''>------</option>
