@@ -97,7 +97,7 @@ const Filter = ({setReport, setParams}) => {
                                     </div>
                                 </div>
                                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                                    <div style={{width:'63%'}}>
+                                    <div style={{width:'85%'}}>
                                         <MultiSelectFilter
                                             label='Branches'
                                             name='branch_ids'
