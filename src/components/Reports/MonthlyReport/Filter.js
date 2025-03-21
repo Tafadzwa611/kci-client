@@ -5,7 +5,7 @@ import {
 } from '../../../common';
 import {
     CustomSelectFilter,
-    CustomMultiSelectFilter,
+    MultiSelectFilter,
     SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
@@ -34,10 +34,16 @@ const Filter = ({setMonthlyReportData, units}) => {
     return params
   }
 
+  const allBranchIds = branches.map(br => br.id);
+
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
       const params = getParams(data);
+      if (values.branch_ids.includes('*')) {
+        params.delete('branch_ids');
+        allBranchIds.forEach(id => params.append('branch_ids', id));
+      }
       const response = await axios.get('/reportsapi/monthly-report/', {params: params});
       setMonthlyReportData(response.data);
     } catch (error) {
@@ -60,13 +66,13 @@ const Filter = ({setMonthlyReportData, units}) => {
                     <NonFieldErrors errors={errors}>
                         <div style={{display:"flex", justifyContent:"space-between"}}>
                             <div style={{width:"70%"}}>
-                                <CustomMultiSelectFilter
-                                    label='Branches'
-                                    name='branch_ids'
-                                    options={branches.map(br => ({label: br.name, value:br.id}))}
-                                    setFieldValue={setFieldValue}
-                                    required
-                                />
+                              <MultiSelectFilter
+                                label='Branches'
+                                name='branch_ids'
+                                options={branches.map(br => ({label: br.name, value:br.id}))}
+                                setFieldValue={setFieldValue}
+                                required
+                              />
                             </div>
                             <div className="row-payments-container" style={{width:"10%"}}>
                               <CustomSelectFilter label='Currency' name='currency_id' required>
