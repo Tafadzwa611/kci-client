@@ -10,7 +10,7 @@ const PortfolioAtRiskReport = () => {
     e.preventDefault();
     setOpen(true);
   }
-
+  console.log(pars)
   return (
     <>
       <AddPar open={openModal} setOpen={setOpen} setPars={setPars} />
