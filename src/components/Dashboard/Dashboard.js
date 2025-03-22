@@ -27,7 +27,7 @@ export default function Dashboard() {
   const [branchIds, setBranchIds] = useState(null);
 
   return (
-    <Fetcher urls={['/usersapi/list_units/']}>
+    <Fetcher urls={['/usersapi/dashboard_units/']}>
       {({data}) => (
         <>
           <DashboardSections 
@@ -46,6 +46,8 @@ export default function Dashboard() {
 }
 
 const DashboardSections = ({setCurrencyId, currencyId, setBranchIds, setUnitId, branchIds, units, unitId}) => {
+
+
   return (
     <div className='font-13'>
       <div style={{padding:'24px', paddingBottom:'0'}}>
@@ -119,6 +121,10 @@ const Filter = ({currencyId, setCurrencyId, setBranchIds, setUnitId, units, unit
                 }
                 setOptionSelected(selectedOpts);
                 setBranchIds(selectedOpts.map(branch => branch.value));
+                let filteredUnits = units.filter(unit => 
+                  selectedOpts.some(branch => branch.value === unit.branch)
+                );
+                console.log(filteredUnits);
               }}
               styles={style}
             />
