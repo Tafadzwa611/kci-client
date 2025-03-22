@@ -3,7 +3,7 @@ import { Form, Formik } from 'formik';
 import {
   NonFieldErrors,
   CustomSelectFilter,
-  CustomMultiSelectFilter,
+  MultiSelectFilter,
   CustomDatePickerFilter,
   SubmitButtonFilter
 } from '../../../common';
@@ -28,11 +28,17 @@ const Filter = ({setReport, setParams, units}) => {
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
+  const allBranchIds = branches.map(br => br.id);
+
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
       if (values.file_format === 'html') {
         const params = getParams(data);
+        if (values.branch_ids.includes('*')) {
+          params.delete('branch_ids');
+          allBranchIds.forEach(id => params.append('branch_ids', id));
+        }
         setParams(params);
         const response = await axios.get('/reportsapi/credit_report/', {params: params});
         setReport(response.data);
@@ -97,7 +103,7 @@ const Filter = ({setReport, setParams, units}) => {
                 </div>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
                   <div style={{width:'73%'}}>
-                    <CustomMultiSelectFilter
+                    <MultiSelectFilter
                       label='Branches'
                       name='branch_ids'
                       options={branches.map(br => ({label: br.name, value:br.id}))}
