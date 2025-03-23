@@ -5,7 +5,7 @@ import {
   CustomInputFilter,
   CustomDatePickerFilter,
   CustomSelectFilter,
-  CustomMultiSelectFilter,
+  MultiSelectFilter,
   SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
@@ -18,10 +18,16 @@ const Filter = ({setData, setParams, units}) => {
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
+  const allBranchIds = branches.map(br => br.id);
+
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
       const params = getParams(data);
+      if (values.branch_ids.includes('*')) {
+        params.delete('branch_ids');
+        allBranchIds.forEach(id => params.append('branch_ids', id));
+      }
       setParams(params);
       const response = await axios.get('/loansapi/payments_list/', {params: params});
       setData(response.data);
@@ -56,11 +62,12 @@ const Filter = ({setData, setParams, units}) => {
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
                   <div style={{width:'70%'}}>
-                    <CustomMultiSelectFilter
+                    <MultiSelectFilter
                       label='Branches'
                       name='branch_ids'
                       options={branches.map(br => ({label: br.name, value:br.id}))}
                       setFieldValue={setFieldValue}
+                      required
                     />
                   </div>
                   <div style={{width:'10%'}}>

@@ -8,6 +8,7 @@ import {
   CustomDatePickerFilter,
   CustomSelectFilter,
   CustomMultiSelectFilter,
+  MultiSelectFilter,
   SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
@@ -54,10 +55,16 @@ const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDeta
     setFieldValue('client_type', value);
   }
 
+  const allBranchIds = branches.map(br => br.id);
+
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
       const params = getParams(data);
+      if (values.branch_ids.includes('*')) {
+        params.delete('branch_ids');
+        allBranchIds.forEach(id => params.append('branch_ids', id));
+      }
       setParams(params);
       const response = await axios.get('/loansapi/loan_list/', {params: params});
       setLoanData(response.data);
@@ -201,7 +208,7 @@ const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDeta
                     </CustomSelectFilter>
                   </div>
                   <div style={{width:'73%'}}>
-                    <CustomMultiSelectFilter
+                    <MultiSelectFilter
                       label='Branches'
                       name='branch_ids'
                       options={branches.map(br => ({label: br.name, value:br.id}))}

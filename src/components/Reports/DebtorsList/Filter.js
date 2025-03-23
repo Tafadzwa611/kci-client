@@ -26,11 +26,17 @@ const Filter = ({setReport, setParams}) => {
     const {currencies} = useCurrencies();
     const {branches} = useBranches();
 
+    const allBranchIds = branches.map(br => br.id);
+
     const onSubmit = async (values, actions) => {
         try {
             const data = removeEmptyValues(values);
             if (values.mode === 'html') {
                 const params = getParams(data);
+                if (values.branch_ids.includes('*')) {
+                    params.delete('branch_ids');
+                    allBranchIds.forEach(id => params.append('branch_ids', id));
+                  }
                 setParams(params);
                 const response = await axios.get('/reportsapi/debtors_list/', {params: params});
                 setReport(response.data);
@@ -97,7 +103,7 @@ const Filter = ({setReport, setParams}) => {
                                     </div>
                                 </div>
                                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                                    <div style={{width:'63%'}}>
+                                    <div style={{width:'85%'}}>
                                         <MultiSelectFilter
                                             label='Branches'
                                             name='branch_ids'

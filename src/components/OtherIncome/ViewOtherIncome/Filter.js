@@ -7,7 +7,7 @@ import {
     CustomInputFilter,
     CustomDatePickerFilter,
     CustomSelectFilter,
-    CustomMultiSelectFilter,
+    MultiSelectFilter,
     SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
@@ -26,6 +26,8 @@ const Filter = ({setOtherIncomeData, setParams}) => {
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
+  const allBranchIds = branches.map(br => br.id);
+
   const getParams = (values) => {
     const params = new URLSearchParams();
     for (const [key, value] of Object.entries(values)) {
@@ -42,6 +44,10 @@ const Filter = ({setOtherIncomeData, setParams}) => {
     try {
       const data = removeEmptyValues(values);
       const params = getParams(data);
+      if (values.branch_ids.includes('*')) {
+        params.delete('branch_ids');
+        allBranchIds.forEach(id => params.append('branch_ids', id));
+      }
       setParams(params);
       const response = await axios.get('/otherincomeapi/otherincomelist/', {params: params});
       setOtherIncomeData(response.data);
@@ -76,12 +82,12 @@ const Filter = ({setOtherIncomeData, setParams}) => {
                         </div>
                         <div style={{marginTop:"1rem", display:"flex", justifyContent:"space-between"}}>
                             <div style={{width:"70%"}}>
-                                <CustomMultiSelectFilter
-                                    label='Branches'
-                                    name='branch_ids'
-                                    options={branches.map(br => ({label: br.name, value:br.id}))}
-                                    setFieldValue={setFieldValue}
-                                />
+                              <MultiSelectFilter
+                                label='Branches'
+                                name='branch_ids'
+                                options={branches.map(br => ({label: br.name, value:br.id}))}
+                                setFieldValue={setFieldValue}
+                              />
                             </div>
                             <div style={{width:"20%"}}>
                                 <CustomSelectFilter label='Currency' name='currency_id' required>

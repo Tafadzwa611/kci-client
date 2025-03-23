@@ -27,11 +27,17 @@ const Filter = ({setReport, setParams}) => {
     const {currencies} = useCurrencies();
     const {branches} = useBranches();
 
+    const allBranchIds = branches.map(br => br.id);
+
     const onSubmit = async (values, actions) => {
         try {
             const data = removeEmptyValues(values);
             if (values.mode === 'html') {
                 const params = getParams(data);
+                if (values.branch_ids.includes('*')) {
+                    params.delete('branch_ids');
+                    allBranchIds.forEach(id => params.append('branch_ids', id));
+                }
                 setParams(params);
                 const response = await axios.get('/reportsapi/loans_granted/', {params: params});
                 setReport(response.data);
@@ -85,7 +91,7 @@ const Filter = ({setReport, setParams}) => {
                                     </div>
                                 </div>
                                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                                    <div className='row-payments-container' style={{width:'63%'}}>
+                                    <div style={{width:'80%'}}>
                                         <MultiSelectFilter
                                             label='Branches'
                                             name='branch_ids'
@@ -93,7 +99,7 @@ const Filter = ({setReport, setParams}) => {
                                             setFieldValue={setFieldValue}
                                         />
                                     </div>
-                                    <div className='row-payments-container' style={{width:'18%'}}>
+                                    <div className='row-payments-container' style={{width:'10%'}}>
                                         <CustomSelectFilter label='Level' name='level' required>
                                             <option value='Detailed'>Detailed</option>
                                             <option value='Summary'>Summary</option>

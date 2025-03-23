@@ -15,7 +15,8 @@ function MultiSelectFilter({label, options, initVals, setFieldValue, ...props}) 
             selected = [selectAll];
         }
         setOptionSelected(selected);
-        const newVals = selected.filter(val => val.value !== '*').map(val => val.value);
+        // const newVals = selected.filter(val => val.value !== '*').map(val => val.value);
+        const newVals = selected.map(val => val.value);
         setFieldValue(field.name, newVals);
         const el = document.getElementById(inputId);
         if (selected.length === 0) {
@@ -47,7 +48,7 @@ function MultiSelectFilter({label, options, initVals, setFieldValue, ...props}) 
                     styles={style}
                     inputId={inputId}
                 />
-                {meta.error && <div className='error'>{meta.error}</div>}
+                {meta.error && <div className='error'>{JSON.stringify(meta.error)}</div>}
             </div>
         </div>
     )

@@ -4,7 +4,7 @@ import {
   NonFieldErrors,
   CustomDatePickerFilter,
   CustomSelectFilter,
-  CustomMultiSelectFilter,
+  MultiSelectFilter,
   SubmitButtonFilter,
   CustomSelectRemoteFilter
 } from '../../../common';
@@ -28,6 +28,8 @@ const DateRange = ({setParams, staff, setInfo}) => {
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
+  const allBranchIds = branches.map(br => br.id);
+
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
@@ -39,6 +41,10 @@ const DateRange = ({setParams, staff, setInfo}) => {
         data.account_credited_id = data.account_credited_id.id;
       }
       const params = getParams(data);
+      if (values.branch_ids.includes('*')) {
+        params.delete('branch_ids');
+        allBranchIds.forEach(id => params.append('branch_ids', id));
+      }
       setParams(params);
       const response = await axios.get('/acc-api/journals-list/', {params: params});
       setInfo(response.data);
@@ -113,7 +119,13 @@ const DateRange = ({setParams, staff, setInfo}) => {
                 </div> : null}
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
                   <div style={{width:'80%'}}>
-                    <CustomMultiSelectFilter label='Branches' name='branch_ids' options={branches.map(br => ({label: br.name, value:br.id}))} setFieldValue={setFieldValue} required/>
+                    <MultiSelectFilter
+                      label='Branches'
+                      name='branch_ids'
+                      options={branches.map(br => ({label: br.name, value:br.id}))}
+                      setFieldValue={setFieldValue}
+                      required
+                    />
                   </div>
                   <div className='row-payments-container' style={{width:'10%'}}>
                     <CustomSelectFilter label='Order' name='order'>

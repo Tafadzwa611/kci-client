@@ -5,7 +5,7 @@ import {
   CustomInputFilter,
   CustomDatePickerFilter,
   CustomSelectFilter,
-  CustomMultiSelectFilter,
+  MultiSelectFilter,
   SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
@@ -18,12 +18,18 @@ const Filter = ({setClientsReportData, setParams, units}) => {
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
+  const allBranchIds = branches.map(br => br.id);
+
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
       if (values.mode === 'html') {
         const params = getParams(data);
         setParams(params);
+        if (values.branch_ids.includes('*')) {
+          params.delete('branch_ids');
+          allBranchIds.forEach(id => params.append('branch_ids', id));
+        }
         const response = await axios.get('/reportsapi/clients-report/', {params: params});
         setClientsReportData(response.data);
       }else {
@@ -73,11 +79,12 @@ const Filter = ({setClientsReportData, setParams, units}) => {
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
                   <div style={{width:'63%'}}>
-                    <CustomMultiSelectFilter
-                      label='Branches'
-                      name='branch_ids'
-                      options={branches.map(br => ({label: br.name, value:br.id}))}
-                      setFieldValue={setFieldValue}
+                    <MultiSelectFilter
+                        label='Branches'
+                        name='branch_ids'
+                        options={branches.map(br => ({label: br.name, value:br.id}))}
+                        setFieldValue={setFieldValue}
+                        required
                     />
                   </div>
                   <div className='row-payments-container' style={{width:'10%'}}>
