@@ -82,6 +82,7 @@ const Filter = ({currencyId, setCurrencyId, setBranchIds, setUnitId, units, unit
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
   const [optionSelected, setOptionSelected] = useState([]);
+  const [unitOptions, setUnitOptions] = useState([]);
   const options = branches.map(branch => ({label: branch.name, value: branch.id}))
   const style = {
     control: base => ({...base, border: '1px solid #dee2e6', boxShadow: 'none', '&:hover': '1px solid #dee2e6'})
@@ -100,7 +101,7 @@ const Filter = ({currencyId, setCurrencyId, setBranchIds, setUnitId, units, unit
           <div className='fields-container-select select_container_width'>
             <select value={unitId} onChange={evt => setUnitId(Number(evt.target.value))} className='custom-select-form select_width' style={{padding:'0.5125rem 0.9rem'}}>
               <option value=''>Units</option>
-              {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+              {unitOptions.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
             </select>
           </div>
           <div className='fields-container-select select_container_width branch'>
@@ -124,7 +125,7 @@ const Filter = ({currencyId, setCurrencyId, setBranchIds, setUnitId, units, unit
                 let filteredUnits = units.filter(unit => 
                   selectedOpts.some(branch => branch.value === unit.branch)
                 );
-                console.log(filteredUnits);
+                setUnitOptions(filteredUnits);
               }}
               styles={style}
             />
