@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Fetcher, ActionModal, NonFieldErrors, ModalActionSubmit } from '../../../../common';
+import {
+  Fetcher,
+  Modal,
+  NonFieldErrors,
+  CustomCheckbox,
+  ModalSubmit
+} from '../../../../common';
 import { Link } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -68,7 +74,7 @@ function DeleteDetailAccount({setOpen, detailAccountId}) {
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      await axios.delete(`/acc-api/delete_detail_account/${detailAccountId}/`, CONFIG);
+      await axios.post(`/acc-api/delete_detail_account/${detailAccountId}/`, values, CONFIG);
       setOpen(false);
       navigate({pathname: '/accounting/viewaccounting/chartsofaccounts'});
     } catch (error) {
@@ -83,20 +89,22 @@ function DeleteDetailAccount({setOpen, detailAccountId}) {
   }
 
   return (
-    <ActionModal>
-      <Formik initialValues={{}} onSubmit={onSubmit}>
+    <Modal open={true} setOpen={setOpen} title='Delete Detail Account'>
+      <Formik initialValues={{delete_all_branches: true}} onSubmit={onSubmit}>
         {({ errors, isSubmitting }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <div className='title' style={{fontSize: '0.875rem'}}>
-                Are you sure you want to delete this account.
+              <div className='create_modal_container'>
+                <div>
+                  <CustomCheckbox label='Delete All In Branches' name='delete_all_branches'/>
+                </div>
               </div>
-              <ModalActionSubmit isSubmitting={isSubmitting} setOpen={setOpen} act='Delete'/>
+              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
             </NonFieldErrors>
           </Form>
         )}
       </Formik>
-    </ActionModal>
+    </Modal>
   )
 }
 

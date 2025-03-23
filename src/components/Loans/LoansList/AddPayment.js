@@ -81,10 +81,6 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
                         <CustomInput label='Penalty Paid' name='manual_allocation.penalty' type='number' required/>
                       </>}
                       <CustomDatePicker label='Payment Date' name='payment_date' setFieldValue={setFieldValue} required/>
-                      {/* <CustomSelect label='Fund Account' name='cash_account_id' required>
-                        <option value=''>------</option>
-                        {data[0].filter(acc => acc.currency_id == currencyId).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_name}</option>)}
-                      </CustomSelect> */}
                       <CustomMultiSelect
                         label='Fund Account'
                         name='fund_account'
