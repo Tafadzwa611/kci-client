@@ -23,7 +23,7 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
     interest_start_date: '',
     fund_account_id: '',
     receipt_number: '',
-    loan_officer_id: loan.client_officer_id || '',
+    loan_officer_id: '',
     first_repayment_date: loan.first_payment_date,
     schedule_strategy: loan.default_schedule_strategy
   };
@@ -102,6 +102,9 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
                         <option value=''>------</option>
                         {data[1].map(user => <option key={user.id} value={user.id}>{`${user.first_name} ${user.last_name} - ${user.branch__name}`}</option>)}
                       </CustomSelect>
+                      <div style={{marginTop:'1rem'}}>
+                        Client/Group Officer: {loan.client_officer}
+                      </div>
                       {lcontrols.request_receipt_number ? (
                         <CustomInput
                           label='Receipt Number'
