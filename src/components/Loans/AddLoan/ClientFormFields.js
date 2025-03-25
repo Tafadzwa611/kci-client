@@ -246,7 +246,7 @@ const ClientSelect = ({values, product, setFieldValue}) => {
           setFieldValue('client', selected);
           setFieldValue(fieldName, selected.value);
         }}
-        params={[{key: 'all_branches', value: 1}]}
+        params={[{key: 'all_branches', value: 1}, {key: 'exclude_blacklisted', value: 1}, {key: 'exclude_rejected', value: 1}]}
         queryParamName='query'
         placeholder='Search Client'
         name='client_id'
