@@ -20,6 +20,7 @@ import PortfolioMgt from '../PortfolioMgt/PortfolioMgt';
 import AssetQuality from '../AssetQuality/AssetQuality';
 import DebtorsList from '../DebtorsList/DebtorsList';
 import LoansGranted from '../LoansGranted/LoansGranted';
+import CashReceipts from '../CashReceipts/CashReceipts';
 import {
   Routes,
   Route,
@@ -57,6 +58,7 @@ const ViewReports = () => {
         <Route path='assetquality' element={<AssetQuality />} />
         <Route path='debtorslist' element={<DebtorsList />} />
         <Route path='loansgranted' element={<LoansGranted />} />
+        <Route path='cashreceipts' element={<CashReceipts />} />
       </Route>
     </Routes>
   )
@@ -130,6 +132,9 @@ function Layout() {
             </Link>
             <Link to='/reports/viewreports/loansgranted' className={location.pathname === '/reports/viewreports/loansgranted' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Loans Granted
+            </Link>
+            <Link to='/reports/viewreports/cashreceipts' className={location.pathname === '/reports/viewreports/cashreceipts' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Cash Receipts
             </Link>
             <Link to='/reports/viewreports/audittrail' className={location.pathname === '/reports/viewreports/audittrail' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Audit Trail
