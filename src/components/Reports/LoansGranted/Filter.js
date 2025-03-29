@@ -32,18 +32,18 @@ const Filter = ({setReport, setParams}) => {
     const onSubmit = async (values, actions) => {
         try {
             const data = removeEmptyValues(values);
+            const params = getParams(data);
+            if (values.branch_ids.includes('*')) {
+                params.delete('branch_ids');
+                allBranchIds.forEach(id => params.append('branch_ids', id));
+            }
             if (values.mode === 'html') {
-                const params = getParams(data);
-                if (values.branch_ids.includes('*')) {
-                    params.delete('branch_ids');
-                    allBranchIds.forEach(id => params.append('branch_ids', id));
-                }
                 setParams(params);
                 const response = await axios.get('/reportsapi/loans_granted/', {params: params});
                 setReport(response.data);
             }else {
-                data.file_format = values.mode;
-                await axios.get('/reportsapi/loans_granted_export/', {params: getParams(data)});
+                params.append('file_format', values.mode);
+                await axios.get('/reportsapi/loans_granted_export/', {params: params});
             }
         } catch (error) {
             if (error.message === 'Network Error') {
