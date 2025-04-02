@@ -23,18 +23,18 @@ const Filter = ({setClientsReportData, setParams, units}) => {
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
+      const params = getParams(data);
+      if (values.branch_ids.includes('*')) {
+        params.delete('branch_ids');
+        allBranchIds.forEach(id => params.append('branch_ids', id));
+      }
       if (values.mode === 'html') {
-        const params = getParams(data);
         setParams(params);
-        if (values.branch_ids.includes('*')) {
-          params.delete('branch_ids');
-          allBranchIds.forEach(id => params.append('branch_ids', id));
-        }
-        const response = await axios.get('/reportsapi/clients-report/', {params: params});
+        const response = await axios.get('/reportsapi/clients-report/', {params});
         setClientsReportData(response.data);
       }else {
-        data.file_format = values.mode;
-        await axios.get('/reportsapi/clients_report_export/', {params: getParams(data)});
+        params.append('file_format', values.mode);
+        await axios.get('/reportsapi/clients_report_export/', {params});
       }
     } catch (error) {
       if (error.message === 'Network Error') {
@@ -56,10 +56,10 @@ const Filter = ({setClientsReportData, setParams, units}) => {
               <NonFieldErrors errors={errors}>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
                   <div className='row-payments-container' style={{width:'16%'}}>
-                    <CustomDatePickerFilter label='Min Client Reg Date' name='min_date' setFieldValue={setFieldValue}/>
+                    <CustomDatePickerFilter label='Min Client Reg Date' name='min_date' setFieldValue={setFieldValue} required/>
                   </div>
                   <div className='row-payments-container' style={{width:'16%'}}>
-                    <CustomDatePickerFilter label='Max Client Reg Date' name='max_date' setFieldValue={setFieldValue}/>
+                    <CustomDatePickerFilter label='Max Client Reg Date' name='max_date' setFieldValue={setFieldValue} required/>
                   </div>
                   <div className='row-payments-container' style={{width:'16%'}}>
                     <CustomDatePickerFilter label='Min Loan DB Date' name='min_db_date' setFieldValue={setFieldValue}/>

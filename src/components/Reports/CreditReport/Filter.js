@@ -33,17 +33,17 @@ const Filter = ({setReport, setParams, units}) => {
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
+      const params = getParams(data);
+      if (values.branch_ids.includes('*')) {
+        params.delete('branch_ids');
+        allBranchIds.forEach(id => params.append('branch_ids', id));
+      }
       if (values.file_format === 'html') {
-        const params = getParams(data);
-        if (values.branch_ids.includes('*')) {
-          params.delete('branch_ids');
-          allBranchIds.forEach(id => params.append('branch_ids', id));
-        }
         setParams(params);
-        const response = await axios.get('/reportsapi/credit_report/', {params: params});
+        const response = await axios.get('/reportsapi/credit_report/', {params});
         setReport(response.data);
       }else {
-        await axios.get('/reportsapi/credit_report_export/', {params: getParams(data)});
+        await axios.get('/reportsapi/credit_report_export/', {params});
       }
     } catch (error) {
       console.log(error);

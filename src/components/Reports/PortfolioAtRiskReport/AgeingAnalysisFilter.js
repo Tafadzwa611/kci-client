@@ -6,9 +6,9 @@ import {
 } from '../../../common';
 import axios from 'axios';
 import { getParams } from '../../../utils/utils';
+import { useBranches } from '../../../contexts/BranchesContext';
 
 const Filter = ({setParams, setLoans, par}) => {
-  console.log(par);
   const initialValues = {
     page_num: 1,
     file_format: 'html',
@@ -21,9 +21,16 @@ const Filter = ({setParams, setLoans, par}) => {
     reason: par.reason
   };
 
+  const {branches} = useBranches();
+  const allBranchIds = branches.map(br => br.id);
+
   const onSubmit = async (values, actions) => {
     try {
       const params = getParams(values);
+      if (values.branch_ids.includes('*')) {
+        params.delete('branch_ids');
+        allBranchIds.forEach(id => params.append('branch_ids', id));
+      }
       setParams(params);
       if (values.file_format === 'html') {
         const response = await axios.get('/reportsapi/ageing-report/', {params: params});
