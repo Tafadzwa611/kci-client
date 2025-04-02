@@ -76,7 +76,7 @@ const Filter = () => {
                                     </div>
                                 </div>
                                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                                    <div style={{width:'65%'}}>
+                                    <div style={{width:'75%'}}>
                                         <MultiSelectFilter
                                             label='Branches'
                                             name='branch_ids'
@@ -84,7 +84,7 @@ const Filter = () => {
                                             setFieldValue={setFieldValue}
                                         />
                                     </div>
-                                    <div style={{width:'65%'}}>
+                                    <div style={{width:'15%', marginTop:'1.5rem'}}>
                                         <CustomCheckBoxfilter label='Include Totals' name='include_totals'/>
                                     </div>
                                     <SubmitButtonFilter isSubmitting={isSubmitting}/>
