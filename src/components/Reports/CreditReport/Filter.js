@@ -5,6 +5,7 @@ import {
   CustomSelectFilter,
   MultiSelectFilter,
   CustomDatePickerFilter,
+  Fetcher,
   SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
@@ -23,7 +24,8 @@ const Filter = ({setReport, setParams, units}) => {
     page_size: '500',
     min_db_date: '',
     max_db_date: '',
-    unit_id: ''
+    unit_id: '',
+    loan_product_id: ''
   };
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
@@ -58,80 +60,90 @@ const Filter = ({setReport, setParams, units}) => {
   }
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({isSubmitting, setFieldValue, errors}) => (
-        <div className='search_background'>
-          <div className='row-containers' style={{border:'none'}}>
-            <Form>
-              <NonFieldErrors errors={errors}>
-                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'15%'}}>
-                    <CustomDatePickerFilter label='Min Disbursement Date' name='min_db_date' setFieldValue={setFieldValue}/>
-                  </div>
-                  <div className='row-payments-container' style={{width:'15%'}}>
-                    <CustomDatePickerFilter label='Max Disbursement Date' name='max_db_date' setFieldValue={setFieldValue}/>
-                  </div>
-                  <div className='row-payments-container' style={{width:'16%'}}>
-                    <CustomSelectFilter label='Currency' name='currency_id' required>
-                      <option value=''>------</option>
-                      {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-                    </CustomSelectFilter>
-                  </div>
-                  <div className='row-payments-container' style={{width:'16%'}}>
-                    <CustomSelectFilter label='Order' name='order' required>
-                      <option value='-id'>Show newest first</option>
-                      <option value='id'>Show oldest first</option>
-                    </CustomSelectFilter>
-                  </div>
-                  <div className='row-payments-container' style={{width:'16%'}}>
-                    <CustomSelectFilter label='Page Size' name='page_size' required>
-                      <option value='10'>10</option>
-                      <option value='25'>25</option>
-                      <option value='50'>50</option>
-                      <option value='100'>100</option>
-                      <option value='200'>200</option>
-                      <option value='500'>500</option>
-                    </CustomSelectFilter>
-                  </div>
-                  <div className='row-payments-container' style={{width:'16%'}}>
-                    <CustomSelectFilter label='Mode' name='file_format' required>
-                      <option value='html'>Screen (HTML)</option>
-                      <option value='xlsx'>Excel</option>
-                      <option value='csv'>CSV</option>
-                    </CustomSelectFilter>
-                  </div>
-                </div>
-                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div style={{width:'73%'}}>
-                    <MultiSelectFilter
-                      label='Branches'
-                      name='branch_ids'
-                      options={branches.map(br => ({label: br.name, value:br.id}))}
-                      setFieldValue={setFieldValue}
-                      required
-                    />
-                  </div>
-                  <div className='row-payments-container' style={{width:'10%'}}>
-                    <CustomSelectFilter label='Status' name='status' required>
-                      <option value='running'>Running</option>
-                      <option value='not_running'>Not Running</option>
-                      <option value='all'>Both</option>
-                    </CustomSelectFilter>
-                  </div>
-                  <div className='row-payments-container' style={{width:'10%'}}>
-                    <CustomSelectFilter label='Unit' name='unit_id'>
-                      <option value=''>------</option>
-                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
-                    </CustomSelectFilter>
-                  </div>
-                  <SubmitButtonFilter isSubmitting={isSubmitting}/>
-                </div>
-              </NonFieldErrors>
-            </Form>
-          </div>
-        </div>
+    <Fetcher urls={['/loansapi/loan_products/']}>
+      {({data}) => (
+        <Formik initialValues={initialValues} onSubmit={onSubmit}>
+          {({isSubmitting, setFieldValue, errors}) => (
+            <div className='search_background'>
+              <div className='row-containers' style={{border:'none'}}>
+                <Form>
+                  <NonFieldErrors errors={errors}>
+                    <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
+                      <div className='row-payments-container' style={{width:'15%'}}>
+                        <CustomDatePickerFilter label='Min Disbursement Date' name='min_db_date' setFieldValue={setFieldValue}/>
+                      </div>
+                      <div className='row-payments-container' style={{width:'15%'}}>
+                        <CustomDatePickerFilter label='Max Disbursement Date' name='max_db_date' setFieldValue={setFieldValue}/>
+                      </div>
+                      <div className='row-payments-container' style={{width:'16%'}}>
+                        <CustomSelectFilter label='Currency' name='currency_id' required>
+                          <option value=''>------</option>
+                          {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+                        </CustomSelectFilter>
+                      </div>
+                      <div className='row-payments-container' style={{width:'16%'}}>
+                        <CustomSelectFilter label='Order' name='order' required>
+                          <option value='-id'>Show newest first</option>
+                          <option value='id'>Show oldest first</option>
+                        </CustomSelectFilter>
+                      </div>
+                      <div className='row-payments-container' style={{width:'16%'}}>
+                        <CustomSelectFilter label='Page Size' name='page_size' required>
+                          <option value='10'>10</option>
+                          <option value='25'>25</option>
+                          <option value='50'>50</option>
+                          <option value='100'>100</option>
+                          <option value='200'>200</option>
+                          <option value='500'>500</option>
+                        </CustomSelectFilter>
+                      </div>
+                      <div className='row-payments-container' style={{width:'16%'}}>
+                        <CustomSelectFilter label='Mode' name='file_format' required>
+                          <option value='html'>Screen (HTML)</option>
+                          <option value='xlsx'>Excel</option>
+                          <option value='csv'>CSV</option>
+                        </CustomSelectFilter>
+                      </div>
+                    </div>
+                    <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
+                      <div style={{width:'63%'}}>
+                        <MultiSelectFilter
+                          label='Branches'
+                          name='branch_ids'
+                          options={branches.map(br => ({label: br.name, value:br.id}))}
+                          setFieldValue={setFieldValue}
+                          required
+                        />
+                      </div>
+                      <div className='row-payments-container' style={{width:'10%'}}>
+                        <CustomSelectFilter label='Status' name='status' required>
+                          <option value='running'>Running</option>
+                          <option value='not_running'>Not Running</option>
+                          <option value='all'>Both</option>
+                        </CustomSelectFilter>
+                      </div>
+                      <div className='row-payments-container' style={{width:'10%'}}>
+                        <CustomSelectFilter label='Loan Product' name='loan_product_id'>
+                          <option value=''>------</option>
+                          {data[0].loan_products.map(product => <option key={product.id} value={product.id}>{product.name} - {product.currency}</option>)}
+                        </CustomSelectFilter>
+                      </div>
+                      <div className='row-payments-container' style={{width:'10%'}}>
+                        <CustomSelectFilter label='Unit' name='unit_id'>
+                          <option value=''>------</option>
+                          {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+                        </CustomSelectFilter>
+                      </div>
+                      <SubmitButtonFilter isSubmitting={isSubmitting}/>
+                    </div>
+                  </NonFieldErrors>
+                </Form>
+              </div>
+            </div>
+          )}
+        </Formik>
       )}
-    </Formik>
+    </Fetcher>
   )
 }
 
