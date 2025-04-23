@@ -89,6 +89,10 @@ const List = ({initControls}) => {
                     <td>{loanControls.allow_groups_with_running_loans_to_guarantee ? 'Yes' : 'No'}</td>
                   </tr>
                   <tr>
+                    <td>SMS Payment Notification — Always Enabled</td>
+                    <td>{loanControls.send_payment_sms_notification ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
                     <td>Two Man Rules</td>
                     <td>
                       {loanControls.two_man_rules.map(rule => <div key={rule}>{rule}</div>)}
@@ -136,6 +140,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
     auto_generate_loan_id: loanControls.auto_generate_loan_id,
     allow_clients_with_running_loans_to_guarantee: loanControls.allow_clients_with_running_loans_to_guarantee,
     allow_groups_with_running_loans_to_guarantee: loanControls.allow_groups_with_running_loans_to_guarantee,
+    send_payment_sms_notification: loanControls.send_payment_sms_notification,
     two_man_rules: loanControls.two_man_rules.map(rule => ({label: rule, value: rule})),
     max_currencies_exposure: currencies.map(currency => {
       const exp = loanControls.max_currencies_exposure.find(exp => exp.currency_id == currency.id);
@@ -159,6 +164,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
       auto_generate_loan_id: values.auto_generate_loan_id,
       allow_clients_with_running_loans_to_guarantee: values.allow_clients_with_running_loans_to_guarantee,
       allow_groups_with_running_loans_to_guarantee: values.allow_groups_with_running_loans_to_guarantee,
+      send_payment_sms_notification: values.send_payment_sms_notification,
       two_man_rules: values.two_man_rules.map(rule => rule.value),
       ...(values.max_num_of_loans && {max_num_of_loans: values.max_num_of_loans}),
       ...(values.max_num_of_group_loans && {max_num_of_group_loans: values.max_num_of_group_loans}),
@@ -204,6 +210,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
                   <CustomCheckbox label='Auto Generate Loan ID' name='auto_generate_loan_id'/>
                   <CustomCheckbox label='Allow Clients With Running Loans To Guarantee' name='allow_clients_with_running_loans_to_guarantee'/>
                   <CustomCheckbox label='Allow Groups With Running Loans To Guarantee' name='allow_groups_with_running_loans_to_guarantee'/>
+                  <CustomCheckbox label='SMS Payment Notification — Always Enabled' name='send_payment_sms_notification'/>
                   <CustomMultiSelect
                     label='Two Man Rules'
                     name='two_man_rules'
