@@ -25,7 +25,8 @@ const Filter = ({setReport, setParams, units}) => {
     min_db_date: '',
     max_db_date: '',
     unit_id: '',
-    loan_product_id: ''
+    loan_product_id: '',
+    date_format: '',
   };
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
@@ -106,7 +107,7 @@ const Filter = ({setReport, setParams, units}) => {
                       </div>
                     </div>
                     <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                      <div style={{width:'63%'}}>
+                      <div style={{width:'53%'}}>
                         <MultiSelectFilter
                           label='Branches'
                           name='branch_ids'
@@ -132,6 +133,16 @@ const Filter = ({setReport, setParams, units}) => {
                         <CustomSelectFilter label='Unit' name='unit_id'>
                           <option value=''>------</option>
                           {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+                        </CustomSelectFilter>
+                      </div>
+                      <div className='row-payments-container' style={{width:'10%'}}>
+                        <CustomSelectFilter label='Date Format' name='date_format'>
+                          <option value=''>-------</option>
+                          <option value='DD/MM/YYYY'>DD/MM/YYYY</option>
+                          <option value='MM/DD/YYYY'>MM/DD/YYYY</option>
+                          <option value='YYYY/MM/DD'>YYYY/MM/DD</option>
+                          <option value='DD/Mon/YYYY'>DD/Mon/YYYY</option>
+                          <option value='Mon/DD/YYYY'>Mon/DD/YYYY</option>
                         </CustomSelectFilter>
                       </div>
                       <SubmitButtonFilter isSubmitting={isSubmitting}/>
