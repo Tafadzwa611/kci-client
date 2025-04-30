@@ -65,7 +65,6 @@ const Filter = ({setbalanceSheetData}) => {
                       name='branch_ids'
                       options={branches.map(br => ({label: br.name, value:br.id}))}
                       setFieldValue={setFieldValue}
-                      required
                     />
                   </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
