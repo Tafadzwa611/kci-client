@@ -71,9 +71,9 @@ const COLUMNS = {
   max_date: 'Newest_Installment_Date',
 
   client_name: 'Client_Name',
-  client_phone_number: 'Client_Phone_Number',
+  client_phone_number: 'Client_Phone',
   group_name: 'Group_Name',
-  group_phone_number: 'Group_Phone_Number',
+  group_phone_number: 'Group_Phone',
   original_principal: 'Applied_Amount',
   principal: 'Principal',
   interest: 'Interest',
@@ -87,8 +87,8 @@ const COLUMNS = {
 
   loan_id: 'Loan_ID',
   currency: 'Currency',
-  loan_number: 'Loan_Number',
-  disbursement_date: 'Disbursement_Date',
+  loan_number: 'Loan#',
+  disbursement_date: 'DB_Date',
   application_date: 'Application_Date',
   entry_date: 'Entry_Date',
   first_repayment_date: 'First_Repayment_Date',

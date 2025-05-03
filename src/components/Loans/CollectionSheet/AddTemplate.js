@@ -8,7 +8,8 @@ import {
   NonFieldErrors, 
   CustomInput, 
   SubmitButton,
-  CustomMultiSelect
+  CustomMultiSelect,
+  CustomSortableSelect
 } from '../../../common';
 
 const AddTemplate = ({data}) => {
@@ -37,7 +38,7 @@ const AddTemplate = ({data}) => {
   }
 
   return (
-    <Formik initialValues={{report_type: 'COLLECTION_SHEET', report_name: '', columns: []}} onSubmit={onSubmit}>
+    <Formik initialValues={{report_type: 'COLLECTION_SHEET', report_name: '', columns: [], order: []}} onSubmit={onSubmit}>
       {({ values, isSubmitting, setFieldValue, errors }) => (
         <Form>
           <NonFieldErrors errors={errors}>
@@ -49,8 +50,24 @@ const AddTemplate = ({data}) => {
               label='Columns'
               name='columns'
               initVals={values.columns}
-              setFieldValue={setFieldValue}
+              setFieldValue={(name, columns) => {
+                setFieldValue(name, columns);
+                let newOrder = values.order;
+                columns.forEach(column => {
+                  if (!newOrder.includes(column.label)) {
+                    newOrder.push(column.label);
+                  }
+                });
+                newOrder = newOrder.filter(item => columns.find(column => column.label === item));
+                setFieldValue('order', newOrder);
+              }}
               options={columns.map(column => ({label: COLUMNS[column], value: column}))}
+            />
+            <CustomSortableSelect
+              label='Column Order'
+              setFieldValue={(name, items) => console.log(items)}
+              name='order'
+              options={values.order}
             />
             <SubmitButton isSubmitting={isSubmitting}/>
           </NonFieldErrors>
