@@ -100,5 +100,9 @@ const COLUMNS = {
   total_payment: 'Total_Payment'
 }
 
+const SWAPPED_COLUMNS = Object.fromEntries(
+  Object.entries(COLUMNS).map(([key, value]) => [value, key])
+);
+
 export default CollectionTable;
-export {COLUMNS};
+export {COLUMNS, SWAPPED_COLUMNS};

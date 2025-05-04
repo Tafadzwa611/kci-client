@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { Form, Formik } from 'formik';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { COLUMNS } from './CollectionTable';
+import { COLUMNS, SWAPPED_COLUMNS } from './CollectionTable';
 import { 
   NonFieldErrors, 
   CustomInput, 
@@ -21,7 +21,7 @@ const AddTemplate = ({data}) => {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.post(
         '/usersapi/add_report_template/',
-        {...values, columns: values.columns.map(column => column.value)},
+        {...values, columns: values.order.map(column => SWAPPED_COLUMNS[column])},
         CONFIG
       );
       navigate({pathname: '/loans/viewloans/collection_sheet/templates'});
@@ -65,11 +65,14 @@ const AddTemplate = ({data}) => {
             />
             <CustomSortableSelect
               label='Column Order'
-              setFieldValue={(name, items) => console.log(items)}
+              setFieldValue={(name, items) => setFieldValue(name, items)}
               name='order'
               options={values.order}
             />
-            <SubmitButton isSubmitting={isSubmitting}/>
+            <div style={{paddingTop: '1rem'}}></div>
+            <div style={{display:'flex', justifyContent: 'flex-end'}}>
+              <SubmitButton isSubmitting={isSubmitting}/>
+            </div>
           </NonFieldErrors>
         </Form>
       )}
