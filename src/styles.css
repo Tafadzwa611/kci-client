@@ -3527,7 +3527,7 @@ input[type=number] {
   color: var(--color);
   background: var(--home-section-color);
   padding: 1rem;
-  width: 100px;
+  width: 100%;
 }
 
 .css-1pahdxg-control, 
