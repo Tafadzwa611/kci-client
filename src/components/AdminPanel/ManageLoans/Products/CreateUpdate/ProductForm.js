@@ -201,13 +201,13 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
               })}
               <AddCustomLoanForm custom_forms={values.custom_forms} setFieldValue={setFieldValue}/>
               <div className='divider divider-info'>
-                <span>Auto Restructure Settings</span>
+                <span>Recalculate Settings</span>
               </div>
               <CustomCheckbox label='Enable Auto Restructure' name='auto_restructure'/>
               {values.auto_restructure && (
                 <>
-                  <CustomInput label='Auto Restructure Interest' name='auto_restructure_interest' type='number' required/>
-                  <CustomInput label='Auto Restructure Installments' name='auto_restructure_installments' type='number' required/>
+                  <CustomInput label='Recalculate Interest' name='auto_restructure_interest' type='number' required/>
+                  <CustomInput label='Recalculate Installments' name='auto_restructure_installments' type='number' required/>
                 </>
               )}
               <div className='divider divider-info'>
@@ -234,6 +234,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                     <option value='Principal + Penalty'>Principal Balance In Arrears + Penalty Balance In Arrears</option>
                   </CustomSelect>
                   <CustomCheckbox label='Auto Apply Scheduled Penalties When Backdating' name='auto_apply_scheduled_penalties_on_backdating'/>
+                  <CustomCheckbox label='Recalculate Scheduled Penalties' name='recalculate_scheduled_penalties'/>
                   {values.schedule_penalties.map((schedule_penalty, index) => {
                     return(
                       <React.Fragment key={index}>

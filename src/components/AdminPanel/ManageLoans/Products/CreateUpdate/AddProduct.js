@@ -63,7 +63,8 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
     allow_editing_fees_on_loan_creation: true,
     allow_editing_schedule_strategy_on_loan_creation: true,
     schedule_penalties: [],
-    auto_apply_scheduled_penalties_on_backdating: false
+    auto_apply_scheduled_penalties_on_backdating: false,
+    recalculate_scheduled_penalties: false
   };
 
   const back = () => setView('list');
