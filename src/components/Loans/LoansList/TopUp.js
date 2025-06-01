@@ -5,9 +5,10 @@ import {
   ModalSubmit,
   NonFieldErrors,
   CustomDatePicker,
-  CustomSelect,
+  // CustomSelect,
   CustomInput,
   CustomCheckbox,
+  CustomMultiSelect,
   Fetcher
 } from '../../../common';
 import axios from 'axios';
@@ -24,6 +25,7 @@ function TopUp({loan, setLoanDetails, setOpen, setLoanData, updateLoanList}) {
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+      values.fund_account_id = values.fund_account.value;
       const response = await axios.patch(`/loansapi/loan_topup/${loan.id}/`, values, CONFIG);
       const newLoan = response.data;
       setLoanDetails(newLoan);
@@ -44,7 +46,7 @@ function TopUp({loan, setLoanDetails, setOpen, setLoanData, updateLoanList}) {
 
   return (
     <Modal open={true} setOpen={setOpen} title={'Top-Up Loan'}>
-      <Fetcher urls={['/acc-api/cash-and-cash-equivalents/']}>
+      <Fetcher urls={['/acc-api/cash-accounts-list/']}>
         {({data}) => (
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ errors, isSubmitting, setFieldValue }) => (
@@ -54,10 +56,20 @@ function TopUp({loan, setLoanDetails, setOpen, setLoanData, updateLoanList}) {
                   <div>
                     <CustomDatePicker label='Top-Up Date' name='topup_date' setFieldValue={setFieldValue} required/>
                     <CustomInput label='Topup Amount' name='topup_amount' type='number' required/>
-                    <CustomSelect label='Fund Account' name='fund_account_id' required>
+                    {/* <CustomSelect label='Fund Account' name='fund_account_id' required>
                       <option value=''>------</option>
                       {data[0].filter(acc => acc.currency_id == loan.currency_id).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_name}</option>)}
-                    </CustomSelect>
+                    </CustomSelect> */}
+                    <CustomMultiSelect
+                      label='Fund Account'
+                      name='fund_account'
+                      isMulti={false}
+                      setFieldValue={setFieldValue}
+                      options={data[0].accounts.filter(account => !account.suspended && account.currency_id == loan.currency_id).map(account => (
+                        {label: `${account.label} - ${account.branch}`, value: account.value}
+                      ))}
+                      required
+                    />
                     <CustomCheckbox label='Apply Fees' name='apply_fees'/>
                   </div>
                   <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
