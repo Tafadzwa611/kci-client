@@ -64,13 +64,16 @@ function GeneralProductInfo({product}) {
               <li>Repayment Cycle: {product.loan_duration_time_unit}</li>
               <li>Minimum Number of Repayments: {getTenure(product.minimum_loan_duration, product.loan_duration_time_unit)}</li>
               <li>Maximum Number of Repayments: {getTenure(product.maximum_loan_duration, product.loan_duration_time_unit)}</li>
+              {product.tenure_in_days.default_tenure && <li>Minimum Tenure In Days: {product.tenure_in_days.default_tenure} Days</li>}
+              <li>Minimum Tenure In Days: {product.tenure_in_days.minimum_tenure} Days</li>
+              <li>Maximum Tenure In Days: {product.tenure_in_days.maximum_tenure} Days</li>
               {product.default_loan_duration && (
                 <li>Default Number of Repayments: {getTenure(product.default_loan_duration, product.loan_duration_time_unit)}</li>
               )}
               <li>Loan Schedule Strategy: {product.schedule_strategy}</li>
               <li>Non Working Days Rescheduling: {getActionOnHoliday(product.action_on_holiday)}</li>
               {product.days_to_first_repayment && (
-                <li>Grace Period: {product.days_to_first_repayment} Days</li>
+                <li>Days To First Repayment: {product.days_to_first_repayment} Days</li>
               )}
               {product.allow_editing_schedule_strategy_on_loan_creation ? (
                 <li>Allow Changing Schedule Strategy On Loan Creation: <span className="badge badge-success">Yes</span></li>

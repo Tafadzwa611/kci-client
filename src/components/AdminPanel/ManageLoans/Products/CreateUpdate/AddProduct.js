@@ -73,7 +73,6 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
     try {
       const data = removeEmptyValues(values);
       data.default_principal_amount = data.minimum_principal_amount;
-      console.log(data);
       data.allowed_branches_ids = values.allowed_branches_ids.map(allowed_branches_id => allowed_branches_id.value);
       data.interest_application = values.product_type === 'Dynamic Term Loan' ? 'On Installment Date' : 'Upfront';
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
