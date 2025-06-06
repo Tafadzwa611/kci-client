@@ -5,14 +5,16 @@ import {
   SuccessBtn
 } from '../../../common';
 import EarlySettlement from './EarlySettlement';
+import Restructure from './Restructure';
 
 const MODAL_STATES = {
   es: 'es',
+  restructure: 'restructure',
   none: false
 };
 
 function ScheduleTab({loan, installments, client_name, loanId, currencyId, setLoan, setLoanData}) {
-  const {es, none } = MODAL_STATES;
+  const {es, restructure, none } = MODAL_STATES;
   const [modal, setModal] = useState(none);
   const [expected, setExpected] = useState(true);
   const [paid, setPaid] = useState(true);
@@ -20,8 +22,12 @@ function ScheduleTab({loan, installments, client_name, loanId, currencyId, setLo
 
   return (
     <>
-      <SuccessBtn handler={() => setModal(es)} value={'Early Settlement'}/>
+      <div style={{display:'flex', columnGap:'3px'}}>
+        <SuccessBtn handler={() => setModal(es)} value={'Early Settlement'}/>
+        <SuccessBtn handler={() => setModal(restructure)} value={'Move Ahead'}/>
+      </div>
       {modal === es && <EarlySettlement loan={loan} setLoanData={setLoanData} setOpen={setModal} setLoan={setLoan} loanId={loanId} currencyId={currencyId} />}
+      {modal === restructure && <Restructure loan={loan} setLoan={setLoan} setOpen={setModal}/>}
       <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"1rem"}}>
         <div className="schedule__check__section" style={{display: "flex", columnGap: "1rem", alignItems:"center"}}>
           <CheckBox isChecked={expected} label='Amount Expected' onChange={() => setExpected(curr => !curr)} />
