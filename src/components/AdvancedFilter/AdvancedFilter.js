@@ -3,10 +3,12 @@ import ValueEditor from './ValueEditor';
 import CombinatorSelector from './CombinatorSelector';
 import { QueryBuilder } from 'react-querybuilder';
 
-function AdvancedFilter({fields, getAdvOpts, getOperators, onQueryChange}) {
-  const [query, setQuery] =  useState({id: 'root', combinator: 'and', rules: []});
+function AdvancedFilter({fields, getAdvOpts, getOperators, onQueryChange, initQuery}) {
+  const initQueryState = initQuery || {id: 'root', combinator: 'and', rules: []};
+  const [query, setQuery] =  useState(initQueryState);
 
   useEffect(() => {
+    console.log(query);
     const advOpts = getAdvOpts(query);
     onQueryChange(advOpts);
   }, [query]);

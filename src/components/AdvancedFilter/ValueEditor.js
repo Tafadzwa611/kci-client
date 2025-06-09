@@ -10,7 +10,7 @@ function ValueEditor(props) {
   }
 
   if (fieldData.datatype === 'date' && ['between', 'notBetween'].includes(operator)) {
-    return <DateRangePicker handleOnChange={handleOnChange} />
+    return <DateRangePicker value={value} handleOnChange={handleOnChange} />
   }
 
   if (fieldData.datatype === 'date') {
@@ -76,7 +76,7 @@ function DatePickerEditor({value, handleOnChange}) {
   return <DatePicker value={value} format={loggedInUser.date_format.toUpperCase()} onChange={handleChange}/>
 }
 
-function DateRangePicker({handleOnChange}) {
+function DateRangePicker({handleOnChange, value}) {
   const {loggedInUser} = useLoggedInUser();
 
   const handleChange = value => {
@@ -84,7 +84,7 @@ function DateRangePicker({handleOnChange}) {
     handleOnChange(valueString);
   }
 
-  return <DatePicker range format={loggedInUser.date_format.toUpperCase()} onChange={handleChange}/>
+  return <DatePicker value={['09/06/2025', '30/06/2025']} range format={loggedInUser.date_format.toUpperCase()} onChange={handleChange}/>
 }
 
 function getFormattedDate(date, format) {

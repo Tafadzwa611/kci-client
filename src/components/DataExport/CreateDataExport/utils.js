@@ -55,6 +55,51 @@ const mapRules = rule => {
   }
 }
 
+const processBackEndSearch = search => {
+  const rules = [];
+  const getOperator = (search_key, rule_key) => {
+    return {
+      [search_key]: '=',
+      [`${search_key}__iexact`]: '=',
+      [`not_${search_key}`]: '!=',
+      [`not_${search_key}__iexact`]: '!=',
+      [`${search_key}__lt`]: '<',
+      [`${search_key}__gt`]: '>',
+      [`${search_key}__lte`]: '<=',
+      [`${search_key}__gte`]: '>=',
+      [`${search_key}__range`]: 'between',
+      [`not_${search_key}__range`]: 'notBetween',
+      [`${search_key}__icontains`]: 'contains',
+      [`not_${search_key}__icontains`]: 'doesNotContain',
+      [`${search_key}__istartswith`]: 'beginsWith',
+      [`not_${search_key}__istartswith`]: 'doesNotBeginWith',
+      [`${search_key}__iendswith`]: 'endsWith',
+      [`not_${search_key}__iendswith`]: 'doesNotEndWith',
+    }[rule_key]
+  }
+
+  const combinator = search.combinator.toLowerCase();
+
+  for (const search_key in search) {
+    if (search_key === 'combinator') continue; // Skip combinator key
+    search[search_key].forEach(rule => {
+      for (const rule_key in rule) {
+        const operator = getOperator(search_key, rule_key);
+        let value = rule[rule_key];
+        if (Array.isArray(value)) {
+          value = value.join(',');
+        }
+        rules.push({
+          "field": search_key,
+          "operator": operator,
+          "value": value
+        })
+      }
+    });
+  }
+  return {id: "root", combinator: combinator, rules: [{field: 'date_of_birth', operator: 'between', value: '09/06/2025,30/06/2025', id: 'r-0.38471380341972106'}]}
+}
+
 const getOperators = (field) => {
   switch (field) {
     case 'date_of_birth':
@@ -192,7 +237,7 @@ const getGroupAdvOpts = query => {
     group_id: query.rules.filter(rule => rule.field === 'group_id').map(mapRules),
     group_phone_number: query.rules.filter(rule => rule.field === 'group_phone_number').map(mapRules),
     group_type__name: query.rules.filter(rule => rule.field === 'group_type__name').map(mapRules),
-    branch_ids: query.rules.filter(rule => rule.field === 'branch_id').map(mapRules),
+    branch_id: query.rules.filter(rule => rule.field === 'branch_id').map(mapRules),
   }
 }
 
@@ -220,7 +265,7 @@ const getClientAdvOpts = query => {
     client_id: query.rules.filter(rule => rule.field === 'client_id').map(mapRules),
     client_type: query.rules.filter(rule => rule.field === 'client_type__name').map(mapRules),
     reg_date: query.rules.filter(rule => rule.field === 'registration_date').map(mapRules),
-    branch_ids: query.rules.filter(rule => rule.field === 'branch_id').map(mapRules),
+    branch_id: query.rules.filter(rule => rule.field === 'branch_id').map(mapRules),
     email: query.rules.filter(rule => rule.field === 'email').map(mapRules),
     phone_number: query.rules.filter(rule => rule.field === 'phone_number').map(mapRules),
     phone_number_secondary: query.rules.filter(rule => rule.field === 'phone_number_secondary').map(mapRules),
@@ -382,4 +427,4 @@ const getAdvOpts = base_entity => {
   }[base_entity]
 }
 
-export {getOperators, getAdvOpts};
+export {getOperators, getAdvOpts, processBackEndSearch};
