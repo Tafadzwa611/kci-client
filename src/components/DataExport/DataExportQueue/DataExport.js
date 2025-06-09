@@ -57,6 +57,9 @@ function DataExport({data, close}) {
               </button>
             </>
             : null}
+            <button className='btn btn-olive'>
+              <Link to={`editdataexport/${dataExport.id}`}>Edit</Link>
+            </button>
           </div>
         </div>
         <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', marginTop:'1.5rem'}}>
