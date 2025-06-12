@@ -97,7 +97,7 @@ const processBackEndSearch = search => {
       }
     });
   }
-  return {id: "root", combinator: combinator, rules: [{field: 'date_of_birth', operator: 'between', value: '09/06/2025,30/06/2025', id: 'r-0.38471380341972106'}]}
+  return {id: "root", combinator: combinator, rules: rules}
 }
 
 const getOperators = (field) => {
@@ -258,30 +258,30 @@ const getClientAdvOpts = query => {
     combinator: {and: 'AND', or: 'OR'}[query.combinator],
     date_of_birth: query.rules.filter(rule => rule.field === 'date_of_birth').map(mapRules),
     status: query.rules.filter(rule => rule.field === 'status').map(mapRules),
-    full_name: query.rules.filter(rule => rule.field === 'fullname').map(mapRules),
+    fullname: query.rules.filter(rule => rule.field === 'fullname').map(mapRules),
     first_name: query.rules.filter(rule => rule.field === 'first_name').map(mapRules),
     last_name: query.rules.filter(rule => rule.field === 'last_name').map(mapRules),
     gender: query.rules.filter(rule => rule.field === 'gender').map(mapRules),
     client_id: query.rules.filter(rule => rule.field === 'client_id').map(mapRules),
-    client_type: query.rules.filter(rule => rule.field === 'client_type__name').map(mapRules),
-    reg_date: query.rules.filter(rule => rule.field === 'registration_date').map(mapRules),
+    client_type__name: query.rules.filter(rule => rule.field === 'client_type__name').map(mapRules),
+    registration_date: query.rules.filter(rule => rule.field === 'registration_date').map(mapRules),
     branch_id: query.rules.filter(rule => rule.field === 'branch_id').map(mapRules),
     email: query.rules.filter(rule => rule.field === 'email').map(mapRules),
     phone_number: query.rules.filter(rule => rule.field === 'phone_number').map(mapRules),
     phone_number_secondary: query.rules.filter(rule => rule.field === 'phone_number_secondary').map(mapRules),
     whatsapp_number: query.rules.filter(rule => rule.field === 'whatsapp_number').map(mapRules),
     home_phone: query.rules.filter(rule => rule.field === 'home_phone').map(mapRules),
-    address: query.rules.filter(rule => rule.field === 'addresses__address').map(mapRules),
-    ownership: query.rules.filter(rule => rule.field === 'addresses__ownership').map(mapRules),
-    city: query.rules.filter(rule => rule.field === 'addresses__city').map(mapRules),
-    country: query.rules.filter(rule => rule.field === 'addresses__country').map(mapRules),
-    nok_first_name: query.rules.filter(rule => rule.field === 'noks__first_name').map(mapRules),
-    nok_last_name: query.rules.filter(rule => rule.field === 'noks__last_name').map(mapRules),
-    nok_phone_number: query.rules.filter(rule => rule.field === 'noks__phone_number').map(mapRules),
-    nok_address: query.rules.filter(rule => rule.field === 'noks__address').map(mapRules),
-    nok_city: query.rules.filter(rule => rule.field === 'noks__city').map(mapRules),
-    nok_country: query.rules.filter(rule => rule.field === 'noks__country').map(mapRules),
-    nok_gender: query.rules.filter(rule => rule.field === 'noks__gender').map(mapRules),
+    addresses__address: query.rules.filter(rule => rule.field === 'addresses__address').map(mapRules),
+    addresses__ownership: query.rules.filter(rule => rule.field === 'addresses__ownership').map(mapRules),
+    addresses__city: query.rules.filter(rule => rule.field === 'addresses__city').map(mapRules),
+    addresses__country: query.rules.filter(rule => rule.field === 'addresses__country').map(mapRules),
+    noks__first_name: query.rules.filter(rule => rule.field === 'noks__first_name').map(mapRules),
+    noks__last_name: query.rules.filter(rule => rule.field === 'noks__last_name').map(mapRules),
+    noks__phone_number: query.rules.filter(rule => rule.field === 'noks__phone_number').map(mapRules),
+    noks__address: query.rules.filter(rule => rule.field === 'noks__address').map(mapRules),
+    noks__city: query.rules.filter(rule => rule.field === 'noks__city').map(mapRules),
+    noks__country: query.rules.filter(rule => rule.field === 'noks__country').map(mapRules),
+    noks__gender: query.rules.filter(rule => rule.field === 'noks__gender').map(mapRules),
   }
 }
 

@@ -58,7 +58,7 @@ function DataExport({data, close}) {
             </>
             : null}
             <button className='btn btn-olive'>
-              <Link to={`editdataexport/${dataExport.id}`}>Edit</Link>
+              <Link to={`/data/viewdata/editdataexport/${dataExport.id}`}>Edit</Link>
             </button>
           </div>
         </div>

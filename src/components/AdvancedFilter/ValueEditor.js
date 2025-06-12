@@ -76,7 +76,7 @@ function DatePickerEditor({value, handleOnChange}) {
   return <DatePicker value={value} format={loggedInUser.date_format.toUpperCase()} onChange={handleChange}/>
 }
 
-function DateRangePicker({handleOnChange, value}) {
+function DateRangePicker({value, handleOnChange}) {
   const {loggedInUser} = useLoggedInUser();
 
   const handleChange = value => {
@@ -84,7 +84,10 @@ function DateRangePicker({handleOnChange, value}) {
     handleOnChange(valueString);
   }
 
-  return <DatePicker value={['09/06/2025', '30/06/2025']} range format={loggedInUser.date_format.toUpperCase()} onChange={handleChange}/>
+  if (value) {
+    return <DatePicker value={value.split(',')} range format={loggedInUser.date_format.toUpperCase()} onChange={handleChange}/>
+  }
+  return <DatePicker range format={loggedInUser.date_format.toUpperCase()} onChange={handleChange}/>
 }
 
 function getFormattedDate(date, format) {

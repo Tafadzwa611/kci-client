@@ -8,7 +8,6 @@ function AdvancedFilter({fields, getAdvOpts, getOperators, onQueryChange, initQu
   const [query, setQuery] =  useState(initQueryState);
 
   useEffect(() => {
-    console.log(query);
     const advOpts = getAdvOpts(query);
     onQueryChange(advOpts);
   }, [query]);

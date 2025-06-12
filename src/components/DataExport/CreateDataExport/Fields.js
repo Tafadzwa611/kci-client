@@ -92,7 +92,6 @@ const installmentFields = [
   {name: 'status', label: 'Status', values: installmentStatusOpts, datatype: 'select'}
 ];
 
-
 const txnTypeOpts = [
   {name: 'Disbursement', label: 'Disbursement'},
   {name: 'Fee Applied', label: 'Fee Applied'},

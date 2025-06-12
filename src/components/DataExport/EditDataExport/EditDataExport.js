@@ -1,10 +1,38 @@
 import React from 'react';
 import { Fetcher } from '../../../common';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import {getFields} from '../../DataExport/CreateDataExport/Fields';
 import {getOperators, getAdvOpts, processBackEndSearch} from '../../DataExport/CreateDataExport/utils';
 import AdvancedFilter from '../../AdvancedFilter/AdvancedFilter';
+import { removeEmptyValues } from '../../../utils/utils';
+import Cookies from 'js-cookie';
+import axios from 'axios';
+import { useBranches } from '../../../contexts/BranchesContext';
+import { useCurrencies } from '../../../contexts/CurrenciesContext';
+
+const branchFieldNames = {
+  CLIENT: 'branch_id',
+  PAYMENT: 'branch_id',
+  GROUP: 'branch_id',
+  LOAN: 'branch_id',
+  JOURNAL: 'branch_id',
+  INSTALLMENT: 'loan__branch_id',
+  TXN: 'loan__branch_id',
+  NOK: 'client__branch_id',
+  ADDRESS: 'client__branch_id',
+  MEMBER: 'group__branch_id',
+  COLLATERAL: 'loan__branch_id',
+};
+
+const currencyFieldNames = {
+  LOAN: 'currency_id',
+  PAYMENT: 'currency_id',
+  JOURNAL: 'currency_id',
+  INSTALLMENT: 'loan__currency_id',
+  TXN: 'loan__currency_id',
+  COLLATERAL: 'currency_id',
+};
 
 function EditDataExport() {
     const params = useParams();
@@ -17,20 +45,44 @@ function EditDataExport() {
 }
 
 function EntityForm({ dataexport, fields }) {
-    const [values, setValues] = React.useState({
-        data_export_name: dataexport.data_export_name,
-        data_export_file_format: dataexport.data_export_file_format,
-        fields: []
-    });
     const initFieldNames = dataexport.fields.map(field => field.field_name);
     const initFields = fields[dataexport.base_entity].filter(
         field => initFieldNames.includes(field.field_name)
     ).map(field => ({label: field.display_name, value: field.field_name}));
+    const [values, setValues] = React.useState({
+        data_export_name: dataexport.data_export_name,
+        data_export_file_format: dataexport.data_export_file_format,
+        fields: dataexport.fields
+    });
     const [optionSelected, setOptionSelected] = React.useState(initFields);
     const [errors, setErrors] = React.useState({});
     const initQuery = processBackEndSearch(dataexport.search);
+    console.log(initQuery);
     const [search, setSearch] = React.useState(initQuery);
     const [basicSearchFields, setBasicSearchFields] = React.useState([]);
+
+    const {branches} = useBranches();
+    const {currencies} = useCurrencies();
+
+    React.useEffect(() => {
+        const basicSearchFields = [];
+        const branchName = branchFieldNames[values.base_entity];
+        const currencyName = currencyFieldNames[values.base_entity];
+        if (values.base_entity === 'JOURNAL') {
+            basicSearchFields.push({name: 'branch_debited_id', label: 'Branch Debited', datatype: 'select', values: branches.map(branch => ({name: branch.id, label: branch.name}))});
+            basicSearchFields.push({name: 'branch_credited_id', label: 'Branch Credited', datatype: 'select', values: branches.map(branch => ({name: branch.id, label: branch.name}))});
+        }
+        if (branchName) {
+            basicSearchFields.push({name: branchName, label: 'Branch', datatype: 'select', values: branches.map(branch => ({name: branch.id, label: branch.name}))});
+        }
+        if (currencyName) {
+            basicSearchFields.push({name: currencyName, label: 'Currency', datatype: 'select', values: currencies.map(currency => ({name: currency.id, label: currency.shortname}))});
+        }
+        setBasicSearchFields(basicSearchFields);
+        setOptionSelected([]);
+    }, []);
+
+    const navigate = useNavigate();
 
     const onChange = (evt) => {
         const {name, value} = evt.target;
@@ -45,6 +97,31 @@ function EntityForm({ dataexport, fields }) {
             selectedFields.push(field);
         });
         setValues(curr => ({...curr, fields: selectedFields}));
+    }
+
+    const onSubmit = async () => {
+        const fields = processFields(values.fields);
+        let data = {
+            data_export_name: values.data_export_name,
+            data_export_file_format: values.data_export_file_format,
+            search,
+            ...fields
+        };
+        data = removeEmptyValues(data);
+        try {
+            const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+            const response = await axios.post(`/reportsapi/update_export/${dataexport.id}/`, data, CONFIG);
+            navigate({pathname: `/data/viewdata/dataexport/${response.data.report_pk}`});
+        } catch (error) {
+            console.log(error);
+            if (error.message === 'Network Error') {
+            setErrors({detail: 'Network Error'});
+            } else if (error.response.status >= 400 && error.response.status < 500) {
+            setErrors(error.response.data);
+            } else {
+            setErrors({detail: 'Server Error'});
+            }
+        }
     }
 
     return (
@@ -103,100 +180,26 @@ function EntityForm({ dataexport, fields }) {
                     initQuery={search}
                 />
             </div>
+            <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+            <div style={{display:'flex', justifyContent: 'flex-end'}}>
+                <button className='btn btn-info' type='submit' onClick={onSubmit}>
+                    Submit
+                </button>
+            </div>
         </>
     )
 }
 
-const a = {
-    "id": "root",
-    "combinator": "and",
-    "rules": [
-        {
-            "id": "r-0.19030902309660325",
-            "field": "date_of_birth",
-            "operator": "=",
-            "valueSource": "value",
-            "value": "09/06/2025"
-        }
-    ]
-}
-
-const b = {
-    "combinator": "AND",
-    "date_of_birth": [{"date_of_birth": "09/06/2025"}],
-    "status": [],
-    "full_name": [],
-    "first_name": [],
-    "last_name": [],
-    "gender": [],
-    "client_id": [],
-    "client_type": [],
-    "reg_date": [],
-    "branch_ids": [],
-    "email": [],
-    "phone_number": [],
-    "phone_number_secondary": [],
-    "whatsapp_number": [],
-    "home_phone": [],
-    "address": [],
-    "ownership": [],
-    "city": [],
-    "country": [],
-    "nok_first_name": [],
-    "nok_last_name": [],
-    "nok_phone_number": [],
-    "nok_address": [],
-    "nok_city": [],
-    "nok_country": [],
-    "nok_gender": []
-}
-
-const search = {
-    "combinator": "AND",
-    "gender": [{"gender__iexact": "FEMALE"}, {"not_gender__iexact": "MALE"}],
-    "branch_ids": [{"branch_id": 111}, {"not_branch_id": "112"}],
-    "first_name": [
-        {"first_name__iexact": "Tanaka"},
-        {"not_first_name__iexact": "Tanaka"},
-        {"first_name__icontains": "Tanaka"},
-        {"not_first_name__icontains": "Tanaka"},
-        {"first_name__istartswith": "Tanaka"},
-        {"not_first_name__istartswith": "Tanaka"},
-        {"first_name__iendswith": "Tanaka"},
-        {"not_first_name__iendswith": "Tanaka"}
-    ],
-    "date_of_birth": [
-        {
-            "date_of_birth": "07/06/2022"
-        },
-        {
-            "not_date_of_birth": "09/06/2025"
-        },
-        {
-            "date_of_birth__lt": "01/06/2025"
-        },
-        {
-            "date_of_birth__gt": "09/06/2025"
-        },
-        {
-            "date_of_birth__lte": "01/04/2025"
-        },
-        {
-            "date_of_birth__gte": "01/06/2021"
-        },
-        {
-            "date_of_birth__range": [
-                "09/06/2025",
-                "27/06/2025"
-            ]
-        },
-        {
-            "not_date_of_birth__range": [
-                "09/06/2025",
-                "30/06/2025"
-            ]
-        }
-    ]
+const processFields = (fields) => {
+  const native_fields = fields.filter(field => field.type === 'native').map(field => field.field_name);
+  const custom_fields = fields.filter(field => field.type === 'custom').map(field => {
+    const startIndex = 7;
+    const endIndex = field.field_name.lastIndexOf('_');
+    let field_name = field.field_name.slice(startIndex, endIndex);
+    return {field_set_id: field.custom_field_set_id, field_name: field_name};
+  })
+  const annotated_fields = fields.filter(field => field.type === 'annotation').map(field => field.field_name);
+  return {native_fields, custom_fields, annotated_fields}
 }
 
 export default EditDataExport;
