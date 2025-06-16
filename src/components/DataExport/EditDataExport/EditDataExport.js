@@ -57,7 +57,6 @@ function EntityForm({ dataexport, fields }) {
     const [optionSelected, setOptionSelected] = React.useState(initFields);
     const [errors, setErrors] = React.useState({});
     const initQuery = processBackEndSearch(dataexport.search);
-    console.log(initQuery);
     const [search, setSearch] = React.useState(initQuery);
     const [basicSearchFields, setBasicSearchFields] = React.useState([]);
 
@@ -66,9 +65,9 @@ function EntityForm({ dataexport, fields }) {
 
     React.useEffect(() => {
         const basicSearchFields = [];
-        const branchName = branchFieldNames[values.base_entity];
-        const currencyName = currencyFieldNames[values.base_entity];
-        if (values.base_entity === 'JOURNAL') {
+        const branchName = branchFieldNames[dataexport.base_entity];
+        const currencyName = currencyFieldNames[dataexport.base_entity];
+        if (dataexport.base_entity === 'JOURNAL') {
             basicSearchFields.push({name: 'branch_debited_id', label: 'Branch Debited', datatype: 'select', values: branches.map(branch => ({name: branch.id, label: branch.name}))});
             basicSearchFields.push({name: 'branch_credited_id', label: 'Branch Credited', datatype: 'select', values: branches.map(branch => ({name: branch.id, label: branch.name}))});
         }
@@ -79,7 +78,6 @@ function EntityForm({ dataexport, fields }) {
             basicSearchFields.push({name: currencyName, label: 'Currency', datatype: 'select', values: currencies.map(currency => ({name: currency.id, label: currency.shortname}))});
         }
         setBasicSearchFields(basicSearchFields);
-        setOptionSelected([]);
     }, []);
 
     const navigate = useNavigate();

@@ -30,7 +30,6 @@ function ValueEditor(props) {
   }
 }
 
-
 function Select({value, handleOnChange, values}) {
   return (
     <select onChange={(e) => handleOnChange(e.target.value)} value={value} className="custom-select-form row-form">
@@ -38,7 +37,6 @@ function Select({value, handleOnChange, values}) {
     </select>
   )
 }
-
 
 function Text({value, handleOnChange}) {
   return (
