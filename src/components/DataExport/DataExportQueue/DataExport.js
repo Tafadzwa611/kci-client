@@ -51,15 +51,21 @@ function DataExport({data, close}) {
           <div style={{display:'flex', justifyContent:'space-between'}}>
             {close ?
             <>
-              <button className='btn btn-default client__details' onClick={close}>Close</button>
-              <button className='btn btn-default client__details'>
-                <Link to={`dataexport/${dataExport.id}`}>Expand</Link>
+              <button className='btn btn-olive'>
+                <Link to={`/data/viewdata/editdataexport/${dataExport.id}`}>Edit</Link>
               </button>
+              <div>
+                <button className='btn btn-default client__details' onClick={close}>Close</button>
+                <button className='btn btn-default client__details'>
+                  <Link to={`dataexport/${dataExport.id}`}>Expand</Link>
+                </button>
+              </div>
             </>
-            : null}
-            <button className='btn btn-olive'>
-              <Link to={`/data/viewdata/editdataexport/${dataExport.id}`}>Edit</Link>
-            </button>
+            : (
+              <button className='btn btn-olive'>
+                <Link to={`/data/viewdata/editdataexport/${dataExport.id}`}>Edit</Link>
+              </button>
+            )}
           </div>
         </div>
         <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', marginTop:'1.5rem'}}>

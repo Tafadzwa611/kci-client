@@ -39,7 +39,21 @@ function EditDataExport() {
 
     return (
         <Fetcher urls={[`/reportsapi/get_export/${params.dataexportId}/`, '/reportsapi/get_entity_fields/']}>
-            {({data}) => <EntityForm dataexport={data[0]} fields={data[1]} />}
+            {({data}) => {
+                const dataexport = data[0];
+                const fields = data[1];
+                if (!fields[dataexport.base_entity]) {
+                    return (
+                        <div>This report cannot be edited.</div>
+                    )
+                }
+                return (
+                    <EntityForm
+                        dataexport={dataexport}
+                        fields={fields}
+                    />
+                )
+            }}
         </Fetcher>
     )
 }
