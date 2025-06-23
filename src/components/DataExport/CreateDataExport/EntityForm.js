@@ -35,7 +35,7 @@ const currencyFieldNames = {
 
 function EntityForm({fields}) {
   const [search, setSearch] = useState({});
-  const [values, setValues] = useState({data_export_name: '', data_export_file_format: '', base_entity: '', fields: []});
+  const [values, setValues] = useState({data_export_name: '', data_export_file_format: '', num_columns: '', base_entity: '', fields: []});
   const [optionSelected, setOptionSelected] = useState();
   const [basicSearchFields, setBasicSearchFields] = useState([]);
   const [errors, setErrors] = useState({});
@@ -67,6 +67,7 @@ function EntityForm({fields}) {
     let data = {
       data_export_name: values.data_export_name,
       data_export_file_format: values.data_export_file_format,
+      num_columns: values.num_columns,
       base_entity: values.base_entity,
       search,
       ...fields
@@ -123,11 +124,31 @@ function EntityForm({fields}) {
             <option value=''>------</option>
             <option value='xlsx'>XLXS</option>
             <option value='csv'>CSV</option>
-            <option value='pdf'>PDF</option>
+            <option value='pdfa4'>PDF A4</option>
+            <option value='pdfa3'>PDF A3</option>
+            <option value='pdfa2'>PDF A2</option>
+            <option value='pdfa1'>PDF A1</option>
           </select>
           {errors.data_export_file_format ? <div className='error'>{JSON.stringify(errors.data_export_file_format)}</div> : null}
         </div>
       </div>
+      {values.data_export_file_format.includes("pdf") && (
+        <div className='row custom-background'>
+          <label className='form-label'>Number Of Columns Per Page<span style={{color: 'red'}}>&#42;</span></label>
+          <div className='col-9'>
+            <input
+              name='num_columns'
+              value={values.num_columns}
+              type='number'
+              step='1'
+              className='custom-select-form'
+              onChange={onChange}
+              required
+            />
+            {errors.num_columns && <div className='error'>{JSON.stringify(errors.num_columns)}</div>}
+          </div>
+        </div>
+      )}
       <div className='row custom-background'>
         <label className='form-label'>Entity<span style={{color: 'red'}}>&#42;</span></label>
         <div className='col-9'>

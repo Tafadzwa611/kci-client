@@ -23,8 +23,9 @@ function DataExport({data, close}) {
 
   const dowloadFile = async () => {
     setError(null);
-    const s3_file_name = `${dataExport.s3_file_name}.${dataExport.data_export_file_format}`;
-    const filename = `${dataExport.data_export_name}.${dataExport.data_export_file_format}`;
+    const file_format = (dataExport.data_export_file_format === 'csv' || dataExport.data_export_file_format === 'xlsx') ? dataExport.data_export_file_format : 'pdf';
+    const s3_file_name = `${dataExport.s3_file_name}.${file_format}`;
+    const filename = `${dataExport.data_export_name}.${file_format}`;
     const response = await axios.get(`/usersapi/get_signed_url/?client_method=get_object&bucket=lenda-client-files&filename=${s3_file_name}`);
     const signedUrl = response.data.url;
     axios({
