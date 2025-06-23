@@ -123,6 +123,7 @@ function EntityForm({fields}) {
             <option value=''>------</option>
             <option value='xlsx'>XLXS</option>
             <option value='csv'>CSV</option>
+            <option value='pdf'>PDF</option>
           </select>
           {errors.data_export_file_format ? <div className='error'>{JSON.stringify(errors.data_export_file_format)}</div> : null}
         </div>
