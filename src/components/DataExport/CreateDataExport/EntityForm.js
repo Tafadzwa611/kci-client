@@ -183,10 +183,7 @@ function EntityForm({fields}) {
             fields={getFields(values.base_entity, branches, currencies)}
             getAdvOpts={getAdvOpts(values.base_entity)}
             getOperators={getOperators}
-            onQueryChange={q => {
-              console.log(q);
-              setSearch(q);
-            }}
+            onQueryChange={q => setSearch(q)}
           />
         </div>
       </> : null}
