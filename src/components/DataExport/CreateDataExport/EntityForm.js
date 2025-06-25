@@ -72,6 +72,7 @@ function EntityForm({fields}) {
       search,
       ...fields
     };
+    console.log(search);
     data = removeEmptyValues(data);
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
@@ -197,7 +198,10 @@ function EntityForm({fields}) {
             fields={[...basicSearchFields, ...getFields(values.base_entity)]}
             getAdvOpts={getAdvOpts(values.base_entity)}
             getOperators={getOperators}
-            onQueryChange={q => setSearch(q)}
+            onQueryChange={q => {
+              console.log(q);
+              setSearch(q)
+            }}
           />
         </div>
       </> : null}
