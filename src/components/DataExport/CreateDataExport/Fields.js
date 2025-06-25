@@ -200,18 +200,26 @@ const paymentFields = [
   {name: 'notes', label: 'Notes', datatype: 'text'},
 ];
 
-const getFields = base_entity => {
+const getFields = (base_entity, branches, currencies) => {
   return {
     CLIENT: clientFields,
     GROUP: groupFields,
-    LOAN: loanFields,
+    LOAN: [
+      {name: 'branch_id', label: 'Branch', datatype: 'select', values: branches.map(branch => ({name: branch.id, label: branch.name}))},
+      {name: 'currency_id', label: 'Currency', datatype: 'select', values: currencies.map(currency => ({name: currency.id, label: currency.shortname}))},
+      ...loanFields
+    ],
     INSTALLMENT: installmentFields,
     TXN: txnFields,
     NOK: nokFields,
     ADDRESS: addressFields,
     MEMBER: groupMemberFields,
     COLLATERAL: collateralFields,
-    JOURNAL: journalFields,
+    JOURNAL: [
+      {name: 'branch_debited_id', label: 'Branch Debited', datatype: 'select', values: branches.map(branch => ({name: branch.id, label: branch.name}))},
+      {name: 'branch_credited_id', label: 'Branch Credited', datatype: 'select', values: branches.map(branch => ({name: branch.id, label: branch.name}))},
+      ...journalFields
+    ],
     PAYMENT: paymentFields,
   }[base_entity]
 }

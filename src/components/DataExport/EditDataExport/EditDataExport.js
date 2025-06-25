@@ -11,28 +11,28 @@ import axios from 'axios';
 import { useBranches } from '../../../contexts/BranchesContext';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
 
-const branchFieldNames = {
-  CLIENT: 'branch_id',
-  PAYMENT: 'branch_id',
-  GROUP: 'branch_id',
-  LOAN: 'branch_id',
-  JOURNAL: 'branch_id',
-  INSTALLMENT: 'loan__branch_id',
-  TXN: 'loan__branch_id',
-  NOK: 'client__branch_id',
-  ADDRESS: 'client__branch_id',
-  MEMBER: 'group__branch_id',
-  COLLATERAL: 'loan__branch_id',
-};
+// const branchFieldNames = {
+//   CLIENT: 'branch_id',
+//   PAYMENT: 'branch_id',
+//   GROUP: 'branch_id',
+//   LOAN: 'branch_id',
+//   JOURNAL: 'branch_id',
+//   INSTALLMENT: 'loan__branch_id',
+//   TXN: 'loan__branch_id',
+//   NOK: 'client__branch_id',
+//   ADDRESS: 'client__branch_id',
+//   MEMBER: 'group__branch_id',
+//   COLLATERAL: 'loan__branch_id',
+// };
 
-const currencyFieldNames = {
-  LOAN: 'currency_id',
-  PAYMENT: 'currency_id',
-  JOURNAL: 'currency_id',
-  INSTALLMENT: 'loan__currency_id',
-  TXN: 'loan__currency_id',
-  COLLATERAL: 'currency_id',
-};
+// const currencyFieldNames = {
+//   LOAN: 'currency_id',
+//   PAYMENT: 'currency_id',
+//   JOURNAL: 'currency_id',
+//   INSTALLMENT: 'loan__currency_id',
+//   TXN: 'loan__currency_id',
+//   COLLATERAL: 'currency_id',
+// };
 
 function EditDataExport() {
     const params = useParams();
@@ -73,27 +73,9 @@ function EntityForm({ dataexport, fields }) {
     const [errors, setErrors] = React.useState({});
     const initQuery = processBackEndSearch(dataexport.search);
     const [search, setSearch] = React.useState(initQuery);
-    const [basicSearchFields, setBasicSearchFields] = React.useState([]);
 
     const {branches} = useBranches();
     const {currencies} = useCurrencies();
-
-    React.useEffect(() => {
-        const basicSearchFields = [];
-        const branchName = branchFieldNames[dataexport.base_entity];
-        const currencyName = currencyFieldNames[dataexport.base_entity];
-        if (dataexport.base_entity === 'JOURNAL') {
-            basicSearchFields.push({name: 'branch_debited_id', label: 'Branch Debited', datatype: 'select', values: branches.map(branch => ({name: branch.id, label: branch.name}))});
-            basicSearchFields.push({name: 'branch_credited_id', label: 'Branch Credited', datatype: 'select', values: branches.map(branch => ({name: branch.id, label: branch.name}))});
-        }
-        if (branchName) {
-            basicSearchFields.push({name: branchName, label: 'Branch', datatype: 'select', values: branches.map(branch => ({name: branch.id, label: branch.name}))});
-        }
-        if (currencyName) {
-            basicSearchFields.push({name: currencyName, label: 'Currency', datatype: 'select', values: currencies.map(currency => ({name: currency.id, label: currency.shortname}))});
-        }
-        setBasicSearchFields(basicSearchFields);
-    }, []);
 
     const navigate = useNavigate();
 
@@ -215,7 +197,7 @@ function EntityForm({ dataexport, fields }) {
                 <label className='form-label'>Filters</label>
                 <AdvancedFilter
                     key={dataexport.base_entity}
-                    fields={[...basicSearchFields, ...getFields(dataexport.base_entity)]}
+                    fields={getFields(dataexport.base_entity, branches, currencies)}
                     getAdvOpts={getAdvOpts(dataexport.base_entity)}
                     getOperators={getOperators}
                     onQueryChange={q => setSearch(q)}

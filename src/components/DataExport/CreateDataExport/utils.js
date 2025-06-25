@@ -250,6 +250,8 @@ const getLoanAdvOpts = query => {
     loan_added_on: query.rules.filter(rule => rule.field === 'loan_added_on').map(mapRules),
     approval_date: query.rules.filter(rule => rule.field === 'approval_date').map(mapRules),
     application_date: query.rules.filter(rule => rule.field === 'application_date').map(mapRules),
+    branch_id: query.rules.filter(rule => rule.field === 'branch_id').map(mapRules),
+    currency_id: query.rules.filter(rule => rule.field === 'currency_id').map(mapRules),
   }
 }
 
