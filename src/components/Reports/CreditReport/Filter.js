@@ -103,6 +103,10 @@ const Filter = ({setReport, setParams, units}) => {
                           <option value='html'>Screen (HTML)</option>
                           <option value='xlsx'>Excel</option>
                           <option value='csv'>CSV</option>
+                          <option value='pdfa4'>PDF A4</option>
+                          <option value='pdfa3'>PDF A3</option>
+                          <option value='pdfa2'>PDF A2</option>
+                          <option value='pdfa1'>PDF A1</option>
                         </CustomSelectFilter>
                       </div>
                     </div>

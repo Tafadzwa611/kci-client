@@ -21,6 +21,7 @@ const Filter = () => {
         client_str: '',
         reason: '',
         status: '',
+        file_format: 'xlsx',
         include_totals: true,
     };
     const {currencies} = useCurrencies();
@@ -31,6 +32,7 @@ const Filter = () => {
     const onSubmit = async (values, actions) => {
         try {
             const data = removeEmptyValues(values);
+            data.mode = values.file_format;
             const params = getParams(data);
             if (values.branch_ids.includes('*')) {
                 params.delete('branch_ids');
@@ -76,13 +78,22 @@ const Filter = () => {
                                     </div>
                                 </div>
                                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                                    <div style={{width:'75%'}}>
+                                    <div style={{width:'55%'}}>
                                         <MultiSelectFilter
                                             label='Branches'
                                             name='branch_ids'
                                             options={branches.map(br => ({label: br.name, value:br.id}))}
                                             setFieldValue={setFieldValue}
                                         />
+                                    </div>
+                                    <div className='row-payments-container' style={{width:'18%'}}>
+                                        <CustomSelectFilter label='Mode' name='file_format' required>
+                                            <option value='xlsx'>Excel</option>
+                                            <option value='pdfa4'>PDF A4</option>
+                                            <option value='pdfa3'>PDF A3</option>
+                                            <option value='pdfa2'>PDF A2</option>
+                                            <option value='pdfa1'>PDF A1</option>
+                                        </CustomSelectFilter>
                                     </div>
                                     <div style={{width:'15%', marginTop:'1.5rem'}}>
                                         <CustomCheckBoxfilter label='Include Totals' name='include_totals'/>
