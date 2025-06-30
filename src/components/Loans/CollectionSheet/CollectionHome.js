@@ -29,7 +29,7 @@ const CollectionHome = () => {
         <Route
           path='templates'
           element={(
-            <Fetcher urls={['/usersapi/list_report_templates/']}>
+            <Fetcher urls={['/usersapi/list_report_templates/?report_type=COLLECTION_SHEET']}>
               {({data}) => <Templates data={data}/>}
             </Fetcher>
           )}
