@@ -2,9 +2,8 @@ import React from 'react';
 import { SuccessBtn } from '../../../common';
 import AddTemplate from './AddTemplate';
 
-function ReportFields({columns, savedTemplates, setOpen, reportType}) {
+function ReportFields({columns, templates, setTemplates, setOpen, reportType}) {
     const [view, setView] = React.useState('list');
-    const [templates, setTemplates] = React.useState(savedTemplates);
 
     return (
         <div className={open ? 'modal fade show' : 'modal fade'} style={{display: open ? 'block' : 'none'}}>
@@ -17,7 +16,7 @@ function ReportFields({columns, savedTemplates, setOpen, reportType}) {
                     <div className='modal-body'>
                         {{
                             'list': <TemplatesTable templates={templates} setView={setView}/>,
-                            'add': <AddTemplate reportType={reportType} columns={columns} setView={setView}/>,
+                            'add': <AddTemplate reportType={reportType} columns={columns} setView={setView} setTemplates={setTemplates}/>,
                         }[view]}
                     </div>
                     <div className='modal-footer justify-content-between'>

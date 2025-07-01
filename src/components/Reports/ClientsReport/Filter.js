@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Form, Formik } from 'formik';
 import {
   NonFieldErrors,
@@ -14,8 +14,9 @@ import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 import ReportFields from '../ReportFields/ReportFields';
 
-const Filter = ({setClientsReportData, setParams, units, templates, columns}) => {
-  const [showReportFields, setShowReportFields] = useState(false);
+const Filter = ({setClientsReportData, setParams, units, savedTemplates, columns}) => {
+  const [showReportFields, setShowReportFields] = React.useState(false);
+  const [templates, setTemplates] = React.useState(savedTemplates);
   const initialValues = {
     branch_ids: [],
     page_num: 1,
@@ -61,7 +62,15 @@ const Filter = ({setClientsReportData, setParams, units, templates, columns}) =>
 
   return (
     <>
-      {showReportFields && <ReportFields columns={columns} savedTemplates={templates} setOpen={setShowReportFields} reportType='CLIENTS_REPORT'/>}
+      {showReportFields && (
+        <ReportFields 
+          columns={columns}
+          templates={templates}
+          setTemplates={setTemplates}
+          setOpen={setShowReportFields}
+          reportType='CLIENTS_REPORT'
+        />
+      )}
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {({isSubmitting, setFieldValue, errors}) => (
           <div className='search_background'>

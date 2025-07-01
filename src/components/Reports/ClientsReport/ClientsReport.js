@@ -13,7 +13,7 @@ function ClientsReport() {
         <ClientsReportSection 
           units={data[0]}
           columns={data[1]}
-          templates={data[2]}
+          savedTemplates={data[2]}
           params={params}
           setParams={setParams}
           clientsReportData={clientsReportData}
@@ -31,13 +31,13 @@ const ClientsReportSection =({
   params,
   units,
   columns,
-  templates
+  savedTemplates
 })=> {
   return (
     <>
       <Filter
         columns={columns}
-        templates={templates}
+        savedTemplates={savedTemplates}
         setClientsReportData={setClientsReportData}
         setParams={setParams}
         units={units}

@@ -11,15 +11,17 @@ import {
   CustomSortableSelect
 } from '../../../common';
 
-const AddTemplate = ({columns, setView, reportType}) => {
+const AddTemplate = ({columns, setView, reportType, setTemplates}) => {
     const onSubmit = async (values, actions) => {
         try {
             const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-            await axios.post(
+            const response = await axios.post(
                 '/usersapi/add_report_template/',
                 {...values, columns: values.order.map(column => getSwappedColumn(reportType)[column])},
                 CONFIG
             );
+            setTemplates(curr => [response.data, ...curr]);
+            setView('list');
         } catch (error) {
             console.log(error);
             if (error.message === 'Network Error') {
@@ -35,7 +37,7 @@ const AddTemplate = ({columns, setView, reportType}) => {
     return (
         <>
             <button><a onClick={() => setView('list')} className="btn btn-default client__details" style={{borderRadius:"0"}}>Back</a></button>
-            <Formik initialValues={{report_type: 'COLLECTION_SHEET', report_name: '', columns: [], order: []}} onSubmit={onSubmit}>
+            <Formik initialValues={{report_type: reportType, report_name: '', columns: [], order: []}} onSubmit={onSubmit}>
                 {({ values, isSubmitting, setFieldValue, errors }) => (
                     <Form>
                         <NonFieldErrors errors={errors}>
