@@ -14,9 +14,8 @@ import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 import ReportFields from '../ReportFields/ReportFields';
 
-const Filter = ({setClientsReportData, setParams, units, savedTemplates, columns}) => {
+const Filter = ({setClientsReportData, setParams, units, templates, setTemplates, columns}) => {
   const [showReportFields, setShowReportFields] = React.useState(false);
-  const [templates, setTemplates] = React.useState(savedTemplates);
   const initialValues = {
     branch_ids: [],
     page_num: 1,
@@ -79,10 +78,10 @@ const Filter = ({setClientsReportData, setParams, units, savedTemplates, columns
                 <NonFieldErrors errors={errors}>
                   <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
                     <div className='row-payments-container' style={{width:'16%'}}>
-                      <CustomDatePickerFilter label='Min Client Reg Date' name='min_date' setFieldValue={setFieldValue} required/>
+                      <CustomDatePickerFilter label='Min Client Reg Date' name='min_date' setFieldValue={setFieldValue}/>
                     </div>
                     <div className='row-payments-container' style={{width:'16%'}}>
-                      <CustomDatePickerFilter label='Max Client Reg Date' name='max_date' setFieldValue={setFieldValue} required/>
+                      <CustomDatePickerFilter label='Max Client Reg Date' name='max_date' setFieldValue={setFieldValue}/>
                     </div>
                     <div className='row-payments-container' style={{width:'16%'}}>
                       <CustomDatePickerFilter label='Min Loan DB Date' name='min_db_date' setFieldValue={setFieldValue}/>
@@ -115,7 +114,7 @@ const Filter = ({setClientsReportData, setParams, units, savedTemplates, columns
                         <option value=''>------</option>
                         {templates.map(template => <option key={template.id} value={template.id}>{template.report_name}</option>)}
                       </CustomSelectFilter>
-                      <a onClick={() => setShowReportFields(true)}>View Templates</a>
+                      <a onClick={() => setShowReportFields(true)} style={{cursor: 'pointer'}}>View Templates</a>
                     </div>
                     <div className='row-payments-container' style={{width:'10%'}}>
                       <CustomSelectFilter label='Currency' name='currency_id' required>
