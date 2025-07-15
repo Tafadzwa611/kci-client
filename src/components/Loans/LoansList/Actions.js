@@ -17,6 +17,7 @@ import ApplyInterest from './ApplyInterest/ApplyInterest';
 import UndoEarlySettlement from './UndoEarlySettlement';
 import { Fetcher } from '../../../common';
 import WaiveInterest from './WaiveInterest';
+import TriggerPenaltyRecal from './TriggerPenaltyRecal';
 
 const MODAL_STATES = {
   lockInt: 'lockInt',
@@ -35,6 +36,7 @@ const MODAL_STATES = {
   addInterest: 'addInterest',
   undoSettle: 'undoSettle',
   waiveInterest: 'waiveInterest',
+  triggerPenaltyRecal: 'triggerPenaltyRecal',
   none: false
 };
 
@@ -56,6 +58,7 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
     addInterest,
     undoSettle,
     waiveInterest,
+    triggerPenaltyRecal,
     none
   } = MODAL_STATES;
   const [modal, setModal] = useState(none);
@@ -174,6 +177,7 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
     return (
       <div style={{display:'flex', columnGap:'3px'}}>
         {modal === addInterest && <ApplyInterest setOpen={setModal} setLoan={setLoanDetails} loan={loan}/>}
+        {modal === triggerPenaltyRecal && <TriggerPenaltyRecal setOpen={setModal} loan={loan}/>}
         {modal === refinance && <Refinance setOpen={setModal} loan={loan}/>}
         {modal === addPayment &&
         <AddPayment
@@ -254,8 +258,14 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
           ): null}
           <button className='btn btn-olive' onClick={() => setModal(topup)}>Top-Up</button>
           {loan.status == 'Written-Off' ?
-          <button className='btn btn-olive' onClick={() => setModal(undoWriteOff)}>Undo Write Off</button> :
-          <button className='btn btn-olive' onClick={() => setModal(writeOff)}>Write Off</button>}
+          <button className='btn btn-olive' onClick={() => setModal(undoWriteOff)}>Undo Write Off</button> : (
+            <>
+              <button className='btn btn-olive' onClick={() => setModal(writeOff)}>Write Off</button>
+              {loan.action_on_loan_default == 'Add Scheduled Penalties After Maturity' && (
+                <button className='btn btn-olive' onClick={() => setModal(triggerPenaltyRecal)}>Recalculate Penalties</button>
+              )}
+            </>
+          )}
           <button className='btn btn-olive' onClick={() => setModal(undoDisburse)}>Undo Disbursement</button>
         </div>
       </div>
