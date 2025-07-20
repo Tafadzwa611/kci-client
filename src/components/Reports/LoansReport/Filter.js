@@ -19,6 +19,8 @@ const Filter = ({setReport, setParams, units}) => {
     page_num: 1,
     min_date: '',
     max_date: '',
+    min_closure: '',
+    max_closure: '',
     client_str: '',
     reason: '',
     status: '',
@@ -67,10 +69,10 @@ const Filter = ({setReport, setParams, units}) => {
               <NonFieldErrors errors={errors}>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
                   <div className='row-payments-container' style={{width:'16%'}}>
-                    <CustomDatePickerFilter label='Min Date' name='min_date' setFieldValue={setFieldValue} required/>
+                    <CustomDatePickerFilter label='Min DB Date' name='min_date' setFieldValue={setFieldValue}/>
                   </div>
                   <div className='row-payments-container' style={{width:'16%'}}>
-                    <CustomDatePickerFilter label='Max Date' name='max_date' setFieldValue={setFieldValue} required/>
+                    <CustomDatePickerFilter label='Max DB Date' name='max_date' setFieldValue={setFieldValue}/>
                   </div>
                   <div className='row-payments-container' style={{width:'16%'}}>
                     <CustomInputFilter label='Search Client' name='client_str' type='text'/>
@@ -108,7 +110,7 @@ const Filter = ({setReport, setParams, units}) => {
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'63%'}}>
+                  <div style={{width:'35%'}}>
                     <MultiSelectFilter
                       label='Branches'
                       name='branch_ids'
@@ -116,6 +118,12 @@ const Filter = ({setReport, setParams, units}) => {
                       setFieldValue={setFieldValue}
                       required
                     />
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomDatePickerFilter label='Min Closure Date' name='min_closure' setFieldValue={setFieldValue}/>
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomDatePickerFilter label='Max Closure Date' name='max_closure' setFieldValue={setFieldValue}/>
                   </div>
                   <div className='row-payments-container' style={{width:'10%'}}>
                     <CustomSelectFilter label='Status' name='status'>
