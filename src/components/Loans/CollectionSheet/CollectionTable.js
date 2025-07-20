@@ -1,7 +1,6 @@
 import React from 'react';
-import TableHeader from './TableHeader';
 
-const CollectionTable = ({sheet, setSheet, params}) => {
+const CollectionTable = ({ sheet }) => {
   if (!sheet || !sheet?.installments) {
     return <div></div>
   }
@@ -14,18 +13,6 @@ const CollectionTable = ({sheet, setSheet, params}) => {
 
   return (
     <>
-      <TableHeader
-        tableName='Collection Sheet'
-        length={sheet.installments.length}
-        totalCount={sheet.count}
-        pageNum={sheet.number}
-        numOfpages={sheet.num_of_pages}
-        nextPage={sheet.next_page_num}
-        params={params}
-        prevPage={sheet.prev_page_num}
-        setData={setSheet}
-        url='/reportsapi/collection_sheet/'
-      />
       <div className='table-container' style={{padding:'0', border:'none'}}>
         <div className='table-responsive font-12' style={{maxHeight:'600px'}}>
           <table className='table' style={{width:'100%'}} id='loans-report'>
