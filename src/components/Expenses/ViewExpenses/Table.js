@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import MainTable from './MainTable';
 import MiniTable from './MiniTable';
 import MiniExpenseDetails from './MiniExpenseDetails';
