@@ -5,7 +5,7 @@ import ExpenseDetails from './ExpenseDetails';
 import { useSearchParams } from 'react-router-dom';
 import { Fetcher } from '../../../common';
 
-function List() {
+function List({ expensetypes }) {
   const [searchParams] = useSearchParams();
   const [params, setParams] = useState(null);
   const [expenseData, setEpenseData] = useState({count: 0, next_page_num: 0, expenses: []});
@@ -16,7 +16,7 @@ function List() {
       {searchParams.get('expense_id') ?
         <ExpenseDetailsView expenseId={searchParams.get('expense_id')} expenseDetails={expenseDetails}/> :
         <>
-          <Filter setEpenseData={setEpenseData} setParams={setParams}/>
+          <Filter setEpenseData={setEpenseData} setParams={setParams} expensetypes={expensetypes}/>
           <div style={{paddingTop: '2rem'}}></div>
           <Table
             expenseData={expenseData} 

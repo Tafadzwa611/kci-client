@@ -15,13 +15,15 @@ import { useBranches } from '../../../contexts/BranchesContext';
 import axios from 'axios';
 import { removeEmptyValues } from '../../../utils/utils';
 
-const Filter = ({setEpenseData, setParams}) => {
+const Filter = ({setEpenseData, setParams, expensetypes}) => {
   const initialValues = {
     branch_ids: [],
     page_num: 1,
     exp_name: '',
-    min_date_created: '',
-    max_date_created: '',
+    exp_type_id: '',
+    currency_id: '',
+    min_expense_date: '',
+    max_expense_date: '',
   };
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
@@ -67,38 +69,48 @@ const Filter = ({setEpenseData, setParams}) => {
       {({isSubmitting, setFieldValue, errors}) => (
           <div className="search_background">
             <div className="row-containers" style={{border:"none"}}>
-                <Form>
-                    <NonFieldErrors errors={errors}>
-                        <div className="row row-payments row-loans" style={{marginTop:"1rem"}}>
-                            <div className="row-payments-container" style={{width:"32%"}}>
-                                <CustomDatePickerFilter label='Min Date Created' name='min_date_created' setFieldValue={setFieldValue}/>
-                            </div>
-                            <div className="row-payments-container" style={{width:"32%"}}>
-                                <CustomDatePickerFilter label='Max Date Created' name='max_date_created' setFieldValue={setFieldValue}/>
-                            </div>
-                            <div className="row-payments-container" style={{width:"32%"}}>
-                                <CustomInputFilter label='Expense Name' name='exp_name' type='text'/>
-                            </div>
-                        </div>
-                        <div style={{marginTop:"1rem", display:"flex", justifyContent:"space-between"}}>
-                            <div style={{width:"70%"}}>
-                              <MultiSelectFilter
-                                label='Branches'
-                                name='branch_ids'
-                                options={branches.map(br => ({label: br.name, value:br.id}))}
-                                setFieldValue={setFieldValue}
-                              />
-                            </div>
-                            <div style={{width:"20%"}}>
-                                <CustomSelectFilter label='Currency' name='currency_id' required>
-                                    <option value=''>------</option>
-                                    {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-                                </CustomSelectFilter>
-                            </div>
-                            <SubmitButtonFilter isSubmitting={isSubmitting}/>
-                        </div>
-                    </NonFieldErrors>
-                </Form>
+              <Form>
+                <NonFieldErrors errors={errors}>
+                  <div className="row row-payments row-loans" style={{marginTop:"1rem"}}>
+                    <div className="row-payments-container" style={{width:"32%"}}>
+                      <CustomDatePickerFilter label='Min Expense Date' name='min_expense_date' setFieldValue={setFieldValue}/>
+                    </div>
+                    <div className="row-payments-container" style={{width:"32%"}}>
+                      <CustomDatePickerFilter label='Max Expense Date' name='max_expense_date' setFieldValue={setFieldValue}/>
+                    </div>
+                    <div className="row-payments-container" style={{width:"32%"}}>
+                      <CustomInputFilter label='Expense Name' name='exp_name' type='text'/>
+                    </div>
+                  </div>
+                  <div style={{marginTop:"1rem", display:"flex", justifyContent:"space-between"}}>
+                    <div style={{width:"50%"}}>
+                      <MultiSelectFilter
+                        label='Branches'
+                        name='branch_ids'
+                        options={branches.map(br => ({label: br.name, value:br.id}))}
+                        setFieldValue={setFieldValue}
+                      />
+                    </div>
+                    <div style={{width:"20%"}}>
+                      <CustomSelectFilter label='Expense Type' name='exp_type_id'>
+                        <option value=''>------</option>
+                        {expensetypes.map(expensetype => (
+                          <option key={expensetype.id} value={expensetype.id}>
+                            {expensetype.currency__shortname} {expensetype.name} {expensetype.branch__name}
+                          </option>
+                        ))}
+                      </CustomSelectFilter>
+                    </div>
+                    <div style={{width:"20%"}}>
+                      <CustomSelectFilter label='Currency' name='currency_id'>
+                        <option value=''>------</option>
+                        {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+                      </CustomSelectFilter>
+                    </div>
+                    <SubmitButtonFilter isSubmitting={isSubmitting}/>
+                  </div>
+                </NonFieldErrors>
+              </Form>
             </div>
         </div>
       )}
