@@ -38,6 +38,7 @@ const SecondRow = ({monthlyReport}) => {
       <td style={{textAlign: 'right'}}>{`${monthlyReport.sum_principal_paid}`}</td>
       <td style={{textAlign: 'right'}}>{`${monthlyReport.sum_interest_paid}`}</td>
       <td style={{textAlign: 'right'}}>{`${monthlyReport.sum_penalty_paid}`}</td>
+      <td style={{textAlign: 'right'}}>{`${monthlyReport.sum_fees_paid}`}</td>
       <td style={{textAlign: 'right'}}>{`${monthlyReport.sum_money_to_be_refunded}`}</td>
       <td style={{textAlign: 'right'}}>{`${monthlyReport.penalty_count}`}</td>
       <td style={{textAlign: 'right'}}>{`${monthlyReport.sum_penalty}`}</td>
