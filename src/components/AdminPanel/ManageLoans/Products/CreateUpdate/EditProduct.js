@@ -2,13 +2,11 @@ import React from 'react';
 import ProductForm from './ProductForm';
 import {editLoanProductSchema} from './schema';
 import { removeNull, removeEmptyValues } from '../../../../../utils/utils';
-import { useCurrencies } from '../../../../../contexts/CurrenciesContext';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { uuidv4 } from '../../../../../utils';
 
 function EditProduct({loanFees, fieldSets, initialValues, setView, setSelectedPrdct, setProducts}) {
-  const {currencies} = useCurrencies();
   initialValues.fees = initialValues.fees.map(fee => ({...fee, id: uuidv4()}));
   initialValues.custom_forms = initialValues.custom_forms.map(custom_form => ({...custom_form, id: uuidv4()}));
   initialValues.schedule_penalties = initialValues.schedule_penalties.map(schedule_penalty => ({...schedule_penalty, id: uuidv4()}));
