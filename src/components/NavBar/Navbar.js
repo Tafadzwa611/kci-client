@@ -14,7 +14,7 @@ import {
 import { getParams } from '../../utils/utils';
 import Cookies from 'js-cookie';
 
-const MINUTE_MS = 5000;
+const MINUTE_MS = 30000;
 
 const MODAL_STATES = {
   search: 'search',
