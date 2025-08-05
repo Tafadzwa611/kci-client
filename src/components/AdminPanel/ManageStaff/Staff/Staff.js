@@ -117,7 +117,6 @@ function Filter({roles, setUsers}) {
                   </div>
                   <div className='row-payments-container' style={{width:'19%'}}>
                     <CustomSelectFilter label='Status' name='status'>
-                      <option value=''>------</option>
                       <option value='all'>All</option>
                       <option value='active'>Active</option>
                       <option value='inactive'>Inactive</option>
