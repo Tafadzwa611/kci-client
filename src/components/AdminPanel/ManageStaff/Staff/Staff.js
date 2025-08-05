@@ -65,6 +65,7 @@ function Filter({roles, setUsers}) {
     email: '',
     staff_role_id: '',
     branch_id: '',
+    status: 'active',
   };
 
   const onSubmit = async (values, actions) => {
@@ -112,6 +113,14 @@ function Filter({roles, setUsers}) {
                     <CustomSelectFilter label='Role' name='staff_role_id'>
                       <option value=''>------</option>
                       {roles.map(role => <option key={role.id} value={role.id}>{role.role}</option>)}
+                    </CustomSelectFilter>
+                  </div>
+                  <div className='row-payments-container' style={{width:'19%'}}>
+                    <CustomSelectFilter label='Status' name='status'>
+                      <option value=''>------</option>
+                      <option value='all'>All</option>
+                      <option value='active'>Active</option>
+                      <option value='inactive'>Inactive</option>
                     </CustomSelectFilter>
                   </div>
                 </div>
