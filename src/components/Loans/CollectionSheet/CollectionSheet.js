@@ -10,7 +10,7 @@ const CollectionSheet = () => {
   const urls = [
     '/usersapi/list_units/',
     '/usersapi/list_report_templates/?report_type=COLLECTION_SHEET',
-    '/usersapi/staff/?loan_officers_only=1'
+    '/usersapi/staff/?loan_officers_only=1&status=all'
   ];
 
   return (

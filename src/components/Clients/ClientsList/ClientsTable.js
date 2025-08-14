@@ -11,7 +11,7 @@ function ClientsTable({clientId, setClientId, clientsData, params, setClientsDat
   const urls = [
     `/clientsapi/get_client/${clientId}/`,
     '/clientsapi/client_controls/',
-    '/usersapi/staff/?loan_officers_only=1',
+    '/usersapi/staff/?loan_officers_only=1&status=all',
     '/usersapi/staff_toplevel_perms/',
   ];
 
