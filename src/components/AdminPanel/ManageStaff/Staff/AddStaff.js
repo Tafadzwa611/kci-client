@@ -14,15 +14,7 @@ import {
 import { Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 
-// const AddStaff= () => {
-//   return (
-//     <Fetcher urls={['/usersapi/staffroles/', '/usersapi/branch-list/']}>
-//       {({data}) => <AddStaffForm roles={data[0]} branches={data[1]}/>}
-//     </Fetcher>
-//   )
-// }
-
-function AddStaff({roles, branches}) {
+function AddStaff() {
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {

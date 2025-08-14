@@ -8,6 +8,7 @@ import ManageClients from './ManageClients/ManageClients';
 import ManageFields from './ManageFields/ManageFields';
 import ManageComms from './ManageComms/ManageComms';
 import ManageCurrencies from './ManageCurrencies/ManageCurrencies';
+import ManageDeposits from './ManageDeposits/ManageDeposits';
 import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
 
 const AdminPanel = () => {
@@ -23,6 +24,7 @@ const AdminPanel = () => {
         <Route path='otherincome' element={<OtherIncomeTypes />} />
         <Route path='expensetypes' element={<ExpenseTypes />} />
         <Route path='manageloans' element={<ManageLoans />} />
+        <Route path='managedeposits/*' element={<ManageDeposits />} />
         <Route path='managebranches/*' element={<ManageBranches />} />
         <Route path='manageclients' element={<ManageClients />} />
         <Route path='managefields' element={<ManageFields />} />
@@ -69,6 +71,13 @@ function Layout() {
               className={location.pathname === '/users/admin/manageloans' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
             >
               Manage Loans
+            </Link>
+            <Link 
+              to='/users/admin/managedeposits'
+              id='managedeposits' 
+              className={location.pathname === '/users/admin/managedeposits' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+            >
+              Manage Deposits
             </Link>
             <Link 
               to='/users/admin/managebranches'
