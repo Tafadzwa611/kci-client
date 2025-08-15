@@ -59,7 +59,7 @@ const Filter = ({setReport, units}) => {
                   <div className='row-payments-container' style={{width:'32%'}}>
                     <CustomSelectFilter label='Unit' name='unit_id'>
                       <option value=''>------</option>
-                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name} {ut.branch_name} BRANCH</option>)}
                     </CustomSelectFilter>
                   </div>
                 </div>
