@@ -62,6 +62,8 @@ function Detail() {
                     </div>
                     {{
                         [Tabs.DETAILS]: <Information product={product}/>,
+                        [Tabs.FEES]: <Fees product={product}/>,
+                        [Tabs.ACCOUNTING]: <AccountingRules product={product}/>,
                     }[tab]}
                 </div>
             </div>
@@ -78,11 +80,82 @@ const Information = ({ product }) => {
                         <ul style={{paddingRight:"1rem"}}>
                             <li style={{marginBottom: '1rem'}}><b>Product Information</b></li>
                             <li>Product Name: {product.name}</li>
-                            <li>Product Name: {product.name}</li>
+                            {product.active ? (
+                                <li>Status: <span className="badge badge-success">Active</span></li>
+                            ): (
+                                <li>Status: <span className="badge badge-danger">Inactive</span></li>
+                            )}
+                            <li>Interest Term: {product.interest_term}</li>
+                            <li>Interest Method: {product.interest_method}</li>
+                            <li>Interest Posting Frequency: {product.interest_posting_frequency}</li>
+                            <li>Fixed Interest Rate: {product.fixed_interest_rate}</li>
+                            <li>Created By: {product.created_by.username}</li>
+                            <li>Date Created: {product.date_created}</li>
+                            <li>Last Updated: {product.last_updated}</li>
                         </ul>
                     </div>
                 </div>
             </div>
+        </div>
+    )
+}
+
+const Fees = ({product}) => {
+    return (
+        <div className="miniLoanDetails-container" style={{padding:'1.5rem'}}>
+            <table className="table">
+                <tbody>
+                    <tr className="journal-details header client__details">
+                        <th>Name</th>
+                        <th>Fee_Calculation</th>
+                        <th>Fee_Type</th>
+                        <th>Value</th>
+                    </tr>
+                    {product.fees.map((fee, idx) => {
+                        return (
+                            <tr key={idx}>
+                                <td>{fee.name}</td>
+                                <td>{fee.fee_calculation}</td>
+                                <td>{fee.fee_type}</td>
+                                <td>{fee.amount}</td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
+function formatKey(key) {
+    return key
+    .split("_")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+const AccountingRules = ({product}) => {
+    const rows = Object.entries(product.accounts);
+    return (
+        <div className="miniLoanDetails-container" style={{padding:'1.5rem'}}>
+            <table className="table">
+                <tbody>
+                    <tr className="journal-details header client__details">
+                        <th>Account_Type</th>
+                        <th>Account_Code</th>
+                        <th>Account_Name</th>
+                    </tr>
+                    {rows.map(([key, { name, code }]) => {
+                        return (
+                            <tr key={key}>
+                                <td>{formatKey(key)}</td>
+                                <td>{code}</td>
+                                <td>{name}</td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
         </div>
     )
 }
