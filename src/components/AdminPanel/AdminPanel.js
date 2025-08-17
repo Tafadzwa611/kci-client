@@ -24,7 +24,7 @@ const AdminPanel = () => {
         <Route path='otherincome' element={<OtherIncomeTypes />} />
         <Route path='expensetypes' element={<ExpenseTypes />} />
         <Route path='manageloans' element={<ManageLoans />} />
-        <Route path='managedeposits/*' element={<ManageDeposits />} />
+        <Route path='deposits/*' element={<ManageDeposits />} />
         <Route path='managebranches/*' element={<ManageBranches />} />
         <Route path='manageclients' element={<ManageClients />} />
         <Route path='managefields' element={<ManageFields />} />
@@ -73,9 +73,9 @@ function Layout() {
               Manage Loans
             </Link>
             <Link 
-              to='/users/admin/managedeposits'
-              id='managedeposits' 
-              className={location.pathname === '/users/admin/managedeposits' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+              to='/users/admin/deposits'
+              id='deposits'
+              className={location.pathname === '/users/admin/deposits' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
             >
               Manage Deposits
             </Link>

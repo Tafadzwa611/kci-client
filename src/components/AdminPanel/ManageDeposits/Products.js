@@ -9,7 +9,7 @@ function Products() {
         <>
             <div style={{margin:'20px 0'}}>
                 <button type='button' className='btn btn-success'>
-                    <Link to='/users/admin/managedeposits/add_deposit_product'>Add Deposit Product</Link>
+                    <Link to='/users/admin/deposits/create'>Add Deposit Product</Link>
                 </button>
             </div>
             <Filter setProducts={setProducts} />
@@ -24,7 +24,9 @@ function Products() {
                         </tr>  
                         {products.map((product) => (
                             <tr className='table-row' key={product.id}>
-                                <td>{product.name}</td>
+                                <td>
+                                    <Link to={`/users/admin/deposits/${product.id}`}>{product.name}</Link>
+                                </td>
                                 <td>{product.interest_term}</td>
                                 <td>{product.interest_method}</td>
                             </tr>
