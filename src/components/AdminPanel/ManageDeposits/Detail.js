@@ -18,17 +18,33 @@ export const Modal = Object.freeze({
 function Detail() {
     const [tab, setTab] = React.useState(Tabs.DETAILS);
     const [product, setProduct] = React.useState(null);
+    const [error, setError] = React.useState(null);
     const [modal, setModal] = React.useState(Modal.NONE);
     const params = useParams();
 
     React.useEffect(() => {
         async function fetch() {
             const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+            try {
+                await axios.get(`/deposits/${params.productId}/`, CONFIG);
+                setProduct(response.data);
+            } catch (error) {
+                if (error.response) {
+                    setError(error.response.data.detail);
+                    return;
+                }
+                console.error("An error occurred while fetching the product:", error);
+            }
             const response = await axios.get(`/deposits/${params.productId}/`, CONFIG);
-            setProduct(response.data);
+            console.log(response.status);
+            console.log(response.data);
         }
         fetch();
     }, []);
+
+    if (error) {
+        return <div className="alert alert-danger">{error}</div>;
+    }
 
     if (!product) {
         return <div>Loading...</div>
