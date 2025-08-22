@@ -8,7 +8,7 @@ function ToggleActivation({product, setProduct, setOpen}) {
     const onSubmit = async (values, actions) => {
         try {
             const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-            const resp = await axios.patch(`/deposits/${product.id}/active/`, values, CONFIG);
+            const resp = await axios.patch(`/deposits/products/${product.id}/active/`, values, CONFIG);
             setProduct(curr => ({...curr, active: resp.data.active}));
             setOpen();
         } catch (error) {

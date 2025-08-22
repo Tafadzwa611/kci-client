@@ -21,7 +21,7 @@ function Create() {
     const onSubmit = async (values, actions) => {
         try {
             const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-            const response = await axios.post('/deposits/create/', values, CONFIG);
+            const response = await axios.post('/deposits/products/create/', values, CONFIG);
             navigate({pathname: `/users/admin/deposits/${response.data.id}`});
         } catch (error) {
             console.log(error);

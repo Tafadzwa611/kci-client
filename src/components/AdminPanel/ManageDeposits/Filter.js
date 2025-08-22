@@ -14,7 +14,7 @@ function Filter({setProducts}) {
         try {
             const data = removeEmptyValues(values);
             const params = getParams(data);
-            const response = await axios.get('/deposits/list/', {params: params});
+            const response = await axios.get('/deposits/products/list/', {params: params});
             setProducts(response.data);
         } catch (error) {
             console.log(error);

@@ -26,7 +26,7 @@ function Detail() {
         async function fetch() {
             const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
             try {
-                await axios.get(`/deposits/${params.productId}/`, CONFIG);
+                const response = await axios.get(`/deposits/products/${params.productId}/`, CONFIG);
                 setProduct(response.data);
             } catch (error) {
                 if (error.response) {
@@ -35,9 +35,6 @@ function Detail() {
                 }
                 console.error("An error occurred while fetching the product:", error);
             }
-            const response = await axios.get(`/deposits/${params.productId}/`, CONFIG);
-            console.log(response.status);
-            console.log(response.data);
         }
         fetch();
     }, []);

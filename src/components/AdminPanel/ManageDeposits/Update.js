@@ -34,7 +34,7 @@ function Update() {
     React.useEffect(() => {
         async function fetch() {
             const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-            let url = `/deposits/${params.productId}/?include_names=0`;
+            let url = `/deposits/products/${params.productId}/?include_names=0`;
             url = url + fields.map(f => `&fields=${encodeURIComponent(f)}`).join('');
             const response = await axios.get(url, CONFIG);
             setProduct(response.data);
@@ -45,7 +45,7 @@ function Update() {
     const onSubmit = async (values, actions) => {
         try {
             const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-            const response = await axios.put(`/deposits/${params.productId}/update/`, values, CONFIG);
+            const response = await axios.put(`/deposits/products/${params.productId}/update/`, values, CONFIG);
             navigate({pathname: `/users/admin/deposits/${response.data.id}`});
         } catch (error) {
             console.log(error);
