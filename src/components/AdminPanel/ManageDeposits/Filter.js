@@ -3,10 +3,10 @@ import { Form, Formik } from 'formik';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 import axios from 'axios';
 import {
-  NonFieldErrors,
-  CustomInputFilter,
-  SubmitButtonFilter,
-  CustomCheckBoxfilter
+    NonFieldErrors,
+    CustomInputFilter,
+    SubmitButtonFilter,
+    CustomCheckBoxfilter
 } from '../../../common';
 
 function Filter({setProducts}) {

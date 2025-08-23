@@ -5,6 +5,7 @@ import ClientRoutes from './ClientRoutes';
 import GroupRoutes from './GroupRoutes';
 import ExpenseRoutes from './ExpenseRoutes';
 import LoanRoutes from './LoanRoutes';
+import DepositRoutes from './DepositRoutes';
 import OtherIncomeRoutes from './OtherIncomeRoutes';
 import PaymentRoutes from './PaymentRoutes';
 import ReportRoutes from './ReportRoutes';
@@ -44,6 +45,7 @@ const Routes = ({loggedInUser, branches, currencies, loanControls}) => {
         {ClientRoutes}
         {GroupRoutes}
         {ExpenseRoutes}
+        {DepositRoutes}
         {LoanRoutes}
         {OtherIncomeRoutes}
         {PaymentRoutes}
