@@ -10,7 +10,7 @@ const Tabs = Object.freeze({
     ACCOUNTING: "ACCOUNTING"
 });
 
-export const Modal = Object.freeze({
+const Modal = Object.freeze({
   NONE: "NONE",
   ACTIVE: "ACTIVE",
 });

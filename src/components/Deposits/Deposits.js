@@ -7,7 +7,8 @@ import {
     useLocation
 } from 'react-router-dom';
 import List from './List/List';
-import Details from './Details';
+import Details from './Details/Details';
+import Add from './Add';
 
 function Deposits() {
     React.useEffect(() => {
@@ -19,6 +20,7 @@ function Deposits() {
             <Route path='/' element={<Layout />}>
                 <Route index element={<List />} />
                 <Route path=':depositId' element={<Details />} />
+                <Route path='add' element={<Add />} />
             </Route>
         </Routes>
     )

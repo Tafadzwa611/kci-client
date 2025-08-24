@@ -23,6 +23,11 @@ function List() {
 
     return (
         <div>
+            <div style={{margin:'20px 0'}}>
+                <button type='button' className='btn btn-success'>
+                    <Link to='/deposits/add'>Create Deposit Account</Link>
+                </button>
+            </div>
             <Filter setDeposits={setDeposits}/>
             <div style={{paddingTop: '2rem'}}></div>
             <div className='table-responsive font-12'>
