@@ -39,6 +39,7 @@ const DEPOSIT_FIELDS = [
     'branch_id',
     'accounting',
     'created_by_name',
+    'statement'
 ];
 
 const STATUS_CLASSES = Object.freeze({
