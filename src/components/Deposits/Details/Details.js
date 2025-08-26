@@ -4,8 +4,10 @@ import Cookies from 'js-cookie';
 import { useParams } from 'react-router-dom';
 import DetailsTab from './DetailsTab';
 import FeesTab from './FeesTab';
+import TxnsTab from './TxnsTab';
 import AccountingRules from './AccountingRules';
 import Activate from './Activate';
+import Transact from './Transact';
 
 const DEPOSIT_FIELDS = [
     'id',
@@ -44,12 +46,14 @@ const DEPOSIT_FIELDS = [
 
 const STATUS_CLASSES = Object.freeze({
     ACTIVE: 'badge badge-success',
-    INACTIVE: 'badge badge-danger'
+    INACTIVE: 'badge badge-info',
+    OVERDRAFT: 'badge badge-danger',
 });
 
-const STATUS = Object.freeze({
+export const STATUS = Object.freeze({
     ACTIVE: 'ACTIVE',
-    INACTIVE: 'INACTIVE'
+    INACTIVE: 'INACTIVE',
+    OVERDRAFT: 'OVERDRAFT',
 });
 
 const TABS = Object.freeze({
@@ -60,7 +64,8 @@ const TABS = Object.freeze({
 });
 
 const MODAL_NAMES = Object.freeze({
-    ACTIVATE: "ACTIVATE"
+    ACTIVATE: "ACTIVATE",
+    TRANSACT: "TRANSACT",
 });
 
 function Details() {
@@ -115,11 +120,7 @@ function Details() {
                                 </div>
                             </div>
                             <div style={{display:'flex', columnGap:'3px'}}>
-                                {STATUS.INACTIVE === deposit.status && (
-                                    <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
-                                        <button className='btn btn-olive' onClick={() => setModal(MODAL_NAMES.ACTIVATE)}>Activate</button>
-                                    </div>
-                                )}
+                                <Actions deposit={deposit} setModal={setModal}/>
                             </div>
                         </div>
                     </div>
@@ -131,7 +132,7 @@ function Details() {
                     </div>
                     {{
                         [TABS.DETAIL]: <DetailsTab deposit={deposit} />,
-                        [TABS.TXNS]: <div>Transaction content goes here</div>,
+                        [TABS.TXNS]: <TxnsTab deposit={deposit}/>,
                         [TABS.FEES]: <FeesTab deposit={deposit}/>,
                         [TABS.ACCOUNTING]: <AccountingRules deposit={deposit}/>
                     }[tab]}
@@ -141,11 +142,36 @@ function Details() {
     )
 }
 
+const Actions = ({ deposit, setModal }) => {
+    const InActive = () => (
+        <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
+            <button className='btn btn-olive' onClick={() => setModal(MODAL_NAMES.ACTIVATE)}>Activate</button>
+        </div>
+    );
+
+    const Active = () => (
+        <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
+            <button className='btn btn-olive' onClick={() => setModal(MODAL_NAMES.TRANSACT)}>Transact</button>
+        </div>
+    );
+
+    return (
+        <div>
+            {{
+                [STATUS.INACTIVE]: <InActive />,
+                [STATUS.ACTIVE]: <Active />,
+                [STATUS.OVERDRAFT]: <Active />,
+            }[deposit.status]}
+        </div>
+    )
+}
+
 const ModalRenderer = ({deposit, setDeposit, modal, setModal}) => {
     return (
         <div>
             {{
                 [MODAL_NAMES.ACTIVATE]: <Activate deposit={deposit} setDeposit={setDeposit} setModal={setModal}/>,
+                [MODAL_NAMES.TRANSACT]: <Transact deposit={deposit} setDeposit={setDeposit} setModal={setModal}/>,
             }[modal]}
         </div>
     )

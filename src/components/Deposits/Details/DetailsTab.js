@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
 import { useBranches } from '../../../contexts/BranchesContext';
+import { STATUS } from './Details';
 
 function DetailsTab({deposit}) {
     const { currencies } = useCurrencies();
@@ -31,19 +32,16 @@ function DetailsTab({deposit}) {
                             <li>Initial Account Activation Date: {deposit.account_date || 'Not Set'}</li>
                             <li>Account Entry Date: {deposit.date_created}</li>
                             <li>Last Account Update Date: {deposit.last_updated}</li>
-                            {deposit.status === 'ACTIVE' ? (
-                                <li>Status: <span className="badge badge-success">Active</span></li>
-                            ): (
-                                <li>Status: <span className="badge badge-danger">Inactive</span></li>
-                            )}
+                            {{
+                                [STATUS.ACTIVE]: <li>Status: <span className="badge badge-success">Active</span></li>,
+                                [STATUS.INACTIVE]: <li>Status: <span className="badge badge-info">Inactive</span></li>,
+                                [STATUS.OVERDRAFT]: <li>Status: <span className="badge badge-danger">Overdraft</span></li>
+                            }[deposit.status]}
                             <li>Interest Term: {deposit.interest_term}</li>
                             <li>Interest Method: {deposit.interest_method}</li>
                             <li>Interest Posting Frequency: {deposit.interest_posting_frequency}</li>
                             <li>Fixed Interest Rate: {deposit.fixed_interest_rate}%</li>
                             <li>Created By: {deposit.created_by_name}</li>
-                            {/*
-                            <li>Date Created: {product.date_created}</li>
-                            <li>Last Updated: {product.last_updated}</li> */}
                         </ul>
                     </div>
                 </div>
