@@ -13,10 +13,17 @@ import {
 } from '../../../common';
 
 function Transact({deposit, setDeposit, setModal}) {
+    const generateKey = () => (window.crypto?.randomUUID ? window.crypto.randomUUID() : `${Date.now()}-${Math.random()}`);
+    const idemKeyRef = React.useRef(generateKey());
+
     const onSubmit = async (values, actions) => {
         try {
             const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-            const response = await axios.post(`/deposits/${deposit.id}/transact/`, values, CONFIG);
+            const payload = {
+                ...values,
+                idempotency_key: idemKeyRef.current,
+            };
+            const response = await axios.post(`/deposits/${deposit.id}/transact/`, payload, CONFIG);
             setDeposit(curr => ({
                 ...curr,
                 statement: response.data.statement,
