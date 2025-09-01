@@ -63,6 +63,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
               <CustomSelect label='Interest Method' name='interest_method' required>
                 <option value=''>------</option>
                 <option value='Flat Rate'>Flat Rate</option>
+                <option value='Interest-Only'>Flat Rate (Interest-Only)</option>
                 <option value='Reducing Balance - Equal Installments'>Reducing Balance - Equal Installments</option>
                 <option value='Reducing Balance - Equal Principal'>Reducing Balance - Equal Principal</option>
               </CustomSelect>

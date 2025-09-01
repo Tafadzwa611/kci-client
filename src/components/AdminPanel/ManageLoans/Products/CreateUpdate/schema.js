@@ -19,7 +19,7 @@ export const createLoanProductSchema = yup.object().shape({
   currency_id: yup.number().integer().required('Required'),
   minimum_principal_amount: yup.number().min(minAmount, minMsg).required('Required'),
   maximum_principal_amount: yup.number().min(minAmount, minMsg).required('Required'),
-  interest_method: yup.string().oneOf(['Flat Rate', 'Reducing Balance - Equal Installments', 'Reducing Balance - Equal Principal'], 'Invalid').required('Required'),
+  interest_method: yup.string().oneOf(['Flat Rate', 'Reducing Balance - Equal Installments', 'Reducing Balance - Equal Principal', 'Interest-Only'], 'Invalid').required('Required'),
   interest_interval: yup.string().oneOf(['/Day', '/Week', '/Month', '/Year'], 'Invalid').required('Required'),
   minimum_interest_rate: yup.number().min(minAmount, minMsg).required('Required'),
   maximum_interest_rate: yup.number().min(minAmount, minMsg).required('Required'),
