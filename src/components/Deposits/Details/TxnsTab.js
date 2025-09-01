@@ -10,7 +10,7 @@ function TxnsTab({ deposit }) {
                             <tr className='journal-details header' style={{position: 'sticky', top: '0'}}>
                                 <th className='schedule__table'>ID</th>
                                 <th className='schedule__table'>Date</th>
-                                <th className='schedule__table'>Transaction Name</th>
+                                <th className='schedule__table'>Transaction Type</th>
                                 <th className='schedule__table'>Credit</th>
                                 <th className='schedule__table'>Debit</th>
                                 <th className='schedule__table'>Balance</th>
