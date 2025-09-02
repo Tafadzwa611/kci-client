@@ -11,15 +11,18 @@ import {
 
 const PAYMENTS_1 = ['Flat', '% Of DB Amount'];
 const PAYMENTS_2 = ['Flat', 'Flat/Installments', '% Of DB Amount', '% Of DB Amount/Installments'];
+const PAYMENTS_3 = ['% Of Installment'];
+
 const FEE_TYPES_AND_PAYMENTS = {
   '': [],
   'Deducted': PAYMENTS_1,
   'Capitalized': PAYMENTS_1,
   'Upfront Disbursement': PAYMENTS_1,
   'Manual fees': PAYMENTS_1,
-  'Payment due': PAYMENTS_2
+  'Payment due': PAYMENTS_2,
+  'Installment fees': PAYMENTS_3,
 };
-const FEE_TYPES = ['Deducted', 'Capitalized', 'Upfront Disbursement', 'Payment due', 'Manual fees'];
+const FEE_TYPES = ['Deducted', 'Capitalized', 'Upfront Disbursement', 'Payment due', 'Manual fees', 'Installment fees'];
 
 function FeeForm({initialValues, onSubmit, back}) {
   return (
