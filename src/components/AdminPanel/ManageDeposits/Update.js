@@ -13,12 +13,14 @@ import {
     Fetcher
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
+import { removeEmptyValues } from '../../../utils/utils';
 
 const fields = [
     'name',
     'currency_id',
     'interest_term',
     'fixed_interest_rate',
+    'overdraft_interest_rate',
     'interest_method',
     'interest_posting_frequency',
     'accounting_rules',
@@ -45,7 +47,7 @@ function Update() {
     const onSubmit = async (values, actions) => {
         try {
             const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-            const response = await axios.put(`/deposits/products/${params.productId}/update/`, values, CONFIG);
+            const response = await axios.put(`/deposits/products/${params.productId}/update/`, removeEmptyValues(values), CONFIG);
             navigate({pathname: `/users/admin/deposits/${response.data.id}`});
         } catch (error) {
             console.log(error);
@@ -67,7 +69,8 @@ function Update() {
         name: product.name,
         currency_id: product.currency_id,
         interest_term: product.interest_term,
-        fixed_interest_rate: product.fixed_interest_rate,
+        fixed_interest_rate: product.fixed_interest_rate || '',
+        overdraft_interest_rate: product.overdraft_interest_rate || '',
         interest_method: product.interest_method,
         interest_posting_frequency: product.interest_posting_frequency,
         accounting_rules: product.accounting_rules,
@@ -97,12 +100,16 @@ function Update() {
                             </CustomSelect>
                             {values.interest_term === 'Fixed' && (
                                 <CustomInput 
-                                    label='Fixed Interest Rate' 
+                                    label='Annual Fixed Interest Rate' 
                                     name='fixed_interest_rate' 
-                                    type='number' 
-                                    required
+                                    type='number'
                                 />
                             )}
+                            <CustomInput
+                                label='Annual Overdraft Interest Rate'
+                                name='overdraft_interest_rate' 
+                                type='number'
+                            />
                             <CustomSelect label='Interest Method' name='interest_method' required>
                                 <option value=''>------</option>
                                 <option value='End of Day Balance'>End of Day Balance</option>

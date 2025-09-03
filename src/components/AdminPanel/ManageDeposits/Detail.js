@@ -101,7 +101,8 @@ const Information = ({ product }) => {
                             <li>Interest Term: {product.interest_term}</li>
                             <li>Interest Method: {product.interest_method}</li>
                             <li>Interest Posting Frequency: {product.interest_posting_frequency}</li>
-                            <li>Fixed Interest Rate: {product.fixed_interest_rate}</li>
+                            <li>Annual Fixed Interest Rate: {product.fixed_interest_rate ? `${product.fixed_interest_rate}%` : 'Not Set'}</li>
+                            <li>Annual Overdraft Interest Rate: {product.overdraft_interest_rate ? `${product.overdraft_interest_rate}%` : 'Not Set'}</li>
                             <li>Created By: {product.created_by.username}</li>
                             <li>Date Created: {product.date_created}</li>
                             <li>Last Updated: {product.last_updated}</li>

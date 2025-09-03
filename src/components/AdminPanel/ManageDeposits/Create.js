@@ -13,6 +13,7 @@ import {
     Fetcher
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
+import { removeEmptyValues } from '../../../utils/utils';
 
 function Create() {
     const { currencies } = useCurrencies();
@@ -21,7 +22,7 @@ function Create() {
     const onSubmit = async (values, actions) => {
         try {
             const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-            const response = await axios.post('/deposits/products/create/', values, CONFIG);
+            const response = await axios.post('/deposits/products/create/', removeEmptyValues(values), CONFIG);
             navigate({pathname: `/users/admin/deposits/${response.data.id}`});
         } catch (error) {
             console.log(error);
@@ -40,6 +41,7 @@ function Create() {
         currency_id: '',
         interest_term: '',
         fixed_interest_rate: '',
+        overdraft_interest_rate: '',
         interest_method: '',
         interest_posting_frequency: '',
         accounting_rules: {},
@@ -69,12 +71,16 @@ function Create() {
                             </CustomSelect>
                             {values.interest_term === 'Fixed' && (
                                 <CustomInput 
-                                    label='Fixed Interest Rate' 
+                                    label='Annual Fixed Interest Rate' 
                                     name='fixed_interest_rate' 
-                                    type='number' 
-                                    required
+                                    type='number'
                                 />
                             )}
+                            <CustomInput 
+                                label='Annual Overdraft Interest Rate'
+                                name='overdraft_interest_rate' 
+                                type='number'
+                            />
                             <CustomSelect label='Interest Method' name='interest_method' required>
                                 <option value=''>------</option>
                                 <option value='End of Day Balance'>End of Day Balance</option>
