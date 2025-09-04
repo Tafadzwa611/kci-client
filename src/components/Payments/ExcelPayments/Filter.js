@@ -81,9 +81,11 @@ function Filter({params, setParams, onSubmit, disableFetch, loading}) {
                     <div className='reports-input-group search_input' style={{margin:'10px 0 0', border:'none'}}>
                       <select className='report-custom-form-control currency' style={{width:'100%'}} name='cash_account_id' value={params.cash_account_id} onChange={handleChange} required>
                         <option value=''>Select Account</option>
-                        {data[0].accounts.filter(acc => acc.currency_id == params.currencyId).map(
-                          acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_code} {acc.general_ledger_name}</option>
-                        )}
+                        {data[0].accounts.filter(acc => acc.currency_id == params.currencyId).map(acc => (
+                          <option key={acc.id} value={acc.id}>
+                            {acc.general_ledger_code} {acc.general_ledger_name}- {acc.branch}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
