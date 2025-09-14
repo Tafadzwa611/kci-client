@@ -10,6 +10,7 @@ import {
     CustomInput,
     SubmitButton,
     NonFieldErrors,
+    CustomCheckbox,
     Fetcher
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
@@ -47,6 +48,7 @@ function Create() {
         overdraft_interest_rate: '',
         interest_method: '',
         interest_posting_frequency: '',
+        allow_overdraft: '',
         accounting_rules: {},
         fees: []
     };
@@ -79,6 +81,7 @@ function Create() {
                                     type='number'
                                 />
                             )}
+                            <CustomCheckbox label='Allow Overdraft' name='allow_overdraft'/>
                             <CustomInput 
                                 label='Annual Overdraft Interest Rate'
                                 name='overdraft_interest_rate' 

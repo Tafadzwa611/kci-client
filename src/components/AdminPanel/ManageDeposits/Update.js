@@ -10,6 +10,7 @@ import {
     CustomInput,
     SubmitButton,
     NonFieldErrors,
+    CustomCheckbox,
     Fetcher
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
@@ -19,6 +20,7 @@ const fields = [
     'name',
     'currency_id',
     'interest_term',
+    'allow_overdraft',
     'fixed_interest_rate',
     'overdraft_interest_rate',
     'interest_method',
@@ -69,6 +71,7 @@ function Update() {
         name: product.name,
         currency_id: product.currency_id,
         interest_term: product.interest_term,
+        allow_overdraft: product.allow_overdraft,
         fixed_interest_rate: product.fixed_interest_rate || '',
         overdraft_interest_rate: product.overdraft_interest_rate || '',
         interest_method: product.interest_method,
@@ -105,6 +108,7 @@ function Update() {
                                     type='number'
                                 />
                             )}
+                            <CustomCheckbox label='Allow Overdraft' name='allow_overdraft'/>
                             <CustomInput
                                 label='Annual Overdraft Interest Rate'
                                 name='overdraft_interest_rate' 
