@@ -191,14 +191,6 @@ function Update() {
                                                     </option>
                                                 ))}
                                             </CustomSelect>
-                                            <CustomSelect label='Interest Income INCOME' name='accounting_rules.interest_income_id' required>
-                                                <option value=''>------</option>
-                                                {data[0].accounts.filter(account => account.account_type === 'INCOME').map(account => (
-                                                    <option key={account.id} value={account.id}>
-                                                        {account.general_ledger_name} {account.general_ledger_code}
-                                                    </option>
-                                                ))}
-                                            </CustomSelect>
                                             <CustomSelect label='Interest Expense EXPENSE' name='accounting_rules.interest_expense_id' required>
                                                 <option value=''>------</option>
                                                 {data[0].accounts.filter(account => account.account_type === 'EXPENSE').map(account => (
@@ -226,6 +218,22 @@ function Update() {
                                             <CustomSelect label='Taxes Payable LIABILITY' name='accounting_rules.taxes_payable_id' required>
                                                 <option value=''>------</option>
                                                 {data[0].accounts.filter(account => account.account_type === 'LIABILITY').map(account => (
+                                                    <option key={account.id} value={account.id}>
+                                                        {account.general_ledger_name} {account.general_ledger_code}
+                                                    </option>
+                                                ))}
+                                            </CustomSelect>
+                                            <CustomSelect label='Interest Payable LIABILITY' name='accounting_rules.interest_payable_id' required>
+                                                <option value=''>------</option>
+                                                {data[0].accounts.filter(account => account.account_type === 'LIABILITY').map(account => (
+                                                    <option key={account.id} value={account.id}>
+                                                        {account.general_ledger_name} {account.general_ledger_code}
+                                                    </option>
+                                                ))}
+                                            </CustomSelect>
+                                            <CustomSelect label='Overdraft Writeoff EXPENSE' name='accounting_rules.od_writeoff_expense_id' required>
+                                                <option value=''>------</option>
+                                                {data[0].accounts.filter(account => account.account_type === 'EXPENSE').map(account => (
                                                     <option key={account.id} value={account.id}>
                                                         {account.general_ledger_name} {account.general_ledger_code}
                                                     </option>

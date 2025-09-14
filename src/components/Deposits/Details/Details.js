@@ -30,7 +30,6 @@ const DEPOSIT_FIELDS = [
     'savings_control_id',
     'fee_income_id',
     'overdraft_control_id',
-    'interest_income_id',
     'interest_expense_id',
     'negative_interest_receivable_id',
     'negative_interest_income_id',
