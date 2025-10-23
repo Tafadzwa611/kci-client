@@ -83,7 +83,7 @@ function SmsForm() {
             <CustomSelectRemote
               selected={values.clients ? values.clients : ''}
               label='Clients'
-              url='/clientsapi/search_client/'
+              url='/clientsapi/search_client/?all_branches=1'
               setFieldValue={(fieldName, selected) => {
                 setFieldValue(fieldName, selected);
               }}
