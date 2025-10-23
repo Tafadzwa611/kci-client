@@ -83,10 +83,11 @@ function SmsForm() {
             <CustomSelectRemote
               selected={values.clients ? values.clients : ''}
               label='Clients'
-              url='/clientsapi/search_client/?all_branches=1'
+              url='/clientsapi/search_client/'
               setFieldValue={(fieldName, selected) => {
                 setFieldValue(fieldName, selected);
               }}
+              params={[{key: 'all_branches', value: 1}]}
               queryParamName='query'
               placeholder='Search Client'
               name='clients'
