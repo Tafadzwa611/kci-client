@@ -98,7 +98,7 @@ const Filter = ({setReport, accounts, setParams, branches, units}) => {
                   <div className='row-payments-container' style={{width:'24%'}}>
                     <CustomSelectFilter label='Payment Fund Account' name='payment_fund_account_id'>
                       <option value=''>------</option>
-                      {newaccounts.map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_code} {acc.general_ledger_name}</option>)}
+                      {newaccounts.map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_code} {acc.general_ledger_name} - {acc.branch}</option>)}
                     </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'24%'}}>
