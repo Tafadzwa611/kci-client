@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Fetcher } from '../../../../common';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 function StaffDetails() {
-  const [tab, setTab] = useState('users__toplevelperms');
+  const [tab, setTab] = React.useState('users__toplevelperms');
 
   const params = useParams();
   return (
@@ -18,10 +18,13 @@ function StaffDetails() {
           </div>
           <div className='search_background' style={{padding:'20px'}}>
             <div>
-              <div style={{display:'flex', justifyContent:'space-between', marginBottom:'1rem'}}>
+              <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
                 <>
                   <button className='btn btn-olive'>
-                    <Link to={`/users/admin/staff/editstaff/${data[0].id}`}>Edit</Link>
+                    <Link to={`/users/admin/staff/editstaff/${data[0].id}`}>Edit User</Link>
+                  </button>
+                  <button className='btn btn-olive'>
+                    <Link to={`/users/admin/staff/updatelimits/${data[0].id}`}>Edit Approval Limits</Link>
                   </button>
                   <button className='btn btn-olive'>
                     <Link to={`/users/admin/staff/updateperms/${data[0].id}`}>Edit Permissions</Link>

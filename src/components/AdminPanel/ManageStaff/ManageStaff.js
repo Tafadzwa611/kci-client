@@ -15,6 +15,7 @@ import AddStaff from './Staff/AddStaff';
 import StaffDetails from './Staff/StaffDetails';
 import EditStaff from './Staff/EditStaff';
 import UpdatePerms from './Staff/UpdatePerms';
+import UpdateLimits from './Staff/UpdateLimits';
 
 const ManageStaff = () => {
   return (
@@ -27,6 +28,7 @@ const ManageStaff = () => {
         <Route path='updateperms/:staffId' element={<UpdatePerms />} />
         <Route path='addrole' element={<AddRole />} />
         <Route path='staffdetails/:staffId' element={<StaffDetails />} />
+        <Route path='updatelimits/:staffId' element={<UpdateLimits />} />
         <Route path='roledetails/:roleId' element={<Role />} />
         <Route path='editrole/:roleId' element={<EditRole />} />
       </Route>
