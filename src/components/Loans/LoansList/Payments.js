@@ -3,7 +3,6 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import DeletePayment from './DeletePayment';
 import EditPayment from './EditPayment';
 import Refund from './Refund';
-import { Link } from 'react-router-dom';
 
 const MODAL_STATES = {
   reverse: 'reverse',
@@ -14,10 +13,8 @@ const MODAL_STATES = {
 
 function Payments({
   payments,
-  clientName,
   setLoan,
   currencyName,
-  accountId,
   currencyId
 }) {
   const {reverse, edit, refund, none } = MODAL_STATES;
@@ -126,15 +123,10 @@ function Payments({
                   <div style={{display:'flex', columnGap:'3px'}}>
                     <button className='btn btn-olive' id={selectedPayment.id} data-name={reverse} onClick={showModal}>Reverse</button>
                     <button className='btn btn-olive' id={selectedPayment.id} data-name={edit} onClick={showModal}>Edit</button>
-                    <button className='btn btn-olive'>
-                      <Link
-                        to={{pathname: `/create_file?type=payment&receiptNumber=${selectedPayment.receipt_number}&collectedBy=${selectedPayment.user_name}&paymentDate=${selectedPayment.cdate_created}&dateRecorded=${selectedPayment.date_recorded}&amountPaid=${selectedPayment.amount_paid}&currencyName=${currencyName}&clientName=${clientName}&accountId=${accountId}&branchName=${selectedPayment.branch_name}`}}
-                        target='_blank'
-                      >
-                        Print
-                      </Link>
-                    </button>
                     <button className='btn btn-olive' id={selectedPayment.id} data-name={refund} onClick={showModal}>Refund</button>
+                    <a className='btn btn-default client__details' href={`/loans/payment_receipt/${selectedPayment.id}/`} target='_blank' rel="noreferrer">
+                      Print
+                    </a>
                   </div>
                 </div>
                 <div style={{display:'flex', width:'100%', justifyContent:'space-between'}}>
