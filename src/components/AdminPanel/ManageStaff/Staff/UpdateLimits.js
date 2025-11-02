@@ -18,11 +18,16 @@ function UpdateLimits() {
     const navigate = useNavigate();
     const { currencies } = useCurrencies();
     const [limits, setLimits] = React.useState(null);
+    const [err, setErr] = React.useState(null);
 
     React.useEffect(() => {
         async function fetch() {
-            const response = await axios.get(`/usersapi/limits/${params.staffId}/`);
-            setLimits(response.data);
+            try {
+                const response = await axios.get(`/usersapi/limits/${params.staffId}/`);
+                setLimits(response.data);
+            } catch (err) {
+                setErr(JSON.stringify(err.response.data));
+            }
         }
         fetch();
     }, []);
@@ -42,6 +47,10 @@ function UpdateLimits() {
                 actions.setErrors({responseStatus: error.response.status});
             }
         }
+    }
+
+    if (err) {
+        return <div>{err}</div>
     }
 
     if (limits === null) {
