@@ -124,7 +124,7 @@ function Payments({
                     <button className='btn btn-olive' id={selectedPayment.id} data-name={reverse} onClick={showModal}>Reverse</button>
                     <button className='btn btn-olive' id={selectedPayment.id} data-name={edit} onClick={showModal}>Edit</button>
                     <button className='btn btn-olive' id={selectedPayment.id} data-name={refund} onClick={showModal}>Refund</button>
-                    <a className='btn btn-default client__details' href={`/loans/payment_receipt/${selectedPayment.id}/`} target='_blank' rel="noreferrer">
+                    <a className='btn btn-olive' href={`/loans/payment_receipt/${selectedPayment.id}/`} target='_blank' rel="noreferrer">
                       Print
                     </a>
                   </div>
