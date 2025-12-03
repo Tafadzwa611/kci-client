@@ -56,6 +56,7 @@ const COLUMNS = {
   installment_penalty_arrears: 'Penalty_In_Arrears',
   min_date: 'Oldest_Installment_Date',
   max_date: 'Newest_Installment_Date',
+  installment_date: 'Installment_Date',
 
   client_name: 'Client_Name',
   client_phone_number: 'Client_Phone',
@@ -83,6 +84,7 @@ const COLUMNS = {
   loan_status: 'Loan_Status',
 
   total_installment_amount: 'Total_Installment_Amount',
+  total_installment_balance: 'Total_Installment_Balance',
   total_arrears_amount: 'Total_Arrears_Amount',
   total_payment: 'Total_Payment'
 }
