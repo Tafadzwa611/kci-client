@@ -23,6 +23,7 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
     default_interest_rate: '',
     maximum_interest_rate: '',
     interest_method: '',
+    interest_application: '',
     interest_interval: '',
     loan_duration_time_unit: '',
     schedule_strategy: '',
@@ -74,7 +75,7 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
       const data = removeEmptyValues(values);
       data.default_principal_amount = data.minimum_principal_amount;
       data.allowed_branches_ids = values.allowed_branches_ids.map(allowed_branches_id => allowed_branches_id.value);
-      data.interest_application = values.product_type === 'Dynamic Term Loan' ? 'On Installment Date' : 'Upfront';
+      data.interest_application = values.product_type === 'Dynamic Term Loan' ? 'On Installment Date' : values.interest_application;
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/loansapi/add_loan_product/', {...data, fees: values.fees}, CONFIG);
       setProductId(response.data.id);

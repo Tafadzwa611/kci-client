@@ -67,6 +67,13 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 <option value='Reducing Balance - Equal Installments'>Reducing Balance - Equal Installments</option>
                 <option value='Reducing Balance - Equal Principal'>Reducing Balance - Equal Principal</option>
               </CustomSelect>
+              {values.product_type === 'Fixed Term Loan' && (
+                <CustomSelect label='Interest Application' name='interest_application' required>
+                  <option value=''>------</option>
+                  <option value='Daily'>Daily</option>
+                  <option value='Upfront'>Upfront</option>
+                </CustomSelect>
+              )}
               <CustomSelect label='Interest Interval' name='interest_interval' required>
                 <option value=''>------</option>
                 <option value='/Day'>Per Day</option>

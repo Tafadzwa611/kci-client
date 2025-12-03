@@ -16,7 +16,7 @@ function EditProduct({loanFees, fieldSets, initialValues, setView, setSelectedPr
     try {
       const data = removeEmptyValues(values);
       const allowed_branches_ids = values.allowed_branches_ids.map(allowed_branches_id => allowed_branches_id.value);
-      data.interest_application = values.product_type === 'Dynamic Term Loan' ? 'On Installment Date' : 'Upfront';
+      data.interest_application = values.product_type === 'Dynamic Term Loan' ? 'On Installment Date' : values.interest_application;
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.put(`/loansapi/edit_loan_product/${data.id}/`, {...data, fees: values.fees, custom_forms: values.custom_forms, allowed_branches_ids}, CONFIG);
       setProducts(curr => curr.map(prod => {
