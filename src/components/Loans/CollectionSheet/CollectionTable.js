@@ -72,6 +72,7 @@ const COLUMNS = {
   interest_balance: 'Interest_Balance',
   penalty_balance: 'Penalty_Balance',
   fees_balance: 'Fees_Balance',
+  claimable_amount: 'Claimable_Amount',
 
   loan_id: 'Loan_ID',
   currency: 'Currency',
