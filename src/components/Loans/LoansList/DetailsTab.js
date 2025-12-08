@@ -45,17 +45,17 @@ function DetailsTab({loan, setLoan}) {
               <li style={{marginBottom: '0.25rem'}}>Product: {loan.product_name}</li>
               <li style={{marginBottom: '0.25rem'}}>Product Type: {loan.product_type}</li>
               <li style={{marginBottom: '0.25rem'}}>Interest Application: {loan.interest_application}</li>
-              {loan.interest_application && (
+              {loan.interest_application == 'Daily' && (
                 <li style={{marginBottom: '0.25rem'}}>
                   Daily Interest: {loan.daily_interest}
                 </li>
               )}
-              {loan.interest_application && (
+              {loan.interest_application == 'Daily' && (
                 <li style={{marginBottom: '0.25rem'}}>
                   Interest Tenure In Days: {loan.interest_tenure_in_days} Day(s)
                 </li>
               )}
-              {loan.interest_application && (
+              {loan.interest_application == 'Daily' && (
                 <li style={{marginBottom: '0.25rem'}}>
                   Interest At Maturity: {loan.interest_at_maturity}
                 </li>
