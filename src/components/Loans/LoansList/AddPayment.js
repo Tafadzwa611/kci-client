@@ -30,7 +30,19 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(`/loansapi/add_payment/${loanId}/`, data, CONFIG);
       const newLoan = response.data;
-      setLoan(newLoan);
+      setLoan(currentLoan => {
+        currentLoan.status = newLoan.status;
+        currentLoan.installments = newLoan.installments;
+        currentLoan.txns = newLoan.txns;
+        currentLoan.payments.push(newLoan.payment);
+        currentLoan.principal_amount_due = newLoan.principal_amount_due;
+        currentLoan.interest_amount_due = newLoan.interest_amount_due;
+        currentLoan.non_deductable_fees = newLoan.non_deductable_fees;
+        currentLoan.balance = newLoan.balance;
+        currentLoan.money_to_be_refunded = newLoan.money_to_be_refunded;
+        currentLoan.total_amount_paid = newLoan.total_amount_paid;
+        return {...currentLoan};
+      });
       setOpen(false);
       actions.resetForm();
       if (setLoanData && updateLoanList) {
