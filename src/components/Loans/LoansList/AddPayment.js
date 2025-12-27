@@ -34,7 +34,7 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
         currentLoan.status = newLoan.status;
         currentLoan.installments = newLoan.installments;
         currentLoan.txns = newLoan.txns;
-        currentLoan.payments.push(newLoan.payment);
+        currentLoan.payments.unshift(newLoan.payment);
         currentLoan.principal_amount_due = newLoan.principal_amount_due;
         currentLoan.interest_amount_due = newLoan.interest_amount_due;
         currentLoan.non_deductable_fees = newLoan.non_deductable_fees;
