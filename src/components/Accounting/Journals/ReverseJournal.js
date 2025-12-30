@@ -8,11 +8,12 @@ import { Form, Formik } from 'formik';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-function ReverseJournal({journalId, setOpen}) {
+function ReverseJournal({journalId, setJournal, setOpen}) {
     const onSubmit = async (_, actions) => {
         try {
             const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-            await axios.get(`/acc-api/reverse_journal/${journalId}/`, CONFIG);
+            const response = await axios.get(`/acc-api/reverse_journal/${journalId}/`, CONFIG);
+            setJournal(curr => ({...curr, reversals: [response.data]}));
             setOpen(false);
         } catch (error) {
             console.log(error);
