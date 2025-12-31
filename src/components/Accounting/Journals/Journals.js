@@ -1,6 +1,7 @@
 import React from 'react';
 import List from './List';
 import AddJournal from './AddJournal';
+import AddJournalBatch from './AddJournalBatch';
 import JournalDetails from './JournalDetails';
 import {
   Routes,
@@ -16,6 +17,7 @@ const ChartsOfAccounts = () => {
       <Route path='/' element={<Layout />}>
         <Route index element={<List />} />
         <Route path='addjournal' element={<AddJournal />} />
+        <Route path='addjournalbatch' element={<AddJournalBatch />} />
         <Route path='journal/:journalId' element={<JournalDetails />} />
       </Route>
     </Routes>
