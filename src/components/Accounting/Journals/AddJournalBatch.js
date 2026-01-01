@@ -12,6 +12,10 @@ import {
 } from '../../../common';
 import CustomInputBatch from './CustomInputBatch';
 import CustomSelectRemoteJournalBatch from './CustomSelectRemoteJournalBatch';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useNavigate } from "react-router-dom";
+
 
 const initialValues = {
   journals: [
@@ -171,7 +175,7 @@ function LineFields({
             label={`${label} Amount`}
             name={amountFieldPath}
             type='number'
-            step='0.00001'
+            step='0.01'
             required
           />
         )}
@@ -496,22 +500,81 @@ function SubmitButton({ isSubmitting, disabled }) {
 }
 
 export default function JournalsFormikForm() {
-  const onSubmit = async (values) => {
-    console.log(values);
-    const pairs = toPairs(values);
-    console.log(pairs);
+  const navigate = useNavigate();
+
+  const onSubmit = async (values, actions) => {
+    actions.setStatus(null);
+    const pairs = values.journals.map(journal => toPairs(journal));
+    const payload = {
+      currency_id: values.journals[0].currency_id,
+      entries: pairs[0]
+    }
+
+    try {
+      const CONFIG = {
+        headers: {
+          "X-CSRFToken": Cookies.get("csrftoken"),
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
+      };
+      const response = await axios.post('/acc-api/create-journals-batch/', payload, CONFIG);
+      navigate('/accounting/viewaccounting/journals/batch-results', {
+        replace: true,
+        state: response.data
+      });
+    } catch (error) {
+      if (!error.response) {
+        actions.setStatus({
+          type: "error",
+          message: "Network error. Please check your connection and try again."
+        });
+        return;
+      }
+
+      const status = error.response.status;
+
+      if (status >= 400 && status <= 499) {
+        actions.setStatus({
+          type: "error",
+          message: error.response.data?.detail || "There were validation errors. Please review and try again.",
+          data: error.response.data
+        });
+        return;
+      }
+
+      actions.setStatus({
+        type: "error",
+        message: `Server error (${error.response.status}). Please try again.`
+      });
+    } finally {
+      actions.setSubmitting(false);
+    }
   }
 
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ values, setFieldValue, isSubmitting }) => {
+      {({ values, setFieldValue, isSubmitting, status }) => {
+        const errorRef = React.useRef(null);
         const hasAnyImbalance = values.journals.some((j) =>
           (j.entries || []).some((e) => !isBalanced(e, 0.00001))
         );
 
+        React.useEffect(() => {
+          if (status?.type === "error" && errorRef.current) {
+            errorRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }, [status]);
+
         return (
           <Form>
             <h3>Journals</h3>
+
+            {status?.type === "error" && (
+              <div ref={errorRef} style={{ color: "red", fontSize: "20px", marginBottom: "12px", scrollMarginTop: "90px" }}>
+                <strong>{status.message}</strong>
+              </div>
+            )}
 
             <FieldArray name="journals">
               {(journalsHelpers) => (
