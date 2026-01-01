@@ -28,6 +28,29 @@ const initialValues = {
   ]
 };
 
+function countPairs(values) {
+  let total = 0;
+
+  for (const journal of values.journals || []) {
+    for (const entry of journal.entries || []) {
+      const debits = entry.accounts_debited || [];
+      const credits = entry.account_credited || [];
+
+      if (!debits.length || !credits.length) continue;
+
+      const isManyDebitsOneCredit = debits.length > 1 && credits.length === 1;
+      const isManyCreditsOneDebit = credits.length > 1 && debits.length === 1;
+      const isOneToOne = debits.length === 1 && credits.length === 1;
+
+      if (isManyDebitsOneCredit) total += debits.length;
+      else if (isManyCreditsOneDebit) total += credits.length;
+      else if (isOneToOne) total += 1;
+    }
+  }
+
+  return total;
+}
+
 function toPairs(journal) {
   const { txn_date, narrative } = journal;
   const out = [];
@@ -500,10 +523,21 @@ function SubmitButton({ isSubmitting, disabled }) {
 }
 
 export default function JournalsFormikForm() {
+  const MAX_PAIRS = 2;
+
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
     actions.setStatus(null);
+    const pairsCount = countPairs(values);
+    if (pairsCount > MAX_PAIRS) {
+      actions.setStatus({
+        type: "error",
+        message: `Too many transactions: this batch would create ${pairsCount} pairs (max is 50).`
+      });
+      actions.setSubmitting(false);
+      return;
+    }
     const pairs = values.journals.map(journal => toPairs(journal));
     const payload = {
       currency_id: values.journals[0].currency_id,
@@ -560,6 +594,11 @@ export default function JournalsFormikForm() {
           (j.entries || []).some((e) => !isBalanced(e, 0.00001))
         );
 
+        const pairCount = countPairs(values);
+        const exceedsPairLimit = pairCount > MAX_PAIRS;
+
+        const disableSubmit = isSubmitting || hasAnyImbalance || exceedsPairLimit;
+
         React.useEffect(() => {
           if (status?.type === "error" && errorRef.current) {
             errorRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -573,6 +612,12 @@ export default function JournalsFormikForm() {
             {status?.type === "error" && (
               <div ref={errorRef} style={{ color: "red", fontSize: "20px", marginBottom: "12px", scrollMarginTop: "90px" }}>
                 <strong>{status.message}</strong>
+              </div>
+            )}
+
+            {exceedsPairLimit && (
+              <div style={{ marginTop: "12px", color: "red", fontSize: "20px" }}>
+                <strong>Too many transactions:</strong> This batch would create {pairCount} pairs (max is {MAX_PAIRS}).
               </div>
             )}
 
@@ -606,7 +651,7 @@ export default function JournalsFormikForm() {
             <div className="divider divider-default" style={{ padding: "1.25rem" }}></div>
 
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <SubmitButton isSubmitting={isSubmitting} disabled={isSubmitting || hasAnyImbalance} />
+              <SubmitButton isSubmitting={isSubmitting} disabled={disableSubmit}/>
             </div>
           </Form>
         );
