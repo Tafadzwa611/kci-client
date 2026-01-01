@@ -24,6 +24,68 @@ const initialValues = {
   ]
 };
 
+function toPairs(journal) {
+  const { txn_date, narrative } = journal;
+  const out = [];
+
+  for (const [entryIdx, entry] of (journal.entries || []).entries()) {
+    const debits = entry.accounts_debited || [];
+    const credits = entry.account_credited || [];
+
+    if (!debits.length || !credits.length) {
+      throw new Error(`Entry ${entryIdx}: missing debit or credit lines`);
+    }
+
+    const isManyDebitsOneCredit = debits.length > 1 && credits.length === 1;
+    const isManyCreditsOneDebit = credits.length > 1 && debits.length === 1;
+    const isOneToOne = debits.length === 1 && credits.length === 1;
+
+    if (!isManyDebitsOneCredit && !isManyCreditsOneDebit && !isOneToOne) {
+      throw new Error(
+        `Entry ${entryIdx}: unsupported shape. Expected (many debits, 1 credit) OR (1 debit, many credits) OR (1,1). Got debits=${debits.length}, credits=${credits.length}`
+      );
+    }
+
+    if (isManyCreditsOneDebit || isOneToOne) {
+      const debitAccountId = debits[0]?.account?.id;
+      if (!debitAccountId) throw new Error(`Entry ${entryIdx}: missing debit account id`);
+
+      for (const c of credits) {
+        const creditAccountId = c?.account?.id;
+        if (!creditAccountId) throw new Error(`Entry ${entryIdx}: missing credit account id`);
+
+        out.push({
+          account_debited_id: debitAccountId,
+          account_credited_id: creditAccountId,
+          amount: Number(c.amount) || 0,
+          txn_date,
+          narrative
+        });
+      }
+    }
+
+    if (isManyDebitsOneCredit) {
+      const creditAccountId = credits[0]?.account?.id;
+      if (!creditAccountId) throw new Error(`Entry ${entryIdx}: missing credit account id`);
+
+      for (const d of debits) {
+        const debitAccountId = d?.account?.id;
+        if (!debitAccountId) throw new Error(`Entry ${entryIdx}: missing debit account id`);
+
+        out.push({
+          account_debited_id: debitAccountId,
+          account_credited_id: creditAccountId,
+          amount: Number(d.amount) || 0,
+          txn_date,
+          narrative
+        });
+      }
+    }
+  }
+
+  return out;
+}
+
 function toNumber(v) {
   const n = typeof v === "number" ? v : parseFloat(String(v ?? "").trim());
   return Number.isFinite(n) ? n : 0;
@@ -45,7 +107,7 @@ function isBalanced(entry, epsilon = 0.00001) {
 }
 
 function emptyLine() {
-  return {key: '', value: '', amount: ''};
+  return {branch: '', account: '', amount: ''};
 }
 
 function emptyEntry() {
@@ -304,7 +366,7 @@ function Entry({
         </div>
       )}
 
-      {disableRemove && (
+      {!disableRemove && (
         <ButtonDefault
           value="Remove entry"
           handler={onRemove}
@@ -346,6 +408,7 @@ function Journal({ journal, journalPath, setFieldValue, values }) {
           name={`${journalPath}.txn_date`}
           label="Transaction Date"
           setFieldValue={setFieldValue}
+          required
         />
       </div>
 
@@ -433,11 +496,14 @@ function SubmitButton({ isSubmitting, disabled }) {
 }
 
 export default function JournalsFormikForm() {
+  const onSubmit = async (values) => {
+    console.log(values);
+    const pairs = toPairs(values);
+    console.log(pairs);
+  }
+
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={(values) => console.log("SUBMIT:", values)}
-    >
+    <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({ values, setFieldValue, isSubmitting }) => {
         const hasAnyImbalance = values.journals.some((j) =>
           (j.entries || []).some((e) => !isBalanced(e, 0.00001))
