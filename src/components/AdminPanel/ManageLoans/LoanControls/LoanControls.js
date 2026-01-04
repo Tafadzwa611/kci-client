@@ -125,6 +125,14 @@ const List = ({initControls}) => {
                       })}
                     </td>
                   </tr>
+                  <tr>
+                    <td>Client Guarantor Required</td>
+                    <td>{loanControls.client_guarantor_required ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
+                    <td>Group Guarantor Required</td>
+                    <td>{loanControls.group_guarantor_required ? 'Yes' : 'No'}</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -152,6 +160,8 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
     send_payment_sms_notification: loanControls.send_payment_sms_notification,
     loan_id_format: loanControls.loan_id_format,
     allow_overpayments: loanControls.allow_overpayments,
+    client_guarantor_required: loanControls.client_guarantor_required,
+    group_guarantor_required: loanControls.group_guarantor_required,
     two_man_rules: loanControls.two_man_rules.map(rule => ({label: rule, value: rule})),
     max_currencies_exposure: currencies.map(currency => {
       const exp = loanControls.max_currencies_exposure.find(exp => exp.currency_id == currency.id);
@@ -178,6 +188,8 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
       loan_id_format: values.loan_id_format,
       allow_overpayments: values.allow_overpayments,
       send_payment_sms_notification: values.send_payment_sms_notification,
+      client_guarantor_required: values.client_guarantor_required,
+      group_guarantor_required: values.group_guarantor_required,
       two_man_rules: values.two_man_rules.map(rule => rule.value),
       ...(values.max_num_of_loans && {max_num_of_loans: values.max_num_of_loans}),
       ...(values.max_num_of_group_loans && {max_num_of_group_loans: values.max_num_of_group_loans}),
