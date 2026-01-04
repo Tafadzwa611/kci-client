@@ -51,7 +51,11 @@ function SuccessTable({successRes}) {
                                     successRes.map(res => {
                                     return (
                                         <tr className='tr-class' key={res.id}>
-                                            <td className='td-class'>{res.transaction_id}</td>
+                                            <td className='td-class'>
+                                                <Link to={`/accounting/viewaccounting/journals/journal/${res.id}`}>
+                                                    {res.transaction_id}
+                                                </Link>
+                                            </td>
                                             <td className='td-class'>{res.account_debited_code}</td>
                                             <td className='td-class'>{res.account_debited}</td>
                                             <td className='td-class'>{res.branch_debited}</td>

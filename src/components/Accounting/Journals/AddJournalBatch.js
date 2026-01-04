@@ -523,7 +523,7 @@ function SubmitButton({ isSubmitting, disabled }) {
 }
 
 export default function JournalsFormikForm() {
-  const MAX_PAIRS = 2;
+  const MAX_PAIRS = 50;
 
   const navigate = useNavigate();
 
