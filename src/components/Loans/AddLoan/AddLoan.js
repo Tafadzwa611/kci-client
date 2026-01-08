@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SolidarityGroupForm from './SolidarityGroupForm';
-import { NonFieldErrors, CustomMultiSelect } from '../../../common';
+import { CustomMultiSelect } from '../../../common';
 import { Form, Formik } from 'formik';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
