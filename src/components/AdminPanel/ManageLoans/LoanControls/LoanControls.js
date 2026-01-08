@@ -242,6 +242,8 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
                   <CustomCheckbox label='Allow Groups With Running Loans To Guarantee' name='allow_groups_with_running_loans_to_guarantee'/>
                   <CustomCheckbox label='SMS Payment Notification — Always Enabled' name='send_payment_sms_notification'/>
                   <CustomCheckbox label='Allow Overpayments' name='allow_overpayments'/>
+                  <CustomCheckbox label='Client Guarantor Required' name='client_guarantor_required'/>
+                  <CustomCheckbox label='Group Guarantor Required' name='group_guarantor_required'/>
                   <CustomMultiSelect
                     label='Two Man Rules'
                     name='two_man_rules'

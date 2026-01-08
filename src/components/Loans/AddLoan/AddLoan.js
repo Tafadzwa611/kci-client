@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SolidarityGroupForm from './SolidarityGroupForm';
-import { NonFieldErrors, CustomSelect } from '../../../common';
+import { NonFieldErrors, CustomMultiSelect } from '../../../common';
 import { Form, Formik } from 'formik';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
@@ -68,8 +68,7 @@ function AddLoan({products, lcontrols, customForms, units, clientControls, cashA
     ...(!lcontrols.auto_generate_loan_id && {loan_id: ''})
   };
 
-  const onChange = (evt, setFieldValue, prevProductId) => {
-    const {value} = evt.target;
+  const onChange = (value, setFieldValue, prevProductId) => {
     const product = products.find(prod => prod.id == value) || null;
     setProduct(product);
     setFieldValue('loan_product_id', value);
@@ -118,54 +117,62 @@ function AddLoan({products, lcontrols, customForms, units, clientControls, cashA
     <Formik key={JSON.stringify(initialValues)} initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors, values}) => (
         <Form>
-          <NonFieldErrors errors={errors}>
-            <div className='divider divider-info'>
-              <span>Loan Product</span>
+          <div className='divider divider-info'>
+            <span>Loan Product</span>
+          </div>
+          <CustomMultiSelect
+            label='Loan Product'
+            name='product'
+            isMulti={false}
+            setFieldValue={(fieldName, selectedOpts) => {
+              onChange(selectedOpts.value, setFieldValue, values.loan_product_id);
+              setFieldValue(fieldName, selectedOpts);
+            }}
+            options={products.map(product => ({label: product.name, value: product.id}))}
+            required
+          />
+          {product ? {
+            'Groups': <ClientFormFields
+              product={product}
+              lcontrols={lcontrols}
+              isSubmitting={isSubmitting}
+              setFieldValue={setFieldValue}
+              values={values}
+              formIds={formIds}
+              customForms={customForms}
+              units={units}
+              clientControls={clientControls}
+              cashAccounts={cashAccounts}
+            />,
+            'Clients': <ClientFormFields
+              product={product}
+              lcontrols={lcontrols}
+              clientName={clientName}
+              isSubmitting={isSubmitting}
+              setFieldValue={setFieldValue}
+              values={values}
+              formIds={formIds}
+              customForms={customForms}
+              units={units}
+              clientControls={clientControls}
+              cashAccounts={cashAccounts}
+            />,
+            'Groups (solidarity)': <SolidarityGroupForm
+              product={product}
+              isSubmitting={isSubmitting}
+              setFieldValue={setFieldValue}
+              values={values}
+              units={units}
+              clientControls={clientControls}
+            />
+          }[product.client_type] : null}
+          {Object.keys(errors).length > 0 && (
+            <div className='row custom-background' style={{marginTop: '15px'}}>
+              <div className='col-9'>
+                <div style={{fontSize: 12, color: 'red'}}>{JSON.stringify(errors)}</div>
+              </div>
             </div>
-            <CustomSelect label='Loan Product' name='loan_product_id' value={product ? product.id : ''} onChange={(evt) => onChange(evt, setFieldValue, values.loan_product_id)} required>
-              <option value=''>------</option>
-              {products.map(product => (
-                <option key={product.id} value={product.id}>
-                  ({product.currency})-{product.name} ({product.loan_product_id})-{product.client_type}
-                </option>
-              ))}
-            </CustomSelect>
-            {product ? {
-              'Groups': <ClientFormFields
-                product={product}
-                lcontrols={lcontrols}
-                isSubmitting={isSubmitting}
-                setFieldValue={setFieldValue}
-                values={values}
-                formIds={formIds}
-                customForms={customForms}
-                units={units}
-                clientControls={clientControls}
-                cashAccounts={cashAccounts}
-              />,
-              'Clients': <ClientFormFields
-                product={product}
-                lcontrols={lcontrols}
-                clientName={clientName}
-                isSubmitting={isSubmitting}
-                setFieldValue={setFieldValue}
-                values={values}
-                formIds={formIds}
-                customForms={customForms}
-                units={units}
-                clientControls={clientControls}
-                cashAccounts={cashAccounts}
-              />,
-              'Groups (solidarity)': <SolidarityGroupForm
-                product={product}
-                isSubmitting={isSubmitting}
-                setFieldValue={setFieldValue}
-                values={values}
-                units={units}
-                clientControls={clientControls}
-              />
-            }[product.client_type] : null}
-          </NonFieldErrors>
+          )}
         </Form>
       )}
     </Formik>
