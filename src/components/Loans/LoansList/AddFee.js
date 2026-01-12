@@ -23,12 +23,17 @@ function AddFee({loanId, manualFees, setOpen, setLoan, updateLoanList, setLoanDa
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(`/loansapi/add_manual_fee/${loanId}/`, data, CONFIG);
-      const newLoan = response.data;
-      setLoan(newLoan);
+      const updates = response.data;
+      setLoan(curr => ({
+        ...curr,
+        ...updates,
+        applied_fees: [updates.new_fee, ...curr.applied_fees],
+        ...(updates.updated_payments ? {payments: updates.updated_payments} : curr.payments)
+      }));
       setOpen(false);
       actions.resetForm();
       if (setLoanData && updateLoanList) {
-        updateLoanList(newLoan, setLoanData);
+        updateLoanList(updates, setLoanData);
       }
     } catch (error) {
       if (error.message === 'Network Error') {
