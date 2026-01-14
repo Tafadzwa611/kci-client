@@ -73,7 +73,13 @@ function DeleteFee({setOpenModal, setLoan, feeId}) {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(`/loansapi/delete_fee/${feeId}/`, values, CONFIG);
-      setLoan(response.data);
+      const updates = response.data;
+      setLoan(curr => ({
+        ...curr,
+        ...updates,
+        applied_fees: curr.applied_fees.filter(fee => fee.id !== updates.fee_id),
+        ...(updates.updated_payments ? {payments: updates.updated_payments} : curr.payments)
+      }));
       setOpenModal(false);
     } catch (error) {
       if (error.message === 'Network Error') {
