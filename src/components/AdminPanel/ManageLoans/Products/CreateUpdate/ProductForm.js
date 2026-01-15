@@ -80,6 +80,9 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 <option value='/Week'>Per Week</option>
                 <option value='/Month'>Per Month</option>
                 <option value='/Year'>Per Year</option>
+                {values.interest_method === 'Flat Rate' && (
+                  <option value='Total'>Total</option>
+                )}
               </CustomSelect>
               <CustomInput label='Minimum Loan Interest' name='minimum_interest_rate' min='0' step='0.00001' type='number' required/>
               <CustomInput label='Maximum Loan Interest' name='maximum_interest_rate' min='0' step='0.00001' type='number' required/>
