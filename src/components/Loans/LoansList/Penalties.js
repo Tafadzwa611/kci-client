@@ -137,7 +137,12 @@ const ReducePenaltyForm = ({loanId, orgPenalty, setLoan}) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(`/loansapi/reduce_penalty/${loanId}/`, values, CONFIG);
-      setLoan(response.data);
+      const updates = response.data;
+      setLoan(curr => ({
+        ...curr,
+        ...updates,
+        ...(updates.updated_payments ? {payments: updates.updated_payments} : curr.payments)
+      }));
       actions.resetForm();
     } catch (error) {
       if (error.message === 'Network Error') {

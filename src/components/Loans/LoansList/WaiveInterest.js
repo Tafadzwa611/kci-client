@@ -1,22 +1,23 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 import {
-  NonFieldErrors,
-  CustomInput,
-  CustomDatePicker,
-  ModalSubmit,
-  Modal
+    NonFieldErrors,
+    CustomInput,
+    CustomDatePicker,
+    ModalSubmit,
+    Modal
 } from '../../../common';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+
 
 function WaiveInterest({loanId, setLoan, setOpen}) {
     const onSubmit = async (values, actions) => {
         try {
             const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
             const response = await axios.post(`/loansapi/waive_interest/${loanId}/`, values, CONFIG);
-            const newLoan = response.data;
-            setLoan(newLoan);
+            const updates = response.data;
+            setLoan(curr => ({...curr, ...updates}));
             setOpen(false);
         } catch (error) {
             if (error.message === 'Network Error') {
