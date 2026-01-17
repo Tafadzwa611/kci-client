@@ -128,7 +128,7 @@ function AddLoan({products, lcontrols, customForms, units, clientControls, cashA
               onChange(selectedOpts.value, setFieldValue, values.loan_product_id);
               setFieldValue(fieldName, selectedOpts);
             }}
-            options={products.map(product => ({label: product.name, value: product.id}))}
+            options={products.map(product => ({label: `${product.loan_product_id} ${product.name}`, value: product.id}))}
             required
           />
           {product ? {
