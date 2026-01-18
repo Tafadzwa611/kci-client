@@ -16,13 +16,20 @@ import Cookies from 'js-cookie';
 import { scheduleStrategies } from './data';
 import { removeEmptyValues } from '../../../utils/utils';
 
+const COOLDOWN_SECONDS = 60;
+
 function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLoanData, lcontrols}) {
+  const [isSending, setIsSending] = React.useState(false);
+  const [cooldownLeft, setCooldownLeft] = React.useState(0);
+  const intervalRef = React.useRef();
+
   const initialValues = {
     send_sms_notification: false,
     disbursement_date: '',
     interest_start_date: '',
     fund_account_id: '',
     receipt_number: '',
+    otp: '',
     loan_officer_id: '',
     first_repayment_date: loan.first_payment_date,
     schedule_strategy: loan.default_schedule_strategy
@@ -51,6 +58,44 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
       }
     }
   }
+
+  const startCooldown = () => {
+    setCooldownLeft(COOLDOWN_SECONDS);
+
+    if (intervalRef.current) window.clearInterval(intervalRef.current);
+    intervalRef.current = window.setInterval(() => {
+      setCooldownLeft((prev) => {
+        if (prev <= 1) {
+          if (intervalRef.current) window.clearInterval(intervalRef.current);
+          intervalRef.current = null;
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  React.useEffect(() => {
+    return () => {
+      if (intervalRef.current) window.clearInterval(intervalRef.current);
+    };
+  }, []);
+
+  const disabled = isSending || cooldownLeft > 0;
+
+  const handleRequestOtp = async () => {
+    if (disabled) return;
+
+    setIsSending(true);
+    try {
+      await axios.get(`/loansapi/request_approval_otp/${loan.id}/`);
+      startCooldown();
+    } catch (err) {
+      console.error("Failed to request OTP:", err);
+    } finally {
+      setIsSending(false);
+    }
+  };
 
   return (
     <Modal open={true} setOpen={setOpen} title={'Disburse Loan'}>
@@ -112,6 +157,23 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
                           type='text'
                           required
                         />
+                      ) : null}
+                      {lcontrols.request_otp_on_db ? (
+                        <>
+                          <CustomInput
+                            label='OTP'
+                            name='otp'
+                            type='text'
+                            required
+                          />
+                          <button className='btn btn-info' onClick={handleRequestOtp} disabled={disabled}>
+                            {isSending
+                              ? "Sending..."
+                              : cooldownLeft > 0
+                                ? `Send OTP (${cooldownLeft}s)`
+                                : "Send OTP"}
+                          </button>
+                        </>
                       ) : null}
                       <CustomCheckbox label='Notify client/group via SMS' name='send_sms_notification'/>
                     </div>

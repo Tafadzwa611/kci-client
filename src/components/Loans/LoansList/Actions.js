@@ -19,6 +19,7 @@ import { Fetcher } from '../../../common';
 import WaiveInterest from './WaiveInterest';
 import TriggerPenaltyRecal from './TriggerPenaltyRecal';
 
+
 const MODAL_STATES = {
   lockInt: 'lockInt',
   approve: 'approve',

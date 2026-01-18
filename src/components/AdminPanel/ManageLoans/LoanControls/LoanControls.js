@@ -66,6 +66,10 @@ const List = ({initControls}) => {
                     <td>{loanControls.request_otp_on_approval ? 'Yes' : 'No'}</td>
                   </tr>
                   <tr>
+                    <td>Request OTP On Loan Disbursement</td>
+                    <td>{loanControls.request_otp_on_db ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
                     <td>Disburse Loan On Capture</td>
                     <td>{loanControls.disburse_loan_on_capture ? 'Yes' : 'No'}</td>
                   </tr>
@@ -151,6 +155,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
     max_num_of_group_loans: loanControls.max_num_of_group_loans || '',
     allow_group_member_as_guarantor: loanControls.allow_group_member_as_guarantor,
     request_otp_on_approval: loanControls.request_otp_on_approval,
+    request_otp_on_db: loanControls.request_otp_on_db,
     disburse_loan_on_capture: loanControls.disburse_loan_on_capture,
     select_branch_on_loan_creation: loanControls.select_branch_on_loan_creation,
     request_receipt_number: loanControls.request_receipt_number,
@@ -179,6 +184,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
     const data = {
       allow_group_member_as_guarantor: values.allow_group_member_as_guarantor,
       request_otp_on_approval: values.request_otp_on_approval,
+      request_otp_on_db: values.request_otp_on_db,
       disburse_loan_on_capture: values.disburse_loan_on_capture,
       select_branch_on_loan_creation: values.select_branch_on_loan_creation,
       request_receipt_number: values.request_receipt_number,
@@ -230,6 +236,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
                   <CustomInput label='Maximum Number Of Running Loans Allowed Per Group' name='max_num_of_group_loans' step='1' type='number'/>
                   <CustomCheckbox label='Allow Group Members To Guarantee Group Loan' name='allow_group_member_as_guarantor'/>
                   <CustomCheckbox label='Request OTP On Loan Approval' name='request_otp_on_approval'/>
+                  <CustomCheckbox label='Request OTP On Loan Disbursement' name='request_otp_on_db'/>
                   <CustomCheckbox label='Disburse Loan On Capture' name='disburse_loan_on_capture'/>
                   <CustomCheckbox label='Select Branch On Loan Creation' name='select_branch_on_loan_creation'/>
                   <CustomCheckbox label='Request Receipt Number On Disbursement' name='request_receipt_number'/>
