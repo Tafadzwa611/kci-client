@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import ChangeAccruedInterest from './ChangeAccruedInterest';
 import ChangeLoanNumber from './ChangeLoanNumber';
 import ChangeLoanNextInstallmentDate from './ChangeLoanNextInstallmentDate';
+import { Link } from 'react-router-dom';
 
 function DetailsTab({loan, setLoan}) {
   const [openModal, setOpenModal] = useState(false);
@@ -28,6 +29,22 @@ function DetailsTab({loan, setLoan}) {
               <li style={{marginBottom: '0.25rem'}}>Assigned to Branch: {loan.branch}</li>
               <li style={{marginBottom: '0.25rem'}}>Assigned to Unit: {loan.unit ? loan.unit : 'Not provided'}</li>
               <li style={{marginBottom: '0.25rem'}}>Assigned to Loan Officer: {loan.loan_officer_name}</li>
+              {loan.guarantor_info && (
+                <li style={{marginBottom: '0.25rem'}}>
+                  Guarantor: 
+                  <Link to={`/clients/viewclients/clientdetails/${loan.guarantor_info.id}`}>
+                    {loan.guarantor_info.client_id} {loan.guarantor_info.name}
+                  </Link>
+                </li>
+              )}
+              {loan.group_guarantor_info && (
+                <li style={{marginBottom: '0.25rem'}}>
+                  Group Guarantor: 
+                  <Link to={`/groups/viewgroups?group_id=${loan.group_guarantor_info.id}`}>
+                    {loan.group_guarantor_info.group_id} {loan.group_guarantor_info.name}
+                  </Link>
+                </li>
+              )}
               <li style={{marginBottom: '0.25rem'}}>Loan Created By: {loan.loan_created_by}</li>
               <li style={{marginBottom: '0.25rem'}}>Loan Approved By: {loan.loan_approved_by}</li>
               <li style={{marginBottom: '0.25rem'}}>Loan Disbursed By: {loan.loan_amount_disbursed_by}</li>
