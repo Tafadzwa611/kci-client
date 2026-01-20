@@ -16,7 +16,7 @@ import Cookies from 'js-cookie';
 import { scheduleStrategies } from './data';
 import { removeEmptyValues } from '../../../utils/utils';
 
-const COOLDOWN_SECONDS = 60;
+const COOLDOWN_SECONDS = 300;
 
 function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLoanData, lcontrols}) {
   const [isSending, setIsSending] = React.useState(false);
