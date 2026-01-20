@@ -87,6 +87,7 @@ function SmsForm() {
               setFieldValue={(fieldName, selected) => {
                 setFieldValue(fieldName, selected);
               }}
+              params={[{key: 'all_branches', value: 1}]}
               queryParamName='query'
               placeholder='Search Client'
               name='clients'

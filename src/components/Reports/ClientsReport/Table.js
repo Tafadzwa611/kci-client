@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import axios from 'axios';
+import { REPORT_FIELDS } from '../ReportFields/data';
 
-const Table = ({ clientsReportData, params, setClientsReportData }) => {
+const Table = ({ clientsReportData, params, templates, setClientsReportData }) => {
+  const template = templates.find(obj => obj.id == params.get('report_template_id'));
+  const columns = template ? template.columns : Object.keys(REPORT_FIELDS.CLIENTS_REPORT);
+
   return (
     <>
       <TableHeader clientsReportData={clientsReportData} params={params} setClientsReportData={setClientsReportData}/>
@@ -10,55 +14,23 @@ const Table = ({ clientsReportData, params, setClientsReportData }) => {
         <div className='table-responsive font-12' style={{maxHeight:'600px'}}>
           <table className='table' id='clients-report' style={{width:'100%'}}>
             <thead className='clients-report-table'>
-              <tr className='journal-details fees__report_thead'> 
-                <th style={{textAlign:'right'}}>Client_Name</th>
-                <th style={{textAlign:'right'}}>Client_ID</th>
-                <th style={{textAlign:'right'}}>Gender</th>
-                <th style={{textAlign:'right'}}>Status</th>
-                <th style={{textAlign:'right'}}>Phone_Number</th>
-                <th style={{textAlign:'right'}}>Loan_Count</th>
-                <th style={{textAlign:'right'}}>Principal</th>
-                <th style={{textAlign:'right'}}>Principal_Paid</th>
-                <th style={{textAlign:'right'}}>Principal_Due</th>
-                <th style={{textAlign:'right'}}>Interest</th>
-                <th style={{textAlign:'right'}}>Interest_Paid</th>
-                <th style={{textAlign:'right'}}>Interest_Due</th>
-                <th style={{textAlign:'right'}}>Fees</th>
-                <th style={{textAlign:'right'}}>Fees_Paid</th>
-                <th style={{textAlign:'right'}}>Fees_Due</th>
-                <th style={{textAlign:'right'}}>Penalty</th>
-                <th style={{textAlign:'right'}}>Penalty_Paid</th>
-                <th style={{textAlign:'right'}}>Penalty_Due</th>
-                <th style={{textAlign:'right'}}>Total_Amount</th>
-                <th style={{textAlign:'right'}}>Total_Paid</th>
-                <th style={{textAlign:'right'}}>Total_Due</th>
+              <tr className='journal-details fees__report_thead'>
+                {columns.map((column, index) => (
+                  <th key={index} style={{textAlign:'right'}}>
+                    {REPORT_FIELDS.CLIENTS_REPORT[column]}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
               {clientsReportData.clients.map(client => {
                 return (
                   <tr key={client.id}>
-                    <td>{client.fullname}</td>
-                    <td>{client.client_id}</td>
-                    <td>{client.gender}</td>
-                    <td>{client.status}</td>
-                    <td>{client.phone_number}</td>
-                    <td>{client.loan_count}</td>
-                    <td>{client.sum_principal}</td>
-                    <td>{client.sum_principal_paid}</td>
-                    <td>{client.sum_principal_due}</td>
-                    <td>{client.sum_interest}</td>
-                    <td>{client.sum_interest_paid}</td>
-                    <td>{client.sum_interest_amount_due}</td>
-                    <td>{client.sum_fees}</td>
-                    <td>{client.sum_fees_paid}</td>
-                    <td>{client.sum_fees_due}</td>
-                    <td>{client.sum_penalty}</td>
-                    <td>{client.sum_penalty_paid}</td>
-                    <td>{client.sum_penalty_due}</td>
-                    <td>{client.total_amount}</td>
-                    <td>{client.total_paid}</td>
-                    <td>{client.total_due}</td>
+                    {columns.map((column, index) => (
+                      <td key={index} style={{textAlign:'right'}}>
+                        {client[column]}
+                      </td>
+                    ))}
                   </tr>
                 )
               })}
@@ -100,7 +72,7 @@ const TableHeader = ({clientsReportData, params, setClientsReportData }) => {
 }
 
 const Pager = ({prevPageNumber, nextPageNumber, setClientsReportData, params}) => {
-  const [errors, setErrors] = useState(null);
+  const [errors, setErrors] = React.useState(null);
 
   const onClick = async (evt) => {
     try {

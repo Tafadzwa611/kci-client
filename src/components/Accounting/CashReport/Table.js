@@ -3,10 +3,15 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Journal from './Journal';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { Margin, usePDF } from 'react-to-pdf';
 
 function Table({statement, setStatement}) {
   const [journalID, setJournalID] = useState(null);
   const [error, setError] = useState(null);
+  const { toPDF, targetRef } = usePDF({
+    filename: 'cash-book.pdf',
+    page: { margin: Margin.MEDIUM, orientation: 'landscape' },
+  });
 
   const goToJournalDetails = (evt) => {
     evt.preventDefault();
@@ -41,7 +46,7 @@ function Table({statement, setStatement}) {
     <div className='row cash-management-table' style={{columnGap: '5px', justifyContent: 'space-between'}}>
       <div style={{width: '60%'}}>
         <div style={{display: 'flex', flexDirection: 'row', columnGap: '10px', marginBottom: '10px'}}>
-          <div>
+          <div style={{display: 'flex', columnGap: '5px'}}>
             <ReactHTMLTableToExcel
               id='test-table-xls-button'
               className='download-table-xls-button btn btn-default'
@@ -50,6 +55,7 @@ function Table({statement, setStatement}) {
               sheet='tablexls'
               buttonText='Download as XLS'
             />
+            <button className='btn btn-default' onClick={toPDF}>Download as PDF</button>
           </div>
           {statement.reconciled ?
           <>
@@ -60,7 +66,7 @@ function Table({statement, setStatement}) {
           {error}
         </div>
         <div style={{width:'100%', overflowX:'auto'}}>
-          <div className='table__height'>
+          <div className='table__height' ref={targetRef}>
             <table id='cash-balance' className='table table-bordered table-condensed table-hover'>
               <thead>
                 <tr className='journal-details header'>

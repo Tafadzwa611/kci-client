@@ -15,6 +15,10 @@ import LockInterest from './LockInterest';
 import Refinance from './Refinance/Refinance';
 import ApplyInterest from './ApplyInterest/ApplyInterest';
 import UndoEarlySettlement from './UndoEarlySettlement';
+import { Fetcher } from '../../../common';
+import WaiveInterest from './WaiveInterest';
+import TriggerPenaltyRecal from './TriggerPenaltyRecal';
+
 
 const MODAL_STATES = {
   lockInt: 'lockInt',
@@ -32,6 +36,8 @@ const MODAL_STATES = {
   refinance: 'refinance',
   addInterest: 'addInterest',
   undoSettle: 'undoSettle',
+  waiveInterest: 'waiveInterest',
+  triggerPenaltyRecal: 'triggerPenaltyRecal',
   none: false
 };
 
@@ -52,6 +58,8 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
     refinance,
     addInterest,
     undoSettle,
+    waiveInterest,
+    triggerPenaltyRecal,
     none
   } = MODAL_STATES;
   const [modal, setModal] = useState(none);
@@ -101,14 +109,21 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
           url={undoApprovalUrl}
           setLoanDetails={setLoanDetails}
         />}
-        {modal === disburse && <DisburseLoan
-          setOpen={setModal}
-          loan={loan}
-          url={disburseUrl}
-          setLoanDetails={setLoanDetails}
-          updateLoanList={updateLoanList}
-          setLoanData={setLoanData}
-        />}
+        {modal === disburse && (
+          <Fetcher urls={['/loansapi/loan_controls/']}>
+            {({data}) => (
+              <DisburseLoan
+                setOpen={setModal}
+                loan={loan}
+                url={disburseUrl}
+                setLoanDetails={setLoanDetails}
+                updateLoanList={updateLoanList}
+                setLoanData={setLoanData}
+                lcontrols={data[0]}
+              />
+            )}
+          </Fetcher>
+        )}
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setModal(undoApproval)}>Undo Approve</button>
           <button className='btn btn-olive' onClick={() => setModal(disburse)}>Disburse</button>
@@ -163,6 +178,7 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
     return (
       <div style={{display:'flex', columnGap:'3px'}}>
         {modal === addInterest && <ApplyInterest setOpen={setModal} setLoan={setLoanDetails} loan={loan}/>}
+        {modal === triggerPenaltyRecal && <TriggerPenaltyRecal setOpen={setModal} loan={loan}/>}
         {modal === refinance && <Refinance setOpen={setModal} loan={loan}/>}
         {modal === addPayment &&
         <AddPayment
@@ -175,6 +191,13 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
           updateLoanList={updateLoanList}
           setLoanData={setLoanData}
         />}
+        {modal === waiveInterest && (
+          <WaiveInterest
+            loanId={loan.id}
+            setLoan={setLoanDetails}
+            setOpen={setModal}
+          />
+        )}
         {modal === addFee &&
         <AddFee
           setOpen={setModal}
@@ -219,12 +242,11 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
         {modal === lockInt && <LockInterest setOpen={setModal} loanId={loan.id} setLoanDetails={setLoanDetails}/>}
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setModal(addPayment)}>Add Payment</button>
+          <button className='btn btn-olive' onClick={() => setModal(waiveInterest)}>Waive Interest</button>
           <button className='btn btn-olive' onClick={() => setModal(refinance)}>Refinance</button>
-          {loan.product_type == 'Dynamic Term Loan' && (
-            <button className='btn btn-olive' onClick={() => setModal(addInterest)}>
-              Add Interest
-            </button>
-          )}
+          <button className='btn btn-olive' onClick={() => setModal(addInterest)}>
+            Add Interest
+          </button>
           {loan.product_type == 'Fixed Term Loan' && (
             <button className='btn btn-olive' onClick={() => setModal(addFee)}>
               Add Fee
@@ -237,8 +259,14 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
           ): null}
           <button className='btn btn-olive' onClick={() => setModal(topup)}>Top-Up</button>
           {loan.status == 'Written-Off' ?
-          <button className='btn btn-olive' onClick={() => setModal(undoWriteOff)}>Undo Write Off</button> :
-          <button className='btn btn-olive' onClick={() => setModal(writeOff)}>Write Off</button>}
+          <button className='btn btn-olive' onClick={() => setModal(undoWriteOff)}>Undo Write Off</button> : (
+            <>
+              <button className='btn btn-olive' onClick={() => setModal(writeOff)}>Write Off</button>
+              {loan.action_on_loan_default == 'Add Scheduled Penalties After Maturity' && (
+                <button className='btn btn-olive' onClick={() => setModal(triggerPenaltyRecal)}>Recalculate Penalties</button>
+              )}
+            </>
+          )}
           <button className='btn btn-olive' onClick={() => setModal(undoDisburse)}>Undo Disbursement</button>
         </div>
       </div>

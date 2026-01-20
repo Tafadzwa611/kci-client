@@ -29,7 +29,9 @@ const LoansReportTable = ({report, setReport, params}) => {
                 <th>Outstanding_Fees</th>
                 <th>Total</th>
                 <th>Loan_Officer</th>
-                <th>Disbursed</th>
+                <th>Date Disbursed</th>
+                <th>Maturity Date</th>
+                <th>Closure Date</th>
                 <th>Installments</th>
                 <th>Repayment_Frequency</th>
                 <th>Status</th>
@@ -59,6 +61,8 @@ const LoansReportTable = ({report, setReport, params}) => {
                       <td>{loan.total_balance}</td>
                       <td>{loan.officer}</td>
                       <td>{loan.db_date}</td>
+                      <td>{loan.last_date}</td>
+                      <td>{loan.closure_date}</td>
                       <td>{loan.number_of_repayments}</td>
                       <td>{loan.repayment_cycle}</td>
                       <td>{loan.status}</td>

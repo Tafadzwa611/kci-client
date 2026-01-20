@@ -6,9 +6,9 @@ import {
 } from '../../../common';
 import axios from 'axios';
 import { getParams } from '../../../utils/utils';
+import { useBranches } from '../../../contexts/BranchesContext';
 
 const Filter = ({setParams, setLoans, par}) => {
-  console.log(par);
   const initialValues = {
     page_num: 1,
     file_format: 'html',
@@ -21,9 +21,16 @@ const Filter = ({setParams, setLoans, par}) => {
     reason: par.reason
   };
 
+  const {branches} = useBranches();
+  const allBranchIds = branches.map(br => br.id);
+
   const onSubmit = async (values, actions) => {
     try {
       const params = getParams(values);
+      if (values.branch_ids.includes('*')) {
+        params.delete('branch_ids');
+        allBranchIds.forEach(id => params.append('branch_ids', id));
+      }
       setParams(params);
       if (values.file_format === 'html') {
         const response = await axios.get('/reportsapi/ageing-report/', {params: params});
@@ -52,6 +59,10 @@ const Filter = ({setParams, setLoans, par}) => {
                 <option value='html'>Screen (HTML)</option>
                 <option value='xlsx'>Excel</option>
                 <option value='csv'>CSV</option>
+                <option value='pdfa4'>PDF A4</option>
+                <option value='pdfa3'>PDF A3</option>
+                <option value='pdfa2'>PDF A2</option>
+                <option value='pdfa1'>PDF A1</option>
               </CustomSelect>
               <SubmitButtonFilter isSubmitting={isSubmitting}/>
             </NonFieldErrors>

@@ -16,6 +16,7 @@ import { useCurrencies } from '../../../../../contexts/CurrenciesContext';
 import { scheduleStrategies } from './data';
 import {Fee, AddFee} from './Fees';
 import {CustomLoanForm, AddCustomLoanForm} from './Forms';
+import { AddSchedulePenalty, SchedulePenalty } from './SchedulePenalties';
 
 function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSubmit, back}) {
   const {branches} = useBranches();
@@ -62,18 +63,30 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
               <CustomSelect label='Interest Method' name='interest_method' required>
                 <option value=''>------</option>
                 <option value='Flat Rate'>Flat Rate</option>
+                <option value='Interest-Only'>Flat Rate (Interest-Only)</option>
                 <option value='Reducing Balance - Equal Installments'>Reducing Balance - Equal Installments</option>
                 <option value='Reducing Balance - Equal Principal'>Reducing Balance - Equal Principal</option>
               </CustomSelect>
+              {values.product_type === 'Fixed Term Loan' && (
+                <CustomSelect label='Interest Application' name='interest_application' required>
+                  <option value=''>------</option>
+                  <option value='Daily'>Daily</option>
+                  <option value='Upfront'>Upfront</option>
+                </CustomSelect>
+              )}
               <CustomSelect label='Interest Interval' name='interest_interval' required>
                 <option value=''>------</option>
                 <option value='/Day'>Per Day</option>
                 <option value='/Week'>Per Week</option>
                 <option value='/Month'>Per Month</option>
                 <option value='/Year'>Per Year</option>
+                {values.interest_method === 'Flat Rate' && (
+                  <option value='Total'>Total</option>
+                )}
               </CustomSelect>
               <CustomInput label='Minimum Loan Interest' name='minimum_interest_rate' min='0' step='0.00001' type='number' required/>
               <CustomInput label='Maximum Loan Interest' name='maximum_interest_rate' min='0' step='0.00001' type='number' required/>
+              <CustomInput label='Default Loan Interest' name='default_interest_rate' min='0' step='0.00001' type='number'/>
               {values.product_type === 'Dynamic Term Loan' && (
                 <>
                   <CustomSelect label='Apply Dynamic Interest On' name='dynamic_interest_applied_on' required>
@@ -119,10 +132,13 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
               </CustomSelect>
               <CustomInput label='Minimum Number of Repayments' name='minimum_loan_duration' type='number' required/>
               <CustomInput label='Maximum Number of Repayments' name='maximum_loan_duration' type='number' required/>
+              <CustomInput label='Default Number of Repayments' name='default_loan_duration' type='number'/>
+              <CustomInput label='Grace period' name='days_to_first_repayment' type='number'/>
               <CustomSelect label='Default Loan Schedule Strategy' name='schedule_strategy' required>
                 <option value=''>------</option>
                 {scheduleStrategies[values.loan_duration_time_unit].map(strategy => <option key={strategy} value={strategy}>{strategy}</option>)}
               </CustomSelect>
+              <CustomCheckbox label='Allow Changing Schedule Strategy On Loan Creation' name='allow_editing_schedule_strategy_on_loan_creation'/>
               <div className='divider divider-info'>
                 <span>Decimal Places, Rounding Off and Repayment Order</span>
               </div>
@@ -149,6 +165,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                   values.repayment_order.fourth
                 ]}
               />
+              <CustomCheckbox label='Apply Overpayment To Future Installments' name='apply_overpayment_to_future_installments'/>
               <div className='divider divider-info'>
                 <span>Product Availability</span>
               </div>
@@ -168,6 +185,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
               <div className='divider divider-info'>
                 <span>Fees</span>
               </div>
+              <CustomCheckbox label='Allow Editing Fees On Loan Creation' name='allow_editing_fees_on_loan_creation'/>
               {values.fees.map((fee, index) => {
                 return(
                   <React.Fragment key={index}>
@@ -194,13 +212,13 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
               })}
               <AddCustomLoanForm custom_forms={values.custom_forms} setFieldValue={setFieldValue}/>
               <div className='divider divider-info'>
-                <span>Auto Restructure Settings</span>
+                <span>Recalculate Settings</span>
               </div>
               <CustomCheckbox label='Enable Auto Restructure' name='auto_restructure'/>
               {values.auto_restructure && (
                 <>
-                  <CustomInput label='Auto Restructure Interest' name='auto_restructure_interest' type='number' required/>
-                  <CustomInput label='Auto Restructure Installments' name='auto_restructure_installments' type='number' required/>
+                  <CustomInput label='Recalculate Interest' name='auto_restructure_interest' type='number' required/>
+                  <CustomInput label='Recalculate Installments' name='auto_restructure_installments' type='number' required/>
                 </>
               )}
               <div className='divider divider-info'>
@@ -211,9 +229,64 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
               <CustomSelect label='Action On Default' name='action_on_loan_default'>
                 <option value='Do Nothing'>Do Nothing</option>
                 <option value='Add Penalty'>Add Penalty</option>
+                <option value='Add Scheduled Penalties After Maturity'>Add Scheduled Penalties After Maturity</option>
+                <option value='Add Scheduled Penalties After Default'>Add Scheduled Penalties After Default</option>
                 <option value='Add Fixed Penalty'>Add Fixed Penalty</option>
                 <option value='Add Interest'>Add Interest Fees</option>
               </CustomSelect>
+              {values.action_on_loan_default === 'Add Scheduled Penalties After Maturity' && (
+                <>
+                  <CustomSelect label='Apply Interest On' name='apply_late_repayment_penalty_on' required>
+                    <option value=''>------</option>
+                    <option value='Total Loan Balance'>Total Loan Balance In Arrears</option>
+                    <option value='Org Principal'>Original Principal</option>
+                    <option value='Principal Balance'>Principal Balance In Arrears</option>
+                    <option value='Interest'>Interest Balance In Arrears</option>
+                    <option value='Principal + Interest'>Principal Balance In Arrears + Interest Balance In Arrears</option>
+                    <option value='Principal + Penalty'>Principal Balance In Arrears + Penalty Balance In Arrears</option>
+                  </CustomSelect>
+                  <CustomCheckbox label='Auto Apply Scheduled Penalties When Backdating' name='auto_apply_scheduled_penalties_on_backdating'/>
+                  <CustomCheckbox label='Recalculate Scheduled Penalties' name='recalculate_scheduled_penalties'/>
+                  {values.schedule_penalties.map((schedule_penalty, index) => {
+                    return(
+                      <React.Fragment key={index}>
+                        <SchedulePenalty
+                          schedule_penalty={schedule_penalty}
+                          index={index}
+                          setFieldValue={setFieldValue}
+                          schedule_penalties={values.schedule_penalties}
+                        />
+                      </React.Fragment>
+                    )
+                  })}
+                  <AddSchedulePenalty schedule_penalties={values.schedule_penalties} setFieldValue={setFieldValue}/>
+                </>
+              )}
+              {values.action_on_loan_default === 'Add Scheduled Penalties After Default' && (
+                <>
+                  <CustomSelect label='Apply Interest On' name='apply_late_repayment_penalty_on' required>
+                    <option value=''>------</option>
+                    <option value='Total Loan Balance'>Total Loan Balance In Arrears</option>
+                    <option value='Principal Balance'>Principal Balance In Arrears</option>
+                    <option value='Interest'>Interest Balance In Arrears</option>
+                    <option value='Principal + Interest'>Principal Balance In Arrears + Interest Balance In Arrears</option>
+                    <option value='Principal + Penalty'>Principal Balance In Arrears + Penalty Balance In Arrears</option>
+                  </CustomSelect>
+                  {values.schedule_penalties.map((schedule_penalty, index) => {
+                    return(
+                      <React.Fragment key={index}>
+                        <SchedulePenalty
+                          schedule_penalty={schedule_penalty}
+                          index={index}
+                          setFieldValue={setFieldValue}
+                          schedule_penalties={values.schedule_penalties}
+                        />
+                      </React.Fragment>
+                    )
+                  })}
+                  <AddSchedulePenalty schedule_penalties={values.schedule_penalties} setFieldValue={setFieldValue}/>
+                </>
+              )}
               {values.action_on_loan_default === 'Add Penalty' &&
                 <>
                   <CustomSelect label='Apply Penalty On' name='apply_late_repayment_penalty_on' required>
@@ -247,7 +320,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                   <CustomCheckbox label='Is recurring' name='is_default_interest_recurring'/>
                   <CustomCheckbox label='Add On Last Installment Only' name='add_on_last_installment_only'/>
                 </>}
-              {values.action_on_loan_default === 'Add Fixed Penalty' &&
+              {values.action_on_loan_default === 'Add Fixed Penalty' && (
                 <>
                   <CustomInput label='Fixed Penalty Amount' name='fixed_penalty_amount' type='number' required/>
                   <CustomSelect label='Penalty Rate Interval' name='penalty_charged_per' required>
@@ -255,7 +328,16 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                     <option value='/Day'>Per Day</option>
                   </CustomSelect>
                 </>
-              }
+              )}
+              <CustomCheckbox label='Enable Auto Write-Off' name='allow_auto_write_off'/>
+              {values.allow_auto_write_off && (
+                <CustomInput
+                  label='Auto Write-Off Grace Period In Days'
+                  name='auto_write_off_grace_period'
+                  type='number'
+                  required
+                />
+              )}
               <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
               <div style={{display:'flex', justifyContent: 'flex-end'}}> 
               <SubmitButton isSubmitting={isSubmitting}/>

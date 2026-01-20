@@ -7,6 +7,7 @@ import {
   CustomCheckbox,
   ModalSubmit,
   CustomMultiSelect,
+  CustomSelect,
   NonFieldErrors
 } from '../../../../common';
 import { useCurrencies } from '../../../../contexts/CurrenciesContext';
@@ -65,8 +66,28 @@ const List = ({initControls}) => {
                     <td>{loanControls.request_otp_on_approval ? 'Yes' : 'No'}</td>
                   </tr>
                   <tr>
+                    <td>Request OTP On Loan Disbursement</td>
+                    <td>{loanControls.request_otp_on_db ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
+                    <td>Disburse Loan On Capture</td>
+                    <td>{loanControls.disburse_loan_on_capture ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
+                    <td>Select Branch On Loan Creation</td>
+                    <td>{loanControls.select_branch_on_loan_creation ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
+                    <td>Request Receipt Number On Disbursement</td>
+                    <td>{loanControls.request_receipt_number ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
                     <td>Auto Generate Loan ID</td>
                     <td>{loanControls.auto_generate_loan_id ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
+                    <td>Loan ID Format</td>
+                    <td>{loanControls.loan_id_format}</td>
                   </tr>
                   <tr>
                     <td>Allow Clients With Running Loans To Guarantee</td>
@@ -75,6 +96,14 @@ const List = ({initControls}) => {
                   <tr>
                     <td>Allow Groups With Running Loans To Guarantee</td>
                     <td>{loanControls.allow_groups_with_running_loans_to_guarantee ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
+                    <td>SMS Payment Notification — Always Enabled</td>
+                    <td>{loanControls.send_payment_sms_notification ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
+                    <td>Allow Overpayments</td>
+                    <td>{loanControls.allow_overpayments ? 'Yes' : 'No'}</td>
                   </tr>
                   <tr>
                     <td>Two Man Rules</td>
@@ -100,6 +129,14 @@ const List = ({initControls}) => {
                       })}
                     </td>
                   </tr>
+                  <tr>
+                    <td>Client Guarantor Required</td>
+                    <td>{loanControls.client_guarantor_required ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
+                    <td>Group Guarantor Required</td>
+                    <td>{loanControls.group_guarantor_required ? 'Yes' : 'No'}</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -118,9 +155,18 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
     max_num_of_group_loans: loanControls.max_num_of_group_loans || '',
     allow_group_member_as_guarantor: loanControls.allow_group_member_as_guarantor,
     request_otp_on_approval: loanControls.request_otp_on_approval,
+    request_otp_on_db: loanControls.request_otp_on_db,
+    disburse_loan_on_capture: loanControls.disburse_loan_on_capture,
+    select_branch_on_loan_creation: loanControls.select_branch_on_loan_creation,
+    request_receipt_number: loanControls.request_receipt_number,
     auto_generate_loan_id: loanControls.auto_generate_loan_id,
     allow_clients_with_running_loans_to_guarantee: loanControls.allow_clients_with_running_loans_to_guarantee,
     allow_groups_with_running_loans_to_guarantee: loanControls.allow_groups_with_running_loans_to_guarantee,
+    send_payment_sms_notification: loanControls.send_payment_sms_notification,
+    loan_id_format: loanControls.loan_id_format,
+    allow_overpayments: loanControls.allow_overpayments,
+    client_guarantor_required: loanControls.client_guarantor_required,
+    group_guarantor_required: loanControls.group_guarantor_required,
     two_man_rules: loanControls.two_man_rules.map(rule => ({label: rule, value: rule})),
     max_currencies_exposure: currencies.map(currency => {
       const exp = loanControls.max_currencies_exposure.find(exp => exp.currency_id == currency.id);
@@ -138,9 +184,18 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
     const data = {
       allow_group_member_as_guarantor: values.allow_group_member_as_guarantor,
       request_otp_on_approval: values.request_otp_on_approval,
+      request_otp_on_db: values.request_otp_on_db,
+      disburse_loan_on_capture: values.disburse_loan_on_capture,
+      select_branch_on_loan_creation: values.select_branch_on_loan_creation,
+      request_receipt_number: values.request_receipt_number,
       auto_generate_loan_id: values.auto_generate_loan_id,
       allow_clients_with_running_loans_to_guarantee: values.allow_clients_with_running_loans_to_guarantee,
       allow_groups_with_running_loans_to_guarantee: values.allow_groups_with_running_loans_to_guarantee,
+      loan_id_format: values.loan_id_format,
+      allow_overpayments: values.allow_overpayments,
+      send_payment_sms_notification: values.send_payment_sms_notification,
+      client_guarantor_required: values.client_guarantor_required,
+      group_guarantor_required: values.group_guarantor_required,
       two_man_rules: values.two_man_rules.map(rule => rule.value),
       ...(values.max_num_of_loans && {max_num_of_loans: values.max_num_of_loans}),
       ...(values.max_num_of_group_loans && {max_num_of_group_loans: values.max_num_of_group_loans}),
@@ -158,6 +213,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
       });
       setOpen(false);
     } catch (error) {
+      console.log(error);
       if (error.message === 'Network Error') {
         actions.setErrors({responseStatus: 'Network Error'});
       } else if (error.response.status >= 400 && error.response.status < 500) {
@@ -180,9 +236,21 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
                   <CustomInput label='Maximum Number Of Running Loans Allowed Per Group' name='max_num_of_group_loans' step='1' type='number'/>
                   <CustomCheckbox label='Allow Group Members To Guarantee Group Loan' name='allow_group_member_as_guarantor'/>
                   <CustomCheckbox label='Request OTP On Loan Approval' name='request_otp_on_approval'/>
+                  <CustomCheckbox label='Request OTP On Loan Disbursement' name='request_otp_on_db'/>
+                  <CustomCheckbox label='Disburse Loan On Capture' name='disburse_loan_on_capture'/>
+                  <CustomCheckbox label='Select Branch On Loan Creation' name='select_branch_on_loan_creation'/>
+                  <CustomCheckbox label='Request Receipt Number On Disbursement' name='request_receipt_number'/>
                   <CustomCheckbox label='Auto Generate Loan ID' name='auto_generate_loan_id'/>
+                  <CustomSelect label='Loan ID Format' name='loan_id_format' required>
+                    <option value='BRANCH-LOAN-COUNT'>BRANCH-LOAN-COUNT</option>
+                    <option value='CLIENT-LOAN-COUNT'>CLIENT-LOAN-COUNT</option>
+                  </CustomSelect>
                   <CustomCheckbox label='Allow Clients With Running Loans To Guarantee' name='allow_clients_with_running_loans_to_guarantee'/>
                   <CustomCheckbox label='Allow Groups With Running Loans To Guarantee' name='allow_groups_with_running_loans_to_guarantee'/>
+                  <CustomCheckbox label='SMS Payment Notification — Always Enabled' name='send_payment_sms_notification'/>
+                  <CustomCheckbox label='Allow Overpayments' name='allow_overpayments'/>
+                  <CustomCheckbox label='Client Guarantor Required' name='client_guarantor_required'/>
+                  <CustomCheckbox label='Group Guarantor Required' name='group_guarantor_required'/>
                   <CustomMultiSelect
                     label='Two Man Rules'
                     name='two_man_rules'

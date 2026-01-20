@@ -2,8 +2,9 @@ import React, { useState, useRef } from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import {
   NonFieldErrors,
-  ActionModal,
-  ActionModalDialog
+  Modal,
+  CustomDatePicker,
+  ModalSubmit
 } from '../../../common';
 import { Form, Formik } from 'formik';
 import axios from 'axios';
@@ -38,9 +39,8 @@ function Fees({fees, setLoan}) {
               <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
                 <th className='schedule__table'>Fee Date</th>
                 <th className='schedule__table'>Fee Name</th>
-                <th className='schedule__table'>Total Amount</th>
-                <th className='schedule__table'>Amount Due</th>
-                <th className='schedule__table'>Status</th>
+                <th className='schedule__table'>Amount</th>
+                <th className='schedule__table'>Receipt Number</th>
                 <th className='schedule__table'>Action</th>
               </tr>
             </thead>
@@ -50,12 +50,13 @@ function Fees({fees, setLoan}) {
                   <td className='schedule__table'>{fee.value_date}</td>
                   <td className='schedule__table'>{fee.fee_name}</td>
                   <td className='schedule__table'>{fee.amount}</td>
-                  <td className='schedule__table'>{fee.amount_due}</td>
-                  <td className='schedule__table'>{fee.status}</td>
+                  <td className='schedule__table'>{fee.receipt_number}</td>
                   <td className='schedule__table'>
-                    <span className='badge badge-danger' id={fee.id} onClick={showDeleteModal} style={{cursor: 'pointer'}}>
-                      Reverse
-                    </span>
+                    {fee.reversible && (
+                      <span className='badge badge-danger' id={fee.id} onClick={showDeleteModal} style={{cursor: 'pointer'}}>
+                        Reverse
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -68,11 +69,17 @@ function Fees({fees, setLoan}) {
 }
 
 function DeleteFee({setOpenModal, setLoan, feeId}) {
-  const onSubmit = async (_, actions) => {
+  const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.delete(`/loansapi/delete_fee/${feeId}/`, CONFIG);
-      setLoan(response.data);
+      const response = await axios.post(`/loansapi/delete_fee/${feeId}/`, values, CONFIG);
+      const updates = response.data;
+      setLoan(curr => ({
+        ...curr,
+        ...updates,
+        applied_fees: curr.applied_fees.filter(fee => fee.id !== updates.fee_id),
+        ...(updates.updated_payments ? {payments: updates.updated_payments} : curr.payments)
+      }));
       setOpenModal(false);
     } catch (error) {
       if (error.message === 'Network Error') {
@@ -86,17 +93,22 @@ function DeleteFee({setOpenModal, setLoan, feeId}) {
   }
 
   return (
-    <ActionModal>
-      <Formik initialValues={{}} onSubmit={onSubmit}>
-        {({isSubmitting, errors}) => (
+    <Modal open={true} setOpen={setOpenModal} title='Reverse Fee'>
+      <Formik initialValues={{value_date: ''}} onSubmit={onSubmit}>
+        {({isSubmitting, setFieldValue, errors}) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <ActionModalDialog isSubmitting={isSubmitting} act={'Reverse'} msg={'Are you sure you want to reverse this fee.'} setOpen={setOpenModal}/>
+            <div className='create_modal_container'>
+                <div>
+                  <CustomDatePicker label='Reversal Date' name='value_date' setFieldValue={setFieldValue} required/>
+                </div>
+                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpenModal}/>
+              </div>
             </NonFieldErrors>
           </Form>
         )}
       </Formik>
-    </ActionModal>
+    </Modal>
   )
 }
 

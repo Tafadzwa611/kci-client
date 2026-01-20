@@ -7,20 +7,30 @@ import {
   CustomDatePicker,
   CustomSelect,
   CustomCheckbox,
-  Fetcher
+  Fetcher,
+  CustomInput,
+  CustomMultiSelect
 } from '../../../common';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { scheduleStrategies } from './data';
 import { removeEmptyValues } from '../../../utils/utils';
 
-function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLoanData}) {
+const COOLDOWN_SECONDS = 300;
+
+function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLoanData, lcontrols}) {
+  const [isSending, setIsSending] = React.useState(false);
+  const [cooldownLeft, setCooldownLeft] = React.useState(0);
+  const intervalRef = React.useRef();
+
   const initialValues = {
     send_sms_notification: false,
     disbursement_date: '',
     interest_start_date: '',
     fund_account_id: '',
-    loan_officer_id: loan.client_officer_id || '',
+    receipt_number: '',
+    otp: '',
+    loan_officer_id: '',
     first_repayment_date: loan.first_payment_date,
     schedule_strategy: loan.default_schedule_strategy
   };
@@ -28,6 +38,7 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
+      data.fund_account_id = data.fund_account.value;
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.patch(url, data, CONFIG);
       const newLoan = response.data;
@@ -48,9 +59,47 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
     }
   }
 
+  const startCooldown = () => {
+    setCooldownLeft(COOLDOWN_SECONDS);
+
+    if (intervalRef.current) window.clearInterval(intervalRef.current);
+    intervalRef.current = window.setInterval(() => {
+      setCooldownLeft((prev) => {
+        if (prev <= 1) {
+          if (intervalRef.current) window.clearInterval(intervalRef.current);
+          intervalRef.current = null;
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  React.useEffect(() => {
+    return () => {
+      if (intervalRef.current) window.clearInterval(intervalRef.current);
+    };
+  }, []);
+
+  const disabled = isSending || cooldownLeft > 0;
+
+  const handleRequestOtp = async () => {
+    if (disabled) return;
+
+    setIsSending(true);
+    try {
+      await axios.get(`/loansapi/request_approval_otp/${loan.id}/`);
+      startCooldown();
+    } catch (err) {
+      console.error("Failed to request OTP:", err);
+    } finally {
+      setIsSending(false);
+    }
+  };
+
   return (
     <Modal open={true} setOpen={setOpen} title={'Disburse Loan'}>
-      <Fetcher urls={['/acc-api/cash-and-cash-equivalents/', `/usersapi/staff/?loan_officers_only=1`]}>
+      <Fetcher urls={['/acc-api/cash-accounts-list/', `/usersapi/staff/?loan_officers_only=1`]}>
         {({data}) => (
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ errors, isSubmitting, setFieldValue }) => (
@@ -84,14 +133,48 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
                           allowKeyDown
                         />
                       )}
-                      <CustomSelect label='Fund Account' name='fund_account_id' required>
-                        <option value=''>------</option>
-                        {data[0].filter(acc => acc.currency_id == loan.currency_id).map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_name}</option>)}
-                      </CustomSelect>
+                      <CustomMultiSelect
+                        label='Fund Account'
+                        name='fund_account'
+                        isMulti={false}
+                        setFieldValue={setFieldValue}
+                        options={data[0].accounts.filter(account => !account.suspended && account.currency_id == loan.currency_id).map(account => (
+                          {label: `${account.label} - ${account.branch}`, value: account.value}
+                        ))}
+                        required
+                      />
                       <CustomSelect label='Loan Officer & Branch' name='loan_officer_id'>
                         <option value=''>------</option>
                         {data[1].map(user => <option key={user.id} value={user.id}>{`${user.first_name} ${user.last_name} - ${user.branch__name}`}</option>)}
                       </CustomSelect>
+                      <div style={{marginTop:'1rem'}}>
+                        Client/Group Officer: {loan.client_officer}
+                      </div>
+                      {lcontrols.request_receipt_number ? (
+                        <CustomInput
+                          label='Receipt Number'
+                          name='receipt_number'
+                          type='text'
+                          required
+                        />
+                      ) : null}
+                      {lcontrols.request_otp_on_db ? (
+                        <>
+                          <CustomInput
+                            label='OTP'
+                            name='otp'
+                            type='text'
+                            required
+                          />
+                          <button className='btn btn-info' onClick={handleRequestOtp} disabled={disabled}>
+                            {isSending
+                              ? "Sending..."
+                              : cooldownLeft > 0
+                                ? `Send OTP (${cooldownLeft}s)`
+                                : "Send OTP"}
+                          </button>
+                        </>
+                      ) : null}
                       <CustomCheckbox label='Notify client/group via SMS' name='send_sms_notification'/>
                     </div>
                     <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>

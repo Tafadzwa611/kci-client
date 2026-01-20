@@ -8,6 +8,7 @@ import {
     NonFieldErrors,
     CustomDatePickerFilter,
     CustomSelectFilter,
+    MultiSelectFilter,
     CustomMultiSelectFilter,
     SubmitButtonFilter
 } from '../../../common';
@@ -28,9 +29,15 @@ const Filter = ({setReport}) => {
         report_date: ''
     };
 
+    const allBranchIds = branches.map(br => br.id);
+
     const onSubmit = async (values, actions) => {
         try {
             const params = getParams(values);
+            if (values.branch_ids.includes('*')) {
+                params.delete('branch_ids');
+                allBranchIds.forEach(id => params.append('branch_ids', id));
+            }
             const response = await axios.get('/reportsapi/maturity_profile/', {params: params});
             setReport(response.data);
         } catch (error) {
@@ -52,18 +59,16 @@ const Filter = ({setReport}) => {
                         <Form>
                             <NonFieldErrors errors={errors}>
                                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                                    <div className='row-payments-container' style={{width:'45%'}}>
+                                    <div className='row-payments-container' style={{width:'32.5%'}}>
                                         <CustomDatePickerFilter label='Report Date' name='report_date' setFieldValue={setFieldValue} required/>
                                     </div>
-                                    <div className='row-payments-container' style={{width:'45%'}}>
+                                    <div className='row-payments-container' style={{width:'32.5%'}}>
                                         <CustomSelectFilter label='Currency' name='currency_id' required>
                                             <option value=''>------</option>
                                             {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
                                         </CustomSelectFilter>
                                     </div>
-                                </div>
-                                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                                    <div style={{width:'45%'}}>
+                                    <div className='row-payments-container' style={{width:'32.5%'}}>
                                         <CustomMultiSelectFilter
                                             label='Status'
                                             name='status_list'
@@ -72,12 +77,15 @@ const Filter = ({setReport}) => {
                                             required
                                         />
                                     </div>
-                                    <div style={{width:'45%'}}>
-                                        <CustomMultiSelectFilter
+                                </div>
+                                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
+                                    <div style={{width:'90%'}}>
+                                        <MultiSelectFilter
                                             label='Branches'
                                             name='branch_ids'
                                             options={branches.map(br => ({label: br.name, value:br.id}))}
                                             setFieldValue={setFieldValue}
+                                            required
                                         />
                                     </div>
                                     <SubmitButtonFilter isSubmitting={isSubmitting}/>

@@ -4,7 +4,7 @@ import {
   NonFieldErrors,
   CustomDatePickerFilter,
   CustomSelectFilter,
-  CustomMultiSelectFilter,
+  MultiSelectFilter,
   SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
@@ -17,11 +17,17 @@ const Filter = ({setReport, setParams, units}) => {
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
+  const allBranchIds = branches.map(br => br.id);
+
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
       data.base_entity = 'INSTALLMENTS_REPORT';
       const params = getParams(data);
+      if (values.branch_ids.includes('*')) {
+        params.delete('branch_ids');
+        allBranchIds.forEach(id => params.append('branch_ids', id));
+      }
       setParams(params);
       if (values.file_format === 'html') {
         const response = await axios.get('/reportsapi/expected_installments_report/', {params: params});
@@ -63,13 +69,13 @@ const Filter = ({setReport, setParams, units}) => {
                   <div className='row-payments-container' style={{width:'24%'}}>
                     <CustomSelectFilter label='Unit' name='unit_id'>
                       <option value=''>------</option>
-                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name} {ut.branch_name} BRANCH</option>)}
                     </CustomSelectFilter>
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
                   <div style={{width:'80%'}}>
-                    <CustomMultiSelectFilter
+                    <MultiSelectFilter
                       label='Branches'
                       name='branch_ids'
                       options={branches.map(br => ({label: br.name, value:br.id}))}
@@ -82,6 +88,10 @@ const Filter = ({setReport, setParams, units}) => {
                       <option value='html'>Screen (HTML)</option>
                       <option value='xlsx'>Excel</option>
                       <option value='csv'>CSV</option>
+                      <option value='pdfa4'>PDF A4</option>
+                      <option value='pdfa3'>PDF A3</option>
+                      <option value='pdfa2'>PDF A2</option>
+                      <option value='pdfa1'>PDF A1</option>
                     </CustomSelectFilter>
                   </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>

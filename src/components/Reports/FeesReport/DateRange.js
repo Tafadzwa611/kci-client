@@ -4,7 +4,7 @@ import {
   NonFieldErrors,
   CustomDatePickerFilter,
   CustomSelectFilter,
-  CustomMultiSelectFilter,
+  MultiSelectFilter,
   SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
@@ -13,13 +13,27 @@ import axios from 'axios';
 import { getParams } from '../../../utils/utils';
 
 const DateRange = ({setReport, setParams}) => {
-  const initialValues = {branch_ids: [], page_num: 1, min_date: '', max_date: '', order: '-id', file_format: 'html'};
+  const initialValues = {
+    branch_ids: [],
+    page_num: 1,
+    min_date: '',
+    max_date: '',
+    order: '-id',
+    file_format: 'html',
+    fee_type: 'Deducted'
+  };
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
+
+  const allBranchIds = branches.map(br => br.id);
 
   const onSubmit = async (values, actions) => {
     try {
       const params = getParams(values);
+      if (values.branch_ids.includes('*')) {
+        params.delete('branch_ids');
+        allBranchIds.forEach(id => params.append('branch_ids', id));
+      }
       setParams(params);
       if (values.file_format === 'html') {
         const response = await axios.get('/reportsapi/loans-fees-report/', {params: params});
@@ -66,20 +80,34 @@ const DateRange = ({setReport, setParams}) => {
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'75%'}}>
-                    <CustomMultiSelectFilter
+                  <div style={{width:'60%'}}>
+                    <MultiSelectFilter
                       label='Branches'
                       name='branch_ids'
-                      options={branches.map(br => ({label: br.name, value:br.id}))}
+                      options={branches.map(br => ({label: br.name, value: br.id}))}
                       setFieldValue={setFieldValue}
-                      required
                     />
+                  </div>
+                  <div className='row-payments-container' style={{width:'15%'}}>
+                    <CustomSelectFilter label='Fee Type' name='fee_type'>
+                      <option value=''>All</option>
+                      <option value='Arbitrary'>Arbitrary</option>
+                      <option value='Deducted'>Deducted</option>
+                      <option value='Capitalized'>Capitalized</option>
+                      <option value='Upfront Disbursement'>Upfront Disbursement</option>
+                      <option value='Payment due'>Payment due</option>
+                      <option value='Manual fees'>Manual fees</option>
+                    </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'15%'}}>
                     <CustomSelectFilter label='Mode' name='file_format' required>
                       <option value='html'>Screen (HTML)</option>
                       <option value='xlsx'>Excel</option>
                       <option value='csv'>CSV</option>
+                      <option value='pdfa4'>PDF A4</option>
+                      <option value='pdfa3'>PDF A3</option>
+                      <option value='pdfa2'>PDF A2</option>
+                      <option value='pdfa1'>PDF A1</option>
                     </CustomSelectFilter>
                   </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>

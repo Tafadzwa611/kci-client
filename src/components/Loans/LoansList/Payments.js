@@ -3,7 +3,6 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import DeletePayment from './DeletePayment';
 import EditPayment from './EditPayment';
 import Refund from './Refund';
-import { Link } from 'react-router-dom';
 
 const MODAL_STATES = {
   reverse: 'reverse',
@@ -14,10 +13,8 @@ const MODAL_STATES = {
 
 function Payments({
   payments,
-  clientName,
   setLoan,
   currencyName,
-  accountId,
   currencyId
 }) {
   const {reverse, edit, refund, none } = MODAL_STATES;
@@ -64,6 +61,7 @@ function Payments({
                       <th className='schedule__table'>Collection_Date</th>
                     </tr>:
                     <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
+                      <th className='schedule__table'>Payment_ID</th>
                       <th className='schedule__table'>Date_Recorded</th>
                       <th className='schedule__table'>Collection_Date</th>
                       <th className='schedule__table'>Collected_by</th>
@@ -95,6 +93,7 @@ function Payments({
                           <td className='schedule__table'>{payment.cdate_created}</td>
                         </>:
                         <>
+                          <td className='schedule__table'>{payment.id}</td>
                           <td className='schedule__table'>
                             <span onClick={handleClick} id={payment.id} style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>
                               {payment.date_recorded}
@@ -124,20 +123,16 @@ function Payments({
                   <div style={{display:'flex', columnGap:'3px'}}>
                     <button className='btn btn-olive' id={selectedPayment.id} data-name={reverse} onClick={showModal}>Reverse</button>
                     <button className='btn btn-olive' id={selectedPayment.id} data-name={edit} onClick={showModal}>Edit</button>
-                    <button className='btn btn-olive'>
-                      <Link
-                        to={{pathname: `/create_file?type=payment&receiptNumber=${selectedPayment.receipt_number}&collectedBy=${selectedPayment.user_name}&paymentDate=${selectedPayment.cdate_created}&dateRecorded=${selectedPayment.date_recorded}&amountPaid=${selectedPayment.amount_paid}&currencyName=${currencyName}&clientName=${clientName}&accountId=${accountId}&branchName=${selectedPayment.branch_name}`}}
-                        target='_blank'
-                      >
-                        Print
-                      </Link>
-                    </button>
                     <button className='btn btn-olive' id={selectedPayment.id} data-name={refund} onClick={showModal}>Refund</button>
+                    <a className='btn btn-olive' href={`/loans/payment_receipt/${selectedPayment.id}/`} target='_blank' rel="noreferrer">
+                      Print
+                    </a>
                   </div>
                 </div>
                 <div style={{display:'flex', width:'100%', justifyContent:'space-between'}}>
                   <div style={{width:"32%"}}>
                     <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
+                      <li>Payment ID: {selectedPayment.id}</li>
                       <li>Date Recorded: {selectedPayment.date_recorded}</li>
                       <li>Collection Date: {selectedPayment.cdate_created}</li>
                       <li>Collected by: {selectedPayment.user_name}</li>

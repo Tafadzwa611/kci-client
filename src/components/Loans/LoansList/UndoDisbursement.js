@@ -1,5 +1,9 @@
 import React from 'react';
-import { Modal, ModalSubmit, NonFieldErrors, CustomDatePicker } from '../../../common';
+import {
+  NonFieldErrors,
+  ActionModal,
+  ActionModalDialog
+} from '../../../common';
 import { Form, Formik } from 'formik';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -28,27 +32,22 @@ function UndoDisbursement({url, setOpen, setLoanDetails, updateLoanList, setLoan
   }
 
   return (
-    <Modal open={true} setOpen={setOpen} title={'Undo Disbursement'}>
-      <Formik initialValues={{value_date: ''}} onSubmit={onSubmit}>
-        {({ errors, isSubmitting, setFieldValue }) => (
+    <ActionModal open={true} setOpen={setOpen} title={'Undo Disbursement'}>
+      <Formik initialValues={{}} onSubmit={onSubmit}>
+        {({ errors, isSubmitting }) => (
           <Form>
             <NonFieldErrors errors={errors}>
-              <div className='create_modal_container'>
-                <div>
-                  <CustomDatePicker
-                    label='Reversal Date'
-                    name='value_date'
-                    setFieldValue={setFieldValue}
-                    required
-                  />
-                </div>
-                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
-              </div>
+              <ActionModalDialog
+                isSubmitting={isSubmitting}
+                msg='Are you sure you want to undo the loan disbursement?'
+                setOpen={setOpen}
+                act='Undo'
+              />
             </NonFieldErrors>
           </Form>
         )}
       </Formik>
-    </Modal>
+    </ActionModal>
   )
 }
 

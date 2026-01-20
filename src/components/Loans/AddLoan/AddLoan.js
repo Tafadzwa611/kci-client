@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SolidarityGroupForm from './SolidarityGroupForm';
-import { NonFieldErrors, CustomSelect } from '../../../common';
+import { CustomMultiSelect } from '../../../common';
 import { Form, Formik } from 'formik';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 import ClientFormFields from './ClientFormFields';
 import { removeEmptyValues, isNumeric } from '../../../utils/utils';
 
-function AddLoan({products, lcontrols, customForms, units, clientControls}) {
+function AddLoan({products, lcontrols, customForms, units, clientControls, cashAccounts}) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const application_id = searchParams.get('application_id');
@@ -16,6 +16,9 @@ function AddLoan({products, lcontrols, customForms, units, clientControls}) {
   const client_id = searchParams.get('client_id') || '';
   const client_name = searchParams.get('client_name') || '';
   let princ = searchParams.get('principal') || '';
+  if (products.length > 1) {
+    products.sort((a, b) => a.loan_product_id.localeCompare(b.loan_product_id));
+  }
   products = products.filter(prod => prod.is_active);
   const [product, setProduct] = useState(null);
   const [clientId, setClientId] = useState('');
@@ -35,7 +38,15 @@ function AddLoan({products, lcontrols, customForms, units, clientControls}) {
     }
   }, [princ, loan_product_id, client_id, client_name]);
 
+  const initialValuesCustomForms = {};
+  customForms.forEach(customForm => {
+    customForm.fields.forEach(field => {
+      initialValuesCustomForms[`custom_${field.id}`] = '';
+    });
+  });
+
   const initialValues = {
+    ...initialValuesCustomForms,
     loan_product_id: loan_product_id,
     principal: principal,
     interest_rate: '',
@@ -52,12 +63,12 @@ function AddLoan({products, lcontrols, customForms, units, clientControls}) {
     client_name: clientName,
     group_id: '',
     unit_id: '',
+    receipt_number: '',
     ...(application_id && {application_id}),
     ...(!lcontrols.auto_generate_loan_id && {loan_id: ''})
   };
 
-  const onChange = (evt, setFieldValue, prevProductId) => {
-    const {value} = evt.target;
+  const onChange = (value, setFieldValue, prevProductId) => {
     const product = products.find(prod => prod.id == value) || null;
     setProduct(product);
     setFieldValue('loan_product_id', value);
@@ -80,6 +91,12 @@ function AddLoan({products, lcontrols, customForms, units, clientControls}) {
     const custom_data = processValues(values, customForms, formIds);
     try {
       const data = removeEmptyValues(values);
+      if (data.fund_account) {
+        data.fund_account_id = data.fund_account.value;
+      }
+      if (data.branch) {
+        data.branch_id = data.branch.value;
+      }
       const url = product.client_type === 'Groups (solidarity)' ? '/loansapi/add_soloan_api/' : '/loansapi/add_loan_api/';
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(url, {...data, fees: values.fees, custom_data_list: custom_data}, CONFIG);
@@ -100,52 +117,62 @@ function AddLoan({products, lcontrols, customForms, units, clientControls}) {
     <Formik key={JSON.stringify(initialValues)} initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors, values}) => (
         <Form>
-          <NonFieldErrors errors={errors}>
-            <div className='divider divider-info'>
-              <span>Loan Product</span>
+          <div className='divider divider-info'>
+            <span>Loan Product</span>
+          </div>
+          <CustomMultiSelect
+            label='Loan Product'
+            name='product'
+            isMulti={false}
+            setFieldValue={(fieldName, selectedOpts) => {
+              onChange(selectedOpts.value, setFieldValue, values.loan_product_id);
+              setFieldValue(fieldName, selectedOpts);
+            }}
+            options={products.map(product => ({label: `${product.loan_product_id} ${product.name}`, value: product.id}))}
+            required
+          />
+          {product ? {
+            'Groups': <ClientFormFields
+              product={product}
+              lcontrols={lcontrols}
+              isSubmitting={isSubmitting}
+              setFieldValue={setFieldValue}
+              values={values}
+              formIds={formIds}
+              customForms={customForms}
+              units={units}
+              clientControls={clientControls}
+              cashAccounts={cashAccounts}
+            />,
+            'Clients': <ClientFormFields
+              product={product}
+              lcontrols={lcontrols}
+              clientName={clientName}
+              isSubmitting={isSubmitting}
+              setFieldValue={setFieldValue}
+              values={values}
+              formIds={formIds}
+              customForms={customForms}
+              units={units}
+              clientControls={clientControls}
+              cashAccounts={cashAccounts}
+            />,
+            'Groups (solidarity)': <SolidarityGroupForm
+              product={product}
+              isSubmitting={isSubmitting}
+              setFieldValue={setFieldValue}
+              values={values}
+              units={units}
+              clientControls={clientControls}
+            />
+          }[product.client_type] : null}
+          {Object.keys(errors).length > 0 && (
+            <div className='row custom-background' style={{marginTop: '15px'}}>
+              <div className='col-9'>
+                <div style={{fontSize: 12, color: 'red'}}>{JSON.stringify(errors)}</div>
+              </div>
             </div>
-            <CustomSelect label='Loan Product' name='loan_product_id' value={product ? product.id : ''} onChange={(evt) => onChange(evt, setFieldValue, values.loan_product_id)} required>
-              <option value=''>------</option>
-              {products.map(product => (
-                <option key={product.id} value={product.id}>
-                  ({product.currency})-{product.name}-{product.client_type}
-                </option>
-              ))}
-            </CustomSelect>
-            {product ? {
-              'Groups': <ClientFormFields
-                product={product}
-                lcontrols={lcontrols}
-                isSubmitting={isSubmitting}
-                setFieldValue={setFieldValue}
-                values={values}
-                formIds={formIds}
-                customForms={customForms}
-                units={units}
-                clientControls={clientControls}
-              />,
-              'Clients': <ClientFormFields
-                product={product}
-                lcontrols={lcontrols}
-                clientName={clientName}
-                isSubmitting={isSubmitting}
-                setFieldValue={setFieldValue}
-                values={values}
-                formIds={formIds}
-                customForms={customForms}
-                units={units}
-                clientControls={clientControls}
-              />,
-              'Groups (solidarity)': <SolidarityGroupForm
-                product={product}
-                isSubmitting={isSubmitting}
-                setFieldValue={setFieldValue}
-                values={values}
-                units={units}
-                clientControls={clientControls}
-              />
-            }[product.client_type] : null}
-          </NonFieldErrors>
+          )}
         </Form>
       )}
     </Formik>

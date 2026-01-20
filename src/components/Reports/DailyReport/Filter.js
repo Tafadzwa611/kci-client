@@ -4,7 +4,7 @@ import {
   NonFieldErrors,
   CustomDatePickerFilter,
   CustomSelectFilter,
-  CustomMultiSelectFilter,
+  MultiSelectFilter,
   SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
@@ -17,9 +17,15 @@ const Filter = ({setReport, units}) => {
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
+  const allBranchIds = branches.map(br => br.id);
+
   const onSubmit = async (values, actions) => {
     try {
       const params = getParams(values);
+      if (values.branch_ids.includes('*')) {
+        params.delete('branch_ids');
+        allBranchIds.forEach(id => params.append('branch_ids', id));
+      }
       const response = await axios.get('/reportsapi/daily-report/', {params: params});
       setReport(response.data);
     } catch (error) {
@@ -53,19 +59,26 @@ const Filter = ({setReport, units}) => {
                   <div className='row-payments-container' style={{width:'32%'}}>
                     <CustomSelectFilter label='Unit' name='unit_id'>
                       <option value=''>------</option>
-                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name} {ut.branch_name} BRANCH</option>)}
                     </CustomSelectFilter>
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
                   <div style={{width:'90%'}}>
-                    <CustomMultiSelectFilter
+                    <MultiSelectFilter
                       label='Branches'
                       name='branch_ids'
                       options={branches.map(br => ({label: br.name, value:br.id}))}
                       setFieldValue={setFieldValue}
                       required
                     />
+                    {/* <CustomMultiSelectFilter
+                      label='Branches'
+                      name='branch_ids'
+                      options={branches.map(br => ({label: br.name, value:br.id}))}
+                      setFieldValue={setFieldValue}
+                      required
+                    /> */}
                   </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>

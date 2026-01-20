@@ -8,6 +8,8 @@ import ManageClients from './ManageClients/ManageClients';
 import ManageFields from './ManageFields/ManageFields';
 import ManageComms from './ManageComms/ManageComms';
 import ManageCurrencies from './ManageCurrencies/ManageCurrencies';
+import ManageDeposits from './ManageDeposits/ManageDeposits';
+import ExpensesSettings from './ManageExpenses/ExpensesSettings';
 import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
 
 const AdminPanel = () => {
@@ -23,15 +25,16 @@ const AdminPanel = () => {
         <Route path='otherincome' element={<OtherIncomeTypes />} />
         <Route path='expensetypes' element={<ExpenseTypes />} />
         <Route path='manageloans' element={<ManageLoans />} />
+        <Route path='deposits/*' element={<ManageDeposits />} />
         <Route path='managebranches/*' element={<ManageBranches />} />
         <Route path='manageclients' element={<ManageClients />} />
         <Route path='managefields' element={<ManageFields />} />
         <Route path='managecomms' element={<ManageComms />} />
+        <Route path='manageexps' element={<ExpensesSettings />} />
       </Route>
     </Routes>
   )
 }
-
 
 function Layout() {
   const location = useLocation();
@@ -71,6 +74,13 @@ function Layout() {
               Manage Loans
             </Link>
             <Link 
+              to='/users/admin/deposits'
+              id='deposits'
+              className={location.pathname === '/users/admin/deposits' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+            >
+              Manage Deposits
+            </Link>
+            <Link 
               to='/users/admin/managebranches'
               id='managebranches' 
               className={location.pathname.includes('/users/admin/managebranches') ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
@@ -90,6 +100,13 @@ function Layout() {
               className={location.pathname === '/users/admin/managecomms' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
             >
               Manage Comms
+            </Link>
+            <Link 
+              to='/users/admin/manageexps'
+              id='manageexps' 
+              className={location.pathname === '/users/admin/manageexps' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+            >
+              Manage Expenses
             </Link>
           </div>
           <div className='tab-content font-12' style={{marginTop:'3rem'}}>

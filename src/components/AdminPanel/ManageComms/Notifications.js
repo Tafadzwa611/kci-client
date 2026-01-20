@@ -22,7 +22,11 @@ function Notifications() {
 }
 
 const TARGETS_MAP = {user: 'Users', client: 'Clients'};
-const NOTIFICATIONS_MAP = {arrears: 'Loan Default', reminder: 'Installment Reminder'};
+const NOTIFICATIONS_MAP = {
+  arrears: 'Loan Default',
+  reminder: 'Installment Reminder',
+  birthday: 'Birthday Reminder'
+};
 
 const Table = ({initTasks}) => {
   const [tasks, setTasks] = useState(initTasks);
@@ -35,11 +39,11 @@ const Table = ({initTasks}) => {
       setTasks(curr => curr.filter((task) => task.id != evt.target.id))
     } catch (error) {
       if (error.message === 'Network Error') {
-        actions.setErrors({responseStatus: 'Network Error'});
+        console.log({responseStatus: 'Network Error'});
       } else if (error.response.status >= 400 && error.response.status < 500) {
-        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+        console.log({responseStatus: error.response.status, ...error.response.data});
       } else {
-        actions.setErrors({responseStatus: error.response.status});
+        console.log({responseStatus: error.response.status});
       }
     }
   }
@@ -126,6 +130,7 @@ const CreatePeriodicTask = ({setTasks, setOpen}) => {
                     <option value=''>------</option>
                     <option value='arrears'>Loan Default</option>
                     <option value='reminder'>Installment Reminder</option>
+                    <option value='birthday'>Birthday Reminder</option>
                   </CustomSelect>
                   {values.notification === 'reminder' ? <CustomInput label='Days From Installment' type='number' min='1' step='1' name='num_of_days_from_installment' required/> : null}
                   <CustomTimePicker setFieldValue={setFieldValue} label='Time' name='schedule_time' required/>

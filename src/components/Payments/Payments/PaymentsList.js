@@ -24,7 +24,9 @@ function Table({data}) {
             <table className='table' id='payments'>
               <thead>
                 <tr className='journal-details header' style={{position:'sticky', top:'0'}}>
-                  <th style={{textAlign:'start'}}>Loan #</th>
+                  <th style={{textAlign:'start'}}>Loan_#</th>
+                  <th style={{textAlign:'start'}}>Payment_ID</th>
+                  <th style={{textAlign:'start'}}>Receipt_#</th>
                   <th style={{textAlign:'start'}}>Collection_Date</th>
                   <th style={{textAlign:'start'}}>Collected_By</th>
                   <th style={{textAlign:'start'}}>Branch</th>
@@ -39,6 +41,8 @@ function Table({data}) {
                   return (
                     <tr key={payment.id}>
                       <td style={{verticalAlign:'middle'}}>{payment.loan_number}</td>
+                      <td style={{verticalAlign:'middle'}}>{payment.id}</td>
+                      <td style={{verticalAlign:'middle'}}>{payment.receipt_number}</td>
                       <td style={{verticalAlign:'middle'}}>{payment.db_date_created}</td>
                       <td style={{verticalAlign:'middle'}}>{payment.collected_by_username}</td>
                       <td style={{verticalAlign:'middle'}}>{payment.branch_name}</td>

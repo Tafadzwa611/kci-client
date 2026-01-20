@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import EntityForm from './CreateDataExport/EntityForm';
 import DataExportQueue from './DataExportQueue/DataExportQueue';
 import DataExport from './DataExportQueue/DataExport';
+import EditDataExport from './EditDataExport/EditDataExport';
 import { Fetcher } from '../../common';
 import { Routes, Route, Outlet, Link, useLocation, useParams } from 'react-router-dom';
 
@@ -27,6 +28,7 @@ const ViewDataExport = () => {
             {({data}) => <EntityForm fields={data[0]} />}
           </Fetcher>}
         />
+        <Route path='editdataexport/:dataexportId' element={<EditDataExport/>}/>
         <Route path='dataexport/:dataexportId' element={<DataExportElement/>}/>
       </Route>
     </Routes>

@@ -6,9 +6,10 @@ import {
   NonFieldErrors, 
   CustomInput, 
   SubmitButton,
-  CustomMultiSelect
+  CustomMultiSelect,
+  CustomSortableSelect
 } from '../../../common';
-import { COLUMNS } from './CollectionTable';
+import { COLUMNS, SWAPPED_COLUMNS } from './CollectionTable';
 import Cookies from 'js-cookie';
 
 const EditTemplate = ({data}) => {
@@ -34,7 +35,7 @@ const EditTemplate = ({data}) => {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.put(
         `/usersapi/edit_report_template/${templateId}/`,
-        {...values, columns: values.columns.map(column => column.value)},
+        {...values, columns: values.order.map(column => SWAPPED_COLUMNS[column])},
         CONFIG
       );
       navigate({pathname: '/loans/viewloans/collection_sheet/templates'});
@@ -56,7 +57,8 @@ const EditTemplate = ({data}) => {
 
   const initialValues = {
     report_name: template.report_name,
-    columns: template.columns.map(column => ({label: COLUMNS[column], value: column}))
+    columns: template.columns.map(column => ({label: COLUMNS[column], value: column})),
+    order: template.columns.map(column => COLUMNS[column])
   };
 
   return (
@@ -72,8 +74,24 @@ const EditTemplate = ({data}) => {
               label='Columns'
               name='columns'
               initVals={values.columns}
-              setFieldValue={setFieldValue}
+              setFieldValue={(name, columns) => {
+                setFieldValue(name, columns);
+                let newOrder = values.order;
+                columns.forEach(column => {
+                  if (!newOrder.includes(column.label)) {
+                    newOrder.push(column.label);
+                  }
+                });
+                newOrder = newOrder.filter(item => columns.find(column => column.label === item));
+                setFieldValue('order', newOrder);
+              }}
               options={columns.map(column => ({label: COLUMNS[column], value: column}))}
+            />
+            <CustomSortableSelect
+              label='Column Order'
+              setFieldValue={(name, items) => setFieldValue(name, items)}
+              name='order'
+              options={values.order}
             />
             <div style={{paddingTop: '1rem'}}></div>
             <div style={{display:'flex', justifyContent: 'flex-end'}}>

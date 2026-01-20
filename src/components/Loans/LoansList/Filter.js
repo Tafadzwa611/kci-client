@@ -8,6 +8,7 @@ import {
   CustomDatePickerFilter,
   CustomSelectFilter,
   CustomMultiSelectFilter,
+  MultiSelectFilter,
   SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
@@ -54,10 +55,16 @@ const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDeta
     setFieldValue('client_type', value);
   }
 
+  const allBranchIds = branches.map(br => br.id);
+
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
       const params = getParams(data);
+      if (values.branch_ids.includes('*')) {
+        params.delete('branch_ids');
+        allBranchIds.forEach(id => params.append('branch_ids', id));
+      }
       setParams(params);
       const response = await axios.get('/loansapi/loan_list/', {params: params});
       setLoanData(response.data);
@@ -106,7 +113,7 @@ const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDeta
                   </div>
                 </div>
 
-                <div style={{display:'flex', justifyContent:'space-between'}}>
+                <div style={{display:'flex', justifyContent:'space-between', marginTop:'1rem'}}>
                   <div style={{display:'flex', justifyContent:'space-between', width:'32%'}}>
                     <div style={{width: '49%'}}>
                       <CustomDatePickerFilter label='Min Approval Date' name='min_approval_date' setFieldValue={setFieldValue}/>
@@ -126,6 +133,13 @@ const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDeta
                   <div style={{display:'flex', justifyContent:'space-between', width:'32%'}}>
                     <div style={{width: '49%'}}>
                       <CustomInputFilter label='Loan Number' name='loan_num' type='text'/>
+                    </div>
+                    <div style={{width:'49%'}}>
+                      <CustomSelectFilter label='Gender' name='gender'>
+                        <option value=''>------</option>
+                        <option value='MALE'>Male</option>
+                        <option value='FEMALE'>Female</option>
+                      </CustomSelectFilter>
                     </div>
                   </div>
                 </div>
@@ -194,7 +208,7 @@ const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDeta
                     </CustomSelectFilter>
                   </div>
                   <div style={{width:'73%'}}>
-                    <CustomMultiSelectFilter
+                    <MultiSelectFilter
                       label='Branches'
                       name='branch_ids'
                       options={branches.map(br => ({label: br.name, value:br.id}))}
@@ -203,20 +217,13 @@ const Filter = ({products, units, setLoanData, setLoanId, setParams, setLoanDeta
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'60%'}}>
+                  <div style={{width:'70%'}}>
                     <CustomMultiSelectFilter
                       label='Status'
                       name='status'
                       options={statusValues.map(val => ({label: val, value: val}))}
                       setFieldValue={setFieldValue}
                     />
-                  </div>
-                  <div className='row-payments-container' style={{width:'10%'}}>
-                    <CustomSelectFilter label='Gender' name='gender'>
-                      <option value=''>------</option>
-                      <option value='MALE'>Male</option>
-                      <option value='FEMALE'>Female</option>
-                    </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'10%'}}>
                     <CustomSelectFilter label='Sector' name='sector'>

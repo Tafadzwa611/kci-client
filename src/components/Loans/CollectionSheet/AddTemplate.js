@@ -3,12 +3,13 @@ import Cookies from 'js-cookie';
 import { Form, Formik } from 'formik';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { COLUMNS } from './CollectionTable';
+import { COLUMNS, SWAPPED_COLUMNS } from './CollectionTable';
 import { 
   NonFieldErrors, 
   CustomInput, 
   SubmitButton,
-  CustomMultiSelect
+  CustomMultiSelect,
+  CustomSortableSelect
 } from '../../../common';
 
 const AddTemplate = ({data}) => {
@@ -20,7 +21,7 @@ const AddTemplate = ({data}) => {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.post(
         '/usersapi/add_report_template/',
-        {...values, columns: values.columns.map(column => column.value)},
+        {...values, columns: values.order.map(column => SWAPPED_COLUMNS[column])},
         CONFIG
       );
       navigate({pathname: '/loans/viewloans/collection_sheet/templates'});
@@ -37,7 +38,7 @@ const AddTemplate = ({data}) => {
   }
 
   return (
-    <Formik initialValues={{report_type: 'COLLECTION_SHEET', report_name: '', columns: []}} onSubmit={onSubmit}>
+    <Formik initialValues={{report_type: 'COLLECTION_SHEET', report_name: '', columns: [], order: []}} onSubmit={onSubmit}>
       {({ values, isSubmitting, setFieldValue, errors }) => (
         <Form>
           <NonFieldErrors errors={errors}>
@@ -49,10 +50,29 @@ const AddTemplate = ({data}) => {
               label='Columns'
               name='columns'
               initVals={values.columns}
-              setFieldValue={setFieldValue}
+              setFieldValue={(name, columns) => {
+                setFieldValue(name, columns);
+                let newOrder = values.order;
+                columns.forEach(column => {
+                  if (!newOrder.includes(column.label)) {
+                    newOrder.push(column.label);
+                  }
+                });
+                newOrder = newOrder.filter(item => columns.find(column => column.label === item));
+                setFieldValue('order', newOrder);
+              }}
               options={columns.map(column => ({label: COLUMNS[column], value: column}))}
             />
-            <SubmitButton isSubmitting={isSubmitting}/>
+            <CustomSortableSelect
+              label='Column Order'
+              setFieldValue={(name, items) => setFieldValue(name, items)}
+              name='order'
+              options={values.order}
+            />
+            <div style={{paddingTop: '1rem'}}></div>
+            <div style={{display:'flex', justifyContent: 'flex-end'}}>
+              <SubmitButton isSubmitting={isSubmitting}/>
+            </div>
           </NonFieldErrors>
         </Form>
       )}

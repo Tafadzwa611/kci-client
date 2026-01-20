@@ -19,8 +19,8 @@ export const createLoanProductSchema = yup.object().shape({
   currency_id: yup.number().integer().required('Required'),
   minimum_principal_amount: yup.number().min(minAmount, minMsg).required('Required'),
   maximum_principal_amount: yup.number().min(minAmount, minMsg).required('Required'),
-  interest_method: yup.string().oneOf(['Flat Rate', 'Reducing Balance - Equal Installments', 'Reducing Balance - Equal Principal'], 'Invalid').required('Required'),
-  interest_interval: yup.string().oneOf(['/Day', '/Week', '/Month', '/Year'], 'Invalid').required('Required'),
+  interest_method: yup.string().oneOf(['Flat Rate', 'Reducing Balance - Equal Installments', 'Reducing Balance - Equal Principal', 'Interest-Only'], 'Invalid').required('Required'),
+  interest_interval: yup.string().oneOf(['/Day', '/Week', '/Month', '/Year', 'Total'], 'Invalid').required('Required'),
   minimum_interest_rate: yup.number().min(minAmount, minMsg).required('Required'),
   maximum_interest_rate: yup.number().min(minAmount, minMsg).required('Required'),
   schedule_strategy: yup.string().oneOf([
@@ -55,7 +55,9 @@ export const createLoanProductSchema = yup.object().shape({
   client_type: yup.string().oneOf(['Clients', 'Groups', 'Groups (solidarity)'], 'Invalid').required('Required'),
   allowed_branches: yup.array().of(yup.number().integer()),
   fees: yup.array().of(feeSchema),
-  action_on_loan_default: yup.string().oneOf(['Do Nothing', 'Add Penalty', 'Add Interest', 'Add Fixed Penalty'], 'Invalid').required('Required'),
+  action_on_loan_default: yup.string()
+  .oneOf(['Do Nothing', 'Add Penalty', 'Add Interest', 'Add Fixed Penalty', 'Add Scheduled Penalties After Maturity', 'Add Scheduled Penalties After Default'], 'Invalid')
+  .required('Required'),
   apply_late_repayment_penalty_on: yup
     .string()
     .oneOf([
@@ -65,7 +67,9 @@ export const createLoanProductSchema = yup.object().shape({
       'Interest',
       'Org Interest',
       'Principal + Penalty',
-      'Principal + Interest + Fees + Penalty'
+      'Principal + Interest + Fees + Penalty',
+      'Total Loan Balance',
+      'Principal Balance'
     ], 'Invalid')
     .when(
       'action_on_loan_default', {

@@ -54,7 +54,6 @@ const getTableRows = (clientControls) => {
           {(key === 'min_client_age' && clientControls[key] != null) && ' years'}
           {(key === 'maximum_group_size' && clientControls[key] != null) && ' members'}
           {(key === 'minimum_group_size' && clientControls[key] != null) && ' members'}
-          {key === 'allow_clients_without_id' &&  (clientControls[key] ? 'Yes' : 'No')}
           {key === 'client_officer_required' &&  (clientControls[key] ? 'Yes' : 'No')}
           {key === 'group_officer_required' &&  (clientControls[key] ? 'Yes' : 'No')}
           {key === 'allow_multi_groups_per_client' &&  (clientControls[key] ? 'Yes' : 'No')}

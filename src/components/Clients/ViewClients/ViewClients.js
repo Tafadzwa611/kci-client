@@ -40,7 +40,7 @@ function FullClientDetails() {
   const urls = [
     `/clientsapi/get_client/${params.clientId}/`,
     '/clientsapi/client_controls/',
-    '/usersapi/staff/?loan_officers_only=1',
+    '/usersapi/staff/?loan_officers_only=1&status=all',
     '/usersapi/staff_toplevel_perms/',
     '/usersapi/list_units/?active_only=1'
   ];

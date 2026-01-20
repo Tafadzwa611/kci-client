@@ -36,10 +36,10 @@ const DateRange = ({setReport, products}) => {
             <Form>
               <NonFieldErrors errors={errors}>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'30%'}}>
+                  <div className='row-payments-container' style={{width:'33%'}}>
                     <CustomDatePickerFilter label='Min Date' name='min_date' setFieldValue={setFieldValue} required/>
                   </div>
-                  <div className='row-payments-container' style={{width:'30%'}}>
+                  <div className='row-payments-container' style={{width:'33%'}}>
                     <CustomDatePickerFilter label='Max Date' name='max_date' setFieldValue={setFieldValue} required/>
                   </div>
                   <div className='row-payments-container' style={{width:'20%'}}>

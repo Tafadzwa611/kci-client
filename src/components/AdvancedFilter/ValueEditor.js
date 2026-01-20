@@ -10,7 +10,7 @@ function ValueEditor(props) {
   }
 
   if (fieldData.datatype === 'date' && ['between', 'notBetween'].includes(operator)) {
-    return <DateRangePicker handleOnChange={handleOnChange} />
+    return <DateRangePicker value={value} handleOnChange={handleOnChange} />
   }
 
   if (fieldData.datatype === 'date') {
@@ -30,7 +30,6 @@ function ValueEditor(props) {
   }
 }
 
-
 function Select({value, handleOnChange, values}) {
   return (
     <select onChange={(e) => handleOnChange(e.target.value)} value={value} className="custom-select-form row-form">
@@ -38,7 +37,6 @@ function Select({value, handleOnChange, values}) {
     </select>
   )
 }
-
 
 function Text({value, handleOnChange}) {
   return (
@@ -76,7 +74,7 @@ function DatePickerEditor({value, handleOnChange}) {
   return <DatePicker value={value} format={loggedInUser.date_format.toUpperCase()} onChange={handleChange}/>
 }
 
-function DateRangePicker({handleOnChange}) {
+function DateRangePicker({value, handleOnChange}) {
   const {loggedInUser} = useLoggedInUser();
 
   const handleChange = value => {
@@ -84,6 +82,9 @@ function DateRangePicker({handleOnChange}) {
     handleOnChange(valueString);
   }
 
+  if (value) {
+    return <DatePicker value={value.split(',')} range format={loggedInUser.date_format.toUpperCase()} onChange={handleChange}/>
+  }
   return <DatePicker range format={loggedInUser.date_format.toUpperCase()} onChange={handleChange}/>
 }
 

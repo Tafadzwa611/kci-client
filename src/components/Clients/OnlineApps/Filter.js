@@ -2,7 +2,7 @@ import React from 'react';
 import { useBranches } from '../../../contexts/BranchesContext';
 import { Form, Formik } from 'formik';
 import {
-  CustomMultiSelectFilter,
+  MultiSelectFilter,
   CustomDatePickerFilter,
   CustomSelectFilter,
   SubmitButtonFilter,
@@ -28,10 +28,16 @@ function Filter({clientTypes, setParams, setAppsData}) {
   };
   const {branches} = useBranches();
 
+  const allBranchIds = branches.map(br => br.id);
+
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
       const params = getParams(data);
+      if (values.branch_ids.includes('*')) {
+        params.delete('branch_ids');
+        allBranchIds.forEach(id => params.append('branch_ids', id));
+      }
       setParams(params);
       const response = await axios.get('/clientsapi/applications_list/', {params: params});
       setAppsData(response.data);
@@ -96,11 +102,11 @@ function Filter({clientTypes, setParams, setAppsData}) {
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
                   <div style={{width:'70%'}}>
-                    <CustomMultiSelectFilter
+                    <MultiSelectFilter
                       label='Branches'
                       name='branch_ids'
+                      options={branches.map(br => ({label: br.name, value:br.id}))}
                       setFieldValue={setFieldValue}
-                      options={branches.map(br => ({value: br.id, label: br.name}))}
                     />
                   </div>
                   <div className='row-payments-container' style={{width:'15%'}}>

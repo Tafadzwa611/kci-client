@@ -98,7 +98,7 @@ const Filter = ({setReport, accounts, setParams, branches, units}) => {
                   <div className='row-payments-container' style={{width:'24%'}}>
                     <CustomSelectFilter label='Payment Fund Account' name='payment_fund_account_id'>
                       <option value=''>------</option>
-                      {newaccounts.map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_code} {acc.general_ledger_name}</option>)}
+                      {newaccounts.map(acc => <option key={acc.id} value={acc.id}>{acc.general_ledger_code} {acc.general_ledger_name} - {acc.branch}</option>)}
                     </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'24%'}}>
@@ -114,12 +114,16 @@ const Filter = ({setReport, accounts, setParams, branches, units}) => {
                       <option value='html'>Screen (HTML)</option>
                       <option value='xlsx'>Excel</option>
                       <option value='csv'>CSV</option>
+                      <option value='pdfa4'>PDF A4</option>
+                      <option value='pdfa3'>PDF A3</option>
+                      <option value='pdfa2'>PDF A2</option>
+                      <option value='pdfa1'>PDF A1</option>
                     </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'45%'}}>
                     <CustomSelectFilter label='Unit' name='unit_id'>
                       <option value=''>------</option>
-                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name} {ut.branch_name} BRANCH</option>)}
                     </CustomSelectFilter>
                   </div>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>

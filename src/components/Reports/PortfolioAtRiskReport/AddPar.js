@@ -5,7 +5,7 @@ import {
   NonFieldErrors,
   CustomInputFilter,
   CustomSelectFilter,
-  CustomMultiSelectFilter,
+  MultiSelectFilter,
   SubmitButtonFilter,
   Modal,
   Fetcher
@@ -20,10 +20,16 @@ const AddPar = ({open, setOpen, setPars}) => {
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
+  const allBranchIds = branches.map(br => br.id);
+
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
       const params = getParams(data);
+      if (values.branch_ids.includes('*')) {
+        params.delete('branch_ids');
+        allBranchIds.forEach(id => params.append('branch_ids', id));
+      }
       const response = await axios.get('/reportsapi/par-report/', {params: params});
       const par = {
         ...response.data,
@@ -59,7 +65,7 @@ const AddPar = ({open, setOpen, setPars}) => {
                 <NonFieldErrors errors={errors}>
                   <div className='create_modal_container'>
                     <div style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
-                      <CustomMultiSelectFilter
+                      <MultiSelectFilter
                         label='Branches'
                         name='branch_ids'
                         options={branches.map(br => ({label: br.name, value:br.id}))}
@@ -88,7 +94,7 @@ const AddPar = ({open, setOpen, setPars}) => {
                       </CustomSelectFilter>
                       <CustomSelectFilter label='Unit' name='unit_id'>
                         <option value=''>------</option>
-                        {data[2].map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+                        {data[2].map(ut => <option key={ut.id} value={ut.id}>{ut.name} {ut.branch_name} BRANCH</option>)}
                       </CustomSelectFilter>
                     </div>
                     <div style={{display:'flex', justifyContent:'flex-end'}}>

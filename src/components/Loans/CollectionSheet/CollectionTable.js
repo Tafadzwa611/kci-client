@@ -1,7 +1,6 @@
 import React from 'react';
-import TableHeader from './TableHeader';
 
-const CollectionTable = ({sheet, setSheet, params}) => {
+const CollectionTable = ({ sheet }) => {
   if (!sheet || !sheet?.installments) {
     return <div></div>
   }
@@ -14,18 +13,6 @@ const CollectionTable = ({sheet, setSheet, params}) => {
 
   return (
     <>
-      <TableHeader
-        tableName='Collection Sheet'
-        length={sheet.installments.length}
-        totalCount={sheet.count}
-        pageNum={sheet.number}
-        numOfpages={sheet.num_of_pages}
-        nextPage={sheet.next_page_num}
-        params={params}
-        prevPage={sheet.prev_page_num}
-        setData={setSheet}
-        url='/reportsapi/collection_sheet/'
-      />
       <div className='table-container' style={{padding:'0', border:'none'}}>
         <div className='table-responsive font-12' style={{maxHeight:'600px'}}>
           <table className='table' style={{width:'100%'}} id='loans-report'>
@@ -69,11 +56,12 @@ const COLUMNS = {
   installment_penalty_arrears: 'Penalty_In_Arrears',
   min_date: 'Oldest_Installment_Date',
   max_date: 'Newest_Installment_Date',
+  installment_date: 'Installment_Date',
 
   client_name: 'Client_Name',
-  client_phone_number: 'Client_Phone_Number',
+  client_phone_number: 'Client_Phone',
   group_name: 'Group_Name',
-  group_phone_number: 'Group_Phone_Number',
+  group_phone_number: 'Group_Phone',
   original_principal: 'Applied_Amount',
   principal: 'Principal',
   interest: 'Interest',
@@ -84,11 +72,12 @@ const COLUMNS = {
   interest_balance: 'Interest_Balance',
   penalty_balance: 'Penalty_Balance',
   fees_balance: 'Fees_Balance',
+  claimable_amount: 'Claimable_Amount',
 
   loan_id: 'Loan_ID',
   currency: 'Currency',
-  loan_number: 'Loan_Number',
-  disbursement_date: 'Disbursement_Date',
+  loan_number: 'Loan#',
+  disbursement_date: 'DB_Date',
   application_date: 'Application_Date',
   entry_date: 'Entry_Date',
   first_repayment_date: 'First_Repayment_Date',
@@ -96,9 +85,14 @@ const COLUMNS = {
   loan_status: 'Loan_Status',
 
   total_installment_amount: 'Total_Installment_Amount',
+  total_installment_balance: 'Total_Installment_Balance',
   total_arrears_amount: 'Total_Arrears_Amount',
   total_payment: 'Total_Payment'
 }
 
+const SWAPPED_COLUMNS = Object.fromEntries(
+  Object.entries(COLUMNS).map(([key, value]) => [value, key])
+);
+
 export default CollectionTable;
-export {COLUMNS};
+export {COLUMNS, SWAPPED_COLUMNS};

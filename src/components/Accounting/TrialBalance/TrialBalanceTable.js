@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import { Margin, usePDF } from 'react-to-pdf';
 
 const TrialBalanceTable = ({trialBalance}) => {
   const [omitZeroBalances, setOmitZeroBalances] = useState(false);
   const [accounts, setAccounts] = useState([]);
+  const { toPDF, targetRef } = usePDF({
+    filename: 'trial-balance.pdf',
+    page: { margin: Margin.MEDIUM, orientation: 'landscape' },
+  });
 
   useEffect(() => {
     if (omitZeroBalances) {
@@ -17,7 +22,7 @@ const TrialBalanceTable = ({trialBalance}) => {
     <div className='col-12 font-12'>
       <div style={{marginTop:'40px', border:'none', padding:'0'}} className='trial_balance_table_container'>
         <div style={{float:'left', margin:'20px', marginLeft:'0', marginTop:'0', display:'flex', flexDirection:'row', alignItems:'center', columnGap:'10px'}}>
-          <div>
+          <div style={{ display: 'flex', columnGap: '5px' }}>
             <ReactHTMLTableToExcel
               id='test-table-xls-button'
               className='download-table-xls-button btn btn-default'
@@ -26,13 +31,14 @@ const TrialBalanceTable = ({trialBalance}) => {
               sheet='tablexls'
               buttonText='Download as XLS'
             />
+            <button className='btn btn-default' onClick={toPDF}>Download as PDF</button>
           </div>
           <div style={{marginTop:'12px'}}>
             <input type='checkbox' checked={omitZeroBalances} onChange={() => setOmitZeroBalances(!omitZeroBalances)} style={{marginRight:'5px'}}/>
             <label> Omit Accounts with zero balances</label>
           </div>
         </div>
-        <div className='table-responsive' style={{maxHeight:'1000px'}}>
+        <div className='table-responsive' style={{maxHeight:'1000px'}} ref={targetRef}>
           <table className='table' style={{width:'100%'}} id='trial-balance'>
             <thead className='clients-report-table'>
               <tr className='journal-details fees__report_thead'>

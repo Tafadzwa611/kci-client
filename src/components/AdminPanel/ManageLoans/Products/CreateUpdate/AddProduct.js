@@ -23,6 +23,7 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
     default_interest_rate: '',
     maximum_interest_rate: '',
     interest_method: '',
+    interest_application: '',
     interest_interval: '',
     loan_duration_time_unit: '',
     schedule_strategy: '',
@@ -55,7 +56,16 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
     is_default_interest_recurring: '',
     add_on_last_installment_only: '',
     fixed_penalty_amount: '',
-    calculate_using_installment: ''
+    calculate_using_installment: '',
+    allow_auto_write_off: false,
+    auto_write_off_grace_period: 1,
+    apply_overpayment_to_future_installments: true,
+    days_to_first_repayment: '',
+    allow_editing_fees_on_loan_creation: true,
+    allow_editing_schedule_strategy_on_loan_creation: true,
+    schedule_penalties: [],
+    auto_apply_scheduled_penalties_on_backdating: false,
+    recalculate_scheduled_penalties: false
   };
 
   const back = () => setView('list');
@@ -64,10 +74,8 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
     try {
       const data = removeEmptyValues(values);
       data.default_principal_amount = data.minimum_principal_amount;
-      data.default_interest_rate = data.minimum_interest_rate;
-      data.default_loan_duration = data.minimum_loan_duration;
       data.allowed_branches_ids = values.allowed_branches_ids.map(allowed_branches_id => allowed_branches_id.value);
-      data.interest_application = values.product_type === 'Dynamic Term Loan' ? 'On Installment Date' : 'Upfront';
+      data.interest_application = values.product_type === 'Dynamic Term Loan' ? 'On Installment Date' : values.interest_application;
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/loansapi/add_loan_product/', {...data, fees: values.fees}, CONFIG);
       setProductId(response.data.id);

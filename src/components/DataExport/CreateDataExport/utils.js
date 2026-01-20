@@ -55,6 +55,51 @@ const mapRules = rule => {
   }
 }
 
+const processBackEndSearch = search => {
+  const rules = [];
+  const getOperator = (search_key, rule_key) => {
+    return {
+      [search_key]: '=',
+      [`${search_key}__iexact`]: '=',
+      [`not_${search_key}`]: '!=',
+      [`not_${search_key}__iexact`]: '!=',
+      [`${search_key}__lt`]: '<',
+      [`${search_key}__gt`]: '>',
+      [`${search_key}__lte`]: '<=',
+      [`${search_key}__gte`]: '>=',
+      [`${search_key}__range`]: 'between',
+      [`not_${search_key}__range`]: 'notBetween',
+      [`${search_key}__icontains`]: 'contains',
+      [`not_${search_key}__icontains`]: 'doesNotContain',
+      [`${search_key}__istartswith`]: 'beginsWith',
+      [`not_${search_key}__istartswith`]: 'doesNotBeginWith',
+      [`${search_key}__iendswith`]: 'endsWith',
+      [`not_${search_key}__iendswith`]: 'doesNotEndWith',
+    }[rule_key]
+  }
+
+  const combinator = search.combinator.toLowerCase();
+
+  for (const search_key in search) {
+    if (search_key === 'combinator') continue; // Skip combinator key
+    search[search_key].forEach(rule => {
+      for (const rule_key in rule) {
+        const operator = getOperator(search_key, rule_key);
+        let value = rule[rule_key];
+        if (Array.isArray(value)) {
+          value = value.join(',');
+        }
+        rules.push({
+          "field": search_key,
+          "operator": operator,
+          "value": value
+        })
+      }
+    });
+  }
+  return {id: "root", combinator: combinator, rules: rules}
+}
+
 const getOperators = (field) => {
   switch (field) {
     case 'date_of_birth':
@@ -192,7 +237,7 @@ const getGroupAdvOpts = query => {
     group_id: query.rules.filter(rule => rule.field === 'group_id').map(mapRules),
     group_phone_number: query.rules.filter(rule => rule.field === 'group_phone_number').map(mapRules),
     group_type__name: query.rules.filter(rule => rule.field === 'group_type__name').map(mapRules),
-    branch_ids: query.rules.filter(rule => rule.field === 'branch_id').map(mapRules),
+    branch_id: query.rules.filter(rule => rule.field === 'branch_id').map(mapRules),
   }
 }
 
@@ -205,6 +250,8 @@ const getLoanAdvOpts = query => {
     loan_added_on: query.rules.filter(rule => rule.field === 'loan_added_on').map(mapRules),
     approval_date: query.rules.filter(rule => rule.field === 'approval_date').map(mapRules),
     application_date: query.rules.filter(rule => rule.field === 'application_date').map(mapRules),
+    branch_id: query.rules.filter(rule => rule.field === 'branch_id').map(mapRules),
+    currency_id: query.rules.filter(rule => rule.field === 'currency_id').map(mapRules),
   }
 }
 
@@ -213,30 +260,30 @@ const getClientAdvOpts = query => {
     combinator: {and: 'AND', or: 'OR'}[query.combinator],
     date_of_birth: query.rules.filter(rule => rule.field === 'date_of_birth').map(mapRules),
     status: query.rules.filter(rule => rule.field === 'status').map(mapRules),
-    full_name: query.rules.filter(rule => rule.field === 'fullname').map(mapRules),
+    fullname: query.rules.filter(rule => rule.field === 'fullname').map(mapRules),
     first_name: query.rules.filter(rule => rule.field === 'first_name').map(mapRules),
     last_name: query.rules.filter(rule => rule.field === 'last_name').map(mapRules),
     gender: query.rules.filter(rule => rule.field === 'gender').map(mapRules),
     client_id: query.rules.filter(rule => rule.field === 'client_id').map(mapRules),
-    client_type: query.rules.filter(rule => rule.field === 'client_type__name').map(mapRules),
-    reg_date: query.rules.filter(rule => rule.field === 'registration_date').map(mapRules),
-    branch_ids: query.rules.filter(rule => rule.field === 'branch_id').map(mapRules),
+    client_type__name: query.rules.filter(rule => rule.field === 'client_type__name').map(mapRules),
+    registration_date: query.rules.filter(rule => rule.field === 'registration_date').map(mapRules),
+    branch_id: query.rules.filter(rule => rule.field === 'branch_id').map(mapRules),
     email: query.rules.filter(rule => rule.field === 'email').map(mapRules),
     phone_number: query.rules.filter(rule => rule.field === 'phone_number').map(mapRules),
     phone_number_secondary: query.rules.filter(rule => rule.field === 'phone_number_secondary').map(mapRules),
     whatsapp_number: query.rules.filter(rule => rule.field === 'whatsapp_number').map(mapRules),
     home_phone: query.rules.filter(rule => rule.field === 'home_phone').map(mapRules),
-    address: query.rules.filter(rule => rule.field === 'addresses__address').map(mapRules),
-    ownership: query.rules.filter(rule => rule.field === 'addresses__ownership').map(mapRules),
-    city: query.rules.filter(rule => rule.field === 'addresses__city').map(mapRules),
-    country: query.rules.filter(rule => rule.field === 'addresses__country').map(mapRules),
-    nok_first_name: query.rules.filter(rule => rule.field === 'noks__first_name').map(mapRules),
-    nok_last_name: query.rules.filter(rule => rule.field === 'noks__last_name').map(mapRules),
-    nok_phone_number: query.rules.filter(rule => rule.field === 'noks__phone_number').map(mapRules),
-    nok_address: query.rules.filter(rule => rule.field === 'noks__address').map(mapRules),
-    nok_city: query.rules.filter(rule => rule.field === 'noks__city').map(mapRules),
-    nok_country: query.rules.filter(rule => rule.field === 'noks__country').map(mapRules),
-    nok_gender: query.rules.filter(rule => rule.field === 'noks__gender').map(mapRules),
+    addresses__address: query.rules.filter(rule => rule.field === 'addresses__address').map(mapRules),
+    addresses__ownership: query.rules.filter(rule => rule.field === 'addresses__ownership').map(mapRules),
+    addresses__city: query.rules.filter(rule => rule.field === 'addresses__city').map(mapRules),
+    addresses__country: query.rules.filter(rule => rule.field === 'addresses__country').map(mapRules),
+    noks__first_name: query.rules.filter(rule => rule.field === 'noks__first_name').map(mapRules),
+    noks__last_name: query.rules.filter(rule => rule.field === 'noks__last_name').map(mapRules),
+    noks__phone_number: query.rules.filter(rule => rule.field === 'noks__phone_number').map(mapRules),
+    noks__address: query.rules.filter(rule => rule.field === 'noks__address').map(mapRules),
+    noks__city: query.rules.filter(rule => rule.field === 'noks__city').map(mapRules),
+    noks__country: query.rules.filter(rule => rule.field === 'noks__country').map(mapRules),
+    noks__gender: query.rules.filter(rule => rule.field === 'noks__gender').map(mapRules),
   }
 }
 
@@ -382,4 +429,4 @@ const getAdvOpts = base_entity => {
   }[base_entity]
 }
 
-export {getOperators, getAdvOpts};
+export {getOperators, getAdvOpts, processBackEndSearch};

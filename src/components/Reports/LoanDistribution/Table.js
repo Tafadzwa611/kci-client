@@ -22,7 +22,10 @@ const Table = ({report}) => {
                                 <td>SECTOR</td>
                                 <td>NUMBER OF CLIENTS</td>
                                 <td>NUMBER OF LOANS</td>
-                                <td>VALUE</td>
+                                <td>BALANCE</td>
+                                <td>INTEREST BALANCE</td>
+                                <td>TOTAL EXPECTED</td>
+                                <td>TOTAL INTEREST</td>
                             </tr>
                             {report.sectors.map((sector, index) => (
                                 <tr key={index}>
@@ -30,6 +33,9 @@ const Table = ({report}) => {
                                     <td>{sector.num_of_clients}</td>
                                     <td>{sector.num_of_loans}</td>
                                     <td>{sector.principal_and_interest_balance}</td>
+                                    <td>{sector.interest_balance}</td>
+                                    <td>{sector.principal_and_interest_expected}</td>
+                                    <td>{sector.interest_expected}</td>
                                 </tr>
                             ))}
                         </tbody>

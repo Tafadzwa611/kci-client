@@ -17,6 +17,9 @@ function List() {
               <button type='button' className='btn btn-success'>
                 <Link to='/accounting/viewaccounting/journals/addjournal'>Add Journal</Link>
               </button>
+              <button type='button' className='btn btn-success' style={{ marginLeft: 6 }}>
+                <Link to='/accounting/viewaccounting/journals/addjournalbatch'>Add Bulk Journals</Link>
+              </button>
             </div>
             <DateRange setParams={setParams} staff={data[0]} setInfo={setInfo}/>
             <div style={{paddingTop: '2rem'}}></div>

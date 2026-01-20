@@ -13,6 +13,8 @@ const Table = ({ report, params, setReport }) => {
               <tr className='journal-details fees__report_thead'> 
                 <th style={{textAlign:'right'}}>Client_Name</th>
                 <th style={{textAlign:'right'}}>Phone_Number</th>
+                <th style={{textAlign:'right'}}>Group_Name</th>
+                <th style={{textAlign:'right'}}>Group_Phone_Number</th>
                 <th style={{textAlign:'right'}}>Loan_Account_No</th>
                 <th style={{textAlign:'right'}}>Payment_Branch</th>
                 <th style={{textAlign:'right'}}>Loan_Branch</th>
@@ -37,6 +39,8 @@ const Table = ({ report, params, setReport }) => {
                   <tr key={payment.id}>
                     <td>{payment.client_name}</td>
                     <td>{payment.phone_number}</td>
+                    <td>{payment.group_name}</td>
+                    <td>{payment.group_phone_number}</td>
                     <td>{payment.loan_account}</td>
                     <td>{payment.payment_branch}</td>
                     <td>{payment.loan_branch}</td>
@@ -49,6 +53,7 @@ const Table = ({ report, params, setReport }) => {
                     <td>{payment.overpayment}</td>
                     <td>{payment.total_paid}</td>
                     <td>{payment.value_date}</td>
+                    <td>{payment.entry_date}</td>
                     <td>{payment.receipt_number}</td>
                     <td>{payment.payment_channel}</td>
                     <td>{payment.loan_fund_account}</td>

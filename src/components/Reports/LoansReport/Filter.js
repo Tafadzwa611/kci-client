@@ -5,7 +5,7 @@ import {
   CustomInputFilter,
   CustomDatePickerFilter,
   CustomSelectFilter,
-  CustomMultiSelectFilter,
+  MultiSelectFilter,
   SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
@@ -19,6 +19,8 @@ const Filter = ({setReport, setParams, units}) => {
     page_num: 1,
     min_date: '',
     max_date: '',
+    min_closure: '',
+    max_closure: '',
     client_str: '',
     reason: '',
     status: '',
@@ -29,17 +31,23 @@ const Filter = ({setReport, setParams, units}) => {
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
+  const allBranchIds = branches.map(br => br.id);
+
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
+      const params = getParams(data);
+      if (values.branch_ids.includes('*')) {
+        params.delete('branch_ids');
+        allBranchIds.forEach(id => params.append('branch_ids', id));
+      }
       if (values.mode === 'html') {
-        const params = getParams(data);
         setParams(params);
-        const response = await axios.get('/reportsapi/loans-report/', {params: params});
+        const response = await axios.get('/reportsapi/loans-report/', {params});
         setReport(response.data);
       }else {
-        data.file_format = values.mode;
-        await axios.get('/reportsapi/loans-report-export/', {params: getParams(data)});
+        params.append('file_format', values.mode);
+        await axios.get('/reportsapi/loans-report-export/', {params});
       }
     } catch (error) {
       if (error.message === 'Network Error') {
@@ -60,52 +68,28 @@ const Filter = ({setReport, setParams, units}) => {
             <Form>
               <NonFieldErrors errors={errors}>
                 <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'19%'}}>
-                    <CustomDatePickerFilter label='Min Date' name='min_date' setFieldValue={setFieldValue} required/>
+                  <div className='row-payments-container' style={{width:'16%'}}>
+                    <CustomDatePickerFilter label='Min DB Date' name='min_date' setFieldValue={setFieldValue}/>
                   </div>
-                  <div className='row-payments-container' style={{width:'19%'}}>
-                    <CustomDatePickerFilter label='Max Date' name='max_date' setFieldValue={setFieldValue} required/>
+                  <div className='row-payments-container' style={{width:'16%'}}>
+                    <CustomDatePickerFilter label='Max DB Date' name='max_date' setFieldValue={setFieldValue}/>
                   </div>
-                  <div className='row-payments-container' style={{width:'19%'}}>
+                  <div className='row-payments-container' style={{width:'16%'}}>
                     <CustomInputFilter label='Search Client' name='client_str' type='text'/>
                   </div>
-                  <div className='row-payments-container' style={{width:'19%'}}>
+                  <div className='row-payments-container' style={{width:'16%'}}>
                     <CustomSelectFilter label='Currency' name='currency_id' required>
                       <option value=''>------</option>
                       {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
                     </CustomSelectFilter>
                   </div>
-                  <div className='row-payments-container' style={{width:'19%'}}>
+                  <div className='row-payments-container' style={{width:'16%'}}>
                     <CustomSelectFilter label='Unit' name='unit_id'>
                       <option value=''>------</option>
-                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
+                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name} {ut.branch_name} BRANCH</option>)}
                     </CustomSelectFilter>
                   </div>
-                </div>
-                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'50%'}}>
-                    <CustomMultiSelectFilter
-                      label='Branches'
-                      name='branch_ids'
-                      options={branches.map(br => ({label: br.name, value:br.id}))}
-                      setFieldValue={setFieldValue}
-                      required
-                    />
-                  </div>
-                  <div className='row-payments-container' style={{width:'10%'}}>
-                    <CustomSelectFilter label='Status' name='status'>
-                      <option value=''>-----</option>
-                      <option value='Open'>Open</option>
-                      <option value='Arrears'>Arrears</option>
-                      <option value='Fully Paid'>Fully Paid</option>
-                      <option value='Over Paid'>Over Paid</option>
-                      <option value='Written-Off'>Written-Off</option>
-                      <option value='Restructured'>Restructured</option>
-                      <option value='Refinanced'>Refinanced</option>
-                      <option value='Early Settlement'>Early Settlement</option>
-                    </CustomSelectFilter>
-                  </div>
-                  <div className='row-payments-container' style={{width:'10%'}}>
+                  <div className='row-payments-container' style={{width:'16%'}}>
                     <CustomSelectFilter label='Reason For Borrowing' name='reason'>
                       <option value=''>-----</option>
                       <option value='CONSUMER'>CONSUMER</option>
@@ -124,11 +108,45 @@ const Filter = ({setReport, setParams, units}) => {
                       <option value='OTHER'>OTHER</option>
                     </CustomSelectFilter>
                   </div>
+                </div>
+                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
+                  <div style={{width:'35%'}}>
+                    <MultiSelectFilter
+                      label='Branches'
+                      name='branch_ids'
+                      options={branches.map(br => ({label: br.name, value:br.id}))}
+                      setFieldValue={setFieldValue}
+                      required
+                    />
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomDatePickerFilter label='Min Closure Date' name='min_closure' setFieldValue={setFieldValue}/>
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomDatePickerFilter label='Max Closure Date' name='max_closure' setFieldValue={setFieldValue}/>
+                  </div>
+                  <div className='row-payments-container' style={{width:'10%'}}>
+                    <CustomSelectFilter label='Status' name='status'>
+                      <option value=''>-----</option>
+                      <option value='Open'>Open</option>
+                      <option value='Arrears'>Arrears</option>
+                      <option value='Fully Paid'>Fully Paid</option>
+                      <option value='Over Paid'>Over Paid</option>
+                      <option value='Written-Off'>Written-Off</option>
+                      <option value='Restructured'>Restructured</option>
+                      <option value='Refinanced'>Refinanced</option>
+                      <option value='Early Settlement'>Early Settlement</option>
+                    </CustomSelectFilter>
+                  </div>
                   <div className='row-payments-container' style={{width:'10%'}}>
                     <CustomSelectFilter label='Mode' name='mode' required>
                       <option value='html'>Screen (HTML)</option>
                       <option value='xlsx'>Excel</option>
                       <option value='csv'>CSV</option>
+                      <option value='pdfa4'>PDF A4</option>
+                      <option value='pdfa3'>PDF A3</option>
+                      <option value='pdfa2'>PDF A2</option>
+                      <option value='pdfa1'>PDF A1</option>
                     </CustomSelectFilter>
                   </div>
                   <div className='row-payments-container' style={{width:'10%'}}>

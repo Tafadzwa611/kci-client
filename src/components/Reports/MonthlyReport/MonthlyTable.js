@@ -28,6 +28,7 @@ const MonthlyTable = ({report}) => {
               <th className='text-right'>Principal_Paid</th>
               <th className='text-right'>Interest_Paid</th>
               <th className='text-right'>Penalty_Paid</th>
+              <th className='text-right'>Fees_Paid</th>
               <th className='text-right'>Overpayment</th>
               <th className='text-right'>Accrued_Penalty_Count</th>
               <th className='text-right'>Accrued_Penalty_Amount</th>

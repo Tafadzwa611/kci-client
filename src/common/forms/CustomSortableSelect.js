@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   DndContext, 
   closestCenter,
@@ -19,6 +19,10 @@ import { useField } from 'formik';
 function CustomSortableSelect({options, label, setFieldValue, ...props}) {
   const [items, setItems] = useState(options);
   const [field, meta] = useField(props);
+
+  useEffect(() => {
+    setItems(options);
+  }, [JSON.stringify(options)]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),

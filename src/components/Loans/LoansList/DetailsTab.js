@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import ChangeAccruedInterest from './ChangeAccruedInterest';
 import ChangeLoanNumber from './ChangeLoanNumber';
 import ChangeLoanNextInstallmentDate from './ChangeLoanNextInstallmentDate';
+import { Link } from 'react-router-dom';
 
 function DetailsTab({loan, setLoan}) {
   const [openModal, setOpenModal] = useState(false);
@@ -18,6 +19,9 @@ function DetailsTab({loan, setLoan}) {
           <div style={{width:'48%'}}>
             <ul style={{paddingRight:'1rem'}}>
               <li style={{marginBottom: '1rem'}}><b>General</b></li>
+              {loan.receipt_number && (
+                <li style={{marginBottom: '0.25rem'}}>Receipt Number: {loan.receipt_number}</li>
+              )}
               <li style={{marginBottom: '0.25rem', display:'flex', columnGap:'5px'}}>
                 Loan Number: {loan.loan_id} 
                 <a style={{cursor: 'pointer'}} onClick={() => setOpenLoanNumberModal(true)}><small>Change</small></a>
@@ -25,6 +29,22 @@ function DetailsTab({loan, setLoan}) {
               <li style={{marginBottom: '0.25rem'}}>Assigned to Branch: {loan.branch}</li>
               <li style={{marginBottom: '0.25rem'}}>Assigned to Unit: {loan.unit ? loan.unit : 'Not provided'}</li>
               <li style={{marginBottom: '0.25rem'}}>Assigned to Loan Officer: {loan.loan_officer_name}</li>
+              {loan.guarantor_info && (
+                <li style={{marginBottom: '0.25rem'}}>
+                  Guarantor: 
+                  <Link to={`/clients/viewclients/clientdetails/${loan.guarantor_info.id}`}>
+                    {loan.guarantor_info.client_id} {loan.guarantor_info.name}
+                  </Link>
+                </li>
+              )}
+              {loan.group_guarantor_info && (
+                <li style={{marginBottom: '0.25rem'}}>
+                  Group Guarantor: 
+                  <Link to={`/groups/viewgroups?group_id=${loan.group_guarantor_info.id}`}>
+                    {loan.group_guarantor_info.group_id} {loan.group_guarantor_info.name}
+                  </Link>
+                </li>
+              )}
               <li style={{marginBottom: '0.25rem'}}>Loan Created By: {loan.loan_created_by}</li>
               <li style={{marginBottom: '0.25rem'}}>Loan Approved By: {loan.loan_approved_by}</li>
               <li style={{marginBottom: '0.25rem'}}>Loan Disbursed By: {loan.loan_amount_disbursed_by}</li>
@@ -42,6 +62,21 @@ function DetailsTab({loan, setLoan}) {
               <li style={{marginBottom: '0.25rem'}}>Product: {loan.product_name}</li>
               <li style={{marginBottom: '0.25rem'}}>Product Type: {loan.product_type}</li>
               <li style={{marginBottom: '0.25rem'}}>Interest Application: {loan.interest_application}</li>
+              {loan.interest_application == 'Daily' && (
+                <li style={{marginBottom: '0.25rem'}}>
+                  Daily Interest: {loan.daily_interest}
+                </li>
+              )}
+              {loan.interest_application == 'Daily' && (
+                <li style={{marginBottom: '0.25rem'}}>
+                  Interest Tenure In Days: {loan.interest_tenure_in_days} Day(s)
+                </li>
+              )}
+              {loan.interest_application == 'Daily' && (
+                <li style={{marginBottom: '0.25rem'}}>
+                  Interest At Maturity: {loan.interest_at_maturity}
+                </li>
+              )}
               <li style={{marginBottom: '0.25rem'}}>Applied Amount: {loan.currency_name} {loan.org_principal}</li>
               <li style={{marginBottom: '0.25rem'}}>Loan Amount: {loan.currency_name} {loan.principal}</li>
               <li style={{marginBottom: '0.25rem'}}>Interest Rate: {loan.interest_rate}%{loan.interest_interval}</li>
@@ -49,6 +84,20 @@ function DetailsTab({loan, setLoan}) {
               <li style={{marginBottom: '0.25rem'}}>Reason For Loan: {loan.reason_for_borrowing}</li>
               <li style={{marginBottom: '0.25rem'}}>Fund Account Name: {loan.fund_account_name}</li>
               <li style={{marginBottom: '0.25rem'}}>Action On Default: {loan.action_on_loan_default}</li>
+              {loan.action_on_loan_default === 'Add Scheduled Penalties After Maturity' && (
+                loan.schedule_penalties.map((sp, idx) => (
+                  <li key={idx} style={{paddingLeft: '20px'}}>
+                    Number Of Days: {sp.days}, Rate: {sp.penalty_rate}%, Type: {sp.charge_type}
+                  </li>
+                ))
+              )}
+              {loan.action_on_loan_default === 'Add Scheduled Penalties After Default' && (
+                loan.schedule_penalties.map((sp, idx) => (
+                  <li key={idx} style={{paddingLeft: '20px'}}>
+                    Number Of Days: {sp.days}, Rate: {sp.penalty_rate}%, Type: {sp.charge_type}
+                  </li>
+                ))
+              )}
               {loan.action_on_loan_default === 'Add Fixed Penalty' && (
                 <li style={{marginBottom: '0.25rem'}}>Penalty Amount: {loan.currency_name} {loan.fixed_penalty_amount}</li>
               )}
