@@ -9,7 +9,7 @@ import ManageFields from './ManageFields/ManageFields';
 import ManageComms from './ManageComms/ManageComms';
 import ManageCurrencies from './ManageCurrencies/ManageCurrencies';
 import ManageDeposits from './ManageDeposits/ManageDeposits';
-import ExpensesSettings from './ManageExpenses/ExpensesSettings';
+import ManageExpenses from './ManageExpenses/ManageExpenses';
 import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
 
 const AdminPanel = () => {
@@ -30,7 +30,7 @@ const AdminPanel = () => {
         <Route path='manageclients' element={<ManageClients />} />
         <Route path='managefields' element={<ManageFields />} />
         <Route path='managecomms' element={<ManageComms />} />
-        <Route path='manageexps' element={<ExpensesSettings />} />
+        <Route path='manageexps/*' element={<ManageExpenses />} />
       </Route>
     </Routes>
   )
