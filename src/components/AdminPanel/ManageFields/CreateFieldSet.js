@@ -36,6 +36,7 @@ function CreateFieldSet({open, setOpen, setFieldSets, entityType, clientTypes}) 
                     <option value=''>------</option>
                     <option value='CLIENT'>Clients</option>
                     <option value='LOAN'>Loans</option>
+                    <option value='GROUP'>Groups</option>
                   </CustomSelect>
                   {values.entity_type === 'CLIENT' ?
                   <CustomSelect label='Client type' name='client_type_id' required>
