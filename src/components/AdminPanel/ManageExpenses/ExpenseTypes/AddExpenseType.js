@@ -15,9 +15,22 @@ import {
 
 
 function AddExpenseType() {
+  const [expenseSettings, setExpenseSettings] = React.useState(null);
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const fetch = async () => {
+      const response = await axios.get('/expensesapi/expense_settings/');
+      setExpenseSettings(response.data);
+    }
+    fetch();
+  }, []);
+
+  if (!expenseSettings) {
+    return <div>Loading...</div>
+  }
 
   const onSubmit = async (values, actions) => {
     try {
@@ -26,12 +39,15 @@ function AddExpenseType() {
         name: values.name,
         currency_id: values.currency_id,
         expense_account_id: values.expense_account.value,
-        payable_account_id: values.payable_account.value,
+        ...(expenseSettings.accounting_method === 2 ? {payable_account_id: values.payable_account.value} : {}),
         branch_ids: values.branches.map(branch => branch.value)
       };
       const response = await axios.post('/expensesapi/add_expense_type/', data, CONFIG);
       console.log(response.data);
-      // navigate({pathname: `/users/admin/staff/staffdetails/${response.data.id}`});
+      navigate('/users/admin/manageexps/addresults', {
+        replace: true,
+        state: response.data
+      });
     } catch (error) {
       console.log(error);
       if (error.message === 'Network Error') {
@@ -91,16 +107,18 @@ function AddExpenseType() {
                       ))}
                       required
                     />
-                    <CustomMultiSelect
-                      label='Payable Account'
-                      name='payable_account'
-                      isMulti={false}
-                      setFieldValue={setFieldValue}
-                      options={data[1].accounts.map(account => (
-                        {label: `${account.general_ledger_name} - ${account.general_ledger_code}`, value: account.id}
-                      ))}
-                      required
-                    />
+                    {expenseSettings.accounting_method === 2 && (
+                      <CustomMultiSelect
+                        label='Payable Account'
+                        name='payable_account'
+                        isMulti={false}
+                        setFieldValue={setFieldValue}
+                        options={data[1].accounts.map(account => (
+                          {label: `${account.general_ledger_name} - ${account.general_ledger_code}`, value: account.id}
+                        ))}
+                        required
+                      />
+                    )}
                   </div>
                 )}
               </Fetcher>
