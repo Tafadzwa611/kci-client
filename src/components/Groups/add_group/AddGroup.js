@@ -3,7 +3,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { removeEmptyValues } from '../../../utils/utils';
-import { Form, Formik, FieldArray } from 'formik';
+import { Form, Formik } from 'formik';
 import {
   CustomCheckbox,
   CustomInput,
@@ -13,7 +13,6 @@ import {
   CustomDatePicker,
   CustomPhoneNumber
 } from '../../../common';
-import CustomForm from './CustomForm';
 import { Member, AddMember } from './Members';
 import * as yup from 'yup';
 
@@ -51,28 +50,29 @@ function AddGroup({groupTypes, loanOfficers, groupRoles, clientControls, units})
     group_bank_name: '',
     group_officer_id: '',
     unit_id: '',
-    fieldsets: {}
+    fieldsets: convertToFormikFieldsets(fieldsets).fieldsets
   };
 
   const onSubmit = async (values, actions) => {
-    console.log(values);
-    // try {
-    //   const data = removeEmptyValues(values);
-    //   data.group_phone_number = `${values.group_phone_number.countryCode} ${values.group_phone_number.phoneNumber}`;
-    //   data.members = values.members.map(member => ({client_id: member.client_id, role_id: member.role_id}))
-    //   const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-    //   const response = await axios.post('/clientsapi/add_group/', data, CONFIG);
-    //   navigate({pathname: '/groups/viewgroups', search: `?group_id=${response.data.id}`});
-    // } catch (error) {
-    //   console.log(error);
-    //   if (error.message === 'Network Error') {
-    //     actions.setErrors({responseStatus: 'Network Error'});
-    //   } else if (error.response.status >= 400 && error.response.status < 500) {
-    //     actions.setErrors({responseStatus: error.response.status, ...error.response.data});
-    //   } else {
-    //     actions.setErrors({responseStatus: error.response.status});
-    //   }
-    // }
+    const custom_data = toFieldValueArray(values.fieldsets);
+    try {
+      const data = removeEmptyValues(values);
+      data.group_phone_number = `${values.group_phone_number.countryCode} ${values.group_phone_number.phoneNumber}`;
+      data.members = values.members.map(member => ({client_id: member.client_id, role_id: member.role_id}));
+      data.custom_data = custom_data;
+      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+      const response = await axios.post('/clientsapi/add_group/', data, CONFIG);
+      navigate({pathname: '/groups/viewgroups', search: `?group_id=${response.data.id}`});
+    } catch (error) {
+      console.log(error);
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+      } else {
+        actions.setErrors({responseStatus: error.response.status});
+      }
+    }
   }
 
   return (
@@ -147,7 +147,29 @@ function AddGroup({groupTypes, loanOfficers, groupRoles, clientControls, units})
   )
 }
 
-const getElement = (form, field, values, setFieldValue) => {
+const convertToFormikFieldsets = (fieldsets) => {
+  return {
+    fieldsets: Object.fromEntries(
+      fieldsets.map((fieldset) => [
+        String(fieldset.id),
+        Object.fromEntries(
+          fieldset.fields.map((field) => [String(field.id), ""])
+        ),
+      ])
+    ),
+  };
+};
+
+const toFieldValueArray = (fieldsets) => {
+  return Object.values(fieldsets).flatMap((fields) =>
+    Object.entries(fields).map(([field_id, value]) => ({
+      field_id: Number(field_id),
+      value,
+    }))
+  );
+};
+
+const getElement = (fieldset, field, setFieldValue) => {
   const dataTypes = {
     free_text: 'text',
     integer: 'number',
@@ -156,7 +178,7 @@ const getElement = (form, field, values, setFieldValue) => {
   };
 
   const fieldLabel = field.is_required ? field.name : `${field.name} (Optional)`;
-  const name = `fieldsets.${form.id}.${field.name}`;
+  const name = `fieldsets.${fieldset.id}.${field.id}`;
 
   if (field.data_type === 'select') {
     return (
