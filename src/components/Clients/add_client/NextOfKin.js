@@ -31,19 +31,19 @@ function NokForm({index, setFieldValue, noks, nok}) {
 
   return (
     <>
-      <CustomInput label='First Name' name={`next_of_kin_list[${index}].first_name`} type='text'/>
-      <CustomInput label='Last Name' name={`next_of_kin_list[${index}].last_name`} type='text'/>
-      <CustomSelect label='Gender' name={`next_of_kin_list[${index}].gender`}>
+      <CustomInput label='First Name' name={`next_of_kin_list[${index}].first_name`} type='text' required/>
+      <CustomInput label='Last Name' name={`next_of_kin_list[${index}].last_name`} type='text' required/>
+      <CustomSelect label='Gender' name={`next_of_kin_list[${index}].gender`} required>
         <option value=''>------</option>
         <option value='MALE'>MALE</option>
         <option value='FEMALE'>FEMALE</option>
       </CustomSelect>
-      <CustomInput label='Relationship' name={`next_of_kin_list[${index}].relationship`} type='text'/>
-      <CustomPhoneNumber label='Phone Number' name={`next_of_kin_list[${index}].phoneNumber`} setFieldValue={setFieldValue}/>
-      <CustomInput label='Address' name={`next_of_kin_list[${index}].address`} type='text'/>
-      <CustomInput label='City' name={`next_of_kin_list[${index}].city`} type='text'/>
-      <CustomInput label='Country' name={`next_of_kin_list[${index}].country`} type='text'/>
-      <CustomSelect label='Ownership' name={`next_of_kin_list[${index}].ownership`}>
+      <CustomInput label='Relationship' name={`next_of_kin_list[${index}].relationship`} type='text' required/>
+      <CustomPhoneNumber label='Phone Number' name={`next_of_kin_list[${index}].phoneNumber`} setFieldValue={setFieldValue} required/>
+      <CustomInput label='Address' name={`next_of_kin_list[${index}].address`} type='text' required/>
+      <CustomInput label='City' name={`next_of_kin_list[${index}].city`} type='text' required/>
+      <CustomInput label='Country' name={`next_of_kin_list[${index}].country`} type='text' required/>
+      <CustomSelect label='Ownership' name={`next_of_kin_list[${index}].ownership`} required>
         <option value=''>------</option>
         <option value='OWNER'>OWNER</option>
         <option value='RENTING'>RENTING</option>
