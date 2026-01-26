@@ -33,7 +33,7 @@ function ClientFiles({app}) {
           <span>
             {file.description}
           </span>
-          <span style={{cursor:'pointer'}} className='badge badge-info' id={file.name} data-name={file.name} onClick={dowloadFile}>
+          <span style={{cursor:'pointer'}} className='badge badge-info' id={file.name} data-name={file.description} onClick={dowloadFile}>
             Download
           </span>
           {error === Errors.downError ? 'Error downloading' : null}
