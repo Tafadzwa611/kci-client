@@ -101,13 +101,13 @@ function Layout() {
             >
               Manage Comms
             </Link>
-            {/* <Link 
+            <Link 
               to='/users/admin/manageexps'
               id='manageexps' 
               className={location.pathname === '/users/admin/manageexps' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
             >
               Manage Expenses
-            </Link> */}
+            </Link>
           </div>
           <div className='tab-content font-12' style={{marginTop:'3rem'}}>
             <Outlet />

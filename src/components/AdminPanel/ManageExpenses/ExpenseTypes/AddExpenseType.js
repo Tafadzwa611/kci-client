@@ -76,7 +76,7 @@ function AddExpenseType() {
             <div className='divider divider-info'>
               <span>Expense Type Information</span>
             </div>
-            <CustomInput label='First Name' name='name' type='text' required/>
+            <CustomInput label='Name' name='name' type='text' required/>
             <CustomSelect label='Currency' name='currency_id' required>
               <option value=''>------</option>
               {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}

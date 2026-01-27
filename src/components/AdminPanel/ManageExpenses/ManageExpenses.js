@@ -10,6 +10,7 @@ import ExpenseSettings from './ExpensesSettings';
 import ExpenseTypes from './ExpenseTypes/ExpenseTypes';
 import AddExpenseType from './ExpenseTypes/AddExpenseType';
 import CreateResults from './ExpenseTypes/CreateResults';
+import EditExpenseType from './ExpenseTypes/EditExpenseType';
 
 function ManageExpenses() {
   React.useEffect(() => {
@@ -22,6 +23,7 @@ function ManageExpenses() {
         <Route index element={<ExpenseSettings />} />
         <Route path='expensetypes' element={<ExpenseTypes />} />
         <Route path='addtype' element={<AddExpenseType />} />
+        <Route path='edittypes/:typeId' element={<EditExpenseType />} />
         <Route path='addresults' element={<CreateResults />} />
       </Route>
     </Routes>

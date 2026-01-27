@@ -18,7 +18,7 @@ function ExpenseTypes() {
 
   React.useEffect(() => {
     const fetch = async () => {
-      const response = await axios.get('/expensesapi/expensetypeslist/');
+      const response = await axios.get('/expensesapi/expensetypeslist/?header=1');
       setExpenseTypes(response.data);
     }
     fetch();
@@ -48,16 +48,24 @@ function ExpenseTypes() {
               <th>Created_By</th>
               <th>Expense_Account_Name</th>
               <th>Payable_Account_Name</th>
+              <th>Action</th>
             </tr>  
             {expenseTypes.map((et) => (
               <tr className='table-row' key={et.id}>
                 <td>{et.name}</td>
                 <td>{et.date_created}</td>
                 <td>{et.currency_shortname}</td>
-                <td>{et.branch_name}</td>
+                <td>{et.branch_name ? et.branch_name : 'Consolidated'}</td>
                 <td>{et.created_by_name}</td>
                 <td>{et.expense_account_name}</td>
                 <td>{et.payable_account_name}</td>
+                <td>
+                  {!et.branch_id && (
+                    <Link to={`/users/admin/manageexps/edittypes/${et.id}`}>
+                      Edit
+                    </Link>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -74,7 +82,12 @@ function Filter({setExpenseTypes}) {
     try {
       const data = removeEmptyValues(values);
       const params = getParams(data);
-      const response = await axios.get('/expensesapi/expensetypeslist/', {params: params});
+      const url = (
+        params.size === 0 ? 
+        '/expensesapi/expensetypeslist/?header=1' : 
+        '/expensesapi/expensetypeslist/'
+      );
+      const response = await axios.get(url, {params: params});
       setExpenseTypes(response.data);
     } catch (error) {
       console.log(error);
