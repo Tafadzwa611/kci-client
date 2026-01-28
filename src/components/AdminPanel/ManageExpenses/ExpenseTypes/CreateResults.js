@@ -6,7 +6,6 @@ function CreateResults() {
     const state = location.state;
 
     if (!state) return <Navigate to='/users/admin/manageexps/addtype' replace />;
-    console.log(state);
 
     return (
         <div>

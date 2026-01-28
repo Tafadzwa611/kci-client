@@ -48,17 +48,19 @@ function ExpenseTypes() {
               <th>Created_By</th>
               <th>Expense_Account_Name</th>
               <th>Payable_Account_Name</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>  
             {expenseTypes.map((et) => (
               <tr className='table-row' key={et.id}>
                 <td>{et.name}</td>
-                <td>{et.date_created}</td>
+                <td>{et.account_date}</td>
                 <td>{et.currency_shortname}</td>
                 <td>{et.branch_name ? et.branch_name : 'Consolidated'}</td>
                 <td>{et.created_by_name}</td>
                 <td>{et.expense_account_name}</td>
                 <td>{et.payable_account_name}</td>
+                <td>{et.is_active ? 'Active' : 'Inactive'}</td>
                 <td>
                   {!et.branch_id && (
                     <Link to={`/users/admin/manageexps/edittypes/${et.id}`}>
