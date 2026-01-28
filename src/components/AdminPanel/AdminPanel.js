@@ -10,6 +10,7 @@ import ManageComms from './ManageComms/ManageComms';
 import ManageCurrencies from './ManageCurrencies/ManageCurrencies';
 import ManageDeposits from './ManageDeposits/ManageDeposits';
 import ManageExpenses from './ManageExpenses/ManageExpenses';
+import ManageTransfers from './ManageTranfers/ManageTransfers';
 import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
 
 const AdminPanel = () => {
@@ -31,6 +32,7 @@ const AdminPanel = () => {
         <Route path='managefields' element={<ManageFields />} />
         <Route path='managecomms' element={<ManageComms />} />
         <Route path='manageexps/*' element={<ManageExpenses />} />
+        <Route path='managetransfers/*' element={<ManageTransfers />} />
       </Route>
     </Routes>
   )
@@ -107,6 +109,13 @@ function Layout() {
               className={location.pathname === '/users/admin/manageexps' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
             >
               Manage Expenses
+            </Link>
+            <Link 
+              to='/users/admin/managetransfers'
+              id='managetransfers' 
+              className={location.pathname === '/users/admin/managetransfers' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
+            >
+              Manage Transfers
             </Link>
           </div>
           <div className='tab-content font-12' style={{marginTop:'3rem'}}>
