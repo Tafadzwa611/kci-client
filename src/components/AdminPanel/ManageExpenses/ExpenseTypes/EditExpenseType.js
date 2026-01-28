@@ -10,10 +10,12 @@ import {
   SubmitButton
 } from '../../../../common';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 
 function EditExpenseType() {
   const params = useParams();
+  const navigate = useNavigate();
   const { branches } = useBranches();
   const [et, setEt] = React.useState(null);
   const [payableAccs, setPayableAccs] = React.useState(null);
@@ -95,11 +97,10 @@ function EditExpenseType() {
         branch_ids: values.branches.map(branch => branch.value)
       };
       const response = await axios.put(`/expensesapi/edit_expense_type/${params.typeId}/`, data, CONFIG);
-      console.log(response.data);
-      // navigate('/users/admin/manageexps/addresults', {
-      //   replace: true,
-      //   state: response.data
-      // });
+      navigate('/users/admin/manageexps/addresults', {
+        replace: true,
+        state: response.data
+      });
     } catch (error) {
       console.log(error);
       if (error.message === 'Network Error') {

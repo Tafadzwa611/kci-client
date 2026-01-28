@@ -43,7 +43,6 @@ function AddExpenseType() {
         branch_ids: values.branches.map(branch => branch.value)
       };
       const response = await axios.post('/expensesapi/add_expense_type/', data, CONFIG);
-      console.log(response.data);
       navigate('/users/admin/manageexps/addresults', {
         replace: true,
         state: response.data
