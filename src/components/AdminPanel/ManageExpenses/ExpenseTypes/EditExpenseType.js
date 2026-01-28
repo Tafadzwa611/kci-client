@@ -3,12 +3,13 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useBranches } from '../../../../contexts/BranchesContext';
 import { Form, Formik } from 'formik';
-import { removeEmptyValues } from '../../../../utils/utils';
 import {
+  NonFieldErrors,
   CustomInput,
   CustomMultiSelect,
   SubmitButton
 } from '../../../../common';
+import Cookies from 'js-cookie';
 
 
 function EditExpenseType() {
@@ -85,7 +86,30 @@ function EditExpenseType() {
   });
 
   const onSubmit = async (values, actions) => {
-    console.log(values);
+    try {
+      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+      const data = {
+        name: values.name,
+        expense_account_id: values.expense_account?.value,
+        ...(expenseSettings.accounting_method === 2 ? {payable_account_id: values.payable_account?.value} : {}),
+        branch_ids: values.branches.map(branch => branch.value)
+      };
+      const response = await axios.put(`/expensesapi/edit_expense_type/${params.typeId}/`, data, CONFIG);
+      console.log(response.data);
+      // navigate('/users/admin/manageexps/addresults', {
+      //   replace: true,
+      //   state: response.data
+      // });
+    } catch (error) {
+      console.log(error);
+      if (error.message === 'Network Error') {
+        actions.setErrors({responseStatus: 'Network Error'});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+      } else {
+        actions.setErrors({responseStatus: error.response.status});
+      }
+    }
   }
 
   const initialValues = {
@@ -120,7 +144,6 @@ function EditExpenseType() {
             options={expenseAccs.accounts.map(account => (
               {label: `${account.general_ledger_name} - ${account.general_ledger_code}`, value: account.id}
             ))}
-            required
           />
           {expenseSettings.accounting_method === 2 && (
             <CustomMultiSelect
@@ -130,12 +153,12 @@ function EditExpenseType() {
               isMulti={false}
               setFieldValue={setFieldValue}
               options={payableAccs.accounts.map(account => (
-              {label: `${account.general_ledger_name} - ${account.general_ledger_code}`, value: account.id}
+                {label: `${account.general_ledger_name} - ${account.general_ledger_code}`, value: account.id}
               ))}
-              required
             />
           )}
           <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+          <NonFieldErrors errors={errors}/>
           <div style={{display:'flex', justifyContent: 'flex-end'}}> 
             <SubmitButton isSubmitting={isSubmitting}/>
           </div>
