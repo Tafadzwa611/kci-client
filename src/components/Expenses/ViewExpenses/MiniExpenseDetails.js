@@ -56,9 +56,11 @@ function MiniExpenseDetails({expenseId, setExpenseId, setExpenseData}) {
         <div className="row" style={{marginBottom: "1rem", marginTop: "0", display: "flex", justifyContent: "flex-end"}}>
           <button className="btn btn-olive" onClick={() => setDeleteExpense(true)}>Delete</button>
         </div>
-        <div className="row" style={{marginBottom:"1rem", marginTop:"0", display:"flex", justifyContent:"flex-end"}}>
-          <button className="btn btn-olive" onClick={() => setPayExpense(true)}>Pay</button>
-        </div>
+        {expenseDetails.status === 2 && (
+          <div className="row" style={{marginBottom:"1rem", marginTop:"0", display:"flex", justifyContent:"flex-end"}}>
+            <button className="btn btn-olive" onClick={() => setPayExpense(true)}>Pay</button>
+          </div>
+        )}
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
           <div style={{width:"30%"}}>
             <ul>
