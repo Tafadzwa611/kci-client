@@ -4,7 +4,7 @@ import axios from 'axios';
 const Pager = ({
   prevPageNumber,
   nextPageNumber,
-  setEpenseData,
+  setExpenseData,
   params
 }) => {
   const [errors, setErrors] = useState(null);
@@ -14,7 +14,7 @@ const Pager = ({
       const pageNum = evt.target.innerText === 'Next' ? nextPageNumber : prevPageNumber;
       params.set('page_num', pageNum);
       const response = await axios.get('/expensesapi/expenseslist/', {params: params});
-      setEpenseData(response.data);
+      setExpenseData(response.data);
     } catch (error) {
       if (error.message === 'Network Error') {
         setErrors({detail: 'Network Error'});

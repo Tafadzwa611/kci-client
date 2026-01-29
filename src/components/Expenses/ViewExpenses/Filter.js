@@ -15,7 +15,7 @@ import { useBranches } from '../../../contexts/BranchesContext';
 import axios from 'axios';
 import { removeEmptyValues } from '../../../utils/utils';
 
-const Filter = ({setEpenseData, setParams, expensetypes}) => {
+const Filter = ({setExpenseData, setParams, expensetypes}) => {
   const initialValues = {
     branch_ids: [],
     page_num: 1,
@@ -52,7 +52,7 @@ const Filter = ({setEpenseData, setParams, expensetypes}) => {
       }
       setParams(params);
       const response = await axios.get('/expensesapi/expenseslist/', {params: params});
-      setEpenseData(response.data);
+      setExpenseData(response.data);
     } catch (error) {
       if (error.message === "Network Error") {
         actions.setErrors({responseStatus: "Network Error"});
