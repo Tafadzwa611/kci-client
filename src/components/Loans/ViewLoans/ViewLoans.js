@@ -26,7 +26,7 @@ const ViewLoans = () => {
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
-        <Route index element={<LoanListComponent />} />
+        <Route index element={<LoansList />} />
         <Route path='addloan' element={<AddLoan />} />
         <Route path='approval' element={<BatchApproval />} />
         <Route path='approval-report/:reportId' element={<Report />} />
@@ -45,14 +45,6 @@ function FullLoanDetails() {
   return (
     <Fetcher urls={[`/loansapi/get_loan/${params.loanId}/`]}>
       {({data}) => <LoanDetails loanApiData={data[0]}/>}
-    </Fetcher>
-  )
-}
-
-const LoanListComponent = () => {
-  return (
-    <Fetcher urls={['/loansapi/loan_products/', '/usersapi/list_units/']}>
-      {({data}) => <LoansList products={data[0].loan_products} units={data[1]}/>}
     </Fetcher>
   )
 }
