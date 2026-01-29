@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import DeleteExpense from './DeleteExpense';
 
 function MiniExpenseDetails({expenseDetails, extra}) {
-  const [deleteExpense, setDeleteExpense] = useState(false);
+  const [deleteExpense, setDeleteExpense] = React.useState(false);
   const {setExpenseDetails, setExpenseId, setEpenseData} = extra;
   const navigate = useNavigate();
 
-  useEffect(() => {
+  React.useEffect(() => {
     setExpenseDetails(expenseDetails);
   }, []);
 
@@ -15,10 +15,9 @@ function MiniExpenseDetails({expenseDetails, extra}) {
     <div style={{position:"sticky", top:"0", width:"100%"}}>
       {deleteExpense && <DeleteExpense setOpen={setDeleteExpense} expenseID={expenseDetails.id} setEpenseData={setEpenseData} setExpenseId={setExpenseId} />}
       <div style={{display:"flex", flexDirection:"column", padding:"1.5rem"}} className="j-details-container">
-
         <div className="row" style={{marginBottom:"1rem", marginTop:"0"}}>
             <div className="col-12" style={{display:"flex", justifyContent:"space-between"}}>
-              <button><a onClick={e => setExpenseId(null)} className="btn btn-default client__details" style={{borderRadius:"0"}}>Close</a></button>
+              <button><a onClick={() => setExpenseId(null)} className="btn btn-default client__details" style={{borderRadius:"0"}}>Close</a></button>
               <button className='btn btn-default client__details' onClick={() => navigate({pathname: '/expenses/viewexpenses', search: `?expense_id=${expenseDetails.id}`})}>
                 Max
               </button>
@@ -49,7 +48,6 @@ function MiniExpenseDetails({expenseDetails, extra}) {
             </ul>
           </div>
         </div>
-
       </div>
     </div>
   )
