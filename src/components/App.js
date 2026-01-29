@@ -8,7 +8,11 @@ import { BranchesProvider } from '../contexts/BranchesContext';
 import { CurrenciesProvider } from '../contexts/CurrenciesContext';
 import { NotificationsProvider } from '../contexts/NotificationsContext';
 import { LoanControlsProvider } from '../contexts/LoanControlsContext';
-
+import  { ProductsProvider } from '../contexts/ProductsContext';
+import { UnitsProvider } from '../contexts/UnitsContext';
+import { CashProvider } from '../contexts/CashContext';
+import { ClientControlsProvider } from '../contexts/ClientControlsContext';
+import { LoanFormsProvider } from '../contexts/LoanFormsContext';
 export const ThemeContext = createContext(null);
 
 function App() {
@@ -27,9 +31,22 @@ function App() {
     window.localStorage.setItem('THEME', JSON.stringify(theme));
   }, [theme]);
 
+  const urls = [
+    '/usersapi/logged_in_user/',
+    '/usersapi/get-branches/',
+    '/usersapi/list_currencies/',
+    '/loansapi/loan_controls/',
+    '/usersapi/staff_toplevel_perms/',
+    '/loansapi/loan_products_list/?allowed_in_user_branch_only=1',
+    '/usersapi/list_units/?active_only=1',
+    '/acc-api/cash-accounts-list/',
+    '/clientsapi/client_controls/',
+    '/usersapi/list_field_sets/?entity_type=LOAN&active=1'
+  ];
+
   return (
     <>
-      <Fetcher urls={['/usersapi/logged_in_user/', '/usersapi/get-branches/', '/usersapi/list_currencies/', '/loansapi/loan_controls/', '/usersapi/staff_toplevel_perms/']}>
+      <Fetcher urls={urls}>
         {({data}) => {
           return (
             <ThemeContext.Provider value={{theme, toggleTheme}}>
@@ -38,16 +55,37 @@ function App() {
                   <BranchesProvider>
                     <NotificationsProvider>
                       <LoanControlsProvider>
-                        <Router>
-                          <div id={theme}>
-                            <section className='home-section'>
-                              <Navbar theme={theme} loggedInUser={data[0]} toggleTheme={toggleTheme} stafftoplevelperms={data[4]}/>
-                              <div className='app'>
-                                <Routes loggedInUser={data[0]} branches={data[1]} currencies={data[2]} loanControls={data[3]} stafftoplevelperms={data[4]}/>
-                              </div>
-                            </section>
-                          </div>
-                        </Router>
+                        <ProductsProvider>
+                          <UnitsProvider>
+                            <CashProvider>
+                              <ClientControlsProvider>
+                                <LoanFormsProvider>
+                                  <Router>
+                                    <div id={theme}>
+                                      <section className='home-section'>
+                                        <Navbar theme={theme} loggedInUser={data[0]} toggleTheme={toggleTheme} stafftoplevelperms={data[4]}/>
+                                        <div className='app'>
+                                          <Routes
+                                            loggedInUser={data[0]}
+                                            branches={data[1]}
+                                            currencies={data[2]}
+                                            loanControls={data[3]}
+                                            stafftoplevelperms={data[4]}
+                                            loanProducts={data[5]}
+                                            units={data[6]}
+                                            cashAccounts={data[7]}
+                                            clientControls={data[8]}
+                                            loanForms={data[9]}
+                                          />
+                                        </div>
+                                      </section>
+                                    </div>
+                                  </Router>
+                                </LoanFormsProvider>
+                              </ClientControlsProvider>
+                            </CashProvider>
+                          </UnitsProvider>
+                        </ProductsProvider>
                       </LoanControlsProvider>
                     </NotificationsProvider>
                   </BranchesProvider>
