@@ -17,20 +17,51 @@ import { scheduleStrategies } from './data';
 import {Fee, AddFee} from './Fees';
 import {CustomLoanForm, AddCustomLoanForm} from './Forms';
 import { AddSchedulePenalty, SchedulePenalty } from './SchedulePenalties';
+import axios from 'axios';
 
 function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSubmit, back}) {
   const {branches} = useBranches();
   const selectBranches = branches.map(br => ({label: br.name, value:br.id}));
   initialValues.allowed_branches_ids = selectBranches.filter(br => initialValues.allowed_branches_ids.includes(br.value))
   const {currencies} = useCurrencies();
+  const [accounts, setAccounts] = React.useState(null);
+
+  React.useEffect(() => {
+    const fetch = async () => {
+      const response = await axios.get('/acc-api/sub_accounts_api/?page_num=1');
+      setAccounts(response.data);
+    }
+    fetch();
+  }, []);
+
+  if (!accounts) {
+    return <div>Loading...</div>
+  }
 
   return (
     <>
       <ButtonDefault value={'Back'} handler={back} />
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-        {({ isSubmitting, errors, setFieldValue, values }) => (
-          <Form>
-            <NonFieldErrors errors={errors}>
+        {({ isSubmitting, errors, setFieldValue, values }) => {
+          const buildAccountOptions = (type) =>
+            accounts.accounts
+            .filter(
+              acc =>
+                acc.account_type === type &&
+                acc.currency_id == values.currency_id
+            )
+            .map(acc => ({
+              label: `${acc.general_ledger_name} - ${acc.general_ledger_code} ${acc.account_type}`,
+              value: acc.id,
+          }));
+    
+          const assetOptions = buildAccountOptions('ASSET');
+          const liabilityOptions = buildAccountOptions('LIABILITY');
+          const expenseOptions = buildAccountOptions('EXPENSE');
+          const incomeOptions = buildAccountOptions('INCOME');
+
+          return (
+            <Form>
               <div className='divider divider-info'>
                 <span>Name & Description</span>
               </div>
@@ -338,13 +369,87 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                   required
                 />
               )}
+              <div className='divider divider-info'>
+                <span>Accounting</span>
+              </div>
+              <CustomMultiSelect
+                label='Portfolio Control (Optional)'
+                name='portfolio_control'
+                isMulti={false}
+                setFieldValue={setFieldValue}
+                options={assetOptions}
+              />
+              <CustomMultiSelect
+                label='Interest Income (Optional)'
+                name='interest_income'
+                isMulti={false}
+                setFieldValue={setFieldValue}
+                options={incomeOptions}
+              />
+              <CustomMultiSelect
+                label='Interest Receivable (Optional)'
+                name='interest_receivable'
+                isMulti={false}
+                setFieldValue={setFieldValue}
+                options={assetOptions}
+              />
+              <CustomMultiSelect
+                label='Penalty Income (Optional)'
+                name='penalty_income'
+                isMulti={false}
+                setFieldValue={setFieldValue}
+                options={incomeOptions}
+              />
+              <CustomMultiSelect
+                label='Penalty Receivable (Optional)'
+                name='penalty_receivable'
+                isMulti={false}
+                setFieldValue={setFieldValue}
+                options={assetOptions}
+              />
+              <CustomMultiSelect
+                label='Fee Income (Optional)'
+                name='fee_income'
+                isMulti={false}
+                setFieldValue={setFieldValue}
+                options={incomeOptions}
+              />
+              <CustomMultiSelect
+                label='Fees Receivable (Optional)'
+                name='fee_receivable'
+                isMulti={false}
+                setFieldValue={setFieldValue}
+                options={assetOptions}
+              />
+              <CustomMultiSelect
+                label='Refunds Payable (Optional)'
+                name='refunds_payable'
+                isMulti={false}
+                setFieldValue={setFieldValue}
+                options={liabilityOptions}
+              />
+              <CustomMultiSelect
+                label='Write Off (Optional)'
+                name='write_off'
+                isMulti={false}
+                setFieldValue={setFieldValue}
+                options={expenseOptions}
+              />
+              <CustomMultiSelect
+                label='Bad Debts Recovery (Optional)'
+                name='bad_debts_recovery'
+                isMulti={false}
+                setFieldValue={setFieldValue}
+                options={incomeOptions}
+              />
               <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
               <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-              <SubmitButton isSubmitting={isSubmitting}/>
+                <SubmitButton isSubmitting={isSubmitting}/>
               </div>
-            </NonFieldErrors>
-          </Form>
-        )}
+              <NonFieldErrors errors={errors}/>
+            </Form>
+          )
+        }}
       </Formik>
     </>
   )
