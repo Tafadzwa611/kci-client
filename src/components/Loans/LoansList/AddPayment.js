@@ -8,13 +8,13 @@ import {
   CustomSelect,
   CustomDatePicker,
   CustomCheckbox,
-  Fetcher,
   ModalSubmit,
   Modal
 } from '../../../common';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { removeEmptyValues } from '../../../utils/utils';
+import { useCash } from '../../../contexts/CashContext';
 
 const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType, updateLoanList, setLoanData}) => {
   const onSubmit = async (values, actions) => {
@@ -59,6 +59,8 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
     }
   }
 
+  const { cash } = useCash();
+
   const selectOpts = subLoans.filter(loan => loan.id !== null);
 
   const initialValues = {
@@ -76,50 +78,46 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
 
   return (
     <Modal open={true} setOpen={setOpen} title={'Add Payment'}>
-      <Fetcher urls={['/acc-api/cash-accounts-list/']}>
-        {({data}) => (
-          <Formik initialValues={initialValues} onSubmit={onSubmit}>
-            {({ values, errors, isSubmitting, setFieldValue }) => (
-              <Form>
-                <NonFieldErrors errors={errors}>
-                  <div className='create_modal_container'>
-                    <div>
-                      <CustomInput label='Amount Paid' name='amount_paid' type='number' required/>
-                      <CustomCheckbox label='Manually Allocate' name='manually_allocate'/>
-                      {values.manually_allocate && <>
-                        <CustomInput label='Principal Paid' name='manual_allocation.principal' type='number' required/>
-                        <CustomInput label='Interest Paid' name='manual_allocation.interest' type='number' required/>
-                        <CustomInput label='Fees Paid' name='manual_allocation.fees' type='number' required/>
-                        <CustomInput label='Penalty Paid' name='manual_allocation.penalty' type='number' required/>
-                      </>}
-                      <CustomDatePicker label='Payment Date' name='payment_date' setFieldValue={setFieldValue} required/>
-                      <CustomMultiSelect
-                        label='Fund Account'
-                        name='fund_account'
-                        isMulti={false}
-                        setFieldValue={setFieldValue}
-                        options={data[0].accounts.filter(account => !account.suspended && account.currency_id == currencyId).map(account => (
-                          {label: `${account.label} - ${account.branch}`, value: account.value}
-                        ))}
-                        required
-                      />
-                      {clientType === 'Groups (solidarity)' ?
-                      <CustomSelect label='Sub Loan' name='sub_loan_id' required>
-                        <option value=''>------</option>
-                        {selectOpts.map(subLoan => <option key={subLoan.id} value={subLoan.id}>{subLoan.fullname}</option>)}
-                      </CustomSelect> : null}
-                      <CustomInput label='Receipt Number' name='receipt_number' type='text'/>
-                      <CustomTextField label='Description' name='notes' type='text'/>
-                      <CustomCheckbox label='Send SMS notification to client' name='send_sms_notification'/>
-                    </div>
-                    <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
-                  </div>
-                </NonFieldErrors>
-              </Form>
-            )}
-          </Formik>
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        {({ values, errors, isSubmitting, setFieldValue }) => (
+          <Form>
+            <NonFieldErrors errors={errors}>
+              <div className='create_modal_container'>
+                <div>
+                  <CustomInput label='Amount Paid' name='amount_paid' type='number' required/>
+                  <CustomCheckbox label='Manually Allocate' name='manually_allocate'/>
+                  {values.manually_allocate && <>
+                    <CustomInput label='Principal Paid' name='manual_allocation.principal' type='number' required/>
+                    <CustomInput label='Interest Paid' name='manual_allocation.interest' type='number' required/>
+                    <CustomInput label='Fees Paid' name='manual_allocation.fees' type='number' required/>
+                    <CustomInput label='Penalty Paid' name='manual_allocation.penalty' type='number' required/>
+                  </>}
+                  <CustomDatePicker label='Payment Date' name='payment_date' setFieldValue={setFieldValue} required/>
+                  <CustomMultiSelect
+                    label='Fund Account'
+                    name='fund_account'
+                    isMulti={false}
+                    setFieldValue={setFieldValue}
+                    options={cash.accounts.filter(account => !account.suspended && account.currency_id == currencyId).map(account => (
+                      {label: `${account.label} - ${account.branch}`, value: account.value}
+                    ))}
+                    required
+                  />
+                  {clientType === 'Groups (solidarity)' ?
+                  <CustomSelect label='Sub Loan' name='sub_loan_id' required>
+                    <option value=''>------</option>
+                    {selectOpts.map(subLoan => <option key={subLoan.id} value={subLoan.id}>{subLoan.fullname}</option>)}
+                  </CustomSelect> : null}
+                  <CustomInput label='Receipt Number' name='receipt_number' type='text'/>
+                  <CustomTextField label='Description' name='notes' type='text'/>
+                  <CustomCheckbox label='Send SMS notification to client' name='send_sms_notification'/>
+                </div>
+                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+              </div>
+            </NonFieldErrors>
+          </Form>
         )}
-      </Fetcher>
+      </Formik>
     </Modal>
   )
 }
