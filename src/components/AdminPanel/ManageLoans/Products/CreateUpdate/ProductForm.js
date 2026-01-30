@@ -373,71 +373,71 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 <span>Accounting</span>
               </div>
               <CustomMultiSelect
-                label='Portfolio Control (Optional)'
-                name='portfolio_control'
+                label='Portfolio Control Asset (Optional)'
+                name='accounting.portfolio_control'
                 isMulti={false}
                 setFieldValue={setFieldValue}
                 options={assetOptions}
               />
               <CustomMultiSelect
                 label='Interest Income (Optional)'
-                name='interest_income'
+                name='accounting.interest_income'
                 isMulti={false}
                 setFieldValue={setFieldValue}
                 options={incomeOptions}
               />
               <CustomMultiSelect
-                label='Interest Receivable (Optional)'
-                name='interest_receivable'
+                label='Interest Receivable Asset (Optional)'
+                name='accounting.interest_receivable'
                 isMulti={false}
                 setFieldValue={setFieldValue}
                 options={assetOptions}
               />
               <CustomMultiSelect
                 label='Penalty Income (Optional)'
-                name='penalty_income'
+                name='accounting.penalty_income'
                 isMulti={false}
                 setFieldValue={setFieldValue}
                 options={incomeOptions}
               />
               <CustomMultiSelect
-                label='Penalty Receivable (Optional)'
-                name='penalty_receivable'
+                label='Penalty Receivable Asset (Optional)'
+                name='accounting.penalty_receivable'
                 isMulti={false}
                 setFieldValue={setFieldValue}
                 options={assetOptions}
               />
               <CustomMultiSelect
-                label='Fee Income (Optional)'
-                name='fee_income'
+                label='Fees Income (Optional)'
+                name='accounting.fee_income'
                 isMulti={false}
                 setFieldValue={setFieldValue}
                 options={incomeOptions}
               />
               <CustomMultiSelect
-                label='Fees Receivable (Optional)'
-                name='fee_receivable'
+                label='Fees Receivable Asset (Optional)'
+                name='accounting.fee_receivable'
                 isMulti={false}
                 setFieldValue={setFieldValue}
                 options={assetOptions}
               />
               <CustomMultiSelect
-                label='Refunds Payable (Optional)'
-                name='refunds_payable'
+                label='Refunds Payable Liability (Optional)'
+                name='accounting.refunds_payable'
                 isMulti={false}
                 setFieldValue={setFieldValue}
                 options={liabilityOptions}
               />
               <CustomMultiSelect
-                label='Write Off (Optional)'
-                name='write_off'
+                label='Write Off Expense (Optional)'
+                name='accounting.write_off'
                 isMulti={false}
                 setFieldValue={setFieldValue}
                 options={expenseOptions}
               />
               <CustomMultiSelect
-                label='Bad Debts Recovery (Optional)'
-                name='bad_debts_recovery'
+                label='Bad Debts Recovery Income (Optional)'
+                name='accounting.bad_debts_recovery'
                 isMulti={false}
                 setFieldValue={setFieldValue}
                 options={incomeOptions}

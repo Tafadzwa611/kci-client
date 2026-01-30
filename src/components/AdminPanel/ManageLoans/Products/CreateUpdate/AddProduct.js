@@ -65,7 +65,8 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
     allow_editing_schedule_strategy_on_loan_creation: true,
     schedule_penalties: [],
     auto_apply_scheduled_penalties_on_backdating: false,
-    recalculate_scheduled_penalties: false
+    recalculate_scheduled_penalties: false,
+    accounting: {}
   };
 
   const back = () => setView('list');
@@ -73,11 +74,12 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
+      const accounting_rules = get_account_ids(data.accounting);
       data.default_principal_amount = data.minimum_principal_amount;
       data.allowed_branches_ids = values.allowed_branches_ids.map(allowed_branches_id => allowed_branches_id.value);
       data.interest_application = values.product_type === 'Dynamic Term Loan' ? 'On Installment Date' : values.interest_application;
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post('/loansapi/add_loan_product/', {...data, fees: values.fees}, CONFIG);
+      const response = await axios.post('/loansapi/add_loan_product/', {...data, ...accounting_rules, fees: values.fees}, CONFIG);
       setProductId(response.data.id);
       setProducts(curr => [response.data, ...curr]);
       setSelectedPrdct(response.data);
@@ -103,6 +105,16 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
       fieldSets={fieldSets}
     />
   )
+}
+
+const get_account_ids = (accounts) => {
+  const accounting_rules = {};
+  Object.keys(accounts).forEach(key => {
+    let account = accounts[key];
+    if (!account) return;
+    accounting_rules[`${key}_id`] = account.value;
+  })
+  return accounting_rules;
 }
 
 export default AddProduct;
