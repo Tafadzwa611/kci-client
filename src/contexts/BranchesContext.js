@@ -1,10 +1,9 @@
-/* eslint-disable react/prop-types */
-import React, {createContext, useState, useContext} from 'react';
+import React from 'react';
 
-const BranchesContext = createContext({});
+const BranchesContext = React.createContext({});
 
 const BranchesProvider = ({children}) => {
-  const [branches, setBranches] = useState([]);
+  const [branches, setBranches] = React.useState([]);
 
   return (
     <BranchesContext.Provider value={{branches, setBranches}}>
@@ -14,7 +13,7 @@ const BranchesProvider = ({children}) => {
 };
 
 function useBranches() {
-  return useContext(BranchesContext)
+  return React.useContext(BranchesContext)
 }
 
 export {BranchesContext, BranchesProvider, useBranches};

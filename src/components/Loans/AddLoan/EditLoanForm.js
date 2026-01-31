@@ -60,7 +60,6 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControl
 
   const onSubmit = async (values, actions) => {
     try {
-      console.log(values);
       const custom_data = processValues(values, customForms, formIds);
       const data = removeEmptyValues(values);
       if (data.fund_account) {

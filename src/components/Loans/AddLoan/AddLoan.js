@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import SolidarityGroupForm from './SolidarityGroupForm';
 import { CustomMultiSelect } from '../../../common';
 import { Form, Formik } from 'formik';
@@ -7,8 +7,14 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import ClientFormFields from './ClientFormFields';
 import { removeEmptyValues, isNumeric } from '../../../utils/utils';
+import { useProducts } from '../../../contexts/ProductsContext';
+import { useUnits } from '../../../contexts/UnitsContext';
+import { useLoanControls } from '../../../contexts/LoanControlsContext';
+import { useCash } from '../../../contexts/CashContext';
+import { useClientControls } from '../../../contexts/ClientControlsContext';
+import { useLoanForms } from '../../../contexts/LoanFormsContext';
 
-function AddLoan({products, lcontrols, customForms, units, clientControls, cashAccounts}) {
+function AddLoan() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const application_id = searchParams.get('application_id');
@@ -16,17 +22,31 @@ function AddLoan({products, lcontrols, customForms, units, clientControls, cashA
   const client_id = searchParams.get('client_id') || '';
   const client_name = searchParams.get('client_name') || '';
   let princ = searchParams.get('principal') || '';
+
+  let { products } = useProducts();
+  const { units } = useUnits();
+  const { clientControls } = useClientControls();
+  const { loanForms } = useLoanForms();
+  const customForms = loanForms;
+
+  let { cash } = useCash();
+  const cashAccounts = cash;
+
+  const { loanControls } = useLoanControls();
+  const lcontrols = loanControls;
+
   if (products.length > 1) {
     products.sort((a, b) => a.loan_product_id.localeCompare(b.loan_product_id));
   }
   products = products.filter(prod => prod.is_active);
-  const [product, setProduct] = useState(null);
-  const [clientId, setClientId] = useState('');
-  const [clientName, setClientName] = useState('');
-  const [principal, setPrincipal] = useState('');
-  const [formIds, setFormIds] = useState([]);
 
-  useEffect(() => {
+  const [product, setProduct] = React.useState(null);
+  const [clientId, setClientId] = React.useState('');
+  const [clientName, setClientName] = React.useState('');
+  const [principal, setPrincipal] = React.useState('');
+  const [formIds, setFormIds] = React.useState([]);
+
+  React.useEffect(() => {
     const prod = products.find(prod => prod.id.toString() === loan_product_id) || null;
     setProduct(prod);
     setClientId(client_id);
