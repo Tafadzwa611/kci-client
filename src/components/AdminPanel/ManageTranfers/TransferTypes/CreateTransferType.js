@@ -18,10 +18,16 @@ function CreateTransferType({branch_ids}) {
 
   const onSubmit = async (values, actions) => {
     try {
-      const data = removeEmptyValues(values);
+      const payload = {
+        name: values.name,
+        currency_id: Number(values.currency_id),
+        receiving_accounts_ids: (values.receiving_accounts_ids || []).map(x => x.value ?? x),
+        sending_accounts_ids: (values.sending_accounts_ids || []).map(x => x.value ?? x),
+      };
+      const data = removeEmptyValues(payload);
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post('/acc-api/create_transfer_type/', data, CONFIG);
-      navigate({pathname: '/acc-api/transfer-types', search: `?transfertype_id=${response.data.id}`});
+      await axios.post('/acc-api/create_transfer_type/', data, CONFIG);
+      navigate({pathname: '/users/admin/managetransfers'});
     } catch (error) {
       if (error.message === "Network Error") {
         actions.setErrors({responseStatus: "Network Error"});

@@ -111,6 +111,11 @@ const Navbar = (props) => {
               <span>Reports</span>
             </NavLink>
           )}
+          {props.stafftoplevelperms.can_view_transfer_module && (
+            <NavLink to='/transfers/viewtransfers' className='btn btn-default dashboard'>
+              <span>Transfers</span>
+            </NavLink>
+          )}
           {props.stafftoplevelperms.can_view_accounting_module && (
             <NavLink to='/accounting/viewaccounting' className='btn btn-default dashboard'>
               <span>Accounting</span>

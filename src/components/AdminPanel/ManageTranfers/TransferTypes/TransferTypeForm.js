@@ -21,10 +21,12 @@ function TransferTypeForm({initialValues, onSubmit}) {
           <NonFieldErrors errors={errors}>
             <div className='divider divider-info'><span>Transfer Type Information</span></div>
             <CustomInput label='Transfer Type Name' name='name' type='text' required/>
-            <CustomSelect label='Currency' name='currency_id' required>
-              <option value=''>------</option>
-              {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-            </CustomSelect>
+            <div style={{marginBottom:'1.5rem', marginTop:'1.5rem'}}>
+              <CustomSelect label='Currency' name='currency_id' required>
+                <option value=''>------</option>
+                {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+              </CustomSelect>
+            </div>
             {values.currency_id && (
               <Fetcher urls={[
                 `/acc-api/cash-accounts-by-currency-list/?currency_id=${values.currency_id}`
@@ -35,7 +37,9 @@ function TransferTypeForm({initialValues, onSubmit}) {
                     <CustomMultiSelect
                         label='Receiving Accounts'
                         initVals={[]}
-                        options={data[0].accounts.map(account => ({value: account.id, label: account.general_ledger_name}))}
+                        options={data[0].accounts.map(account => (
+                          {label: `${account.general_ledger_name} - ${account.general_ledger_code}`, value: account.id}
+                        ))}
                         setFieldValue={setFieldValue}
                         name='receiving_accounts_ids'
                         required
@@ -43,7 +47,9 @@ function TransferTypeForm({initialValues, onSubmit}) {
                     <CustomMultiSelect
                         label='Sending Accounts'
                         initVals={[]}
-                        options={data[0].accounts.map(account => ({value: account.id, label: account.general_ledger_name}))}
+                        options={data[0].accounts.map(account => (
+                          {label: `${account.general_ledger_name} - ${account.general_ledger_code}`, value: account.id}
+                        ))}
                         setFieldValue={setFieldValue}
                         name='sending_accounts_ids'
                         required
