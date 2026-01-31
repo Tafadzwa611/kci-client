@@ -12,8 +12,17 @@ import { useBranches } from '../../../contexts/BranchesContext';
 import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
+
 const Filter = ({setReport, setParams, units}) => {
-  const initialValues = {branch_ids: [], page_num: 1, min_date: '', max_date: '', file_format: 'html', unit_id: ''};
+  const initialValues = {
+    branch_ids: [],
+    page_num: 1,
+    min_date: '',
+    max_date: '',
+    file_format: 'html',
+    unit_id: '',
+    status: ''
+  };
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
@@ -74,7 +83,7 @@ const Filter = ({setReport, setParams, units}) => {
                   </div>
                 </div>
                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'80%'}}>
+                  <div style={{width:'60%'}}>
                     <MultiSelectFilter
                       label='Branches'
                       name='branch_ids'
@@ -83,7 +92,15 @@ const Filter = ({setReport, setParams, units}) => {
                       required
                     />
                   </div>
-                  <div className='row-payments-container' style={{width:'10%'}}>
+                  <div className='row-payments-container' style={{width:'15%'}}>
+                    <CustomSelectFilter label='Status' name='status'>
+                      <option value=''>Select Status</option>
+                      <option value='Pending'>Unpaid</option>
+                      <option value='Paid'>Paid</option>
+                      <option value='Overdue'>Overdue</option>
+                    </CustomSelectFilter>
+                  </div>
+                  <div className='row-payments-container' style={{width:'15%'}}>
                     <CustomSelectFilter label='Mode' name='file_format' required>
                       <option value='html'>Screen (HTML)</option>
                       <option value='xlsx'>Excel</option>

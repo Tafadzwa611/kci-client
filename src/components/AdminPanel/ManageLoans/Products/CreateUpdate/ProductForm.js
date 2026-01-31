@@ -376,6 +376,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 label='Portfolio Control Asset (Optional)'
                 name='accounting.portfolio_control'
                 isMulti={false}
+                initVals={values.accounting.portfolio_control}
                 setFieldValue={setFieldValue}
                 options={assetOptions}
               />
@@ -383,6 +384,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 label='Interest Income (Optional)'
                 name='accounting.interest_income'
                 isMulti={false}
+                initVals={values.accounting.interest_income}
                 setFieldValue={setFieldValue}
                 options={incomeOptions}
               />
@@ -390,6 +392,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 label='Interest Receivable Asset (Optional)'
                 name='accounting.interest_receivable'
                 isMulti={false}
+                initVals={values.accounting.interest_receivable}
                 setFieldValue={setFieldValue}
                 options={assetOptions}
               />
@@ -397,6 +400,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 label='Penalty Income (Optional)'
                 name='accounting.penalty_income'
                 isMulti={false}
+                initVals={values.accounting.penalty_income}
                 setFieldValue={setFieldValue}
                 options={incomeOptions}
               />
@@ -404,6 +408,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 label='Penalty Receivable Asset (Optional)'
                 name='accounting.penalty_receivable'
                 isMulti={false}
+                initVals={values.accounting.penalty_receivable}
                 setFieldValue={setFieldValue}
                 options={assetOptions}
               />
@@ -411,6 +416,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 label='Fees Income (Optional)'
                 name='accounting.fee_income'
                 isMulti={false}
+                initVals={values.accounting.fee_income}
                 setFieldValue={setFieldValue}
                 options={incomeOptions}
               />
@@ -418,6 +424,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 label='Fees Receivable Asset (Optional)'
                 name='accounting.fee_receivable'
                 isMulti={false}
+                initVals={values.accounting.fee_receivable}
                 setFieldValue={setFieldValue}
                 options={assetOptions}
               />
@@ -425,6 +432,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 label='Refunds Payable Liability (Optional)'
                 name='accounting.refunds_payable'
                 isMulti={false}
+                initVals={values.accounting.refunds_payable}
                 setFieldValue={setFieldValue}
                 options={liabilityOptions}
               />
@@ -432,6 +440,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 label='Write Off Expense (Optional)'
                 name='accounting.write_off'
                 isMulti={false}
+                initVals={values.accounting.write_off}
                 setFieldValue={setFieldValue}
                 options={expenseOptions}
               />
@@ -439,6 +448,7 @@ function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSu
                 label='Bad Debts Recovery Income (Optional)'
                 name='accounting.bad_debts_recovery'
                 isMulti={false}
+                initVals={values.accounting.bad_debts_recovery}
                 setFieldValue={setFieldValue}
                 options={incomeOptions}
               />

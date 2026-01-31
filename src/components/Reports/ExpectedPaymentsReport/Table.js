@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import axios from 'axios';
 
+
 const Table = ({ report, params, setReport }) => {
   return (
     <>
@@ -25,6 +26,7 @@ const Table = ({ report, params, setReport }) => {
                 <th style={{textAlign:'right'}}>Fees_Paid</th>
                 <th style={{textAlign:'right'}}>Penalty_Paid</th>
                 <th style={{textAlign:'right'}}>Loan_Status</th>
+                <th style={{textAlign:'right'}}>Installment_Status</th>
                 <th style={{textAlign:'right'}}>Branch</th>
                 <th style={{textAlign:'right'}}>Installment_Date</th>
                 <th style={{textAlign:'right'}}>Loan_Officer</th>
@@ -49,6 +51,7 @@ const Table = ({ report, params, setReport }) => {
                     <td>{installment.fees_paid}</td>
                     <td>{installment.penalty_paid}</td>
                     <td>{installment.loan_status}</td>
+                    <td>{installment.status}</td>
                     <td>{installment.branch}</td>
                     <td>{installment.installment_date}</td>
                     <td>{installment.loan_officer}</td>

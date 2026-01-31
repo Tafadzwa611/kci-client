@@ -79,7 +79,7 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
       data.allowed_branches_ids = values.allowed_branches_ids.map(allowed_branches_id => allowed_branches_id.value);
       data.interest_application = values.product_type === 'Dynamic Term Loan' ? 'On Installment Date' : values.interest_application;
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post('/loansapi/add_loan_product/', {...data, ...accounting_rules, fees: values.fees}, CONFIG);
+      const response = await axios.post('/loansapi/add_loan_product/', {...data, fees: values.fees, accounting_rules}, CONFIG);
       setProductId(response.data.id);
       setProducts(curr => [response.data, ...curr]);
       setSelectedPrdct(response.data);
