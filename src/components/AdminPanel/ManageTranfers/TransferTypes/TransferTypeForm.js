@@ -38,7 +38,7 @@ function TransferTypeForm({initialValues, onSubmit}) {
                         label='Receiving Accounts'
                         initVals={[]}
                         options={data[0].accounts.map(account => (
-                          {label: `${account.general_ledger_name} - ${account.general_ledger_code}`, value: account.id}
+                          {label: `${account.general_ledger_name} - ${account.general_ledger_code} ${account.branch} `, value: account.id}
                         ))}
                         setFieldValue={setFieldValue}
                         name='receiving_accounts_ids'
@@ -48,7 +48,7 @@ function TransferTypeForm({initialValues, onSubmit}) {
                         label='Sending Accounts'
                         initVals={[]}
                         options={data[0].accounts.map(account => (
-                          {label: `${account.general_ledger_name} - ${account.general_ledger_code}`, value: account.id}
+                          {label: `${account.general_ledger_name} - ${account.general_ledger_code} ${account.branch} `, value: account.id}
                         ))}
                         setFieldValue={setFieldValue}
                         name='sending_accounts_ids'
