@@ -55,7 +55,7 @@ function Layout() {
               Cash Book
             </Link>
             <Link to='/accounting/viewaccounting/profitandloss' className={location.pathname === '/accounting/viewaccounting/profitandloss' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Profit & Loss
+              Comprehensive Income
             </Link>
             <Link to='/accounting/viewaccounting/trialbalance' className={location.pathname === '/accounting/viewaccounting/trialbalance' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Trial Balance

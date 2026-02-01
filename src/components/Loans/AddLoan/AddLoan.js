@@ -149,7 +149,7 @@ function AddLoan() {
               setFieldValue(fieldName, selectedOpts);
             }}
             options={products.map(product => ({
-              label: `${product.currency_shortname} - ${product.loan_product_id} ${product.name}`,
+              label: `${product.currency_shortname} - ${product.loan_product_id} ${product.name} ${product.client_type}`,
               value: product.id
             }))}
             required
