@@ -28,7 +28,7 @@ const ViewTransfers = () => {
 const AddTransferComponent = () => {
     return (
         <Fetcher urls={['/acc-api/get_transfertype_list/']}>
-            {({data}) => <CreateTransfer transferTypes={data[0]} />}
+            {({data}) => <CreateTransfer transfertypes={data[0]} />}
         </Fetcher>
     )
 }
@@ -46,7 +46,7 @@ function Layout() {
   return (
     <div className='card'>
       <div className='card-body'>
-        <h5 className='table-heading' style={{marginBottom:'20px'}}>View Clients</h5>
+        <h5 className='table-heading' style={{marginBottom:'20px'}}>View Transfers</h5>
         <>
           <div className='bloc-tabs'>
             <Link to='/transfers/viewtransfers' id='list' className={location.pathname === '/transfers/viewtransfers' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
