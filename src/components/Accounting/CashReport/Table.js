@@ -57,12 +57,20 @@ function Table({statement, setStatement}) {
             />
             <button className='btn btn-default' onClick={toPDF}>Download as PDF</button>
           </div>
-          {statement.reconciled ?
-          <>
-          <button className='btn btn-success'>Closed</button>
-          <button type='submit' className='btn btn-danger' onClick={removeClosure}>Remove Closure</button>
-          </> :
-          <button type='submit' onClick={reconcile} className='btn btn-default'>Close</button>}
+          {statement.reconciled ? (
+            <div>
+              <button className='btn btn-success'>
+                Closed
+              </button>
+              <button type='submit' className='btn btn-danger' onClick={removeClosure}>
+                Remove Closure
+              </button>
+            </div>
+          ) : (
+            <button type='submit' onClick={reconcile} className='btn btn-default'>
+              Close
+            </button>
+          )}
           {error}
         </div>
         <div style={{width:'100%', overflowX:'auto'}}>
@@ -71,6 +79,8 @@ function Table({statement, setStatement}) {
               <thead>
                 <tr className='journal-details header'>
                   <th>Date</th>
+                  <th>Client</th>
+                  <th>Account</th>
                   <th>Narration</th>
                   <th>Referencing Account</th>
                   <th>Reference</th>
@@ -81,6 +91,8 @@ function Table({statement, setStatement}) {
               <tbody>
                 <tr style={{background: Number(statement.balance_bd) >= 0 ? '#7FFF00' : '#FFB6C1', position:'sticky', top:'0'}} className='cashreport-balance'>
                   <td>{statement.report_date}</td>
+                  <td></td>
+                  <td></td>
                   <td>Balance b/d</td>
                   <td></td>
                   <td></td>
@@ -90,7 +102,9 @@ function Table({statement, setStatement}) {
                 {statement.transactions.map(txn => {
                   return (
                     <tr key={txn.id} className={txn.id == journalID ? 'cashreport-table selected': 'cashreport-table'}>
-                      <td></td>
+                      <td>{txn.value_date}</td>
+                      <td>{txn.client_name}</td>
+                      <td>{txn.account_id}</td>
                       <td>{txn.description}</td>
                       <td>{txn.ref_account}</td>
                       <td><a id={txn.id} href='#' onClick={goToJournalDetails}>{txn.reference}</a></td>
@@ -101,6 +115,8 @@ function Table({statement, setStatement}) {
                 })}
                 <tr style={{background: Number(statement.balance_cd) >= 0 ? '#7FFF00' : '#FFB6C1', position:'sticky', insetBlockEnd:'0'}} className='cashreport-balance'>
                   <td></td>
+                  <td></td>
+                  <td></td>
                   <td>Balance c/d</td>
                   <td></td>
                   <td></td>
@@ -108,6 +124,8 @@ function Table({statement, setStatement}) {
                   <td>{Number(statement.balance_cd) >= 0 && statement.balance_cd}</td>
                 </tr>
                 <tr>
+                  <td></td>
+                  <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
