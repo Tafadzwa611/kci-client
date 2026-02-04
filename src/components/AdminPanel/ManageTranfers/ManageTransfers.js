@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import CreateTransferType from './TransferTypes/CreateTransferType';
 import TransferTypes from './TransferTypes/TransferTypes';
+import UpdateTransferType from './TransferTypes/UpdateTransferType';
 
 function ManageTransfers() {
   React.useEffect(() => {
@@ -19,6 +20,7 @@ function ManageTransfers() {
       <Route path='/' element={<Layout />}>
         <Route index element={<TransferTypes />} />
         <Route path='createtransfertype' element={<CreateTransferType />} />
+        <Route path='edittransfertype/:transfertype_id' element={<UpdateTransferType />} />
       </Route>
     </Routes>
   )
