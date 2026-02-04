@@ -13,12 +13,16 @@ function DebtorsListTable({report, setReport, params}) {
                             <tr className='journal-details fees__report_thead'>
                                 <th>Branch</th>
                                 <th>Client_Name</th>
+                                <th>Client_ID</th>
                                 <th>Loan_Number</th>
                                 <th>Disbursed_Date</th>
                                 <th>Maturity_Date</th>
                                 <th>Principal</th>
                                 <th>Claimable_Balance</th>
-                                <th>Balance</th>
+                                <th>Current_Balance</th>
+                                <th>Balance_At</th>
+                                <th>Num_Of_Repayments</th>
+                                <th>Repayment_Cycle</th>
                                 <th>Sector</th>
                                 <th>Male</th>
                                 <th>Female</th>
@@ -45,12 +49,16 @@ function DebtorsListTable({report, setReport, params}) {
                                     <tr key={loan.id}>
                                         <td>{loan.branch_name}</td>
                                         <td>{loan.client_name}</td>
-                                        <td>{loan.loan_id}</td>
+                                        <td>{loan.client_id_num}</td>
+                                        <td>{loan.loan_num}</td>
                                         <td>{loan.db_date}</td>
                                         <td>{loan.last_date}</td>
                                         <td>{loan.principal}</td>
                                         <td>{loan.claimable_balance}</td>
                                         <td>{loan.current_balance}</td>
+                                        <td>{loan.balance}</td>
+                                        <td>{loan.num_of_repayments}</td>
+                                        <td>{loan.repayment_cycle}</td>
                                         <td>{loan.reason_for_borrowing}</td>
                                         <td>{loan.male}</td>
                                         <td>{loan.female}</td>
