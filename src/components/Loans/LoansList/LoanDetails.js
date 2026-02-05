@@ -29,8 +29,8 @@ function LoanDetails({loanApiData}) {
         <div style={{display:'flex', flexDirection:'column', padding:'1.5rem'}} className='j-details-container'>
           <div style={{marginBottom:'1rem'}}>
             <div style={{marginBottom:'1rem', display:'flex', justifyContent:'space-between'}}>
-              <div></div>
               <button className='btn btn-default client__details' onClick={() => setLoan(null)}>Refresh</button>
+              <div></div>
             </div>
             <div style={{display:'flex', justifyContent:'space-between'}}>
               <div style={{display:'flex', alignItems:'center'}}>
