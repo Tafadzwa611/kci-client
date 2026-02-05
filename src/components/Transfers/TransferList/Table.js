@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 
 function Table({transferData, setTransferData, params}) {
@@ -27,7 +28,14 @@ function Table({transferData, setTransferData, params}) {
                         {transferData.transfers.map(transfer => {
                             return (
                             <tr key={transfer.id}>
-                                <td style={{verticalAlign:"middle"}}>{transfer.receiving_branch_name}</td>
+                                <td>
+                                  <Link
+                                    to={`/transfers/viewtransfers?transfer_id=${transfer.id}`}
+                                    style={{ color: "#2563eb" }}
+                                  >
+                                    {transfer.receiving_branch_name}
+                                  </Link>
+                                </td>
                                 <td style={{verticalAlign:"middle"}}>{transfer.sending_branch_name}</td>
                                 <td style={{verticalAlign:"middle"}}>{transfer.amount}</td>
                                 <td style={{verticalAlign:"middle"}}>{transfer.db_date_created}</td>

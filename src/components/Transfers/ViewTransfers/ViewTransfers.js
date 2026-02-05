@@ -35,7 +35,7 @@ const AddTransferComponent = () => {
 
 const TransferComponent = () => {
     return (
-        <Fetcher urls={['/acc-api/get_transfertype_list/']}>
+        <Fetcher urls={['/acc-api/get_tenant_transfertype_list/']}>
             {({data}) => <TransferList transferTypes={data[0]} />}
         </Fetcher>
     )
