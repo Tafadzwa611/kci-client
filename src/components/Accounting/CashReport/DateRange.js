@@ -34,13 +34,13 @@ const DateRange = ({setStatement, accounts}) => {
           <div className='row-containers' style={{border:'none'}}>
             <Form>
               <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                <div className='row-payments-container' style={{width:'20%'}}>
+                <div className='row-payments-container' style={{width:'30%'}}>
                   <CustomDatePickerFilter label='Min Report Date' name='report_date' setFieldValue={setFieldValue} required/>
                 </div>
-                <div className='row-payments-container' style={{width:'20%'}}>
+                <div className='row-payments-container' style={{width:'30%'}}>
                   <CustomDatePickerFilter label='Max Report Date' name='max_report_date' setFieldValue={setFieldValue} required/>
                 </div>
-                <div className='row-payments-container' style={{width:'25%'}}>
+                <div className='row-payments-container' style={{width:'30%'}}>
                   <CustomSelectFilter label='Account' name='account_id' required>
                     <option value=''>------</option>
                     {accounts.map(account => <option key={account.id} value={account.id}>{account.currency} {account.label} {account.branch}</option>)}
