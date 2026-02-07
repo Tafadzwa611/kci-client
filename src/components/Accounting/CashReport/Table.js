@@ -58,7 +58,7 @@ function Table({statement, setStatement}) {
             <button className='btn btn-default' onClick={toPDF}>Download as PDF</button>
           </div>
           {statement.reconciled ? (
-            <div>
+            <div style={{display:'flex', columnGap:'5px'}}>
               <button className='btn btn-success'>
                 Closed
               </button>
