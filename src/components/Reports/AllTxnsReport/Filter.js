@@ -113,7 +113,7 @@ const Filter = ({setReport, setParams}) => {
                 </div>
               </div>
               <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                <div style={{width:'40%'}}>
+                <div style={{width:'45%'}}>
                   <MultiSelectFilter
                     label='Txn Types'
                     name='txn_types'
@@ -121,7 +121,7 @@ const Filter = ({setReport, setParams}) => {
                     setFieldValue={setFieldValue}
                   />
                 </div>
-                <div style={{width:'40%'}}>
+                <div style={{width:'45%'}}>
                   <MultiSelectFilter
                     label='Branches'
                     name='branch_ids'
