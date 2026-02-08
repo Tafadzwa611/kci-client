@@ -127,4 +127,5 @@ function Filter({setExpenseTypes}) {
     </Formik>
   )
 }
+
 export default ExpenseTypes;

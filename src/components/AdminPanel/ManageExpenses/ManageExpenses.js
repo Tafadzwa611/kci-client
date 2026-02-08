@@ -11,6 +11,12 @@ import ExpenseTypes from './ExpenseTypes/ExpenseTypes';
 import AddExpenseType from './ExpenseTypes/AddExpenseType';
 import CreateResults from './ExpenseTypes/CreateResults';
 import EditExpenseType from './ExpenseTypes/EditExpenseType';
+import Budgets from './Budgets/Budgets';
+import AddBudget from './Budgets/AddBudget';
+import BudgetResults from './Budgets/BudgetResults';
+import EditBudget from './Budgets/EditBudget';
+import DeleteBudget from './Budgets/DeleteBudget';
+import BudgetDetails from './Budgets/BudgetDetails';
 
 function ManageExpenses() {
   React.useEffect(() => {
@@ -25,6 +31,12 @@ function ManageExpenses() {
         <Route path='addtype' element={<AddExpenseType />} />
         <Route path='edittypes/:typeId' element={<EditExpenseType />} />
         <Route path='addresults' element={<CreateResults />} />
+        <Route path='budgets' element={<Budgets />} />
+        <Route path='addbudget' element={<AddBudget />} />
+        <Route path='budget-results' element={<BudgetResults />} />
+        <Route path='edit-budget/:bdId' element={<EditBudget />} />
+        <Route path='budget-details/:bdId' element={<BudgetDetails />} />
+        <Route path='delete-budget/:bdId' element={<DeleteBudget />} />
       </Route>
     </Routes>
   )
@@ -40,6 +52,9 @@ function Layout() {
           </Link>
           <Link to='/users/admin/manageexps/expensetypes' id='list' className={location.pathname === '/users/admin/manageexps/expensetypes' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
             Expenses Types
+          </Link>
+          <Link to='/users/admin/manageexps/budgets' id='list' className={location.pathname === '/users/admin/manageexps/budgets' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+            Budgets
           </Link>
         </div>
         <div className='tab-content font-12' style={{marginTop:'3rem'}}>
