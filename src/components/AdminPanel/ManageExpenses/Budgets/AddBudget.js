@@ -29,7 +29,13 @@ function AddBudget() {
         expense_account_id: values.expense_account.value,
         branch_ids: values.branches.map(branch => branch.value)
       };
-      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+      const CONFIG = {
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken'),
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      };
       const response = await axios.post(
         '/expensesapi/create_budget/',
         data,

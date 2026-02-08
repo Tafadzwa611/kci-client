@@ -47,6 +47,9 @@ function Budgets() {
                 <td>{bd.limit}</td>
                 <td>{bd.expense_account.general_ledger_name}</td>
                 <td>
+                  <Link to={`/users/admin/manageexps/budget-details/${bd.id}`}>
+                    View
+                  </Link><br/>
                   <Link to={`/users/admin/manageexps/edit-budget/${bd.id}`}>
                     Edit
                   </Link><br/>
@@ -85,36 +88,34 @@ function Filter({setBudgets}) {
   }
 
   return (
-    <Formik initialValues={{branch_id: '', currency_id: ''}} onSubmit={onSubmit}>
+    <Formik initialValues={{ branch_id: '', currency_id: '' }} onSubmit={onSubmit}>
       {({isSubmitting}) => (
         <div className='search_background'>
           <div className='row-containers' style={{border:'none'}}>
             <Form>
-                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'19%'}}>
-                    <CustomSelectFilter label='Branch' name='branch_id' required>
-                      <option value=''>------</option>
-                      {branches.map(branch => (
-                        <option key={branch.id} value={branch.id}>
-                          {branch.name}
-                        </option>
-                      ))}
-                    </CustomSelectFilter>
-                  </div>
-                  <div className='row-payments-container' style={{width:'19%'}}>
-                    <CustomSelectFilter label='Currency' name='currency_id' required>
-                      <option value=''>------</option>
-                      {currencies.map(currency => (
-                        <option key={currency.id} value={currency.id}>
-                          {currency.fullname}
-                        </option>
-                      ))}
-                    </CustomSelectFilter>
-                  </div>
+              <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
+                <div className='row-payments-container' style={{width:'19%'}}>
+                  <CustomSelectFilter label='Branch' name='branch_id' required>
+                    <option value=''>------</option>
+                    {branches.map(branch => (
+                      <option key={branch.id} value={branch.id}>
+                        {branch.name}
+                      </option>
+                    ))}
+                  </CustomSelectFilter>
+                  <CustomSelectFilter label='Currency' name='currency_id' required>
+                    <option value=''>------</option>
+                    {currencies.map(currency => (
+                      <option key={currency.id} value={currency.id}>
+                        {currency.fullname}
+                      </option>
+                    ))}
+                  </CustomSelectFilter>
                 </div>
-                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <SubmitButtonFilter isSubmitting={isSubmitting}/>
-                </div>
+              </div>
+              <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
+                <SubmitButtonFilter isSubmitting={isSubmitting}/>
+              </div>
             </Form>
           </div>
         </div>

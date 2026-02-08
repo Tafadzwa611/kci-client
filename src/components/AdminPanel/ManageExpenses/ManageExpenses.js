@@ -16,6 +16,7 @@ import AddBudget from './Budgets/AddBudget';
 import BudgetResults from './Budgets/BudgetResults';
 import EditBudget from './Budgets/EditBudget';
 import DeleteBudget from './Budgets/DeleteBudget';
+import BudgetDetails from './Budgets/BudgetDetails';
 
 function ManageExpenses() {
   React.useEffect(() => {
@@ -33,8 +34,9 @@ function ManageExpenses() {
         <Route path='budgets' element={<Budgets />} />
         <Route path='addbudget' element={<AddBudget />} />
         <Route path='budget-results' element={<BudgetResults />} />
-        <Route path='edit-budget/:typeId' element={<EditBudget />} />
-        <Route path='delete-budget/:typeId' element={<DeleteBudget />} />
+        <Route path='edit-budget/:bdId' element={<EditBudget />} />
+        <Route path='budget-details/:bdId' element={<BudgetDetails />} />
+        <Route path='delete-budget/:bdId' element={<DeleteBudget />} />
       </Route>
     </Routes>
   )
