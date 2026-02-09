@@ -35,6 +35,8 @@ function New({report}) {
               <th>Account Branch</th>
               <th>Account Name</th>
               <th>Balance</th>
+              <th>Budget</th>
+              <th>Variance</th>
             </tr>
           </thead>
           <tbody>
@@ -43,9 +45,13 @@ function New({report}) {
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><b>{report.company_name} From {report.min_date} to {report.max_date}</b></td>
+              <td></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -59,6 +65,8 @@ function New({report}) {
               <td></td>
               <td><b>TOTAL INCOME</b></td>
               <td><b>{report.total_income}</b></td>
+              <td></td>
+              <td></td>
             </tr>
             {Object.keys(groupedExpenseAccs).map((headerAccountName, idx) => (
               <GroupedAccounts key={idx} headerAccountName={headerAccountName} detailAccounts={groupedExpenseAccs[headerAccountName]}/>
@@ -69,12 +77,16 @@ function New({report}) {
               <td></td>
               <td><b>TOTAL EXPENSES</b></td>
               <td><b>{report.total_expenses}</b></td>
+              <td><b>{report.total_budget}</b></td>
+              <td><b>{report.total_variance}</b></td>
             </tr>
             <tr>
               <td></td>
               <td></td>
               <td><b>NET INCOME</b></td>
               <td><b>{report.net_income}</b></td>
+              <td></td>
+              <td></td>
             </tr>
           </tbody>
         </table>
@@ -90,6 +102,8 @@ const DetailAccount = ({acc}) => {
       <td>{acc.branch_name ? acc.branch_name : 'Interbranch'}</td>
       <td>{acc.name}</td>
       <td>{acc.balance}</td>
+      <td>{acc.budget}</td>
+      <td>{acc.variance}</td>
     </tr>
   )
 }
@@ -109,6 +123,8 @@ const GroupedAccounts = ({headerAccountName, detailAccounts}) => {
           <td>{acc.branch_name}</td>
           <td>{acc.name}</td>
           <td>{acc.balance}</td>
+          <td>{acc.budget}</td>
+          <td>{acc.variance}</td>
         </tr>
       ))}
     </>

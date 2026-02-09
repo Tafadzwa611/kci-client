@@ -30,7 +30,7 @@ const AddExpenseComponent = () => {
 
 const ExpenseListComponent = () => {
   return (
-    <Fetcher urls={['/expensesapi/expensetypeslist/?header=1']}>
+    <Fetcher urls={['/expensesapi/expensetypeslist/?header=0']}>
       {({data}) => <List expensetypes={data[0]} />}
     </Fetcher>
   )

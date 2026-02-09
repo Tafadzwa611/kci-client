@@ -96,7 +96,7 @@ const Filter = ({setExpenseData, setParams, expensetypes}) => {
                         <option value=''>------</option>
                         {expensetypes.map(expensetype => (
                           <option key={expensetype.id} value={expensetype.id}>
-                            {expensetype.currency__shortname} {expensetype.name} {expensetype.branch__name}
+                            {expensetype.currency_shortname} {expensetype.name} {expensetype.branch_name}
                           </option>
                         ))}
                       </CustomSelectFilter>
