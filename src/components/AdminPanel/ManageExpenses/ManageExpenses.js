@@ -17,6 +17,8 @@ import BudgetResults from './Budgets/BudgetResults';
 import EditBudget from './Budgets/EditBudget';
 import DeleteBudget from './Budgets/DeleteBudget';
 import BudgetDetails from './Budgets/BudgetDetails';
+import ReceiptBooks from './ReceiptBooks/ReceiptBooks';
+import AddReceiptBook from './ReceiptBooks/AddReceiptBook';
 
 function ManageExpenses() {
   React.useEffect(() => {
@@ -37,6 +39,8 @@ function ManageExpenses() {
         <Route path='edit-budget/:bdId' element={<EditBudget />} />
         <Route path='budget-details/:bdId' element={<BudgetDetails />} />
         <Route path='delete-budget/:bdId' element={<DeleteBudget />} />
+        <Route path='receipt-books' element={<ReceiptBooks />} />
+        <Route path='add-receipt-book' element={<AddReceiptBook />} />
       </Route>
     </Routes>
   )
@@ -55,6 +59,9 @@ function Layout() {
           </Link>
           <Link to='/users/admin/manageexps/budgets' id='list' className={location.pathname === '/users/admin/manageexps/budgets' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
             Budgets
+          </Link>
+          <Link to='/users/admin/manageexps/receipt-books' id='list' className={location.pathname === '/users/admin/manageexps/receipt-books' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+            Receipt Books
           </Link>
         </div>
         <div className='tab-content font-12' style={{marginTop:'3rem'}}>

@@ -1,34 +1,28 @@
 import React from 'react';
+import { Form, Formik } from 'formik';
 import {
-  Fetcher,
   CustomInput,
   CustomSelect,
   CustomMultiSelect,
-  SubmitButton,
-  CustomDatePicker,
-  NonFieldErrors
+  CustomCheckbox,
+  NonFieldErrors,
+  SubmitButton
 } from '../../../../common';
-import axios from 'axios';
-import Cookies from 'js-cookie';
 import { useBranches } from '../../../../contexts/BranchesContext';
 import { useCurrencies } from '../../../../contexts/CurrenciesContext';
-import { Form, Formik } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 
-function AddBudget() {
+function AddReceiptBook() {
   const {branches} = useBranches();
   const {currencies} = useCurrencies();
-  const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
     try {
       const data = {
-        month: values.month,
-        limit: values.limit,
-        currency_id: values.currency_id,
-        expense_account_id: values.expense_account.value,
-        branch_ids: values.branches.map(branch => branch.value)
+        ...values,
+        allowed_apps: values.allowed_apps.map(branch => branch.value)
       };
       const CONFIG = {
         headers: {
@@ -38,14 +32,15 @@ function AddBudget() {
         }
       };
       const response = await axios.post(
-        '/expensesapi/create_budget/',
+        '/loansapi/create_receipt_book/',
         data,
         CONFIG
       );
-      navigate('/users/admin/manageexps/budget-results', {
-        replace: true,
-        state: response.data
-      });
+      console.log(response.data);
+      // navigate('/users/admin/manageexps/budget-results', {
+      //   replace: true,
+      //   state: response.data
+      // });
     } catch (error) {
       console.log(error);
       if (error.message === 'Network Error') {
@@ -59,23 +54,34 @@ function AddBudget() {
   }
 
   const initialValues = {
-    month: '',
-    limit: '',
+    name: '',
+    prefix: '',
+    start_number: '',
+    end_number: '',
+    mode: '',
     currency_id: '',
-    expense_account: '',
-    branches: ''
+    branch_id: '',
+    allowed_apps: '',
+    is_active: false
   };
 
   return (
     <div>
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        {({ values, errors, isSubmitting, setFieldValue }) => (
+        {({ errors, isSubmitting, setFieldValue }) => (
           <Form>
             <div className='divider divider-info'>
-              <span>Budget Information</span>
+              <span>Receipt Book Information</span>
             </div>
-            <CustomDatePicker label='Date' name='month' setFieldValue={setFieldValue} required/>
-            <CustomInput label='Limit' name='limit' type='number' required/>
+            <CustomInput label='Name' name='name' type='text' required/>
+            <CustomInput label='Prefix' name='prefix' type='text'/>
+            <CustomInput label='Start Number' name='start_number' type='number' step={1} required/>
+            <CustomInput label='End Number' name='end_number' type='number' step={1} required/>
+            <CustomSelect label='Mode' name='mode' required>
+              <option value=''>------</option>
+              <option value='1'>Auto</option>
+              <option value='2'>Manual</option>
+            </CustomSelect>
             <CustomSelect label='Currency' name='currency_id' required>
               <option value=''>------</option>
               {currencies.map(currency => (
@@ -84,34 +90,27 @@ function AddBudget() {
                 </option>
               ))}
             </CustomSelect>
+            <CustomSelect label='Branch' name='branch_id' required>
+              <option value=''>------</option>
+              {branches.map(branch => (
+                <option key={branch.id} value={branch.id}>
+                  {branch.name}
+                </option>
+              ))}
+            </CustomSelect>
             <CustomMultiSelect
-              label='Branches'
+              label='Applications'
               initVals={[]}
-              options={branches.map(branch => ({value: branch.id, label: branch.name}))}
+              options={[
+                {value: 1, label: 'Loans'},
+                {value: 2, label: 'Payments'},
+                {value: 3, label: 'Expenses'}
+              ]}
               setFieldValue={setFieldValue}
-              name='branches'
+              name='allowed_apps'
               required
             />
-            <div style={{paddingTop: '1rem'}}></div>
-            {values.currency_id && (
-              <Fetcher urls={[
-                `/acc-api/sub_accounts_api/?page_num=1&currency_id=${values.currency_id}&show_ib=0&account_type=EXPENSE`
-                ]}
-              >
-                {({data}) => (
-                  <CustomMultiSelect
-                    label='Expense Account'
-                    name='expense_account'
-                    isMulti={false}
-                    setFieldValue={setFieldValue}
-                    options={data[0].accounts.map(account => (
-                      {label: `${account.general_ledger_name} - ${account.general_ledger_code}`, value: account.id}
-                    ))}
-                    required
-                  />
-                )}
-              </Fetcher>
-            )}
+            <CustomCheckbox label='Is Active' name='is_active'/>
             <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
             <div style={{display:'flex', justifyContent: 'flex-end'}}> 
               <SubmitButton isSubmitting={isSubmitting}/>
@@ -124,4 +123,4 @@ function AddBudget() {
   )
 }
 
-export default AddBudget;
+export default AddReceiptBook;
