@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Fetcher,
   Modal,
@@ -15,6 +15,7 @@ import { Form, Formik } from 'formik';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+
 function LoanControls() {
   return (
     <Fetcher urls={['/loansapi/loan_controls/']}>
@@ -23,9 +24,10 @@ function LoanControls() {
   )
 }
 
+
 const List = ({initControls}) => {
-  const [loanControls, setLoanControls] = useState(initControls);
-  const [openModal, setOpenModal] = useState(false);
+  const [loanControls, setLoanControls] = React.useState(initControls);
+  const [openModal, setOpenModal] = React.useState(false);
   const {currencies} = useCurrencies();
 
   return (
@@ -98,8 +100,12 @@ const List = ({initControls}) => {
                     <td>{loanControls.allow_groups_with_running_loans_to_guarantee ? 'Yes' : 'No'}</td>
                   </tr>
                   <tr>
-                    <td>SMS Payment Notification — Always Enabled</td>
+                    <td>SMS Payment Notification Always Enabled</td>
                     <td>{loanControls.send_payment_sms_notification ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
+                    <td>Use Receipt Book For Payments</td>
+                    <td>{loanControls.use_receipt_book ? 'Yes' : 'No'}</td>
                   </tr>
                   <tr>
                     <td>Allow Overpayments</td>
@@ -147,6 +153,7 @@ const List = ({initControls}) => {
   )
 }
 
+
 const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
   const {currencies} = useCurrencies();
   currencies.sort((a, b) => a.id - b.id);
@@ -167,6 +174,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
     allow_overpayments: loanControls.allow_overpayments,
     client_guarantor_required: loanControls.client_guarantor_required,
     group_guarantor_required: loanControls.group_guarantor_required,
+    use_receipt_book: loanControls.use_receipt_book,
     two_man_rules: loanControls.two_man_rules.map(rule => ({label: rule, value: rule})),
     max_currencies_exposure: currencies.map(currency => {
       const exp = loanControls.max_currencies_exposure.find(exp => exp.currency_id == currency.id);
@@ -196,6 +204,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
       send_payment_sms_notification: values.send_payment_sms_notification,
       client_guarantor_required: values.client_guarantor_required,
       group_guarantor_required: values.group_guarantor_required,
+      use_receipt_book: values.use_receipt_book,
       two_man_rules: values.two_man_rules.map(rule => rule.value),
       ...(values.max_num_of_loans && {max_num_of_loans: values.max_num_of_loans}),
       ...(values.max_num_of_group_loans && {max_num_of_group_loans: values.max_num_of_group_loans}),
@@ -240,6 +249,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
                   <CustomCheckbox label='Disburse Loan On Capture' name='disburse_loan_on_capture'/>
                   <CustomCheckbox label='Select Branch On Loan Creation' name='select_branch_on_loan_creation'/>
                   <CustomCheckbox label='Request Receipt Number On Disbursement' name='request_receipt_number'/>
+                  <CustomCheckbox label='Use Receipt Book' name='use_receipt_book'/>
                   <CustomCheckbox label='Auto Generate Loan ID' name='auto_generate_loan_id'/>
                   <CustomSelect label='Loan ID Format' name='loan_id_format' required>
                     <option value='BRANCH-LOAN-COUNT'>BRANCH-LOAN-COUNT</option>
@@ -247,7 +257,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
                   </CustomSelect>
                   <CustomCheckbox label='Allow Clients With Running Loans To Guarantee' name='allow_clients_with_running_loans_to_guarantee'/>
                   <CustomCheckbox label='Allow Groups With Running Loans To Guarantee' name='allow_groups_with_running_loans_to_guarantee'/>
-                  <CustomCheckbox label='SMS Payment Notification — Always Enabled' name='send_payment_sms_notification'/>
+                  <CustomCheckbox label='SMS Payment Notification Always Enabled' name='send_payment_sms_notification'/>
                   <CustomCheckbox label='Allow Overpayments' name='allow_overpayments'/>
                   <CustomCheckbox label='Client Guarantor Required' name='client_guarantor_required'/>
                   <CustomCheckbox label='Group Guarantor Required' name='group_guarantor_required'/>
