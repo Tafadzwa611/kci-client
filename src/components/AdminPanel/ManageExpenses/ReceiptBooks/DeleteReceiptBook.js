@@ -8,20 +8,21 @@ import {
 } from '../../../../common';
 import Cookies from 'js-cookie';
 
+
 function DeleteBudget() {
   const params = useParams();
   const navigate = useNavigate();
-  const [budget, setBudget] = React.useState(null);
+  const [rb, setRb] = React.useState(null);
 
   React.useEffect(() => {
     const fetch = async () => {
-      const response = await axios.get(`/expensesapi/get_budget/${params.bdId}`);
-      setBudget(response.data);
+      const response = await axios.get(`/loansapi/receipt_book/${params.rbId}`);
+      setRb(response.data);
     }
     fetch();
   }, []);
 
-  if (!budget) {
+  if (!rb) {
     return <div>Loading...</div>
   }
 
@@ -35,10 +36,10 @@ function DeleteBudget() {
         }
       };
       await axios.delete(
-        `/expensesapi/delete_budget/${params.bdId}/`,
+        `/loansapi/delete_receipt_book/${params.rbId}/`,
         CONFIG
       );
-      navigate(`/users/admin/manageexps/budgets`);
+      navigate('/users/admin/manageexps/receipt-books');
     } catch (error) {
       console.log(error);
       if (error.message === 'Network Error') {
@@ -57,7 +58,7 @@ function DeleteBudget() {
         {({ errors, isSubmitting }) => (
           <Form>
             <h4>
-              Are you sure you want to delete this budget? {budget.month}
+              Are you sure you want to delete this receipt book? {rb.name}
             </h4>
             <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
             <div style={{display:'flex', justifyContent: 'flex-end'}}> 

@@ -19,6 +19,10 @@ import DeleteBudget from './Budgets/DeleteBudget';
 import BudgetDetails from './Budgets/BudgetDetails';
 import ReceiptBooks from './ReceiptBooks/ReceiptBooks';
 import AddReceiptBook from './ReceiptBooks/AddReceiptBook';
+import ReceiptBookDetails from './ReceiptBooks/ReceiptBookDetails';
+import UpdateReceiptBook from './ReceiptBooks/UpdateReceiptBook';
+import DeleteReceiptBook from './ReceiptBooks/DeleteReceiptBook';
+
 
 function ManageExpenses() {
   React.useEffect(() => {
@@ -41,6 +45,9 @@ function ManageExpenses() {
         <Route path='delete-budget/:bdId' element={<DeleteBudget />} />
         <Route path='receipt-books' element={<ReceiptBooks />} />
         <Route path='add-receipt-book' element={<AddReceiptBook />} />
+        <Route path='receipt-book-details/:rbId' element={<ReceiptBookDetails />} />
+        <Route path='update-receipt-book/:rbId' element={<UpdateReceiptBook />} />
+        <Route path='delete-receipt-book/:rbId' element={<DeleteReceiptBook />} />
       </Route>
     </Routes>
   )

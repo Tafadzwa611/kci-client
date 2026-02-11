@@ -53,7 +53,7 @@ function ReceiptBooks() {
                 <td>{bd.end_number}</td>
                 <td>{bd.next_number}</td>
                 <td>{bd.is_active ? 'Yes' : 'No'}</td>
-                <td>{bd.mode}</td>
+                <td>{{1: 'Auto', 2: 'Manual'}[bd.mode]}</td>
                 <td>
                   {bd.allowed_apps.map(app => (
                     {
@@ -65,13 +65,13 @@ function ReceiptBooks() {
                   ).join(', ')}
                 </td>
                 <td>
-                  <Link to={`/users/admin/manageexps/budget-details/${bd.id}`}>
+                  <Link to={`/users/admin/manageexps/receipt-book-details/${bd.id}`}>
                     View
                   </Link><br/>
-                  <Link to={`/users/admin/manageexps/edit-budget/${bd.id}`}>
+                  <Link to={`/users/admin/manageexps/update-receipt-book/${bd.id}`}>
                     Edit
                   </Link><br/>
-                  <Link to={`/users/admin/manageexps/delete-budget/${bd.id}`}>
+                  <Link to={`/users/admin/manageexps/delete-receipt-book/${bd.id}`}>
                     Delete
                   </Link>
                 </td>

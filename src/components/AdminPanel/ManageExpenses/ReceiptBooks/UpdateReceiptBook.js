@@ -1,4 +1,6 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import { Form, Formik } from 'formik';
 import {
   CustomInput,
@@ -10,15 +12,34 @@ import {
 } from '../../../../common';
 import { useBranches } from '../../../../contexts/BranchesContext';
 import { useCurrencies } from '../../../../contexts/CurrenciesContext';
-import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
 
-function AddReceiptBook() {
+const APP_LABELS = {
+  1: 'Loans',
+  2: 'Payments',
+  3: 'Expenses'
+};
+
+function UpdateReceiptBook() {
+  const params = useParams();
   const {branches} = useBranches();
   const {currencies} = useCurrencies();
+  const [rb, setRb] = React.useState(null);
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const fetch = async () => {
+      const response = await axios.get(`/loansapi/receipt_book/${params.rbId}`);
+      setRb(response.data);
+    }
+    fetch();
+  }, []);
+
+  if (!rb) {
+    return <div>Loading...</div>
+  }
 
   const onSubmit = async (values, actions) => {
     try {
@@ -33,12 +54,12 @@ function AddReceiptBook() {
           'Content-Type': 'application/json'
         }
       };
-      const response = await axios.post(
-        '/loansapi/create_receipt_book/',
+      await axios.put(
+        `/loansapi/update_receipt_book/${params.rbId}/`,
         data,
         CONFIG
       );
-      navigate(`/users/admin/manageexps/receipt-book-details/${response.data.id}`);
+      navigate(`/users/admin/manageexps/receipt-book-details/${params.rbId}`);
     } catch (error) {
       console.log(error);
       if (error.message === 'Network Error') {
@@ -52,21 +73,21 @@ function AddReceiptBook() {
   }
 
   const initialValues = {
-    name: '',
-    prefix: '',
-    start_number: '',
-    end_number: '',
-    mode: '',
-    currency_id: '',
-    branch_id: '',
-    allowed_apps: '',
-    is_active: false
-  };
+    name: rb.name,
+    prefix: rb.prefix,
+    start_number: rb.start_number,
+    end_number: rb.end_number,
+    mode: rb.mode,
+    currency_id: rb.currency.id,
+    branch_id: rb.branch.id,
+    allowed_apps: rb.allowed_apps.map(app => ({value: app, label: APP_LABELS[app]})),
+    is_active: rb.is_active
+  }
 
   return (
     <div>
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        {({ errors, isSubmitting, setFieldValue }) => (
+        {({ values, errors, isSubmitting, setFieldValue }) => (
           <Form>
             <div className='divider divider-info'>
               <span>Receipt Book Information</span>
@@ -98,7 +119,7 @@ function AddReceiptBook() {
             </CustomSelect>
             <CustomMultiSelect
               label='Applications'
-              initVals={[]}
+              initVals={values.allowed_apps}
               options={[
                 {value: 1, label: 'Loans'},
                 {value: 2, label: 'Payments'},
@@ -106,7 +127,6 @@ function AddReceiptBook() {
               ]}
               setFieldValue={setFieldValue}
               name='allowed_apps'
-              required
             />
             <CustomCheckbox label='Is Active' name='is_active'/>
             <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
@@ -121,4 +141,4 @@ function AddReceiptBook() {
   )
 }
 
-export default AddReceiptBook;
+export default UpdateReceiptBook;
