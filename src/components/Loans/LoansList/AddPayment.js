@@ -15,17 +15,34 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { removeEmptyValues } from '../../../utils/utils';
 import { useCash } from '../../../contexts/CashContext';
+import { useReceiptBooks } from '../../../contexts/ReceiptBooksContext';
+import { useLoanControls } from '../../../contexts/LoanControlsContext';
+
 
 const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType, updateLoanList, setLoanData}) => {
+  const { loanControls } = useLoanControls();
+  const { receiptBooks } = useReceiptBooks();
+  const [selectedRb, setSelectedRb] = React.useState({});
+
+  const receiptBooksObj = Object.fromEntries(receiptBooks.map(rb => [rb.id, rb]));
+  console.log(receiptBooksObj);
+
   const onSubmit = async (values, actions) => {
     const data = removeEmptyValues(values);
+
+    if (loanControls.use_receipt_book) {
+      data.receipt_book_id = values.receipt_book.value;
+    }
+
     data.cash_account_id = data.fund_account.value;
     if (!values.manually_allocate) {
       delete data.manual_allocation
     }
+
     if (data.sub_loan_ids) {
       data.sub_loan_ids = data.sub_loan_ids.map(sub_loan_id => sub_loan_id.value);
     }
+
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(`/loansapi/add_payment/${loanId}/`, data, CONFIG);
@@ -108,7 +125,37 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
                     <option value=''>------</option>
                     {selectOpts.map(subLoan => <option key={subLoan.id} value={subLoan.id}>{subLoan.fullname}</option>)}
                   </CustomSelect> : null}
-                  <CustomInput label='Receipt Number' name='receipt_number' type='text'/>
+                  {loanControls.use_receipt_book ? (
+                    <>
+                      <CustomMultiSelect
+                        label='Receipt Book'
+                        name='receipt_book'
+                        isMulti={false}
+                        setFieldValue={(fieldName, selectedOpts) => {
+                          setFieldValue(fieldName, selectedOpts);
+                          const selectedRb = receiptBooksObj[selectedOpts.value];
+                          setSelectedRb(selectedRb);
+                          if (selectedRb.mode == 1) {
+                            setFieldValue('receipt_number', '');
+                          }
+                        }}
+                        options={receiptBooks.filter(rb => rb.is_active && rb.currency.id == currencyId).map(rb => (
+                          {label: `${rb.name} - ${rb.branch.name} - ${rb.branch.name}`, value: rb.id}
+                        ))}
+                        required
+                      />
+                      {selectedRb.mode === 2 && (
+                        <CustomInput
+                          label='Receipt Number'
+                          name='receipt_number'
+                          type='text'
+                          required
+                        />
+                      )}
+                    </>
+                    ) : (
+                      <CustomInput label='Receipt Number' name='receipt_number' type='text'/>
+                  )}
                   <CustomTextField label='Description' name='notes' type='text'/>
                   <CustomCheckbox label='Send SMS notification to client' name='send_sms_notification'/>
                 </div>

@@ -22,6 +22,7 @@ import { useUnits } from '../../contexts/UnitsContext';
 import { useCash } from '../../contexts/CashContext';
 import { useClientControls } from '../../contexts/ClientControlsContext';
 import { useLoanForms } from '../../contexts/LoanFormsContext';
+import { useReceiptBooks } from '../../contexts/ReceiptBooksContext';
 import { Routes as ReactRoutes, Route } from 'react-router-dom';
 
 const Home = lazy(() => import('../Home/Home'));
@@ -36,7 +37,8 @@ const Routes = ({
   units,
   cashAccounts,
   clientControls,
-  loanForms
+  loanForms,
+  receiptBooks
 }) => {
   const {setLoggedInUser} = useLoggedInUser();
   const {setBranches} = useBranches();
@@ -47,6 +49,7 @@ const Routes = ({
   const { setCash } = useCash();
   const { setClientControls } = useClientControls();
   const { setLoanForms } = useLoanForms();
+  const { setReceiptBooks } = useReceiptBooks();
 
   useEffect(() => {
     setLoggedInUser(loggedInUser);
@@ -58,6 +61,7 @@ const Routes = ({
     setCash(cashAccounts);
     setClientControls(clientControls);
     setLoanForms(loanForms);
+    setReceiptBooks(receiptBooks);
   }, []);
 
   return (
