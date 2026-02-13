@@ -25,7 +25,6 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
   const [selectedRb, setSelectedRb] = React.useState({});
 
   const receiptBooksObj = Object.fromEntries(receiptBooks.map(rb => [rb.id, rb]));
-  console.log(receiptBooksObj);
 
   const onSubmit = async (values, actions) => {
     const data = removeEmptyValues(values);

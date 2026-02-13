@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {
+  CustomCheckbox,
   SuccessBtn,
   Modal,
   CustomSelect,
@@ -8,6 +9,7 @@ import {
 } from '../../../common';
 import { Form, Formik } from 'formik';
 import Cookies from 'js-cookie';
+
 
 function ExpenseSettings() {
   const [settings, SetSettings] = React.useState(null);
@@ -50,6 +52,10 @@ function ExpenseSettings() {
                     <td>Accounting Method</td>
                     <td>{{1: 'Cash', 2: 'Accrual'}[settings.accounting_method]}</td>
                   </tr>
+                  <tr>
+                    <td>Use voucher book</td>
+                    <td>{settings.use_voucher_book ? 'Yes' : 'No'}</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -63,7 +69,8 @@ function ExpenseSettings() {
 const UpdateExpenseSettings = ({open, setOpen, settings, SetSettings}) => {
   const onSubmit = async (values, actions) => {
     const data = {
-      accounting_method: values.accounting_method
+      accounting_method: values.accounting_method,
+      use_voucher_book: values.use_voucher_book
     };
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
@@ -82,9 +89,14 @@ const UpdateExpenseSettings = ({open, setOpen, settings, SetSettings}) => {
     }
   }
 
+  const initialValues = {
+    accounting_method: settings.accounting_method,
+    use_voucher_book: settings.use_voucher_book
+  };
+
   return (
     <Modal open={open} setOpen={setOpen} title={'Update Expense Settings'}>
-      <Formik initialValues={{accounting_method: settings.accounting_method}} onSubmit={onSubmit}>
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {({ isSubmitting }) => (
           <Form>
             <div className='create_modal_container'>
@@ -93,6 +105,10 @@ const UpdateExpenseSettings = ({open, setOpen, settings, SetSettings}) => {
                   <option value='1'>Cash</option>
                   <option value='2'>Accrual</option>
                 </CustomSelect>
+                <CustomCheckbox
+                  label='User Voucher Book'
+                  name='use_voucher_book'
+                />
               </div>
               <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
             </div>

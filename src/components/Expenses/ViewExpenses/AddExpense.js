@@ -13,13 +13,17 @@ import {
   CustomDatePicker
 } from '../../../common';
 import { useBranches } from '../../../contexts/BranchesContext';
+import { useReceiptBooks } from '../../../contexts/ReceiptBooksContext';
 
 
 function AddExpense({expensetypes, fundaccounts}) {
   const [currencyId, setCurrencyId] = React.useState('');
   const [settings, setSettings] = React.useState(null);
+  const [selectedRb, setSelectedRb] = React.useState({});
   const navigate = useNavigate();
   const {branches} = useBranches();
+  const { receiptBooks } = useReceiptBooks();
+  const receiptBooksObj = Object.fromEntries(receiptBooks.map(rb => [rb.id, rb]));
 
   React.useEffect(() => {
     async function fetchSettings() {
@@ -53,6 +57,9 @@ function AddExpense({expensetypes, fundaccounts}) {
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
+      if (settings.use_voucher_book) {
+        data.receipt_book_id = values.receipt_book.value;
+      }
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/expensesapi/add_expense/', data, CONFIG);
       navigate({pathname: '/expenses/viewexpenses', search: `?expense_id=${response.data.id}`});
@@ -131,7 +138,41 @@ function AddExpense({expensetypes, fundaccounts}) {
             <CustomInput label='Expense Name' name='expense_name' type='text' required/>
             <CustomInput label='Expense Amount' name='expense_amount' type='number' required/>
             <CustomDatePicker label='Expense Date' name='expense_date' setFieldValue={setFieldValue} required/>
-            <CustomInput label='Reference' name='reference' type='text' />
+            {settings.use_voucher_book ? (
+              <>
+                <CustomMultiSelect
+                  label='Receipt Book'
+                  name='receipt_book'
+                  isMulti={false}
+                  setFieldValue={(fieldName, selectedOpts) => {
+                    setFieldValue(fieldName, selectedOpts);
+                    const selectedRb = receiptBooksObj[selectedOpts.value];
+                    setSelectedRb(selectedRb);
+                    if (selectedRb.mode == 1) {
+                      setFieldValue('receipt_number', '');
+                    }
+                  }}
+                  options={receiptBooks.filter(rb => rb.is_active && rb.currency.id == currencyId && rb.allowed_apps.includes(3)).map(rb => (
+                    {label: `${rb.name} - ${rb.branch.name} - ${rb.branch.name}`, value: rb.id}
+                  ))}
+                  required
+                />
+                {selectedRb.mode === 2 && (
+                  <CustomInput
+                    label='Reference'
+                    name='reference'
+                    type='text'
+                    required
+                  />
+                )}
+              </>
+            ) : (
+              <CustomInput
+                label='Reference'
+                name='reference'
+                type='text'
+              />
+            )}
             <CustomInput label='Description' name='description' type='text' />
             <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
             <div style={{display:'flex', justifyContent: 'flex-end'}}>

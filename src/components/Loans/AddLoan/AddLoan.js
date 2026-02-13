@@ -84,6 +84,7 @@ function AddLoan() {
     group_id: '',
     unit_id: '',
     receipt_number: '',
+    receipt_book_id: '',
     ...(application_id && {application_id}),
     ...(!lcontrols.auto_generate_loan_id && {loan_id: ''})
   };
@@ -114,8 +115,13 @@ function AddLoan() {
       if (data.fund_account) {
         data.fund_account_id = data.fund_account.value;
       }
+
       if (data.branch) {
         data.branch_id = data.branch.value;
+      }
+
+      if (loanControls.use_receipt_book) {
+        data.receipt_book_id = values.receipt_book.value;
       }
       const url = product.client_type === 'Groups (solidarity)' ? '/loansapi/add_soloan_api/' : '/loansapi/add_loan_api/';
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
