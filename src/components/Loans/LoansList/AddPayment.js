@@ -97,70 +97,69 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {({ values, errors, isSubmitting, setFieldValue }) => (
           <Form>
-            <NonFieldErrors errors={errors}>
-              <div className='create_modal_container'>
-                <div>
-                  <CustomInput label='Amount Paid' name='amount_paid' type='number' required/>
-                  <CustomCheckbox label='Manually Allocate' name='manually_allocate'/>
-                  {values.manually_allocate && <>
-                    <CustomInput label='Principal Paid' name='manual_allocation.principal' type='number' required/>
-                    <CustomInput label='Interest Paid' name='manual_allocation.interest' type='number' required/>
-                    <CustomInput label='Fees Paid' name='manual_allocation.fees' type='number' required/>
-                    <CustomInput label='Penalty Paid' name='manual_allocation.penalty' type='number' required/>
-                  </>}
-                  <CustomDatePicker label='Payment Date' name='payment_date' setFieldValue={setFieldValue} required/>
-                  <CustomMultiSelect
-                    label='Fund Account'
-                    name='fund_account'
-                    isMulti={false}
-                    setFieldValue={setFieldValue}
-                    options={cash.accounts.filter(account => !account.suspended && account.currency_id == currencyId).map(account => (
-                      {label: `${account.label} - ${account.branch}`, value: account.value}
-                    ))}
-                    required
-                  />
-                  {clientType === 'Groups (solidarity)' ?
-                  <CustomSelect label='Sub Loan' name='sub_loan_id' required>
-                    <option value=''>------</option>
-                    {selectOpts.map(subLoan => <option key={subLoan.id} value={subLoan.id}>{subLoan.fullname}</option>)}
-                  </CustomSelect> : null}
-                  {loanControls.use_receipt_book ? (
-                    <>
-                      <CustomMultiSelect
-                        label='Receipt Book'
-                        name='receipt_book'
-                        isMulti={false}
-                        setFieldValue={(fieldName, selectedOpts) => {
-                          setFieldValue(fieldName, selectedOpts);
-                          const selectedRb = receiptBooksObj[selectedOpts.value];
-                          setSelectedRb(selectedRb);
-                          if (selectedRb.mode == 1) {
-                            setFieldValue('receipt_number', '');
-                          }
-                        }}
-                        options={receiptBooks.filter(rb => rb.is_active && rb.currency.id == currencyId).map(rb => (
-                          {label: `${rb.name} - ${rb.branch.name} - ${rb.branch.name}`, value: rb.id}
-                        ))}
+            <div className='create_modal_container'>
+              <div>
+                <CustomInput label='Amount Paid' name='amount_paid' type='number' required/>
+                <CustomCheckbox label='Manually Allocate' name='manually_allocate'/>
+                {values.manually_allocate && <>
+                  <CustomInput label='Principal Paid' name='manual_allocation.principal' type='number' required/>
+                  <CustomInput label='Interest Paid' name='manual_allocation.interest' type='number' required/>
+                  <CustomInput label='Fees Paid' name='manual_allocation.fees' type='number' required/>
+                  <CustomInput label='Penalty Paid' name='manual_allocation.penalty' type='number' required/>
+                </>}
+                <CustomDatePicker label='Payment Date' name='payment_date' setFieldValue={setFieldValue} required/>
+                <CustomMultiSelect
+                  label='Fund Account'
+                  name='fund_account'
+                  isMulti={false}
+                  setFieldValue={setFieldValue}
+                  options={cash.accounts.filter(account => !account.suspended && account.currency_id == currencyId).map(account => (
+                    {label: `${account.label} - ${account.branch}`, value: account.value}
+                  ))}
+                  required
+                />
+                {clientType === 'Groups (solidarity)' ?
+                <CustomSelect label='Sub Loan' name='sub_loan_id' required>
+                  <option value=''>------</option>
+                  {selectOpts.map(subLoan => <option key={subLoan.id} value={subLoan.id}>{subLoan.fullname}</option>)}
+                </CustomSelect> : null}
+                {loanControls.use_receipt_book ? (
+                  <>
+                    <CustomMultiSelect
+                      label='Receipt Book'
+                      name='receipt_book'
+                      isMulti={false}
+                      setFieldValue={(fieldName, selectedOpts) => {
+                        setFieldValue(fieldName, selectedOpts);
+                        const selectedRb = receiptBooksObj[selectedOpts.value];
+                        setSelectedRb(selectedRb);
+                        if (selectedRb.mode == 1) {
+                          setFieldValue('receipt_number', '');
+                        }
+                      }}
+                      options={receiptBooks.filter(rb => rb.is_active && rb.currency.id == currencyId).map(rb => (
+                        {label: `${rb.name} - ${rb.branch.name} - ${{1: 'AUTO', 2: 'MANUAL'}[rb.mode]}`, value: rb.id}
+                      ))}
+                      required
+                    />
+                    {selectedRb.mode === 2 && (
+                      <CustomInput
+                        label='Receipt Number'
+                        name='receipt_number'
+                        type='text'
                         required
                       />
-                      {selectedRb.mode === 2 && (
-                        <CustomInput
-                          label='Receipt Number'
-                          name='receipt_number'
-                          type='text'
-                          required
-                        />
-                      )}
-                    </>
-                    ) : (
-                      <CustomInput label='Receipt Number' name='receipt_number' type='text'/>
-                  )}
-                  <CustomTextField label='Description' name='notes' type='text'/>
-                  <CustomCheckbox label='Send SMS notification to client' name='send_sms_notification'/>
-                </div>
-                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+                    )}
+                  </>
+                  ) : (
+                    <CustomInput label='Receipt Number' name='receipt_number' type='text'/>
+                )}
+                <CustomTextField label='Description' name='notes' type='text'/>
+                <CustomCheckbox label='Send SMS notification to client' name='send_sms_notification'/>
+                <NonFieldErrors errors={errors}/>
               </div>
-            </NonFieldErrors>
+              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+            </div>
           </Form>
         )}
       </Formik>

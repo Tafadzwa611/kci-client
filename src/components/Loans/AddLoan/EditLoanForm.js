@@ -7,6 +7,7 @@ import { NonFieldErrors, CustomSelect } from '../../../common';
 import ClientFormFields from './ClientFormFields';
 import { Form, Formik } from 'formik';
 
+
 const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControls, units, cashAccounts}) => {
   const navigate = useNavigate();
   const [product, setProduct] = useState(loanProducts.find(prod => prod.id == loan.loan_product_id));
@@ -65,6 +66,11 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControl
       if (data.fund_account) {
         data.fund_account_id = data.fund_account.value;
       }
+
+      if (lcontrols.use_receipt_book) {
+        data.receipt_book_id = values.receipt_book.value;
+      }
+
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.put(`/loansapi/update_loan_api/${loan.id}/`, {...data, fees: values.fees, custom_data_list: custom_data}, CONFIG);
       navigate({pathname: `/loans/viewloans/loandetails/cli/${loan.id}`});
@@ -83,38 +89,37 @@ const EditLoanFoam = ({loan, loanProducts, lcontrols, customForms, clientControl
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors, values}) => (
         <Form>
-          <NonFieldErrors errors={errors}>
-            <div className='divider divider-info'>
-              <span>Loan Product</span>
-            </div>
-            <CustomSelect
-              label='Loan Product'
-              name='loan_product_id'
-              value={product.id}
-              onChange={(evt) => onChange(evt, setFieldValue)}
-              required
-            >
-              {[product, ...products].map(product => (
-                <option key={product.id} value={product.id}>
-                  ({product.currency})-{product.name} ({product.loan_product_id})-{product.client_type}
-                </option>
-              )
-              )}
-            </CustomSelect>
-            <ClientFormFields
-              product={product}
-              lcontrols={lcontrols}
-              isSubmitting={isSubmitting}
-              setFieldValue={setFieldValue}
-              values={values}
-              edit={true}
-              customForms={customForms}
-              formIds={formIds}
-              units={units}
-              clientControls={clientControls}
-              cashAccounts={cashAccounts}
-            />
-          </NonFieldErrors>
+          <div className='divider divider-info'>
+            <span>Loan Product</span>
+          </div>
+          <CustomSelect
+            label='Loan Product'
+            name='loan_product_id'
+            value={product.id}
+            onChange={(evt) => onChange(evt, setFieldValue)}
+            required
+          >
+            {[product, ...products].map(product => (
+              <option key={product.id} value={product.id}>
+                ({product.currency})-{product.name} ({product.loan_product_id})-{product.client_type}
+              </option>
+            )
+            )}
+          </CustomSelect>
+          <ClientFormFields
+            product={product}
+            lcontrols={lcontrols}
+            isSubmitting={isSubmitting}
+            setFieldValue={setFieldValue}
+            values={values}
+            edit={true}
+            customForms={customForms}
+            formIds={formIds}
+            units={units}
+            clientControls={clientControls}
+            cashAccounts={cashAccounts}
+          />
+          <NonFieldErrors errors={errors}/>
         </Form>
       )}
     </Formik>

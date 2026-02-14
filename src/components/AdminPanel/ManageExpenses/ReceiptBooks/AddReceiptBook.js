@@ -22,9 +22,10 @@ function AddReceiptBook() {
 
   const onSubmit = async (values, actions) => {
     try {
+      const allowed_apps = values.receipt_book_type === '1' ? values.receipt_apps : values.voucher_apps;
       const data = {
         ...values,
-        allowed_apps: values.allowed_apps.map(branch => branch.value)
+        allowed_apps: allowed_apps.map(branch => branch.value)
       };
       const CONFIG = {
         headers: {
@@ -54,25 +55,62 @@ function AddReceiptBook() {
   const initialValues = {
     name: '',
     prefix: '',
+    receipt_book_type: '',
     start_number: '',
     end_number: '',
     mode: '',
     currency_id: '',
     branch_id: '',
-    allowed_apps: '',
+    receipt_apps: '',
+    voucher_apps: '',
     is_active: false
   };
+
+  const receiptBookApps = [
+    {value: 1, label: 'Loans'},
+    {value: 2, label: 'Payments'}
+  ];
+
+  const voucherBookApps = [
+    {value: 3, label: 'Expenses'}
+  ];
 
   return (
     <div>
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        {({ errors, isSubmitting, setFieldValue }) => (
+        {({ values, errors, isSubmitting, setFieldValue }) => (
           <Form>
             <div className='divider divider-info'>
               <span>Receipt Book Information</span>
             </div>
             <CustomInput label='Name' name='name' type='text' required/>
             <CustomInput label='Prefix' name='prefix' type='text'/>
+            <CustomSelect label='Type' name='receipt_book_type' required>
+              <option value=''>------</option>
+              <option value='1'>Receipt Book</option>
+              <option value='2'>Voucher Book</option>
+            </CustomSelect>
+            {values.receipt_book_type === '1' ? (
+              <CustomMultiSelect
+                key='receipt_apps'
+                label='Applications'
+                initVals={[]}
+                options={receiptBookApps}
+                setFieldValue={setFieldValue}
+                name='receipt_apps'
+                required
+              />
+              ) : (
+              <CustomMultiSelect
+                key='voucher_apps'
+                label='Applications'
+                initVals={[]}
+                options={voucherBookApps}
+                setFieldValue={setFieldValue}
+                name='voucher_apps'
+                required
+              />
+            )}
             <CustomInput label='Start Number' name='start_number' type='number' step={1} required/>
             <CustomInput label='End Number' name='end_number' type='number' step={1} required/>
             <CustomSelect label='Mode' name='mode' required>
@@ -96,18 +134,6 @@ function AddReceiptBook() {
                 </option>
               ))}
             </CustomSelect>
-            <CustomMultiSelect
-              label='Applications'
-              initVals={[]}
-              options={[
-                {value: 1, label: 'Loans'},
-                {value: 2, label: 'Payments'},
-                {value: 3, label: 'Expenses'}
-              ]}
-              setFieldValue={setFieldValue}
-              name='allowed_apps'
-              required
-            />
             <CustomCheckbox label='Is Active' name='is_active'/>
             <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
             <div style={{display:'flex', justifyContent: 'flex-end'}}> 

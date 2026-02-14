@@ -16,12 +16,6 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
 
-const APP_LABELS = {
-  1: 'Loans',
-  2: 'Payments',
-  3: 'Expenses'
-};
-
 function UpdateReceiptBook() {
   const params = useParams();
   const {branches} = useBranches();
@@ -43,9 +37,14 @@ function UpdateReceiptBook() {
 
   const onSubmit = async (values, actions) => {
     try {
+      const allowed_apps = (
+        values.receipt_book_type == '1' ?
+        values.receipt_apps :
+        values.voucher_apps
+      );
       const data = {
         ...values,
-        allowed_apps: values.allowed_apps.map(branch => branch.value)
+        allowed_apps: allowed_apps.map(app => app.value)
       };
       const CONFIG = {
         headers: {
@@ -72,15 +71,26 @@ function UpdateReceiptBook() {
     }
   }
 
+  const receiptBookApps = [
+    {value: 1, label: 'Loans'},
+    {value: 2, label: 'Payments'}
+  ];
+
+  const voucherBookApps = [
+    {value: 3, label: 'Expenses'}
+  ];
+
   const initialValues = {
     name: rb.name,
     prefix: rb.prefix,
     start_number: rb.start_number,
     end_number: rb.end_number,
     mode: rb.mode,
+    receipt_book_type: rb.receipt_book_type,
     currency_id: rb.currency.id,
     branch_id: rb.branch.id,
-    allowed_apps: rb.allowed_apps.map(app => ({value: app, label: APP_LABELS[app]})),
+    receipt_apps: receiptBookApps.filter(app => rb.allowed_apps.includes(app.value)),
+    voucher_apps: voucherBookApps.filter(app => rb.allowed_apps.includes(app.value)),
     is_active: rb.is_active
   }
 
@@ -94,6 +104,30 @@ function UpdateReceiptBook() {
             </div>
             <CustomInput label='Name' name='name' type='text' required/>
             <CustomInput label='Prefix' name='prefix' type='text'/>
+            <CustomSelect label='Type' name='receipt_book_type' required>
+              <option value=''>------</option>
+              <option value='1'>Receipt Book</option>
+              <option value='2'>Voucher Book</option>
+            </CustomSelect>
+            {values.receipt_book_type == '1' ? (
+              <CustomMultiSelect
+                key='receipt_apps'
+                label='Applications'
+                initVals={values.receipt_apps}
+                options={receiptBookApps}
+                setFieldValue={setFieldValue}
+                name='receipt_apps'
+              />
+              ) : (
+              <CustomMultiSelect
+                key='voucher_apps'
+                label='Applications'
+                initVals={values.voucher_apps}
+                options={voucherBookApps}
+                setFieldValue={setFieldValue}
+                name='voucher_apps'
+              />
+            )}
             <CustomInput label='Start Number' name='start_number' type='number' step={1} required/>
             <CustomInput label='End Number' name='end_number' type='number' step={1} required/>
             <CustomSelect label='Mode' name='mode' required>
@@ -117,17 +151,6 @@ function UpdateReceiptBook() {
                 </option>
               ))}
             </CustomSelect>
-            <CustomMultiSelect
-              label='Applications'
-              initVals={values.allowed_apps}
-              options={[
-                {value: 1, label: 'Loans'},
-                {value: 2, label: 'Payments'},
-                {value: 3, label: 'Expenses'}
-              ]}
-              setFieldValue={setFieldValue}
-              name='allowed_apps'
-            />
             <CustomCheckbox label='Is Active' name='is_active'/>
             <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
             <div style={{display:'flex', justifyContent: 'flex-end'}}> 

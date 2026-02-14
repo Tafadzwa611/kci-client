@@ -48,9 +48,10 @@ function ReceiptBookDetails() {
               <li>End Number: {rb.end_number}</li>
               <li>Next Number: {rb.next_number}</li>
               <li>Is Active: {rb.is_active ? 'Yes' : 'No'}</li>
+              <li>Receipt Book Type: {{1: 'Receipt Book', 2: 'Voucher Book'}[rb.receipt_book_type]}</li>
               <li>Mode: {{1: 'Auto', 2: 'Manual'}[rb.mode]}</li>
               <li>
-                Mode: {rb.allowed_apps.map(app => ({1: 'Loans', 2: 'Payments', 3: 'Expenses'}[app])).join(', ')}
+                Applications: {rb.allowed_apps.map(app => ({1: 'Loans', 2: 'Payments', 3: 'Expenses'}[app])).join(', ')}
               </li>
               <li>Created By: {rb.created_by.name}</li>
               <li>Currency: {rb.currency.name}</li>
