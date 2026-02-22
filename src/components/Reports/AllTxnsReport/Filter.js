@@ -72,6 +72,8 @@ const Filter = ({setReport, setParams}) => {
     {label: 'Fees Reversed', value: 'Fees Reversed'},
     {label: 'Top-Up Principal', value: 'Top-Up Principal'},
     {label: 'Top-Up Interest', value: 'Top-Up Interest'},
+    {label: 'Write Off', value: 'Write Off'},
+    {label: 'Undo Write Off', value: 'Undo Write Off'},
   ]
 
   return (
