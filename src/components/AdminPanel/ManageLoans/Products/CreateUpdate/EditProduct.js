@@ -6,6 +6,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { uuidv4 } from '../../../../../utils';
 
+
 function EditProduct({loanFees, fieldSets, initialValues, setView, setSelectedPrdct, setProducts}) {
   initialValues.fees = initialValues.fees.map(fee => ({...fee, id: uuidv4()}));
   initialValues.custom_forms = initialValues.custom_forms.map(custom_form => ({...custom_form, id: uuidv4()}));

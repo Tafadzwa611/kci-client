@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Table from './Table';
 import EditProduct from '../CreateUpdate/EditProduct';
@@ -6,12 +6,12 @@ import AddProduct from '../CreateUpdate/AddProduct';
 import { Fetcher, SuccessBtn } from '../../../../../common';
 
 function ProductList({data}) {
-  const [productId, setProductId] = useState(null);
-  const [view, setView] = useState('list');
-  const [selectedPrdct, setSelectedPrdct] = useState(null);
-  const [products, setProducts] = useState(data);
+  const [productId, setProductId] = React.useState(null);
+  const [view, setView] = React.useState('list');
+  const [selectedPrdct, setSelectedPrdct] = React.useState(null);
+  const [products, setProducts] = React.useState(data);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (productId !== null) {
       const product = products.find(prd => prd.id == productId);
       setSelectedPrdct(product);
@@ -40,6 +40,7 @@ function ProductList({data}) {
       </>
     )
   }else if (view === 'edit') {
+    console.log(selectedPrdct);
     return (
       <Fetcher urls={urls}>
         {({data}) => (

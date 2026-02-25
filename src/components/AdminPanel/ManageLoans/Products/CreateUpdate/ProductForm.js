@@ -21,8 +21,13 @@ import axios from 'axios';
 
 function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSubmit, back}) {
   const {branches} = useBranches();
-  const selectBranches = branches.map(br => ({label: br.name, value:br.id}));
-  initialValues.allowed_branches_ids = selectBranches.filter(br => initialValues.allowed_branches_ids.includes(br.value))
+  const selectBranches = branches.map(br => ({label: br.name, value: br.id}));
+  console.log(selectBranches.filter(br => (
+    initialValues.allowed_branches_ids.includes(br.value)
+  )));
+  // initialValues.allowed_branches_ids = selectBranches.filter(br => (
+  //   initialValues.allowed_branches_ids.includes(br.value)
+  // ));
   const {currencies} = useCurrencies();
   const [accounts, setAccounts] = React.useState(null);
 
