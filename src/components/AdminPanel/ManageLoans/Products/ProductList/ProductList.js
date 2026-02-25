@@ -40,7 +40,6 @@ function ProductList({data}) {
       </>
     )
   }else if (view === 'edit') {
-    console.log(selectedPrdct);
     return (
       <Fetcher urls={urls}>
         {({data}) => (
@@ -48,6 +47,7 @@ function ProductList({data}) {
             loanFees={data[0]}
             fieldSets={data[1]}
             initialValues={selectedPrdct}
+            accounting={selectedPrdct.accounting}
             setView={setView}
             setSelectedPrdct={setSelectedPrdct}
             setProducts={setProducts}

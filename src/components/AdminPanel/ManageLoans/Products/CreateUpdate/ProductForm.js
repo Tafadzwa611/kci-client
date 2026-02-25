@@ -17,31 +17,17 @@ import { scheduleStrategies } from './data';
 import {Fee, AddFee} from './Fees';
 import {CustomLoanForm, AddCustomLoanForm} from './Forms';
 import { AddSchedulePenalty, SchedulePenalty } from './SchedulePenalties';
-import axios from 'axios';
 
-function ProductForm({loanFees, fieldSets, initialValues, validationSchema, onSubmit, back}) {
+
+function ProductForm({loanFees, accounts, fieldSets, initialValues, validationSchema, onSubmit, back}) {
   const {branches} = useBranches();
   const selectBranches = branches.map(br => ({label: br.name, value: br.id}));
-  console.log(selectBranches.filter(br => (
+  initialValues.allowed_branches_ids = selectBranches.filter(br => (
     initialValues.allowed_branches_ids.includes(br.value)
-  )));
-  // initialValues.allowed_branches_ids = selectBranches.filter(br => (
-  //   initialValues.allowed_branches_ids.includes(br.value)
-  // ));
+  ));
+
+
   const {currencies} = useCurrencies();
-  const [accounts, setAccounts] = React.useState(null);
-
-  React.useEffect(() => {
-    const fetch = async () => {
-      const response = await axios.get('/acc-api/sub_accounts_api/?page_num=1');
-      setAccounts(response.data);
-    }
-    fetch();
-  }, []);
-
-  if (!accounts) {
-    return <div>Loading...</div>
-  }
 
   return (
     <>
