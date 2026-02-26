@@ -26,7 +26,6 @@ function ProductForm({loanFees, accounts, fieldSets, initialValues, validationSc
     initialValues.allowed_branches_ids.includes(br.value)
   ));
 
-
   const {currencies} = useCurrencies();
 
   return (
@@ -38,11 +37,12 @@ function ProductForm({loanFees, accounts, fieldSets, initialValues, validationSc
             accounts.accounts
             .filter(
               acc =>
-                acc.account_type === type &&
-                acc.currency_id == values.currency_id
+                acc.account_type === type 
+                && acc.currency_id == values.currency_id
+                && !acc.is_interbranch_account
             )
             .map(acc => ({
-              label: `${acc.general_ledger_name} - ${acc.general_ledger_code} ${acc.account_type}`,
+              label: `${acc.currency__shortname} - ${acc.general_ledger_name} ${acc.general_ledger_code} ${acc.account_type}`,
               value: acc.id,
           }));
     
@@ -73,9 +73,21 @@ function ProductForm({loanFees, accounts, fieldSets, initialValues, validationSc
               <div className='divider divider-info'>
                 <span>Principal Settings</span>
               </div>
-              <CustomSelect label='Currency' name='currency_id' required>
+              <CustomSelect
+                label='Currency'
+                name='currency_id'
+                onChange={(evt) => {
+                  setFieldValue('accounting', {});
+                  setFieldValue('currency_id', evt.target.value);
+                }}
+                required
+              >
                 <option value=''>------</option>
-                {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+                {currencies.map(currency => (
+                  <option key={currency.id} value={currency.id}>
+                    {currency.fullname}
+                  </option>
+                ))}
               </CustomSelect>
               <CustomInput label='Minimum Principal Amount' name='minimum_principal_amount' step='0.00001' type='number' required/>
               <CustomInput label='Maximum Principal Amount' name='maximum_principal_amount' step='0.00001' type='number' required/>
@@ -309,7 +321,7 @@ function ProductForm({loanFees, accounts, fieldSets, initialValues, validationSc
                   <AddSchedulePenalty schedule_penalties={values.schedule_penalties} setFieldValue={setFieldValue}/>
                 </>
               )}
-              {values.action_on_loan_default === 'Add Penalty' &&
+              {values.action_on_loan_default === 'Add Penalty' && (
                 <>
                   <CustomSelect label='Apply Penalty On' name='apply_late_repayment_penalty_on' required>
                     <option value=''>------</option>
@@ -325,7 +337,8 @@ function ProductForm({loanFees, accounts, fieldSets, initialValues, validationSc
                   </CustomSelect>
                   <CustomInput label='Penalty Rate' name='late_repayment_penalty_percentage' type='number' required/>
                   <CustomInput label='Penalty Tolerance Period In Days' name='grace_period' type='number' required/>
-                </>}
+                </>
+              )}
               {values.action_on_loan_default === 'Add Interest' &&
                 <>
                   <CustomSelect label='Apply Interest On' name='apply_late_repayment_penalty_on' required>
@@ -363,86 +376,88 @@ function ProductForm({loanFees, accounts, fieldSets, initialValues, validationSc
               <div className='divider divider-info'>
                 <span>Accounting</span>
               </div>
-              <CustomMultiSelect
-                label='Portfolio Control Asset (Optional)'
-                name='accounting.portfolio_control'
-                isMulti={false}
-                initVals={values.accounting.portfolio_control}
-                setFieldValue={setFieldValue}
-                options={assetOptions}
-              />
-              <CustomMultiSelect
-                label='Interest Income (Optional)'
-                name='accounting.interest_income'
-                isMulti={false}
-                initVals={values.accounting.interest_income}
-                setFieldValue={setFieldValue}
-                options={incomeOptions}
-              />
-              <CustomMultiSelect
-                label='Interest Receivable Asset (Optional)'
-                name='accounting.interest_receivable'
-                isMulti={false}
-                initVals={values.accounting.interest_receivable}
-                setFieldValue={setFieldValue}
-                options={assetOptions}
-              />
-              <CustomMultiSelect
-                label='Penalty Income (Optional)'
-                name='accounting.penalty_income'
-                isMulti={false}
-                initVals={values.accounting.penalty_income}
-                setFieldValue={setFieldValue}
-                options={incomeOptions}
-              />
-              <CustomMultiSelect
-                label='Penalty Receivable Asset (Optional)'
-                name='accounting.penalty_receivable'
-                isMulti={false}
-                initVals={values.accounting.penalty_receivable}
-                setFieldValue={setFieldValue}
-                options={assetOptions}
-              />
-              <CustomMultiSelect
-                label='Fees Income (Optional)'
-                name='accounting.fee_income'
-                isMulti={false}
-                initVals={values.accounting.fee_income}
-                setFieldValue={setFieldValue}
-                options={incomeOptions}
-              />
-              <CustomMultiSelect
-                label='Fees Receivable Asset (Optional)'
-                name='accounting.fee_receivable'
-                isMulti={false}
-                initVals={values.accounting.fee_receivable}
-                setFieldValue={setFieldValue}
-                options={assetOptions}
-              />
-              <CustomMultiSelect
-                label='Refunds Payable Liability (Optional)'
-                name='accounting.refunds_payable'
-                isMulti={false}
-                initVals={values.accounting.refunds_payable}
-                setFieldValue={setFieldValue}
-                options={liabilityOptions}
-              />
-              <CustomMultiSelect
-                label='Write Off Expense (Optional)'
-                name='accounting.write_off'
-                isMulti={false}
-                initVals={values.accounting.write_off}
-                setFieldValue={setFieldValue}
-                options={expenseOptions}
-              />
-              <CustomMultiSelect
-                label='Bad Debts Recovery Income (Optional)'
-                name='accounting.bad_debts_recovery'
-                isMulti={false}
-                initVals={values.accounting.bad_debts_recovery}
-                setFieldValue={setFieldValue}
-                options={incomeOptions}
-              />
+              <React.Fragment key={values.currency_id}>
+                <CustomMultiSelect
+                  label='Portfolio Control Asset (Optional)'
+                  name='accounting.portfolio_control'
+                  isMulti={false}
+                  initVals={values.accounting.portfolio_control}
+                  setFieldValue={setFieldValue}
+                  options={assetOptions}
+                />
+                <CustomMultiSelect
+                  label='Interest Income (Optional)'
+                  name='accounting.interest_income'
+                  isMulti={false}
+                  initVals={values.accounting.interest_income}
+                  setFieldValue={setFieldValue}
+                  options={incomeOptions}
+                />
+                <CustomMultiSelect
+                  label='Interest Receivable Asset (Optional)'
+                  name='accounting.interest_receivable'
+                  isMulti={false}
+                  initVals={values.accounting.interest_receivable}
+                  setFieldValue={setFieldValue}
+                  options={assetOptions}
+                />
+                <CustomMultiSelect
+                  label='Penalty Income (Optional)'
+                  name='accounting.penalty_income'
+                  isMulti={false}
+                  initVals={values.accounting.penalty_income}
+                  setFieldValue={setFieldValue}
+                  options={incomeOptions}
+                />
+                <CustomMultiSelect
+                  label='Penalty Receivable Asset (Optional)'
+                  name='accounting.penalty_receivable'
+                  isMulti={false}
+                  initVals={values.accounting.penalty_receivable}
+                  setFieldValue={setFieldValue}
+                  options={assetOptions}
+                />
+                <CustomMultiSelect
+                  label='Fees Income (Optional)'
+                  name='accounting.fee_income'
+                  isMulti={false}
+                  initVals={values.accounting.fee_income}
+                  setFieldValue={setFieldValue}
+                  options={incomeOptions}
+                />
+                <CustomMultiSelect
+                  label='Fees Receivable Asset (Optional)'
+                  name='accounting.fee_receivable'
+                  isMulti={false}
+                  initVals={values.accounting.fee_receivable}
+                  setFieldValue={setFieldValue}
+                  options={assetOptions}
+                />
+                <CustomMultiSelect
+                  label='Refunds Payable Liability (Optional)'
+                  name='accounting.refunds_payable'
+                  isMulti={false}
+                  initVals={values.accounting.refunds_payable}
+                  setFieldValue={setFieldValue}
+                  options={liabilityOptions}
+                />
+                <CustomMultiSelect
+                  label='Write Off Expense (Optional)'
+                  name='accounting.write_off'
+                  isMulti={false}
+                  initVals={values.accounting.write_off}
+                  setFieldValue={setFieldValue}
+                  options={expenseOptions}
+                />
+                <CustomMultiSelect
+                  label='Bad Debts Recovery Income (Optional)'
+                  name='accounting.bad_debts_recovery'
+                  isMulti={false}
+                  initVals={values.accounting.bad_debts_recovery}
+                  setFieldValue={setFieldValue}
+                  options={incomeOptions}
+                />
+              </React.Fragment>
               <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
               <div style={{display:'flex', justifyContent: 'flex-end'}}> 
                 <SubmitButton isSubmitting={isSubmitting}/>

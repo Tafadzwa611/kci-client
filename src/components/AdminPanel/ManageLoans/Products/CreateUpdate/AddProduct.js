@@ -6,6 +6,16 @@ import Cookies from 'js-cookie';
 import { removeEmptyValues } from '../../../../../utils/utils';
 
 function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, setSelectedPrdct}) {
+  const [accounts, setAccounts] = React.useState(null);
+
+  React.useEffect(() => {
+    const fetch = async () => {
+      const response = await axios.get('/acc-api/sub_accounts_api/?page_num=1');
+      setAccounts(response.data);
+    }
+    fetch();
+  }, []);
+
   const initialValues = {
     name: '',
     ext_name: '',
@@ -95,8 +105,13 @@ function AddProduct({loanFees, fieldSets, setView, setProductId, setProducts, se
     }
   }
 
+  if (!accounts) {
+    return <div>Loading...</div>
+  }
+
   return (
     <ProductForm
+      accounts={accounts}
       initialValues={initialValues}
       validationSchema={createLoanProductSchema}
       onSubmit={onSubmit}
