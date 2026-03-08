@@ -4,7 +4,7 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: './src/index.js',
     output: {
-        path: path.join(__dirname, '../goldenknot/dashboard/static/dashboard/js'),
+        path: path.join(__dirname, '../kci/dashboard/static/dashboard/js'),
         filename: 'bundle.js'
     },
     // plugins: [
