@@ -18,6 +18,14 @@ const TrialBalanceTable = ({trialBalance}) => {
     }
   }, [omitZeroBalances, JSON.stringify(trialBalance)]);
 
+  const isBold = (account_name) => [
+    'TOTAL ASSET',
+    'TOTAL LIABILITY',
+    'TOTAL EXPENSE',
+    'TOTAL INCOME',
+    'TOTAL EQUITY',
+  ].includes(account_name);
+
   return (
     <div className='col-12 font-12'>
       <div style={{marginTop:'40px', border:'none', padding:'0'}} className='trial_balance_table_container'>
@@ -49,12 +57,14 @@ const TrialBalanceTable = ({trialBalance}) => {
                 <th>Debits({trialBalance.currency} {trialBalance.total_debits})</th>
                 <th>Credits({trialBalance.currency} {trialBalance.total_credits})</th>
                 <th>Net Change</th>
-                <th>Closing Balance</th>
+                <th>Closing Balance (DR)</th>
+                <th>Closing Balance (CR)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td><b>{trialBalance.currency} Trial Balance</b></td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -72,21 +82,78 @@ const TrialBalanceTable = ({trialBalance}) => {
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
               </tr>
               {accounts.map((account, index) => {
                 return (
                   <tr key={index}>
-                    <td style={{textAlign:'start'}}>{account.account_name}</td>
+                    <td style={{textAlign:'start'}}>
+                      {isBold(account.account_name) ? (
+                          <b>
+                            {account.account_name}
+                          </b>
+                        ) : (
+                        account.account_name
+                      )}
+                    </td>
                     <td style={{textAlign:'start'}}>{account.branch_name || 'Consolidated'}</td>
                     <td style={{textAlign:'start'}}>{account.account_type}</td>
-                    <td className='trial-balance-text-color' style={Number(account.balance_at_opening) >= 0 ? {background: 'rgb(127, 255, 0) none repeat scroll 0% 0%', textAlign: 'center'}: {background: 'rgb(255, 182, 193) none repeat scroll 0% 0%', textAlign: 'center'}}>
-                      {account.balance_at_opening}
+                    <td
+                      className='trial-balance-text-color'
+                      style={
+                        isBold(account.account_name) ? 
+                        {} :
+                          Number(account.balance_at_opening) >= 0 ? 
+                          {background: 'rgb(127, 255, 0) none repeat scroll 0% 0%', textAlign: 'center'} : 
+                          {background: 'rgb(255, 182, 193) none repeat scroll 0% 0%', textAlign: 'center'}
+                      }
+                    >
+                      {isBold(account.account_name) ? (
+                          <b>
+                            {account.balance_at_opening}
+                          </b>
+                        ) : (
+                        account.balance_at_opening
+                      )}
                     </td>
                     <td style={{textAlign:'start'}}>{account.range_debits}</td>
                     <td style={{textAlign:'start'}}>{account.range_credits}</td>
                     <td style={{textAlign:'start'}}>{account.net_change}</td>
-                    <td className='trial-balance-text-color' style={Number(account.balance_at_closing) >= 0 ? {background: 'rgb(127, 255, 0) none repeat scroll 0% 0%', textAlign: 'center'}: {background: 'rgb(255, 182, 193) none repeat scroll 0% 0%', textAlign: 'center'}}>
-                      {account.balance_at_closing}
+                    <td
+                      className='trial-balance-text-color'
+                      style={
+                        Number(account.balance_at_closing) >= 0 && !isBold(account.account_name) ? 
+                        {background: 'rgb(127, 255, 0) none repeat scroll 0% 0%', textAlign: 'center'} :
+                        {}
+                      }
+                    >
+                      {Number(account.balance_at_closing) >= 0 && (
+                        isBold(account.account_name) ? (
+                            <b>
+                              {account.balance_at_closing}
+                            </b>
+                          ) : (
+                          account.balance_at_closing
+                        )
+                      )}
+                    </td>
+                    <td
+                      className='trial-balance-text-color'
+                      style={
+                        Number(account.balance_at_closing) < 0 && !isBold(account.account_name) ? 
+                        {background: 'rgb(255, 182, 193) none repeat scroll 0% 0%', textAlign: 'center'} : 
+                        {}
+                      }
+                    >
+                      {Number(account.balance_at_closing) < 0 && (
+                        isBold(account.account_name) ? (
+                            <b>
+                              {account.balance_at_closing}
+                            </b>
+                          ) : (
+                          account.balance_at_closing
+                        )
+                      )}
                     </td>
                   </tr>
                 )

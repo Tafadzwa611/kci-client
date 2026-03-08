@@ -11,6 +11,7 @@ import { scheduleStrategies } from './data';
 import Fee from './Fee';
 import { useBranches } from '../../../contexts/BranchesContext';
 import CustomForm from './CustomForm';
+import { useReceiptBooks } from '../../../contexts/ReceiptBooksContext';
 
 function ClientFormFields({
   product,
@@ -26,7 +27,11 @@ function ClientFormFields({
   clientControls,
   cashAccounts
 }) {
+  const [selectedRb, setSelectedRb] = React.useState({});
   const {branches} = useBranches();
+  const { receiptBooks } = useReceiptBooks();
+  const receiptBooksObj = Object.fromEntries(receiptBooks.map(rb => [rb.id, rb]));
+
   const hideInterest = Boolean(product.default_interest_rate);
   const hideInstallments = Boolean(product.default_loan_duration);
   const hideFirstRepayment = Boolean(product.days_to_first_repayment);
@@ -170,14 +175,49 @@ function ClientFormFields({
           required
         />
       )}
-      {lcontrols.request_receipt_number && lcontrols.disburse_loan_on_capture ? (
-        <>
-          <div className='divider divider-info'>
-            <span>Receipt Number</span>
-          </div>
-          <CustomInput label='Receipt Number' name='receipt_number' type='text' required/>
-        </>
-      ) : null}
+      {lcontrols.request_receipt_number && lcontrols.disburse_loan_on_capture && (
+        lcontrols.use_receipt_book ? (
+          <>
+            <CustomMultiSelect
+              label='Receipt Book'
+              name='receipt_book'
+              isMulti={false}
+              setFieldValue={(fieldName, selectedOpts) => {
+                setFieldValue(fieldName, selectedOpts);
+                const selectedRb = receiptBooksObj[selectedOpts.value];
+                setSelectedRb(selectedRb);
+                if (selectedRb.mode == 1) {
+                  setFieldValue('receipt_number', '');
+                }
+              }}
+              options={receiptBooks.filter(rb => rb.is_active && rb.currency.id == product.currency_id).map(rb => (
+                {label: `${rb.name} - ${rb.branch.name} - ${rb.branch.name}`, value: rb.id}
+              ))}
+              required
+            />
+            {selectedRb.mode === 2 && (
+              <CustomInput
+                label='Receipt Number'
+                name='receipt_number'
+                type='text'
+                required
+              />
+            )}
+          </>
+        ) : (
+          <>
+            <div className='divider divider-info'>
+              <span>Receipt Number</span>
+            </div>
+            <CustomInput
+              label='Receipt Number'
+              name='receipt_number'
+              type='text'
+              required
+            />
+          </>
+        )
+      )}
       {customForms.filter(form => formIds.includes(form.id)).map(form => (
         <React.Fragment key={form.id}>
           <div className='divider divider-info' style={{padding: '1.25rem'}}><span>{form.name}</span></div>

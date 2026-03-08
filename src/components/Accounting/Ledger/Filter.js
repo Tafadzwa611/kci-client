@@ -46,47 +46,46 @@ const Filter = ({setTxns, setParams, setQueue}) => {
         <div className='search_background'>
           <div className='row-containers' style={{border:'none'}}>
             <Form>
-              <NonFieldErrors errors={errors}>
-                <div style={{display:'flex', justifyContent:'space-between'}}>
-                  <div className='row-payments-container' style={{width:'32%'}}>
-                    <CustomSelectFilter label='Currency' name='currency_id' required>
-                      <option value=''>------</option>
-                      {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-                    </CustomSelectFilter>
-                  </div>
-                  <div className='row-payments-container' style={{width:'32%'}}>
-                    <CustomDatePickerFilter label='Start Value Date' name='min_date' setFieldValue={setFieldValue} required/>
-                  </div>
-                  <div className='row-payments-container' style={{width:'32%'}}>
-                    <CustomDatePickerFilter label='End Value Date' name='max_date' setFieldValue={setFieldValue} required/>
-                  </div>
+              <div style={{display:'flex', justifyContent:'space-between'}}>
+                <div className='row-payments-container' style={{width:'32%'}}>
+                  <CustomSelectFilter label='Currency' name='currency_id' required>
+                    <option value=''>------</option>
+                    {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
+                  </CustomSelectFilter>
                 </div>
-                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'49%'}}>
-                    <CustomSelectFilter label='Mode' name='mode' required>
-                      <option value='html'>Screen (HTML)</option>
-                      <option value='xlsx'>Excel</option>
-                      <option value='csv'>CSV</option>
-                    </CustomSelectFilter>
-                  </div>
-                  {values.currency_id ? <div className='row-payments-container' style={{width:'49%'}}>
-                    <CustomSelectRemoteFilter
-                      label='Account'
-                      url='/acc-api/search_account/'
-                      selected={values.account}
-                      params={[{key: 'currency_id', value: values.currency_id}]}
-                      setFieldValue={setFieldValue}
-                      queryParamName='query'
-                      placeholder='Search Account'
-                      name='account'
-                      required
-                    />
-                  </div> : null}
+                <div className='row-payments-container' style={{width:'32%'}}>
+                  <CustomDatePickerFilter label='Start Value Date' name='min_date' setFieldValue={setFieldValue} required/>
                 </div>
-                <div style={{display:'flex', justifyContent:'space-between'}}>
-                  <SubmitButtonFilter isSubmitting={isSubmitting}/>
+                <div className='row-payments-container' style={{width:'32%'}}>
+                  <CustomDatePickerFilter label='End Value Date' name='max_date' setFieldValue={setFieldValue} required/>
                 </div>
-              </NonFieldErrors>
+              </div>
+              <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
+                <div className='row-payments-container' style={{width:'49%'}}>
+                  <CustomSelectFilter label='Mode' name='mode' required>
+                    <option value='html'>Screen (HTML)</option>
+                    <option value='xlsx'>Excel</option>
+                    <option value='csv'>CSV</option>
+                  </CustomSelectFilter>
+                </div>
+                {values.currency_id ? <div className='row-payments-container' style={{width:'49%'}}>
+                  <CustomSelectRemoteFilter
+                    label='Account'
+                    url='/acc-api/search_account/'
+                    selected={values.account}
+                    params={[{key: 'currency_id', value: values.currency_id}]}
+                    setFieldValue={setFieldValue}
+                    queryParamName='query'
+                    placeholder='Search Account'
+                    name='account'
+                    required
+                  />
+                </div> : null}
+              </div>
+              <div style={{display:'flex', justifyContent:'space-between'}}>
+                <SubmitButtonFilter isSubmitting={isSubmitting}/>
+              </div>
+              <NonFieldErrors errors={errors}/>
             </Form>
           </div>
         </div>

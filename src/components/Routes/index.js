@@ -6,6 +6,7 @@ import GroupRoutes from './GroupRoutes';
 import ExpenseRoutes from './ExpenseRoutes';
 import LoanRoutes from './LoanRoutes';
 import DepositRoutes from './DepositRoutes';
+import TransfersRoutes from './TransferRoutes';
 import OtherIncomeRoutes from './OtherIncomeRoutes';
 import PaymentRoutes from './PaymentRoutes';
 import ReportRoutes from './ReportRoutes';
@@ -16,22 +17,51 @@ import {useLoggedInUser} from '../../contexts/LoggedInUserContext';
 import { useBranches } from '../../contexts/BranchesContext';
 import { useCurrencies } from '../../contexts/CurrenciesContext';
 import { useLoanControls } from '../../contexts/LoanControlsContext';
+import { useProducts } from '../../contexts/ProductsContext';
+import { useUnits } from '../../contexts/UnitsContext';
+import { useCash } from '../../contexts/CashContext';
+import { useClientControls } from '../../contexts/ClientControlsContext';
+import { useLoanForms } from '../../contexts/LoanFormsContext';
+import { useReceiptBooks } from '../../contexts/ReceiptBooksContext';
 import { Routes as ReactRoutes, Route } from 'react-router-dom';
 
 const Home = lazy(() => import('../Home/Home'));
 const Dashboard = lazy(() => import('../Dashboard/Dashboard'));
 
-const Routes = ({loggedInUser, branches, currencies, loanControls}) => {
+const Routes = ({
+  loggedInUser,
+  branches,
+  currencies,
+  loanControls,
+  loanProducts,
+  units,
+  cashAccounts,
+  clientControls,
+  loanForms,
+  receiptBooks
+}) => {
   const {setLoggedInUser} = useLoggedInUser();
   const {setBranches} = useBranches();
   const {setCurrencies} = useCurrencies();
   const {setLoanControls} = useLoanControls();
+  const { setProducts } = useProducts();
+  const { setUnits } = useUnits();
+  const { setCash } = useCash();
+  const { setClientControls } = useClientControls();
+  const { setLoanForms } = useLoanForms();
+  const { setReceiptBooks } = useReceiptBooks();
 
   useEffect(() => {
     setLoggedInUser(loggedInUser);
     setBranches(branches.results);
     setCurrencies(currencies);
     setLoanControls(loanControls);
+    setProducts(loanProducts);
+    setUnits(units);
+    setCash(cashAccounts);
+    setClientControls(clientControls);
+    setLoanForms(loanForms);
+    setReceiptBooks(receiptBooks);
   }, []);
 
   return (
@@ -50,6 +80,7 @@ const Routes = ({loggedInUser, branches, currencies, loanControls}) => {
         {OtherIncomeRoutes}
         {PaymentRoutes}
         {ReportRoutes}
+        {TransfersRoutes}
         {UserRoutes}
         {DataRoutes}
         {LocalExportRoutes}

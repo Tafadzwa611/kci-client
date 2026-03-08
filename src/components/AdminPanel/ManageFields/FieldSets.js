@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import CreateFieldSet from './CreateFieldSet';
 import EditFieldSet from './EditFieldSet';
 import DeleteFieldSet from './DeleteFieldSet';
@@ -7,12 +7,12 @@ import ChangeListingOrder from './ChangeListingOrder';
 import { Fetcher, SuccessBtn, DeleteBtn, EditBtn, Select } from '../../../common';
 
 const FieldSets = ({data, entityType, clientTypes}) => {
-  const [fieldSets, setFieldSets] = useState(data);
-  const [fieldSetId, setFieldSetId] = useState('');
-  const [openCreateFieldSetModal, setOpenCreateFieldSetModal] = useState(false);
-  const [openEditFieldSetModal, setOpenEditFieldSetModal] = useState(false);
-  const [openDeleteFieldSetModal, setOpenDeleteFieldSetModal] = useState(false);
-  const [openChangeModal, setOpenChangeModal] = useState(false);
+  const [fieldSets, setFieldSets] = React.useState(data);
+  const [fieldSetId, setFieldSetId] = React.useState('');
+  const [openCreateFieldSetModal, setOpenCreateFieldSetModal] = React.useState(false);
+  const [openEditFieldSetModal, setOpenEditFieldSetModal] = React.useState(false);
+  const [openDeleteFieldSetModal, setOpenDeleteFieldSetModal] = React.useState(false);
+  const [openChangeModal, setOpenChangeModal] = React.useState(false);
 
   return (
     <>

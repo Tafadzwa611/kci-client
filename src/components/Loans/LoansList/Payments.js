@@ -72,6 +72,7 @@ function Payments({
                       <th className='schedule__table'>Fees Paid</th>
                       <th className='schedule__table'>To_Be Refunded</th>
                       <th className='schedule__table'>Total Amount_Paid</th>
+                      <th className='schedule__table'>Receipt_Number</th>
                     </tr>
                   }
                 </thead>
@@ -108,6 +109,7 @@ function Payments({
                           <td className='schedule__table'>{payment.fees}</td>
                           <td className='schedule__table'>{payment.money_to_be_refunded}</td>
                           <td className='schedule__table'>{payment.amount_paid}</td>
+                          <td className='schedule__table'>{payment.receipt_number}</td>
                         </>}
                     </tr>
                   ))}

@@ -5,8 +5,6 @@ function BatchResults() {
     const location = useLocation();
     const state = location.state;
 
-    console.log(state);
-
     if (!state) return <Navigate to='/accounting/viewaccounting/journals/addjournalbatch' replace />;
 
     return (

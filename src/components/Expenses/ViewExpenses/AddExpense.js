@@ -1,27 +1,65 @@
 import React from 'react';
 import {addSchema} from './schema';
-import ExpenseForm from './ExpenseForm';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { removeEmptyValues } from '../../../utils/utils';
+import { Form, Formik } from 'formik';
+import {
+  CustomMultiSelect,
+  CustomInput,
+  NonFieldErrors,
+  SubmitButton,
+  CustomDatePicker
+} from '../../../common';
+import { useBranches } from '../../../contexts/BranchesContext';
+import { useReceiptBooks } from '../../../contexts/ReceiptBooksContext';
+
 
 function AddExpense({expensetypes, fundaccounts}) {
+  const [currencyId, setCurrencyId] = React.useState('');
+  const [settings, setSettings] = React.useState(null);
+  const [selectedRb, setSelectedRb] = React.useState({});
   const navigate = useNavigate();
+  const {branches} = useBranches();
+  const { receiptBooks } = useReceiptBooks();
+  const receiptBooksObj = Object.fromEntries(receiptBooks.map(rb => [rb.id, rb]));
+
+  React.useEffect(() => {
+    async function fetchSettings() {
+      try {
+        const response = await axios.get('/expensesapi/expense_settings/');
+        setSettings(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchSettings();
+  }, []);
+
+  if (!settings) {
+    return <div>Loading...</div>
+  }
 
   const initialValues = {
     expense_type_id: '',
+    expense_type: '',
     expense_name: '',
     expense_amount: '',
     expense_date: '',
+    expense_branch: '',
     reference: '',
     description: '',
     fund_account_id: '',
+    branch: ''
   };
 
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
+      if (settings.use_voucher_book) {
+        data.receipt_book_id = values.receipt_book.value;
+      }
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post('/expensesapi/add_expense/', data, CONFIG);
       navigate({pathname: '/expenses/viewexpenses', search: `?expense_id=${response.data.id}`});
@@ -37,13 +75,113 @@ function AddExpense({expensetypes, fundaccounts}) {
   }
 
   return (
-    <ExpenseForm
-      expensetypes={expensetypes}
-      fundaccounts={fundaccounts}
-      initialValues={initialValues}
-      validationSchema={addSchema}
-      onSubmit={onSubmit}
-    />
+    <Formik initialValues={initialValues} validationSchema={addSchema} onSubmit={onSubmit}>
+      {({ isSubmitting, errors, values, setFieldValue }) => (
+        <Form>
+            <div className='divider divider-info'><span>Expense Information</span></div>
+            <CustomMultiSelect
+              label='Expense Branch'
+              name='expense_branch'
+              isMulti={false}
+              options={branches.map(branch => ({value: branch.id, label: branch.name}))}
+              required
+              setFieldValue={(field_name, selectedOpts) => {
+                setFieldValue('expense_type', '');
+                setFieldValue('expense_type_id', '');
+                setFieldValue(field_name, selectedOpts);
+              }}
+            />
+            <CustomMultiSelect
+              label='Expense Type'
+              name='expense_type'
+              isMulti={false}
+              setFieldValue={(field_name, selectedOpts) => {
+                setFieldValue(field_name, selectedOpts);
+                setFieldValue('expense_type_id', selectedOpts?.value);
+                const exp_type = expensetypes.find(et => et.id == selectedOpts?.value);
+                setCurrencyId(exp_type?.currency_id);
+              }}
+              options={expensetypes.filter(type => type.branch_id === values.expense_branch?.value).map(type => (
+                {label: `${type.currency_shortname} ${type.name} ${type.branch_name}`, value: type.id}
+              ))}
+              required
+            />
+            {settings.accounting_method === 1 && (
+              <>
+                <CustomMultiSelect
+                  label='Fund Branch'
+                  name='fund_branch'
+                  isMulti={false}
+                  options={branches.map(branch => ({value: branch.id, label: branch.name}))}
+                  required
+                  setFieldValue={(field_name, selectedOpts) => {
+                    setFieldValue(field_name, selectedOpts);
+                    setFieldValue('fund_account', '');
+                    setFieldValue('fund_account_id', '');
+                  }}
+                />
+                <CustomMultiSelect
+                  label='Fund Account'
+                  name='fund_account'
+                  isMulti={false}
+                  setFieldValue={(field_name, selectedOpts) => {
+                    setFieldValue(field_name, selectedOpts);
+                    setFieldValue('fund_account_id', selectedOpts.value);
+                  }}
+                  options={fundaccounts.filter(fa => fa.currency_id == currencyId && fa.branch_id == values.fund_branch?.value).map(account => (
+                    {label: `${account.currency} ${account.general_ledger_name} ${account.branch}`, value: account.id}
+                  ))}
+                  required
+                />
+              </>
+            )}
+            <CustomInput label='Expense Name' name='expense_name' type='text' required/>
+            <CustomInput label='Expense Amount' name='expense_amount' type='number' required/>
+            <CustomDatePicker label='Expense Date' name='expense_date' setFieldValue={setFieldValue} required/>
+            {settings.use_voucher_book ? (
+              <>
+                <CustomMultiSelect
+                  label='Receipt Book'
+                  name='receipt_book'
+                  isMulti={false}
+                  setFieldValue={(fieldName, selectedOpts) => {
+                    setFieldValue(fieldName, selectedOpts);
+                    const selectedRb = receiptBooksObj[selectedOpts.value];
+                    setSelectedRb(selectedRb);
+                    if (selectedRb.mode == 1) {
+                      setFieldValue('receipt_number', '');
+                    }
+                  }}
+                  options={receiptBooks.filter(rb => rb.is_active && rb.currency.id == currencyId && rb.allowed_apps.includes(3)).map(rb => (
+                    {label: `${rb.name} - ${rb.branch.name} - ${rb.branch.name}`, value: rb.id}
+                  ))}
+                  required
+                />
+                {selectedRb.mode === 2 && (
+                  <CustomInput
+                    label='Reference'
+                    name='reference'
+                    type='text'
+                    required
+                  />
+                )}
+              </>
+            ) : (
+              <CustomInput
+                label='Reference'
+                name='reference'
+                type='text'
+              />
+            )}
+            <CustomInput label='Description' name='description' type='text' />
+            <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
+            <div style={{display:'flex', justifyContent: 'flex-end'}}>
+              <SubmitButton isSubmitting={isSubmitting}/>
+            </div>
+            <NonFieldErrors errors={errors}/>
+        </Form>
+      )}
+    </Formik>
   )
 }
 

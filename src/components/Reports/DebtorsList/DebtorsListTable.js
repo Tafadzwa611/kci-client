@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React from 'react';
 import axios from 'axios';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 function DebtorsListTable({report, setReport, params}) {
     return (
@@ -13,12 +12,16 @@ function DebtorsListTable({report, setReport, params}) {
                             <tr className='journal-details fees__report_thead'>
                                 <th>Branch</th>
                                 <th>Client_Name</th>
+                                <th>Client_ID</th>
                                 <th>Loan_Number</th>
                                 <th>Disbursed_Date</th>
                                 <th>Maturity_Date</th>
                                 <th>Principal</th>
                                 <th>Claimable_Balance</th>
-                                <th>Balance</th>
+                                <th>Current_Balance</th>
+                                <th>Balance_At</th>
+                                <th>Num_Of_Repayments</th>
+                                <th>Repayment_Cycle</th>
                                 <th>Sector</th>
                                 <th>Male</th>
                                 <th>Female</th>
@@ -45,12 +48,16 @@ function DebtorsListTable({report, setReport, params}) {
                                     <tr key={loan.id}>
                                         <td>{loan.branch_name}</td>
                                         <td>{loan.client_name}</td>
-                                        <td>{loan.loan_id}</td>
+                                        <td>{loan.client_id_num}</td>
+                                        <td>{loan.loan_num}</td>
                                         <td>{loan.db_date}</td>
                                         <td>{loan.last_date}</td>
                                         <td>{loan.principal}</td>
                                         <td>{loan.claimable_balance}</td>
                                         <td>{loan.current_balance}</td>
+                                        <td>{loan.balance}</td>
+                                        <td>{loan.num_of_repayments}</td>
+                                        <td>{loan.repayment_cycle}</td>
                                         <td>{loan.reason_for_borrowing}</td>
                                         <td>{loan.male}</td>
                                         <td>{loan.female}</td>
@@ -94,23 +101,13 @@ const TableHeader = ({report, params, setReport}) => {
                 <div style={{marginTop:'6px'}}>
                     Page {report.number} of {report.num_of_pages}
                 </div>
-                <div>
-                    <ReactHTMLTableToExcel
-                        id='test-table-xls-button'
-                        className='btn btn-default'
-                        table='loans-report'
-                        filename='Loans Report'
-                        sheet='tablexls'
-                        buttonText='Download as XLS'
-                    />
-                </div>
             </div>
         </div>
     )
 }
 
 const Pager = ({prevPageNumber, nextPageNumber, setReport, params}) => {
-    const [errors, setErrors] = useState(null);
+    const [errors, setErrors] = React.useState(null);
 
     const onClick = async (evt) => {
         try {

@@ -1,11 +1,12 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import List from './ViewExpenses/List';
 import AddExpense from './ViewExpenses/AddExpense';
 import { Fetcher } from '../../common';
 import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
 
+
 const ViewExpenses = () => {
-  useEffect(() => {
+  React.useEffect(() => {
     document.title = 'View Expenses';
   }, []);
 
@@ -21,7 +22,7 @@ const ViewExpenses = () => {
 
 const AddExpenseComponent = () => {
   return (
-    <Fetcher urls={['/expensesapi/expensetypeslist/', '/acc-api/cash-accounts-list/']}>
+    <Fetcher urls={['/expensesapi/expensetypeslist/?header=0', '/acc-api/cash-accounts-list/']}>
       {({data}) => <AddExpense expensetypes={data[0]} fundaccounts={data[1].accounts} />}
     </Fetcher>
   )
@@ -29,7 +30,7 @@ const AddExpenseComponent = () => {
 
 const ExpenseListComponent = () => {
   return (
-    <Fetcher urls={['/expensesapi/expensetypeslist/']}>
+    <Fetcher urls={['/expensesapi/expensetypeslist/?header=0']}>
       {({data}) => <List expensetypes={data[0]} />}
     </Fetcher>
   )

@@ -9,6 +9,7 @@ import {
 import axios from 'axios';
 import { getParams } from '../../../utils/utils';
 
+
 const DateRange = ({setStatement, accounts}) => {
   const onSubmit = async (values, actions) => {
     try {
@@ -27,25 +28,27 @@ const DateRange = ({setStatement, accounts}) => {
   }
 
   return (
-    <Formik initialValues={{account_id: '', report_date: ''}} onSubmit={onSubmit}>
+    <Formik initialValues={{account_id: '', report_date: '', max_report_date: ''}} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors}) => (
         <div className='search_background'>
           <div className='row-containers' style={{border:'none'}}>
             <Form>
-              <NonFieldErrors errors={errors}>
-                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'45%'}}>
-                    <CustomDatePickerFilter label='Report Date' name='report_date' setFieldValue={setFieldValue} required/>
-                  </div>
-                  <div className='row-payments-container' style={{width:'45%'}}>
-                    <CustomSelectFilter label='Account' name='account_id' required>
-                      <option value=''>------</option>
-                      {accounts.map(account => <option key={account.id} value={account.id}>{account.currency} {account.label} {account.branch}</option>)}
-                    </CustomSelectFilter>
-                  </div>
-                  <SubmitButtonFilter isSubmitting={isSubmitting}/>
+              <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
+                <div className='row-payments-container' style={{width:'30%'}}>
+                  <CustomDatePickerFilter label='Min Report Date' name='report_date' setFieldValue={setFieldValue} required/>
                 </div>
-              </NonFieldErrors>
+                <div className='row-payments-container' style={{width:'30%'}}>
+                  <CustomDatePickerFilter label='Max Report Date' name='max_report_date' setFieldValue={setFieldValue} required/>
+                </div>
+                <div className='row-payments-container' style={{width:'30%'}}>
+                  <CustomSelectFilter label='Account' name='account_id' required>
+                    <option value=''>------</option>
+                    {accounts.map(account => <option key={account.id} value={account.id}>{account.currency} {account.label} {account.branch}</option>)}
+                  </CustomSelectFilter>
+                </div>
+                <SubmitButtonFilter isSubmitting={isSubmitting}/>
+              </div>
+              <NonFieldErrors errors={errors}/>
             </Form>
           </div>
         </div>
@@ -55,4 +58,3 @@ const DateRange = ({setStatement, accounts}) => {
 }
 
 export default DateRange;
-

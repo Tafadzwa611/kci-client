@@ -1,10 +1,26 @@
 import Actions from './Actions';
 import { statusClasses } from './data';
-import React, { useState } from 'react';
+import React from 'react';
 import BlocTabs from './BlocTabs';
+import axios from 'axios';
+
 
 function LoanDetails({loanApiData}) {
-  const [loan, setLoan] = useState(loanApiData);
+  const [loan, setLoan] = React.useState(loanApiData);
+
+  React.useEffect(() => {
+    const fetch = async () => {
+      if (loan)return;
+      const response = await axios.get(`/loansapi/get_loan/${loanApiData.id}/`);
+      setLoan(response.data);
+    }
+    fetch();
+  }, [JSON.stringify(loan)]);
+
+  if(!loan) {
+    return <div>Loading...</div>
+  }
+
   const loanType = loan.client_type === 'Clients' || loan.client_type === 'Groups' ? 'cli' : 'sol';
 
   return (
@@ -12,6 +28,10 @@ function LoanDetails({loanApiData}) {
       <div style={{position:'sticky', top:'0', width:'100%'}}>
         <div style={{display:'flex', flexDirection:'column', padding:'1.5rem'}} className='j-details-container'>
           <div style={{marginBottom:'1rem'}}>
+            <div style={{marginBottom:'1rem', display:'flex', justifyContent:'space-between'}}>
+              <button className='btn btn-default client__details' onClick={() => setLoan(null)}>Refresh</button>
+              <div></div>
+            </div>
             <div style={{display:'flex', justifyContent:'space-between'}}>
               <div style={{display:'flex', alignItems:'center'}}>
                 <span style={{margin: "0 5px"}}><b>{loan.branch} Branch </b></span> /

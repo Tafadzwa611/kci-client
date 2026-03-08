@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import SolidarityGroupForm from './SolidarityGroupForm';
 import { CustomMultiSelect } from '../../../common';
 import { Form, Formik } from 'formik';
@@ -7,8 +7,14 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import ClientFormFields from './ClientFormFields';
 import { removeEmptyValues, isNumeric } from '../../../utils/utils';
+import { useProducts } from '../../../contexts/ProductsContext';
+import { useUnits } from '../../../contexts/UnitsContext';
+import { useLoanControls } from '../../../contexts/LoanControlsContext';
+import { useCash } from '../../../contexts/CashContext';
+import { useClientControls } from '../../../contexts/ClientControlsContext';
+import { useLoanForms } from '../../../contexts/LoanFormsContext';
 
-function AddLoan({products, lcontrols, customForms, units, clientControls, cashAccounts}) {
+function AddLoan() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const application_id = searchParams.get('application_id');
@@ -16,17 +22,31 @@ function AddLoan({products, lcontrols, customForms, units, clientControls, cashA
   const client_id = searchParams.get('client_id') || '';
   const client_name = searchParams.get('client_name') || '';
   let princ = searchParams.get('principal') || '';
+
+  let { products } = useProducts();
+  const { units } = useUnits();
+  const { clientControls } = useClientControls();
+  const { loanForms } = useLoanForms();
+  const customForms = loanForms;
+
+  let { cash } = useCash();
+  const cashAccounts = cash;
+
+  const { loanControls } = useLoanControls();
+  const lcontrols = loanControls;
+
   if (products.length > 1) {
     products.sort((a, b) => a.loan_product_id.localeCompare(b.loan_product_id));
   }
   products = products.filter(prod => prod.is_active);
-  const [product, setProduct] = useState(null);
-  const [clientId, setClientId] = useState('');
-  const [clientName, setClientName] = useState('');
-  const [principal, setPrincipal] = useState('');
-  const [formIds, setFormIds] = useState([]);
 
-  useEffect(() => {
+  const [product, setProduct] = React.useState(null);
+  const [clientId, setClientId] = React.useState('');
+  const [clientName, setClientName] = React.useState('');
+  const [principal, setPrincipal] = React.useState('');
+  const [formIds, setFormIds] = React.useState([]);
+
+  React.useEffect(() => {
     const prod = products.find(prod => prod.id.toString() === loan_product_id) || null;
     setProduct(prod);
     setClientId(client_id);
@@ -64,6 +84,7 @@ function AddLoan({products, lcontrols, customForms, units, clientControls, cashA
     group_id: '',
     unit_id: '',
     receipt_number: '',
+    receipt_book_id: '',
     ...(application_id && {application_id}),
     ...(!lcontrols.auto_generate_loan_id && {loan_id: ''})
   };
@@ -94,8 +115,13 @@ function AddLoan({products, lcontrols, customForms, units, clientControls, cashA
       if (data.fund_account) {
         data.fund_account_id = data.fund_account.value;
       }
+
       if (data.branch) {
         data.branch_id = data.branch.value;
+      }
+
+      if (loanControls.use_receipt_book) {
+        data.receipt_book_id = values.receipt_book.value;
       }
       const url = product.client_type === 'Groups (solidarity)' ? '/loansapi/add_soloan_api/' : '/loansapi/add_loan_api/';
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
@@ -128,7 +154,10 @@ function AddLoan({products, lcontrols, customForms, units, clientControls, cashA
               onChange(selectedOpts.value, setFieldValue, values.loan_product_id);
               setFieldValue(fieldName, selectedOpts);
             }}
-            options={products.map(product => ({label: `${product.loan_product_id} ${product.name}`, value: product.id}))}
+            options={products.map(product => ({
+              label: `${product.currency_shortname} - ${product.loan_product_id} ${product.name} ${product.client_type}`,
+              value: product.id
+            }))}
             required
           />
           {product ? {

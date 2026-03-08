@@ -56,7 +56,7 @@ const TableHeader = ({report, params, setReport}) => {
             <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
                 <Pager nextPageNumber={report.next_page_num} params={params} prevPageNumber={report.prev_page_num} setReport={setReport}/>
                 <div style={{marginTop:'6px'}}>
-                    Showing {report.loans.length} of {report.count} loans.
+                    Showing {report.page_size} of {report.count} loans.
                 </div>
             </div>
             <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>

@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Filter from './Filter';
 import LoansTable from './LoansTable';
+import { useProducts } from '../../../contexts/ProductsContext';
+import { useUnits } from '../../../contexts/UnitsContext';
 
-function LoansList({products, units}) {
-  const [loanData, setLoanData] = useState({
+
+function LoansList() {
+  const [loanData, setLoanData] = React.useState({
     count: 0,
     next_page_num: null,
     prev_page_num: null,
@@ -11,9 +14,12 @@ function LoansList({products, units}) {
     num_of_pages: null,
     loans: []
   });
-  const [params, setParams] = useState(null);
-  const [loanDetails, setLoanDetails] = useState(null);
-  const [loanId, setLoanId] = useState(null);
+  const [params, setParams] = React.useState(null);
+  const [loanDetails, setLoanDetails] = React.useState(null);
+  const [loanId, setLoanId] = React.useState(null);
+
+  const { units } = useUnits();
+  const { products } = useProducts();
 
   return (
     <>

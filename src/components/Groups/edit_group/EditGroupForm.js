@@ -11,7 +11,8 @@ import {
   SubmitButton,
   CustomSelect,
   CustomDatePicker,
-  CustomPhoneNumber
+  CustomPhoneNumber,
+  CustomCheckbox
 } from '../../../common';
 import { AddMember, Member } from '../add_group/Members';
 
@@ -23,8 +24,24 @@ const createGroupSchema = yup.object().shape({
 });
 
 const EditGroupForm = ({group, groupTypes, loanOfficers, groupRoles, clientControls, units}) => {
+  const [fieldsets, setFieldsets] = React.useState(null);
   const navigate = useNavigate();
   const phoneNumberArray = group.group_phone_number.split(' ');
+
+  React.useEffect(() => {
+    const fetch = async () => {
+      const response = await axios.get('/usersapi/list_field_sets/?entity_type=GROUP&active=1');
+      setFieldsets(response.data);
+    }
+    fetch();
+  }, []);
+
+  if (fieldsets === null) {
+    return <div>Loading...</div>
+  }
+
+  const formikFieldsets = convertToFormikFieldsets(fieldsets).fieldsets;
+  hydrateTargetFromCustomFields(group.custom_field_values, formikFieldsets);
 
   const initialValues = {
     name: group.group_name,
@@ -39,13 +56,16 @@ const EditGroupForm = ({group, groupTypes, loanOfficers, groupRoles, clientContr
     group_bank_name: group.group_bank_name,
     group_officer_id: group.group_officer_id || '',
     unit_id: group.unit_id || '',
+    fieldsets: formikFieldsets
   };
 
   const onSubmit = async (values, actions) => {
     try {
+      const custom_data = toFieldValueArray(values.fieldsets);
       const data = removeEmptyValues(values);
       data.group_phone_number = `${values.group_phone_number.countryCode} ${values.group_phone_number.phoneNumber}`;
       data.members = data.members.map(member => ({client_id: member.client_id, role_id: member.role_id}));
+      data.custom_data = custom_data;
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       await axios.put(`/clientsapi/edit_group/${group.id}/`, data, CONFIG);
       navigate({pathname: `/groups/viewgroups?group_id=${group.id}`});
@@ -103,6 +123,12 @@ const EditGroupForm = ({group, groupTypes, loanOfficers, groupRoles, clientContr
                   {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
                 </CustomSelect>
               }
+              {fieldsets.map(fieldset => (
+                <React.Fragment key={fieldset.id}>
+                  <div className='divider divider-info'>{fieldset.name}</div>
+                  {fieldset.fields.map(field => getElement(fieldset, field, setFieldValue))}
+                </React.Fragment>
+              ))}
               <div className='divider divider-info'>
                 <span>Members</span>
               </div>
@@ -131,6 +157,81 @@ const EditGroupForm = ({group, groupTypes, loanOfficers, groupRoles, clientContr
       </Formik>
     </>
   )
+}
+
+const toFieldValueArray = (fieldsets) => {
+  return Object.values(fieldsets).flatMap((fields) =>
+    Object.entries(fields).map(([field_id, value]) => ({
+      field_id: Number(field_id),
+      value,
+    }))
+  );
+};
+
+const convertToFormikFieldsets = (fieldsets) => {
+  return {
+    fieldsets: Object.fromEntries(
+      fieldsets.map((fieldset) => [
+        String(fieldset.id),
+        Object.fromEntries(
+          fieldset.fields.map((field) => [String(field.id), ""])
+        ),
+      ])
+    ),
+  };
+};
+
+function hydrateTargetFromCustomFields(customFieldValues, target) {
+  Object.values(customFieldValues).forEach(fields => {
+    fields.forEach(({ field_id, value }) => {
+      Object.keys(target).forEach(groupId => {
+        if (field_id in target[groupId]) {
+          target[groupId][field_id] = value;
+        }
+      });
+    });
+  });
+
+  return target;
+}
+
+const getElement = (fieldset, field, setFieldValue) => {
+  const dataTypes = {
+    free_text: 'text',
+    integer: 'number',
+    decimal: 'number',
+    date: 'date',
+  };
+
+  const fieldLabel = field.is_required ? field.name : `${field.name} (Optional)`;
+  const name = `fieldsets.${fieldset.id}.${field.id}`;
+
+  if (field.data_type === 'select') {
+    return (
+      <CustomSelect key={field.id} label={fieldLabel} name={name} required={field.is_required}>
+        <option value=''>------</option>
+        {field.select_opts.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+      </CustomSelect>
+    )
+  }
+
+  if (field.data_type === 'checkbox') {
+    return <CustomCheckbox key={field.id} label={fieldLabel} name={name} required={field.is_required}/>
+  }
+
+  return {
+    free_text: <CustomInput key={field.id} label={fieldLabel} name={name} type={dataTypes[field.data_type]} required={field.is_required}/>,
+    integer: <CustomInput
+      key={field.id}
+      label={fieldLabel}
+      required={field.is_required}
+      name={name}
+      type={dataTypes[field.data_type]}
+      onKeyDown={e => {if(e.key==='.')e.preventDefault()}}
+    />,
+    decimal: <CustomInput key={field.id} label={fieldLabel} name={name} type={dataTypes[field.data_type]} required={field.is_required}/>,
+    date: <CustomDatePicker key={field.id} label={fieldLabel} name={name} setFieldValue={setFieldValue} required={field.is_required}/>
+  }[field.data_type]
 }
 
 export default EditGroupForm;

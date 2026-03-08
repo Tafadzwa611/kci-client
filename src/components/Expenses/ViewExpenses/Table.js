@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import MainTable from './MainTable';
 import MiniTable from './MiniTable';
 import MiniExpenseDetails from './MiniExpenseDetails';
-import { Fetcher } from '../../../common';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Pager from './Pager';
 
-function Table({expenseData, setExpenseDetails, setEpenseData, params}) {
+function Table({expenseData, setExpenseData, params}) {
   const [expenseId, setExpenseId] = useState(null);
   const [selectedExpenseId, setSelectedExpenseId] = useState(null);
-
 
   const handleClick = (e) => {
     setExpenseId(e.target.id);
@@ -18,7 +16,7 @@ function Table({expenseData, setExpenseDetails, setEpenseData, params}) {
 
   return (
     <>
-      <TableHeader expenseData={expenseData} params={params} setEpenseData={setEpenseData}/>
+      <TableHeader expenseData={expenseData} params={params} setExpenseData={setExpenseData}/>
       <div style={{padding:"0", border:"none"}} className={expenseId ? 'table-container journal__table font-12' :'table-container full__width font-12'}>
         <div className={expenseId ? "table-responsive journal__table-container-journals" : "table-responsive full__table"} >
           {expenseId ?
@@ -32,18 +30,21 @@ function Table({expenseData, setExpenseDetails, setEpenseData, params}) {
               handleClick={handleClick}
             />
           }
-          {expenseId &&
-          <Fetcher urls={[`/expensesapi/get_expense/${expenseId}/`]} extra={{setExpenseDetails, setExpenseId, setEpenseData}}>
-            {({data, extra}) => <MiniExpenseDetails expenseDetails={data[0]} extra={extra}/>}
-          </Fetcher>
-          }
+          {expenseId && (
+            <MiniExpenseDetails
+              key={expenseId}
+              expenseId={expenseId}
+              setExpenseId={setExpenseId}
+              setExpenseData={setExpenseData}
+            />
+          )}
         </div>
       </div>
     </>
   )
 }
 
-const TableHeader = ({expenseData, params, setEpenseData}) => {
+const TableHeader = ({expenseData, params, setExpenseData}) => {
   return (
     <div className='table-header'>
       <div style={{display:'flex', columnGap:'10px', alignItems:'center'}}>
@@ -53,7 +54,7 @@ const TableHeader = ({expenseData, params, setEpenseData}) => {
           loadMoreExpenses={() => console.log('loadMoreExpenses')}
           loadingMore={false}
           prevPageNumber={expenseData.prev_page_num}
-          setEpenseData={setEpenseData}
+          setExpenseData={setExpenseData}
         />
         <div style={{marginTop:'6px'}}>Showing {expenseData.expenses.length} of {expenseData.count} expenses.</div>
       </div>

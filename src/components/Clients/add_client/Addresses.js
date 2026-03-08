@@ -26,14 +26,14 @@ function AddressForm({index, setFieldValue, addresses, address}) {
 
   return (
     <>
-      <CustomSelect label='Ownership' name={`address_list[${index}].ownership`}>
+      <CustomSelect label='Ownership' name={`address_list[${index}].ownership`} required>
         <option value=''>------</option>
         <option value='OWNER'>OWNER</option>
         <option value='RENTING'>RENTING</option>
       </CustomSelect>
-      <CustomInput label='Address' name={`address_list[${index}].address`} type='text'/>
-      <CustomInput label='City' name={`address_list[${index}].city`} type='text'/>
-      <CustomInput label='Country' name={`address_list[${index}].country`} type='text'/>
+      <CustomInput label='Address' name={`address_list[${index}].address`} type='text' required/>
+      <CustomInput label='City' name={`address_list[${index}].city`} type='text' required/>
+      <CustomInput label='Country' name={`address_list[${index}].country`} type='text' required/>
       <div style={{marginTop:'10px'}}>
         <ButtonDefault value={'Remove Address'} handler={remove} />
       </div>

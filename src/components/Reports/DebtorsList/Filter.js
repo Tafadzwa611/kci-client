@@ -20,7 +20,7 @@ const Filter = ({setReport, setParams}) => {
         max_date: '',
         client_str: '',
         reason: '',
-        status: '',
+        loan_status: '',
         mode: 'html'
     };
     const {currencies} = useCurrencies();
@@ -76,7 +76,7 @@ const Filter = ({setReport, setParams}) => {
                                         </CustomSelectFilter>
                                     </div>
                                     <div className='row-payments-container' style={{width:'16%'}}>
-                                        <CustomSelectFilter label='Status' name='status'>
+                                        <CustomSelectFilter label='Loan Status' name='loan_status'>
                                             <option value=''>-----</option>
                                             <option value='Open'>Open</option>
                                             <option value='Arrears'>Arrears</option>

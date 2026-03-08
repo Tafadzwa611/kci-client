@@ -25,7 +25,10 @@ function CustomSelectRemote({url, label, selected, queryParamName, params, setFi
   }
 
   const onChange = selected => {
-    if (!selected) return;
+    if (!selected) {
+      setFieldValue(field.name, '');
+      return
+    }
     setFieldValue(field.name, selected);
     setIsRequired(selected);
   }
