@@ -23,6 +23,7 @@ import LoansGranted from '../LoansGranted/LoansGranted';
 import CashReceipts from '../CashReceipts/CashReceipts';
 import AllTxnsReport from '../AllTxnsReport/AllTxnsReport';
 import ReceiptNumbers from '../ReceiptNumbers/ReceiptNumbers';
+import DebtorsListAge from '../DebtorsListAge/DebtorsListAge';
 import {
   Routes,
   Route,
@@ -64,6 +65,7 @@ const ViewReports = () => {
         <Route path='cashreceipts' element={<CashReceipts />} />
         <Route path='txns-report' element={<AllTxnsReport />} />
         <Route path='receipt-numbers' element={<ReceiptNumbers />} />
+        <Route path='age-analysis' element={<DebtorsListAge />} />
       </Route>
     </Routes>
   )
@@ -135,6 +137,9 @@ function Layout() {
             </Link>
             <Link to='/reports/viewreports/debtorslist' className={location.pathname === '/reports/viewreports/debtorslist' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Debtors List
+            </Link>
+            <Link to='/reports/viewreports/age-analysis' className={location.pathname === '/reports/viewreports/age-analysis' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+              Age Analysis
             </Link>
             <Link to='/reports/viewreports/loansgranted' className={location.pathname === '/reports/viewreports/loansgranted' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
               Loans Granted
