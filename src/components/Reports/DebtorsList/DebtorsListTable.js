@@ -18,8 +18,8 @@ function DebtorsListTable({report, setReport, params}) {
                                 <th>Maturity_Date</th>
                                 <th>Principal</th>
                                 <th>Claimable_Balance</th>
-                                <th>Current_Balance</th>
                                 <th>Balance_At</th>
+                                <th>Current_Balance</th>
                                 <th>Num_Of_Repayments</th>
                                 <th>Repayment_Cycle</th>
                                 <th>Sector</th>
@@ -54,8 +54,8 @@ function DebtorsListTable({report, setReport, params}) {
                                         <td>{loan.last_date}</td>
                                         <td>{loan.principal}</td>
                                         <td>{loan.claimable_balance}</td>
-                                        <td>{loan.current_balance}</td>
                                         <td>{loan.balance}</td>
+                                        <td>{loan.current_balance}</td>
                                         <td>{loan.num_of_repayments}</td>
                                         <td>{loan.repayment_cycle}</td>
                                         <td>{loan.reason_for_borrowing}</td>

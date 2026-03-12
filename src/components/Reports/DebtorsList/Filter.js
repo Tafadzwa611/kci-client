@@ -99,12 +99,6 @@ const Filter = ({setReport, setParams}) => {
                                             <option value='pdfa1'>PDF A1</option>
                                         </CustomSelectFilter>
                                     </div>
-                                    <div className='row-payments-container' style={{width:'16%'}}>
-                                        <CustomSelectFilter label='Order' name='order' required>
-                                            <option value={'-id'}>Show newest first</option>
-                                            <option value={'id'}>Show oldest first</option>
-                                        </CustomSelectFilter>
-                                    </div>
                                 </div>
                                 <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
                                     <div style={{width:'85%'}}>
