@@ -125,7 +125,9 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
           </Fetcher>
         )}
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
-          <button className='btn btn-olive' onClick={() => setModal(undoApproval)}>Undo Approve</button>
+          <button className='btn btn-olive'>
+            <Link to={`/loans/viewloans/editloan/${loanType}/${loan.id}`}>Edit</Link>
+          </button>
           <button className='btn btn-olive' onClick={() => setModal(disburse)}>Disburse</button>
         </div>
       </div>

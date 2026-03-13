@@ -100,7 +100,6 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
             <div className='create_modal_container'>
               <div>
                 <CustomInput label='Amount Paid' name='amount_paid' type='number' required/>
-                <CustomCheckbox label='Manually Allocate' name='manually_allocate'/>
                 {values.manually_allocate && <>
                   <CustomInput label='Principal Paid' name='manual_allocation.principal' type='number' required/>
                   <CustomInput label='Interest Paid' name='manual_allocation.interest' type='number' required/>

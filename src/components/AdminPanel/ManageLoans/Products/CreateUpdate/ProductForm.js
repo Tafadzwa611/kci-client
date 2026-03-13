@@ -167,7 +167,7 @@ function ProductForm({loanFees, accounts, fieldSets, initialValues, validationSc
               <CustomInput label='Minimum Number of Repayments' name='minimum_loan_duration' type='number' required/>
               <CustomInput label='Maximum Number of Repayments' name='maximum_loan_duration' type='number' required/>
               <CustomInput label='Default Number of Repayments' name='default_loan_duration' type='number'/>
-              <CustomInput label='Grace period' name='days_to_first_repayment' type='number'/>
+              <CustomInput label='Days To First Repayment' name='days_to_first_repayment' type='number' required/>
               <CustomSelect label='Default Loan Schedule Strategy' name='schedule_strategy' required>
                 <option value=''>------</option>
                 {scheduleStrategies[values.loan_duration_time_unit].map(strategy => <option key={strategy} value={strategy}>{strategy}</option>)}

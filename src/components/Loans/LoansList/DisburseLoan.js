@@ -13,7 +13,6 @@ import {
 } from '../../../common';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { scheduleStrategies } from './data';
 import { removeEmptyValues } from '../../../utils/utils';
 
 const COOLDOWN_SECONDS = 300;
@@ -31,8 +30,7 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
     receipt_number: '',
     otp: '',
     loan_officer_id: '',
-    first_repayment_date: loan.first_payment_date,
-    schedule_strategy: loan.default_schedule_strategy
+    first_repayment_date: loan.first_payment_date
   };
 
   const onSubmit = async (values, actions) => {
@@ -107,16 +105,6 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
                 <NonFieldErrors errors={errors}>
                   <div className='create_modal_container'>
                     <div>
-                      <CustomSelect label='Default Loan Schedule Strategy' name='schedule_strategy' required>
-                        <option value=''>------</option>
-                        {scheduleStrategies[loan.repayment_cycle].map(strategy => <option key={strategy} value={strategy}>{strategy}</option>)}
-                      </CustomSelect>
-                      <CustomDatePicker
-                        label='First Repayment Date'
-                        name='first_repayment_date'
-                        setFieldValue={setFieldValue}
-                        required
-                      />
                       <CustomDatePicker
                         label='Disbursement Date'
                         name='disbursement_date'

@@ -7,8 +7,6 @@ import {
   CustomMultiSelect,
   SubmitButton
 } from '../../../common';
-import { scheduleStrategies } from './data';
-import Fee from './Fee';
 import { useBranches } from '../../../contexts/BranchesContext';
 import CustomForm from './CustomForm';
 import { useReceiptBooks } from '../../../contexts/ReceiptBooksContext';
@@ -36,7 +34,6 @@ function ClientFormFields({
   const hideInstallments = Boolean(product.default_loan_duration);
   const hideFirstRepayment = Boolean(product.days_to_first_repayment);
   const hideUnit = units.length === 0;
-  const hideFees = values.fees.length === 0;
 
   return (
     <>
@@ -114,12 +111,6 @@ function ClientFormFields({
       )}
       {!hideFirstRepayment && (
         <CustomDatePicker label='First Repayment Date' name='first_repayment_date' setFieldValue={setFieldValue} required/>
-      )}
-      {product.allow_editing_schedule_strategy_on_loan_creation && (
-        <CustomSelect label='Loan Schedule Strategy' name='schedule_strategy' required>
-          <option value=''>------</option>
-          {scheduleStrategies[product.loan_duration_time_unit].map(strategy => <option key={strategy} value={strategy}>{strategy}</option>)}
-        </CustomSelect>
       )}
       {clientControls.use_client_units ? (
         <CustomSelect label='Unit' name='unit_id' required>
@@ -224,20 +215,6 @@ function ClientFormFields({
           <CustomForm form={form} setFieldValue={setFieldValue}/>
         </React.Fragment>
       ))}
-      {!hideFees && (
-        <>
-          {product.allow_editing_fees_on_loan_creation && (
-            <>
-              <div className='divider divider-info'>
-                <span>Loan Fees</span>
-              </div>
-              <div>
-                {values.fees.map((fee, index) => <Fee key={index} index={index} setFieldValue={setFieldValue} fee={fee} values={values}/>)}
-              </div>
-            </>
-          )}
-        </>
-      )}
       <div className='divider divider-info'>
         <span>Guarantor</span>
       </div>
@@ -253,19 +230,6 @@ function ClientFormFields({
         params={[{key: 'guarantors_only', value: 1}, {key: 'all_branches', value: 1}]}
         placeholder='Search Client Guarantor'
         name='guarantor_id'
-      />
-      <CustomSelectRemote
-        selected={values.group_guarantor || ''}
-        label='Group Guarantor (Optional)'
-        url='/clientsapi/search_group/'
-        setFieldValue={(fieldName, selected) => {
-          setFieldValue('group_guarantor', selected);
-          setFieldValue(fieldName, selected.value);
-        }}
-        queryParamName='query'
-        params={[{key: 'guarantors_only', value: 1}, {key: 'all_branches', value: 1}]}
-        placeholder='Search Group Guarantor'
-        name='group_guarantor_id'
       />
       <div style={{display:'flex', justifyContent: 'flex-end'}}>
         <SubmitButton isSubmitting={isSubmitting}/>
