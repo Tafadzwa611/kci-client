@@ -45,24 +45,33 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
       const response = await axios.post(`/loansapi/add_payment/${loanId}/`, data, CONFIG);
-      const newLoan = response.data;
+      const updates = response.data;
+      if (!updates.payment) {
+        setLoan(curr => ({
+          ...curr,
+          requests: [updates, ...curr.requests]
+        }));
+        setOpen(false);
+        actions.resetForm();
+        return
+      }
       setLoan(currentLoan => {
-        currentLoan.status = newLoan.status;
-        currentLoan.installments = newLoan.installments;
-        currentLoan.txns = newLoan.txns;
-        currentLoan.payments.unshift(newLoan.payment);
-        currentLoan.principal_amount_due = newLoan.principal_amount_due;
-        currentLoan.interest_amount_due = newLoan.interest_amount_due;
-        currentLoan.non_deductable_fees = newLoan.non_deductable_fees;
-        currentLoan.balance = newLoan.balance;
-        currentLoan.money_to_be_refunded = newLoan.money_to_be_refunded;
-        currentLoan.total_amount_paid = newLoan.total_amount_paid;
+        currentLoan.status = updates.status;
+        currentLoan.installments = updates.installments;
+        currentLoan.txns = updates.txns;
+        currentLoan.payments.unshift(updates.payment);
+        currentLoan.principal_amount_due = updates.principal_amount_due;
+        currentLoan.interest_amount_due = updates.interest_amount_due;
+        currentLoan.non_deductable_fees = updates.non_deductable_fees;
+        currentLoan.balance = updates.balance;
+        currentLoan.money_to_be_refunded = updates.money_to_be_refunded;
+        currentLoan.total_amount_paid = updates.total_amount_paid;
         return {...currentLoan};
       });
       setOpen(false);
       actions.resetForm();
       if (setLoanData && updateLoanList) {
-        updateLoanList(newLoan, setLoanData);
+        updateLoanList(updates, setLoanData);
       }
     } catch (error) {
       if (error.message === 'Network Error') {

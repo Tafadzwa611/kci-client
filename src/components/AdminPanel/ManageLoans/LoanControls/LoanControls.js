@@ -267,6 +267,7 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
                     setFieldValue={setFieldValue}
                     initVals={values.two_man_rules}
                     options={[
+                      {label: 'Repayment', value: 'Repayment'},
                       {label: 'Loan Approval', value: 'Loan Approval'},
                       {label: 'Loan Disbursement', value: 'Loan Disbursement'},
                       {label: 'Loan Rejection', value: 'Loan Rejection'},

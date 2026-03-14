@@ -36,7 +36,7 @@ const DeletePayment = ({setOpen, paymentId, setLoan, setPayId}) => {
   }
 
   return (
-    <Modal open={true} setOpen={setOpen} title={'Reverse Payment'}>
+    <Modal open={true} setOpen={setOpen} title='Reverse Payment'>
       <Formik initialValues={{value_date: ''}} onSubmit={onSubmit}>
         {({ errors, isSubmitting, setFieldValue }) => (
           <Form>
