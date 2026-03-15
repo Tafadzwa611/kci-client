@@ -5,8 +5,6 @@ import {
   ModalSubmit,
   NonFieldErrors,
   CustomDatePicker,
-  CustomSelect,
-  CustomCheckbox,
   Fetcher,
   CustomInput,
   CustomMultiSelect
@@ -30,6 +28,7 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
     receipt_number: '',
     otp: '',
     loan_officer_id: '',
+    estab_fee_paid: '',
     first_repayment_date: loan.first_payment_date
   };
 
@@ -131,21 +130,16 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
                         ))}
                         required
                       />
-                      <CustomSelect label='Loan Officer & Branch' name='loan_officer_id'>
-                        <option value=''>------</option>
-                        {data[1].map(user => <option key={user.id} value={user.id}>{`${user.first_name} ${user.last_name} - ${user.branch__name}`}</option>)}
-                      </CustomSelect>
-                      <div style={{marginTop:'1rem'}}>
-                        Client/Group Officer: {loan.client_officer}
-                      </div>
-                      {lcontrols.request_receipt_number ? (
-                        <CustomInput
-                          label='Receipt Number'
-                          name='receipt_number'
-                          type='text'
-                          required
-                        />
-                      ) : null}
+                      <CustomInput
+                        label='Establishment Fee Paid'
+                        name='estab_fee_paid'
+                        type='number'
+                      />
+                      <CustomInput
+                        label='Receipt Number'
+                        name='receipt_number'
+                        type='text'
+                      />
                       {lcontrols.request_otp_on_db ? (
                         <>
                           <CustomInput
@@ -163,7 +157,6 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
                           </button>
                         </>
                       ) : null}
-                      <CustomCheckbox label='Notify client/group via SMS' name='send_sms_notification'/>
                     </div>
                     <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
                   </div>
