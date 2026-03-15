@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function AuthorizationDashboard() {
     React.useEffect(() => {
-        document.title = 'AuthorizationDashboard';
+        document.title = 'Authorization Dashboard';
     }, []);
 
     return (
