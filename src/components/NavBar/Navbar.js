@@ -71,6 +71,11 @@ const Navbar = (props) => {
               <span>Dashboard</span>
             </NavLink>
           )}
+          {props.stafftoplevelperms.can_view_dashboard_module && (
+            <NavLink to='/authorizationdashboard' className='btn btn-default dashboard'>
+              <span>Authorization Dashboard</span>
+            </NavLink>
+          )}
           {props.stafftoplevelperms.can_view_client_module && (
             <NavLink to='/clients/viewclients' className='btn btn-default dashboard'>
               <span>Clients</span>

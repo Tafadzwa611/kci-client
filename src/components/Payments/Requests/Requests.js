@@ -78,22 +78,26 @@ function Filter({setRequests, setParams}) {
           <div className='search_background'>
             <div className='row-containers' style={{border:'none'}}>
               <Form>
-                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'20%'}}>
-                    <CustomSelectFilter label='Branch' name='branch_id' required>
-                      <option value=''>------</option>
-                      {branches.map(branch => (
-                        <option key={branch.id} value={branch.id}>
-                          {branch.name}
-                        </option>
-                      ))}
-                    </CustomSelectFilter>
-                    <CustomSelectFilter label='Status' name='status'>
-                      <option value=''>------</option>
-                      <option value='Pending'>Pending</option>
-                      <option value='Approved'>Approved</option>
-                      <option value='Rejected'>Rejected</option>
-                    </CustomSelectFilter>
+                <div>
+                  <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
+                    <div className='row-payments-container' style={{width:'45%'}}>
+                      <CustomSelectFilter label='Branch' name='branch_id' required>
+                        <option value=''>------</option>
+                        {branches.map(branch => (
+                          <option key={branch.id} value={branch.id}>
+                            {branch.name}
+                          </option>
+                        ))}
+                      </CustomSelectFilter>
+                    </div>
+                    <div className='row-payments-container' style={{width:'45%'}}>
+                      <CustomSelectFilter label='Status' name='status'>
+                        <option value=''>------</option>
+                        <option value='Pending'>Pending</option>
+                        <option value='Approved'>Approved</option>
+                        <option value='Rejected'>Rejected</option>
+                      </CustomSelectFilter>
+                    </div>
                     <SubmitButtonFilter isSubmitting={isSubmitting}/>
                   </div>
                 </div>
