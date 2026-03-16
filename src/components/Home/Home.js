@@ -1,7 +1,5 @@
 import React from 'react';
 import { Fetcher } from '../../common';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 function Home() {
   React.useEffect(() => {
@@ -15,7 +13,6 @@ function Home() {
           <span>You can use topbar for navigation.</span>
         </div>
       </div>
-      <PaymentApprovals/>
       <div style={{width:'50%'}}>
         <div style={{width:'100%', marginTop:'1.5rem'}} className='book-value-section card'>
           <p>Activity Log</p>
@@ -41,35 +38,6 @@ function Home() {
         </div>
       </div>
     </>
-  )
-}
-
-function PaymentApprovals() {
-  const [count, setCount] = React.useState(null);
-
-  React.useEffect(() => {
-    const fetch = async () => {
-      const response = await axios.get('/loansapi/payment_requests_count/');
-      setCount(response.data);
-    }
-    fetch();
-  }, []);
-
-  if (!count) {
-    return (
-      <div>
-        <div className="mini-spinner"></div>
-      </div>
-    )
-  }
-
-  return (
-    <div className='book-value-info-box loan__book'>
-      <p>Pending Payment Approvals: {count.count}</p>
-      <Link to='/payments/viewpayments/requests'>
-        Go to payment requests
-      </Link>
-    </div>
   )
 }
 

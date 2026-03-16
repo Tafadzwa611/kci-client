@@ -27,6 +27,7 @@ import { Routes as ReactRoutes, Route } from 'react-router-dom';
 
 const Home = lazy(() => import('../Home/Home'));
 const Dashboard = lazy(() => import('../Dashboard/Dashboard'));
+const AuthorizationDashboard = lazy(() => import('../AuthorizationDashboard/AuthorizationDashboard'));
 
 const Routes = ({
   loggedInUser,
@@ -70,6 +71,7 @@ const Routes = ({
         <Route exact path='/' element={<Home/>} />
         <Route exact path='/home' element={<Home/>} />
         <Route exact path='/dashboard' element={<Dashboard/>}/>
+        <Route exact path='/authorizationdashboard' element={<AuthorizationDashboard/>}/>
         {AccountingRoutes}
         {AssetRoutes}
         {ClientRoutes}

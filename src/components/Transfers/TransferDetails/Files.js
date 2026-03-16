@@ -109,12 +109,12 @@ function Files({transfer, setTransfer}) {
               Download
             </span>
             {error === Errors.downError ? 'Error downloading' : null}
-            <span style={{cursor:'pointer'}} className='badge badge-danger' id={file.id} onClick={deleteFile}>Remove</span>
-            {error === Errors.delError ? 'Error deleting' : null}
+            {/* <span style={{cursor:'pointer'}} className='badge badge-danger' id={file.id} onClick={deleteFile}>Remove</span>
+            {error === Errors.delError ? 'Error deleting' : null} */}
           </div>
         ))}
       </div>
-      <Dropzone onDrop={onDrop}>
+      {/* <Dropzone onDrop={onDrop}>
         {({acceptedFiles, getRootProps, getInputProps}) => (
           <section className='container'>
             <div {...getRootProps({className: 'dropzone'})}>
@@ -133,7 +133,7 @@ function Files({transfer, setTransfer}) {
             </aside>
           </section>
         )}
-      </Dropzone>
+      </Dropzone> */}
     </>
   )
 }
