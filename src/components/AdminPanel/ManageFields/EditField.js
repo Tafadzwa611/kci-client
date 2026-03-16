@@ -18,6 +18,7 @@ const EditField = ({open, setOpen, field, setFields}) => {
     text_format: field.text_format ?? '',
     select_opts: field.select_opts ?? [],
     is_required: field.is_required,
+    is_required_for_loan: field.is_required_for_loan,
     is_searchable: field.is_searchable,
     is_unique: field.is_unique
   };
@@ -26,6 +27,7 @@ const EditField = ({open, setOpen, field, setFields}) => {
     return {
       name: values.name,
       is_required: values.is_required,
+      is_required_for_loan: values.is_required_for_loan,
       is_unique: values.is_unique,
       is_searchable: values.is_searchable,
       ...(values.text_format != '') && {text_format: values.text_format},
@@ -50,6 +52,7 @@ const EditField = ({open, setOpen, field, setFields}) => {
                 <div>
                   <CustomInput label='Name' name='name' type='text'/>
                   <CustomCheckbox label='Is Mandatory' name='is_required'/>
+                  <CustomCheckbox label='Is KYC' name='is_required_for_loan'/>
                   {values.data_type === 'free_text' && <CustomCheckbox label='Is Unique' name='is_unique'/>}
                   {values.data_type === 'free_text' && <CustomCheckbox label='Is Searchable' name='is_searchable'/>}
                   {values.data_type === 'free_text' && <CustomInput label='Text Format' name='text_format' type='text'/>}

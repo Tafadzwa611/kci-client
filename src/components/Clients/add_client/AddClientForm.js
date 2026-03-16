@@ -60,6 +60,10 @@ const initValidationSchema = yup.object().shape({
 function AddClientForm({customForms, clientTypes, idTemplates, clientControls, staff, units}) {
   const [validationSchema, setValidationSchema] = useState(initValidationSchema);
   const [showIgnore, setShowIgnore] = useState(false);
+  const [customFileUploadsInProgress, setCustomFileUploadsInProgress] = useState(0);
+
+  const onCustomFileUploadStart = () => setCustomFileUploadsInProgress(curr => curr + 1);
+  const onCustomFileUploadEnd = () => setCustomFileUploadsInProgress(curr => (curr > 0 ? curr - 1 : 0));
 
   const handleClientTypeChange = (evt) => {
     const {name, value} = evt.target;
@@ -68,12 +72,16 @@ function AddClientForm({customForms, clientTypes, idTemplates, clientControls, s
     customForms.filter(form => form.client_type_id == value).forEach(form => {
       form.fields.forEach(field => {
         let schema;
-        if (field.data_type === 'free_text' || field.data_type === 'date') {
+        if (field.data_type === 'free_text' || field.data_type === 'date' || field.data_type === 'file') {
           schema = yup.string();
         }else if (field.data_type === 'select') {
           schema = yup.string().oneOf(field.select_opts);
         }
-        schema = field.is_required ? schema.required('Required') : schema;
+        if (field.is_required && field.data_type === 'file') {
+          schema = schema.required('Please upload a file');
+        } else {
+          schema = field.is_required ? schema.required('Required') : schema;
+        }
         newSchema = newSchema.concat(yup.object().shape({
           [`custom_${field.id}`]: schema
         }));
@@ -156,12 +164,17 @@ function AddClientForm({customForms, clientTypes, idTemplates, clientControls, s
             {customForms.filter(form => form.client_type_id == values.client_type_id).map(form => (
               <React.Fragment key={form.id}>
                 <div className='divider divider-info'>{form.name}</div>
-                <CustomForm form={form} setFieldValue={setFieldValue}/>
+                <CustomForm
+                  form={form}
+                  setFieldValue={setFieldValue}
+                  onUploadStart={onCustomFileUploadStart}
+                  onUploadEnd={onCustomFileUploadEnd}
+                />
               </React.Fragment>
             ))}
             {showIgnore ? <CustomCheckbox label='Ignore Warnings' name='ignore_warnings'/>: null}
-            <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-              <SubmitButton isSubmitting={isSubmitting}/>
+            <div style={{display:'flex', justifyContent: 'flex-end'}}>
+              <SubmitButton isSubmitting={isSubmitting || customFileUploadsInProgress > 0}/>
             </div>
           </NonFieldErrors>
         </Form>

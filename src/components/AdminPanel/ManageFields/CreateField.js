@@ -13,6 +13,7 @@ import {
   CustomTypeAndAdd
 } from '../../../common';
 
+
 const CreateField = ({open, setOpen, setFields, fieldSetId}) => {
   const initialValues = {
     name: '',
@@ -20,6 +21,7 @@ const CreateField = ({open, setOpen, setFields, fieldSetId}) => {
     text_format: '',
     select_opts: [],
     is_required: false,
+    is_required_for_loan: false,
     is_searchable: false,
     is_unique: false
   };
@@ -29,6 +31,7 @@ const CreateField = ({open, setOpen, setFields, fieldSetId}) => {
       name: values.name,
       data_type: values.data_type,
       is_required: values.is_required,
+      is_required_for_loan: values.is_required_for_loan,
       is_unique: values.is_unique,
       is_searchable: values.is_searchable,
       field_set_id: fieldSetId,
@@ -58,6 +61,7 @@ const CreateField = ({open, setOpen, setFields, fieldSetId}) => {
                     {Object.keys(dataTypes).map(key => <option key={key} value={key}>{dataTypes[key]}</option>)}
                   </CustomSelect>
                   <CustomCheckbox label='Is Mandatory' name='is_required'/>
+                  <CustomCheckbox label='Is KYC' name='is_required_for_loan'/>
                   {values.data_type === 'free_text' && <CustomCheckbox label='Is Unique' name='is_unique'/>}
                   {values.data_type === 'free_text' && <CustomCheckbox label='Is Searchable' name='is_searchable'/>}
                   {values.data_type === 'free_text' && <CustomInput label='Text Format' name='text_format' type='text'/>}
