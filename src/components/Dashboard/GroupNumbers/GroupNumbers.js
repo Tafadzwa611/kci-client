@@ -1,105 +1,160 @@
-import React, { useState, useEffect } from 'react';
-import { removeEmptyValues, getParams } from '../../../utils/utils';
-import axios from 'axios';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
-import Loader from '../../Loader/MiniLoader';
+import React, { useMemo, useState, useEffect } from "react";
+import { removeEmptyValues, getParams } from "../../../utils/utils";
+import axios from "axios";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
+import Loader from "../../Loader/MiniLoader";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function GroupNumbers({branchIds, unitId}) {
+function GroupNumbers({ branchIds, unitId }) {
   const [data, setData] = useState(null);
   const [err, setErr] = useState(false);
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [branchIds, unitId]);
 
   const getData = async () => {
     try {
-      const data = removeEmptyValues({branch_ids: branchIds, unit_id: unitId});
-      const params = getParams(data);
-      const response = await axios.get('/dashboardapi/group-numbers/', {params: params});
+      setErr(false);
+      const payload = removeEmptyValues({ branch_ids: branchIds, unit_id: unitId });
+      const params = getParams(payload);
+      const response = await axios.get("/dashboardapi/group-numbers/", { params });
       setData(response.data);
     } catch (error) {
       console.log(error);
       setErr(true);
     }
-  }
+  };
+
+  const statusColors = useMemo(
+    () => ({
+      Active: "var(--chart-green)",
+      Blacklisted: "var(--chart-blue)",
+      Processing: "var(--chart-amber)",
+      "Pending Approval": "var(--chart-teal)",
+      Inactive: "var(--chart-purple)",
+      Left: "var(--chart-orange)",
+      Rejected: "var(--chart-red)",
+    }),
+    []
+  );
+
+  const statusDataSet = useMemo(() => {
+    const rows = data?.group_status || [];
+    return {
+      labels: rows.map((s) => s.status),
+      datasets: [
+        {
+          label: "# Group Status",
+          data: rows.map((s) => s.count),
+          backgroundColor: rows.map((s) => statusColors[s.status] || "var(--chart-gray)"),
+          borderWidth: 0,
+        },
+      ],
+    };
+  }, [data, statusColors]);
+
+  const chartOptions = useMemo(
+    () => ({
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: "bottom",
+          labels: {
+            boxWidth: 10,
+            boxHeight: 10,
+            usePointStyle: true,
+            pointStyle: "circle",
+          },
+        },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => {
+              const label = ctx.label || "";
+              const value = ctx.parsed ?? 0;
+              return `${label}: ${value}`;
+            },
+          },
+        },
+      },
+    }),
+    []
+  );
+
+  const groupTypes = useMemo(() => data?.group_types || [], [data]);
+  const totalGroups = useMemo(
+    () => groupTypes.reduce((acc, x) => acc + (Number(x.count) || 0), 0),
+    [groupTypes]
+  );
 
   if (err) {
     return (
-      <div className='card-body'>
-        <div className='book-value-section'>
-          Error Please Try Again.
-        </div>
+      <div className="card-body">
+        <div className="book-value-section">Error. Please try again.</div>
       </div>
-    )
+    );
   }
 
   if (!data) {
     return (
-      <div className='card-body'>
-        <div className='book-value-section'>
-          <Loader/>
+      <div className="card-body">
+        <div className="book-value-section">
+          <Loader />
         </div>
       </div>
-    )
+    );
   }
 
-  const statusColors = {
-    'Active': 'rgba(255, 99, 132, 0.2)',
-    'Blacklisted': 'rgba(54, 162, 235, 0.2)',
-    'Processing': 'rgba(255, 206, 86, 0.2)',
-    'Pending Approval': 'rgba(75, 192, 192, 0.2)',
-    'Inactive': 'rgba(153, 102, 255, 0.2)',
-    'Left': 'rgba(255, 159, 64, 0.2)',
-    'Rejected': 'rgba(153, 102, 255, 1)',
-  };
-
-  const statusDataSet = {
-    labels: data.group_status.map(s => s.status),
-    datasets: [
-      {
-        label: '# Group Status',
-        data: data.group_status.map(s => s.count),
-        backgroundColor: data.group_status.map(s => statusColors[s.status]),
-        borderWidth: 0,
-      },
-    ],
-  };
+  // keep your original behavior: show nothing if no group types
+  if (!data.group_types || data.group_types.length === 0) return null;
 
   return (
-    <>
-      {data.group_types.length > 0 ?
-        <div className='card-body'>
-          <div className='book-value-section'>
-            <div style={{display: 'flex', justifyContent: 'space-between', columnGap: '1%'}}>
-              <div style={{width:'49%', flex: '1'}} className='book-value-section'>
-                <div style={{display:'flex', justifyContent:'space-around'}}>
-                  <div style={{width: '48%'}}>
-                    <Pie data={statusDataSet} />
-                  </div>
+    <div className="card-body">
+      <div className="book-value-section">
+        <div className="dash-grid">
+          {/* LEFT: CHART */}
+          <div className="book-value-section">
+            <div className="dash-charts">
+              <div className="dash-chart dash-chart--single">
+                <div className="dash-chart-title">Group Status</div>
+                <div className="dash-chart-canvas">
+                  <Pie data={statusDataSet} options={chartOptions} />
                 </div>
               </div>
-              <div style={{width: '49%', flex: '1'}} className='book-value-section'>
-                <div className='book-value-update-section'>
-                  <div className='book-value-info-box group__type'>
-                    <div style={{overflowY:'auto', height:'268px'}}>
-                      <p className='dashboard-section-title j-details-container' style={{position:'sticky', top:'0', padding:'10px', fontWeight:'normal'}}>Group Types</p>
-                      {data.group_types.map((gt, idx) => (
-                        <p key={idx} style={{marginBottom:'0.625rem'}}>{gt.group_type__name} {gt.count}</p>
-                      ))}
-                    </div>
+            </div>
+          </div>
+
+          {/* RIGHT: TYPES LIST */}
+          <div className="book-value-section">
+            <div className="book-value-update-section dash-types">
+              <div className="book-value-info-box group__type">
+                <div className="dash-list">
+                  <div className="dash-list-header">
+                    <div>Group Types</div>
+                    <div className="dash-list-meta">Total: {totalGroups}</div>
+                  </div>
+
+                  <div className="dash-list-body">
+                    {groupTypes.map((gt, idx) => (
+                      <div key={idx} className="dash-list-row">
+                        <div className="dash-list-name">{gt.group_type__name}</div>
+                        <div className="dash-list-count">{gt.count}</div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>:
-        null}
-    </>
-  )
+          {/* END RIGHT */}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default GroupNumbers;

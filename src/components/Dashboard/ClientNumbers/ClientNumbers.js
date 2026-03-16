@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
-import axios from 'axios';
-import { removeEmptyValues, getParams } from '../../../utils/utils';
-import Loader from '../../Loader/MiniLoader';
+import React, { useMemo, useState, useEffect } from "react";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
+import axios from "axios";
+import { removeEmptyValues, getParams } from "../../../utils/utils";
+import Loader from "../../Loader/MiniLoader";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const ClientNumbers = ({branchIds, unitId}) => {
+const ClientNumbers = ({ branchIds, unitId }) => {
   const [data, setData] = useState(null);
   const [err, setErr] = useState(false);
 
@@ -17,108 +17,205 @@ const ClientNumbers = ({branchIds, unitId}) => {
 
   const getData = async () => {
     try {
-      const data = removeEmptyValues({branch_ids: branchIds, unit_id: unitId});
-      const params = getParams(data);
-      const response = await axios.get('/dashboardapi/client-numbers/', {params: params});
+      setErr(false);
+      const payload = removeEmptyValues({ branch_ids: branchIds, unit_id: unitId });
+      const params = getParams(payload);
+      const response = await axios.get("/dashboardapi/client-numbers/", { params });
       setData(response.data);
     } catch (error) {
       console.log(error);
       setErr(true);
     }
-  }
+  };
+
+  const isDark =
+    document.body.classList.contains("dark") ||
+    document.documentElement.dataset.theme === "dark";
+
+  const statusColors = useMemo(
+    () =>
+      isDark
+        ? {
+            Active: "#34d399",
+            Blacklisted: "#60a5fa",
+            Processing: "#fbbf24",
+            "Pending Approval": "#2dd4bf",
+            Inactive: "#c084fc",
+            Left: "#fb923c",
+            Rejected: "#f87171",
+          }
+        : {
+            Active: "#16a34a",
+            Blacklisted: "#2563eb",
+            Processing: "#d97706",
+            "Pending Approval": "#0d9488",
+            Inactive: "#7c3aed",
+            Left: "#ea580c",
+            Rejected: "#dc2626",
+          },
+    [isDark]
+  );
+
+  const splitStatusByGender = (gender) => {
+    const rows = (data?.client_status || []).filter((s) => s.gender === gender);
+
+    return {
+      labels: rows.map((s) => `${s.gender} ${s.status}`),
+      datasets: [
+        {
+          label: `# ${gender === "MALE" ? "Male" : "Female"} Clients Status`,
+          data: rows.map((s) => s.count),
+          backgroundColor: rows.map((s) => statusColors[s.status] || (isDark ? "#94a3b8" : "#64748b")),
+          borderWidth: 0,
+        },
+      ],
+    };
+  };
+
+  const maleStatusDataSet = useMemo(() => splitStatusByGender("MALE"), [data, statusColors]);
+  const femaleStatusDataSet = useMemo(() => splitStatusByGender("FEMALE"), [data, statusColors]);
+
+  const chartOptions = useMemo(
+    () => ({
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: "bottom",
+          labels: {
+            color: "var(--text-color)",
+            boxWidth: 10,
+            boxHeight: 10,
+            usePointStyle: true,
+            pointStyle: "circle",
+            font: { size: 11 },
+          },
+        },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => `${ctx.label || ""}: ${ctx.parsed ?? 0}`,
+          },
+        },
+      },
+    }),
+    []
+  );
+
+  const maleTypes = useMemo(
+    () => (data?.client_types || []).filter((ct) => ct.gender === "MALE"),
+    [data]
+  );
+
+  const femaleTypes = useMemo(
+    () => (data?.client_types || []).filter((ct) => ct.gender === "FEMALE"),
+    [data]
+  );
+
+  const sumCounts = (arr) => arr.reduce((acc, x) => acc + (Number(x.count) || 0), 0);
+  const maleTotal = useMemo(() => sumCounts(maleTypes), [maleTypes]);
+  const femaleTotal = useMemo(() => sumCounts(femaleTypes), [femaleTypes]);
 
   if (err) {
     return (
-      <div className='card-body'>
-        <div className='book-value-section'>
-          Error Please Try Again.
-        </div>
+      <div className="card-body">
+        <div className="book-value-section">Error. Please try again.</div>
       </div>
-    )
+    );
   }
 
   if (!data) {
     return (
-      <div className='card-body'>
-        <div className='book-value-section'>
-          <Loader/>
+      <div className="card-body">
+        <div className="book-value-section">
+          <Loader />
         </div>
       </div>
-    )
+    );
   }
-
-  const statusColors = {
-    'Active': 'rgba(255, 99, 132, 0.2)',
-    'Blacklisted': 'rgba(54, 162, 235, 0.2)',
-    'Processing': 'rgba(255, 206, 86, 0.2)',
-    'Pending Approval': 'rgba(75, 192, 192, 0.2)',
-    'Inactive': 'rgba(153, 102, 255, 0.2)',
-    'Left': 'rgba(255, 159, 64, 0.2)',
-    'Rejected': 'rgba(153, 102, 255, 1)',
-  }
-
-  const maleStatusDataSet = {
-    labels: data.client_status.filter(s => s.gender === 'MALE').map(s => `${s.gender} ${s.status}`),
-    datasets: [
-      {
-        label: '# Male Clients Status',
-        data: data.client_status.filter(s => s.gender === 'MALE').map(s => s.count),
-        backgroundColor: data.client_status.filter(s => s.gender === 'MALE').map(s => statusColors[s.status]),
-        borderWidth: 0,
-      },
-    ],
-  };
-
-  const femaleStatusDataSet = {
-    labels: data.client_status.filter(s => s.gender === 'FEMALE').map(s => `${s.gender} ${s.status}`),
-    datasets: [
-      {
-        label: '# Female Clients Status',
-        data: data.client_status.filter(s => s.gender === 'FEMALE').map(s => s.count),
-        backgroundColor: data.client_status.filter(s => s.gender === 'FEMALE').map(s => statusColors[s.status]),
-        borderWidth: 0,
-      },
-    ],
-  };
 
   return (
-    <div className='card-body'>
-      <div className='book-value-section'>
-        <div style={{display: 'flex', justifyContent: 'space-between', columnGap: '1%'}}>
-          <div style={{width:'49%', flex: '1'}} className='book-value-section'>
-            <div style={{display:'flex', justifyContent:'space-around'}}>
-              <div style={{width: '48%'}}>
-                <Pie data={maleStatusDataSet} />
-              </div>
-              <div style={{width: '48%'}}>
-                <Pie data={femaleStatusDataSet} />
-              </div>
-            </div>
-          </div>
-          <div style={{width: '49%', flex: '1'}} className='book-value-section'>
-            <div className='book-value-update-section'>
-              <div className='book-value-info-box client__type'>
-                <div style={{overflowY:'auto', height:'268px'}}>
-                  <p className='dashboard-section-title j-details-container' style={{position:'sticky', top:'0', padding:'10px', fontWeight:'normal'}}>Male Client Types</p>
-                  {data.client_types.filter(ct => ct.gender === 'MALE').map(
-                    (ct, idx) => <p key={idx} style={{marginBottom:'0.625rem'}}>{ct.client_type__name} - {ct.count}</p>
-                  )}
+    <div className="card-body">
+      <div className="book-value-section">
+        <div className="dash-grid">
+
+          <div className="book-value-section">
+            <div className="dash-charts">
+
+              <div className="dash-chart dash-chart--responsive">
+                <div className="dash-chart-title">Male Status</div>
+                <div className="dash-chart-canvas dash-chart-canvas--responsive">
+                  <Pie data={maleStatusDataSet} options={chartOptions} />
                 </div>
               </div>
-              <div className='book-value-info-box client__type'>
-                <div style={{overflowY:'auto', height:'268px'}}>
-                  <p className='dashboard-section-title j-details-container' style={{position:'sticky', top:'0', padding:'10px', fontWeight:'normal'}}>Female Client Types</p>
-                  {data.client_types.filter(ct => ct.gender === 'FEMALE').map(
-                    (ct, idx) => <p key={idx} style={{marginBottom:'0.625rem'}}>{ct.client_type__name} - {ct.count}</p>
-                  )}
+
+              <div className="dash-chart dash-chart--responsive">
+                <div className="dash-chart-title">Female Status</div>
+                <div className="dash-chart-canvas dash-chart-canvas--responsive">
+                  <Pie data={femaleStatusDataSet} options={chartOptions} />
                 </div>
               </div>
+
             </div>
           </div>
+
+          <div className="book-value-section">
+            <div className="book-value-update-section dash-types">
+
+              <div className="book-value-info-box client__type">
+                <div className="dash-list">
+
+                  <div className="dash-list-header">
+                    <div>Male Client Types</div>
+                    <div className="dash-list-meta">Total: {maleTotal}</div>
+                  </div>
+
+                  <div className="dash-list-body">
+                    {maleTypes.length ? (
+                      maleTypes.map((ct, idx) => (
+                        <div key={idx} className="dash-list-row">
+                          <div className="dash-list-name">{ct.client_type__name}</div>
+                          <div className="dash-list-count">{ct.count}</div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="dash-empty">No male client types found.</div>
+                    )}
+                  </div>
+
+                </div>
+              </div>
+
+              <div className="book-value-info-box client__type">
+                <div className="dash-list">
+
+                  <div className="dash-list-header">
+                    <div>Female Client Types</div>
+                    <div className="dash-list-meta">Total: {femaleTotal}</div>
+                  </div>
+
+                  <div className="dash-list-body">
+                    {femaleTypes.length ? (
+                      femaleTypes.map((ct, idx) => (
+                        <div key={idx} className="dash-list-row">
+                          <div className="dash-list-name">{ct.client_type__name}</div>
+                          <div className="dash-list-count">{ct.count}</div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="dash-empty">No female client types found.</div>
+                    )}
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default ClientNumbers;

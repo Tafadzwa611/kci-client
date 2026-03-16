@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import { Fetcher } from '../common';
-import Navbar from './NavBar';
+import NavbarModern from './NavBar/NavbarModern';
 import Routes from './Routes';
 import {LoggedInUserProvider} from '../contexts/LoggedInUserContext';
 import { BranchesProvider } from '../contexts/BranchesContext';
@@ -66,7 +66,7 @@ function App() {
                                     <Router>
                                       <div id={theme}>
                                         <section className='home-section'>
-                                          <Navbar theme={theme} loggedInUser={data[0]} toggleTheme={toggleTheme} stafftoplevelperms={data[4]}/>
+                                          <NavbarModern theme={theme} loggedInUser={data[0]} toggleTheme={toggleTheme} stafftoplevelperms={data[4]}/>
                                           <div className='app'>
                                             <Routes
                                               loggedInUser={data[0]}
