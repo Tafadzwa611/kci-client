@@ -77,6 +77,17 @@ function CustomFileInput({field, fieldName, setFieldValue, onUploadStart, onUplo
   const {errors, touched, submitCount, values, setFieldTouched} = useFormikContext();
   const fieldKey = `custom_${field.id}`;
 
+
+  const getFileExtension = (file) => {
+    if (file?.name && file.name.includes('.')) {
+      return file.name.split('.').pop().toLowerCase();
+    }
+    if (file?.type && file.type.includes('/')) {
+      return file.type.split('/').pop().toLowerCase();
+    }
+    return '';
+  };
+
   const uploadFile = (file, url) => {
     return new Promise((res, rej) => {
       const xhr = new XMLHttpRequest();
@@ -112,7 +123,9 @@ function CustomFileInput({field, fieldName, setFieldValue, onUploadStart, onUplo
     setFieldTouched(fieldKey, true, false);
 
     try {
-      const response = await axios.get('/usersapi/get_signed_url/?client_method=put_object&bucket=lenda-client-files');
+      const ext = getFileExtension(file);
+      const signedUrlEndpoint = `/usersapi/get_signed_url/?client_method=put_object&bucket=lenda-client-files${ext ? `&ext=${encodeURIComponent(ext)}` : ''}`;
+      const response = await axios.get(signedUrlEndpoint);
       await uploadFile(file, response.data.url);
       setFieldValue(fieldKey, response.data.filename);
       setFieldTouched(fieldKey, true, false);

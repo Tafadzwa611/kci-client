@@ -15,24 +15,121 @@ import {
 import Dropzone from 'react-dropzone';
 
 
-function CustomData({fieldset, client, setClient, setModal, modal}) {
+function CustomData({ fieldset, client, setClient, setModal, modal }) {
+  const [downloadingId, setDownloadingId] = React.useState(null);
+
+  function getExtension(filename) {
+    const lastDot = filename.lastIndexOf(".");
+    if (lastDot <= 0) return null;
+    return filename.slice(lastDot + 1);
+  }
+
+  const dowloadFile = async (evt) => {
+    const fileId = evt.currentTarget.id;
+    const ext = getExtension(fileId);
+    const fileName = `${evt.currentTarget.dataset.name}.${ext}`;
+
+    try {
+      setDownloadingId(fileId);
+
+      const response = await axios.get(
+        `/usersapi/get_signed_url/?client_method=get_object&bucket=lenda-client-files&filename=${fileId}`
+      );
+
+      const signedUrl = response.data.url;
+
+      const fileResponse = await axios({
+        url: signedUrl,
+        method: 'GET',
+        responseType: 'blob',
+      });
+
+      const url = window.URL.createObjectURL(new Blob([fileResponse.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', fileName);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.log(error);
+      // setError(Errors.downError);
+    } finally {
+      setDownloadingId(null);
+    }
+  };
 
   return (
     <div>
-      {modal === MODAL_STATES.editCustom && <CustomDataForm client={client} fieldset={fieldset} setOpen={setModal} setClient={setClient}/>}
-      <div style={{margin: '20px 0'}}>
-        <button className='btn btn-success' onClick={() => setModal(MODAL_STATES.editCustom)}>
+      {modal === MODAL_STATES.editCustom && (
+        <CustomDataForm
+          client={client}
+          fieldset={fieldset}
+          setOpen={setModal}
+          setClient={setClient}
+        />
+      )}
+
+      <div style={{ margin: '20px 0' }}>
+        <button
+          className="btn btn-success"
+          onClick={() => setModal(MODAL_STATES.editCustom)}
+        >
           Edit
         </button>
       </div>
-      <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
-        {fieldset.values.map(value => <li key={value.id}>{value.name}: {value.data}</li>)}
+
+      <ul style={{ display: 'flex', flexDirection: 'column', rowGap: '10px' }}>
+        {fieldset.values.map((value) => (
+          <li key={value.id}>
+            {value.name}:{' '}
+            {value.data_type === 'file' ? (
+              <button
+                type="button"
+                className="badge badge-info"
+                id={value.data}
+                data-name={value.name}
+                onClick={dowloadFile}
+                disabled={downloadingId === value.data}
+                style={{
+                  border: 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  cursor: downloadingId === value.data ? 'not-allowed' : 'pointer',
+                  opacity: downloadingId === value.data ? 0.7 : 1,
+                }}
+              >
+                {downloadingId === value.data ? (
+                  <>
+                    <span
+                      className="spinner-border spinner-border-sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    Downloading...
+                  </>
+                ) : (
+                  'Download'
+                )}
+              </button>
+            ) : (
+              value.data
+            )}
+          </li>
+        ))}
       </ul>
     </div>
-  )
+  );
 }
 
 const CustomDataForm = ({fieldset, setOpen, setClient, client}) => {
+  const [customFileUploadsInProgress, setCustomFileUploadsInProgress] = React.useState(0);
+
+  const onCustomFileUploadStart = () => setCustomFileUploadsInProgress(curr => curr + 1);
+  const onCustomFileUploadEnd = () => setCustomFileUploadsInProgress(curr => (curr > 0 ? curr - 1 : 0));
+
   const onSubmit = async (values, actions) => {
     let data = [];
     fieldset.values.forEach(val => {
@@ -78,11 +175,11 @@ const CustomDataForm = ({fieldset, setOpen, setClient, client}) => {
                 <div>
                   {fieldset.values.map(val => (
                     <React.Fragment key={val.id}>
-                      {getElement(val, setFieldValue)}
+                      {getElement(val, setFieldValue, onCustomFileUploadStart, onCustomFileUploadEnd)}
                     </React.Fragment>
                   ))}
                 </div>
-                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+                <ModalSubmit isSubmitting={isSubmitting || customFileUploadsInProgress > 0} setOpen={setOpen}/>
               </div>
             </NonFieldErrors>
           </Form>
@@ -92,7 +189,7 @@ const CustomDataForm = ({fieldset, setOpen, setClient, client}) => {
   )
 }
 
-const getElement = (field, setFieldValue) => {
+const getElement = (field, setFieldValue, onUploadStart, onUploadEnd) => {
   const dataTypes = {
     free_text: 'text',
     integer: 'number',
@@ -116,7 +213,15 @@ const getElement = (field, setFieldValue) => {
   }
 
   if (field.data_type === 'file') {
-    return <CustomFileInput field={field} fieldName={fieldName} setFieldValue={setFieldValue} />
+    return (
+      <CustomFileInput
+        field={field}
+        fieldName={fieldName}
+        setFieldValue={setFieldValue}
+        onUploadStart={onUploadStart}
+        onUploadEnd={onUploadEnd}
+      />
+    )
   }
 
   return {
@@ -138,7 +243,7 @@ function CustomFileInput({field, fieldName, setFieldValue, onUploadStart, onUplo
   const [progress, setProgress] = React.useState(0);
   const [status, setStatus] = React.useState(null);
   const {errors, touched, submitCount, values, setFieldTouched} = useFormikContext();
-  const fieldKey = `custom_${field.id}`;
+  const fieldKey = field.id;
 
   const uploadFile = (file, url) => {
     return new Promise((res, rej) => {
@@ -198,7 +303,7 @@ function CustomFileInput({field, fieldName, setFieldValue, onUploadStart, onUplo
         {({getRootProps, getInputProps}) => (
           <section className='container'>
             <div {...getRootProps({className: 'dropzone'})}>
-              <input {...getInputProps()} required={field.is_required} />
+              <input {...getInputProps()} />
               <p className='dropzone__text'>Drag and drop a file here, or click to select a file</p>
             </div>
           </section>
