@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Formik, Form } from 'formik';
+import { Formik, Form, useFormikContext } from 'formik';
 import {
   NonFieldErrors,
   CustomSelect,
@@ -18,6 +18,8 @@ import { removeEmptyValues } from '../../../utils/utils';
 import { useNavigate } from 'react-router-dom';
 import { uuidv4 } from '../../../utils';
 import { useBranches } from '../../../contexts/BranchesContext';
+import Dropzone from 'react-dropzone';
+
 
 const initValidationSchema = yup.object().shape({
   client_type_id: yup.number().required('Required'),
@@ -161,6 +163,13 @@ function AddClientForm({customForms, clientTypes, idTemplates, clientControls, s
             <Addresses address_list={values.address_list} setFieldValue={setFieldValue}/>
             <div className='divider divider-info'>Next Of Kin</div>
             <NextOfKin next_of_kin_list={values.next_of_kin_list} setFieldValue={setFieldValue}/>
+            <div className='divider divider-info'>Client Photo</div>
+            <CustomFileInput 
+              setFieldValue={setFieldValue}
+              values={values}
+              onUploadStart={onCustomFileUploadStart}
+              onUploadEnd={onCustomFileUploadEnd}
+            />
             {customForms.filter(form => form.client_type_id == values.client_type_id).map(form => (
               <React.Fragment key={form.id}>
                 <div className='divider divider-info'>{form.name}</div>
@@ -253,5 +262,140 @@ const getFieldName = (fieldName, fieldSetId, customForms) => {
   const field = fs.fields.find(field => field.id == fieldName);
   return field.name
 }
+
+
+function CustomFileInput({ values, setFieldValue, onUploadStart, onUploadEnd }) {
+  const [progress, setProgress] = React.useState(0);
+  const [status, setStatus] = React.useState(null);
+  const [previewUrl, setPreviewUrl] = React.useState(null);
+  const { errors, touched, submitCount, setFieldTouched } = useFormikContext();
+
+  React.useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
+
+  const uploadFile = (file, url) => {
+    return new Promise((res, rej) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('PUT', url);
+      xhr.onload = () => {
+        setStatus('Uploaded');
+        setProgress(100);
+        res();
+      };
+      xhr.onerror = (evt) => {
+        setStatus('Failed');
+        rej(evt);
+      };
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const percentage = (event.loaded / event.total) * 100;
+          setProgress(Math.round(percentage));
+        }
+      };
+      const blob = new Blob([file], { type: file.type || 'application/octet-stream' });
+      xhr.send(blob);
+    });
+  };
+
+  const onDrop = async (acceptedFiles) => {
+    const [file] = acceptedFiles;
+    if (!file) return;
+
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+    }
+    setPreviewUrl(URL.createObjectURL(file));
+
+    setStatus('In Progress');
+    setProgress(0);
+    if (onUploadStart) onUploadStart();
+    setFieldValue('profile_filename', '');
+    setFieldTouched('profile_filename', true, false);
+
+    try {
+      const response = await axios.get(
+        '/usersapi/get_signed_url/?client_method=put_object&bucket=lenda-client-files'
+      );
+      await uploadFile(file, response.data.url);
+      setFieldValue('profile_filename', response.data.filename);
+      setFieldTouched('profile_filename', true, false);
+    } catch (error) {
+      console.log(error);
+      setStatus('Failed');
+    } finally {
+      if (onUploadEnd) onUploadEnd();
+    }
+  };
+
+  const hasFormikError = Boolean(errors.profile_filename);
+  const isEmpty = !values.profile_filename;
+
+  const showError =
+    (hasFormikError || isEmpty) &&
+    (touched.profile_filename || submitCount > 0) &&
+    status !== 'In Progress';
+
+  const errorMessage = errors.profile_filename || 'Please upload a file';
+
+  return (
+    <div style={{ marginBottom: '1rem' }}>
+      <label>Profile Picture</label>
+
+      <Dropzone
+        onDrop={onDrop}
+        multiple={false}
+        accept={{
+          'image/jpeg': ['.jpg', '.jpeg'],
+          'image/png': ['.png'],
+          'image/webp': ['.webp'],
+        }}
+      >
+        {({ getRootProps, getInputProps }) => (
+          <section className='container'>
+            <div {...getRootProps({ className: 'dropzone' })}>
+              <input {...getInputProps()} />
+              <p className='dropzone__text'>
+                Drag and drop a file here, or click to select a file
+              </p>
+            </div>
+          </section>
+        )}
+      </Dropzone>
+
+      {previewUrl ? (
+        <div style={{ marginTop: '0.75rem' }}>
+          <img
+            src={previewUrl}
+            alt='Preview'
+            style={{
+              width: '140px',
+              height: '140px',
+              objectFit: 'cover',
+              borderRadius: '8px',
+              border: '1px solid #ddd',
+              display: 'block',
+            }}
+          />
+        </div>
+      ) : null}
+
+      {status === 'In Progress' ? (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '0.75rem' }}>
+          <i className='fa fa-spinner fa-spin' style={{ fontSize: '2rem' }}></i>
+          <div style={{ fontWeight: 700, fontSize: '1.15rem' }}>{progress}%</div>
+        </div>
+      ) : null}
+
+      {status && status !== 'In Progress' ? <small>{status}</small> : null}
+      {showError ? <div className='error'>{errorMessage}</div> : null}
+    </div>
+  );
+}
+
 
 export default AddClientForm;
