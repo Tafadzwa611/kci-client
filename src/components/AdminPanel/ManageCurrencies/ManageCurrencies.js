@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Currencies from './Currencies';
 import AddCurrency from './AddCurrency';
 import EditCurrency from './EditCurrency';
 import {
   Routes,
   Route,
-  Link,
   Outlet,
-  useLocation
+  NavLink
 } from 'react-router-dom';
 
 function ManageCurrencies() {
+  useEffect(() => {
+    document.title = 'Manage Currencies - Admin Panel';
+  }, []);
+
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
@@ -19,23 +22,35 @@ function ManageCurrencies() {
         <Route path='editcurrency/:currencyId' element={<EditCurrency />} />
       </Route>
     </Routes>
-  )
+  );
 }
 
 function Layout() {
-  const location = useLocation();
   return (
-      <>
-        <div className='bloc-tabs'>
-          <Link to='/users/admin' id='list' className={location.pathname === '/users/admin' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-            Currencies
-          </Link>
-        </div>
-        <div className='tab-content font-12' style={{marginTop:'3rem'}}>
-          <Outlet />
-        </div>
-      </>
-  )
+    <>
+      <div className='ui-tabs' aria-label='Currency tabs'>
+        <Tab to='/users/admin' end>
+          Currencies
+        </Tab>
+      </div>
+
+      <div className='tab-content font-12 ui-tab-panel'>
+        <Outlet />
+      </div>
+    </>
+  );
+}
+
+function Tab({ to, end, children }) {
+  return (
+    <NavLink
+      to={to}
+      end={end}
+      className={({ isActive }) => `ui-tab ${isActive ? 'is-active' : ''}`}
+    >
+      {children}
+    </NavLink>
+  );
 }
 
 export default ManageCurrencies;

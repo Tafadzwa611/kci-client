@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import List from './Branches/List';
 import Holidays from './Holidays/Holidays';
 import NonWorkingDays from './NonWorkingDays/NonWorkingDays';
@@ -9,12 +9,15 @@ import Units from './Units/Units';
 import {
   Routes,
   Route,
-  Link,
   Outlet,
-  useLocation
+  NavLink
 } from 'react-router-dom';
 
 const ManageBranches = () => {
+  useEffect(() => {
+    document.title = 'Manage Branches - Admin Panel';
+  }, []);
+
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
@@ -27,36 +30,44 @@ const ManageBranches = () => {
         <Route path='units' element={<Units />} />
       </Route>
     </Routes>
-  )
-}
+  );
+};
 
 function Layout() {
-  const location = useLocation();
   return (
     <>
-      <div className='bloc-tabs'>
-        <Link to='/users/admin/managebranches' id='list' className={location.pathname === '/users/admin/managebranches' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+      <div className='ui-tabs' aria-label='Branch tabs'>
+        <Tab to='/users/admin/managebranches' end>
           Branches
-        </Link>
-        <Link to='/users/admin/managebranches/holidays' id='add' className={location.pathname === '/users/admin/managebranches/holidays' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+        </Tab>
+        <Tab to='/users/admin/managebranches/holidays'>
           Holidays
-        </Link>
-        <Link to='/users/admin/managebranches/nonworkingDays' id='add' className={location.pathname === '/users/admin/managebranches/nonworkingDays' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+        </Tab>
+        <Tab to='/users/admin/managebranches/nonworkingDays'>
           Non-Working Days
-        </Link>
-        <Link to='/users/admin/managebranches/units' id='add' className={location.pathname === '/users/admin/managebranches/units' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+        </Tab>
+        <Tab to='/users/admin/managebranches/units'>
           Units
-        </Link>
+        </Tab>
       </div>
-      <div className='tab-content font-12' style={{marginTop:'3rem'}}>
+
+      <div className='tab-content font-12 ui-tab-panel'>
         <Outlet />
       </div>
     </>
-  )
+  );
+}
+
+function Tab({ to, end, children }) {
+  return (
+    <NavLink
+      to={to}
+      end={end}
+      className={({ isActive }) => `ui-tab ${isActive ? 'is-active' : ''}`}
+    >
+      {children}
+    </NavLink>
+  );
 }
 
 export default ManageBranches;
-
-
-
-

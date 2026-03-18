@@ -57,9 +57,9 @@ function DeleteBudget() {
       <Formik initialValues={{}} onSubmit={onSubmit}>
         {({ errors, isSubmitting }) => (
           <Form>
-            <h4>
+            <p style={{fontSize:'0.8125rem'}}>
               Are you sure you want to delete this receipt book? {rb.name}
-            </h4>
+            </p>
             <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
             <div style={{display:'flex', justifyContent: 'flex-end'}}> 
               <SubmitButton isSubmitting={isSubmitting}/>

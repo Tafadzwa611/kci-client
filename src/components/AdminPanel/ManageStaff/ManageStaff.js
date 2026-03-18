@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Staff from './Staff/Staff';
 import AddRole from './AddRole';
 import ClientRoles from './ClientRoles';
@@ -7,9 +7,8 @@ import EditRole from './EditRole';
 import {
   Routes,
   Route,
-  Link,
   Outlet,
-  useLocation
+  NavLink
 } from 'react-router-dom';
 import AddStaff from './Staff/AddStaff';
 import StaffDetails from './Staff/StaffDetails';
@@ -18,6 +17,10 @@ import UpdatePerms from './Staff/UpdatePerms';
 import UpdateLimits from './Staff/UpdateLimits';
 
 const ManageStaff = () => {
+  useEffect(() => {
+    document.title = 'Manage Staff - Admin Panel';
+  }, []);
+
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
@@ -33,26 +36,38 @@ const ManageStaff = () => {
         <Route path='editrole/:roleId' element={<EditRole />} />
       </Route>
     </Routes>
-  )
-}
+  );
+};
 
 function Layout() {
-  const location = useLocation();
   return (
-      <>
-        <div className='bloc-tabs'>
-          <Link to='/users/admin/staff' id='list' className={location.pathname === '/users/admin/staff' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-            Staff
-          </Link>
-          <Link to='/users/admin/staff/rolesndperm' id='add' className={location.pathname === '/users/admin/staff/rolesndperm' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-            Staff Roles and Permissions
-          </Link>
-        </div>
-        <div className='tab-content font-12' style={{marginTop:'3rem'}}>
-          <Outlet />
-        </div>
-      </>
-  )
+    <>
+      <div className='ui-tabs' aria-label='Staff tabs'>
+        <Tab to='/users/admin/staff' end>
+          Staff
+        </Tab>
+        <Tab to='/users/admin/staff/rolesndperm'>
+          Staff Roles and Permissions
+        </Tab>
+      </div>
+
+      <div className='tab-content font-12 ui-tab-panel'>
+        <Outlet />
+      </div>
+    </>
+  );
+}
+
+function Tab({ to, end, children }) {
+  return (
+    <NavLink
+      to={to}
+      end={end}
+      className={({ isActive }) => `ui-tab ${isActive ? 'is-active' : ''}`}
+    >
+      {children}
+    </NavLink>
+  );
 }
 
 export default ManageStaff;

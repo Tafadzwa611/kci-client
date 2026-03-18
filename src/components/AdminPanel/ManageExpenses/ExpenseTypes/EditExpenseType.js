@@ -12,7 +12,6 @@ import {
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
-
 function EditExpenseType() {
   const params = useParams();
   const navigate = useNavigate();
@@ -30,7 +29,7 @@ function EditExpenseType() {
     const fetch = async () => {
       const response = await axios.get('/expensesapi/expense_settings/');
       setExpenseSettings(response.data);
-    }
+    };
     fetch();
   }, []);
 
@@ -73,14 +72,14 @@ function EditExpenseType() {
   }, [JSON.stringify(et)]);
 
   if (!et || !expenseAccs || !payableAccs) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   const accountOption = (a) =>
-  a && {
-    value: a.id,
-    label: `${a.general_ledger_code} - ${a.general_ledger_name}`,
-  };
+    a && {
+      value: a.id,
+      label: `${a.general_ledger_code} - ${a.general_ledger_name}`,
+    };
 
   const branchOption = ({ id, name }) => ({
     value: id,
@@ -111,7 +110,7 @@ function EditExpenseType() {
         actions.setErrors({responseStatus: error.response.status});
       }
     }
-  }
+  };
 
   const initialValues = {
     name: et.name,
@@ -122,51 +121,76 @@ function EditExpenseType() {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ isSubmitting, errors, values, setFieldValue }) => (
-        <Form>
-          <div className='divider divider-info'>
-            <span>Expense Type Information</span>
-          </div>
-          <CustomInput label='Name' name='name' type='text' required/>
-          <CustomMultiSelect
-            label='Branches'
-            name='branches'
-            initVals={values.branches}
-            options={branches.map(branch => ({value: branch.id, label: branch.name}))}
-            setFieldValue={setFieldValue}
-          />
-          <CustomMultiSelect
-            label='Expense Account'
-            name='expense_account'
-            initVals={values.expense_account}
-            isMulti={false}
-            setFieldValue={setFieldValue}
-            options={expenseAccs.accounts.map(account => (
-              {label: `${account.general_ledger_name} - ${account.general_ledger_code}`, value: account.id}
-            ))}
-          />
-          {expenseSettings.accounting_method === 2 && (
-            <CustomMultiSelect
-              label='Payable Account'
-              name='payable_account'
-              initVals={values.payable_account}
-              isMulti={false}
-              setFieldValue={setFieldValue}
-              options={payableAccs.accounts.map(account => (
-                {label: `${account.general_ledger_name} - ${account.general_ledger_code}`, value: account.id}
-              ))}
-            />
-          )}
-          <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
-          <NonFieldErrors errors={errors}/>
-          <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-            <SubmitButton isSubmitting={isSubmitting}/>
-          </div>
-        </Form>
-      )}
-    </Formik>
-  )
+    <div className='sf-page'>
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        {({ isSubmitting, errors, values, setFieldValue }) => (
+          <Form autoComplete='off' className='sf-form'>
+            <NonFieldErrors errors={errors}>
+              <div className='sf-shell'>
+                <div className='sf-shell-head'>
+                  <div className='sf-shell-title'>Expense Type</div>
+                  <div className='sf-shell-subtitle'>
+                    Update the expense type details and linked accounts while keeping the existing setup aligned to your accounting configuration.
+                  </div>
+                </div>
+
+                <div className='sf-shell-body'>
+                  <section className='sf-section'>
+                    <div className='sf-section-head'>
+                      <div className='sf-section-title'>Expense type information</div>
+                      <div className='sf-section-hint'>
+                        Edit the name, branches, expense account, and payable account where applicable.
+                      </div>
+                    </div>
+
+                    <div className='sf-section-body sf-stack'>
+                      <CustomInput label='Name' name='name' type='text' required />
+
+                      <CustomMultiSelect
+                        label='Branches'
+                        name='branches'
+                        initVals={values.branches}
+                        options={branches.map(branch => ({ value: branch.id, label: branch.name }))}
+                        setFieldValue={setFieldValue}
+                      />
+
+                      <CustomMultiSelect
+                        label='Expense Account'
+                        name='expense_account'
+                        initVals={values.expense_account}
+                        isMulti={false}
+                        setFieldValue={setFieldValue}
+                        options={expenseAccs.accounts.map(account => (
+                          { label: `${account.general_ledger_name} - ${account.general_ledger_code}`, value: account.id }
+                        ))}
+                      />
+
+                      {expenseSettings.accounting_method === 2 && (
+                        <CustomMultiSelect
+                          label='Payable Account'
+                          name='payable_account'
+                          initVals={values.payable_account}
+                          isMulti={false}
+                          setFieldValue={setFieldValue}
+                          options={payableAccs.accounts.map(account => (
+                            { label: `${account.general_ledger_name} - ${account.general_ledger_code}`, value: account.id }
+                          ))}
+                        />
+                      )}
+                    </div>
+                  </section>
+                </div>
+
+                <div className='sf-shell-footer'>
+                  <SubmitButton isSubmitting={isSubmitting} />
+                </div>
+              </div>
+            </NonFieldErrors>
+          </Form>
+        )}
+      </Formik>
+    </div>
+  );
 }
 
 export default EditExpenseType;

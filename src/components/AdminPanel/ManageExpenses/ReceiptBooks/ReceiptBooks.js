@@ -12,7 +12,6 @@ import {
   SubmitButtonFilter
 } from '../../../../common';
 
-
 function ReceiptBooks() {
   const [receiptBooks, setReceiptBooks] = React.useState([]);
 
@@ -109,29 +108,35 @@ function Filter({setReceiptBooks}) {
     <Formik initialValues={{ branch_id: '', currency_id: '', is_active: true }} onSubmit={onSubmit}>
       {({isSubmitting}) => (
         <div className='search_background'>
-          <div className='row-containers' style={{border:'none'}}>
+          <div className='row-containers sf-shellwrap'>
             <Form>
-              <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                <div className='row-payments-container' style={{width:'19%'}}>
-                  <CustomSelectFilter label='Branch' name='branch_id' required>
-                    <option value=''>------</option>
-                    {branches.map(branch => (
-                      <option key={branch.id} value={branch.id}>
-                        {branch.name}
-                      </option>
-                    ))}
-                  </CustomSelectFilter>
-                  <CustomSelectFilter label='Currency' name='currency_id' required>
-                    <option value=''>------</option>
-                    {currencies.map(currency => (
-                      <option key={currency.id} value={currency.id}>
-                        {currency.fullname}
-                      </option>
-                    ))}
-                  </CustomSelectFilter>
+              <div className='row row-payments row-loans sf-card'>
+                <div className='sf-row sf-row-2'>
+                  <div className='row-payments-container sf-w-49'>
+                    <CustomSelectFilter label='Branch' name='branch_id' required>
+                      <option value=''>------</option>
+                      {branches.map(branch => (
+                        <option key={branch.id} value={branch.id}>
+                          {branch.name}
+                        </option>
+                      ))}
+                    </CustomSelectFilter>
+                  </div>
+
+                  <div className='row-payments-container sf-w-49'>
+                    <CustomSelectFilter label='Currency' name='currency_id' required>
+                      <option value=''>------</option>
+                      {currencies.map(currency => (
+                        <option key={currency.id} value={currency.id}>
+                          {currency.fullname}
+                        </option>
+                      ))}
+                    </CustomSelectFilter>
+                  </div>
                 </div>
               </div>
-              <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
+
+              <div className='sf-submit'>
                 <SubmitButtonFilter isSubmitting={isSubmitting}/>
               </div>
             </Form>
