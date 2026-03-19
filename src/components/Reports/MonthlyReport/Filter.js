@@ -2,11 +2,9 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import {
   NonFieldErrors,
-} from '../../../common';
-import {
-    CustomSelectFilter,
-    MultiSelectFilter,
-    SubmitButtonFilter
+  CustomSelectFilter,
+  MultiSelectFilter,
+  SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
 import { useBranches } from '../../../contexts/BranchesContext';
@@ -19,6 +17,7 @@ const Filter = ({setMonthlyReportData, units}) => {
     page_num: 1,
     unit_id: '',
   };
+
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
@@ -27,7 +26,7 @@ const Filter = ({setMonthlyReportData, units}) => {
     for (const [key, value] of Object.entries(values)) {
       if (Array.isArray(value)) {
         value.forEach(el => params.append(key, el));
-      }else {
+      } else {
         params.append(key, value);
       }
     }
@@ -40,12 +39,15 @@ const Filter = ({setMonthlyReportData, units}) => {
     try {
       const data = removeEmptyValues(values);
       const params = getParams(data);
+
       if (values.branch_ids.includes('*')) {
         params.delete('branch_ids');
         allBranchIds.forEach(id => params.append('branch_ids', id));
       }
+
       const response = await axios.get('/reportsapi/monthly-report/', {params: params});
       setMonthlyReportData(response.data);
+
     } catch (error) {
       if (error.message === "Network Error") {
         actions.setErrors({responseStatus: "Network Error"});
@@ -60,37 +62,57 @@ const Filter = ({setMonthlyReportData, units}) => {
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors}) => (
-          <div className="search_background">
-            <div className="row-containers" style={{border:"none"}}>
-                <Form>
-                    <NonFieldErrors errors={errors}>
-                        <div style={{display:"flex", justifyContent:"space-between"}}>
-                            <div style={{width:"70%"}}>
-                              <MultiSelectFilter
-                                label='Branches'
-                                name='branch_ids'
-                                options={branches.map(br => ({label: br.name, value:br.id}))}
-                                setFieldValue={setFieldValue}
-                                required
-                              />
-                            </div>
-                            <div className="row-payments-container" style={{width:"10%"}}>
-                              <CustomSelectFilter label='Currency' name='currency_id' required>
-                                    <option value=''>------</option>
-                                    {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-                                </CustomSelectFilter>
-                            </div>
-                            <div className="row-payments-container" style={{width:"10%"}}>
-                              <CustomSelectFilter label='Unit' name='unit_id'>
-                                    <option value=''>------</option>
-                                    {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
-                                </CustomSelectFilter>
-                            </div>
-                            <SubmitButtonFilter isSubmitting={isSubmitting}/>
-                        </div>
-                    </NonFieldErrors>
-                </Form>
-            </div>
+        <div className="search_background">
+          <div className="row-containers sf-shellwrap">
+            <Form>
+              <NonFieldErrors errors={errors}>
+                <div className="row row-payments row-loans sf-card">
+
+                  <div className="sf-row sf-row-4">
+
+                    <div className="row-payments-container" style={{width:"60%"}}>
+                      <MultiSelectFilter
+                        label='Branches'
+                        name='branch_ids'
+                        options={branches.map(br => ({label: br.name, value:br.id}))}
+                        setFieldValue={setFieldValue}
+                        required
+                      />
+                    </div>
+
+                    <div className="row-payments-container" style={{width:"15%"}}>
+                      <CustomSelectFilter label='Currency' name='currency_id' required>
+                        <option value=''>------</option>
+                        {currencies.map(currency => (
+                          <option key={currency.id} value={currency.id}>
+                            {currency.fullname}
+                          </option>
+                        ))}
+                      </CustomSelectFilter>
+                    </div>
+
+                    <div className="row-payments-container" style={{width:"20%"}}>
+                      <CustomSelectFilter label='Unit' name='unit_id'>
+                        <option value=''>------</option>
+                        {units.map(ut => (
+                          <option key={ut.id} value={ut.id}>
+                            {ut.name}
+                          </option>
+                        ))}
+                      </CustomSelectFilter>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div className="sf-submit">
+                  <SubmitButtonFilter isSubmitting={isSubmitting}/>
+                </div>
+
+              </NonFieldErrors>
+            </Form>
+          </div>
         </div>
       )}
     </Formik>
@@ -98,4 +120,3 @@ const Filter = ({setMonthlyReportData, units}) => {
 }
 
 export default Filter;
-

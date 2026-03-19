@@ -4,7 +4,7 @@ import axios from 'axios';
 
 function LoansTable({loans, params, setLoans}) {
   return (
-    <div className='row'>
+    <div>
       <div className='col-12'>
         <div>
           <TableHeader loans={loans} params={params} setLoans={setLoans} />

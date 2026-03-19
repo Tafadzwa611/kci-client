@@ -12,7 +12,6 @@ import { useBranches } from '../../../contexts/BranchesContext';
 import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
-
 const Filter = ({setReport, setParams, units}) => {
   const initialValues = {
     branch_ids: [],
@@ -23,6 +22,7 @@ const Filter = ({setReport, setParams, units}) => {
     unit_id: '',
     status: ''
   };
+
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
@@ -41,7 +41,7 @@ const Filter = ({setReport, setParams, units}) => {
       if (values.file_format === 'html') {
         const response = await axios.get('/reportsapi/expected_installments_report/', {params: params});
         setReport(response.data);
-      }else {
+      } else {
         await axios.get('/reportsapi/expected_installments_report_export/', {params: params});
       }
     } catch (error) {
@@ -59,58 +59,89 @@ const Filter = ({setReport, setParams, units}) => {
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors}) => (
         <div className='search_background'>
-          <div className='row-containers' style={{border:'none'}}>
+          <div className='row-containers sf-shellwrap'>
             <Form>
               <NonFieldErrors errors={errors}>
-                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomDatePickerFilter label='Start Value Date' name='min_date' setFieldValue={setFieldValue} required/>
+                <div className='row row-payments row-loans sf-card'>
+                  <div className='sf-row sf-row-4'>
+                    <div className='row-payments-container sf-w-24'>
+                      <CustomDatePickerFilter
+                        label='Start Value Date'
+                        name='min_date'
+                        setFieldValue={setFieldValue}
+                        required
+                      />
+                    </div>
+
+                    <div className='row-payments-container sf-w-24'>
+                      <CustomDatePickerFilter
+                        label='End Value Date'
+                        name='max_date'
+                        setFieldValue={setFieldValue}
+                        required
+                      />
+                    </div>
+
+                    <div className='row-payments-container sf-w-24'>
+                      <CustomSelectFilter label='Currency' name='currency_id' required>
+                        <option value=''>------</option>
+                        {currencies.map(currency => (
+                          <option key={currency.id} value={currency.id}>
+                            {currency.fullname}
+                          </option>
+                        ))}
+                      </CustomSelectFilter>
+                    </div>
+
+                    <div className='row-payments-container sf-w-24'>
+                      <CustomSelectFilter label='Unit' name='unit_id'>
+                        <option value=''>------</option>
+                        {units.map(ut => (
+                          <option key={ut.id} value={ut.id}>
+                            {ut.name} {ut.branch_name} BRANCH
+                          </option>
+                        ))}
+                      </CustomSelectFilter>
+                    </div>
                   </div>
-                  <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomDatePickerFilter label='End Value Date' name='max_date' setFieldValue={setFieldValue} required/>
+
+                  <div className='sf-row sf-mt-3'>
+                    <div className='row-payments-container' style={{width:'100%'}}>
+                      <MultiSelectFilter
+                        label='Branches'
+                        name='branch_ids'
+                        options={branches.map(br => ({label: br.name, value:br.id}))}
+                        setFieldValue={setFieldValue}
+                        required
+                      />
+                    </div>
                   </div>
-                  <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomSelectFilter label='Currency' name='currency_id' required>
-                      <option value=''>------</option>
-                      {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-                    </CustomSelectFilter>
-                  </div>
-                  <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomSelectFilter label='Unit' name='unit_id'>
-                      <option value=''>------</option>
-                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name} {ut.branch_name} BRANCH</option>)}
-                    </CustomSelectFilter>
+
+                  <div className='sf-row sf-row-2 sf-mt-3'>
+                    <div className='row-payments-container' style={{width:'49%'}}>
+                      <CustomSelectFilter label='Status' name='status'>
+                        <option value=''>Select Status</option>
+                        <option value='Pending'>Unpaid</option>
+                        <option value='Paid'>Paid</option>
+                        <option value='Overdue'>Overdue</option>
+                      </CustomSelectFilter>
+                    </div>
+
+                    <div className='row-payments-container' style={{width:'49%'}}>
+                      <CustomSelectFilter label='Mode' name='file_format' required>
+                        <option value='html'>Screen (HTML)</option>
+                        <option value='xlsx'>Excel</option>
+                        <option value='csv'>CSV</option>
+                        <option value='pdfa4'>PDF A4</option>
+                        <option value='pdfa3'>PDF A3</option>
+                        <option value='pdfa2'>PDF A2</option>
+                        <option value='pdfa1'>PDF A1</option>
+                      </CustomSelectFilter>
+                    </div>
                   </div>
                 </div>
-                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'60%'}}>
-                    <MultiSelectFilter
-                      label='Branches'
-                      name='branch_ids'
-                      options={branches.map(br => ({label: br.name, value:br.id}))}
-                      setFieldValue={setFieldValue}
-                      required
-                    />
-                  </div>
-                  <div className='row-payments-container' style={{width:'15%'}}>
-                    <CustomSelectFilter label='Status' name='status'>
-                      <option value=''>Select Status</option>
-                      <option value='Pending'>Unpaid</option>
-                      <option value='Paid'>Paid</option>
-                      <option value='Overdue'>Overdue</option>
-                    </CustomSelectFilter>
-                  </div>
-                  <div className='row-payments-container' style={{width:'15%'}}>
-                    <CustomSelectFilter label='Mode' name='file_format' required>
-                      <option value='html'>Screen (HTML)</option>
-                      <option value='xlsx'>Excel</option>
-                      <option value='csv'>CSV</option>
-                      <option value='pdfa4'>PDF A4</option>
-                      <option value='pdfa3'>PDF A3</option>
-                      <option value='pdfa2'>PDF A2</option>
-                      <option value='pdfa1'>PDF A1</option>
-                    </CustomSelectFilter>
-                  </div>
+
+                <div className='sf-submit'>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>
               </NonFieldErrors>

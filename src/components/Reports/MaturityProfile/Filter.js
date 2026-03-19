@@ -55,39 +55,56 @@ const Filter = ({setReport}) => {
         <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({isSubmitting, setFieldValue, errors}) => (
                 <div className='search_background'>
-                    <div className='row-containers' style={{border:'none'}}>
+                    <div className='row-containers sf-shellwrap'>
                         <Form>
                             <NonFieldErrors errors={errors}>
-                                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                                    <div className='row-payments-container' style={{width:'32.5%'}}>
-                                        <CustomDatePickerFilter label='Report Date' name='report_date' setFieldValue={setFieldValue} required/>
+                                <div className='row row-payments row-loans sf-card'>
+                                    <div className='sf-row sf-row-2'>
+                                        <div className='row-payments-container sf-w-49'>
+                                            <CustomDatePickerFilter
+                                                label='Report Date'
+                                                name='report_date'
+                                                setFieldValue={setFieldValue}
+                                                required
+                                            />
+                                        </div>
+
+                                        <div className='row-payments-container sf-w-49'>
+                                            <CustomSelectFilter label='Currency' name='currency_id' required>
+                                                <option value=''>------</option>
+                                                {currencies.map(currency => (
+                                                    <option key={currency.id} value={currency.id}>
+                                                        {currency.fullname}
+                                                    </option>
+                                                ))}
+                                            </CustomSelectFilter>
+                                        </div>
                                     </div>
-                                    <div className='row-payments-container' style={{width:'32.5%'}}>
-                                        <CustomSelectFilter label='Currency' name='currency_id' required>
-                                            <option value=''>------</option>
-                                            {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-                                        </CustomSelectFilter>
-                                    </div>
-                                    <div className='row-payments-container' style={{width:'32.5%'}}>
-                                        <CustomMultiSelectFilter
-                                            label='Status'
-                                            name='status_list'
-                                            options={statusValues.map(val => ({label: val, value: val}))}
-                                            setFieldValue={setFieldValue}
-                                            required
-                                        />
+
+                                    <div className='sf-row sf-row-2 sf-mt-3'>
+                                        <div className='row-payments-container' style={{width: '66%'}}>
+                                            <MultiSelectFilter
+                                                label='Branches'
+                                                name='branch_ids'
+                                                options={branches.map(br => ({label: br.name, value: br.id}))}
+                                                setFieldValue={setFieldValue}
+                                                required
+                                            />
+                                        </div>
+
+                                        <div className='row-payments-container' style={{width: '32%'}}>
+                                            <CustomMultiSelectFilter
+                                                label='Status'
+                                                name='status_list'
+                                                options={statusValues.map(val => ({label: val, value: val}))}
+                                                setFieldValue={setFieldValue}
+                                                required
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                                    <div style={{width:'90%'}}>
-                                        <MultiSelectFilter
-                                            label='Branches'
-                                            name='branch_ids'
-                                            options={branches.map(br => ({label: br.name, value:br.id}))}
-                                            setFieldValue={setFieldValue}
-                                            required
-                                        />
-                                    </div>
+
+                                <div className='sf-submit'>
                                     <SubmitButtonFilter isSubmitting={isSubmitting}/>
                                 </div>
                             </NonFieldErrors>
