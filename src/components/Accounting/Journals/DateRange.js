@@ -63,76 +63,105 @@ const DateRange = ({setParams, staff, setInfo}) => {
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors, values}) => (
         <div className='search_background'>
-          <div className='row-containers' style={{border:'none'}}>
+          <div className='row-containers sf-shellwrap'>
             <Form>
               <NonFieldErrors errors={errors}>
-                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomSelectFilter label='Currency' name='currency_id' required>
-                      <option value=''>------</option>
-                      {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.shortname}</option>)}
-                    </CustomSelectFilter>
+                <div className='row row-payments row-loans sf-card'>
+                  <div className='sf-row sf-row-4'>
+                    <div className='row-payments-container sf-w-24'>
+                      <CustomSelectFilter label='Currency' name='currency_id' required>
+                        <option value=''>------</option>
+                        {currencies.map(currency => (
+                          <option key={currency.id} value={currency.id}>
+                            {currency.shortname}
+                          </option>
+                        ))}
+                      </CustomSelectFilter>
+                    </div>
+
+                    <div className='row-payments-container sf-w-24'>
+                      <CustomDatePickerFilter
+                        label='Min Value Date'
+                        name='min_date'
+                        setFieldValue={setFieldValue}
+                      />
+                    </div>
+
+                    <div className='row-payments-container sf-w-24'>
+                      <CustomDatePickerFilter
+                        label='Max Value Date'
+                        name='max_date'
+                        setFieldValue={setFieldValue}
+                      />
+                    </div>
+
+                    <div className='row-payments-container sf-w-24'>
+                      <CustomSelectFilter label='User' name='user_id'>
+                        <option value=''>------</option>
+                        {staff.map(mbr => (
+                          <option key={mbr.id} value={mbr.id}>
+                            {mbr.first_name} {mbr.last_name}
+                          </option>
+                        ))}
+                      </CustomSelectFilter>
+                    </div>
                   </div>
-                  <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomDatePickerFilter label='Min Value Date' name='min_date' setFieldValue={setFieldValue}/>
-                  </div>
-                  <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomDatePickerFilter label='Max Value Date' name='max_date' setFieldValue={setFieldValue}/>
-                  </div>
-                  <div className='row-payments-container' style={{width:'24%'}}>
-                    <CustomSelectFilter label='User' name='user_id'>
-                      <option value=''>------</option>
-                      {staff.map(mbr => <option key={mbr.id} value={mbr.id}>{mbr.first_name} {mbr.last_name}</option>)}
-                    </CustomSelectFilter>
+
+                  {values.currency_id ? (
+                    <div className='sf-row sf-row-2 sf-mt-3'>
+                      <div className='row-payments-container sf-w-49'>
+                        <CustomSelectRemoteFilter
+                          label='Account Debited'
+                          url='/acc-api/search_account/'
+                          selected={values.account_debited_id}
+                          params={[
+                            {key: 'currency_id', value: values.currency_id}
+                          ]}
+                          setFieldValue={setFieldValue}
+                          queryParamName='query'
+                          placeholder='Search Account'
+                          name='account_debited_id'
+                        />
+                      </div>
+
+                      <div className='row-payments-container sf-w-49'>
+                        <CustomSelectRemoteFilter
+                          label='Account Credited'
+                          url='/acc-api/search_account/'
+                          selected={values.account_credited_id}
+                          params={[
+                            {key: 'currency_id', value: values.currency_id}
+                          ]}
+                          setFieldValue={setFieldValue}
+                          queryParamName='query'
+                          placeholder='Search Account'
+                          name='account_credited_id'
+                        />
+                      </div>
+                    </div>
+                  ) : null}
+
+                  <div className='sf-row sf-row-2 sf-mt-3'>
+                    <div className='row-payments-container' style={{width:'66%'}}>
+                      <MultiSelectFilter
+                        label='Branches'
+                        name='branch_ids'
+                        options={branches.map(br => ({label: br.name, value:br.id}))}
+                        setFieldValue={setFieldValue}
+                        required
+                      />
+                    </div>
+
+                    <div className='row-payments-container' style={{width:'32%'}}>
+                      <CustomSelectFilter label='Order' name='order'>
+                        <option value={'-date_created'}>Show newest first</option>
+                        <option value={'date_created'}>Show oldest first</option>
+                      </CustomSelectFilter>
+                    </div>
                   </div>
                 </div>
-                {values.currency_id ?
-                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'49%'}}>
-                    <CustomSelectRemoteFilter
-                      label='Account Debited'
-                      url='/acc-api/search_account/'
-                      selected={values.account_debited_id}
-                      params={[
-                        {key: 'currency_id', value: values.currency_id}
-                      ]}
-                      setFieldValue={setFieldValue}
-                      queryParamName='query'
-                      placeholder='Search Account'
-                      name='account_debited_id'
-                    />
-                  </div>
-                  <div style={{width:'49%'}}>
-                    <CustomSelectRemoteFilter
-                      label='Account Credited'
-                      url='/acc-api/search_account/'
-                      selected={values.account_credited_id}
-                      params={[
-                        {key: 'currency_id', value: values.currency_id}
-                      ]}
-                      setFieldValue={setFieldValue}
-                      queryParamName='query'
-                      placeholder='Search Account'
-                      name='account_credited_id'
-                    />
-                  </div>
-                </div> : null}
-                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'80%'}}>
-                    <MultiSelectFilter
-                      label='Branches'
-                      name='branch_ids'
-                      options={branches.map(br => ({label: br.name, value:br.id}))}
-                      setFieldValue={setFieldValue}
-                      required
-                    />
-                  </div>
-                  <div className='row-payments-container' style={{width:'10%'}}>
-                    <CustomSelectFilter label='Order' name='order'>
-                      <option value={'-date_created'}>Show newest first</option>
-                      <option value={'date_created'}>Show oldest first</option>
-                    </CustomSelectFilter>
-                  </div>
+
+                <div className='sf-submit'>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>
               </NonFieldErrors>
@@ -145,4 +174,3 @@ const DateRange = ({setParams, staff, setInfo}) => {
 }
 
 export default DateRange;
-

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Routes, Route, Outlet, NavLink } from 'react-router-dom';
 import MainAccounts from './MainAccounts/MainAccounts';
 import SubAccounts from './SubAccounts/SubAccounts';
 import AddHeaderAccount from './MainAccounts/AddHeaderAccount';
@@ -7,15 +8,12 @@ import EditHeaderAccount from './MainAccounts/EditHeaderAccount';
 import AddDetailAccount from './SubAccounts/AddDetailAccount';
 import DetailAccount from './SubAccounts/DetailAccount';
 import EditDetailAccount from './SubAccounts/EditDetailAccount';
-import {
-  Routes,
-  Route,
-  Outlet,
-  Link,
-  useLocation
-} from 'react-router-dom';
 
 const ChartsOfAccounts = () => {
+  useEffect(() => {
+    document.title = 'Charts of Accounts - Accounting';
+  }, []);
+
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
@@ -29,26 +27,38 @@ const ChartsOfAccounts = () => {
         <Route path='editheaderaccount/:headerAccountId' element={<EditHeaderAccount />} />
       </Route>
     </Routes>
-  )
-}
+  );
+};
 
 function Layout() {
-  const location = useLocation();
   return (
     <>
-      <div className='bloc-tabs'>
-        <Link to='/accounting/viewaccounting/chartsofaccounts' className={location.pathname === '/accounting/viewaccounting/chartsofaccounts' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+      <div className='ui-tabs' aria-label='Charts of accounts tabs'>
+        <Tab to='/accounting/viewaccounting/chartsofaccounts' end>
           Detail Accounts
-        </Link>
-        <Link to='/accounting/viewaccounting/chartsofaccounts/headeraccounts' className={location.pathname === '/accounting/viewaccounting/chartsofaccounts/headeraccounts' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+        </Tab>
+        <Tab to='/accounting/viewaccounting/chartsofaccounts/headeraccounts'>
           Header Accounts
-        </Link>
+        </Tab>
       </div>
-      <div className='tab-content font-12' style={{marginTop:'3rem'}}>
+
+      <div className='tab-content font-12 ui-tab-panel'>
         <Outlet />
       </div>
     </>
-  )
+  );
+}
+
+function Tab({ to, end, children }) {
+  return (
+    <NavLink
+      to={to}
+      end={end}
+      className={({ isActive }) => `ui-tab ${isActive ? 'is-active' : ''}`}
+    >
+      {children}
+    </NavLink>
+  );
 }
 
 export default ChartsOfAccounts;
