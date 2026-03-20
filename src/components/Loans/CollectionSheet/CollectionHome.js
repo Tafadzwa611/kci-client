@@ -3,8 +3,7 @@ import {
   Routes,
   Route,
   Outlet,
-  Link,
-  useLocation
+  NavLink
 } from 'react-router-dom';
 import CollectionSheet from './CollectionSheet';
 import DeleteTemplate from './DeleteTemplate';
@@ -22,7 +21,7 @@ const CollectionHome = () => {
           path='add_template'
           element={(
             <Fetcher urls={['/usersapi/list_template_columns/?report_type=COLLECTION_SHEET']}>
-              {({data}) => <AddTemplate data={data}/>}
+              {({ data }) => <AddTemplate data={data} />}
             </Fetcher>
           )}
         />
@@ -30,7 +29,7 @@ const CollectionHome = () => {
           path='templates'
           element={(
             <Fetcher urls={['/usersapi/list_report_templates/?report_type=COLLECTION_SHEET']}>
-              {({data}) => <Templates data={data}/>}
+              {({ data }) => <Templates data={data} />}
             </Fetcher>
           )}
         />
@@ -38,42 +37,45 @@ const CollectionHome = () => {
           path='edit_template/:templateId'
           element={(
             <Fetcher urls={['/usersapi/list_template_columns/?report_type=COLLECTION_SHEET']}>
-              {({data}) => <EditTemplate data={data}/>}
+              {({ data }) => <EditTemplate data={data} />}
             </Fetcher>
           )}
         />
         <Route path='delete_template/:templateId' element={<DeleteTemplate />} />
       </Route>
     </Routes>
-  )
-}
+  );
+};
 
 function Layout() {
-  const location = useLocation();
-
   return (
     <>
-      <div className='bloc-tabs'>
-        <Link
-          id='sheet'
-          to='/loans/viewloans/collection_sheet'
-          className={location.pathname === '/loans/viewloans/collection_sheet' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
-        >
+      <div className='ui-tabs' aria-label='Collection sheet tabs'>
+        <Tab to='/loans/viewloans/collection_sheet' end>
           Collection Sheet
-        </Link>
-        <Link 
-          id='templates'
-          to='/loans/viewloans/collection_sheet/templates'
-          className={location.pathname === '/loans/viewloans/collection_sheet/templates' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}
-        >
+        </Tab>
+        <Tab to='/loans/viewloans/collection_sheet/templates'>
           Templates
-        </Link>
+        </Tab>
       </div>
-      <div className='tab-content font-12' style={{marginTop:'3rem'}}>
+
+      <div className='tab-content font-12 ui-tab-panel'>
         <Outlet />
       </div>
     </>
-  )
+  );
+}
+
+function Tab({ to, end, children }) {
+  return (
+    <NavLink
+      to={to}
+      end={end}
+      className={({ isActive }) => `ui-tab ${isActive ? 'is-active' : ''}`}
+    >
+      {children}
+    </NavLink>
+  );
 }
 
 export default CollectionHome;
