@@ -4,11 +4,11 @@ import {
   NonFieldErrors,
 } from '../../../common';
 import {
-    CustomInputFilter,
-    CustomDatePickerFilter,
-    CustomSelectFilter,
-    MultiSelectFilter,
-    SubmitButtonFilter
+  CustomInputFilter,
+  CustomDatePickerFilter,
+  CustomSelectFilter,
+  MultiSelectFilter,
+  SubmitButtonFilter
 } from '../../../common';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
 import { useBranches } from '../../../contexts/BranchesContext';
@@ -23,6 +23,7 @@ const Filter = ({setOtherIncomeData, setParams}) => {
     min_date_created: '',
     max_date_created: '',
   };
+
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
@@ -33,7 +34,7 @@ const Filter = ({setOtherIncomeData, setParams}) => {
     for (const [key, value] of Object.entries(values)) {
       if (Array.isArray(value)) {
         value.forEach(el => params.append(key, el));
-      }else {
+      } else {
         params.append(key, value);
       }
     }
@@ -65,41 +66,66 @@ const Filter = ({setOtherIncomeData, setParams}) => {
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors}) => (
-          <div className="search_background">
-            <div className="row-containers" style={{border:"none"}}>
-                <Form>
-                    <NonFieldErrors errors={errors}>
-                        <div className="row row-payments row-loans" style={{marginTop:"1rem"}}>
-                            <div className="row-payments-container" style={{width:"32%"}}>
-                                <CustomDatePickerFilter label='Min Date Created' name='min_date_created' setFieldValue={setFieldValue}/>
-                            </div>
-                            <div className="row-payments-container" style={{width:"32%"}}>
-                                <CustomDatePickerFilter label='Max Date Created' name='max_date_created' setFieldValue={setFieldValue}/>
-                            </div>
-                            <div className="row-payments-container" style={{width:"32%"}}>
-                                <CustomInputFilter label='Other Income Name' name='oth_name' type='text'/>
-                            </div>
-                        </div>
-                        <div style={{marginTop:"1rem", display:"flex", justifyContent:"space-between"}}>
-                            <div style={{width:"70%"}}>
-                              <MultiSelectFilter
-                                label='Branches'
-                                name='branch_ids'
-                                options={branches.map(br => ({label: br.name, value:br.id}))}
-                                setFieldValue={setFieldValue}
-                              />
-                            </div>
-                            <div style={{width:"20%"}}>
-                                <CustomSelectFilter label='Currency' name='currency_id' required>
-                                    <option value=''>------</option>
-                                    {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-                                </CustomSelectFilter>
-                            </div>
-                            <SubmitButtonFilter isSubmitting={isSubmitting}/>
-                        </div>
-                    </NonFieldErrors>
-                </Form>
-            </div>
+        <div className="search_background">
+          <div className="row-containers sf-shellwrap">
+            <Form>
+              <NonFieldErrors errors={errors}>
+                <div className="row row-payments row-loans sf-card">
+                  <div className="sf-row sf-row-3">
+                    <div className="row-payments-container sf-w-32">
+                      <CustomDatePickerFilter
+                        label='Min Date Created'
+                        name='min_date_created'
+                        setFieldValue={setFieldValue}
+                      />
+                    </div>
+
+                    <div className="row-payments-container sf-w-32">
+                      <CustomDatePickerFilter
+                        label='Max Date Created'
+                        name='max_date_created'
+                        setFieldValue={setFieldValue}
+                      />
+                    </div>
+
+                    <div className="row-payments-container sf-w-32">
+                      <CustomInputFilter
+                        label='Other Income Name'
+                        name='oth_name'
+                        type='text'
+                      />
+                    </div>
+                  </div>
+
+                  <div className="sf-row sf-row-2 sf-mt-3">
+                    <div className="row-payments-container" style={{width:"66%"}}>
+                      <MultiSelectFilter
+                        label='Branches'
+                        name='branch_ids'
+                        options={branches.map(br => ({label: br.name, value: br.id}))}
+                        setFieldValue={setFieldValue}
+                      />
+                    </div>
+
+                    <div className="row-payments-container" style={{width:"32%"}}>
+                      <CustomSelectFilter label='Currency' name='currency_id' required>
+                        <option value=''>------</option>
+                        {currencies.map(currency => (
+                          <option key={currency.id} value={currency.id}>
+                            {currency.fullname}
+                          </option>
+                        ))}
+                      </CustomSelectFilter>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="sf-submit">
+                  <SubmitButtonFilter isSubmitting={isSubmitting}/>
+                </div>
+              </NonFieldErrors>
+            </Form>
+          </div>
         </div>
       )}
     </Formik>
@@ -107,4 +133,3 @@ const Filter = ({setOtherIncomeData, setParams}) => {
 }
 
 export default Filter;
-

@@ -33,7 +33,7 @@ function ExcelPayments() {
     <div>
       <Filter params={params} setParams={setParams} onSubmit={onSubmit} disableFetch={false} loading={false}/>
       <div style={{paddingTop: '17px'}}></div>
-      <div className='row'>
+      <div>
         <div className='col-12'>
           <PaymentsReportList />
         </div>

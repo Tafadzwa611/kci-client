@@ -14,7 +14,15 @@ import axios from 'axios';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 
 const Filter = ({setData, setParams, units}) => {
-  const initialValues = {branch_ids: [], page_num: 1, client_name: '', min_date_created: '', max_date_created: '', unit_id: ''};
+  const initialValues = {
+    branch_ids: [],
+    page_num: 1,
+    client_name: '',
+    min_date_created: '',
+    max_date_created: '',
+    unit_id: ''
+  };
+
   const {currencies} = useCurrencies();
   const {branches} = useBranches();
 
@@ -46,42 +54,72 @@ const Filter = ({setData, setParams, units}) => {
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors}) => (
         <div className='search_background'>
-          <div className='row-containers' style={{border:'none'}}>
+          <div className='row-containers sf-shellwrap'>
             <Form>
               <NonFieldErrors errors={errors}>
-                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'32%'}}>
-                    <CustomDatePickerFilter label='Min Col Date' name='min_date_created' setFieldValue={setFieldValue}/>
+                <div className='row row-payments row-loans sf-card'>
+                  <div className='sf-row sf-row-3'>
+                    <div className='row-payments-container sf-w-32'>
+                      <CustomDatePickerFilter
+                        label='Min Col Date'
+                        name='min_date_created'
+                        setFieldValue={setFieldValue}
+                      />
+                    </div>
+
+                    <div className='row-payments-container sf-w-32'>
+                      <CustomDatePickerFilter
+                        label='Max Col Date'
+                        name='max_date_created'
+                        setFieldValue={setFieldValue}
+                      />
+                    </div>
+
+                    <div className='row-payments-container sf-w-32'>
+                      <CustomInputFilter
+                        label='Search Client'
+                        name='client_name'
+                        type='text'
+                      />
+                    </div>
                   </div>
-                  <div className='row-payments-container' style={{width:'32%'}}>
-                    <CustomDatePickerFilter label='Max Col Date' name='max_date_created' setFieldValue={setFieldValue}/>
-                  </div>
-                  <div className='row-payments-container' style={{width:'32%'}}>
-                    <CustomInputFilter label='Search Client' name='client_name' type='text'/>
+
+                  <div className='sf-row sf-mt-3'>
+                    <div className='row-payments-container' style={{width:'58%'}}>
+                      <MultiSelectFilter
+                        label='Branches'
+                        name='branch_ids'
+                        options={branches.map(br => ({label: br.name, value:br.id}))}
+                        setFieldValue={setFieldValue}
+                        required
+                      />
+                    </div>
+
+                    <div className='row-payments-container' style={{width:'20%'}}>
+                      <CustomSelectFilter label='Currency' name='currency_id' required>
+                        <option value=''>------</option>
+                        {currencies.map(currency => (
+                          <option key={currency.id} value={currency.id}>
+                            {currency.fullname}
+                          </option>
+                        ))}
+                      </CustomSelectFilter>
+                    </div>
+
+                    <div className='row-payments-container' style={{width:'20%'}}>
+                      <CustomSelectFilter label='Units' name='unit_id'>
+                        <option value=''>------</option>
+                        {units.map(ut => (
+                          <option key={ut.id} value={ut.id}>
+                            {ut.name}
+                          </option>
+                        ))}
+                      </CustomSelectFilter>
+                    </div>
                   </div>
                 </div>
-                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'70%'}}>
-                    <MultiSelectFilter
-                      label='Branches'
-                      name='branch_ids'
-                      options={branches.map(br => ({label: br.name, value:br.id}))}
-                      setFieldValue={setFieldValue}
-                      required
-                    />
-                  </div>
-                  <div style={{width:'10%'}}>
-                    <CustomSelectFilter label='Currency' name='currency_id' required>
-                      <option value=''>------</option>
-                      {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-                    </CustomSelectFilter>
-                  </div>
-                  <div style={{width:'10%'}}>
-                    <CustomSelectFilter label='Units' name='unit_id'>
-                      <option value=''>------</option>
-                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
-                    </CustomSelectFilter>
-                  </div>
+
+                <div className='sf-submit'>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>
               </NonFieldErrors>
@@ -94,4 +132,3 @@ const Filter = ({setData, setParams, units}) => {
 }
 
 export default Filter;
-
