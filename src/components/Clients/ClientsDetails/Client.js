@@ -22,13 +22,13 @@ import Profile from './Profile';
 import Cloans from './Cloans';
 import Comms from './Comms';
 
-function Client({clientData, clientControls, staff, staffTopLevelPerm, close, units}) {
+function Client({ clientData, clientControls, staff, staffTopLevelPerm, close, units }) {
   const [client, setClient] = useState(clientData);
-  const [modal, setModal] = useState();
+  const [modal, setModal] = useState(null);
 
   return (
-    <div style={{position:'sticky', top:'0', width:'100%'}}>
-      <div className='j-details-container' style={{padding:'1.5rem'}}>
+    <div className="client-details-sticky-wrap">
+      <div className="j-details-container client-details-shell">
         <ModalSelector
           staff={staff}
           clientControls={clientControls}
@@ -38,6 +38,7 @@ function Client({clientData, clientControls, staff, staffTopLevelPerm, close, un
           setClient={setClient}
           units={units}
         />
+
         <Actions
           modal={modal}
           setModal={setModal}
@@ -48,117 +49,259 @@ function Client({clientData, clientControls, staff, staffTopLevelPerm, close, un
         />
       </div>
     </div>
-  )
+  );
 }
 
-const Actions = ({modal, setModal, client, close, setClient, staffTopLevelPerm}) => {
+const Actions = ({ modal, setModal, client, close, setClient, staffTopLevelPerm }) => {
   const [tab, setTab] = useState('details');
 
   const customViews = {};
-  client.custom_data.forEach(fs => {
-    customViews[fs.field_set_id] = <CustomData fieldset={fs} setModal={setModal} modal={modal} setClient={setClient} client={client}/>;
+  client.custom_data.forEach((fs) => {
+    customViews[fs.field_set_id] = (
+      <CustomData
+        fieldset={fs}
+        setModal={setModal}
+        modal={modal}
+        setClient={setClient}
+        client={client}
+      />
+    );
   });
-
 
   const Inactive = () => {
     return (
       <>
-        <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.undoApprove)}>Undo Approve</button>
-        <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.blacklist)}>Blacklist</button>
-        <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.left)}>Left</button>
+        <button className="btn btn-olive" onClick={() => setModal(MODAL_STATES.undoApprove)}>
+          Undo Approve
+        </button>
+        <button className="btn btn-olive" onClick={() => setModal(MODAL_STATES.blacklist)}>
+          Blacklist
+        </button>
+        <button className="btn btn-olive" onClick={() => setModal(MODAL_STATES.left)}>
+          Left
+        </button>
       </>
-    )
-  }
+    );
+  };
 
   const PendingApproval = () => {
     return (
       <>
-        <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.approve)}>Approve</button>
-        <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.reject)}>Reject</button>
-        <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.blacklist)}>Blacklist</button>
+        <button className="btn btn-olive" onClick={() => setModal(MODAL_STATES.approve)}>
+          Approve
+        </button>
+        <button className="btn btn-olive" onClick={() => setModal(MODAL_STATES.reject)}>
+          Reject
+        </button>
+        <button className="btn btn-olive" onClick={() => setModal(MODAL_STATES.blacklist)}>
+          Blacklist
+        </button>
       </>
-    )
-  }
+    );
+  };
 
   return (
     <>
       <div>
-        {close &&
-          <div style={{display:'flex', justifyContent:'space-between', marginBottom:'1.5rem'}}>
-            <>
-              <button className='btn btn-default client__details' onClick={close}>Close</button>
-              <button className='btn btn-default client__details'>
-                <Link to={`clientdetails/${client.id}`}>Expand</Link>
-              </button>
-            </>
+        {close && (
+          <div className="client-details-top-actions">
+            <button className="btn btn-default client__details" onClick={close}>
+              Close
+            </button>
+
+            <button className="btn btn-default client__details">
+              <Link to={`clientdetails/${client.id}`}>Expand</Link>
+            </button>
           </div>
-        }
-        <div className='profile__container'>
-          <div>
-            <Profile client={client} setClient={setClient}/>
+        )}
+
+        <div className="profile__container client-profile-container">
+          <div className="client-profile-block">
+            <Profile client={client} setClient={setClient} />
           </div>
-          <div style={{display:'flex', justifyContent:'space-between'}}>
-            <div className='client-state-btns' style={{display: 'flex', columnGap: '3px'}}>
+
+          <div className="client-state-actions-row">
+            <div className="client-state-btns client-state-btns-responsive">
               {{
-                'Blacklisted': <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.undoBlacklist)}>Undo Blacklist</button>,
-                'Left': <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.undoLeft)}>Undo Left</button>,
-                'Active': <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.blacklist)}>Blacklist</button>,
-                'Inactive': <Inactive />,
+                Blacklisted: (
+                  <button
+                    className="btn btn-olive"
+                    onClick={() => setModal(MODAL_STATES.undoBlacklist)}
+                  >
+                    Undo Blacklist
+                  </button>
+                ),
+                Left: (
+                  <button
+                    className="btn btn-olive"
+                    onClick={() => setModal(MODAL_STATES.undoLeft)}
+                  >
+                    Undo Left
+                  </button>
+                ),
+                Active: (
+                  <button
+                    className="btn btn-olive"
+                    onClick={() => setModal(MODAL_STATES.blacklist)}
+                  >
+                    Blacklist
+                  </button>
+                ),
+                Inactive: <Inactive />,
                 'Pending Approval': <PendingApproval />,
-                'Rejected': <button className='btn btn-olive' onClick={() => setModal(MODAL_STATES.undoReject)}>Undo Rejection</button>,
+                Rejected: (
+                  <button
+                    className="btn btn-olive"
+                    onClick={() => setModal(MODAL_STATES.undoReject)}
+                  >
+                    Undo Rejection
+                  </button>
+                ),
               }[client.status]}
             </div>
           </div>
         </div>
       </div>
-      <div className='bloc-tabs'>
-        <button className={tab === 'details' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('details')}> Personal Info </button>
-        <button className={tab === 'id' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('id')}>Identification</button>
-        <button className={tab === 'addresses' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('addresses')}> Address List </button>
-        <button className={tab === 'nok' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('nok')}> Next Of Kin List </button>
-        {client.custom_data.map(fs => (
-          <button key={fs.field_set_id} className={tab === fs.field_set_id ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab(fs.field_set_id)}>
+
+      <div className="bloc-tabs client-tabs-wrap">
+        <button
+          className={tab === 'details' ? 'tabs-client active-tabs' : 'tabs-client'}
+          onClick={() => setTab('details')}
+        >
+          Personal Info
+        </button>
+
+        <button
+          className={tab === 'id' ? 'tabs-client active-tabs' : 'tabs-client'}
+          onClick={() => setTab('id')}
+        >
+          Identification
+        </button>
+
+        <button
+          className={tab === 'addresses' ? 'tabs-client active-tabs' : 'tabs-client'}
+          onClick={() => setTab('addresses')}
+        >
+          Address List
+        </button>
+
+        <button
+          className={tab === 'nok' ? 'tabs-client active-tabs' : 'tabs-client'}
+          onClick={() => setTab('nok')}
+        >
+          Next Of Kin List
+        </button>
+
+        {client.custom_data.map((fs) => (
+          <button
+            key={fs.field_set_id}
+            className={tab === fs.field_set_id ? 'tabs-client active-tabs' : 'tabs-client'}
+            onClick={() => setTab(fs.field_set_id)}
+          >
             {fs.field_set}
           </button>
         ))}
-        <button className={tab === 'files' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('files')}>Files</button>
-        {staffTopLevelPerm.can_view_loan_module &&
-          <button className={tab === 'loans' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('loans')}>Loans</button>
-        }
-        <button className={tab === 'groups' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('groups')}>Groups</button>
-        <button className={tab === 'comms' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('comms')}>Comms</button>
+
+        <button
+          className={tab === 'files' ? 'tabs-client active-tabs' : 'tabs-client'}
+          onClick={() => setTab('files')}
+        >
+          Files
+        </button>
+
+        {staffTopLevelPerm.can_view_loan_module && (
+          <button
+            className={tab === 'loans' ? 'tabs-client active-tabs' : 'tabs-client'}
+            onClick={() => setTab('loans')}
+          >
+            Loans
+          </button>
+        )}
+
+        <button
+          className={tab === 'groups' ? 'tabs-client active-tabs' : 'tabs-client'}
+          onClick={() => setTab('groups')}
+        >
+          Groups
+        </button>
+
+        <button
+          className={tab === 'comms' ? 'tabs-client active-tabs' : 'tabs-client'}
+          onClick={() => setTab('comms')}
+        >
+          Comms
+        </button>
       </div>
-      <div className='tab-content font-12' style={{marginTop: '3rem'}}>
+
+      <div className="tab-content font-12 client-tab-content">
         {{
-          details: <PersonalInfo client={client} setModal={setModal}/>,
-          id: <Identity client={client} setModal={setModal} modal={modal} setClient={setClient}/>,
-          addresses: <Addresses client={client} modal={modal} setModal={setModal} setClient={setClient}/>,
-          nok: <Nok client={client} modal={modal} setModal={setModal} setClient={setClient}/>,
-          files: <ClientFiles client={client} setClient={setClient}/>,
-          loans: <Cloans client={client}/>,
+          details: <PersonalInfo client={client} setModal={setModal} />,
+          id: (
+            <Identity
+              client={client}
+              setModal={setModal}
+              modal={modal}
+              setClient={setClient}
+            />
+          ),
+          addresses: (
+            <Addresses
+              client={client}
+              modal={modal}
+              setModal={setModal}
+              setClient={setClient}
+            />
+          ),
+          nok: (
+            <Nok
+              client={client}
+              modal={modal}
+              setModal={setModal}
+              setClient={setClient}
+            />
+          ),
+          files: <ClientFiles client={client} setClient={setClient} />,
+          loans: <Cloans client={client} />,
           groups: <Groups client={client} />,
           comms: <Comms client={client} />,
-          ...customViews
+          ...customViews,
         }[tab]}
       </div>
     </>
-  )
-}
+  );
+};
 
-const ModalSelector = ({modal, staff, clientControls, client, setClient, setModal, units}) => {
+const ModalSelector = ({ modal, staff, clientControls, client, setClient, setModal, units }) => {
   return {
     null: null,
-    undoBlacklist: <UndoClientBlackList clientId={client.id} setClient={setClient} setOpen={setModal}/>,
-    undoLeft: <UndoClientLeft clientId={client.id} setClient={setClient} setOpen={setModal}/>,
-    blacklist: <BlacklistClient clientId={client.id} setClient={setClient} setOpen={setModal}/>,
-    left: <ClientLeft clientId={client.id} setClient={setClient} setOpen={setModal}/>,
-    undoApprove: <UndoClientApproval clientId={client.id} setClient={setClient} setOpen={setModal}/>,
-    reject: <RejectClient clientId={client.id} setClient={setClient} setOpen={setModal}/>,
+    undoBlacklist: (
+      <UndoClientBlackList clientId={client.id} setClient={setClient} setOpen={setModal} />
+    ),
+    undoLeft: <UndoClientLeft clientId={client.id} setClient={setClient} setOpen={setModal} />,
+    blacklist: <BlacklistClient clientId={client.id} setClient={setClient} setOpen={setModal} />,
+    left: <ClientLeft clientId={client.id} setClient={setClient} setOpen={setModal} />,
+    undoApprove: (
+      <UndoClientApproval clientId={client.id} setClient={setClient} setOpen={setModal} />
+    ),
+    reject: <RejectClient clientId={client.id} setClient={setClient} setOpen={setModal} />,
     approve: <ApproveClient clientId={client.id} setClient={setClient} setOpen={setModal} />,
-    undoReject: <UndoClientRejection clientId={client.id} setClient={setClient} setOpen={setModal} />,
-    updateInfo: <UpdatePersonalInfo client={client} staff={staff} clientControls={clientControls} setClient={setClient} setOpen={setModal} units={units} />,
-    changeType: <ChangeClientType client={client} setClient={setClient} setOpen={setModal} />,
-  }[modal]
-}
+    undoReject: (
+      <UndoClientRejection clientId={client.id} setClient={setClient} setOpen={setModal} />
+    ),
+    updateInfo: (
+      <UpdatePersonalInfo
+        client={client}
+        staff={staff}
+        clientControls={clientControls}
+        setClient={setClient}
+        setOpen={setModal}
+        units={units}
+      />
+    ),
+    changeType: (
+      <ChangeClientType client={client} setClient={setClient} setOpen={setModal} />
+    ),
+  }[modal];
+};
 
 export default Client;
