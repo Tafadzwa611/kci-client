@@ -15,7 +15,6 @@ import { useReceiptBooks } from '../../../contexts/ReceiptBooksContext';
 function ClientFormFields({
   product,
   lcontrols,
-  isSubmitting,
   setFieldValue,
   clientName,
   values,
@@ -59,18 +58,18 @@ function ClientFormFields({
 
           {!lcontrols.auto_generate_loan_id && (
             <CustomInput
-              label='Loan ID'
-              name='loan_id'
-              type='text'
+              label="Loan ID"
+              name="loan_id"
+              type="text"
               required
             />
           )}
 
           <div className="sf-field-block">
             <CustomInput
-              label='Principal'
-              name='principal'
-              type='number'
+              label="Principal"
+              name="principal"
+              type="number"
               min={product.minimum_principal_amount}
               max={product.maximum_principal_amount}
               step={product.number_of_decimal_places}
@@ -85,9 +84,9 @@ function ClientFormFields({
 
           {product.calculate_using_installment ? (
             <CustomInput
-              label='Installment Amount'
-              name='installment'
-              type='number'
+              label="Installment Amount"
+              name="installment"
+              type="number"
               step={product.number_of_decimal_places}
               required
             />
@@ -96,9 +95,9 @@ function ClientFormFields({
               {!hideInterest && (
                 <div className="sf-field-block">
                   <CustomInput
-                    label='Interest Rate'
-                    name='interest_rate'
-                    type='number'
+                    label="Interest Rate"
+                    name="interest_rate"
+                    type="number"
                     min={product.minimum_interest_rate}
                     max={product.maximum_interest_rate}
                     step={product.number_of_decimal_places}
@@ -115,8 +114,8 @@ function ClientFormFields({
           )}
 
           <CustomDatePicker
-            label='Application Date'
-            name='application_date'
+            label="Application Date"
+            name="application_date"
             setFieldValue={setFieldValue}
             required
           />
@@ -124,9 +123,9 @@ function ClientFormFields({
           {!hideInstallments && (
             <div className="sf-field-block">
               <CustomInput
-                label='Number of Repayments'
-                name='number_of_repayments'
-                type='number'
+                label="Number of Repayments"
+                name="number_of_repayments"
+                type="number"
                 min={product.minimum_loan_duration}
                 max={product.maximum_loan_duration}
                 required
@@ -141,16 +140,16 @@ function ClientFormFields({
 
           {!hideFirstRepayment && (
             <CustomDatePicker
-              label='First Repayment Date'
-              name='first_repayment_date'
+              label="First Repayment Date"
+              name="first_repayment_date"
               setFieldValue={setFieldValue}
               required
             />
           )}
 
           {product.allow_editing_schedule_strategy_on_loan_creation && (
-            <CustomSelect label='Loan Schedule Strategy' name='schedule_strategy' required>
-              <option value=''>------</option>
+            <CustomSelect label="Loan Schedule Strategy" name="schedule_strategy" required>
+              <option value="">------</option>
               {scheduleStrategies[product.loan_duration_time_unit].map(strategy => (
                 <option key={strategy} value={strategy}>
                   {strategy}
@@ -160,8 +159,8 @@ function ClientFormFields({
           )}
 
           {clientControls.use_client_units ? (
-            <CustomSelect label='Unit' name='unit_id' required>
-              <option value=''>------</option>
+            <CustomSelect label="Unit" name="unit_id" required>
+              <option value="">------</option>
               {units.map(ut => (
                 <option key={ut.id} value={ut.id}>
                   {ut.name}
@@ -171,8 +170,8 @@ function ClientFormFields({
           ) : (
             <>
               {!hideUnit && (
-                <CustomSelect label='Unit' name='unit_id'>
-                  <option value=''>------</option>
+                <CustomSelect label="Unit" name="unit_id">
+                  <option value="">------</option>
                   {units.map(ut => (
                     <option key={ut.id} value={ut.id}>
                       {ut.name}
@@ -183,28 +182,28 @@ function ClientFormFields({
             </>
           )}
 
-          <CustomSelect label='Reason For Loan' name='reason_for_loan' required>
-            <option value=''>------</option>
-            <option value='CONSUMER'>CONSUMER</option>
-            <option value='COMMERCIAL - Agriculture'>COMMERCIAL - Agriculture</option>
-            <option value='COMMERCIAL - Manufacturing'>COMMERCIAL - Manufacturing</option>
-            <option value='COMMERCIAL - Mining'>COMMERCIAL - Mining</option>
-            <option value='COMMERCIAL - Housing'>COMMERCIAL - Housing</option>
-            <option value='COMMERCIAL - Distribution & Services'>COMMERCIAL - Distribution & Services</option>
-            <option value='COMMERCIAL - Retail'>COMMERCIAL - Retail</option>
-            <option value='COMMERCIAL - Transport'>COMMERCIAL - Transport</option>
-            <option value='COMMERCIAL - Health'>COMMERCIAL - Health</option>
-            <option value='COMMERCIAL - Education'>COMMERCIAL - Education</option>
-            <option value='COMMERCIAL - Cross Border Traders'>COMMERCIAL - Cross Border Traders</option>
-            <option value='COMMERCIAL - Construction'>COMMERCIAL - Construction</option>
-            <option value='COMMERCIAL - Vendors'>COMMERCIAL - Vendors</option>
-            <option value='OTHER'>OTHER</option>
+          <CustomSelect label="Reason For Loan" name="reason_for_loan" required>
+            <option value="">------</option>
+            <option value="CONSUMER">CONSUMER</option>
+            <option value="COMMERCIAL - Agriculture">COMMERCIAL - Agriculture</option>
+            <option value="COMMERCIAL - Manufacturing">COMMERCIAL - Manufacturing</option>
+            <option value="COMMERCIAL - Mining">COMMERCIAL - Mining</option>
+            <option value="COMMERCIAL - Housing">COMMERCIAL - Housing</option>
+            <option value="COMMERCIAL - Distribution & Services">COMMERCIAL - Distribution & Services</option>
+            <option value="COMMERCIAL - Retail">COMMERCIAL - Retail</option>
+            <option value="COMMERCIAL - Transport">COMMERCIAL - Transport</option>
+            <option value="COMMERCIAL - Health">COMMERCIAL - Health</option>
+            <option value="COMMERCIAL - Education">COMMERCIAL - Education</option>
+            <option value="COMMERCIAL - Cross Border Traders">COMMERCIAL - Cross Border Traders</option>
+            <option value="COMMERCIAL - Construction">COMMERCIAL - Construction</option>
+            <option value="COMMERCIAL - Vendors">COMMERCIAL - Vendors</option>
+            <option value="OTHER">OTHER</option>
           </CustomSelect>
 
-          {(lcontrols.select_branch_on_loan_creation && !edit) && (
+          {lcontrols.select_branch_on_loan_creation && !edit && (
             <CustomMultiSelect
-              label='Branch'
-              name='branch'
+              label="Branch"
+              name="branch"
               isMulti={false}
               setFieldValue={setFieldValue}
               options={branches.map(branch => ({ label: branch.name, value: branch.id }))}
@@ -214,8 +213,8 @@ function ClientFormFields({
 
           {lcontrols.disburse_loan_on_capture && (
             <CustomMultiSelect
-              label='Fund Account'
-              name='fund_account'
+              label="Fund Account"
+              name="fund_account"
               isMulti={false}
               setFieldValue={setFieldValue}
               options={cashAccounts.accounts
@@ -243,8 +242,8 @@ function ClientFormFields({
             {lcontrols.use_receipt_book ? (
               <>
                 <CustomMultiSelect
-                  label='Receipt Book'
-                  name='receipt_book'
+                  label="Receipt Book"
+                  name="receipt_book"
                   isMulti={false}
                   setFieldValue={(fieldName, selectedOpts) => {
                     setFieldValue(fieldName, selectedOpts);
@@ -265,18 +264,18 @@ function ClientFormFields({
 
                 {selectedRb.mode === 2 && (
                   <CustomInput
-                    label='Receipt Number'
-                    name='receipt_number'
-                    type='text'
+                    label="Receipt Number"
+                    name="receipt_number"
+                    type="text"
                     required
                   />
                 )}
               </>
             ) : (
               <CustomInput
-                label='Receipt Number'
-                name='receipt_number'
-                type='text'
+                label="Receipt Number"
+                name="receipt_number"
+                type="text"
                 required
               />
             )}
@@ -334,30 +333,30 @@ function ClientFormFields({
         <div className="sf-section-body sf-stack">
           <CustomSelectRemote
             selected={values.guarantor || ''}
-            label='Client Guarantor (Optional)'
-            url='/clientsapi/search_client/'
+            label="Client Guarantor (Optional)"
+            url="/clientsapi/search_client/"
             setFieldValue={(fieldName, selected) => {
               setFieldValue('guarantor', selected);
               setFieldValue(fieldName, selected.value);
             }}
-            queryParamName='query'
+            queryParamName="query"
             params={[{ key: 'guarantors_only', value: 1 }, { key: 'all_branches', value: 1 }]}
-            placeholder='Search Client Guarantor'
-            name='guarantor_id'
+            placeholder="Search Client Guarantor"
+            name="guarantor_id"
           />
 
           <CustomSelectRemote
             selected={values.group_guarantor || ''}
-            label='Group Guarantor (Optional)'
-            url='/clientsapi/search_group/'
+            label="Group Guarantor (Optional)"
+            url="/clientsapi/search_group/"
             setFieldValue={(fieldName, selected) => {
               setFieldValue('group_guarantor', selected);
               setFieldValue(fieldName, selected.value);
             }}
-            queryParamName='query'
+            queryParamName="query"
             params={[{ key: 'guarantors_only', value: 1 }, { key: 'all_branches', value: 1 }]}
-            placeholder='Search Group Guarantor'
-            name='group_guarantor_id'
+            placeholder="Search Group Guarantor"
+            name="group_guarantor_id"
           />
         </div>
       </section>
@@ -371,8 +370,8 @@ const ClientSelect = ({ values, product, setFieldValue }) => {
       <CustomSelectRemote
         key={product.client_type}
         selected={values.client || ''}
-        label='Client'
-        url='/clientsapi/search_client/'
+        label="Client"
+        url="/clientsapi/search_client/"
         setFieldValue={(fieldName, selected) => {
           setFieldValue('client', selected);
           setFieldValue(fieldName, selected.value);
@@ -382,9 +381,9 @@ const ClientSelect = ({ values, product, setFieldValue }) => {
           { key: 'exclude_blacklisted', value: 1 },
           { key: 'exclude_rejected', value: 1 }
         ]}
-        queryParamName='query'
-        placeholder='Search Client'
-        name='client_id'
+        queryParamName="query"
+        placeholder="Search Client"
+        name="client_id"
         required
       />
     );
@@ -394,15 +393,15 @@ const ClientSelect = ({ values, product, setFieldValue }) => {
     <CustomSelectRemote
       key={product.client_type}
       selected={values.group || ''}
-      label='Group'
-      url='/clientsapi/search_group/'
+      label="Group"
+      url="/clientsapi/search_group/"
       setFieldValue={(fieldName, selected) => {
         setFieldValue('group', selected);
         setFieldValue(fieldName, selected.value);
       }}
-      queryParamName='query'
-      placeholder='Search Group'
-      name='group_id'
+      queryParamName="query"
+      placeholder="Search Group"
+      name="group_id"
       required
     />
   );

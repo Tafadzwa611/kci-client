@@ -48,7 +48,7 @@ function CustomSelectRemote({url, label, selected, queryParamName, params, setFi
     <div className='row custom-background'>
       <label className='form-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
       <div className='col-9'>
-        <div style={{width:"50%"}}>
+        <div className='custom__select__width'>
           {isMulti ?
           <AsyncSelect 
             onChange={onChange} 

@@ -1667,7 +1667,7 @@ body.dark .searchItem a {
 }
 
 .tabs-client.active-tabs {
-  color: var(--app-text);
+  color: var(--app-text) !important;
   background: var(--app-pill);
   border-color: var(--app-border);
 }
@@ -4235,6 +4235,17 @@ body.dark  .css-1hgnrag-control,
 .journal-details.header {
   z-index: 1;
 }
+.css-169l02m-menu {
+  background: #fff !important;
+}
+/* Dark mode */
+body.dark .css-169l02m-menu,
+[data-theme="dark"] .css-169l02m-menu{
+  background: #0b1220 !important;
+}
+.custom__select__width {
+  width: 50%;
+}
 @media screen and (max-width: 900px) {
   .row {
       display: grid;
@@ -4349,5 +4360,11 @@ body.dark  .css-1hgnrag-control,
   }
   .ageing-analysis-grid {
     grid-template-columns: 1fr !important;
+  }
+  .custom__select__width {
+    width: 100%;
+  }
+  .btn-olive {
+    color: var(--app-bg);
   }
 }
