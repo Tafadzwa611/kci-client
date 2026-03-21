@@ -4246,6 +4246,13 @@ body.dark .css-169l02m-menu,
 .custom__select__width {
   width: 50%;
 }
+.phone__number__code__section {
+  width: 350px;
+}
+.phone__number__main__section {
+  display: flex;
+  column-gap: 10px;
+}
 @media screen and (max-width: 900px) {
   .row {
       display: grid;
@@ -4366,5 +4373,15 @@ body.dark .css-169l02m-menu,
   }
   .btn-olive {
     color: var(--app-bg);
+  }
+  .phone__number-container {
+    width: 100%;
+  }
+  .phone__number__code__section {
+    width: 100%;
+  }
+  .phone__number__main__section {
+    display: grid;
+    row-gap: 10px;
   }
 }

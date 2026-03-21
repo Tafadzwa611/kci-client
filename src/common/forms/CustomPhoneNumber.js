@@ -32,8 +32,8 @@ const CustomPhoneNumber = ({ label, setFieldValue, ...props }) => {
       <div className='row custom-background'>
         <label className='form-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
         <div className='phone__number-container'>
-          <div className='col-9' style={{display:'flex', columnGap:'10px'}}>
-            <div style={{width:'350px'}}>
+          <div className='col-9 phone__number__main__section'>
+            <div className='phone__number__code__section'>
               <Select
                 defaultValue={defaultCode}
                 isSearchable={true}
