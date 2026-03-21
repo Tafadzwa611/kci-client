@@ -22,11 +22,11 @@ function GroupDetails({
     <div id='loan-details'>
       {groupDetails ? 
         <div style={{position:'sticky', top:'0', width:'100%'}}>
-          <div style={{display:'flex', flexDirection:'column', padding:'1.5rem'}} className='j-details-container'>
+          <div className='j-details-container' style={{padding:'1.5rem'}}>
             <div style={{marginBottom:"1rem"}}>
-              <div style={{display:"flex", justifyContent:"space-between"}}>
+              <div className='group__details__upper__section'>
 
-                <div style={{display:'flex', alignItems:'center'}}>
+                <div className='groupame__section'>
                   <span style={{marginRight:"5px"}}><b>{groupDetails.group_name}</b></span> /
                   <span style={{margin: "0 5px"}}><b>{groupDetails.group_id}</b></span> /
                   <div style={{marginLeft:"5px"}}>

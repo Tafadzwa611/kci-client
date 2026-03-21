@@ -27,8 +27,8 @@ function MiniGroupDetails({groupData, extra}) {
               Max
             </button>
           </div>
-          <div style={{display:"flex", justifyContent:"space-between"}}>
-            <div style={{display:'flex', alignItems:'center'}}>
+          <div className='group__details__upper__section'>
+            <div className='groupame__section'>
               <span style={{marginRight:"5px"}}><b>{groupDetails.group_name}</b></span> /
               <span style={{margin: "0 5px"}}><b>{groupDetails.group_id}</b></span> /
               <div style={{marginLeft:"5px"}}>
