@@ -14,10 +14,10 @@ function BudgetResults() {
           <Link to='/users/admin/manageexps/addbudget'>Add Budget</Link>
         </button>
       </div>
-      <h2>Failed Expense Types</h2>
+      <p style={{fontSize:'0.8125rem'}}>Failed Expense Types</p>
       <FailTable failRes={state.failed}/>
       <div style={{marginTop: '30px'}}></div>
-      <h2>Successful Expense Types</h2>
+      <p style={{fontSize:'0.8125rem'}}>Successful Expense Types</p>
       <SuccessTable successRes={state.success}/>
     </div>
   )

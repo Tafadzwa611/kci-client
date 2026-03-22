@@ -54,50 +54,77 @@ const Filter = () => {
         <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({isSubmitting, setFieldValue, errors}) => (
                 <div className='search_background'>
-                    <div className='row-containers' style={{border:'none'}}>
+                    <div className='row-containers sf-shellwrap'>
                         <Form>
                             <NonFieldErrors errors={errors}>
-                                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                                    <div className='row-payments-container' style={{width:'22%'}}>
-                                        <CustomDatePickerFilter label='Min Date' name='min_date' setFieldValue={setFieldValue} required/>
+                                <div className='row row-payments row-loans sf-card'>
+                                    <div className='sf-row sf-row-4'>
+                                        <div className='row-payments-container sf-w-24'>
+                                            <CustomDatePickerFilter
+                                                label='Min Date'
+                                                name='min_date'
+                                                setFieldValue={setFieldValue}
+                                                required
+                                            />
+                                        </div>
+
+                                        <div className='row-payments-container sf-w-24'>
+                                            <CustomDatePickerFilter
+                                                label='Max Date'
+                                                name='max_date'
+                                                setFieldValue={setFieldValue}
+                                                required
+                                            />
+                                        </div>
+
+                                        <div className='row-payments-container sf-w-24'>
+                                            <CustomSelectFilter label='Currency' name='currency_id' required>
+                                                <option value=''>------</option>
+                                                {currencies.map(currency => (
+                                                    <option key={currency.id} value={currency.id}>
+                                                        {currency.fullname}
+                                                    </option>
+                                                ))}
+                                            </CustomSelectFilter>
+                                        </div>
+
+                                        <div className='row-payments-container sf-w-24'>
+                                            <CustomSelectFilter label='Order' name='order' required>
+                                                <option value={'-id'}>Show newest first</option>
+                                                <option value={'id'}>Show oldest first</option>
+                                            </CustomSelectFilter>
+                                        </div>
                                     </div>
-                                    <div className='row-payments-container' style={{width:'22%'}}>
-                                        <CustomDatePickerFilter label='Max Date' name='max_date' setFieldValue={setFieldValue} required/>
+
+                                    <div className='sf-row sf-mt-3'>
+                                        <div className='row-payments-container' style={{width:'100%'}}>
+                                            <MultiSelectFilter
+                                                label='Branches'
+                                                name='branch_ids'
+                                                options={branches.map(br => ({label: br.name, value:br.id}))}
+                                                setFieldValue={setFieldValue}
+                                            />
+                                        </div>
                                     </div>
-                                    <div className='row-payments-container' style={{width:'22%'}}>
-                                        <CustomSelectFilter label='Currency' name='currency_id' required>
-                                            <option value=''>------</option>
-                                            {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-                                        </CustomSelectFilter>
-                                    </div>
-                                    <div className='row-payments-container' style={{width:'22%'}}>
-                                        <CustomSelectFilter label='Order' name='order' required>
-                                            <option value={'-id'}>Show newest first</option>
-                                            <option value={'id'}>Show oldest first</option>
-                                        </CustomSelectFilter>
+
+                                    <div className='sf-row sf-row-2 sf-mt-3'>
+                                        <div className='row-payments-container' style={{width:'66%'}}>
+                                            <CustomSelectFilter label='Mode' name='file_format' required>
+                                                <option value='xlsx'>Excel</option>
+                                                <option value='pdfa4'>PDF A4</option>
+                                                <option value='pdfa3'>PDF A3</option>
+                                                <option value='pdfa2'>PDF A2</option>
+                                                <option value='pdfa1'>PDF A1</option>
+                                            </CustomSelectFilter>
+                                        </div>
+
+                                        <div className='row-payments-container' style={{width:'32%', marginTop:'1.5rem'}}>
+                                            <CustomCheckBoxfilter label='Include Totals' name='include_totals'/>
+                                        </div>
                                     </div>
                                 </div>
-                                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                                    <div style={{width:'55%'}}>
-                                        <MultiSelectFilter
-                                            label='Branches'
-                                            name='branch_ids'
-                                            options={branches.map(br => ({label: br.name, value:br.id}))}
-                                            setFieldValue={setFieldValue}
-                                        />
-                                    </div>
-                                    <div className='row-payments-container' style={{width:'18%'}}>
-                                        <CustomSelectFilter label='Mode' name='file_format' required>
-                                            <option value='xlsx'>Excel</option>
-                                            <option value='pdfa4'>PDF A4</option>
-                                            <option value='pdfa3'>PDF A3</option>
-                                            <option value='pdfa2'>PDF A2</option>
-                                            <option value='pdfa1'>PDF A1</option>
-                                        </CustomSelectFilter>
-                                    </div>
-                                    <div style={{width:'15%', marginTop:'1.5rem'}}>
-                                        <CustomCheckBoxfilter label='Include Totals' name='include_totals'/>
-                                    </div>
+
+                                <div className='sf-submit'>
                                     <SubmitButtonFilter isSubmitting={isSubmitting}/>
                                 </div>
                             </NonFieldErrors>
@@ -110,4 +137,3 @@ const Filter = () => {
 }
 
 export default Filter;
-

@@ -14,10 +14,10 @@ function BatchResults() {
                 <Link to='/accounting/viewaccounting/journals/addjournalbatch'>Add Journals</Link>
                 </button>
             </div>
-            <h2>Failed Transactions</h2>
+            <h5 style={{color:'red'}}>Failed Transactions</h5>
             <FailTable failRes={state.failed}/>
             <div style={{marginTop: '30px'}}></div>
-            <h2>Successful Transactions</h2>
+            <h5 style={{color:'green'}}>Successful Transactions</h5>
             <SuccessTable successRes={state.success}/>
         </div>
     )

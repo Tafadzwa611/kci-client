@@ -43,43 +43,64 @@ const Filter = ({setReport, units}) => {
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors}) => (
         <div className='search_background'>
-          <div className='row-containers' style={{border:'none'}}>
+          <div className='row-containers sf-shellwrap'>
             <Form>
               <NonFieldErrors errors={errors}>
-                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'32%'}}>
-                    <CustomDatePickerFilter label='Date' name='date_of_report' setFieldValue={setFieldValue} required/>
+                <div className='row row-payments row-loans sf-card'>
+                  <div className='sf-row sf-row-3'>
+                    <div className='row-payments-container sf-w-32'>
+                      <CustomDatePickerFilter
+                        label='Date'
+                        name='date_of_report'
+                        setFieldValue={setFieldValue}
+                        required
+                      />
+                    </div>
+
+                    <div className='row-payments-container sf-w-32'>
+                      <CustomSelectFilter label='Currency' name='currency_id' required>
+                        <option value=''>------</option>
+                        {currencies.map(currency => (
+                          <option key={currency.id} value={currency.id}>
+                            {currency.fullname}
+                          </option>
+                        ))}
+                      </CustomSelectFilter>
+                    </div>
+
+                    <div className='row-payments-container sf-w-32'>
+                      <CustomSelectFilter label='Unit' name='unit_id'>
+                        <option value=''>------</option>
+                        {units.map(ut => (
+                          <option key={ut.id} value={ut.id}>
+                            {ut.name} {ut.branch_name} BRANCH
+                          </option>
+                        ))}
+                      </CustomSelectFilter>
+                    </div>
                   </div>
-                  <div className='row-payments-container' style={{width:'32%'}}>
-                    <CustomSelectFilter label='Currency' name='currency_id' required>
-                      <option value=''>------</option>
-                      {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-                    </CustomSelectFilter>
-                  </div>
-                  <div className='row-payments-container' style={{width:'32%'}}>
-                    <CustomSelectFilter label='Unit' name='unit_id'>
-                      <option value=''>------</option>
-                      {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name} {ut.branch_name} BRANCH</option>)}
-                    </CustomSelectFilter>
+
+                  <div className='sf-row sf-mt-3'>
+                    <div className='row-payments-container' style={{width:'100%'}}>
+                      <MultiSelectFilter
+                        label='Branches'
+                        name='branch_ids'
+                        options={branches.map(br => ({label: br.name, value:br.id}))}
+                        setFieldValue={setFieldValue}
+                        required
+                      />
+                      {/* <CustomMultiSelectFilter
+                        label='Branches'
+                        name='branch_ids'
+                        options={branches.map(br => ({label: br.name, value:br.id}))}
+                        setFieldValue={setFieldValue}
+                        required
+                      /> */}
+                    </div>
                   </div>
                 </div>
-                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'90%'}}>
-                    <MultiSelectFilter
-                      label='Branches'
-                      name='branch_ids'
-                      options={branches.map(br => ({label: br.name, value:br.id}))}
-                      setFieldValue={setFieldValue}
-                      required
-                    />
-                    {/* <CustomMultiSelectFilter
-                      label='Branches'
-                      name='branch_ids'
-                      options={branches.map(br => ({label: br.name, value:br.id}))}
-                      setFieldValue={setFieldValue}
-                      required
-                    /> */}
-                  </div>
+
+                <div className='sf-submit'>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>
               </NonFieldErrors>

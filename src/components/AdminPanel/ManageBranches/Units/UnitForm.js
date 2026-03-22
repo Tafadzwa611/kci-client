@@ -10,34 +10,62 @@ import {
 } from '../../../../common';
 import { useBranches } from '../../../../contexts/BranchesContext';
 
-function UnitForm({initialValues, onSubmit, back}) {
-  const {branches} = useBranches();
+function UnitForm({ initialValues, onSubmit, back }) {
+  const { branches } = useBranches();
 
   return (
-    <>
-      <ButtonDefault value={'Back'} handler={back} />
+    <div className='sf-page'>
+      <div style={{ marginBottom: 12 }}>
+        <ButtonDefault value={'Back'} handler={back} />
+      </div>
+
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {({ isSubmitting, errors }) => (
-          <Form>
+          <Form autoComplete='off' className='sf-form'>
             <NonFieldErrors errors={errors}>
-              <div className='divider divider-info'>
-                <span>Holiday Info</span>
-              </div>
-              <CustomInput label='Name' name='name' type='text' required/>
-              <CustomSelect label='Branch' name='branch_id' required>
-                {branches.map(br => <option key={br.id} value={br.id}>{br.name}</option>)}
-              </CustomSelect>
-              <CustomCheckbox label='Is Active' name='is_active'/>
-              <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
-              <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-                <SubmitButton isSubmitting={isSubmitting}/>
+              <div className='sf-shell'>
+                <div className='sf-shell-head'>
+                  <div className='sf-shell-title'>Unit</div>
+                  <div className='sf-shell-subtitle'>
+                    Capture the unit details, assign it to a branch, and set whether it is active.
+                  </div>
+                </div>
+
+                <div className='sf-shell-body'>
+                  <section className='sf-section'>
+                    <div className='sf-section-head'>
+                      <div className='sf-section-title'>Unit information</div>
+                      <div className='sf-section-hint'>
+                        Enter the unit name, choose its branch, and update its active status.
+                      </div>
+                    </div>
+
+                    <div className='sf-section-body sf-stack'>
+                      <CustomInput label='Name' name='name' type='text' required />
+
+                      <CustomSelect label='Branch' name='branch_id' required>
+                        {branches.map(br => (
+                          <option key={br.id} value={br.id}>
+                            {br.name}
+                          </option>
+                        ))}
+                      </CustomSelect>
+
+                      <CustomCheckbox label='Is Active' name='is_active' />
+                    </div>
+                  </section>
+                </div>
+
+                <div className='sf-shell-footer'>
+                  <SubmitButton isSubmitting={isSubmitting} />
+                </div>
               </div>
             </NonFieldErrors>
           </Form>
         )}
       </Formik>
-    </>
-  )
+    </div>
+  );
 }
 
 export default UnitForm;

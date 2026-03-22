@@ -2,8 +2,12 @@ import React from 'react';
 import { Fetcher } from '../../../common';
 import { useParams, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
-import {getFields} from '../../DataExport/CreateDataExport/Fields';
-import {getOperators, getAdvOpts, processBackEndSearch} from '../../DataExport/CreateDataExport/utils';
+import { getFields } from '../../DataExport/CreateDataExport/Fields';
+import {
+  getOperators,
+  getAdvOpts,
+  processBackEndSearch
+} from '../../DataExport/CreateDataExport/utils';
 import AdvancedFilter from '../../AdvancedFilter/AdvancedFilter';
 import { removeEmptyValues } from '../../../utils/utils';
 import Cookies from 'js-cookie';
@@ -11,41 +15,32 @@ import axios from 'axios';
 import { useBranches } from '../../../contexts/BranchesContext';
 import { useCurrencies } from '../../../contexts/CurrenciesContext';
 
-
 function EditDataExport() {
   const params = useParams();
 
   return (
     <Fetcher urls={[`/reportsapi/get_export/${params.dataexportId}/`, '/reportsapi/get_entity_fields/']}>
-      {({data}) => {
+      {({ data }) => {
         const dataexport = data[0];
         const fields = data[1];
         if (!fields[dataexport.base_entity]) {
-          return (
-            <div>This report cannot be edited.</div>
-          )
+          return <div>This report cannot be edited.</div>;
         }
-        return (
-          <EntityForm
-            dataexport={dataexport}
-            fields={fields}
-          />
-        )
+        return <EntityForm dataexport={dataexport} fields={fields} />;
       }}
     </Fetcher>
-  )
+  );
 }
-
 
 function EntityForm({ dataexport, fields }) {
   const initFieldNames = dataexport.fields.map(field => field.field_name);
 
-  const initFields = fields[dataexport.base_entity].filter(
-    field => initFieldNames.includes(field.field_name)
-  ).map(field => ({
-    label: field.display_name,
-    value: field.field_name
-  }));
+  const initFields = fields[dataexport.base_entity]
+    .filter(field => initFieldNames.includes(field.field_name))
+    .map(field => ({
+      label: field.display_name,
+      value: field.field_name
+    }));
 
   const [values, setValues] = React.useState({
     data_export_name: dataexport.data_export_name,
@@ -59,15 +54,15 @@ function EntityForm({ dataexport, fields }) {
   const initQuery = processBackEndSearch(dataexport.search);
   const [search, setSearch] = React.useState(initQuery);
 
-  const {branches} = useBranches();
-  const {currencies} = useCurrencies();
+  const { branches } = useBranches();
+  const { currencies } = useCurrencies();
 
   const navigate = useNavigate();
 
-  const onChange = (evt) => {
-    const {name, value} = evt.target;
-    setValues(curr => ({...curr, [name]: value}));
-  }
+  const onChange = evt => {
+    const { name, value } = evt.target;
+    setValues(curr => ({ ...curr, [name]: value }));
+  };
 
   const handleMultiSelect = selected => {
     setOptionSelected(selected);
@@ -76,8 +71,8 @@ function EntityForm({ dataexport, fields }) {
       const field = fields[dataexport.base_entity].find(field => field.field_name === opt.value);
       selectedFields.push(field);
     });
-    setValues(curr => ({...curr, fields: selectedFields}));
-  }
+    setValues(curr => ({ ...curr, fields: selectedFields }));
+  };
 
   const onSubmit = async () => {
     const fields = processFields(values.fields);
@@ -90,142 +85,209 @@ function EntityForm({ dataexport, fields }) {
     };
     data = removeEmptyValues(data);
     try {
-      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+      const CONFIG = {
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken'),
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      };
       const response = await axios.post(`/reportsapi/update_export/${dataexport.id}/`, data, CONFIG);
-      navigate({pathname: `/data/viewdata/dataexport/${response.data.report_pk}`});
+      navigate({ pathname: `/data/viewdata/dataexport/${response.data.report_pk}` });
     } catch (error) {
       console.log(error);
       if (error.message === 'Network Error') {
-        setErrors({detail: 'Network Error'});
+        setErrors({ detail: 'Network Error' });
       } else if (error.response.status >= 400 && error.response.status < 500) {
         setErrors(error.response.data);
       } else {
-        setErrors({detail: 'Server Error'});
+        setErrors({ detail: 'Server Error' });
       }
     }
-  }
+  };
 
   return (
-    <>
-      <div className='divider divider-info' style={{marginTop:'0'}}><span>Fields</span></div>
-      {errors.detail && (
-        <div className='col-12' style={{color:"red", padding:"1.75rem 1rem", border:"1px solid red", backgroundColor: "#ffe5e5"}}>
-          {JSON.stringify(errors.detail)}
-        </div>
-      )}
-      <div className='row custom-background'>
-        <label className='form-label'>Data Export Name<span style={{color: 'red'}}>&#42;</span></label>
-        <div className='col-9'>
-          <input
-            name='data_export_name'
-            value={values.data_export_name}
-            type='text'
-            className='custom-select-form'
-            onChange={onChange}
-            required
-          />
-          {errors.data_export_name && (
-            <div className='error'>
-              {JSON.stringify(errors.data_export_name)}
-            </div>
-          )}
-        </div>
-      </div>
-      <div className='row custom-background'>
-        <label className='form-label'>File Format<span style={{color: 'red'}}>&#42;</span></label>
-        <div className='col-9'>
-          <select name='data_export_file_format' value={values.data_export_file_format} className='custom-select-form' onChange={onChange}>
-            <option value=''>------</option>
-            <option value='xlsx'>XLXS</option>
-            <option value='csv'>CSV</option>
-            <option value='pdfa4'>PDF A4</option>
-            <option value='pdfa3'>PDF A3</option>
-            <option value='pdfa2'>PDF A2</option>
-            <option value='pdfa1'>PDF A1</option>
-          </select>
-          {errors.data_export_file_format && (
-            <div className='error'>
-              {JSON.stringify(errors.data_export_file_format)}
-            </div>
-          )}
-        </div>
-      </div>
-      {values.data_export_file_format.includes("pdf") && (
-        <div className='row custom-background'>
-          <label className='form-label'>Number Of Columns Per Page<span style={{color: 'red'}}>&#42;</span></label>
-          <div className='col-9'>
-            <input
-              name='num_columns'
-              value={values.num_columns}
-              type='number'
-              step='1'
-              className='custom-select-form'
-              onChange={onChange}
-              required
-            />
-            {errors.num_columns && (
-              <div className='error'>
-                {JSON.stringify(errors.num_columns)}
-              </div>
-            )}
+    <div className='sf-page'>
+      <div className='sf-shell'>
+        <div className='sf-shell-head'>
+          <div className='sf-shell-title'>Edit Data Export</div>
+          <div className='sf-shell-subtitle'>
+            Update the export name, file format, selected fields, and filters for this data export.
           </div>
         </div>
-      )}
-      <div className='row custom-background'>
-        <label className='form-label'>Fields<span style={{color: 'red'}}>&#42;</span></label>
-        <div className='col-9'>
-          <Select
-            isMulti
-            name='multi-select'
-            options={[{label: 'Select all', value: '*'}, ...fields[dataexport.base_entity].map(field => ({label: field.display_name, value: field.field_name}))]}
-            value={optionSelected}
-            className='basic-multi-select'
-            classNamePrefix='select'
-            onChange={selected => {
-                if (selected !== null && selected.length > 0 && selected[selected.length - 1].value === '*') {
-                    return handleMultiSelect(fields[dataexport.base_entity].map(field => ({label: field.display_name, value: field.field_name})));
-                }
-                handleMultiSelect(selected);
-            }}
-          />
+
+        <div className='sf-shell-body'>
+          {errors.detail && (
+            <div
+              className='col-12'
+              style={{
+                color: 'red',
+                padding: '1.75rem 1rem',
+                border: '1px solid red',
+                backgroundColor: '#ffe5e5',
+                marginBottom: '1rem'
+              }}
+            >
+              {JSON.stringify(errors.detail)}
+            </div>
+          )}
+
+          <section className='sf-section'>
+            <div className='sf-section-head'>
+              <div className='sf-section-title'>Export information</div>
+              <div className='sf-section-hint'>
+                Adjust the file settings, selected fields, and advanced filters, then save the updated export.
+              </div>
+            </div>
+
+            <div className='sf-section-body sf-stack'>
+              <div className='row custom-background'>
+                <label className='form-label'>
+                  Data Export Name<span style={{ color: 'red' }}>&#42;</span>
+                </label>
+                <div className='col-9'>
+                  <input
+                    name='data_export_name'
+                    value={values.data_export_name}
+                    type='text'
+                    className='custom-select-form'
+                    onChange={onChange}
+                    required
+                  />
+                  {errors.data_export_name && (
+                    <div className='error'>{JSON.stringify(errors.data_export_name)}</div>
+                  )}
+                </div>
+              </div>
+
+              <div className='row custom-background'>
+                <label className='form-label'>
+                  File Format<span style={{ color: 'red' }}>&#42;</span>
+                </label>
+                <div className='col-9'>
+                  <select
+                    name='data_export_file_format'
+                    value={values.data_export_file_format}
+                    className='custom-select-form'
+                    onChange={onChange}
+                  >
+                    <option value=''>------</option>
+                    <option value='xlsx'>XLXS</option>
+                    <option value='csv'>CSV</option>
+                    <option value='pdfa4'>PDF A4</option>
+                    <option value='pdfa3'>PDF A3</option>
+                    <option value='pdfa2'>PDF A2</option>
+                    <option value='pdfa1'>PDF A1</option>
+                  </select>
+                  {errors.data_export_file_format && (
+                    <div className='error'>{JSON.stringify(errors.data_export_file_format)}</div>
+                  )}
+                </div>
+              </div>
+
+              {values.data_export_file_format.includes('pdf') && (
+                <div className='row custom-background'>
+                  <label className='form-label'>
+                    Number Of Columns Per Page<span style={{ color: 'red' }}>&#42;</span>
+                  </label>
+                  <div className='col-9'>
+                    <input
+                      name='num_columns'
+                      value={values.num_columns}
+                      type='number'
+                      step='1'
+                      className='custom-select-form'
+                      onChange={onChange}
+                      required
+                    />
+                    {errors.num_columns && (
+                      <div className='error'>{JSON.stringify(errors.num_columns)}</div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <div className='row custom-background'>
+                <label className='form-label'>
+                  Fields<span style={{ color: 'red' }}>&#42;</span>
+                </label>
+                <div className='col-9'>
+                  <Select
+                    isMulti
+                    name='multi-select'
+                    options={[
+                      { label: 'Select all', value: '*' },
+                      ...fields[dataexport.base_entity].map(field => ({
+                        label: field.display_name,
+                        value: field.field_name
+                      }))
+                    ]}
+                    value={optionSelected}
+                    className='basic-multi-select'
+                    classNamePrefix='select'
+                    onChange={selected => {
+                      if (
+                        selected !== null &&
+                        selected.length > 0 &&
+                        selected[selected.length - 1].value === '*'
+                      ) {
+                        return handleMultiSelect(
+                          fields[dataexport.base_entity].map(field => ({
+                            label: field.display_name,
+                            value: field.field_name
+                          }))
+                        );
+                      }
+                      handleMultiSelect(selected);
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className='row custom-background'>
+                <label className='form-label'>Filters</label>
+                <AdvancedFilter
+                  key={dataexport.base_entity}
+                  fields={getFields(dataexport.base_entity, branches, currencies)}
+                  getAdvOpts={getAdvOpts(dataexport.base_entity)}
+                  getOperators={getOperators}
+                  onQueryChange={q => setSearch(q)}
+                  initQuery={search}
+                />
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div className='sf-shell-footer'>
+          <button className='btn btn-info' type='submit' onClick={onSubmit}>
+            Submit
+          </button>
         </div>
       </div>
-      <div className='row custom-background'>
-        <label className='form-label'>Filters</label>
-        <AdvancedFilter
-          key={dataexport.base_entity}
-          fields={getFields(dataexport.base_entity, branches, currencies)}
-          getAdvOpts={getAdvOpts(dataexport.base_entity)}
-          getOperators={getOperators}
-          onQueryChange={q => setSearch(q)}
-          initQuery={search}
-        />
-      </div>
-      <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
-      <div style={{display:'flex', justifyContent: 'flex-end'}}>
-        <button className='btn btn-info' type='submit' onClick={onSubmit}>
-          Submit
-        </button>
-      </div>
-    </>
-  )
+    </div>
+  );
 }
 
-const processFields = (fields) => {
-  const native_fields = fields.filter(field => field.type === 'native').map(field => field.field_name);
+const processFields = fields => {
+  const native_fields = fields
+    .filter(field => field.type === 'native')
+    .map(field => field.field_name);
 
-  const custom_fields = fields.filter(field => field.type === 'custom').map(field => {
-    const startIndex = 7;
-    const endIndex = field.field_name.lastIndexOf('_');
-    let field_name = field.field_name.slice(startIndex, endIndex);
-    return {field_set_id: field.custom_field_set_id, field_name: field_name};
-  });
+  const custom_fields = fields
+    .filter(field => field.type === 'custom')
+    .map(field => {
+      const startIndex = 7;
+      const endIndex = field.field_name.lastIndexOf('_');
+      let field_name = field.field_name.slice(startIndex, endIndex);
+      return { field_set_id: field.custom_field_set_id, field_name: field_name };
+    });
 
-  const annotated_fields = fields.filter(
-    field => field.type === 'annotation' || field.type === 'method'
-  ).map(field => field.field_name);
+  const annotated_fields = fields
+    .filter(field => field.type === 'annotation' || field.type === 'method')
+    .map(field => field.field_name);
 
-  return {native_fields, custom_fields, annotated_fields}
-}
+  return { native_fields, custom_fields, annotated_fields };
+};
 
 export default EditDataExport;

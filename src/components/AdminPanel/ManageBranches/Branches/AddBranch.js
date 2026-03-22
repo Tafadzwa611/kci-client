@@ -48,31 +48,61 @@ function AddBranch() {
     <>
       <Fetcher urls={['/loansapi/loan_products_list/']}>
         {({data}) => (
-          <div>
-            <button type='button' className='btn btn-default max'>
-              <Link to='/users/admin/managebranches'>Back</Link>
-            </button>
+          <div className='sf-page'>
+            <div style={{ marginBottom: 12 }}>
+              <button type='button' className='btn btn-default max'>
+                <Link to='/users/admin/managebranches'>Back</Link>
+              </button>
+            </div>
+
             <Formik initialValues={initialValues} onSubmit={onSubmit}>
               {({ isSubmitting, setFieldValue, errors }) => (
-                <Form>
+                <Form autoComplete='off' className='sf-form'>
                   <NonFieldErrors errors={errors}>
-                    <div className='divider divider-info'>
-                      <span>Branch Information</span>
-                    </div>
-                    <CustomInput label='Name' name='name' type='text' required/>
-                    <CustomInput label='Geographical Location' name='geographical_location' type='text'/>
-                    <CustomInput label='Branch Code' name='branch_code' type='text' maxLength='5' required/>
-                    <CustomDatePicker label='Date of Opening' name='date_of_opening' setFieldValue={setFieldValue} required/>
-                    <CustomMultiSelect
-                      label='Loan Products'
-                      setFieldValue={setFieldValue}
-                      name='loan_products'
-                      options={data[0].map(loanProduct => ({value: loanProduct.id, label: loanProduct.name}))}
-                    />
-                    <CustomCheckbox label='Is Rural' name='is_rural'/>
-                    <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
-                    <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-                      <SubmitButton isSubmitting={isSubmitting}/>
+                    <div className='sf-shell'>
+                      <div className='sf-shell-head'>
+                        <div className='sf-shell-title'>Branch</div>
+                        <div className='sf-shell-subtitle'>
+                          Create a branch profile with its location, code, opening date, available loan products, and rural status.
+                        </div>
+                      </div>
+
+                      <div className='sf-shell-body'>
+                        <section className='sf-section'>
+                          <div className='sf-section-head'>
+                            <div className='sf-section-title'>Branch information</div>
+                            <div className='sf-section-hint'>
+                              Enter the branch details and select any loan products available for this branch.
+                            </div>
+                          </div>
+
+                          <div className='sf-section-body sf-stack'>
+                            <CustomInput label='Name' name='name' type='text' required />
+                            <CustomInput label='Geographical Location' name='geographical_location' type='text' />
+                            <CustomInput label='Branch Code' name='branch_code' type='text' maxLength='5' required />
+                            <CustomDatePicker
+                              label='Date of Opening'
+                              name='date_of_opening'
+                              setFieldValue={setFieldValue}
+                              required
+                            />
+                            <CustomMultiSelect
+                              label='Loan Products'
+                              setFieldValue={setFieldValue}
+                              name='loan_products'
+                              options={data[0].map(loanProduct => ({
+                                value: loanProduct.id,
+                                label: loanProduct.name
+                              }))}
+                            />
+                            <CustomCheckbox label='Is Rural' name='is_rural' />
+                          </div>
+                        </section>
+                      </div>
+
+                      <div className='sf-shell-footer'>
+                        <SubmitButton isSubmitting={isSubmitting} />
+                      </div>
                     </div>
                   </NonFieldErrors>
                 </Form>

@@ -37,7 +37,7 @@ function CustomSelectRemoteJournal({url, label, selected, queryParamName, params
   };
 
   return (
-    <div style={{marginTop:'1.5rem', width:'50%'}} >
+    <div className='custom_multiselect_remote_section' >
       <label className='form-label row-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
       <div>
         <div className='col-9'>

@@ -10,7 +10,7 @@ function Journal({journalID, setJournalID}) {
   return (
     <Fetcher urls={[`/acc-api/journal-details/${journalID}`]}>
       {({data}) => (
-        <div style={{width: '38%'}}>
+        <div style={{width: '100%'}}>
           <span>Journal Details</span>
           <div className='journal-details'>
             <button type='button' className='close' onClick={closeJournalDetails}><span aria-hidden='true' style={{fontSize:'1.2rem'}}>&times;</span></button>

@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Routes, Route, Outlet, NavLink } from 'react-router-dom';
 import List from './List';
 import AddJournal from './AddJournal';
 import AddJournalBatch from './AddJournalBatch';
 import JournalDetails from './JournalDetails';
 import BatchResults from './BatchResults';
-import {
-  Routes,
-  Route,
-  Outlet,
-  Link,
-  useLocation
-} from 'react-router-dom';
 
 const ChartsOfAccounts = () => {
+  useEffect(() => {
+    document.title = 'Journals - Accounting';
+  }, []);
+
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
@@ -23,23 +21,35 @@ const ChartsOfAccounts = () => {
         <Route path='journal/:journalId' element={<JournalDetails />} />
       </Route>
     </Routes>
-  )
-}
+  );
+};
 
 function Layout() {
-  const location = useLocation();
   return (
     <>
-      <div className='bloc-tabs'>
-        <Link to='/accounting/viewaccounting/journals' className={location.pathname === '/accounting/viewaccounting/journals' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
+      <div className='ui-tabs' aria-label='Journal tabs'>
+        <Tab to='/accounting/viewaccounting/journals' end>
           Journals
-        </Link>
+        </Tab>
       </div>
-      <div className='tab-content font-12' style={{marginTop:'3rem'}}>
+
+      <div className='tab-content font-12 ui-tab-panel'>
         <Outlet />
       </div>
     </>
-  )
+  );
+}
+
+function Tab({ to, end, children }) {
+  return (
+    <NavLink
+      to={to}
+      end={end}
+      className={({ isActive }) => `ui-tab ${isActive ? 'is-active' : ''}`}
+    >
+      {children}
+    </NavLink>
+  );
 }
 
 export default ChartsOfAccounts;

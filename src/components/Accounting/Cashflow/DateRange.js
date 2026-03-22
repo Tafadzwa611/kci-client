@@ -36,38 +36,61 @@ const DateRange = ({setCashFlowData}) => {
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors, values}) => (
         <div className='search_background'>
-          <div className='row-containers' style={{border:'none'}}>
+          <div className='row-containers sf-shellwrap'>
             <Form>
               <NonFieldErrors errors={errors}>
-                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'32%'}}>
-                    <CustomDatePickerFilter label='Min Date' name='min_date' setFieldValue={setFieldValue} required/>
+                <div className='row row-payments row-loans sf-card'>
+                  <div className='sf-row sf-row-3'>
+                    <div className='row-payments-container sf-w-32'>
+                      <CustomDatePickerFilter
+                        label='Min Date'
+                        name='min_date'
+                        setFieldValue={setFieldValue}
+                        required
+                      />
+                    </div>
+
+                    <div className='row-payments-container sf-w-32'>
+                      <CustomDatePickerFilter
+                        label='Max Date'
+                        name='max_date'
+                        setFieldValue={setFieldValue}
+                        required
+                      />
+                    </div>
+
+                    <div className='row-payments-container sf-w-32'>
+                      <CustomSelectFilter label='Currency' name='currency_id' required>
+                        <option value=''>------</option>
+                        {currencies.map(currency => (
+                          <option key={currency.id} value={currency.id}>
+                            {currency.fullname}
+                          </option>
+                        ))}
+                      </CustomSelectFilter>
+                    </div>
                   </div>
-                  <div className='row-payments-container' style={{width:'32%'}}>
-                    <CustomDatePickerFilter label='Max Date' name='max_date' setFieldValue={setFieldValue} required/>
-                  </div>
-                  <div className='row-payments-container' style={{width:'32%'}}>
-                    <CustomSelectFilter label='Currency' name='currency_id' required>
-                      <option value=''>------</option>
-                      {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-                    </CustomSelectFilter>
-                  </div>
-                </div>
-                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
+
                   {values.currency_id ? 
-                  <div className='row-payments-container' style={{width:'90%'}}>
-                    <CustomSelectRemoteFilter
-                      label='Account'
-                      url='/acc-api/search_account/'
-                      selected={values.account}
-                      params={[{key: 'currency_id', value: values.currency_id}]}
-                      setFieldValue={setFieldValue}
-                      queryParamName='query'
-                      placeholder='Search Account'
-                      name='cash_account'
-                      required
-                    />
-                  </div> : null}
+                    <div className='sf-row sf-mt-3'>
+                      <div className='row-payments-container' style={{width:'100%'}}>
+                        <CustomSelectRemoteFilter
+                          label='Account'
+                          url='/acc-api/search_account/'
+                          selected={values.account}
+                          params={[{key: 'currency_id', value: values.currency_id}]}
+                          setFieldValue={setFieldValue}
+                          queryParamName='query'
+                          placeholder='Search Account'
+                          name='cash_account'
+                          required
+                        />
+                      </div>
+                    </div>
+                  : null}
+                </div>
+
+                <div className='sf-submit'>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>
               </NonFieldErrors>
@@ -80,4 +103,3 @@ const DateRange = ({setCashFlowData}) => {
 }
 
 export default DateRange;
-

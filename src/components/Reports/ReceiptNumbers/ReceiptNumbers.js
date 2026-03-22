@@ -103,21 +103,24 @@ function Filter({rbs, setReceiptNumbers}) {
     <Formik initialValues={{ receipt_book_id: '' }} onSubmit={onSubmit}>
       {({isSubmitting}) => (
         <div className='search_background'>
-          <div className='row-containers' style={{border:'none'}}>
+          <div className='row-containers sf-shellwrap'>
             <Form>
-              <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                <div className='row-payments-container' style={{width:'19%'}}>
-                  <CustomSelectFilter label='Receipt Book' name='receipt_book_id' required>
-                    <option value=''>------</option>
-                    {rbs.map(rb => (
-                      <option key={rb.id} value={rb.id}>
-                        {rb.currency.name} - {rb.name} - {rb.branch.name}
-                      </option>
-                    ))}
-                  </CustomSelectFilter>
+              <div className='row row-payments row-loans sf-card'>
+                <div className='sf-row sf-row-2'>
+                  <div className='row-payments-container sf-w-24'>
+                    <CustomSelectFilter label='Receipt Book' name='receipt_book_id' required>
+                      <option value=''>------</option>
+                      {rbs.map(rb => (
+                        <option key={rb.id} value={rb.id}>
+                          {rb.currency.name} - {rb.name} - {rb.branch.name}
+                        </option>
+                      ))}
+                    </CustomSelectFilter>
+                  </div>
                 </div>
               </div>
-              <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
+
+              <div className='sf-submit'>
                 <SubmitButtonFilter isSubmitting={isSubmitting}/>
               </div>
             </Form>

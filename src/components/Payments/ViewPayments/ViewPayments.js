@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Payments from '../Payments/Payments';
 import PaymentsChart from '../PaymentsChart/PaymentsChart';
 import ExcelPayments from '../ExcelPayments/ExcelPayments';
 import Requests from '../Requests/Requests';
-import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
 import ExcelPaymentsReport from '../ExcelPaymentsReport/ExcelPaymentsReport';
-
+import {
+  Routes,
+  Route,
+  Outlet,
+  NavLink
+} from 'react-router-dom';
 
 const ViewPayments = () => {
-  React.useEffect(() => {
+  useEffect(() => {
     document.title = 'View Payments';
   }, []);
 
@@ -22,36 +26,50 @@ const ViewPayments = () => {
         <Route path='paymentsreport/:reportId' element={<ExcelPaymentsReport />} />
       </Route>
     </Routes>
-  )
-}
+  );
+};
 
 function Layout() {
-  const location = useLocation();
-
   return (
-    <div className='card'>
-      <div className='card-body'>
-        <h5 className='table-heading' style={{marginBottom:'20px'}}>View Payments</h5>
-        <div className='bloc-tabs'>
-          <Link to='/payments/viewpayments' id='list' className={location.pathname === '/payments/viewpayments' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-            View Payments
-          </Link>
-          <Link to='/payments/viewpayments/excelpayments' id='upload' className={location.pathname === '/payments/viewpayments/excelpayments' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-            Upload File
-          </Link>
-          <Link to='/payments/viewpayments/paymentschart' id='chart' className={location.pathname === '/payments/viewpayments/paymentschart' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-            Payments Chart
-          </Link>
-          <Link to='/payments/viewpayments/requests' id='chart' className={location.pathname === '/payments/viewpayments/requests' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-            Requests
-          </Link>
+    <div className='card ui-card'>
+      <div className='card-body ui-card-body'>
+        <div className='ui-page-head'>
+          <h5 className='table-heading ui-page-title'>View Payments</h5>
         </div>
-        <div className='tab-content font-12' style={{marginTop:'3rem'}}>
+
+        <div className='ui-tabs' aria-label='Payments tabs'>
+          <Tab to='/payments/viewpayments' end>
+            View Payments
+          </Tab>
+          <Tab to='/payments/viewpayments/excelpayments'>
+            Upload File
+          </Tab>
+          <Tab to='/payments/viewpayments/paymentschart'>
+            Payments Chart
+          </Tab>
+          <Tab to='/payments/viewpayments/requests'>
+            Requests
+          </Tab>
+        </div>
+
+        <div className='tab-content font-12 ui-tab-panel'>
           <Outlet />
         </div>
       </div>
     </div>
-  )
+  );
+}
+
+function Tab({ to, end, children }) {
+  return (
+    <NavLink
+      to={to}
+      end={end}
+      className={({ isActive }) => `ui-tab ${isActive ? 'is-active' : ''}`}
+    >
+      {children}
+    </NavLink>
+  );
 }
 
 export default ViewPayments;

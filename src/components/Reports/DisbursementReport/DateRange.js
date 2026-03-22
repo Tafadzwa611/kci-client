@@ -30,7 +30,7 @@ const DateRange = ({setReport, setParams}) => {
       if (values.file_format === 'html') {
         const response = await axios.get('/reportsapi/disbursement-report/', {params: params});
         setReport(response.data);
-      }else {
+      } else {
         await axios.get('/reportsapi/disbursement-report-export/', {params: params});
       }
     } catch (error) {
@@ -48,50 +48,76 @@ const DateRange = ({setReport, setParams}) => {
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors}) => (
         <div className='search_background'>
-          <div className='row-containers' style={{border:'none'}}>
+          <div className='row-containers sf-shellwrap'>
             <Form>
               <NonFieldErrors errors={errors}>
-                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'32%'}}>
-                    <CustomDatePickerFilter label='Start Date' name='min_date' setFieldValue={setFieldValue} required/>
+                <div className='row row-payments row-loans sf-card'>
+                  <div className='sf-row sf-row-3'>
+                    <div className='row-payments-container sf-w-32'>
+                      <CustomDatePickerFilter
+                        label='Start Date'
+                        name='min_date'
+                        setFieldValue={setFieldValue}
+                        required
+                      />
+                    </div>
+
+                    <div className='row-payments-container sf-w-32'>
+                      <CustomDatePickerFilter
+                        label='End Date'
+                        name='max_date'
+                        setFieldValue={setFieldValue}
+                        required
+                      />
+                    </div>
+
+                    <div className='row-payments-container sf-w-32'>
+                      <CustomSelectFilter label='Currency' name='currency_id' required>
+                        <option value=''>------</option>
+                        {currencies.map(currency => (
+                          <option key={currency.id} value={currency.id}>
+                            {currency.fullname}
+                          </option>
+                        ))}
+                      </CustomSelectFilter>
+                    </div>
                   </div>
-                  <div className='row-payments-container' style={{width:'32%'}}>
-                    <CustomDatePickerFilter label='End Date' name='max_date' setFieldValue={setFieldValue} required/>
+
+                  <div className='sf-row sf-mt-3'>
+                    <div className='row-payments-container' style={{width:'100%'}}>
+                      <MultiSelectFilter
+                        label='Branches'
+                        name='branch_ids'
+                        options={branches.map(br => ({label: br.name, value: br.id}))}
+                        setFieldValue={setFieldValue}
+                        required
+                      />
+                    </div>
                   </div>
-                  <div className='row-payments-container' style={{width:'32%'}}>
-                    <CustomSelectFilter label='Currency' name='currency_id' required>
-                      <option value=''>------</option>
-                      {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-                    </CustomSelectFilter>
+
+                  <div className='sf-row sf-row-2 sf-mt-3'>
+                    <div className='row-payments-container' style={{width:'66%'}}>
+                      <CustomSelectFilter label='Mode' name='file_format' required>
+                        <option value='html'>Screen (HTML)</option>
+                        <option value='xlsx'>Excel</option>
+                        <option value='csv'>CSV</option>
+                        <option value='pdfa4'>PDF A4</option>
+                        <option value='pdfa3'>PDF A3</option>
+                        <option value='pdfa2'>PDF A2</option>
+                        <option value='pdfa1'>PDF A1</option>
+                      </CustomSelectFilter>
+                    </div>
+
+                    <div className='row-payments-container' style={{width:'32%'}}>
+                      <CustomSelectFilter label='Order' name='order' required>
+                        <option value={'DESC'}>Show newest first</option>
+                        <option value={'ASC'}>Show oldest first</option>
+                      </CustomSelectFilter>
+                    </div>
                   </div>
                 </div>
-                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <div style={{width:'70%'}}>
-                    <MultiSelectFilter
-                      label='Branches'
-                      name='branch_ids'
-                      options={branches.map(br => ({label: br.name, value:br.id}))}
-                      setFieldValue={setFieldValue}
-                      required
-                    />
-                  </div>
-                  <div className='row-payments-container' style={{width:'10%'}}>
-                    <CustomSelectFilter label='Mode' name='file_format' required>
-                      <option value='html'>Screen (HTML)</option>
-                      <option value='xlsx'>Excel</option>
-                      <option value='csv'>CSV</option>
-                      <option value='pdfa4'>PDF A4</option>
-                      <option value='pdfa3'>PDF A3</option>
-                      <option value='pdfa2'>PDF A2</option>
-                      <option value='pdfa1'>PDF A1</option>
-                    </CustomSelectFilter>
-                  </div>
-                  <div className='row-payments-container' style={{width:'10%'}}>
-                    <CustomSelectFilter label='Order' name='order' required>
-                      <option value={'DESC'}>Show newest first</option>
-                      <option value={'ASC'}>Show oldest first</option>
-                    </CustomSelectFilter>
-                  </div>
+
+                <div className='sf-submit'>
                   <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>
               </NonFieldErrors>
@@ -104,4 +130,3 @@ const DateRange = ({setReport, setParams}) => {
 }
 
 export default DateRange;
-

@@ -20,10 +20,30 @@ const createGroupSchema = yup.object().shape({
   name: yup.string().required('Required').max(50),
   group_type_id: yup.number().integer().required('Required'),
   address: yup.string().required('Required'),
-  group_phone_number: yup.object().shape({countryCode: yup.string().required(), phoneNumber: yup.string().required('Required')}),
+  group_phone_number: yup.object().shape({
+    countryCode: yup.string().required(),
+    phoneNumber: yup.string().required('Required')
+  }),
 });
 
-const EditGroupForm = ({group, groupTypes, loanOfficers, groupRoles, clientControls, units}) => {
+const Section = ({ title, hint, children }) => (
+  <section className='sf-section'>
+    <div className='sf-section-head'>
+      <div>
+        <h3 className='sf-section-title'>{title}</h3>
+        {hint ? <p className='sf-section-hint'>{hint}</p> : null}
+      </div>
+    </div>
+
+    <div className='sf-section-body'>
+      <div className='sf-stack'>
+        {children}
+      </div>
+    </div>
+  </section>
+);
+
+const EditGroupForm = ({ group, groupTypes, loanOfficers, groupRoles, clientControls, units }) => {
   const [fieldsets, setFieldsets] = React.useState(null);
   const navigate = useNavigate();
   const phoneNumberArray = group.group_phone_number.split(' ');
@@ -32,12 +52,12 @@ const EditGroupForm = ({group, groupTypes, loanOfficers, groupRoles, clientContr
     const fetch = async () => {
       const response = await axios.get('/usersapi/list_field_sets/?entity_type=GROUP&active=1');
       setFieldsets(response.data);
-    }
+    };
     fetch();
   }, []);
 
   if (fieldsets === null) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   const formikFieldsets = convertToFormikFieldsets(fieldsets).fieldsets;
@@ -46,12 +66,12 @@ const EditGroupForm = ({group, groupTypes, loanOfficers, groupRoles, clientContr
   const initialValues = {
     name: group.group_name,
     group_id: group.id,
-    members: group.members.map(member => ({...member, id: member.client_id})),
+    members: group.members.map(member => ({ ...member, id: member.client_id })),
     group_type_id: group.group_type_id,
-    group_type: group.group_type_id ? {value: group.group_type_id, label: `${group.group_type}`} : '',
+    group_type: group.group_type_id ? { value: group.group_type_id, label: `${group.group_type}` } : '',
     group_date: group.db_group_date,
     address: group.address,
-    group_phone_number: {countryCode: phoneNumberArray[0], phoneNumber: phoneNumberArray[1]},
+    group_phone_number: { countryCode: phoneNumberArray[0], phoneNumber: phoneNumberArray[1] },
     group_account_number: group.group_account_number,
     group_bank_name: group.group_bank_name,
     group_officer_id: group.group_officer_id || '',
@@ -64,100 +84,186 @@ const EditGroupForm = ({group, groupTypes, loanOfficers, groupRoles, clientContr
       const custom_data = toFieldValueArray(values.fieldsets);
       const data = removeEmptyValues(values);
       data.group_phone_number = `${values.group_phone_number.countryCode} ${values.group_phone_number.phoneNumber}`;
-      data.members = data.members.map(member => ({client_id: member.client_id, role_id: member.role_id}));
+      data.members = data.members.map(member => ({ client_id: member.client_id, role_id: member.role_id }));
       data.custom_data = custom_data;
-      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
+
+      const CONFIG = {
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken'),
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      };
+
       await axios.put(`/clientsapi/edit_group/${group.id}/`, data, CONFIG);
-      navigate({pathname: `/groups/viewgroups?group_id=${group.id}`});
+      navigate({ pathname: `/groups/viewgroups?group_id=${group.id}` });
     } catch (error) {
       if (error.message === 'Network Error') {
-        actions.setErrors({responseStatus: 'Network Error'});
+        actions.setErrors({ responseStatus: 'Network Error' });
       } else if (error.response.status >= 400 && error.response.status < 500) {
-        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+        actions.setErrors({ responseStatus: error.response.status, ...error.response.data });
       } else {
-        actions.setErrors({responseStatus: error.response.status});
+        actions.setErrors({ responseStatus: error.response.status });
       }
     }
-  }
+  };
 
   return (
-    <>
-      <div>
-        <button type='button' className='btn btn-default max'>
-          <Link to={`/groups/viewgroups?group_id=${group.id}`}>Back</Link>
-        </button>
-      </div>
-      <Formik initialValues={initialValues} validationSchema={createGroupSchema} onSubmit={onSubmit}>
-        {({ isSubmitting, errors, setFieldValue, values }) => (
-          <Form>
-            <NonFieldErrors errors={errors}>
-              <div className='divider divider-info'>
-                <span>Group Information</span>
+    <Formik initialValues={initialValues} validationSchema={createGroupSchema} onSubmit={onSubmit}>
+      {({ isSubmitting, errors, setFieldValue, values }) => (
+        <Form className='sf-form'>
+          <NonFieldErrors errors={errors}>
+            <div className='sf-page'>
+              <div className='sf-page-top' style={{marginBottom:'1rem'}}>
+                <Link to={`/groups/viewgroups?group_id=${group.id}`} className='btn btn-default'>
+                  Back
+                </Link>
               </div>
-              <CustomSelect label='Group Type' name='group_type_id' required>
-                <option value=''>------</option>
-                {groupTypes.map(gtype => <option key={gtype.id} value={gtype.id}>{gtype.name}</option>)}
-              </CustomSelect>
-              <CustomInput label='Group Name' name='name' type='text' required/>
-              <CustomDatePicker label='Group Date' name='group_date' setFieldValue={setFieldValue} required/>
-              <CustomPhoneNumber label='Group Phone Number' name='group_phone_number' setFieldValue={setFieldValue} />
-              <CustomInput label='Group Address' name='address' type='text' required/>
-              <CustomInput label='Group Account Number' name='group_account_number' type='text' required/>
-              <CustomInput label='Group Bank Name' name='group_bank_name' type='text' required/>
-              {clientControls.group_officer_required ? 
-              <CustomSelect label='Group Officer' name='group_officer_id' required>
-                <option value=''>------</option>
-                {loanOfficers.map(officer => <option key={officer.id} value={officer.id}>{officer.first_name} {officer.last_name}</option>)}
-              </CustomSelect>:
-              <CustomSelect label='Group Officer' name='group_officer_id'>
-                <option value=''>------</option>
-                {loanOfficers.map(officer => <option key={officer.id} value={officer.id}>{officer.first_name} {officer.last_name}</option>)}
-              </CustomSelect>}
-              {clientControls.use_client_units ? 
-                <CustomSelect label='Unit' name='unit_id' required>
-                  <option value=''>------</option>
-                  {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
-                </CustomSelect>:
-                <CustomSelect label='Unit' name='unit_id'>
-                  <option value=''>------</option>
-                  {units.map(ut => <option key={ut.id} value={ut.id}>{ut.name}</option>)}
-                </CustomSelect>
-              }
-              {fieldsets.map(fieldset => (
-                <React.Fragment key={fieldset.id}>
-                  <div className='divider divider-info'>{fieldset.name}</div>
-                  {fieldset.fields.map(field => getElement(fieldset, field, setFieldValue))}
-                </React.Fragment>
-              ))}
-              <div className='divider divider-info'>
-                <span>Members</span>
+
+              <div className='sf-shell'>
+                <div className='sf-shell-head'>
+                  <div>
+                    <h1 className='sf-shell-title'>Edit Group</h1>
+                    <p className='sf-shell-subtitle'>
+                      Update group information, custom fields, and members.
+                    </p>
+                  </div>
+                </div>
+
+                <div className='sf-shell-body'>
+                  <section className="sf-section">
+                    <div className="sf-section-head">
+                      <div className="sf-section-title">Group information</div>
+                      <div className="sf-section-hint">Maintain the group’s core profile, contact details, officer, and banking information.</div>
+                    </div>
+
+                    <div className="sf-section-body sf-stack">
+                      <CustomSelect label='Group Type' name='group_type_id' required>
+                        <option value=''>------</option>
+                        {groupTypes.map(gtype => (
+                          <option key={gtype.id} value={gtype.id}>
+                            {gtype.name}
+                          </option>
+                        ))}
+                      </CustomSelect>
+
+                      <CustomInput label='Group Name' name='name' type='text' required />
+                      <CustomDatePicker
+                        label='Group Date'
+                        name='group_date'
+                        setFieldValue={setFieldValue}
+                        required
+                      />
+
+                      <CustomPhoneNumber
+                        label='Group Phone Number'
+                        name='group_phone_number'
+                        setFieldValue={setFieldValue}
+                      />
+                      <CustomInput label='Group Address' name='address' type='text' required />
+
+                      <CustomInput
+                        label='Group Account Number'
+                        name='group_account_number'
+                        type='text'
+                        required
+                      />
+                      <CustomInput
+                        label='Group Bank Name'
+                        name='group_bank_name'
+                        type='text'
+                        required
+                      />
+
+                      {clientControls.group_officer_required ? (
+                        <CustomSelect label='Group Officer' name='group_officer_id' required>
+                          <option value=''>------</option>
+                          {loanOfficers.map(officer => (
+                            <option key={officer.id} value={officer.id}>
+                              {officer.first_name} {officer.last_name}
+                            </option>
+                          ))}
+                        </CustomSelect>
+                      ) : (
+                        <CustomSelect label='Group Officer' name='group_officer_id'>
+                          <option value=''>------</option>
+                          {loanOfficers.map(officer => (
+                            <option key={officer.id} value={officer.id}>
+                              {officer.first_name} {officer.last_name}
+                            </option>
+                          ))}
+                        </CustomSelect>
+                      )}
+                      {clientControls.use_client_units ? (
+                        <CustomSelect label='Unit' name='unit_id' required>
+                          <option value=''>------</option>
+                          {units.map(ut => (
+                            <option key={ut.id} value={ut.id}>
+                              {ut.name}
+                            </option>
+                          ))}
+                        </CustomSelect>
+                      ) : (
+                        <CustomSelect label='Unit' name='unit_id'>
+                          <option value=''>------</option>
+                          {units.map(ut => (
+                            <option key={ut.id} value={ut.id}>
+                              {ut.name}
+                            </option>
+                          ))}
+                        </CustomSelect>
+                      )}
+                    </div>
+                  </section>
+
+                  {fieldsets.map(fieldset => (
+                    <Section
+                      key={fieldset.id}
+                      title={fieldset.name}
+                      hint='These custom fields preserve your existing field-set configuration and values.'
+                    >
+                      {fieldset.fields.map(field => (
+                        <div key={field.id} className='sf-field-block'>
+                          {getElement(fieldset, field, setFieldValue)}
+                        </div>
+                      ))}
+                    </Section>
+                  ))}
+
+                  <Section
+                    title='Members'
+                    hint='Review existing members, update their roles, and add more members where needed.'
+                  >
+                    {values.members.map((member, index) => (
+                      <div key={index} className='sf-subsection'>
+                        <Member
+                          id={member.id}
+                          index={index}
+                          groupRoles={groupRoles}
+                          members={values.members}
+                          setFieldValue={setFieldValue}
+                          selectedMember={member}
+                        />
+                      </div>
+                    ))}
+
+                    <div className='sf-subsection'>
+                      <AddMember members={values.members} setFieldValue={setFieldValue} />
+                    </div>
+                  </Section>
+                </div>
+
+                <div className='sf-shell-footer'>
+                  <SubmitButton isSubmitting={isSubmitting} />
+                </div>
               </div>
-              {values.members.map((member, index) => {
-                return(
-                  <React.Fragment key={index}>
-                    <Member
-                      id={member.id}
-                      index={index}
-                      groupRoles={groupRoles}
-                      members={values.members}
-                      setFieldValue={setFieldValue}
-                      selectedMember={member}
-                    />
-                  </React.Fragment>
-                )
-              })}
-              <AddMember members={values.members} setFieldValue={setFieldValue} />
-              <div className='divider divider-default' style={{padding: '1.25rem'}}></div>
-              <div style={{display:'flex', justifyContent: 'flex-end'}}> 
-              <SubmitButton isSubmitting={isSubmitting}/>
-              </div>
-            </NonFieldErrors>
-          </Form>
-        )}
-      </Formik>
-    </>
-  )
-}
+            </div>
+          </NonFieldErrors>
+        </Form>
+      )}
+    </Formik>
+  );
+};
 
 const toFieldValueArray = (fieldsets) => {
   return Object.values(fieldsets).flatMap((fields) =>
@@ -174,7 +280,7 @@ const convertToFormikFieldsets = (fieldsets) => {
       fieldsets.map((fieldset) => [
         String(fieldset.id),
         Object.fromEntries(
-          fieldset.fields.map((field) => [String(field.id), ""])
+          fieldset.fields.map((field) => [String(field.id), ''])
         ),
       ])
     ),
@@ -210,28 +316,67 @@ const getElement = (fieldset, field, setFieldValue) => {
     return (
       <CustomSelect key={field.id} label={fieldLabel} name={name} required={field.is_required}>
         <option value=''>------</option>
-        {field.select_opts.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+        {field.select_opts.map(opt => (
+          <option key={opt} value={opt}>
+            {opt}
+          </option>
+        ))}
       </CustomSelect>
-    )
+    );
   }
 
   if (field.data_type === 'checkbox') {
-    return <CustomCheckbox key={field.id} label={fieldLabel} name={name} required={field.is_required}/>
+    return (
+      <CustomCheckbox
+        key={field.id}
+        label={fieldLabel}
+        name={name}
+        required={field.is_required}
+      />
+    );
   }
 
   return {
-    free_text: <CustomInput key={field.id} label={fieldLabel} name={name} type={dataTypes[field.data_type]} required={field.is_required}/>,
-    integer: <CustomInput
-      key={field.id}
-      label={fieldLabel}
-      required={field.is_required}
-      name={name}
-      type={dataTypes[field.data_type]}
-      onKeyDown={e => {if(e.key==='.')e.preventDefault()}}
-    />,
-    decimal: <CustomInput key={field.id} label={fieldLabel} name={name} type={dataTypes[field.data_type]} required={field.is_required}/>,
-    date: <CustomDatePicker key={field.id} label={fieldLabel} name={name} setFieldValue={setFieldValue} required={field.is_required}/>
-  }[field.data_type]
-}
+    free_text: (
+      <CustomInput
+        key={field.id}
+        label={fieldLabel}
+        name={name}
+        type={dataTypes[field.data_type]}
+        required={field.is_required}
+      />
+    ),
+    integer: (
+      <CustomInput
+        key={field.id}
+        label={fieldLabel}
+        required={field.is_required}
+        name={name}
+        type={dataTypes[field.data_type]}
+        onKeyDown={e => {
+          if (e.key === '.') e.preventDefault();
+        }}
+      />
+    ),
+    decimal: (
+      <CustomInput
+        key={field.id}
+        label={fieldLabel}
+        name={name}
+        type={dataTypes[field.data_type]}
+        required={field.is_required}
+      />
+    ),
+    date: (
+      <CustomDatePicker
+        key={field.id}
+        label={fieldLabel}
+        name={name}
+        setFieldValue={setFieldValue}
+        required={field.is_required}
+      />
+    )
+  }[field.data_type];
+};
 
 export default EditGroupForm;

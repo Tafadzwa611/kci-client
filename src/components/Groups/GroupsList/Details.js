@@ -2,8 +2,8 @@ import React from 'react'
 
 function Details({groupDetails}) {
     return (
-        <div style={{display:"flex", width:"100%", justifyContent:"space-between"}}>
-            <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", marginTop:"1.5rem", width:"74%"}}>
+        <div className='group__details__main__container'>
+            <div className='group__details__first__sub__container'>
 
                 <div>
                     <ul style={{display:"flex", flexDirection:"column", rowGap:"10px"}}>
@@ -26,7 +26,7 @@ function Details({groupDetails}) {
 
             </div>
 
-            <div style={{width:"24%", marginTop:"1.5rem"}}>
+            <div className='group__details__second__sub__container'>
                 <div className="fees-container">
                     <div style={{marginBottom:"1rem"}}><b>Group Members</b></div>
                     <ul style={{maxHeight:"250px", overflowY:"auto"}}>

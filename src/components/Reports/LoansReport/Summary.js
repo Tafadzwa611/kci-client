@@ -4,7 +4,7 @@ import React from 'react';
 function Summary({summary}) {
   return (
     <div className='search_background' style={{padding:'20px'}}>
-      <div style={{display:'grid', marginTop:'0.5rem', gridTemplateColumns: '1fr 1fr 1fr 1fr', columnGap: '10px'}}>
+      <div className='loans__report__summary__container'>
         <div>
           <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
             <li style={{marginBottom:'0.5rem'}}><b>Disbursement Info</b></li>
@@ -57,7 +57,7 @@ function Summary({summary}) {
           </ul>
         </div>
       </div>
-      <div style={{display:'grid', marginTop:'1.5rem', gridTemplateColumns: '1fr 1fr 1fr 1fr', columnGap: '10px'}}>
+      <div className='loans__report__summary__container'>
         <div>
           <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
             <li style={{marginBottom:'0.5rem'}}><b>Running Loans Info</b></li>

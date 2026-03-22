@@ -1,169 +1,123 @@
-import React, {useEffect} from 'react';
-import ClientsReport from '../ClientsReport/ClientsReport';
-import LoansReport from '../LoansReport/LoansReport';
-import MonthlyReport from '../MonthlyReport/MonthlyReport';
-import TopBorrowers from '../TopBorrowers/TopBorrowers';
-import DisbursementReport from '../DisbursementReport/DisbursementReport';
-import LoanProductReport from '../LoanProductReport/LoanProductReport';
-import FeesReport from '../FeesReport/FeesReport';
-import LoanOfficerReport from '../LoanOfficerReport/LoanOfficerReport';
-import DailyReport from '../DailyReport/DailyReport';
-import PaymentsReport from '../PaymentsReport/PaymentsReport';
-import PortfolioAtRiskReport from '../PortfolioAtRiskReport/PortfolioAtRiskReport';
-import ExpectedPaymentsReport from '../ExpectedPaymentsReport/ExpectedPaymentsReport';
-import AuditTrail from '../AuditTrail/AuditTrail';
-import CreditReport from '../CreditReport/CreditReport';
-import LoanDistribution from '../LoanDistribution/LoanDistribution';
-import GenderDistribution from '../GenderDistribution/GenderDistribution';
-import MaturityProfile from '../MaturityProfile/MaturityProfile';
-import PortfolioMgt from '../PortfolioMgt/PortfolioMgt';
-import AssetQuality from '../AssetQuality/AssetQuality';
-import DebtorsList from '../DebtorsList/DebtorsList';
-import LoansGranted from '../LoansGranted/LoansGranted';
-import CashReceipts from '../CashReceipts/CashReceipts';
-import AllTxnsReport from '../AllTxnsReport/AllTxnsReport';
-import ReceiptNumbers from '../ReceiptNumbers/ReceiptNumbers';
-import DebtorsListAge from '../DebtorsListAge/DebtorsListAge';
-import {
-  Routes,
-  Route,
-  Outlet,
-  Link,
-  useLocation
-} from 'react-router-dom';
-
+import React, { useEffect } from "react";
+import ClientsReport from "../ClientsReport/ClientsReport";
+import LoansReport from "../LoansReport/LoansReport";
+import MonthlyReport from "../MonthlyReport/MonthlyReport";
+import TopBorrowers from "../TopBorrowers/TopBorrowers";
+import DisbursementReport from "../DisbursementReport/DisbursementReport";
+import LoanProductReport from "../LoanProductReport/LoanProductReport";
+import FeesReport from "../FeesReport/FeesReport";
+import LoanOfficerReport from "../LoanOfficerReport/LoanOfficerReport";
+import DailyReport from "../DailyReport/DailyReport";
+import PaymentsReport from "../PaymentsReport/PaymentsReport";
+import PortfolioAtRiskReport from "../PortfolioAtRiskReport/PortfolioAtRiskReport";
+import ExpectedPaymentsReport from "../ExpectedPaymentsReport/ExpectedPaymentsReport";
+import AuditTrail from "../AuditTrail/AuditTrail";
+import CreditReport from "../CreditReport/CreditReport";
+import LoanDistribution from "../LoanDistribution/LoanDistribution";
+import GenderDistribution from "../GenderDistribution/GenderDistribution";
+import MaturityProfile from "../MaturityProfile/MaturityProfile";
+import PortfolioMgt from "../PortfolioMgt/PortfolioMgt";
+import AssetQuality from "../AssetQuality/AssetQuality";
+import DebtorsList from "../DebtorsList/DebtorsList";
+import LoansGranted from "../LoansGranted/LoansGranted";
+import CashReceipts from "../CashReceipts/CashReceipts";
+import AllTxnsReport from "../AllTxnsReport/AllTxnsReport";
+import ReceiptNumbers from "../ReceiptNumbers/ReceiptNumbers";
+import { Routes, Route, Outlet, NavLink } from "react-router-dom";
 
 const ViewReports = () => {
   useEffect(() => {
-    document.title = 'View Reports';
+    document.title = "View Reports";
   }, []);
 
   return (
     <Routes>
-      <Route path='/' element={<Layout />}>
+      <Route path="/" element={<Layout />}>
         <Route index element={<ClientsReport />} />
-        <Route path='loansreport' element={<LoansReport />} />
-        <Route path='paymentsreport' element={<PaymentsReport />} />
-        <Route path='expectedpaymentsreport' element={<ExpectedPaymentsReport />} />
-        <Route path='monthlyreport' element={<MonthlyReport />} />
-        <Route path='topborrowersreport' element={<TopBorrowers />} />
-        <Route path='disbursementreport' element={<DisbursementReport />} />
-        <Route path='loanproductreport' element={<LoanProductReport />} />
-        <Route path='feesreport' element={<FeesReport />} />
-        <Route path='loanofficerreport' element={<LoanOfficerReport />} />
-        <Route path='dailyreport' element={<DailyReport />} />
-        <Route path='portofolioatriskreport' element={<PortfolioAtRiskReport />} />
-        <Route path='audittrail' element={<AuditTrail />} />
-        <Route path='creditreport' element={<CreditReport />} />
-        <Route path='loandistribution' element={<LoanDistribution />} />
-        <Route path='genderdistribution' element={<GenderDistribution />} />
-        <Route path='maturityprofile' element={<MaturityProfile />} />
-        <Route path='portfoliomgt' element={<PortfolioMgt />} />
-        <Route path='assetquality' element={<AssetQuality />} />
-        <Route path='debtorslist' element={<DebtorsList />} />
-        <Route path='loansgranted' element={<LoansGranted />} />
-        <Route path='cashreceipts' element={<CashReceipts />} />
-        <Route path='txns-report' element={<AllTxnsReport />} />
-        <Route path='receipt-numbers' element={<ReceiptNumbers />} />
-        <Route path='age-analysis' element={<DebtorsListAge />} />
+        <Route path="loansreport" element={<LoansReport />} />
+        <Route path="paymentsreport" element={<PaymentsReport />} />
+        <Route path="expectedpaymentsreport" element={<ExpectedPaymentsReport />} />
+        <Route path="monthlyreport" element={<MonthlyReport />} />
+        <Route path="topborrowersreport" element={<TopBorrowers />} />
+        <Route path="disbursementreport" element={<DisbursementReport />} />
+        <Route path="loanproductreport" element={<LoanProductReport />} />
+        <Route path="feesreport" element={<FeesReport />} />
+        <Route path="loanofficerreport" element={<LoanOfficerReport />} />
+        <Route path="dailyreport" element={<DailyReport />} />
+        <Route path="portofolioatriskreport" element={<PortfolioAtRiskReport />} />
+        <Route path="audittrail" element={<AuditTrail />} />
+        <Route path="creditreport" element={<CreditReport />} />
+        <Route path="loandistribution" element={<LoanDistribution />} />
+        <Route path="genderdistribution" element={<GenderDistribution />} />
+        <Route path="maturityprofile" element={<MaturityProfile />} />
+        <Route path="portfoliomgt" element={<PortfolioMgt />} />
+        <Route path="assetquality" element={<AssetQuality />} />
+        <Route path="debtorslist" element={<DebtorsList />} />
+        <Route path="loansgranted" element={<LoansGranted />} />
+        <Route path="cashreceipts" element={<CashReceipts />} />
+        <Route path="txns-report" element={<AllTxnsReport />} />
+        <Route path="receipt-numbers" element={<ReceiptNumbers />} />
       </Route>
     </Routes>
-  )
-}
-
+  );
+};
 
 function Layout() {
-  const location = useLocation();
-
   return (
-    <div className='card'>
-      <div className='card-body'>
-        <h5 className='table-heading' style={{marginBottom:'20px'}}>View Reports</h5>
-        <>
-          <div className='bloc-tabs'>
-            <Link to='/reports/viewreports' className={location.pathname === '/reports/viewreports' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Client Reports
-            </Link>
-            <Link to='/reports/viewreports/loandistribution' className={location.pathname === '/reports/viewreports/loandistribution' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Loan Distribution Report
-            </Link>
-            <Link to='/reports/viewreports/genderdistribution' className={location.pathname === '/reports/viewreports/genderdistribution' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Gender Distribution Report
-            </Link>
-            <Link to='/reports/viewreports/maturityprofile' className={location.pathname === '/reports/viewreports/maturityprofile' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Maturity Profile
-            </Link>
-            <Link to='/reports/viewreports/portfoliomgt' className={location.pathname === '/reports/viewreports/portfoliomgt' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Portfolio Management
-            </Link>
-            {/* <Link to='/reports/viewreports/assetquality' className={location.pathname === '/reports/viewreports/assetquality' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Asset Quality
-            </Link> */}
-            <Link to='/reports/viewreports/loansreport' className={location.pathname === '/reports/viewreports/loansreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Loans Report
-            </Link>
-            <Link to='/reports/viewreports/creditreport' className={location.pathname === '/reports/viewreports/creditreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Credit Report
-            </Link>
-            <Link to='/reports/viewreports/paymentsreport' className={location.pathname === '/reports/viewreports/paymentsreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Payments
-            </Link>
-            <Link to='/reports/viewreports/expectedpaymentsreport' className={location.pathname === '/reports/viewreports/expectedpaymentsreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Expected Payments
-            </Link>
-            <Link to='/reports/viewreports/monthlyreport' className={location.pathname === '/reports/viewreports/monthlyreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Monthly
-            </Link>
-            <Link to='/reports/viewreports/topborrowersreport' className={location.pathname === '/reports/viewreports/topborrowersreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Top Borrowers
-            </Link>
-            <Link to='/reports/viewreports/disbursementreport' className={location.pathname === '/reports/viewreports/disbursementreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Disbursement
-            </Link>
-            <Link to='/reports/viewreports/loanproductreport' className={location.pathname === '/reports/viewreports/loanproductreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Loan Product
-            </Link>
-            <Link to='/reports/viewreports/feesreport' className={location.pathname === '/reports/viewreports/feesreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Fees Report
-            </Link>
-            <Link to='/reports/viewreports/loanofficerreport' className={location.pathname === '/reports/viewreports/loanofficerreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Loans Officer
-            </Link>
-            <Link to='/reports/viewreports/dailyreport' className={location.pathname === '/reports/viewreports/dailyreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Daily Report
-            </Link>
-            <Link to='/reports/viewreports/portofolioatriskreport' className={location.pathname === '/reports/viewreports/portofolioatriskreport' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Par Report
-            </Link>
-            <Link to='/reports/viewreports/debtorslist' className={location.pathname === '/reports/viewreports/debtorslist' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Debtors List
-            </Link>
-            <Link to='/reports/viewreports/age-analysis' className={location.pathname === '/reports/viewreports/age-analysis' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Age Analysis
-            </Link>
-            <Link to='/reports/viewreports/loansgranted' className={location.pathname === '/reports/viewreports/loansgranted' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Loans Granted
-            </Link>
-            <Link to='/reports/viewreports/cashreceipts' className={location.pathname === '/reports/viewreports/cashreceipts' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Cash Receipts
-            </Link>
-            <Link to='/reports/viewreports/audittrail' className={location.pathname === '/reports/viewreports/audittrail' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Audit Trail
-            </Link>
-            <Link to='/reports/viewreports/txns-report' className={location.pathname === '/reports/viewreports/txns-report' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              All Transactions Report
-            </Link>
-            <Link to='/reports/viewreports/receipt-numbers' className={location.pathname === '/reports/viewreports/receipt-numbers' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Receipt Numbers
-            </Link>
-          </div>
-          <div className='tab-content font-12' style={{marginTop:'3rem'}}>
-            <Outlet />
-          </div>
-        </>
+    <div className="card ui-card">
+      <div className="card-body ui-card-body">
+        <div className="ui-page-head">
+          <h5 className="table-heading ui-page-title">View Reports</h5>
+        </div>
+
+        {/* Modern, scrollable tabs (mobile-first) */}
+        <div className="ui-tabs" aria-label="Reports tabs">
+          <Tab to="/reports/viewreports" end>
+            Client Reports
+          </Tab>
+          <Tab to="/reports/viewreports/loandistribution">Loan Distribution</Tab>
+          <Tab to="/reports/viewreports/genderdistribution">Gender Distribution</Tab>
+          <Tab to="/reports/viewreports/maturityprofile">Maturity Profile</Tab>
+          <Tab to="/reports/viewreports/portfoliomgt">Portfolio Management</Tab>
+          {/* <Tab to="/reports/viewreports/assetquality">Asset Quality</Tab> */}
+          <Tab to="/reports/viewreports/loansreport">Loans Report</Tab>
+          <Tab to="/reports/viewreports/creditreport">Credit Report</Tab>
+          <Tab to="/reports/viewreports/paymentsreport">Payments</Tab>
+          <Tab to="/reports/viewreports/expectedpaymentsreport">Expected Payments</Tab>
+          <Tab to="/reports/viewreports/monthlyreport">Monthly</Tab>
+          <Tab to="/reports/viewreports/topborrowersreport">Top Borrowers</Tab>
+          <Tab to="/reports/viewreports/disbursementreport">Disbursement</Tab>
+          <Tab to="/reports/viewreports/loanproductreport">Loan Product</Tab>
+          <Tab to="/reports/viewreports/feesreport">Fees Report</Tab>
+          <Tab to="/reports/viewreports/loanofficerreport">Loans Officer</Tab>
+          <Tab to="/reports/viewreports/dailyreport">Daily Report</Tab>
+          <Tab to="/reports/viewreports/portofolioatriskreport">Par Report</Tab>
+          <Tab to="/reports/viewreports/debtorslist">Debtors List</Tab>
+          <Tab to="/reports/viewreports/loansgranted">Loans Granted</Tab>
+          <Tab to="/reports/viewreports/cashreceipts">Cash Receipts</Tab>
+          <Tab to="/reports/viewreports/audittrail">Audit Trail</Tab>
+          <Tab to="/reports/viewreports/txns-report">All Transactions</Tab>
+          <Tab to="/reports/viewreports/receipt-numbers">Receipt Numbers</Tab>
+        </div>
+
+        <div className="tab-content font-12 ui-tab-panel">
+          <Outlet />
+        </div>
       </div>
     </div>
-  )
+  );
+}
+
+function Tab({ to, end, children }) {
+  return (
+    <NavLink
+      to={to}
+      end={end}
+      className={({ isActive }) => `ui-tab ${isActive ? "is-active" : ""}`}
+    >
+      {children}
+    </NavLink>
+  );
 }
 
 export default ViewReports;

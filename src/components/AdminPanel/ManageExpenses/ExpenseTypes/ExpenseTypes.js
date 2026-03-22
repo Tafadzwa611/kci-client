@@ -107,19 +107,21 @@ function Filter({setExpenseTypes}) {
     <Formik initialValues={{branch_id: ''}} onSubmit={onSubmit}>
       {({isSubmitting}) => (
         <div className='search_background'>
-          <div className='row-containers' style={{border:'none'}}>
+          <div className='row-containers sf-shellwrap'>
             <Form>
-                <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                  <div className='row-payments-container' style={{width:'19%'}}>
-                    <CustomSelectFilter label='Branch' name='branch_id'>
-                      <option value=''>------</option>
-                      {branches.map(branch => <option key={branch.id} value={branch.id}>{branch.name}</option>)}
-                    </CustomSelectFilter>
+                <div className='row row-payments row-loans sf-card'>
+                  <div className='sf-row sf-row-2'>
+                    <div className='row-payments-container'>
+                      <CustomSelectFilter label='Branch' name='branch_id'>
+                        <option value=''>------</option>
+                        {branches.map(branch => <option key={branch.id} value={branch.id}>{branch.name}</option>)}
+                      </CustomSelectFilter>
+                    </div>
                   </div>
                 </div>
-                <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between'}}>
-                  <SubmitButtonFilter isSubmitting={isSubmitting}/>
-                </div>
+                <div className='sf-submit'>
+                <SubmitButtonFilter isSubmitting={isSubmitting}/>
+              </div>
             </Form>
           </div>
         </div>

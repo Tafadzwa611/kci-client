@@ -5,7 +5,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Margin, usePDF } from 'react-to-pdf';
 
-function Table({statement, setStatement}) {
+function Table({ statement, setStatement }) {
   const [journalID, setJournalID] = useState(null);
   const [error, setError] = useState(null);
   const { toPDF, targetRef } = usePDF({
@@ -16,68 +16,144 @@ function Table({statement, setStatement}) {
   const goToJournalDetails = (evt) => {
     evt.preventDefault();
     setJournalID(evt.target.id);
-  }
+  };
 
   const reconcile = async (evt) => {
     evt.preventDefault();
     setError(null);
     try {
-      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      await axios.patch(`/acc-api/mark-reconciled/${statement.account_id}/`, {last_reconciliation_date: statement.report_date}, CONFIG);
-      setStatement(curr => ({...curr, reconciled: true}));
+      const CONFIG = {
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken'),
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      };
+      await axios.patch(
+        `/acc-api/mark-reconciled/${statement.account_id}/`,
+        { last_reconciliation_date: statement.report_date },
+        CONFIG
+      );
+      setStatement((curr) => ({ ...curr, reconciled: true }));
     } catch (error) {
       setError(JSON.stringify(error.response.data));
     }
-  }
+  };
 
   const removeClosure = async (evt) => {
     evt.preventDefault();
     setError(null);
     try {
-      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      await axios.patch(`/acc-api/remove_closure/${statement.account_id}/`, {closure_date: statement.report_date}, CONFIG);
-      setStatement(curr => ({...curr, reconciled: false}));
+      const CONFIG = {
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken'),
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      };
+      await axios.patch(
+        `/acc-api/remove_closure/${statement.account_id}/`,
+        { closure_date: statement.report_date },
+        CONFIG
+      );
+      setStatement((curr) => ({ ...curr, reconciled: false }));
     } catch (error) {
       setError(JSON.stringify(error.response.data));
     }
-  }
+  };
 
   return (
-    <div className='row cash-management-table' style={{columnGap: '5px', justifyContent: 'space-between'}}>
-      <div style={{width: '60%'}}>
-        <div style={{display: 'flex', flexDirection: 'row', columnGap: '10px', marginBottom: '10px'}}>
-          <div style={{display: 'flex', columnGap: '5px'}}>
+    <div
+      className="row cash-management-table"
+      style={{
+        columnGap: '5px',
+        justifyContent: 'space-between',
+        rowGap: '16px',
+        flexWrap: 'wrap',
+      }}
+    >
+      <div
+        style={{
+          width: '100%',
+          maxWidth: journalID ? 'calc(100% - 420px)' : '100%',
+          minWidth: 0,
+          flex: '1 1 700px',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            columnGap: '10px',
+            rowGap: '10px',
+            marginBottom: '10px',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              columnGap: '5px',
+              rowGap: '8px',
+              flexWrap: 'wrap',
+            }}
+          >
             <ReactHTMLTableToExcel
-              id='test-table-xls-button'
-              className='download-table-xls-button btn btn-default'
-              table='cash-balance'
-              filename='Cash Balance'
-              sheet='tablexls'
-              buttonText='Download as XLS'
+              id="test-table-xls-button"
+              className="download-table-xls-button btn btn-default"
+              table="cash-balance"
+              filename="Cash Balance"
+              sheet="tablexls"
+              buttonText="Download as XLS"
             />
-            <button className='btn btn-default' onClick={toPDF}>Download as PDF</button>
+            <button className="btn btn-default" onClick={toPDF}>
+              Download as PDF
+            </button>
           </div>
+
           {statement.reconciled ? (
-            <div style={{display:'flex', columnGap:'5px'}}>
-              <button className='btn btn-success'>
-                Closed
-              </button>
-              <button type='submit' className='btn btn-danger' onClick={removeClosure}>
+            <div
+              style={{
+                display: 'flex',
+                columnGap: '5px',
+                rowGap: '8px',
+                flexWrap: 'wrap',
+              }}
+            >
+              <button className="btn btn-success">Closed</button>
+              <button type="submit" className="btn btn-danger" onClick={removeClosure}>
                 Remove Closure
               </button>
             </div>
           ) : (
-            <button type='submit' onClick={reconcile} className='btn btn-default'>
+            <button type="submit" onClick={reconcile} className="btn btn-default">
               Close
             </button>
           )}
-          {error}
+
+          {error ? (
+            <div
+              style={{
+                width: '100%',
+                color: 'var(--danger, #dc2626)',
+                wordBreak: 'break-word',
+              }}
+            >
+              {error}
+            </div>
+          ) : null}
         </div>
-        <div style={{width:'100%', overflowX:'auto'}}>
-          <div className='table__height' ref={targetRef}>
-            <table id='cash-balance' className='table table-bordered table-condensed table-hover'>
+
+        <div style={{ width: '100%', overflowX: 'auto' }}>
+          <div className="table__height" ref={targetRef}>
+            <table
+              id="cash-balance"
+              className="table table-bordered table-condensed table-hover"
+              style={{ minWidth: '900px' }}
+            >
               <thead>
-                <tr className='journal-details header'>
+                <tr className="journal-details header">
                   <th>Date</th>
                   <th>Client</th>
                   <th>Account</th>
@@ -89,7 +165,14 @@ function Table({statement, setStatement}) {
                 </tr>
               </thead>
               <tbody>
-                <tr style={{background: Number(statement.balance_bd) >= 0 ? '#7FFF00' : '#FFB6C1', position:'sticky', top:'0'}} className='cashreport-balance'>
+                <tr
+                  style={{
+                    background: Number(statement.balance_bd) >= 0 ? '#7FFF00' : '#FFB6C1',
+                    position: 'sticky',
+                    top: '0',
+                  }}
+                  className="cashreport-balance"
+                >
                   <td>{statement.report_date}</td>
                   <td></td>
                   <td></td>
@@ -99,21 +182,37 @@ function Table({statement, setStatement}) {
                   <td>{Number(statement.balance_bd) >= 0 && statement.balance_bd}</td>
                   <td>{Number(statement.balance_bd) < 0 && Math.abs(statement.balance_bd)}</td>
                 </tr>
-                {statement.transactions.map(txn => {
+
+                {statement.transactions.map((txn) => {
                   return (
-                    <tr key={txn.id} className={txn.id == journalID ? 'cashreport-table selected': 'cashreport-table'}>
+                    <tr
+                      key={txn.id}
+                      className={txn.id == journalID ? 'cashreport-table selected' : 'cashreport-table'}
+                    >
                       <td>{txn.value_date}</td>
                       <td>{txn.client_name}</td>
                       <td>{txn.account_id}</td>
                       <td>{txn.description}</td>
                       <td>{txn.ref_account}</td>
-                      <td><a id={txn.id} href='#' onClick={goToJournalDetails}>{txn.reference}</a></td>
+                      <td>
+                        <a id={txn.id} href="#" onClick={goToJournalDetails}>
+                          {txn.reference}
+                        </a>
+                      </td>
                       <td>{txn.type === 'receipt' && txn.amount}</td>
                       <td>{txn.type === 'payment' && txn.amount}</td>
                     </tr>
-                  )
+                  );
                 })}
-                <tr style={{background: Number(statement.balance_cd) >= 0 ? '#7FFF00' : '#FFB6C1', position:'sticky', insetBlockEnd:'0'}} className='cashreport-balance'>
+
+                <tr
+                  style={{
+                    background: Number(statement.balance_cd) >= 0 ? '#7FFF00' : '#FFB6C1',
+                    position: 'sticky',
+                    insetBlockEnd: '0',
+                  }}
+                  className="cashreport-balance"
+                >
                   <td></td>
                   <td></td>
                   <td></td>
@@ -123,6 +222,7 @@ function Table({statement, setStatement}) {
                   <td>{Number(statement.balance_cd) < 0 && Math.abs(statement.balance_cd)}</td>
                   <td>{Number(statement.balance_cd) >= 0 && statement.balance_cd}</td>
                 </tr>
+
                 <tr>
                   <td></td>
                   <td></td>
@@ -138,9 +238,21 @@ function Table({statement, setStatement}) {
           </div>
         </div>
       </div>
-      {journalID ? <Journal journalID={journalID} setJournalID={setJournalID} /> : null}
+
+      {journalID ? (
+        <div
+          style={{
+            width: '100%',
+            maxWidth: '420px',
+            flex: '1 1 360px',
+            minWidth: 0,
+          }}
+        >
+          <Journal journalID={journalID} setJournalID={setJournalID} />
+        </div>
+      ) : null}
     </div>
-  )
+  );
 }
 
 export default Table;

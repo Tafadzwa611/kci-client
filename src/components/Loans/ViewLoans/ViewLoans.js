@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import OnlineApplications from '../OnlineApplications/OnlineApplications';
 import LoansList from '../LoansList/LoansList';
 import AddLoan from '../AddLoan/AddLoan';
@@ -14,8 +14,7 @@ import {
   Routes,
   Route,
   Outlet,
-  Link,
-  useLocation
+  NavLink
 } from 'react-router-dom';
 
 const ViewLoans = () => {
@@ -33,56 +32,70 @@ const ViewLoans = () => {
         <Route path='onlineapplications' element={<OnlineApplications />} />
         <Route path='calculator' element={<Calculator />} />
         <Route path='/collection_sheet/*' element={<CollectionHome />} />
-        <Route path='editloan/:loanType/:loanId' element={<EditLoan />}/>
-        <Route path='loandetails/:loanType/:loanId' element={<FullLoanDetails/>}/>
+        <Route path='editloan/:loanType/:loanId' element={<EditLoan />} />
+        <Route path='loandetails/:loanType/:loanId' element={<FullLoanDetails />} />
       </Route>
     </Routes>
-  )
-}
+  );
+};
 
 function FullLoanDetails() {
   const params = useParams();
+
   return (
     <Fetcher urls={[`/loansapi/get_loan/${params.loanId}/`]}>
-      {({data}) => <LoanDetails loanApiData={data[0]}/>}
+      {({ data }) => <LoanDetails loanApiData={data[0]} />}
     </Fetcher>
-  )
+  );
 }
 
 function Layout() {
-  const location = useLocation();
   return (
-    <div className='card'>
-      <div className='card-body'>
-        <h5 className='table-heading' style={{marginBottom:'20px'}}>View Loans</h5>
-        <>
-          <div className='bloc-tabs'>
-            <Link to='/loans/viewloans' id='list' className={location.pathname === '/loans/viewloans' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              View Loans
-            </Link>
-            <Link to='/loans/viewloans/addloan' id='add' className={location.pathname === '/loans/viewloans/addloan' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Add Loan
-            </Link>
-            <Link to='/loans/viewloans/approval' id='add' className={location.pathname === '/loans/viewloans/approval' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Batch Approval
-            </Link>
-            <Link to='/loans/viewloans/onlineapplications' id='onlineapplications' className={location.pathname === '/loans/viewloans/onlineapplications' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-             Online Applications
-            </Link>
-            <Link to='/loans/viewloans/calculator' id='calculator' className={location.pathname === '/loans/viewloans/calculator' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Loan Calculator
-            </Link>
-            <Link to='/loans/viewloans/collection_sheet' id='calculator' className={location.pathname === '/loans/viewloans/collection_sheet' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Collection Sheet
-            </Link>
-          </div>
-          <div className='tab-content font-12' style={{marginTop:'3rem'}}>
-            <Outlet />
-          </div>
-        </>
+    <div className='card ui-card'>
+      <div className='card-body ui-card-body'>
+        <div className='ui-page-head'>
+          <h5 className='table-heading ui-page-title'>View Loans</h5>
+        </div>
+
+        <div className='ui-tabs' aria-label='Loans tabs'>
+          <Tab to='/loans/viewloans' end>
+            View Loans
+          </Tab>
+          <Tab to='/loans/viewloans/addloan'>
+            Add Loan
+          </Tab>
+          <Tab to='/loans/viewloans/approval'>
+            Batch Approval
+          </Tab>
+          <Tab to='/loans/viewloans/onlineapplications'>
+            Online Applications
+          </Tab>
+          <Tab to='/loans/viewloans/calculator'>
+            Loan Calculator
+          </Tab>
+          <Tab to='/loans/viewloans/collection_sheet'>
+            Collection Sheet
+          </Tab>
+        </div>
+
+        <div className='tab-content font-12 ui-tab-panel'>
+          <Outlet />
+        </div>
       </div>
     </div>
-  )
+  );
+}
+
+function Tab({ to, end, children }) {
+  return (
+    <NavLink
+      to={to}
+      end={end}
+      className={({ isActive }) => `ui-tab ${isActive ? 'is-active' : ''}`}
+    >
+      {children}
+    </NavLink>
+  );
 }
 
 export default ViewLoans;

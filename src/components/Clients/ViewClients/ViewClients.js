@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import ClientsList from '../ClientsList/ClientsList';
 import NewAddClient from '../add_client/NewAddClient';
 import Sms from '../Sms/Sms';
@@ -8,10 +8,9 @@ import DiyLink from '../DiyLink/DiyLink';
 import {
   Routes,
   Route,
-  Link,
   Outlet,
-  useParams,
-  useLocation
+  NavLink,
+  useParams
 } from 'react-router-dom';
 import { Fetcher } from '../../../common';
 
@@ -28,11 +27,11 @@ const ViewClients = () => {
         <Route path='sms' element={<Sms />} />
         <Route path='apps' element={<OnlineApps />} />
         <Route path='link' element={<DiyLink />} />
-        <Route path='clientdetails/:clientId' element={<FullClientDetails/>}/>
+        <Route path='clientdetails/:clientId' element={<FullClientDetails />} />
       </Route>
     </Routes>
-  )
-}
+  );
+};
 
 function FullClientDetails() {
   const params = useParams();
@@ -47,42 +46,63 @@ function FullClientDetails() {
 
   return (
     <Fetcher urls={urls}>
-      {({data}) => <Client clientData={data[0]} clientControls={data[1]} staff={data[2]} staffTopLevelPerm={data[3]} units={data[4]}/>}
+      {({ data }) => (
+        <Client
+          clientData={data[0]}
+          clientControls={data[1]}
+          staff={data[2]}
+          staffTopLevelPerm={data[3]}
+          units={data[4]}
+        />
+      )}
     </Fetcher>
-  )
+  );
 }
 
 function Layout() {
-  const location = useLocation();
   return (
-    <div className='card'>
-      <div className='card-body'>
-        <h5 className='table-heading' style={{marginBottom:'20px'}}>View Clients</h5>
-        <>
-          <div className='bloc-tabs'>
-            <Link to='/clients/viewclients' id='list' className={location.pathname === '/clients/viewclients' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              View Clients
-            </Link>
-            <Link to='/clients/viewclients/addclient' id='add' className={location.pathname === '/clients/viewclients/addclient' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Add Client
-            </Link>
-            <Link to='/clients/viewclients/sms' id='sms' className={location.pathname === '/clients/viewclients/sms' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              SmS
-            </Link>
-            <Link to='/clients/viewclients/apps' id='apps' className={location.pathname === '/clients/viewclients/apps' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Online Applications
-            </Link>
-            <Link to='/clients/viewclients/link' id='link' className={location.pathname === '/clients/viewclients/link' ? 'tabs-client_a active-tabs' : 'tabs-client_a'}>
-              Diy Link
-            </Link>
-          </div>
-          <div className='tab-content font-12' style={{marginTop:'3rem'}}>
-            <Outlet />
-          </div>
-        </>
+    <div className='card ui-card'>
+      <div className='card-body ui-card-body'>
+        <div className='ui-page-head'>
+          <h5 className='table-heading ui-page-title'>View Clients</h5>
+        </div>
+
+        <div className='ui-tabs' aria-label='Clients tabs'>
+          <Tab to='/clients/viewclients' end>
+            View Clients
+          </Tab>
+          <Tab to='/clients/viewclients/addclient'>
+            Add Client
+          </Tab>
+          <Tab to='/clients/viewclients/sms'>
+            SmS
+          </Tab>
+          <Tab to='/clients/viewclients/apps'>
+            Online Applications
+          </Tab>
+          <Tab to='/clients/viewclients/link'>
+            Diy Link
+          </Tab>
+        </div>
+
+        <div className='tab-content font-12 ui-tab-panel'>
+          <Outlet />
+        </div>
       </div>
     </div>
-  )
+  );
+}
+
+function Tab({ to, end, children }) {
+  return (
+    <NavLink
+      to={to}
+      end={end}
+      className={({ isActive }) => `ui-tab ${isActive ? 'is-active' : ''}`}
+    >
+      {children}
+    </NavLink>
+  );
 }
 
 export default ViewClients;

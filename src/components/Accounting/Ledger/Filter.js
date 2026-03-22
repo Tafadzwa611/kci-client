@@ -23,7 +23,7 @@ const Filter = ({setTxns, setParams, setQueue}) => {
         setParams(params);
         const response = await axios.get('/acc-api/ledger/', {params: params});
         setTxns(response.data);
-      }else {
+      } else {
         data.file_format = values.mode;
         await axios.get('/acc-api/ledger_export/', {params: getParams(data)});
         setQueue(curr => ['Your request has been added to queue, you will receive a notification once its processed.', ...curr]);
@@ -44,48 +44,74 @@ const Filter = ({setTxns, setParams, setQueue}) => {
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue, errors, values}) => (
         <div className='search_background'>
-          <div className='row-containers' style={{border:'none'}}>
+          <div className='row-containers sf-shellwrap'>
             <Form>
-              <div style={{display:'flex', justifyContent:'space-between'}}>
-                <div className='row-payments-container' style={{width:'32%'}}>
-                  <CustomSelectFilter label='Currency' name='currency_id' required>
-                    <option value=''>------</option>
-                    {currencies.map(currency => <option key={currency.id} value={currency.id}>{currency.fullname}</option>)}
-                  </CustomSelectFilter>
+              <NonFieldErrors errors={errors}>
+                <div className='row row-payments row-loans sf-card'>
+                  <div className='sf-row sf-row-3'>
+                    <div className='row-payments-container sf-w-32'>
+                      <CustomSelectFilter label='Currency' name='currency_id' required>
+                        <option value=''>------</option>
+                        {currencies.map(currency => (
+                          <option key={currency.id} value={currency.id}>
+                            {currency.fullname}
+                          </option>
+                        ))}
+                      </CustomSelectFilter>
+                    </div>
+
+                    <div className='row-payments-container sf-w-32'>
+                      <CustomDatePickerFilter
+                        label='Start Value Date'
+                        name='min_date'
+                        setFieldValue={setFieldValue}
+                        required
+                      />
+                    </div>
+
+                    <div className='row-payments-container sf-w-32'>
+                      <CustomDatePickerFilter
+                        label='End Value Date'
+                        name='max_date'
+                        setFieldValue={setFieldValue}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className='sf-row sf-row-2 sf-mt-3'>
+                    <div className='row-payments-container sf-w-49'>
+                      <CustomSelectFilter label='Mode' name='mode' required>
+                        <option value='html'>Screen (HTML)</option>
+                        <option value='xlsx'>Excel</option>
+                        <option value='csv'>CSV</option>
+                      </CustomSelectFilter>
+                    </div>
+
+                    {values.currency_id ? (
+                      <div className='row-payments-container sf-w-49'>
+                        <CustomSelectRemoteFilter
+                          label='Account'
+                          url='/acc-api/search_account/'
+                          selected={values.account}
+                          params={[{key: 'currency_id', value: values.currency_id}]}
+                          setFieldValue={setFieldValue}
+                          queryParamName='query'
+                          placeholder='Search Account'
+                          name='account'
+                          required
+                        />
+                      </div>
+                    ) : (
+                      <div className='row-payments-container sf-w-49'></div>
+                    )}
+                  </div>
                 </div>
-                <div className='row-payments-container' style={{width:'32%'}}>
-                  <CustomDatePickerFilter label='Start Value Date' name='min_date' setFieldValue={setFieldValue} required/>
+
+                <div className='sf-submit'>
+                  <SubmitButtonFilter isSubmitting={isSubmitting}/>
                 </div>
-                <div className='row-payments-container' style={{width:'32%'}}>
-                  <CustomDatePickerFilter label='End Value Date' name='max_date' setFieldValue={setFieldValue} required/>
-                </div>
-              </div>
-              <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                <div className='row-payments-container' style={{width:'49%'}}>
-                  <CustomSelectFilter label='Mode' name='mode' required>
-                    <option value='html'>Screen (HTML)</option>
-                    <option value='xlsx'>Excel</option>
-                    <option value='csv'>CSV</option>
-                  </CustomSelectFilter>
-                </div>
-                {values.currency_id ? <div className='row-payments-container' style={{width:'49%'}}>
-                  <CustomSelectRemoteFilter
-                    label='Account'
-                    url='/acc-api/search_account/'
-                    selected={values.account}
-                    params={[{key: 'currency_id', value: values.currency_id}]}
-                    setFieldValue={setFieldValue}
-                    queryParamName='query'
-                    placeholder='Search Account'
-                    name='account'
-                    required
-                  />
-                </div> : null}
-              </div>
-              <div style={{display:'flex', justifyContent:'space-between'}}>
-                <SubmitButtonFilter isSubmitting={isSubmitting}/>
-              </div>
-              <NonFieldErrors errors={errors}/>
+              </NonFieldErrors>
             </Form>
           </div>
         </div>

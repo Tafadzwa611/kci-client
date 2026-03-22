@@ -4,7 +4,7 @@ function Summary({summary}) {
   return (
     <div style={{margin:'2rem 0'}}>
       <div>
-        <div style={{display:'grid', marginTop:'1.5rem', gridTemplateColumns: '1fr 1fr 1fr 1fr', columnGap: '10px'}}>
+        <div style={{display:'grid', marginTop:'1.5rem', gridTemplateColumns: '1fr', columnGap: '10px'}}>
           <div>
             <ul style={{display:'flex', flexDirection:'column', rowGap:'10px'}}>
               <li><b>Installments Info</b></li>

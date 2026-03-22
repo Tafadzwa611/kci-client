@@ -34,26 +34,33 @@ const DateRange = ({setMainAccounts}) => {
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {({isSubmitting, errors}) => (
           <div className='search_background'>
-            <div className='row-containers' style={{border:'none'}}>
+            <div className='row-containers sf-shellwrap'>
               <Form>
                 <NonFieldErrors errors={errors}>
-                  <div className='row row-payments row-loans' style={{marginTop:'1rem'}}>
-                    <div className='row-payments-container' style={{width:'30%'}}>
-                      <CustomSelectFilter label='Account Type' name='acc_type'>
-                        <option value=''>------</option>
-                        <option value={'ASSET'}>ASSET</option>
-                        <option value={'LIABILITY'}>LIABILITY</option>
-                        <option value={'EQUITY'}>EQUITY</option>
-                        <option value={'INCOME'}>INCOME</option>
-                        <option value={'EXPENSE'}>EXPENSE</option>
-                      </CustomSelectFilter>
+                  <div className='row row-payments row-loans sf-card'>
+                    <div className='sf-row sf-row-3'>
+                      <div className='row-payments-container sf-w-32'>
+                        <CustomSelectFilter label='Account Type' name='acc_type'>
+                          <option value=''>------</option>
+                          <option value={'ASSET'}>ASSET</option>
+                          <option value={'LIABILITY'}>LIABILITY</option>
+                          <option value={'EQUITY'}>EQUITY</option>
+                          <option value={'INCOME'}>INCOME</option>
+                          <option value={'EXPENSE'}>EXPENSE</option>
+                        </CustomSelectFilter>
+                      </div>
+
+                      <div className='row-payments-container sf-w-32'>
+                        <CustomInputFilter label='GL Code' name='gl_code'/>
+                      </div>
+
+                      <div className='row-payments-container sf-w-32'>
+                        <CustomInputFilter label='GL Name' name='gl_name'/>
+                      </div>
                     </div>
-                    <div className='row-payments-container' style={{width:'30%'}}>
-                      <CustomInputFilter label='GL Code' name='gl_code'/>
-                    </div>
-                    <div className='row-payments-container' style={{width:'30%'}}>
-                      <CustomInputFilter label='GL Name' name='gl_name'/>
-                    </div>
+                  </div>
+
+                  <div className='sf-submit'>
                     <SubmitButtonFilter isSubmitting={isSubmitting}/>
                   </div>
                 </NonFieldErrors>
@@ -67,4 +74,3 @@ const DateRange = ({setMainAccounts}) => {
 }
 
 export default DateRange;
-

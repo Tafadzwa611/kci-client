@@ -1,6 +1,6 @@
 import React from 'react';
 import SolidarityGroupForm from './SolidarityGroupForm';
-import { CustomMultiSelect } from '../../../common';
+import { CustomMultiSelect, NonFieldErrors, SubmitButton } from '../../../common';
 import { Form, Formik } from 'formik';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
@@ -53,7 +53,7 @@ function AddLoan() {
     setClientName(client_name);
     if (isNumeric(princ)) {
       setPrincipal(princ);
-    }else {
+    } else {
       setPrincipal('');
     }
   }, [princ, loan_product_id, client_id, client_name]);
@@ -85,20 +85,24 @@ function AddLoan() {
     unit_id: '',
     receipt_number: '',
     receipt_book_id: '',
-    ...(application_id && {application_id}),
-    ...(!lcontrols.auto_generate_loan_id && {loan_id: ''})
+    ...(application_id && { application_id }),
+    ...(!lcontrols.auto_generate_loan_id && { loan_id: '' })
   };
 
   const onChange = (value, setFieldValue, prevProductId) => {
     const product = products.find(prod => prod.id == value) || null;
     setProduct(product);
     setFieldValue('loan_product_id', value);
+
     if (product) {
-      const productFormIds = product.custom_forms.filter(form => form.required_on === 'CREATION').map(form => form.custom_field_set_id);
+      const productFormIds = product.custom_forms
+        .filter(form => form.required_on === 'CREATION')
+        .map(form => form.custom_field_set_id);
       setFormIds(productFormIds);
       setFieldValue('schedule_strategy', product.schedule_strategy);
       setFieldValue('fees', product.fees);
     }
+
     const prevProduct = products.find(prod => prod.id == prevProductId);
     if (prevProduct) {
       if (!product || prevProduct.client_type !== product.client_type) {
@@ -106,12 +110,13 @@ function AddLoan() {
         setFieldValue('group_id', '');
       }
     }
-  }
+  };
 
   const onSubmit = async (values, actions) => {
     const custom_data = processValues(values, customForms, formIds);
     try {
       const data = removeEmptyValues(values);
+
       if (data.fund_account) {
         data.fund_account_id = data.fund_account.value;
       }
@@ -123,89 +128,151 @@ function AddLoan() {
       if (loanControls.use_receipt_book) {
         data.receipt_book_id = values.receipt_book.value;
       }
-      const url = product.client_type === 'Groups (solidarity)' ? '/loansapi/add_soloan_api/' : '/loansapi/add_loan_api/';
-      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const response = await axios.post(url, {...data, fees: values.fees, custom_data_list: custom_data}, CONFIG);
-      navigate({pathname: `/loans/viewloans/loandetails/cli/${response.data.loan_id}`});
+
+      const url =
+        product.client_type === 'Groups (solidarity)'
+          ? '/loansapi/add_soloan_api/'
+          : '/loansapi/add_loan_api/';
+
+      const CONFIG = {
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken'),
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      };
+
+      const response = await axios.post(
+        url,
+        { ...data, fees: values.fees, custom_data_list: custom_data },
+        CONFIG
+      );
+
+      navigate({ pathname: `/loans/viewloans/loandetails/cli/${response.data.loan_id}` });
     } catch (error) {
       console.log(error);
       if (error.message === 'Network Error') {
-        actions.setErrors({responseStatus: 'Network Error'});
+        actions.setErrors({ responseStatus: 'Network Error' });
       } else if (error.response.status >= 400 && error.response.status < 500) {
-        actions.setErrors({responseStatus: error.response.status, ...error.response.data});
+        actions.setErrors({ responseStatus: error.response.status, ...error.response.data });
       } else {
-        actions.setErrors({responseStatus: error.response.status});
+        actions.setErrors({ responseStatus: error.response.status });
       }
     }
-  }
+  };
 
   return (
     <Formik key={JSON.stringify(initialValues)} initialValues={initialValues} onSubmit={onSubmit}>
-      {({isSubmitting, setFieldValue, errors, values}) => (
-        <Form>
-          <div className='divider divider-info'>
-            <span>Loan Product</span>
-          </div>
-          <CustomMultiSelect
-            label='Loan Product'
-            name='product'
-            isMulti={false}
-            setFieldValue={(fieldName, selectedOpts) => {
-              onChange(selectedOpts.value, setFieldValue, values.loan_product_id);
-              setFieldValue(fieldName, selectedOpts);
-            }}
-            options={products.map(product => ({
-              label: `${product.currency_shortname} - ${product.loan_product_id} ${product.name} ${product.client_type}`,
-              value: product.id
-            }))}
-            required
-          />
-          {product ? {
-            'Groups': <ClientFormFields
-              product={product}
-              lcontrols={lcontrols}
-              isSubmitting={isSubmitting}
-              setFieldValue={setFieldValue}
-              values={values}
-              formIds={formIds}
-              customForms={customForms}
-              units={units}
-              clientControls={clientControls}
-              cashAccounts={cashAccounts}
-            />,
-            'Clients': <ClientFormFields
-              product={product}
-              lcontrols={lcontrols}
-              clientName={clientName}
-              isSubmitting={isSubmitting}
-              setFieldValue={setFieldValue}
-              values={values}
-              formIds={formIds}
-              customForms={customForms}
-              units={units}
-              clientControls={clientControls}
-              cashAccounts={cashAccounts}
-            />,
-            'Groups (solidarity)': <SolidarityGroupForm
-              product={product}
-              isSubmitting={isSubmitting}
-              setFieldValue={setFieldValue}
-              values={values}
-              units={units}
-              clientControls={clientControls}
-            />
-          }[product.client_type] : null}
-          {Object.keys(errors).length > 0 && (
-            <div className='row custom-background' style={{marginTop: '15px'}}>
-              <div className='col-9'>
-                <div style={{fontSize: 12, color: 'red'}}>{JSON.stringify(errors)}</div>
+      {({ isSubmitting, setFieldValue, errors, values }) => (
+        <Form autoComplete="off" className="sf-form">
+          <div className="sf-page">
+            <div className="sf-shell">
+              <div className="sf-shell-head">
+                <div className="sf-shell-title">Add Loan</div>
+                <div className="sf-shell-subtitle">
+                  Select a loan product, then complete the required details based on the product’s client type.
+                </div>
+              </div>
+
+              <div className="sf-shell-body">
+                <section className="sf-section">
+                  <div className="sf-section-head">
+                    <div className="sf-section-title">Loan product</div>
+                    <div className="sf-section-hint">
+                      This selection determines the fields shown below.
+                    </div>
+                  </div>
+
+                  <div className="sf-section-body sf-stack">
+                    <CustomMultiSelect
+                      label="Loan Product"
+                      name="product"
+                      isMulti={false}
+                      setFieldValue={(fieldName, selectedOpts) => {
+                        onChange(selectedOpts.value, setFieldValue, values.loan_product_id);
+                        setFieldValue(fieldName, selectedOpts);
+                      }}
+                      options={products.map(product => ({
+                        label: `${product.currency_shortname} - ${product.loan_product_id} ${product.name} ${product.client_type}`,
+                        value: product.id
+                      }))}
+                      required
+                    />
+                  </div>
+                </section>
+
+                {product ? (
+                  <section className="sf-section">
+                    <div className="sf-section-head">
+                      <div className="sf-section-title">Loan details</div>
+                      <div className="sf-section-hint">
+                        Complete the fields below to create the loan.
+                      </div>
+                    </div>
+
+                    <div className="sf-section-body">
+                      {{
+                        'Groups': (
+                          <ClientFormFields
+                            product={product}
+                            lcontrols={lcontrols}
+                            isSubmitting={isSubmitting}
+                            setFieldValue={setFieldValue}
+                            values={values}
+                            formIds={formIds}
+                            customForms={customForms}
+                            units={units}
+                            clientControls={clientControls}
+                            cashAccounts={cashAccounts}
+                          />
+                        ),
+                        'Clients': (
+                          <ClientFormFields
+                            product={product}
+                            lcontrols={lcontrols}
+                            clientName={clientName}
+                            isSubmitting={isSubmitting}
+                            setFieldValue={setFieldValue}
+                            values={values}
+                            formIds={formIds}
+                            customForms={customForms}
+                            units={units}
+                            clientControls={clientControls}
+                            cashAccounts={cashAccounts}
+                          />
+                        ),
+                        'Groups (solidarity)': (
+                          <SolidarityGroupForm
+                            product={product}
+                            isSubmitting={isSubmitting}
+                            setFieldValue={setFieldValue}
+                            values={values}
+                            units={units}
+                            clientControls={clientControls}
+                          />
+                        )
+                      }[product.client_type] || null}
+                    </div>
+                  </section>
+                ) : null}
+
+                {Object.keys(errors).length > 0 && (
+                  <div className="sf-errorbox">
+                    <div className="sf-errorbox-title">Form errors</div>
+                    <pre className="sf-errorbox-pre">{JSON.stringify(errors, null, 2)}</pre>
+                  </div>
+                )}
+              </div>
+
+              <div className="sf-shell-footer">
+                <SubmitButton isSubmitting={isSubmitting} />
               </div>
             </div>
-          )}
+          </div>
         </Form>
       )}
     </Formik>
-  )
+  );
 }
 
 const processValues = (values, customForms, formIds) => {
@@ -214,12 +281,12 @@ const processValues = (values, customForms, formIds) => {
     const fields = [];
     form.fields.forEach(field => {
       if (values[`custom_${field.id}`]) {
-        fields.push({'field_id': field.id, [field.data_type]: values[`custom_${field.id}`]});
+        fields.push({ field_id: field.id, [field.data_type]: values[`custom_${field.id}`] });
       }
     });
-    return {'field_set_id': form.id, 'fields': fields}
+    return { field_set_id: form.id, fields: fields };
   });
-  return custom_data
-}
+  return custom_data;
+};
 
 export default AddLoan;
