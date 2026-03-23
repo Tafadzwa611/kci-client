@@ -6,38 +6,22 @@ const NonFieldErrors = ({children, errors}) => {
     return (
       <>
         {children}
-        <div className='row custom-background' style={{marginTop: '15px', display:"flex", justifyContent:"center"}}>
-          <div className='col-12' style={{color:"red", padding:"1.75rem 1rem", border:"1px solid red", backgroundColor: "#ffe5e5"}}>
-            <div style={{fontSize: 12, color: 'red'}}>Server Error please try again later. If error persists please contact developer.</div>
-          </div>
+        <div className='sf-errorbox'>
+          <div className="sf-errorbox-title">Form errors</div>
+          <pre className="sf-errorbox-pre">Server Error please try again later. If error persists please contact developer.</pre>
         </div>
       </>
     )
   }
 
   if (errors.responseStatus >= 400) {
-    if ('detail' in errors) {
-      return (
-        <>
-          {children}
-          <div className='row custom-background' style={{marginTop: '15px', display:"flex", justifyContent:"center"}}>
-            <div className='col-12' style={{color:"red", padding:"1.75rem 1rem", border:"1px solid red", backgroundColor: "#ffe5e5"}}>
-              {typeof errors.detail === 'string' ?
-              <div style={{fontSize: 12, color: 'red'}}>Error: {JSON.stringify(errors.detail)}</div> :
-              Array.isArray(errors.detail) ? errors.detail.map((error, idx) => <DictError key={idx} error={error}/>) : <DictError error={errors.detail}/>}
-            </div>
-          </div>
-        </>
-      )
-    }
     return (
       <>
         {children}
-        <div className='row custom-background' style={{marginTop: '15px', display:"flex", justifyContent:"center"}}>
-          <div className='col-12' style={{color:"red", padding:"1.75rem 1rem", border:"1px solid red", backgroundColor: "#ffe5e5"}}>
-            Error: {JSON.stringify(errors)}
+          <div className='sf-errorbox'>
+            <div className="sf-errorbox-title">Form errors</div>
+            <pre className="sf-errorbox-pre">{JSON.stringify(errors, null, 2)}</pre>
           </div>
-        </div>
       </>
     )
   }
@@ -46,11 +30,10 @@ const NonFieldErrors = ({children, errors}) => {
     return (
       <>
         {children}
-        <div className='row custom-background' style={{marginTop: '15px', display:"flex", justifyContent:"center"}}>
-          <div className='col-12' style={{color:"red", padding:"1.75rem 1rem", border:"1px solid red", backgroundColor: "#ffe5e5"}}>
-            <div style={{fontSize: 12, color: 'red'}}>Network Error</div>
+          <div className='sf-errorbox'>
+            <div className="sf-errorbox-title">Form errors</div>
+            <pre className="sf-errorbox-pre">Network Error</pre>
           </div>
-        </div>
       </>
     )
   }
