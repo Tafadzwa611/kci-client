@@ -12,6 +12,7 @@ import Audit from './Audit';
 import Fees from './Fees';
 import TopUpList from './TopUpList';
 import CustomData from './CustomData';
+import Requests from './Requests';
 
 function BlocTabs({loan, setLoan, client_name, setLoanData}) {
   const [tab, setTab] = useState('details');
@@ -29,6 +30,7 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
         <button className={tab === 'schedule' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('schedule')}>Schedule</button>
         <button className={tab === 'txns' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('txns')}>Transactions</button>
         <button className={tab === 'payments' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('payments')}>Payments</button>
+        <button className={tab === 'requests' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('requests')}>Requests</button>
         <button className={tab === 'fees' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('fees')}>
             Fees
           </button>
@@ -62,6 +64,7 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
           accountId={loan.loan_id}
           clientName={loan.client_fullname ? loan.client_fullname : loan.group_name}
         />,
+        requests: <Requests requests={loan.requests} setLoan={setLoan}/>,
         securities: <Securities collaterals={loan.collaterals} setLoan={setLoan} loanId={loan.id} />,
         loans: <SubLoans loans={loan.sub_loans_list} client_name={client_name} />,
         schedule: <ScheduleTab
