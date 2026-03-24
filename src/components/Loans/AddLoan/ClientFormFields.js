@@ -10,7 +10,6 @@ import { scheduleStrategies } from './data';
 import Fee from './Fee';
 import { useBranches } from '../../../contexts/BranchesContext';
 import CustomForm from './CustomForm';
-import { useReceiptBooks } from '../../../contexts/ReceiptBooksContext';
 
 function ClientFormFields({
   product,
@@ -25,10 +24,7 @@ function ClientFormFields({
   clientControls,
   cashAccounts
 }) {
-  const [selectedRb, setSelectedRb] = React.useState({});
   const { branches } = useBranches();
-  const { receiptBooks } = useReceiptBooks();
-  const receiptBooksObj = Object.fromEntries(receiptBooks.map(rb => [rb.id, rb]));
 
   const hideInterest = Boolean(product.default_interest_rate);
   const hideInstallments = Boolean(product.default_loan_duration);
@@ -228,60 +224,6 @@ function ClientFormFields({
           )}
         </div>
       </section>
-
-      {lcontrols.request_receipt_number && lcontrols.disburse_loan_on_capture && (
-        <section className="sf-section">
-          <div className="sf-section-head">
-            <div className="sf-section-title">Receipt</div>
-            <div className="sf-section-hint">
-              Receipt details are required when disbursing on capture.
-            </div>
-          </div>
-
-          <div className="sf-section-body sf-stack">
-            {lcontrols.use_receipt_book ? (
-              <>
-                <CustomMultiSelect
-                  label="Receipt Book"
-                  name="receipt_book"
-                  isMulti={false}
-                  setFieldValue={(fieldName, selectedOpts) => {
-                    setFieldValue(fieldName, selectedOpts);
-                    const selectedRb = receiptBooksObj[selectedOpts.value];
-                    setSelectedRb(selectedRb);
-                    if (selectedRb.mode == 1) {
-                      setFieldValue('receipt_number', '');
-                    }
-                  }}
-                  options={receiptBooks
-                    .filter(rb => rb.is_active && rb.currency.id == product.currency_id)
-                    .map(rb => ({
-                      label: `${rb.name} - ${rb.branch.name} - ${rb.branch.name}`,
-                      value: rb.id
-                    }))}
-                  required
-                />
-
-                {selectedRb.mode === 2 && (
-                  <CustomInput
-                    label="Receipt Number"
-                    name="receipt_number"
-                    type="text"
-                    required
-                  />
-                )}
-              </>
-            ) : (
-              <CustomInput
-                label="Receipt Number"
-                name="receipt_number"
-                type="text"
-                required
-              />
-            )}
-          </div>
-        </section>
-      )}
 
       {customForms.filter(form => formIds.includes(form.id)).length > 0 && (
         <section className="sf-section">
