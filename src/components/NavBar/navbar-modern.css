@@ -4296,7 +4296,10 @@ body.dark .css-169l02m-menu, body.dark .css-1jknvbe-menu,
   border: none !important;
   min-height: 0;
 }
-
+.css-qc6sy-singleValue {
+  color: var(--sf-text) !important;
+}
+ 
 /* .css-1d8n9bt {
     padding: 0 8px;
 } */
@@ -4308,6 +4311,19 @@ body.dark .css-169l02m-menu, body.dark .css-1jknvbe-menu,
 /* .css-1pndypt-Input {
   width: 42px;
 } */
+ @media (max-width: 1524px) {
+  .dash-charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 12px;
+  }
+}
+
+ @media (max-width: 480pc) {
+  .dash-charts {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
 
 @media screen and (max-width: 900px) {
   .row {

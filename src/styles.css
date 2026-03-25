@@ -3547,7 +3547,7 @@ input[type=number] {
 #dark .css-6j8wv5-Input,
 #dark .css-qc6sy-singleValue,
 #dark .css-1pndypt-Input {
-  color: var(--light-color) !important;
+  color: var(--light-color);
 }
 
 .css-26l3qy-menu {

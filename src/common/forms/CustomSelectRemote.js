@@ -326,6 +326,7 @@ function CustomSelectRemote({
       minHeight: '42px',
       borderRadius: '12px',
       border: '1px solid var(--sf-border)',
+      color: 'var(--sf--text)',
       background: isDarkMode
         ? 'rgba(255, 255, 255, 0.06)'
         : 'rgba(2, 6, 23, 0.02)',
