@@ -125,10 +125,6 @@ function AddLoan() {
         data.branch_id = data.branch.value;
       }
 
-      if (loanControls.use_receipt_book) {
-        data.receipt_book_id = values.receipt_book.value;
-      }
-
       const url =
         product.client_type === 'Groups (solidarity)'
           ? '/loansapi/add_soloan_api/'

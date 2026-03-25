@@ -4235,12 +4235,12 @@ body.dark  .css-1hgnrag-control,
 .journal-details.header {
   z-index: 1;
 }
-.css-169l02m-menu {
+.css-169l02m-menu, .css-1jknvbe-menu {
   background: #fff !important;
 }
 /* Dark mode */
-body.dark .css-169l02m-menu,
-[data-theme="dark"] .css-169l02m-menu{
+body.dark .css-169l02m-menu, body.dark .css-1jknvbe-menu,
+[data-theme="dark"] .css-169l02m-menu, [data-theme="dark"] .css-1jknvbe-menu{
   background: #0b1220 !important;
 }
 .custom__select__width {
@@ -4275,6 +4275,40 @@ body.dark .css-169l02m-menu,
   width: 24%;
   margin-top: 1.5rem;
 }
+.css-1s2u09g-control {
+  height: 42px !important;
+} 
+.css-ackcql {
+    margin: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+    visibility: visible;
+    color: rgb(51, 51, 51);
+    flex: 1 1 auto;
+    display: inline-grid;
+    grid-area: 1 / 1 / 2 / 3;
+    grid-template-columns: none;
+    box-sizing: border-box;
+    border: none;
+}
+.css-ackcql input, .css-ackcql input:focus {
+  background: none !important;
+  border: none !important;
+  min-height: 0;
+}
+
+/* .css-1d8n9bt {
+    padding: 0 8px;
+} */
+
+/* .css-1okebmr-indicator-Separator {
+  display: none;
+} */
+
+/* .css-1pndypt-Input {
+  width: 42px;
+} */
+
 @media screen and (max-width: 900px) {
   .row {
       display: grid;

@@ -1,13 +1,272 @@
-import React, {useEffect} from 'react';
+// import React, {useEffect} from 'react';
+// import AsyncSelect from 'react-select/async';
+// import axios from 'axios';
+// import { useField } from 'formik';
+// import { uuidv4 } from '../../utils';
+
+// function CustomSelectRemote({url, label, selected, queryParamName, params, setFieldValue, placeholder, isMulti, ...props}) {
+//   const [field, meta] = useField(props);
+
+//   const inputId = uuidv4();
+
+//   useEffect(() => {
+//     setIsRequired(selected);
+//   }, []);
+
+//   const setIsRequired = (selected) => {
+//     const el = document.getElementById(inputId);
+//     if (selected === null || selected === '') {
+//       el.required = props.required;
+//     }else if (selected.length === 0) {
+//       el.required = props.required;
+//     }else {
+//       el.required = false;
+//     }
+//   }
+
+//   const onChange = selected => {
+//     if (!selected) {
+//       setFieldValue(field.name, '');
+//       return
+//     }
+//     setFieldValue(field.name, selected);
+//     setIsRequired(selected);
+//   }
+
+//   const loadOptions = (inputValue, callback) => {
+//     if (inputValue.length <= 1) return
+//     let search = '';
+//     if (params) {
+//       params.forEach(param => {
+//         search += `&${param.key}=${param.value}`;
+//       });
+//     }
+//     axios.get(`${url}?${queryParamName}=${inputValue}${search}`).then((response) => callback(response.data))
+//   };
+
+//   return (
+//     <div className='row custom-background'>
+//       <label className='form-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
+//       <div className='col-9'>
+//         <div className='custom__select__width'>
+//           {isMulti ?
+//           <AsyncSelect 
+//             onChange={onChange} 
+//             value={selected} 
+//             loadOptions={loadOptions} 
+//             placeholder={placeholder} 
+//             inputId={inputId} 
+//             isMulti 
+//             isClearable 
+//             theme={(theme) => ({
+//               ...theme,
+//               colors: {
+//                 ...theme.colors,
+//                 primary25: '',
+//               },
+//             })}
+//           /> :
+//           <AsyncSelect 
+//             onChange={onChange} 
+//             value={selected} 
+//             loadOptions={loadOptions} 
+//             placeholder={placeholder} 
+//             inputId={inputId} 
+//             isClearable 
+//             theme={(theme) => ({
+//               ...theme,
+//               colors: {
+//                 ...theme.colors,
+//                 primary25: '',
+//               },
+//             })}
+//           />}
+//           {meta.error && <div className='error'>{meta.error}</div>}
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
+
+// export default CustomSelectRemote;
+
+// import React, { useEffect, useRef } from 'react';
+// import AsyncSelect from 'react-select/async';
+// import axios from 'axios';
+// import { useField } from 'formik';
+// import { uuidv4 } from '../../utils';
+
+// function CustomSelectRemote({
+//   url,
+//   label,
+//   selected,
+//   queryParamName,
+//   params,
+//   setFieldValue,
+//   placeholder,
+//   isMulti,
+//   ...props
+// }) {
+//   const [field, meta] = useField(props);
+//   const inputId = useRef(uuidv4()).current;
+
+//   useEffect(() => {
+//     setIsRequired(selected);
+//   }, []);
+
+//   const setIsRequired = (selected) => {
+//     const el = document.getElementById(inputId);
+//     if (!el) return;
+
+//     if (selected === null || selected === '') {
+//       el.required = props.required;
+//     } else if (Array.isArray(selected) && selected.length === 0) {
+//       el.required = props.required;
+//     } else {
+//       el.required = false;
+//     }
+//   };
+
+//   const onChange = (selected) => {
+//     if (!selected) {
+//       setFieldValue(field.name, '');
+//       setIsRequired('');
+//       return;
+//     }
+//     setFieldValue(field.name, selected);
+//     setIsRequired(selected);
+//   };
+
+//   const loadOptions = (inputValue, callback) => {
+//     if (inputValue.length <= 1) return;
+//     let search = '';
+//     if (params) {
+//       params.forEach((param) => {
+//         search += `&${param.key}=${param.value}`;
+//       });
+//     }
+//     axios
+//       .get(`${url}?${queryParamName}=${inputValue}${search}`)
+//       .then((response) => callback(response.data));
+//   };
+
+// const selectStyles = {
+//   container: (base) => ({
+//     ...base,
+//     width: '100%',
+//   }),
+
+//   control: (base) => ({
+//       ...base,
+//       width: '100%',
+//       minWidth: 0,
+//       height: '42px',
+//       minHeight: '42px',
+//       borderRadius: '12px',
+//       border: '1px solid var(--sf-border)',
+//       background: 'rgba(2, 6, 23, 0.02)', // light mode default
+//       boxShadow: 'none',
+
+//       '&:hover': {
+//         border: '1px solid var(--sf-border)',
+//       },
+//     }),
+
+//     valueContainer: (base) => ({
+//       ...base,
+//       height: '42px',
+//       padding: '0 10px',
+//     }),
+
+//     input: (base) => ({
+//       ...base,
+//       margin: 0,
+//       padding: 0,
+//     }),
+
+//     indicatorsContainer: (base) => ({
+//       ...base,
+//       height: '42px',
+//     }),
+
+//     menu: (base) => ({
+//       ...base,
+//       zIndex: 9999,
+//     }),
+//   };
+
+//   return (
+//     <div className='row custom-background'>
+//       <label className='form-label'>
+//         {label}
+//         {props.required && <span style={{ color: 'red' }}>&#42;</span>}
+//       </label>
+//       <div className='col-9'>
+//         <div className='custom__select__width'>
+//           {isMulti ? (
+//             <AsyncSelect
+//               onChange={onChange}
+//               value={selected}
+//               loadOptions={loadOptions}
+//               placeholder={placeholder}
+//               inputId={inputId}
+//               isMulti
+//               isClearable
+//               styles={selectStyles}
+//               theme={(theme) => ({
+//                 ...theme,
+//                 colors: {
+//                   ...theme.colors,
+//                   primary25: '',
+//                 },
+//               })}
+//             />
+//           ) : (
+//             <AsyncSelect
+//               onChange={onChange}
+//               value={selected}
+//               loadOptions={loadOptions}
+//               placeholder={placeholder}
+//               inputId={inputId}
+//               isClearable
+//               styles={selectStyles}
+//               theme={(theme) => ({
+//                 ...theme,
+//                 colors: {
+//                   ...theme.colors,
+//                   primary25: '',
+//                 },
+//               })}
+//             />
+//           )}
+//           {meta.error && <div className='error'>{meta.error}</div>}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default CustomSelectRemote;
+
+import React, { useEffect, useRef } from 'react';
 import AsyncSelect from 'react-select/async';
 import axios from 'axios';
 import { useField } from 'formik';
 import { uuidv4 } from '../../utils';
 
-function CustomSelectRemote({url, label, selected, queryParamName, params, setFieldValue, placeholder, isMulti, ...props}) {
+function CustomSelectRemote({
+  url,
+  label,
+  selected,
+  queryParamName,
+  params,
+  setFieldValue,
+  placeholder,
+  isMulti,
+  ...props
+}) {
   const [field, meta] = useField(props);
-
-  const inputId = uuidv4();
+  const inputId = useRef(uuidv4()).current;
 
   useEffect(() => {
     setIsRequired(selected);
@@ -15,77 +274,140 @@ function CustomSelectRemote({url, label, selected, queryParamName, params, setFi
 
   const setIsRequired = (selected) => {
     const el = document.getElementById(inputId);
+    if (!el) return;
+
     if (selected === null || selected === '') {
       el.required = props.required;
-    }else if (selected.length === 0) {
+    } else if (Array.isArray(selected) && selected.length === 0) {
       el.required = props.required;
-    }else {
+    } else {
       el.required = false;
     }
-  }
+  };
 
-  const onChange = selected => {
+  const onChange = (selected) => {
     if (!selected) {
       setFieldValue(field.name, '');
-      return
+      setIsRequired('');
+      return;
     }
     setFieldValue(field.name, selected);
     setIsRequired(selected);
-  }
+  };
 
   const loadOptions = (inputValue, callback) => {
-    if (inputValue.length <= 1) return
+    if (inputValue.length <= 1) return;
     let search = '';
     if (params) {
-      params.forEach(param => {
+      params.forEach((param) => {
         search += `&${param.key}=${param.value}`;
       });
     }
-    axios.get(`${url}?${queryParamName}=${inputValue}${search}`).then((response) => callback(response.data))
+    axios
+      .get(`${url}?${queryParamName}=${inputValue}${search}`)
+      .then((response) => callback(response.data));
+  };
+
+  const isDarkMode =
+    document.documentElement.getAttribute('data-theme') === 'dark' ||
+    document.body.classList.contains('dark');
+
+  const selectStyles = {
+    container: (base) => ({
+      ...base,
+      width: '100%',
+    }),
+
+    control: (base) => ({
+      ...base,
+      width: '100%',
+      minWidth: 0,
+      height: '42px',
+      minHeight: '42px',
+      borderRadius: '12px',
+      border: '1px solid var(--sf-border)',
+      background: isDarkMode
+        ? 'rgba(255, 255, 255, 0.06)'
+        : 'rgba(2, 6, 23, 0.02)',
+      boxShadow: 'none',
+      '&:hover': {
+        border: '1px solid var(--sf-border)',
+      },
+    }),
+
+    valueContainer: (base) => ({
+      ...base,
+      height: '42px',
+      padding: '0 10px',
+    }),
+
+    input: (base) => ({
+      ...base,
+      margin: 0,
+      padding: 0,
+    }),
+
+    indicatorsContainer: (base) => ({
+      ...base,
+      height: '42px',
+    }),
+
+    menu: (base) => ({
+      ...base,
+      width: '100%',
+      zIndex: 9999,
+    }),
   };
 
   return (
     <div className='row custom-background'>
-      <label className='form-label'>{label}{props.required && <span style={{color: 'red'}}>&#42;</span>}</label>
+      <label className='form-label'>
+        {label}
+        {props.required && <span style={{ color: 'red' }}>&#42;</span>}
+      </label>
       <div className='col-9'>
         <div className='custom__select__width'>
-          {isMulti ?
-          <AsyncSelect 
-            onChange={onChange} 
-            value={selected} 
-            loadOptions={loadOptions} 
-            placeholder={placeholder} 
-            inputId={inputId} 
-            isMulti 
-            isClearable 
-            theme={(theme) => ({
-              ...theme,
-              colors: {
-                ...theme.colors,
-                primary25: '',
-              },
-            })}
-          /> :
-          <AsyncSelect 
-            onChange={onChange} 
-            value={selected} 
-            loadOptions={loadOptions} 
-            placeholder={placeholder} 
-            inputId={inputId} 
-            isClearable 
-            theme={(theme) => ({
-              ...theme,
-              colors: {
-                ...theme.colors,
-                primary25: '',
-              },
-            })}
-          />}
+          {isMulti ? (
+            <AsyncSelect
+              onChange={onChange}
+              value={selected}
+              loadOptions={loadOptions}
+              placeholder={placeholder}
+              inputId={inputId}
+              isMulti
+              isClearable
+              styles={selectStyles}
+              theme={(theme) => ({
+                ...theme,
+                colors: {
+                  ...theme.colors,
+                  primary25: '',
+                },
+              })}
+            />
+          ) : (
+            <AsyncSelect
+              onChange={onChange}
+              value={selected}
+              loadOptions={loadOptions}
+              placeholder={placeholder}
+              inputId={inputId}
+              isClearable
+              styles={selectStyles}
+              theme={(theme) => ({
+                ...theme,
+                colors: {
+                  ...theme.colors,
+                  primary25: '',
+                },
+              })}
+            />
+          )}
           {meta.error && <div className='error'>{meta.error}</div>}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default CustomSelectRemote;
