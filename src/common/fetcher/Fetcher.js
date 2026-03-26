@@ -31,14 +31,12 @@ const Fetcher = ({urls, children, extra}) => {
 
 function Error({errorMessage, setLoading}) {
   return (
-    <div className='col-12' style={{color:"red", border:"1px solid red", backgroundColor: "#ffe5e5", height:'75px'}}>
-      <div style={{fontSize: 12, color: 'red', display:'flex', alignItems:'center', height:'100%', paddingLeft:'20px'}}>
-        {errorMessage}
-        <span className='retry__span' onClick={() => setLoading(true)}>
-          Retry
-        </span>
+    <>
+      <div className='sf-errorbox'>
+        <div className="sf-errorbox-title">{errorMessage}</div>
+        <pre className="sf-errorbox-pre" style={{cursor:'pointer'}} onClick={() => setLoading(true)}>Retry</pre>
       </div>
-    </div>
+    </>
   )
 }
 

@@ -152,7 +152,7 @@ body {
 #dark .guarantor_border,
 #dark .footer,
 #dark .row-containers,
-#dark .input-group,
+/* #dark .input-group, */
 #dark .custom-select-form, 
 #dark .custom-select, 
 #dark .btn-export, 
@@ -459,7 +459,7 @@ a {
   padding: .45rem .9rem;
   font-size: .9rem;
   line-height: var(--line-height);
-  border-radius: .15rem;
+  border-radius: 12px;
 }
 
 .input-group-login {
@@ -931,7 +931,7 @@ span {
   padding: .45rem .9rem;
   font-size: var(--medium-font-size);
   line-height: var(--line-height);
-  border-radius: .15rem;
+  border-radius: 12px;
   -webkit-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;

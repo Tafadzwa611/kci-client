@@ -210,6 +210,7 @@ function AddClientForm({
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
+            margin-bottom: 1rem;
           }
 
           .sf-label {
