@@ -76,6 +76,14 @@ const List = ({initControls}) => {
                     <td>{loanControls.disburse_loan_on_capture ? 'Yes' : 'No'}</td>
                   </tr>
                   <tr>
+                    <td>Client Profile Required</td>
+                    <td>{loanControls.client_profile_required ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
+                    <td>Check Cash Balance On DB</td>
+                    <td>{loanControls.check_cash_balance_on_db ? 'Yes' : 'No'}</td>
+                  </tr>
+                  <tr>
                     <td>Select Branch On Loan Creation</td>
                     <td>{loanControls.select_branch_on_loan_creation ? 'Yes' : 'No'}</td>
                   </tr>
@@ -173,6 +181,8 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
     loan_id_format: loanControls.loan_id_format,
     allow_overpayments: loanControls.allow_overpayments,
     client_guarantor_required: loanControls.client_guarantor_required,
+    client_profile_required: loanControls.client_profile_required,
+    check_cash_balance_on_db: loanControls.check_cash_balance_on_db,
     group_guarantor_required: loanControls.group_guarantor_required,
     use_receipt_book: loanControls.use_receipt_book,
     two_man_rules: loanControls.two_man_rules.map(rule => ({label: rule, value: rule})),
@@ -204,6 +214,8 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
       send_payment_sms_notification: values.send_payment_sms_notification,
       client_guarantor_required: values.client_guarantor_required,
       group_guarantor_required: values.group_guarantor_required,
+      client_profile_required: values.client_profile_required,
+      check_cash_balance_on_db: values.check_cash_balance_on_db,
       use_receipt_book: values.use_receipt_book,
       two_man_rules: values.two_man_rules.map(rule => rule.value),
       ...(values.max_num_of_loans && {max_num_of_loans: values.max_num_of_loans}),
@@ -260,6 +272,8 @@ const UpdateLoanControls = ({open, setOpen, loanControls, setLoanControls}) => {
                   <CustomCheckbox label='SMS Payment Notification Always Enabled' name='send_payment_sms_notification'/>
                   <CustomCheckbox label='Allow Overpayments' name='allow_overpayments'/>
                   <CustomCheckbox label='Client Guarantor Required' name='client_guarantor_required'/>
+                  <CustomCheckbox label='Client Profile Required' name='client_profile_required'/>
+                  <CustomCheckbox label='Check Cash Balance On DB' name='check_cash_balance_on_db'/>
                   <CustomCheckbox label='Group Guarantor Required' name='group_guarantor_required'/>
                   <CustomMultiSelect
                     label='Two Man Rules'
