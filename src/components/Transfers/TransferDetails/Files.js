@@ -109,31 +109,9 @@ function Files({transfer, setTransfer}) {
               Download
             </span>
             {error === Errors.downError ? 'Error downloading' : null}
-            {/* <span style={{cursor:'pointer'}} className='badge badge-danger' id={file.id} onClick={deleteFile}>Remove</span>
-            {error === Errors.delError ? 'Error deleting' : null} */}
           </div>
         ))}
       </div>
-      {/* <Dropzone onDrop={onDrop}>
-        {({acceptedFiles, getRootProps, getInputProps}) => (
-          <section className='container'>
-            <div {...getRootProps({className: 'dropzone'})}>
-              <input {...getInputProps()} />
-              <p className='dropzone__text'>Drag and drop some files here, or click to select files</p>
-            </div>
-            <aside>
-              <p style={{marginTop:'1rem'}}>Files</p>
-              <ul>
-                {acceptedFiles.map(file => (
-                  <li key={file.path}>
-                    {file.path} {progress[file.path].status} {progress[file.path].progress}%
-                  </li>
-                ))}
-              </ul>
-            </aside>
-          </section>
-        )}
-      </Dropzone> */}
     </>
   )
 }

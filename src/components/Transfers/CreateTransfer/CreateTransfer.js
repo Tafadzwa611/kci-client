@@ -19,33 +19,6 @@ function CreateTransfer({ transfertypes }) {
     files: [],
   };
 
-  const uploadFileToSpaces = (file, url, setProgress) => {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('PUT', url);
-
-      xhr.onload = () => resolve();
-      xhr.onerror = (evt) => reject(evt);
-
-      xhr.upload.onprogress = (event) => {
-        if (event.lengthComputable) {
-          const percentage = (event.loaded / event.total) * 100;
-          setProgress((curr) => ({
-            ...curr,
-            [file.path]: {
-              ...curr[file.path],
-              progress: Math.round(percentage),
-              status: 'In Progress',
-            }
-          }));
-        }
-      };
-
-      const blob = new Blob([file], { type: file.type || 'application/octet-stream' });
-      xhr.send(blob);
-    });
-  };
-
   const onSubmit = async (values, actions) => {
     try {
       if (!values.files || values.files.length !== 1) {
@@ -56,41 +29,15 @@ function CreateTransfer({ transfertypes }) {
         return;
       }
 
-      let uploadedFiles = [];
+      const currentFile = values.files[0];
 
-      const initialProgress = {};
-      values.files.forEach((item) => {
-        initialProgress[item.file.path] = { progress: 0, status: 'Queued' };
-      });
-      setProgress(initialProgress);
-
-      const urls = Array(values.files.length).fill(
-        '/usersapi/get_signed_url/?client_method=put_object&bucket=lenda-client-files'
-      );
-
-      const signedUrls = await axios.all(urls.map((url) => axios.get(url)));
-
-      uploadedFiles = await Promise.all(
-        signedUrls.map(async (response, idx) => {
-          const currentFile = values.files[idx];
-
-          await uploadFileToSpaces(currentFile.file, response.data.url, setProgress);
-
-          setProgress((curr) => ({
-            ...curr,
-            [currentFile.file.path]: {
-              ...curr[currentFile.file.path],
-              progress: 100,
-              status: 'Uploaded',
-            }
-          }));
-
-          return {
-            filename: response.data.filename,
-            description: currentFile.description || currentFile.file.name,
-          };
-        })
-      );
+      if (!currentFile.uploaded_filename) {
+        actions.setErrors({
+          files: ['File upload failed. Please upload the file again.']
+        });
+        actions.setSubmitting(false);
+        return;
+      }
 
       const data = {
         ...removeEmptyValues({
@@ -101,7 +48,12 @@ function CreateTransfer({ transfertypes }) {
           description: values.description,
           date_added: values.date_added,
         }),
-        files: uploadedFiles,
+        files: [
+          {
+            filename: currentFile.uploaded_filename,
+            description: currentFile.description || currentFile.file?.name,
+          }
+        ],
       };
 
       const CONFIG = {
