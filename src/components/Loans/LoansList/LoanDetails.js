@@ -50,7 +50,7 @@ function LoanDetails({ loanApiData, close }) {
                 <span style={{ margin: '0 5px' }}><b>{loan.loan_id}</b></span> /
                 <div style={{ marginLeft: '5px' }}>
                   <button className={statusClasses[loan.status]}>
-                    {loan.status} {loan.auto_restructured && '(Auto Restructured)'}
+                    {loan.status === 'Approved' ? 'Awaiting Disbursement' : loan.status} {loan.auto_restructured && '(Auto Restructured)'}
                   </button>
                 </div>
               </div>

@@ -1,11 +1,17 @@
 import React from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import { Form, Formik } from 'formik';
 import {
+  ActionModal,
+  ModalActionSubmit,
+  NonFieldErrors,
+  CustomDatePickerFilter,
   CustomSelectFilter,
   SubmitButtonFilter
 } from '../../../common';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import { removeEmptyValues, getParams } from '../../../utils/utils';
 
 
 function ReceiptNumbers() {
@@ -28,15 +34,37 @@ function ReceiptNumbers() {
     <div>
       <Filter rbs={rbs} setReceiptNumbers={setReceiptNumbers} />
       {receiptNumbers && (
-        <Table receiptNumbers={receiptNumbers} />
+        <Table receiptNumbers={receiptNumbers} setReceiptNumbers={setReceiptNumbers} />
       )}
     </div>
   )
 }
 
-function Table({ receiptNumbers }) {
+const MODAL_STATES = {
+  reuse: 'reuse',
+  none: false,
+};
+
+function Table({ receiptNumbers, setReceiptNumbers }) {
+  const { none, reuse } = MODAL_STATES;
+  const [modal, setModal] = React.useState(none);
+  const rnRef = React.useRef(null);
+
+  const openApproveModal = (evt) => {
+    const rn = receiptNumbers.find(rn => rn.id == evt.target.id);
+    rnRef.current = rn;
+    setModal(reuse);
+  };
+
   return (
     <div>
+      {modal == reuse && (
+        <ReuseReceipt
+          receipt={rnRef.current}
+          setOpen={setModal}
+          setReceiptNumbers={setReceiptNumbers}
+        />
+      )}
       <div style={{paddingTop: '2rem'}}></div>
       <div className='table-responsive font-12'>
         <div style={{marginBottom: '1rem', float: 'right'}}>
@@ -53,7 +81,6 @@ function Table({ receiptNumbers }) {
           <tbody>
             <tr className='journal-details header'>
               <th>Details</th>
-              <th>Prefix</th>
               <th>Receipt_Number</th>
               <th>Receipt_Book_Name</th>
               <th>Receipt_Book_Branch</th>
@@ -61,11 +88,11 @@ function Table({ receiptNumbers }) {
               <th>Txn_Date</th>
               <th>Entry_Date</th>
               <th>Source_ID</th>
+              <th>Action</th>
             </tr>
             {receiptNumbers.map((rn) => (
-              <tr className='table-row' key={rn.id}>
+              <tr className='table-row' key={rn.receipt_number}>
                 <td>{rn.receipt_info}</td>
-                <td>{rn.receipt_book_prefix}</td>
                 <td>{rn.receipt_number}</td>
                 <td>{rn.receipt_book_name}</td>
                 <td>{rn.receipt_book_branch}</td>
@@ -73,6 +100,26 @@ function Table({ receiptNumbers }) {
                 <td>{rn.value_date}</td>
                 <td>{rn.entry_date}</td>
                 <td>{rn.source_id}</td>
+                <td>
+                  {rn.used_for === 'Orphaned' && (
+                    <button
+                      id={rn.id}
+                      onClick={openApproveModal}
+                      style={{
+                      background: '#1bbf5f',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '.15rem',
+                      cursor: 'pointer',
+                      padding: '.2rem .25rem',
+                      fontSize: '0.75rem',
+                      marginLeft: '5px',
+                      }}
+                    >
+                      Reuse
+                    </button>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -85,7 +132,9 @@ function Table({ receiptNumbers }) {
 function Filter({rbs, setReceiptNumbers}) {
   const onSubmit = async (values, actions) => {
     try {
-      const response = await axios.get(`/reportsapi/receipt_numbers/${values.receipt_book_id}/`);
+      const data = removeEmptyValues(values);
+      const params = getParams(data);
+      const response = await axios.get(`/reportsapi/receipt_numbers/${values.receipt_book_id}/`, {params});
       setReceiptNumbers(response.data);
     } catch (error) {
       console.log(error);
@@ -101,7 +150,7 @@ function Filter({rbs, setReceiptNumbers}) {
 
   return (
     <Formik initialValues={{ receipt_book_id: '' }} onSubmit={onSubmit}>
-      {({isSubmitting}) => (
+      {({isSubmitting, setFieldValue}) => (
         <div className='search_background'>
           <div className='row-containers sf-shellwrap'>
             <Form>
@@ -116,6 +165,27 @@ function Filter({rbs, setReceiptNumbers}) {
                         </option>
                       ))}
                     </CustomSelectFilter>
+                    <CustomSelectFilter label='Used For' name='used_for'>
+                      <option value=''>------</option>
+                      <option value='Payment'>Payment</option>
+                      <option value='Expense'>Expense</option>
+                      <option value='Orphaned'>Orphaned</option>
+                      <option value='Unused'>Unused</option>
+                    </CustomSelectFilter>
+                    <div className="row-payments-container sf-w-49">
+                      <CustomDatePickerFilter
+                        label="Min Date"
+                        name="min_created_at"
+                        setFieldValue={setFieldValue}
+                      />
+                    </div>
+                    <div className="row-payments-container sf-w-49">
+                      <CustomDatePickerFilter
+                        label="Max Date"
+                        name="max_created_at"
+                        setFieldValue={setFieldValue}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -129,6 +199,72 @@ function Filter({rbs, setReceiptNumbers}) {
       )}
     </Formik>
   )
+}
+
+const UNUSED = 'Unused';
+
+function ReuseReceipt({ receipt, setOpen, setReceiptNumbers }) {
+  const updateItem = (id) => {
+    setReceiptNumbers(curr => curr.map(rn => {
+      return rn.id === id ? ({
+        ...rn,
+        'receipt_info': UNUSED,
+        'used_for': UNUSED,
+        'source_id': null,
+        'value_date': null,
+        'entry_date': null,
+      }) : (
+        rn
+      );
+    }));
+  };
+
+  const onSubmit = async (values, actions) => {
+    try {
+      const CONFIG = {
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken'),
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      };
+      await axios.post(`/reportsapi/reuse_receipt/${receipt.id}/`, values, CONFIG);
+      updateItem(receipt.id);
+      setOpen(false);
+      actions.resetForm();
+    } catch (error) {
+      if (error.message === 'Network Error') {
+        actions.setErrors({ responseStatus: 'Network Error' });
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        actions.setErrors({ responseStatus: error.response.status, ...error.response.data });
+      } else {
+        actions.setErrors({ responseStatus: error.response.status });
+      }
+    }
+  };
+
+  return (
+    <ActionModal text='add'>
+      <Formik initialValues={{}} onSubmit={onSubmit}>
+        {({ errors, isSubmitting }) => (
+          <Form>
+            <div className='title' style={{ fontSize: '0.875rem' }}>
+              Are you sure you want to reuse this receipt?<br />
+              <b>
+                Receipt Number: {receipt.receipt_number}<br />
+                Receipt Info: {receipt.receipt_info}<br />
+                Receipt Book Name: {receipt.receipt_book_name}<br />
+                Receipt Book Branch: {receipt.receipt_book_branch}<br />
+                Entry Date: {receipt.entry_date}<br />
+              </b>
+            </div>
+            <ModalActionSubmit text='add' isSubmitting={isSubmitting} setOpen={setOpen} act='Reuse' />
+            <NonFieldErrors errors={errors} />
+          </Form>
+        )}
+      </Formik>
+    </ActionModal>
+  );
 }
 
 export default ReceiptNumbers;

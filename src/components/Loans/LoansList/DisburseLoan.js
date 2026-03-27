@@ -21,8 +21,8 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
   const [cooldownLeft, setCooldownLeft] = React.useState(0);
   const intervalRef = React.useRef();
   const { receiptBooks } = useReceiptBooks();
-
-   const receiptBooksObj = Object.fromEntries(receiptBooks.map(rb => [rb.id, rb]));
+  const receiptBooksObj = Object.fromEntries(receiptBooks.map(rb => [rb.id, rb]));
+  const [selectedRb, setSelectedRb] = React.useState({});
 
   const initialValues = {
     send_sms_notification: false,
@@ -109,81 +109,84 @@ function DisburseLoan({setOpen, url, setLoanDetails, loan, updateLoanList, setLo
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ errors, isSubmitting, setFieldValue }) => (
               <Form>
-                <NonFieldErrors errors={errors}>
-                  <div className='create_modal_container'>
-                    <div>
+                <div className='create_modal_container'>
+                  <div>
+                    <CustomDatePicker
+                      label='Disbursement Date'
+                      name='disbursement_date'
+                      setFieldValue={setFieldValue}
+                      required
+                      allowKeyDown
+                    />
+                    {loan.product_type === 'Dynamic Term Loan' && (
                       <CustomDatePicker
-                        label='Disbursement Date'
-                        name='disbursement_date'
+                        label='Interest Start Date'
+                        name='interest_start_date'
                         setFieldValue={setFieldValue}
                         required
                         allowKeyDown
                       />
-                      {loan.product_type === 'Dynamic Term Loan' && (
-                        <CustomDatePicker
-                          label='Interest Start Date'
-                          name='interest_start_date'
-                          setFieldValue={setFieldValue}
-                          required
-                          allowKeyDown
-                        />
-                      )}
-                      <CustomMultiSelect
-                        label='Fund Account'
-                        name='fund_account'
-                        isMulti={false}
-                        setFieldValue={setFieldValue}
-                        options={data[0].accounts.filter(account => !account.suspended && account.currency_id == loan.currency_id).map(account => (
-                          {label: `${account.label} - ${account.branch}`, value: account.value}
-                        ))}
-                        required
-                      />
-                      <CustomInput
-                        label='Establishment Fee Paid'
-                        name='estab_fee_paid'
-                        type='number'
-                      />
-                      <CustomMultiSelect
-                        label='Receipt Book'
-                        name='receipt_book'
-                        isMulti={false}
-                        setFieldValue={(fieldName, selectedOpts) => {
-                          setFieldValue(fieldName, selectedOpts);
-                          const selectedRb = receiptBooksObj[selectedOpts.value];
-                          if (selectedRb.mode == 1) {
-                            setFieldValue('receipt_number', '');
-                          }
-                        }}
-                        options={receiptBooks.filter(rb => rb.is_active && rb.currency.id == loan.currency_id).map(rb => (
-                          {label: `${rb.name} - ${rb.branch.name} - ${{1: 'AUTO', 2: 'MANUAL'}[rb.mode]}`, value: rb.id}
-                        ))}
-                      />
+                    )}
+                    <CustomMultiSelect
+                      label='Fund Account'
+                      name='fund_account'
+                      isMulti={false}
+                      setFieldValue={setFieldValue}
+                      options={data[0].accounts.filter(account => !account.suspended && account.currency_id == loan.currency_id).map(account => (
+                        {label: `${account.label} - ${account.branch}`, value: account.value}
+                      ))}
+                      required
+                    />
+                    <CustomInput
+                      label='Establishment Fee Paid'
+                      name='estab_fee_paid'
+                      type='number'
+                    />
+                    <CustomMultiSelect
+                      label='Receipt Book'
+                      name='receipt_book'
+                      isMulti={false}
+                      setFieldValue={(fieldName, selectedOpts) => {
+                        setFieldValue(fieldName, selectedOpts);
+                        const selectedRb = receiptBooksObj[selectedOpts.value];
+                        setSelectedRb(selectedRb);
+                        if (selectedRb.mode == 1) {
+                          setFieldValue('receipt_number', '');
+                        }
+                      }}
+                      options={receiptBooks.filter(rb => rb.is_active && rb.currency.id == loan.currency_id).map(rb => (
+                        {label: `${rb.name} - ${rb.branch.name} - ${{1: 'AUTO', 2: 'MANUAL'}[rb.mode]}`, value: rb.id}
+                      ))}
+                    />
+                    {selectedRb.mode === 2 && (
                       <CustomInput
                         label='Receipt Number'
                         name='receipt_number'
                         type='text'
+                        required
                       />
-                      {lcontrols.request_otp_on_db ? (
-                        <>
-                          <CustomInput
-                            label='OTP'
-                            name='otp'
-                            type='text'
-                            required
-                          />
-                          <button className='btn btn-info' onClick={handleRequestOtp} disabled={disabled}>
-                            {isSending
-                              ? "Sending..."
-                              : cooldownLeft > 0
-                                ? `Send OTP (${cooldownLeft}s)`
-                                : "Send OTP"}
-                          </button>
-                        </>
-                      ) : null}
-                    </div>
-                    <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+                    )}
+                    {lcontrols.request_otp_on_db ? (
+                      <>
+                        <CustomInput
+                          label='OTP'
+                          name='otp'
+                          type='text'
+                          required
+                        />
+                        <button className='btn btn-info' onClick={handleRequestOtp} disabled={disabled}>
+                          {isSending
+                            ? "Sending..."
+                            : cooldownLeft > 0
+                              ? `Send OTP (${cooldownLeft}s)`
+                              : "Send OTP"}
+                        </button>
+                      </>
+                    ) : null}
                   </div>
-                </NonFieldErrors>
+                  <NonFieldErrors errors={errors}/>
+                  <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+                </div>
               </Form>
             )}
           </Formik>

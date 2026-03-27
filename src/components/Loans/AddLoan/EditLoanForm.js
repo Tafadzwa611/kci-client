@@ -96,10 +96,6 @@ const EditLoanFoam = ({
         data.fund_account_id = data.fund_account.value;
       }
 
-      if (lcontrols.use_receipt_book) {
-        data.receipt_book_id = values.receipt_book.value;
-      }
-
       const CONFIG = {
         headers: {
           'X-CSRFToken': Cookies.get('csrftoken'),

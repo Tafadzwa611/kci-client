@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import ApproveLoan from './ApproveLoan';
-import UndoLoanApproval from './UndoLoanApproval';
 import DeleteLoan from './DeleteLoan';
 import RejectLoan from './RejectLoan';
 import DisburseLoan from './DisburseLoan';
@@ -41,6 +40,7 @@ const MODAL_STATES = {
   none: false
 };
 
+
 const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
   const {
     lockInt,
@@ -49,7 +49,6 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
     deleteLoan,
     disburse,
     undoDisburse,
-    undoApproval,
     addPayment,
     addFee,
     writeOff,
@@ -98,16 +97,17 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
       </div>
     )
   } else if (loan.status == 'Approved') {
-    const undoApprovalUrl = loanType === 'cli' ? `/loansapi/undo_loan_approval/${loan.id}/` : `/loansapi/undo_sloan_approval/${loan.id}/`;
+    const deleteUrl = loanType === 'cli' ? `/loansapi/delete_loan/${loan.id}/` : `/loansapi/delete_sloan/${loan.id}/`;
     const disburseUrl = loanType === 'cli' ? `/loansapi/disburse_loan/${loan.id}/` : `/loansapi/disburse_sloan/${loan.id}/`;
     return (
       <div style={{display:'flex', columnGap:'3px'}}>
-        {modal === undoApproval && <UndoLoanApproval
-          updateLoanList={updateLoanList}
-          setLoanData={setLoanData}
+        {modal === deleteLoan && <DeleteLoan
+          loanId={loan.id}
           setOpen={setModal}
-          url={undoApprovalUrl}
+          url={deleteUrl}
           setLoanDetails={setLoanDetails}
+          setLoanId={setLoanId}
+          setLoanData={setLoanData}
         />}
         {modal === disburse && (
           <Fetcher urls={['/loansapi/loan_controls/']}>
@@ -125,7 +125,6 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
           </Fetcher>
         )}
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
-          {/* <button className='btn btn-olive' onClick={() => setModal(undoApproval)}>Undo Approve</button> */}
           <button className='btn btn-olive'>
             <Link to={`/loans/viewloans/editloan/${loanType}/${loan.id}`}>Edit</Link>
           </button>

@@ -36,7 +36,14 @@ function Payments({
 
   return (
     <>
-      {modal == reverse && <DeletePayment paymentId={payId} setOpen={setModal} setLoan={setLoan} setPayId={setPayId}/>}
+      {modal == reverse && (
+        <DeletePayment 
+          payment={paymentRef.current}
+          setOpen={setModal}
+          setLoan={setLoan}
+          setPayId={setPayId}
+        />
+      )}
       {modal == edit && <EditPayment selectedPayment={paymentRef.current} setOpen={setModal} setLoan={setLoan} setSelectedPayment={setSelectedPayment}/>}
       {modal == refund && <Refund currencyId={currencyId} selectedPayment={paymentRef.current} setOpen={setModal} setLoan={setLoan} payId={payId} setSelectedPayment={setSelectedPayment}/>}
       <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'1rem'}}>
@@ -73,6 +80,7 @@ function Payments({
                       <th className='schedule__table'>To_Be Refunded</th>
                       <th className='schedule__table'>Total Amount_Paid</th>
                       <th className='schedule__table'>Receipt_Number</th>
+                      <th className='schedule__table'>Action</th>
                     </tr>
                   }
                 </thead>
@@ -110,6 +118,25 @@ function Payments({
                           <td className='schedule__table'>{payment.money_to_be_refunded}</td>
                           <td className='schedule__table'>{payment.amount_paid}</td>
                           <td className='schedule__table'>{payment.receipt_number}</td>
+                          <td className='schedule__table'>
+                            <button
+                              id={payment.id}
+                              onClick={showModal}
+                              data-name={reverse}
+                              style={{
+                                background: '#f5424b',
+                                color: '#fff',
+                                border: 'none',
+                                borderRadius: '.15rem',
+                                cursor: 'pointer',
+                                padding: '.2rem .25rem',
+                                marginLeft: '5px',
+                                fontSize: '0.75rem',
+                              }}
+                            >
+                              Reverse
+                            </button>
+                          </td>
                         </>}
                     </tr>
                   ))}

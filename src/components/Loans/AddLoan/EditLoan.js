@@ -27,6 +27,7 @@ function EditLoan() {
       </Fetcher>
     )
   }
+
   return (
     <Fetcher urls={[`/loansapi/get_loan/${params.loanId}/`,]}>
       {({data}) => (

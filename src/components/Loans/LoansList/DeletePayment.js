@@ -3,27 +3,31 @@ import { Form, Formik } from 'formik';
 import {
   Modal,
   ModalSubmit,
-  NonFieldErrors,
-  CustomDatePicker
+  NonFieldErrors
 } from '../../../common';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { removeEmptyValues } from '../../../utils/utils';
 
-const DeletePayment = ({setOpen, paymentId, setLoan, setPayId}) => {
+
+const DeletePayment = ({setOpen, payment, setLoan, setPayId}) => {
   const onSubmit = async (values, actions) => {
     try {
-      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const startTime = performance.now();
-      const response = await axios.post(`/loansapi/delete_payment/${paymentId}/`, values, CONFIG);
-      const endTime = performance.now();
-      const elapsedTimeInSeconds = (endTime - startTime) / 1000;
-      console.log(`Execution time: ${elapsedTimeInSeconds} seconds`);
+      const CONFIG = {
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken'),
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      };
+      const response = await axios.post(
+        `/loansapi/delete_payment/${payment.id}/`,
+        removeEmptyValues(values),
+        CONFIG
+      );
       setLoan(response.data);
       setOpen(false);
       setPayId(null);
-      const endTime2 = performance.now();
-      const elapsedTimeInSeconds2 = (endTime2 - startTime) / 1000;
-      console.log(`Execution time 2: ${elapsedTimeInSeconds2} seconds`);
     } catch (error) {
       if (error.message === 'Network Error') {
         actions.setErrors({responseStatus: 'Network Error'});
@@ -38,16 +42,21 @@ const DeletePayment = ({setOpen, paymentId, setLoan, setPayId}) => {
   return (
     <Modal open={true} setOpen={setOpen} title='Reverse Payment'>
       <Formik initialValues={{value_date: ''}} onSubmit={onSubmit}>
-        {({ errors, isSubmitting, setFieldValue }) => (
+        {({ errors, isSubmitting }) => (
           <Form>
-            <NonFieldErrors errors={errors}>
-              <div className='create_modal_container'>
-                <div>
-                  <CustomDatePicker label='Reversal Date' name='value_date' setFieldValue={setFieldValue} required/>
-                </div>
-                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+            <div className='create_modal_container'>
+              <div>
+                Are you sure you want to reverse this payment?<br />
+                <b>
+                  Amount: {payment.amount_paid}<br />
+                  Requested By: {payment.user_name}<br />
+                  Collection Date: {payment.cdate_created}<br />
+                  Receipt Number: {payment.receipt_number}<br />
+                </b>
               </div>
-            </NonFieldErrors>
+              <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen}/>
+            </div>
+            <NonFieldErrors errors={errors}/>
           </Form>
         )}
       </Formik>
@@ -56,20 +65,3 @@ const DeletePayment = ({setOpen, paymentId, setLoan, setPayId}) => {
 }
 
 export default DeletePayment;
-
-// <ActionModal open={true} setOpen={setOpen} title={'Reverse Payment'}>
-    //   <Formik initialValues={{expected_disbursement_date: ''}} onSubmit={onSubmit}>
-    //     {({ errors, isSubmitting }) => (
-    //       <Form>
-    //         <NonFieldErrors errors={errors}>
-    //           <ActionModalDialog 
-    //             isSubmitting={isSubmitting} 
-    //             msg={'Are you sure you want to reverse this payment.'} 
-    //             setOpen={setOpen}
-    //             act={'Reverse'}
-    //           />
-    //         </NonFieldErrors>
-    //       </Form>
-    //     )}
-    //   </Formik>
-    // </ActionModal>
