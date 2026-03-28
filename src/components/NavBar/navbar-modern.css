@@ -4299,19 +4299,8 @@ body.dark .css-169l02m-menu, body.dark .css-1jknvbe-menu,
 .css-qc6sy-singleValue {
   color: var(--sf-text) !important;
 }
- 
-/* .css-1d8n9bt {
-    padding: 0 8px;
-} */
 
-/* .css-1okebmr-indicator-Separator {
-  display: none;
-} */
-
-/* .css-1pndypt-Input {
-  width: 42px;
-} */
- @media (max-width: 1524px) {
+@media (max-width: 1524px) {
   .dash-charts {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -4319,7 +4308,7 @@ body.dark .css-169l02m-menu, body.dark .css-1jknvbe-menu,
   }
 }
 
- @media (max-width: 480pc) {
+ @media (max-width: 480px) {
   .dash-charts {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }

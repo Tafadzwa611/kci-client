@@ -22,22 +22,22 @@ function MiniTable({loanData, handleClick, selectedLoanId}) {
                       <tr className='tr-class' key={loan.id}>
                         <td style={{display:"flex", flexDirection:"column", rowGap:"10px"}}>
                           {(selectedLoanId==loan.id) ?
-                          <>
-                            <span style={{display:'flex', columnGap:'10px'}}>
+                          <span style={{display:'grid', rowGap:'5px'}}>
+                            <span style={{display:'grid', rowGap:'5px'}}>
                               <span onClick={handleClick} id={loan.id} style={{fontSize:'0.75rem', cursor:'pointer', color: 'red'}} className='link'>{loan.loan_id}</span>
-                              <span style={{width:"100px"}} className={statusClasses[loan.status]}>{loan.status}</span>
+                              <span style={{width:"140px"}} className={statusClasses[loan.status]}>{loan.status === 'Approved' ? 'Awaiting Disbursement' : loan.status} {loan.auto_restructured && '(Auto Restructured)'}</span>
                             </span>
                             <span>{loan.client_name}</span> 
                             <span>{loan.group_name}</span> 
-                          </>:
-                          <>
-                            <span style={{display:'flex', columnGap:'10px'}}>
+                          </span>:
+                          <span style={{display:'grid', rowGap:'5px'}}>
+                            <span style={{display:'grid', rowGap:'5px'}}>
                               <span onClick={handleClick} id={loan.id} style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>{loan.loan_id}</span>
-                              <span style={{width:"100px"}} className={statusClasses[loan.status]}>{loan.status}</span>
+                              <span style={{width:"140px"}} className={statusClasses[loan.status]}>{loan.status === 'Approved' ? 'Awaiting Disbursement' : loan.status} {loan.auto_restructured && '(Auto Restructured)'}</span>
                             </span>
                             <span>{loan.client_name}</span> 
                             <span>{loan.group_name}</span> 
-                          </>}
+                          </span>}
                         </td>
                       </tr>
                     )
