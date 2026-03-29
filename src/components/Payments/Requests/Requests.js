@@ -208,7 +208,7 @@ function Table({ params, requests, setRequests }) {
                         {request.amount_paid}
                       </td>
                       <td style={{ verticalAlign: 'middle' }}>
-                        {request.receipt_number || 'N/A'}
+                        {request.receipt_number}
                       </td>
                       <td style={{ verticalAlign: 'middle' }}>
                         {request.status === 'Pending' && (

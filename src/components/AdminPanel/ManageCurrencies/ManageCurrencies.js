@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Currencies from './Currencies';
 import AddCurrency from './AddCurrency';
 import EditCurrency from './EditCurrency';
+import Denominations from './Denominations';
 import {
   Routes,
   Route,
@@ -20,6 +21,7 @@ function ManageCurrencies() {
         <Route index element={<Currencies />} />
         <Route path='addcurrency' element={<AddCurrency />} />
         <Route path='editcurrency/:currencyId' element={<EditCurrency />} />
+        <Route path='denominations/' element={<Denominations />} />
       </Route>
     </Routes>
   );
@@ -31,6 +33,9 @@ function Layout() {
       <div className='ui-tabs' aria-label='Currency tabs'>
         <Tab to='/users/admin' end>
           Currencies
+        </Tab>
+        <Tab to='/users/admin/denominations' end>
+          Denominations
         </Tab>
       </div>
 
