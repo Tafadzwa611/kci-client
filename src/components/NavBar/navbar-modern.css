@@ -2385,12 +2385,18 @@ body.dark .sf-section{
 
 /* Inputs: target your existing input class names */
 .custom-select-form,
-.sf-form input,
 .sf-form select,
 .sf-form textarea{
   border-radius: 12px !important;
   border: 1px solid var(--sf-border) !important;
   background: rgba(2,6,23,0.02) !important;
+  color: var(--sf-text) !important;
+  min-height: 42px;
+}
+
+.sf-form input {
+  border-radius: 12px !important;
+  /* background: rgba(2,6,23,0.02) !important; */
   color: var(--sf-text) !important;
   min-height: 42px;
 }
@@ -2402,9 +2408,9 @@ body.dark .sf-section{
 html[data-theme="dark"] .custom-select-form,
 body[data-theme="dark"] .custom-select-form,
 body.dark .custom-select-form,
-html[data-theme="dark"] .sf-form input,
+/* html[data-theme="dark"] .sf-form input,
 body[data-theme="dark"] .sf-form input,
-body.dark .sf-form input,
+body.dark .sf-form input, */
 html[data-theme="dark"] .sf-form select,
 body[data-theme="dark"] .sf-form select,
 body.dark .sf-form select{
