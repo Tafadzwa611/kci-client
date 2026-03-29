@@ -2385,12 +2385,18 @@ body.dark .sf-section{
 
 /* Inputs: target your existing input class names */
 .custom-select-form,
-.sf-form input,
 .sf-form select,
 .sf-form textarea{
   border-radius: 12px !important;
   border: 1px solid var(--sf-border) !important;
   background: rgba(2,6,23,0.02) !important;
+  color: var(--sf-text) !important;
+  min-height: 42px;
+}
+
+.sf-form input {
+  border-radius: 12px !important;
+  /* background: rgba(2,6,23,0.02) !important; */
   color: var(--sf-text) !important;
   min-height: 42px;
 }
@@ -2402,9 +2408,9 @@ body.dark .sf-section{
 html[data-theme="dark"] .custom-select-form,
 body[data-theme="dark"] .custom-select-form,
 body.dark .custom-select-form,
-html[data-theme="dark"] .sf-form input,
+/* html[data-theme="dark"] .sf-form input,
 body[data-theme="dark"] .sf-form input,
-body.dark .sf-form input,
+body.dark .sf-form input, */
 html[data-theme="dark"] .sf-form select,
 body[data-theme="dark"] .sf-form select,
 body.dark .sf-form select{
@@ -4299,19 +4305,8 @@ body.dark .css-169l02m-menu, body.dark .css-1jknvbe-menu,
 .css-qc6sy-singleValue {
   color: var(--sf-text) !important;
 }
- 
-/* .css-1d8n9bt {
-    padding: 0 8px;
-} */
 
-/* .css-1okebmr-indicator-Separator {
-  display: none;
-} */
-
-/* .css-1pndypt-Input {
-  width: 42px;
-} */
- @media (max-width: 1524px) {
+@media (max-width: 1524px) {
   .dash-charts {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -4319,7 +4314,7 @@ body.dark .css-169l02m-menu, body.dark .css-1jknvbe-menu,
   }
 }
 
- @media (max-width: 480pc) {
+ @media (max-width: 480px) {
   .dash-charts {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }

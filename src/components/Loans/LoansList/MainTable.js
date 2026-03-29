@@ -43,7 +43,7 @@ function MainTable({loanData, handleClick}) {
                           <span onClick={handleClick} id={loan.id} style={{fontSize:'0.75rem', cursor:'pointer'}} className='link'>{loan.loan_id}</span>
                         </td>
                         <td>
-                          <span className={statusClasses[loan.status]}>{loan.status}</span>
+                          <span className={statusClasses[loan.status]}>{loan.status === 'Approved' ? 'Awaiting Disbursement' : loan.status} {loan.auto_restructured && '(Auto Restructured)'}</span>
                         </td>
                         <td>{loan.db_date}</td>
                         <td>{loan.interest_rate}%{loan.interest_interval}</td>

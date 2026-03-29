@@ -81,7 +81,11 @@ const ClientLoans = ({clientsLoansData}) => {
                         <td>{loan.db_date}</td>
                         <td>{loan.final_date}</td>
                         <td>{loan.total_balance}</td>
-                        <td><button className={statusClasses[loan.status]}>{loan.status}</button></td>
+                        <td>
+                          <button className={statusClasses[loan.status]}>
+                            {loan.status === 'Approved' ? 'Awaiting Disbursement' : loan.status} {loan.auto_restructured && '(Auto Restructured)'}
+                          </button>
+                        </td>
                       </tr>
                     )
                   })}
