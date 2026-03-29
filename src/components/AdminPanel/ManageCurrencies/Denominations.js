@@ -76,6 +76,13 @@ function Table({ denominations, modal, setModal, setDenominations }) {
           setDenominations={setDenominations}
         />
       )}
+      {modal === MODAL_STATES.del && (
+        <DeleteDenomination
+          denomination={denomRef.current}
+          setOpen={setModal}
+          setDenominations={setDenominations}
+        />
+      )}
       <TableHeader denominations={denominations} />
       <div style={{ padding: '0', border: 'none' }}>
         <div style={{ width: '50%', overflowX: 'auto' }}>
@@ -354,5 +361,54 @@ const EditDenomination = ({denomination, setOpen, setDenominations}) => {
     </Modal>
   )
 }
+
+const DeleteDenomination = ({ setOpen, denomination, setDenominations }) => {
+  const onSubmit = async (values, actions) => {
+    try {
+      const CONFIG = {
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken'),
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      };
+      await axios.delete(`/acc-api/delete_denomination/${denomination.id}/`, CONFIG);
+      setDenominations(curr => curr.filter(d => d.id !== denomination.id));
+      setOpen(false);
+    } catch (error) {
+      if (error.message === 'Network Error') {
+        actions.setErrors({ responseStatus: 'Network Error' });
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        actions.setErrors({ responseStatus: error.response.status, ...error.response.data });
+      } else {
+        actions.setErrors({ responseStatus: error.response.status });
+      }
+    }
+  };
+
+  return (
+    <Modal open={true} setOpen={setOpen} title='Delete Denomination'>
+      <Formik initialValues={{ reason: '' }} onSubmit={onSubmit}>
+        {({ errors, isSubmitting }) => (
+          <Form>
+            <NonFieldErrors errors={errors}>
+              <div className='create_modal_container'>
+                <div>
+                  Are you sure you want to delete this denomination?<br />
+                  <b>
+                    Label: {denomination.label}<br />
+                    Value: {denomination.value}<br />
+                    Is Active: {denomination.is_active ? 'Yes' : 'No'}<br />
+                  </b>
+                </div>
+                <ModalSubmit isSubmitting={isSubmitting} setOpen={setOpen} />
+              </div>
+            </NonFieldErrors>
+          </Form>
+        )}
+      </Formik>
+    </Modal>
+  );
+};
 
 export default Denominations;
