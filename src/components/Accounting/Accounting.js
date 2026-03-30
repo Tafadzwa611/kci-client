@@ -7,6 +7,9 @@ import Journals from "./Journals/Journals";
 import ChartsOfAccounts from "./ChartsOfAccounts/ChartsOfAccounts";
 import BalanceSheet from "./BalanceSheet/BalanceSheet";
 import Ledger from "./Ledger/Ledger";
+import CashCountReport from "./CashCountReport/CashCountReport";
+import RecordCashCount from "./CashCountReport/RecordCashCount";
+import History from "./CashCountReport/History";
 import { useLoggedInUser } from "../../contexts/LoggedInUserContext";
 import { Routes, Route, Outlet, NavLink } from "react-router-dom";
 
@@ -22,6 +25,9 @@ const ViewAccounting = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<Cashflow loggedInUser={loggedInUser} />} />
         <Route path="cashreport" element={<CashReport loggedInUser={loggedInUser} />} />
+        <Route path="balanced_cashbook" element={<CashCountReport />} />
+        <Route path="record_cash_count/:accountId" element={<RecordCashCount />} />
+        <Route path='balanced_cashbook/:accountId' element={<History />} />
         <Route path="profitandloss" element={<ProfitAndLoss />} />
         <Route path="trialbalance" element={<TrialBalance />} />
         <Route path="balancesheet" element={<BalanceSheet />} />
@@ -47,6 +53,7 @@ function Layout() {
             Cashflow
           </Tab>
           <Tab to="/accounting/viewaccounting/cashreport">Cash Book</Tab>
+          <Tab to="/accounting/viewaccounting/balanced_cashbook">Balanced Cashbook</Tab>
           <Tab to="/accounting/viewaccounting/profitandloss">Comprehensive Income</Tab>
           <Tab to="/accounting/viewaccounting/trialbalance">Trial Balance</Tab>
           <Tab to="/accounting/viewaccounting/balancesheet">Balance Sheet</Tab>
