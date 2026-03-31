@@ -717,9 +717,12 @@ function CustomFileInput({ values, setFieldValue, onUploadStart, onUploadEnd }) 
     setFieldTouched('profile_filename', true, false);
 
     try {
+      const ext = file.name.split('.').pop();
+
       const response = await axios.get(
-        '/usersapi/get_signed_url/?client_method=put_object&bucket=lenda-client-files'
+        `/usersapi/get_signed_url/?client_method=put_object&bucket=lenda-client-files&ext=${ext}`
       );
+
       await uploadFile(file, response.data.url);
       setFieldValue('profile_filename', response.data.filename);
       setFieldTouched('profile_filename', true, false);

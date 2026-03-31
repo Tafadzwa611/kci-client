@@ -4305,6 +4305,14 @@ body.dark .css-169l02m-menu, body.dark .css-1jknvbe-menu,
 .css-qc6sy-singleValue {
   color: var(--sf-text) !important;
 }
+.searchItem a {
+  color: rgba(37,99,235,0.95) !important;
+}
+/* Dark mode */
+body.dark .searchItem a, 
+[data-theme="dark"] .searchItem a {
+  color: hsl(267, 95%, 76%) !important;
+}
 
 @media (max-width: 1524px) {
   .dash-charts {

@@ -28,7 +28,7 @@ function ScheduleTab({loan, installments, client_name, loanId, currencyId, setLo
       </div>
       {modal === es && <EarlySettlement loan={loan} setLoanData={setLoanData} setOpen={setModal} setLoan={setLoan} loanId={loanId} currencyId={currencyId} />}
       {modal === restructure && <Restructure loan={loan} setLoan={setLoan} setOpen={setModal}/>}
-      <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"1rem"}}>
+      <div className='schedule__download__btn_section'>
         <div className="schedule__check__section" style={{display: "flex", columnGap: "1rem", alignItems:"center"}}>
           <CheckBox isChecked={expected} label='Amount Expected' onChange={() => setExpected(curr => !curr)} />
           <CheckBox isChecked={paid} label='Amount Paid' onChange={() => setPaid(curr => !curr)} />
