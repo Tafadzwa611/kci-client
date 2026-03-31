@@ -12,6 +12,8 @@ import { Form, Formik } from 'formik';
 import { useCash } from '../../../contexts/CashContext';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
 import { useBranches } from '../../../contexts/BranchesContext';
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 
 function CashCountReport() {
@@ -135,115 +137,199 @@ function Filter({ setReports }) {
 }
 
 
-const Table = ({reports}) => {
+const Table = ({ reports }) => {
+  const exportToPDF = () => {
+    const doc = new jsPDF({ orientation: "landscape" });
+
+    const columns = [
+      "Date",
+      "Branch",
+      "Cashbook",
+      "Currency",
+      "System Balance",
+      "Manual Balance",
+      "Reason",
+    ];
+
+    const rows = reports.map(r => [
+      r.count_date,
+      r.branch_name,
+      `${r.account_name} - ${r.currency}`,
+      r.currency,
+      r.system_balance,
+      r.counted_total,
+      r.variance_explanation,
+    ]);
+
+    doc.text("Cash Count Report", 14, 15);
+
+    autoTable(doc, {
+      startY: 20,
+      head: [columns],
+      body: rows,
+      styles: { fontSize: 9 },
+    });
+
+    doc.save("cash_count_report.pdf");
+  };
+
   return (
     <div style={{ padding: '0', border: 'none' }}>
+      <div style={{ marginBottom: '10px' }}>
+        <button className="btn btn-primary" onClick={exportToPDF}>
+          Export PDF
+        </button>
+      </div>
+
       <div style={{ width: '100%', overflowX: 'auto' }}>
         <div className='table__height'>
           <table className='table' id='requests'>
             <thead>
               <tr className='journal-details header' style={{ position: 'sticky', top: '0' }}>
-                <th style={{ textAlign: 'start' }}>Date</th>
-                <th style={{ textAlign: 'start' }}>Branch</th>
-                <th style={{ textAlign: 'start' }}>Cashbook</th>
-                <th style={{ textAlign: 'start' }}>Currency</th>
-                <th style={{ textAlign: 'start' }}>System_Balance</th>
-                <th style={{ textAlign: 'start' }}>Manual_Balance</th>
-                <th style={{ textAlign: 'start' }}>Reason</th>
+                <th>Date</th>
+                <th>Branch</th>
+                <th>Cashbook</th>
+                <th>Currency</th>
+                <th>System Balance</th>
+                <th>Manual Balance</th>
+                <th>Reason</th>
               </tr>
             </thead>
             <tbody>
-              {reports.map(report => {
-                return (
-                  <tr key={report.id}>
-                    <td style={{ verticalAlign: 'middle' }}>
-                      {report.count_date}
-                    </td>
-                    <td style={{ verticalAlign: 'middle' }}>
-                      {report.branch_name}
-                    </td>
-                    <td style={{ verticalAlign: 'middle' }}>
-                      {report.account_name}- {report.currency}
-                    </td>
-                    <td style={{ verticalAlign: 'middle' }}>
-                      {report.currency}
-                    </td>
-                    <td style={{ verticalAlign: 'middle' }}>
-                      {report.system_balance}
-                    </td>
-                    <td style={{ verticalAlign: 'middle' }}>
-                      {report.counted_total}
-                    </td>
-                    <td style={{ verticalAlign: 'middle' }}>
-                      {report.variance_explanation}
-                    </td>
-                  </tr>
-                );
-              })}
+              {reports.map(report => (
+                <tr key={report.id}>
+                  <td>{report.count_date}</td>
+                  <td>{report.branch_name}</td>
+                  <td>{report.account_name} - {report.currency}</td>
+                  <td>{report.currency}</td>
+                  <td>{report.system_balance}</td>
+                  <td>{report.counted_total}</td>
+                  <td>{report.variance_explanation}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 
-const DenominationTable = ({reports}) => {
-  const { column_labels, rows } = reports;
+const DenominationTable = ({ reports }) => {
+  const { column_labels = [], rows = [] } = reports;
+
+  const exportToPDF = () => {
+    const doc = new jsPDF({
+      orientation: "landscape",
+      format: "a3",
+    });
+
+    const columns = [
+      "Date",
+      "Branch",
+      "Cashbook",
+      ...column_labels,
+      "System Balance",
+      "Manual Balance",
+      "Variance",
+      "Reason",
+    ];
+
+    const body = rows.map(row => [
+      row.count_date,
+      row.branch_name,
+      row.account_name,
+      ...column_labels.map(label => row.denomination_quantities?.[label] ?? 0),
+      row.system_total,
+      row.manual_total,
+      row.variance,
+      row.variance_explanation,
+    ]);
+
+    doc.text("Cash Count Denomination Report", 14, 15);
+
+    autoTable(doc, {
+      startY: 20,
+      head: [columns],
+      body,
+      styles: {
+        fontSize: 7,
+        cellPadding: 2,
+        overflow: "linebreak",
+        valign: "middle",
+      },
+      theme: "grid",
+      headStyles: {
+        fontSize: 7,
+      },
+      columnStyles: {
+        0: { cellWidth: 20 },
+        1: { cellWidth: 28 },
+        2: { cellWidth: 28 },
+        [columns.length - 1]: { cellWidth: 60 },
+      },
+      margin: { left: 8, right: 8 },
+      rowPageBreak: "avoid",
+      tableWidth: "wrap",
+    });
+
+    doc.save("cash_count_denomination_report.pdf");
+  };
 
   return (
     <div style={{ padding: '0', border: 'none' }}>
+      <div style={{ marginBottom: '10px' }}>
+        <button className="btn btn-primary" onClick={exportToPDF}>
+          Export PDF
+        </button>
+      </div>
+
       <div style={{ width: '100%', overflowX: 'auto' }}>
         <div className='table__height'>
           <table className='table' id='requests'>
             <thead>
               <tr className='journal-details header' style={{ position: 'sticky', top: '0' }}>
-                <th style={{ textAlign: 'start' }}>Date</th>
-                <th style={{ textAlign: 'start' }}>Branch</th>
-                <th style={{ textAlign: 'start' }}>Cashbook</th>
-                {column_labels.map((label) => (
+                <th>Date</th>
+                <th>Branch</th>
+                <th>Cashbook</th>
+                {column_labels.map(label => (
                   <th key={label}>{label}</th>
                 ))}
-                <th>System_Balance</th>
-                <th>Manual_Balance</th>
+                <th>System Balance</th>
+                <th>Manual Balance</th>
                 <th>Variance</th>
-                <th style={{ textAlign: 'start' }}>Reason</th>
+                <th>Reason</th>
               </tr>
             </thead>
             <tbody>
-              {rows.map(row => {
-                return (
-                  <tr key={row.cash_count_id}>
-                    <td style={{ verticalAlign: 'middle' }}>
-                      {row.count_date}
+              {rows.map(row => (
+                <tr key={row.cash_count_id}>
+                  <td>{row.count_date}</td>
+                  <td>{row.branch_name}</td>
+                  <td>{row.account_name}</td>
+
+                  {column_labels.map(label => (
+                    <td key={label}>
+                      {row.denomination_quantities?.[label] ?? 0}
                     </td>
-                    <td style={{ verticalAlign: 'middle' }}>
-                      {row.branch_name}
-                    </td>
-                    <td style={{ verticalAlign: 'middle' }}>
-                      {row.account_name}
-                    </td>
-                    {column_labels.map((label) => (
-                      <td key={label} style={{ verticalAlign: 'middle' }}>
-                        {row.denomination_quantities?.[label] ?? 0}
-                      </td>
-                    ))}
-                    <td style={{ verticalAlign: 'middle' }}>{row.system_total}</td>
-                    <td style={{ verticalAlign: 'middle' }}>{row.manual_total}</td>
-                    <td style={{color: Number(row.variance) < 0 ? "red" : "green", verticalAlign: 'middle' }}>
-                      {row.variance}
-                    </td>
-                    <td style={{ verticalAlign: 'middle' }}>{row.variance_explanation}</td>
-                  </tr>
-                );
-              })}
+                  ))}
+
+                  <td>{row.system_total}</td>
+                  <td>{row.manual_total}</td>
+
+                  <td style={{ color: Number(row.variance) < 0 ? "red" : "green" }}>
+                    {row.variance}
+                  </td>
+                  <td>{row.variance_explanation}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default CashCountReport;
