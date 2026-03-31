@@ -26,7 +26,7 @@ const ViewAccounting = () => {
         <Route index element={<Cashflow loggedInUser={loggedInUser} />} />
         <Route path="cashreport" element={<CashReport loggedInUser={loggedInUser} />} />
         <Route path="balanced_cashbook" element={<CashCountReport />} />
-        <Route path="record_cash_count/:accountId" element={<RecordCashCount />} />
+        <Route path="record_cash_count" element={<RecordCashCount />} />
         <Route path='balanced_cashbook/:accountId' element={<History />} />
         <Route path="profitandloss" element={<ProfitAndLoss />} />
         <Route path="trialbalance" element={<TrialBalance />} />

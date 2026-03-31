@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  CustomMultiSelect,
   NonFieldErrors,
   SubmitButton,
   CustomInput,
@@ -8,32 +9,22 @@ import {
 import axios from 'axios';
 import { Form, Formik, useFormikContext } from "formik";
 import Cookies from "js-cookie";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useCash } from '../../../contexts/CashContext';
 
 
 function RecordCashCount() {
   const [denominations, setDenominations] = React.useState(null);
   const [total, setTotal] = React.useState(0);
   const [sysBalance, setSysBalance] = React.useState(0);
-  const params = useParams();
-  const accountId = params.accountId;
-  const date = params.date;
-  const currencyId = params.currencyId;
 
   const navigate = useNavigate();
+  const { cash } = useCash();
 
   React.useEffect(() => {
     const fetch = async () => {
       const response = await axios.get('/acc-api/list_denomination/');
       setDenominations(response.data);
-    }
-    fetch();
-  }, []);
-
-  React.useEffect(() => {
-    const fetch = async () => {
-      const response = await axios.get(`/acc-api/account_balance/${accountId}/`);
-      setSysBalance(response.data.balance);
     }
     fetch();
   }, []);
@@ -46,6 +37,16 @@ function RecordCashCount() {
       setTotal(total);
     }, [values.note_counts]);
 
+    React.useEffect(() => {
+      const fetch = async () => {
+        const response = await axios.get(`/acc-api/account_balance/${values.account_id}/`);
+        setSysBalance(response.data.balance);
+      }
+      if (values.account_id) {
+        fetch();
+      }
+    }, [values.account_id]);
+
     return null;
   };
 
@@ -53,18 +54,12 @@ function RecordCashCount() {
     try {
       const CONFIG = {
         headers: {
-          "X-CSRFToken": Cookies.get("csrftoken"),
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          'X-CSRFToken': Cookies.get('csrftoken'),
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
       };
-      const data = {
-        account_id: accountId,
-        count_date: date,
-        variance_explanation: values.variance_explanation,
-        note_counts: values.note_counts,
-      };
-      await axios.post("/acc-api/record_cash_count/", data, CONFIG);
+      await axios.post('/acc-api/record_cash_count/', values, CONFIG);
       navigate('/accounting/viewaccounting/balanced_cashbook');
     } catch (error) {
       console.log(error);
@@ -82,31 +77,16 @@ function RecordCashCount() {
     return <div>Loading...</div>
   }
 
-  console.log(currencyId);
-
-  const noteCounts = (
-    denominations
-    .filter(item => item.currency.id == currencyId)
-    .map(denomination => ({
-      label: denomination.label,
-      value: denomination.value,
-      denomination_id: denomination.id,
-      quantity: 0
-    }))
-  );
-
-  console.log(denominations);
-  console.log(noteCounts);
-
   const initialValues = {
+    account_id: '',
     variance_explanation: '',
-    note_counts: noteCounts
+    note_counts: []
   }
 
   return (
     <div>
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        {({ isSubmitting, values, errors }) => (
+        {({ isSubmitting, values, setFieldValue, errors }) => (
           <Form autoComplete="off" className="sf-form">
             <div className="sf-page">
               <div className="sf-shell">
@@ -120,7 +100,7 @@ function RecordCashCount() {
                 <div className="sf-shell-body">
                   <section className="sf-section">
                     <div className="sf-section-body" style={{ display: "grid", gap: 12 }}>
-                      {/* <CustomMultiSelect
+                      <CustomMultiSelect
                         label='Fund Account'
                         name='account'
                         isMulti={false}
@@ -144,7 +124,7 @@ function RecordCashCount() {
                           {label: `${account.label} - ${account.branch}`, value: account.value}
                         ))}
                         required
-                      /> */}
+                      />
                       {values.note_counts.map((item, index) => (
                         <div key={index}>
                           <CustomInput
