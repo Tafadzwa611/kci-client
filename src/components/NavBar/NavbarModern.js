@@ -443,6 +443,7 @@ const Search = ({ setOpen }) => {
                     display: "flex",
                     flexDirection: "column",
                     rowGap: "1.25rem",
+                    fontSize: "0.8125rem",
                   }}
                 >
                   <div>
