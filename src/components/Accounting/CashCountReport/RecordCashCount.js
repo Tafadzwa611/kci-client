@@ -138,13 +138,13 @@ function RecordCashCount() {
                       ))}
                       <CustomTextField label='Comment' name='variance_explanation' required />
                     </div>
-                    <div className="sf-shell-subtitle">
-                      <h2>
+                    <div className="sf-shell-subtitle" style={{fontWeight:'bold', fontSize:'0.8125rem'}}>
+                      <p>
                         System Balance: {sysBalance}
-                      </h2>
-                      <h2>
+                      </p>
+                      <p>
                         Total Cash In Hand: {total}
-                      </h2>
+                      </p>
                     </div>
                   </section>
                 </div>
