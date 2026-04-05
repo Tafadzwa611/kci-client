@@ -192,6 +192,7 @@ const Table = ({ reports }) => {
                 <th>Currency</th>
                 <th>System Balance</th>
                 <th>Manual Balance</th>
+                <th>Variance</th>
                 <th>Reason</th>
               </tr>
             </thead>
@@ -204,6 +205,7 @@ const Table = ({ reports }) => {
                   <td>{report.currency}</td>
                   <td>{report.system_balance}</td>
                   <td>{report.counted_total}</td>
+                  <td>{report.variance}</td>
                   <td>{report.variance_explanation}</td>
                 </tr>
               ))}
