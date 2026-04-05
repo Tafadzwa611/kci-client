@@ -97,6 +97,7 @@ const JournalDetails = ({ close, journalId }) => {
                 <li>Value Date: {journal.value_date}</li>
                 <li>Date Logged: {journal.date_added}</li>
                 <li>Created By: {journal.created_by}</li>
+                <li>Is Manual: {journal.is_manual ? 'Yes' : 'No'}</li>
                 <li>Narrative: {journal.description}</li>
                 {journal.original_journal && (
                   <li>

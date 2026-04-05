@@ -23,8 +23,7 @@ function DetailsTab({loan, setLoan}) {
                 <li style={{marginBottom: '0.25rem'}}>Receipt Number: {loan.receipt_number}</li>
               )}
               <li style={{marginBottom: '0.25rem', display:'flex', columnGap:'5px'}}>
-                Loan Number: {loan.loan_id} 
-                <a style={{cursor: 'pointer'}} onClick={() => setOpenLoanNumberModal(true)}><small>Change</small></a>
+                Loan Number: {loan.loan_id}
               </li>
               <li style={{marginBottom: '0.25rem'}}>Assigned to Branch: {loan.branch}</li>
               <li style={{marginBottom: '0.25rem'}}>Assigned to Unit: {loan.unit ? loan.unit : 'Not provided'}</li>
@@ -87,7 +86,7 @@ function DetailsTab({loan, setLoan}) {
               {loan.action_on_loan_default === 'Add Scheduled Penalties After Maturity' && (
                 loan.schedule_penalties.map((sp, idx) => (
                   <li key={idx} style={{paddingLeft: '20px'}}>
-                    Number Of Days: {sp.days}, Rate: {sp.penalty_rate}%, Type: {sp.charge_type}
+                    Date: {sp.penalty_date}, Number Of Days: {sp.days}, Rate: {sp.penalty_rate}%, Type: {sp.charge_type}
                   </li>
                 ))
               )}
