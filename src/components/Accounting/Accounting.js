@@ -9,6 +9,7 @@ import BalanceSheet from './BalanceSheet/BalanceSheet';
 import Ledger from './Ledger/Ledger';
 import CashCountReport from './CashCountReport/CashCountReport';
 import RecordCashCount from './CashCountReport/RecordCashCount';
+import EditCashCount from './CashCountReport/EditCashCount';
 import History from './CashCountReport/History';
 import { useLoggedInUser } from '../../contexts/LoggedInUserContext';
 import { Routes, Route, Outlet, NavLink } from 'react-router-dom';
@@ -29,6 +30,7 @@ const ViewAccounting = () => {
         <Route path='cashbook_report' element={<CashBook loggedInUser={loggedInUser} />} />
         <Route path='balanced_cashbook' element={<CashCountReport />} />
         <Route path='record_cash_count' element={<RecordCashCount />} />
+        <Route path='update_cashcount/:accountId' element={<EditCashCount />} />
         <Route path='balanced_cashbook/:accountId' element={<History />} />
         <Route path='profitandloss' element={<ProfitAndLoss />} />
         <Route path='trialbalance' element={<TrialBalance />} />
