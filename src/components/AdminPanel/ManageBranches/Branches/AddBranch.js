@@ -10,9 +10,12 @@ import {
   Fetcher,
   SubmitButton,
   CustomMultiSelect,
-  CustomCheckbox
+  CustomCheckbox,
+  CustomSelect
 } from '../../../../common';
 import { useNavigate } from 'react-router-dom';
+import { useBranches } from '../../../../contexts/BranchesContext';
+
 
 function AddBranch() {
   const initialValues = {
@@ -20,10 +23,12 @@ function AddBranch() {
     geographical_location: '',
     branch_code: '',
     date_of_opening: '',
+    coa_branch_id: '',
     is_rural: false,
     loan_products: []
   };
   const navigate = useNavigate();
+  const { branches } = useBranches();
 
   const onSubmit = async (values, actions) => {
     try {
@@ -95,6 +100,13 @@ function AddBranch() {
                                 label: loanProduct.name
                               }))}
                             />
+                            <CustomSelect label='Chart Of Accounts' name='coa_branch_id' required>
+                              {branches.map(br => (
+                                <option key={br.id} value={br.id}>
+                                  {br.name}
+                                </option>
+                              ))}
+                            </CustomSelect>
                             <CustomCheckbox label='Is Rural' name='is_rural' />
                           </div>
                         </section>
