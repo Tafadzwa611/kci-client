@@ -27,6 +27,7 @@ const UpdatePermsForm = ({ user, allPerms }) => {
     otherincome__otherincome: 'Other Income Permissions',
     accounting__journal: 'Journal Permissions',
     accounting__generalledgeraccount: 'Ledger Accounts Permissions',
+    accounting__cashcount: 'Cash Count Permissions',
     reports__rightssupport: 'Reports Permissions',
     admin_perms: 'Admin Permissions',
     users__toplevelperms: 'Module Level Permissions'
@@ -59,6 +60,9 @@ const UpdatePermsForm = ({ user, allPerms }) => {
       : [],
     accounting__generalledgeraccount: user.perms.accounting__generalledgeraccount
       ? user.perms.accounting__generalledgeraccount.map(perm => ({ value: perm.id, label: perm.name }))
+      : [],
+    accounting__cashcount: user.perms.accounting__cashcount
+      ? user.perms.accounting__cashcount.map(perm => ({ value: perm.id, label: perm.name }))
       : [],
     reports__rightssupport: user.perms.reports__rightssupport
       ? user.perms.reports__rightssupport.map(perm => ({ value: perm.id, label: perm.name }))

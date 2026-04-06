@@ -194,6 +194,7 @@ const Table = ({ reports }) => {
                 <th>Manual Balance</th>
                 <th>Variance</th>
                 <th>Reason</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -207,6 +208,26 @@ const Table = ({ reports }) => {
                   <td>{report.counted_total}</td>
                   <td>{report.variance}</td>
                   <td>{report.variance_explanation}</td>
+                  <td>
+                    <Link 
+                      to={`/accounting/viewaccounting/update_cashcount/${report.account_id}?date=${report.count_date}&explanation=${report.variance_explanation}&reportId=${report.id}`}
+                    >
+                      <button
+                        style={{
+                          background: '#1bbf5f',
+                          color: '#fff',
+                          border: 'none',
+                          borderRadius: '.15rem',
+                          cursor: 'pointer',
+                          padding: '.2rem .25rem',
+                          fontSize: '0.75rem',
+                          marginLeft: '5px',
+                        }}
+                      >
+                        Edit
+                      </button>
+                    </Link>
+                  </td>
                 </tr>
               ))}
             </tbody>
