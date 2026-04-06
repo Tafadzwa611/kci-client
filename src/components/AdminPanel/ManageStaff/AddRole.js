@@ -31,6 +31,7 @@ function AddRoleForm({ perms }) {
     otherincome__otherincome: 'Other Income Permissions',
     accounting__journal: 'Journal Permissions',
     accounting__generalledgeraccount: 'Ledger Accounts Permissions',
+    accounting__cashcount: 'Cash Count Permissions',
     reports__rightssupport: 'Reports Permissions',
     admin_perms: 'Admin Permissions',
     users__toplevelperms: 'Module Level Permissions'
@@ -46,6 +47,7 @@ function AddRoleForm({ perms }) {
     otherincome__otherincome: [],
     accounting__journal: [],
     accounting__generalledgeraccount: [],
+    accounting__cashcount: [],
     reports__rightssupport: [],
     admin_perms: []
   };

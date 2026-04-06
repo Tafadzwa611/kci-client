@@ -45,6 +45,9 @@ function Role() {
               <button className={tab === 'accounting__generalledgeraccount' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('accounting__generalledgeraccount')}>
                 Accounting
               </button>
+              <button className={tab === 'accounting__cashcount' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('accounting__cashcount')}>
+                Cash Count
+              </button>
               <button className={tab === 'accounting__journal' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('accounting__journal')}>Journal</button>
             </div>
             <div className='tab-content font-12' style={{marginTop: '3rem'}}>

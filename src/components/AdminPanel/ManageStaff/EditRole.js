@@ -33,6 +33,7 @@ const EditRoleForm = ({ role, allPerms }) => {
     otherincome__otherincome: 'Other Income Permissions',
     accounting__journal: 'Journal Permissions',
     accounting__generalledgeraccount: 'Ledger Accounts Permissions',
+    accounting__cashcount: 'Cash Count Permissions',
     reports__rightssupport: 'Reports Permissions',
     admin_perms: 'Admin Permissions',
     users__toplevelperms: 'Module Level Permissions'
@@ -66,6 +67,9 @@ const EditRoleForm = ({ role, allPerms }) => {
       : [],
     accounting__generalledgeraccount: role.perms.accounting__generalledgeraccount
       ? role.perms.accounting__generalledgeraccount.map(perm => ({ value: perm.id, label: perm.name }))
+      : [],
+    accounting__cashcount: role.perms.accounting__cashcount
+      ? role.perms.accounting__cashcount.map(perm => ({ value: perm.id, label: perm.name }))
       : [],
     reports__rightssupport: role.perms.reports__rightssupport
       ? role.perms.reports__rightssupport.map(perm => ({ value: perm.id, label: perm.name }))
