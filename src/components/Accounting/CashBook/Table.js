@@ -33,14 +33,14 @@ const buildDisplayRows = (statement) => {
 
   rows.push({
     kind: 'opening',
-    cells: ['Opening Balance', '', '', '', toNumber(statement.opening_balance).toFixed(2), runningBalance.toFixed(2)],
+    cells: ['Opening Balance', '', '', '', '', toNumber(statement.opening_balance).toFixed(2), runningBalance.toFixed(2)],
   });
 
   SECTION_CONFIG.forEach(({ key, label }) => {
     const entries = sortByValueDate(statement[key] || []);
     if (!entries.length) return;
 
-    rows.push({ kind: 'category', cells: [label, '', '', '', '', ''] });
+    rows.push({ kind: 'category', cells: [label, '', '', '', '', '', ''] });
     let sectionNet = 0;
 
     entries.forEach((txn) => {
@@ -51,10 +51,11 @@ const buildDisplayRows = (statement) => {
       rows.push({
         kind: 'data',
         cells: [
-          txn.client_name || txn.description,
-          txn.account_id,
-          txn.reference,
-          label,
+          txn.client_name || txn.description || '-',
+          txn.value_date || '-',
+          txn.account_id || '-',
+          txn.reference || '-',
+          txn.description || txn.type || '-',
           formatAmount(txn.amount, txn.type),
           '',
         ],
@@ -63,7 +64,7 @@ const buildDisplayRows = (statement) => {
 
     rows.push({
       kind: 'subtotal',
-      cells: [`Sub Total - ${label}`, '', '', '', Math.abs(sectionNet).toFixed(2), ''],
+      cells: [`Sub Total - ${label}`, '', '', '', '', Math.abs(sectionNet).toFixed(2), ''],
     });
   });
 
@@ -71,6 +72,7 @@ const buildDisplayRows = (statement) => {
     kind: 'grand-total',
     cells: [
       'Report Totals',
+      '',
       '',
       '',
       '',
@@ -99,7 +101,7 @@ function Table({ statement }) {
 
     autoTable(doc, {
       startY: 26,
-      head: [['Description', 'LoanCode', 'Ref No', 'Type', 'Amount', 'Cumulative Balance']],
+      head: [['Description', 'Date', 'LoanCode', 'Ref No', 'Type', 'Amount', 'Cumulative Balance']],
       body: rows.map((row) => row.cells),
       styles: { fontSize: 8, cellPadding: 1.5 },
       headStyles: { fillColor: [184, 184, 184], textColor: [0, 0, 0] },
@@ -143,6 +145,7 @@ function Table({ statement }) {
           <thead>
             <tr>
               <th>Description</th>
+              <th>Date</th>
               <th>LoanCode</th>
               <th>Ref No</th>
               <th>Type</th>
@@ -158,8 +161,9 @@ function Table({ statement }) {
                 <td>{row.cells[1]}</td>
                 <td>{row.cells[2]}</td>
                 <td>{row.cells[3]}</td>
-                <td className='text-right'>{row.cells[4]}</td>
+                <td>{row.cells[4]}</td>
                 <td className='text-right'>{row.cells[5]}</td>
+                <td className='text-right'>{row.cells[6]}</td>
               </tr>
             ))}
           </tbody>
