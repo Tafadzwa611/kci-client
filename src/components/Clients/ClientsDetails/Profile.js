@@ -361,6 +361,7 @@ const styles = {
     padding: 3,
     background: "linear-gradient(135deg, var(--pf-ring-bg1), var(--pf-ring-bg2))",
     position: "relative",
+    minHeight: "fit-content",
   },
 
   avatarImg: {
