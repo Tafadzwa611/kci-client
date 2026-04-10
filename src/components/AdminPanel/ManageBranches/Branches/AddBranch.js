@@ -101,6 +101,7 @@ function AddBranch() {
                               }))}
                             />
                             <CustomSelect label='Chart Of Accounts' name='coa_branch_id' required>
+                            <option value=''>-----</option>
                               {branches.map(br => (
                                 <option key={br.id} value={br.id}>
                                   {br.name}
