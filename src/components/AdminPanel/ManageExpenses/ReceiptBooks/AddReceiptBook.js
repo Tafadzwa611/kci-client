@@ -66,7 +66,7 @@ function AddReceiptBook() {
 
   const initialValues = {
     name: '',
-    prefix: '',
+    // prefix: '',
     receipt_book_type: '',
     start_number: '',
     end_number: '',
@@ -79,7 +79,6 @@ function AddReceiptBook() {
   };
 
   const receiptBookApps = [
-    { value: 1, label: 'Loans' },
     { value: 2, label: 'Payments' }
   ];
 
@@ -118,7 +117,7 @@ function AddReceiptBook() {
 
                     <div className='sf-section-body sf-stack'>
                       <CustomInput label='Name' name='name' type='text' required />
-                      <CustomInput label='Prefix' name='prefix' type='text' />
+                      {/* <CustomInput label='Prefix' name='prefix' type='text' /> */}
 
                       <CustomSelect label='Type' name='receipt_book_type' required>
                         <option value=''>------</option>
