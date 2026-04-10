@@ -39,11 +39,11 @@ function BlocTabs({loan, setLoan, client_name, setLoanData}) {
             Penalties
           </button>
         )}
-        {loan.product_type == 'Fixed Term Loan' && (
+        {/* {loan.product_type == 'Fixed Term Loan' && (
           <button className={tab === 'topup' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('topup')}>
             Top-Ups
           </button>
-        )}
+        )} */}
         <button className={tab === 'securities' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('securities')}>Collateral</button>
         <button className={tab === 'comments' ? 'tabs-client active-tabs' : 'tabs-client'} onClick={() => setTab('comments')}>Comments</button>
         {loan.custom_data.map(fs => (

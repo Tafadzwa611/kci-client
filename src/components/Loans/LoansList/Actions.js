@@ -246,21 +246,21 @@ const Actions = ({loan, setLoanDetails, loanType, setLoanId, setLoanData}) => {
         <div className='client-state-btns' style={{display:'flex', columnGap:'3px', justifyContent:'flex-end'}}>
           <button className='btn btn-olive' onClick={() => setModal(addPayment)}>Add Payment</button>
           <button className='btn btn-olive' onClick={() => setModal(waiveInterest)}>Waive Interest</button>
-          <button className='btn btn-olive' onClick={() => setModal(refinance)}>Refinance</button>
+          {/* <button className='btn btn-olive' onClick={() => setModal(refinance)}>Refinance</button> */}
           <button className='btn btn-olive' onClick={() => setModal(addInterest)}>
             Add Interest
           </button>
-          {loan.product_type == 'Fixed Term Loan' && (
+          {/* {loan.product_type == 'Fixed Term Loan' && (
             <button className='btn btn-olive' onClick={() => setModal(addFee)}>
               Add Fee
             </button>
-          )}
+          )} */}
           {(loan.product_type == 'Dynamic Term Loan' && !loan.lock_interest) ? (
             <button className='btn btn-olive' onClick={() => setModal(lockInt)}>
               Lock Interest
             </button>
           ): null}
-          <button className='btn btn-olive' onClick={() => setModal(topup)}>Top-Up</button>
+          {/* <button className='btn btn-olive' onClick={() => setModal(topup)}>Top-Up</button> */}
           {loan.status == 'Written-Off' ?
           <button className='btn btn-olive' onClick={() => setModal(undoWriteOff)}>Undo Write Off</button> : (
             <>

@@ -85,7 +85,7 @@ function Table({ denominations, modal, setModal, setDenominations }) {
       )}
       <TableHeader denominations={denominations} />
       <div style={{ padding: '0', border: 'none' }}>
-        <div style={{ width: '50%', overflowX: 'auto' }}>
+        <div style={{ overflowX: 'auto' }}>
           <div className='table__height'>
             <table className='table' id='requests'>
               <thead>
