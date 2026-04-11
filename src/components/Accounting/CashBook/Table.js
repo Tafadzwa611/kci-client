@@ -124,33 +124,37 @@ function Table({ statement }) {
     <div style={{ width: '100%', overflowX: 'auto' }}>
       <div className='cashbook-report__paper'>
         <div className='cashbook-report__head'>
-          <h4 className='cashbook-report__title'>Cashbook (Account {statement.currency} {statement.account_name})</h4>
+          <p className='cashbook-report__title' style={{fontSize:'0.75rem', fontWeight:'0.75rem'}}>Cashbook (Account {statement.currency} {statement.account_name})</p>
           <div>{generatedAt}</div>
         </div>
 
-        <div className='cashbook-report__meta'>
-          <strong>From:</strong> {fromDate}
-          <strong style={{ marginLeft: '1.2rem' }}>To:</strong> {toDate}
-          <button
-            type='button'
-            className='btn btn-default'
-            onClick={exportPDF}
-            style={{ marginLeft: '1.2rem' }}
-          >
-            Export PDF
-          </button>
+        <div className='cashbook-report__meta' style={{display:'flex', justifyContent:'space-between', alignItems:'center', padding:'1rem 0'}}>
+          <div>
+            <strong>From:</strong> {fromDate}
+            <strong style={{ marginLeft: '1.2rem' }}>To:</strong> {toDate}
+          </div>
+          <div>
+            <button
+              type='button'
+              className='btn btn-default'
+              onClick={exportPDF}
+              style={{ marginLeft: '1.2rem' }}
+            >
+              Export PDF
+            </button>
+          </div>
         </div>
 
         <table className='table table-condensed cashbook-report__table'>
           <thead>
-            <tr>
+            <tr className='journal-details header'>
               <th>Description</th>
               <th>Date</th>
               <th>LoanCode</th>
-              <th>Ref No</th>
+              <th>Ref_No</th>
               <th>Type</th>
               <th className='text-right'>Amount</th>
-              <th className='text-right'>Cumulative Balance</th>
+              <th className='text-right'>Cumulative_Balance</th>
             </tr>
           </thead>
 
