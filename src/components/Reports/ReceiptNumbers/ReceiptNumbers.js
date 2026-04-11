@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { Form, Formik } from 'formik';
+import { Form, Formik, } from 'formik';
 import {
   ActionModal,
   ModalActionSubmit,
@@ -130,11 +130,18 @@ function Table({ receiptNumbers, setReceiptNumbers }) {
 }
 
 function Filter({rbs, setReceiptNumbers}) {
+  const [rbType, setRbType] = React.useState(null);
+
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
       const params = getParams(data);
-      const response = await axios.get(`/reportsapi/receipt_numbers/${values.receipt_book_id}/`, {params});
+      const url = (
+        rbType === 1 ? 
+        `/reportsapi/receipt_numbers/${values.receipt_book_id}/` : 
+        `/reportsapi/voucher_numbers/${values.receipt_book_id}/`
+      );
+      const response = await axios.get(url, {params});
       setReceiptNumbers(response.data);
     } catch (error) {
       console.log(error);
@@ -148,8 +155,20 @@ function Filter({rbs, setReceiptNumbers}) {
     }
   }
 
+  const initialValues = {
+    receipt_book_id: '',
+    used_for: '',
+    min_created_at: '',
+    max_created_at: '',
+  };
+
+  const receiptBookTypes = {
+    1: 'Receipt Book',
+    2: 'Voucher Book',
+  }
+
   return (
-    <Formik initialValues={{ receipt_book_id: '' }} onSubmit={onSubmit}>
+    <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({isSubmitting, setFieldValue}) => (
         <div className='search_background'>
           <div className='row-containers sf-shellwrap'>
@@ -157,21 +176,41 @@ function Filter({rbs, setReceiptNumbers}) {
               <div className='row row-payments row-loans sf-card'>
                 <div className='sf-row sf-row-2'>
                   <div className='row-payments-container sf-w-24'>
-                    <CustomSelectFilter label='Receipt Book' name='receipt_book_id' required>
+                    <CustomSelectFilter
+                      label='Receipt Book'
+                      name='receipt_book_id'
+                      onChange={(e) => {
+                        setFieldValue('receipt_book_id', e.target.value);
+                        const rb = rbs.find(rb => rb.id == e.target.value);
+                        if (rb.receipt_book_type !== rbType) {
+                          setFieldValue('used_for', '');
+                          setRbType(rb ? rb.receipt_book_type : null);
+                        }
+                      }}
+                      required
+                    >
                       <option value=''>------</option>
                       {rbs.map(rb => (
                         <option key={rb.id} value={rb.id}>
-                          {rb.currency.name} - {rb.name} - {rb.branch.name}
+                          {rb.currency.name} - {rb.name} - {rb.branch.name} - {receiptBookTypes[rb.receipt_book_type]}
                         </option>
                       ))}
                     </CustomSelectFilter>
-                    <CustomSelectFilter label='Used For' name='used_for'>
-                      <option value=''>------</option>
-                      <option value='Payment'>Payment</option>
-                      <option value='Expense'>Expense</option>
-                      <option value='Orphaned'>Orphaned</option>
-                      <option value='Unused'>Unused</option>
-                    </CustomSelectFilter>
+                    {rbType === 1 ? (
+                      <CustomSelectFilter label='Used For' name='used_for'>
+                        <option value=''>------</option>
+                        <option value='Payment'>Payment</option>
+                        <option value='Orphaned'>Orphaned</option>
+                        <option value='Unused'>Unused</option>
+                      </CustomSelectFilter>
+                    ) : (
+                      <CustomSelectFilter label='Used For' name='used_for'>
+                        <option value=''>------</option>
+                        <option value='Expense'>Expense</option>
+                        <option value='Orphaned'>Orphaned</option>
+                        <option value='Unused'>Unused</option>
+                      </CustomSelectFilter>
+                    )}
                     <div className="row-payments-container sf-w-49">
                       <CustomDatePickerFilter
                         label="Min Date"
@@ -228,7 +267,12 @@ function ReuseReceipt({ receipt, setOpen, setReceiptNumbers }) {
           'Content-Type': 'application/json'
         }
       };
-      await axios.post(`/reportsapi/reuse_receipt/${receipt.id}/`, values, CONFIG);
+      const url = (
+        receipt.receipt_book_type === 1 ? 
+        `/reportsapi/receipt_numbers/${receipt.id}/` :
+        `/reportsapi/voucher_numbers/${receipt.id}/`
+      );
+      await axios.post(url, values, CONFIG);
       updateItem(receipt.id);
       setOpen(false);
       actions.resetForm();
