@@ -269,8 +269,8 @@ function ReuseReceipt({ receipt, setOpen, setReceiptNumbers }) {
       };
       const url = (
         receipt.receipt_book_type === 1 ? 
-        `/reportsapi/receipt_numbers/${receipt.id}/` :
-        `/reportsapi/voucher_numbers/${receipt.id}/`
+        `/reportsapi/reuse_receipt/${receipt.id}/` :
+        `/reportsapi/reuse_voucher/${receipt.id}/`
       );
       await axios.post(url, values, CONFIG);
       updateItem(receipt.id);
