@@ -27,14 +27,11 @@ const DateRange = ({ setStatement, accounts }) => {
     }
   };
 
-  const initialValues = {
-    account_id: '',
-    min_report_date: '',
-    max_report_date: '',
-  };
-
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+    <Formik
+      initialValues={{ account_id: '', min_report_date: '', max_report_date: '' }}
+      onSubmit={onSubmit}
+    >
       {({ isSubmitting, setFieldValue, errors }) => (
         <div className="search_background">
           <div className="row-containers sf-shellwrap">
