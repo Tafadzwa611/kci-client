@@ -145,7 +145,7 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
                           setFieldValue('receipt_number', '');
                         }
                       }}
-                      options={receiptBooks.filter(rb => rb.is_active && rb.currency.id == currencyId).map(rb => (
+                      options={receiptBooks.filter(rb => rb.is_active && rb.currency.id == currencyId && rb.allowed_apps.includes(2)).map(rb => (
                         {label: `${rb.name} - ${rb.branch.name} - ${{1: 'AUTO', 2: 'MANUAL'}[rb.mode]}`, value: rb.id}
                       ))}
                       required
