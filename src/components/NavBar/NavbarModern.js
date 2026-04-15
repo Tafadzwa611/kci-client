@@ -278,7 +278,7 @@ const NavbarModern = (props) => {
             >
               <span aria-hidden="true">🔔</span>
               {unreadNotifs ? (
-                <span className="badge">
+                <span className="badge notificationsBadge">
                   {unreadNotifs > 9 ? "9+" : unreadNotifs}
                 </span>
               ) : null}

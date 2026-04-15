@@ -251,6 +251,10 @@ body {
   color: var(--nav-fg);
 }
 
+.badge.notificationsBadge {
+  color: var(--nav-fg);
+}
+
 .iconbtn:hover {
   background: var(--pill-bg-hover);
   border-color: var(--nav-border);
