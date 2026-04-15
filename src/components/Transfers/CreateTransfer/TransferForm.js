@@ -1333,7 +1333,7 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
                         hint='Upload one supporting file when required by the selected transfer type. It uploads immediately after selection.'
                       >
                         <div className='sf-file-field'>
-                          <label className='sf-label'>
+                          <label className='sf-label' style={{fontSize:'0.75rem', paddingTop:'1rem'}}>
                             Transfer File {isFileRequired ? '(Required)' : '(Optional)'}
                           </label>
 
