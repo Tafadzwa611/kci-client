@@ -927,6 +927,10 @@ body.dark .searchItem a {
 /* 4) BADGES (REUSABLE, APP-WIDE)              */
 /* ------------------------------------------ */
 
+.btn-info {
+    color: var(--app-surface);
+}
+
 .pill-badge {
   height: 22px;
   display: inline-flex;
@@ -4254,6 +4258,7 @@ body.dark .css-169l02m-menu, body.dark .css-1jknvbe-menu,
 }
 .phone__number__code__section {
   width: 350px;
+  font-size: 0.8125rem;
 }
 .phone__number__main__section {
   display: flex;
