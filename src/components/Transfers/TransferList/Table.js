@@ -22,6 +22,7 @@ function Table({transferData, setTransferData, params}) {
                             <th style={{textAlign:"start"}}>Amount</th>
                             <th style={{textAlign:"start"}}>Date_Created</th>
                             <th style={{textAlign:"start"}}>TransferDate</th>
+                            <th style={{textAlign:"start"}}>Status</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -40,6 +41,7 @@ function Table({transferData, setTransferData, params}) {
                                 <td style={{verticalAlign:"middle"}}>{transfer.amount}</td>
                                 <td style={{verticalAlign:"middle"}}>{transfer.db_date_created}</td>
                                 <td style={{verticalAlign:"middle"}}>{transfer.date_added}</td>
+                                <td style={{verticalAlign:"middle"}}>{transfer.status}</td>
                             </tr>
                             )
                         })}
