@@ -8,7 +8,7 @@ function AuthorizationDashboard() {
   }, []);
 
   return (
-    <div className='sf-page font-13'>
+    <div>
       <style>{`
         .authz-wrap {
           display: flex;
