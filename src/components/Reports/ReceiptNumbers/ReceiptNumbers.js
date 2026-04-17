@@ -8,7 +8,8 @@ import {
   NonFieldErrors,
   CustomDatePickerFilter,
   CustomSelectFilter,
-  SubmitButtonFilter
+  SubmitButtonFilter,
+  CustomInputFilter
 } from '../../../common';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { removeEmptyValues, getParams } from '../../../utils/utils';
@@ -136,11 +137,14 @@ function Filter({rbs, setReceiptNumbers}) {
     try {
       const data = removeEmptyValues(values);
       const params = getParams(data);
-      const url = (
-        rbType === 1 ? 
-        `/reportsapi/receipt_numbers/${values.receipt_book_id}/` : 
-        `/reportsapi/voucher_numbers/${values.receipt_book_id}/`
-      );
+      const baseUrl = rbType === 1
+        ? '/reportsapi/receipt_numbers/'
+        : '/reportsapi/voucher_numbers/';
+
+      const url = values.receipt_book_id
+        ? `${baseUrl}${values.receipt_book_id}/`
+        : baseUrl;
+
       const response = await axios.get(url, {params});
       setReceiptNumbers(response.data);
     } catch (error) {
@@ -187,7 +191,6 @@ function Filter({rbs, setReceiptNumbers}) {
                           setRbType(rb ? rb.receipt_book_type : null);
                         }
                       }}
-                      required
                     >
                       <option value=''>------</option>
                       {rbs.map(rb => (
@@ -223,6 +226,12 @@ function Filter({rbs, setReceiptNumbers}) {
                         label="Max Date"
                         name="max_created_at"
                         setFieldValue={setFieldValue}
+                      />
+                    </div>
+                    <div className="row-payments-container sf-w-49">
+                      <CustomInputFilter
+                        label="Receipt Number"
+                        name="receipt_number"
                       />
                     </div>
                   </div>
