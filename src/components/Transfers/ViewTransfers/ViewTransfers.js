@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Fetcher } from '../../../common';
 import TransferList from '../TransferList/TransferList';
 import CreateTransfer from '../CreateTransfer/CreateTransfer';
+import TransferRequests from '../TransferRequests/TransferRequests'
 import {
   Routes,
   Route,
@@ -19,6 +20,7 @@ const ViewTransfers = () => {
       <Route path='/' element={<Layout />}>
         <Route index element={<TransferComponent />} />
         <Route path='addtransfer' element={<AddTransferComponent />} />
+        <Route path='transferrequests' element={<TransferRequests />} />
       </Route>
     </Routes>
   );
@@ -54,6 +56,9 @@ function Layout() {
           </Tab>
           <Tab to='/transfers/viewtransfers/addtransfer'>
             Add Transfer
+          </Tab>
+          <Tab to='/transfers/viewtransfers/transferrequests'>
+            Requests
           </Tab>
         </div>
 

@@ -7,6 +7,7 @@ import {
   SubmitButton,
   CustomSelect,
   Fetcher,
+  CustomCheckbox,
 } from "../../../../common";
 import { useCurrencies } from "../../../../contexts/CurrenciesContext";
 
@@ -57,6 +58,16 @@ function TransferTypeForm({ initialValues, onSubmit }) {
                         ))}
                       </CustomSelect>
 
+                      <CustomCheckbox
+                        label="File Required"
+                        name="is_file_required"
+                      />
+
+                      <CustomCheckbox
+                        label="Approval Required"
+                        name="is_approval_required"
+                      />
+
                       {values.currency_id && (
                         <Fetcher
                           urls={[
@@ -67,7 +78,7 @@ function TransferTypeForm({ initialValues, onSubmit }) {
                             <>
                               <CustomMultiSelect
                                 label="Receiving Accounts"
-                                initVals={[]}
+                                initVals={values.receiving_accounts_ids || []}
                                 options={data[0].accounts.map((account) => ({
                                   label: `${account.general_ledger_name} - ${account.general_ledger_code} ${account.branch} `,
                                   value: account.id,
@@ -79,7 +90,7 @@ function TransferTypeForm({ initialValues, onSubmit }) {
 
                               <CustomMultiSelect
                                 label="Sending Accounts"
-                                initVals={[]}
+                                initVals={values.sending_accounts_ids || []}
                                 options={data[0].accounts.map((account) => ({
                                   label: `${account.general_ledger_name} - ${account.general_ledger_code} ${account.branch} `,
                                   value: account.id,

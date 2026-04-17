@@ -21,7 +21,30 @@ function CreateTransfer({ transfertypes }) {
 
   const onSubmit = async (values, actions) => {
     try {
-      if (!values.files || values.files.length !== 1) {
+      const safeTransferTypes = Array.isArray(transfertypes)
+        ? transfertypes
+        : Array.isArray(transfertypes?.tranfertypes)
+          ? transfertypes.tranfertypes
+          : Array.isArray(transfertypes?.transfertypes)
+            ? transfertypes.transfertypes
+            : [];
+
+      const selectedTransferType = safeTransferTypes.find(
+        item => String(item.id) === String(values.transfertype_id)
+      );
+
+      const isFileRequired = Boolean(selectedTransferType?.is_file_required);
+      const hasFiles = Array.isArray(values.files) && values.files.length > 0;
+
+      if (isFileRequired && !hasFiles) {
+        actions.setErrors({
+          files: ['A file is required for this transfer type.']
+        });
+        actions.setSubmitting(false);
+        return;
+      }
+
+      if (hasFiles && values.files.length !== 1) {
         actions.setErrors({
           files: ['Please upload exactly one file.']
         });
@@ -29,9 +52,9 @@ function CreateTransfer({ transfertypes }) {
         return;
       }
 
-      const currentFile = values.files[0];
+      const currentFile = hasFiles ? values.files[0] : null;
 
-      if (!currentFile.uploaded_filename) {
+      if (hasFiles && !currentFile.uploaded_filename) {
         actions.setErrors({
           files: ['File upload failed. Please upload the file again.']
         });
@@ -48,12 +71,16 @@ function CreateTransfer({ transfertypes }) {
           description: values.description,
           date_added: values.date_added,
         }),
-        files: [
-          {
-            filename: currentFile.uploaded_filename,
-            description: currentFile.description || currentFile.file?.name,
-          }
-        ],
+        ...(hasFiles
+          ? {
+              files: [
+                {
+                  filename: currentFile.uploaded_filename,
+                  description: currentFile.description || currentFile.file?.name,
+                }
+              ],
+            }
+          : {}),
       };
 
       const CONFIG = {
@@ -71,6 +98,8 @@ function CreateTransfer({ transfertypes }) {
         search: `?transfer_id=${response.data.id}`
       });
     } catch (error) {
+      console.log('CreateTransfer submit error:', error);
+
       if (error.message === 'Network Error') {
         actions.setErrors({ responseStatus: 'Network Error' });
       } else if (error.response && error.response.status >= 400 && error.response.status < 500) {
@@ -78,7 +107,7 @@ function CreateTransfer({ transfertypes }) {
       } else if (error.response) {
         actions.setErrors({ responseStatus: error.response.status });
       } else {
-        actions.setErrors({ responseStatus: 'Unknown Error' });
+        actions.setErrors({ responseStatus: error.message || 'Unknown Error' });
       }
     } finally {
       actions.setSubmitting(false);

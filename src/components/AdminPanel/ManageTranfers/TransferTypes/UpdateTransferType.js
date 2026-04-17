@@ -13,6 +13,7 @@ function UpdateTransferType() {
 
   const [initialValues, setInitialValues] = useState(null);
   const [loading, setLoading] = useState(true);
+
   const branch_ids = useMemo(
     () => (Array.isArray(branches) ? branches.map(b => b.id) : []),
     [branches]
@@ -25,17 +26,13 @@ function UpdateTransferType() {
       try {
         setLoading(true);
 
-        // ✅ Use list endpoint and normalize shape to a real array
         const res = await axios.get('/acc-api/transfer-types/');
         const raw = res.data;
 
         let list = [];
 
-        // Case A: { tranfertypes: [...] }
         if (raw && Array.isArray(raw.tranfertypes)) {
           list = raw.tranfertypes;
-
-          // Case B: [ [ ... ] ] or [ ... ]
         } else if (Array.isArray(raw)) {
           list = Array.isArray(raw[0]) ? raw[0] : raw;
         }
@@ -55,6 +52,8 @@ function UpdateTransferType() {
           branch_ids: tt.receiving_accounts_branches || [],
           receiving_accounts_ids: (tt.receiving_accounts || []).map(a => a.id),
           sending_accounts_ids: (tt.sending_accounts || []).map(a => a.id),
+          is_file_required: Boolean(tt.is_file_required),
+          is_approval_required: Boolean(tt.is_approval_required),
         };
 
         if (mounted) setInitialValues(init);
@@ -78,6 +77,8 @@ function UpdateTransferType() {
         currency_id: Number(values.currency_id),
         receiving_accounts_ids: (values.receiving_accounts_ids || []).map(x => x.value ?? x),
         sending_accounts_ids: (values.sending_accounts_ids || []).map(x => x.value ?? x),
+        is_file_required: Boolean(values.is_file_required),
+        is_approval_required: Boolean(values.is_approval_required),
       };
 
       const data = removeEmptyValues(payload);

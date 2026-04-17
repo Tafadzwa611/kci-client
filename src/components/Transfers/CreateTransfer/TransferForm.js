@@ -139,18 +139,15 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
             flex-direction: column;
             gap: 0.75rem;
           }
-
           .sf-label {
             font-size: 0.95rem;
             font-weight: 600;
             color: var(--sf-text, #111827);
             position: static;
           }
-
           .sf-dropzone-wrap {
             width: 100%;
           }
-
           .sf-dropzone {
             border: 1px dashed var(--sf-border, #d0d5dd);
             border-radius: 12px;
@@ -164,18 +161,25 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
             cursor: pointer;
             transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
           }
-
           .sf-dropzone:hover {
             border-color: var(--sf-primary, #635bff);
             box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.08);
           }
-
           .sf-dropzone-text {
             margin: 0;
             font-size: 0.95rem;
             color: var(--sf-muted, #667085);
           }
+          body.dark .sf-dropzone,
+          [data-theme='dark'] .sf-dropzone {
+            background: var(--sf-surface, #111827);
+            border-color: var(--sf-border, #374151);
+          }
 
+          body.dark .sf-dropzone-text,
+          [data-theme='dark'] .sf-dropzone-text {
+            color: var(--sf-muted, #9ca3af);
+          }
           .sf-file-preview-wrap {
             margin-top: 0.25rem;
             display: flex;
@@ -183,7 +187,6 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
             gap: 1rem;
             flex-wrap: wrap;
           }
-
           .sf-file-preview-image {
             width: 84px;
             height: 84px;
@@ -196,12 +199,10 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
           }
-
           .sf-file-preview-image:hover {
             transform: scale(1.03);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
           }
-
           .sf-file-icon-preview {
             display: inline-flex;
             align-items: center;
@@ -215,7 +216,6 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
             color: var(--sf-text, #111827);
             flex-shrink: 0;
           }
-
           .sf-upload-status {
             min-width: 220px;
             flex: 1;
@@ -223,29 +223,24 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
             flex-direction: column;
             gap: 0.5rem;
           }
-
           .sf-file-meta-name {
             font-weight: 600;
             word-break: break-word;
             color: var(--sf-text, #111827);
           }
-
           .sf-upload-progress {
             display: flex;
             align-items: center;
             gap: 10px;
           }
-
           .sf-upload-progress-icon {
             font-size: 1rem;
           }
-
           .sf-upload-progress-text {
             font-weight: 700;
             font-size: 0.95rem;
             color: var(--sf-text, #111827);
           }
-
           .sf-upload-bar {
             width: 100%;
             height: 8px;
@@ -253,25 +248,21 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
             background: var(--sf-border, #e5e7eb);
             overflow: hidden;
           }
-
           .sf-upload-bar-fill {
             height: 100%;
             width: 0%;
             background: var(--sf-primary, #635bff);
             transition: width 0.2s ease;
           }
-
           .sf-help {
             color: var(--sf-muted, #667085);
             font-size: 0.875rem;
           }
-
           .sf-warning {
             margin-top: 0.5rem;
             color: #b45309;
             font-size: 0.9rem;
           }
-
           .sf-image-modal {
             position: fixed;
             inset: 0;
@@ -282,7 +273,6 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
             justify-content: center;
             padding: 1rem;
           }
-
           .sf-image-modal-content {
             position: relative;
             max-width: min(92vw, 900px);
@@ -291,7 +281,6 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
             align-items: center;
             justify-content: center;
           }
-
           .sf-image-modal-img {
             max-width: 100%;
             max-height: 92vh;
@@ -300,7 +289,6 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
             background: #fff;
           }
-
           .sf-image-modal-close {
             position: absolute;
             top: -0.75rem;
@@ -319,93 +307,19 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
             align-items: center;
             justify-content: center;
           }
-
-          .sf-inline-action {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 0.5rem;
-          }
-
-          .sf-remove-btn {
-            border: 1px solid #ef4444;
-            background: #fff;
-            color: #dc2626;
-            border-radius: 10px;
-            padding: 0.55rem 0.9rem;
-            cursor: pointer;
-            font-weight: 600;
-          }
-
-          .sf-remove-btn:hover {
-            background: #fef2f2;
-          }
-
-          body.dark .sf-label,
-          [data-theme='dark'] .sf-label {
-            color: var(--sf-text, #f3f4f6);
-          }
-
-          body.dark .sf-dropzone,
-          [data-theme='dark'] .sf-dropzone {
-            background: var(--sf-surface, #111827);
-            border-color: var(--sf-border, #374151);
-          }
-
-          body.dark .sf-dropzone-text,
-          [data-theme='dark'] .sf-dropzone-text {
-            color: var(--sf-muted, #9ca3af);
-          }
-
-          body.dark .sf-file-preview-image,
-          [data-theme='dark'] .sf-file-preview-image,
-          body.dark .sf-file-icon-preview,
-          [data-theme='dark'] .sf-file-icon-preview {
-            border-color: var(--sf-border, #374151);
-            background: var(--sf-surface, #111827);
-          }
-
-          body.dark .sf-file-icon-preview,
-          [data-theme='dark'] .sf-file-icon-preview,
-          body.dark .sf-file-meta-name,
-          [data-theme='dark'] .sf-file-meta-name,
-          body.dark .sf-upload-progress-text,
-          [data-theme='dark'] .sf-upload-progress-text {
-            color: var(--sf-text, #f3f4f6);
-          }
-
-          body.dark .sf-upload-bar,
-          [data-theme='dark'] .sf-upload-bar {
-            background: #1f2937;
-          }
-
-          body.dark .sf-help,
-          [data-theme='dark'] .sf-help {
-            color: var(--sf-muted, #9ca3af);
-          }
-
-          body.dark .sf-remove-btn,
-          [data-theme='dark'] .sf-remove-btn {
-            background: transparent;
-            color: #fca5a5;
-            border-color: #ef4444;
-          }
-
           @media (max-width: 768px) {
             .sf-dropzone {
               min-height: 96px;
               padding: 0.875rem;
             }
-
             .sf-file-preview-image,
             .sf-file-icon-preview {
               width: 72px;
               height: 72px;
             }
-
             .sf-upload-status {
               min-width: 100%;
             }
-
             .sf-image-modal-close {
               top: 0.5rem;
               right: 0.5rem;
@@ -417,35 +331,18 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {({ values, isSubmitting, errors, setFieldValue }) => {
           const selectedTransferTypeId = Number(values.transfertype_id || 0);
+
+          const selectedTransferType = safeTransferTypes.find(
+            (type) => Number(type.id) === selectedTransferTypeId
+          );
+
+          const isFileRequired = Boolean(selectedTransferType?.is_file_required);
+          const hasFiles = Array.isArray(values.files) && values.files.length > 0;
           const hasOneFile = Array.isArray(values.files) && values.files.length === 1;
-          const uploadedFile = hasOneFile ? values.files[0] : null;
-          const uploadInProgress =
-            uploadedFile && fileUploadState[uploadedFile.file.path]?.status === 'Uploading';
 
-          const destinationBranchOptions = React.useMemo(() => {
-            if (!selectedTransferTypeId) {
-              return branches.map((b) => ({ id: Number(b.id), name: b.name }));
-            }
-            return receivingBranchOptionsByTT[selectedTransferTypeId] || [];
-          }, [selectedTransferTypeId, receivingBranchOptionsByTT, branches]);
-
-          React.useEffect(() => {
-            if (!selectedTransferTypeId) return;
-            if (!values.receiving_branch_id) return;
-
-            const current = Number(values.receiving_branch_id);
-            const ok = destinationBranchOptions.some((b) => b.id === current);
-            if (!ok) setFieldValue('receiving_branch_id', '', false);
-          }, [selectedTransferTypeId, values.receiving_branch_id, destinationBranchOptions, setFieldValue]);
-
-          React.useEffect(() => {
-            if (!selectedTransferTypeId) return;
-            if (values.receiving_branch_id) return;
-
-            if (destinationBranchOptions.length === 1) {
-              setFieldValue('receiving_branch_id', String(destinationBranchOptions[0].id), false);
-            }
-          }, [selectedTransferTypeId, destinationBranchOptions, values.receiving_branch_id, setFieldValue]);
+          const destinationBranchOptions = !selectedTransferTypeId
+            ? branches.map((b) => ({ id: Number(b.id), name: b.name }))
+            : (receivingBranchOptionsByTT[selectedTransferTypeId] || []);
 
           const handleDrop = async (acceptedFiles) => {
             if (!acceptedFiles || !acceptedFiles.length) return;
@@ -473,6 +370,17 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
               description: file.name,
               uploaded_filename: '',
             };
+
+            if (
+              values.receiving_branch_id &&
+              !destinationBranchOptions.some((b) => b.id === Number(values.receiving_branch_id))
+            ) {
+              setFieldValue('receiving_branch_id', '', false);
+            }
+
+            if (!values.receiving_branch_id && destinationBranchOptions.length === 1) {
+              setFieldValue('receiving_branch_id', String(destinationBranchOptions[0].id), false);
+            }
 
             setFieldValue('files', [localItem], false);
             setFileUploadState((prev) => ({
@@ -522,15 +430,12 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
                     <div className='sf-shell-head'>
                       <div className='sf-shell-title'>Create transfer</div>
                       <div className='sf-shell-subtitle'>
-                        Capture transfer details and upload the supporting file.
+                        Capture transfer details and upload the supporting file when required by the transfer type.
                       </div>
                     </div>
 
                     <div className='sf-shell-body'>
-                      <FormSection
-                        title='Transfer Information'
-                        hint='Enter the transfer details below.'
-                      >
+                      <FormSection title='Transfer Information' hint='Enter the transfer details below.'>
                         <CustomSelect label='Transfer Type' name='transfertype_id' required>
                           <option value=''>------</option>
                           {safeTransferTypes.map((type) => (
@@ -575,10 +480,12 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
 
                       <FormSection
                         title='Transfer File'
-                        hint='Upload one supporting file. It uploads immediately after selection.'
+                        hint='Upload one supporting file when required by the selected transfer type. It uploads immediately after selection.'
                       >
                         <div className='sf-file-field'>
-                          <label className='sf-label'>Transfer File</label>
+                          <label className='sf-label' style={{ fontSize: '0.75rem', paddingTop: '1rem' }}>
+                            Transfer File {isFileRequired ? '(Required)' : '(Optional)'}
+                          </label>
 
                           <Dropzone onDrop={handleDrop} multiple={false} maxFiles={1}>
                             {({ getRootProps, getInputProps }) => (
@@ -593,21 +500,25 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
                             )}
                           </Dropzone>
 
-                          {!hasOneFile && (
+                          {isFileRequired && !hasOneFile && (
                             <div className='text-danger' style={{ marginTop: '0.25rem' }}>
                               Please upload one file before submitting.
                             </div>
                           )}
 
+                          {hasFiles && !hasOneFile && (
+                            <div className='text-danger' style={{ marginTop: '0.25rem' }}>
+                              Please upload only one file.
+                            </div>
+                          )}
+
                           <FieldArray name='files'>
-                            {({ remove }) => (
+                            {() => (
                               <div>
                                 {(values.files || []).map((item, index) => {
                                   const path = item.file?.path || item.file?.name;
-                                  const currentProgress =
-                                    fileUploadState[path] || progress[path] || {};
-                                  const isImage =
-                                    item.file?.type && item.file.type.startsWith('image/');
+                                  const currentProgress = fileUploadState[path] || progress[path] || {};
+                                  const isImage = item.file?.type && item.file.type.startsWith('image/');
 
                                   return (
                                     <div key={`${path}-${index}`} className='sf-file-preview-wrap'>
@@ -638,7 +549,7 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
                                           {formatFileSize(item.file?.size)}
                                         </small>
 
-                                        {currentProgress.status === 'Uploading' ? (
+                                        {currentProgress.status === 'Uploading' && (
                                           <>
                                             <div className='sf-upload-progress'>
                                               <i className='fa fa-spinner fa-spin sf-upload-progress-icon'></i>
@@ -649,48 +560,18 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
                                             <div className='sf-upload-bar'>
                                               <div
                                                 className='sf-upload-bar-fill'
-                                                style={{
-                                                  width: `${currentProgress.progress || 0}%`
-                                                }}
+                                                style={{ width: `${currentProgress.progress || 0}%` }}
                                               ></div>
                                             </div>
                                           </>
-                                        ) : null}
+                                        )}
 
-                                        {currentProgress.status &&
-                                        currentProgress.status !== 'Uploading' ? (
+                                        {currentProgress.status && currentProgress.status !== 'Uploading' && (
                                           <small className='sf-help'>
                                             {currentProgress.status}
                                             {isImage && previewUrl ? '. Click the image to preview.' : ''}
                                           </small>
-                                        ) : null}
-
-                                        {/* <CustomInput
-                                          label='File Description'
-                                          name={`files.${index}.description`}
-                                          type='text'
-                                        />
-
-                                        <div className='sf-inline-action'>
-                                          <button
-                                            type='button'
-                                            className='sf-remove-btn'
-                                            onClick={() => {
-                                              if (previewUrl) {
-                                                URL.revokeObjectURL(previewUrl);
-                                                setPreviewUrl(null);
-                                              }
-                                              remove(index);
-                                              setFileUploadState((prev) => {
-                                                const next = { ...prev };
-                                                delete next[path];
-                                                return next;
-                                              });
-                                            }}
-                                          >
-                                            Remove
-                                          </button>
-                                        </div> */}
+                                        )}
                                       </div>
                                     </div>
                                   );
@@ -703,22 +584,14 @@ function TransferForm({ transfertypes, initialValues, onSubmit, progress = {} })
                     </div>
 
                     <div className='sf-shell-footer'>
-                      <SubmitButton
-                        isSubmitting={isSubmitting || !hasOneFile || uploadInProgress}
-                      />
+                      <SubmitButton isSubmitting={isSubmitting} />
                     </div>
                   </div>
                 </div>
 
                 {showPreviewModal && previewUrl ? (
-                  <div
-                    className='sf-image-modal'
-                    onClick={() => setShowPreviewModal(false)}
-                  >
-                    <div
-                      className='sf-image-modal-content'
-                      onClick={(e) => e.stopPropagation()}
-                    >
+                  <div className='sf-image-modal' onClick={() => setShowPreviewModal(false)}>
+                    <div className='sf-image-modal-content' onClick={(e) => e.stopPropagation()}>
                       <button
                         type='button'
                         className='sf-image-modal-close'
