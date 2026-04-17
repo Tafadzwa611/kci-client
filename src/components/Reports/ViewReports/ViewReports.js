@@ -23,6 +23,7 @@ import LoansGranted from "../LoansGranted/LoansGranted";
 import CashReceipts from "../CashReceipts/CashReceipts";
 import AllTxnsReport from "../AllTxnsReport/AllTxnsReport";
 import ReceiptNumbers from "../ReceiptNumbers/ReceiptNumbers";
+import VoucherNumbers from "../ReceiptNumbers/VoucherNumbers";
 import { Routes, Route, Outlet, NavLink } from "react-router-dom";
 
 const ViewReports = () => {
@@ -57,6 +58,7 @@ const ViewReports = () => {
         <Route path="cashreceipts" element={<CashReceipts />} />
         <Route path="txns-report" element={<AllTxnsReport />} />
         <Route path="receipt-numbers" element={<ReceiptNumbers />} />
+        <Route path="voucher-numbers" element={<VoucherNumbers />} />
       </Route>
     </Routes>
   );
@@ -97,7 +99,8 @@ function Layout() {
           <Tab to="/reports/viewreports/cashreceipts">Cash Receipts</Tab>
           <Tab to="/reports/viewreports/audittrail">Audit Trail</Tab>
           <Tab to="/reports/viewreports/txns-report">All Transactions</Tab>
-          <Tab to="/reports/viewreports/receipt-numbers">Receipt Numbers</Tab>
+          <Tab to="/reports/viewreports/receipt-numbers">Receipt Number</Tab>
+          <Tab to="/reports/viewreports/voucher-numbers">Voucher Number</Tab>
         </div>
 
         <div className="tab-content font-12 ui-tab-panel">
