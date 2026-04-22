@@ -227,8 +227,6 @@ function AddExpense({ expensetypes, fundaccounts }) {
             </div>
           </NonFieldErrors>
 
-          {/* keep where it was: still renders field-level/non-field errors if any */}
-          <NonFieldErrors errors={errors} />
         </Form>
       )}
     </Formik>

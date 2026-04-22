@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import List from './ViewExpenses/List';
 import AddExpense from './ViewExpenses/AddExpense';
+import ExpenseRequests from './ExpenseRequests/ExpenseRequests';
 import { Fetcher } from '../../common';
 import {
   Routes,
@@ -24,6 +25,10 @@ const ViewExpenses = () => {
         <Route
           path='addexpense'
           element={<AddExpenseComponent />}
+        />
+        <Route 
+          path='expenserequests' 
+          element={<ExpenseRequests />} 
         />
       </Route>
     </Routes>
@@ -65,6 +70,9 @@ function Layout() {
           </Tab>
           <Tab to='/expenses/viewexpenses/addexpense'>
             Add Expense
+          </Tab>
+          <Tab to='/expenses/viewexpenses/expenserequests'>
+            Requests
           </Tab>
         </div>
 

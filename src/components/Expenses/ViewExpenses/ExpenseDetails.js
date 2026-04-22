@@ -45,11 +45,6 @@ function ExpenseDetails({expenseId}) {
           <div className='col-12' style={{display:'flex', justifyContent:'space-between'}}>
             <div className='row' style={{marginBottom: '1rem', marginTop: '0', display: 'flex', justifyContent: 'flex-end', columnGap: '5px'}}>
               <button className='btn btn-olive' onClick={() => setDeleteExpense(true)}>Delete</button>
-              {expense.status === 2 && (
-                <button className='btn btn-olive' onClick={() => setPayExpense(true)}>
-                  Pay
-                </button>
-              )}
             </div>
           </div>
         </div>
@@ -57,31 +52,28 @@ function ExpenseDetails({expenseId}) {
           <div style={{width:'30%'}}>
             <ul>
               <li>Branch: {expense.branch_name}</li>
-              {expense.status === 1 ? (
-                <li>
-                  Status: <span className="badge badge-success">Paid</span>
-                </li>
+                {expense.status === 'Approved' ? (
+                  <li>
+                    Status: Approved
+                  </li>
+                ) : expense.status === 'Rejected' ? (
+                  <li>
+                    Status: Rejected
+                  </li>
                 ) : (
-                <li>
-                  Status: <span className="badge badge-danger">Unpaid</span>
-                </li>
-              )}
+                  <li>
+                    Status: Pending
+                  </li>
+                )}
               <li>Expense Name: {expense.expense_name}</li>
               <li>Expense Type: {expense.exp_type}</li>
               <li>Expense Amount: {expense.currency_code} {expense.expense_amount}</li>
               <li>
                 Expense Account: {expense.expense_account.general_ledger_code} {expense.expense_account.general_ledger_name}
               </li>
-              {expense.fund_account && (
-                <li>
-                  Fund Account: {expense.fund_account.general_ledger_code} {expense.fund_account.general_ledger_name}
-                </li>
-              )}
-              {expense.payable_account && (
-                <li>
-                  Fund Account: {expense.payable_account.general_ledger_code} {expense.payable_account.general_ledger_name}
-                </li>
-              )}
+              <li>
+                Fund Account: {expense.fund_account.general_ledger_code} {expense.fund_account.general_ledger_name}
+              </li>
             </ul>
           </div>
           <div style={{width:"30%", display:"flex", alignItems:"start", justifyContent:"center"}}>
