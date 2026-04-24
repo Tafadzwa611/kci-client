@@ -19,6 +19,7 @@ function MainTable({expenseData, handleClick}) {
                     <th style={{textAlign:"start"}}>Date_Captured</th>
                     <th style={{textAlign:"start"}}>Currency</th>
                     <th style={{textAlign:"start"}}>Expense_Amount</th>
+                    <th style={{textAlign:"start"}}>Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -32,6 +33,21 @@ function MainTable({expenseData, handleClick}) {
                         <td style={{verticalAlign:"middle"}}>{expense.db_date_created}</td>
                         <td style={{verticalAlign:"middle"}}>{expense.currency_code}</td>
                         <td style={{verticalAlign:"middle"}}>{expense.expense_amount}</td>
+                        <td style={{verticalAlign:"middle"}}>
+                          {expense.status === 'Approved' ? (
+                            <span>
+                              Approved
+                            </span>
+                          ) : expense.status === 'Rejected' ? (
+                            <span>
+                              Rejected
+                            </span>
+                          ) : (
+                            <span>
+                              Pending
+                            </span>
+                          )}
+                        </td>
                       </tr>
                     )
                   })}
