@@ -5,11 +5,7 @@ const Modal = ({ open, setOpen, children, title }) => {
   const modalRoot = useMemo(() => document.getElementById("modal-root"), []);
 
   useEffect(() => {
-    console.log("Modal mounted", { modalRoot });
-
     if (!open) return;
-
-    // prevent background scroll while open
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
