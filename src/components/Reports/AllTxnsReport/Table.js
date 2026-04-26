@@ -17,11 +17,9 @@ function Table({ report, setReport, params }) {
                 <th>Loan_Number</th>
                 <th>Disbursed_Date</th>
                 <th>Maturity_Date</th>
-                <th>Transaction_Amount</th>
                 <th>Transaction_Type</th>
-                <th>Entry_Type</th>
-                <th>Loan_Balance</th>
-                <th>Principal</th>
+                <th>Dr/Cr</th>
+                <th>Transaction_Amount</th>
               </tr>
             </thead>
             <tbody>
@@ -34,11 +32,9 @@ function Table({ report, setReport, params }) {
                     <td>{txn.loan_num}</td>
                     <td>{txn.db_date}</td>
                     <td>{txn.last_date}</td>
-                    <td>{txn.amount}</td>
                     <td>{txn.txn_type}</td>
                     <td>{txn.entry_type}</td>
-                    <td>{txn.balance}</td>
-                    <td>{txn.principal}</td>
+                    <td>{txn.amount}</td>
                   </tr>
                 )
               })}
