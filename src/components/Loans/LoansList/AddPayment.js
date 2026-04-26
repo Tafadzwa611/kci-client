@@ -26,6 +26,12 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
 
   const receiptBooksObj = Object.fromEntries(receiptBooks.map(rb => [rb.id, rb]));
 
+  const { cash } = useCash();
+  const fundAccounts = cash.accounts.filter(
+    account => !account.suspended && account.currency_id == currencyId
+  );
+  const onlyFundAccount = fundAccounts.length === 1 ? fundAccounts[0] : null;
+
   const onSubmit = async (values, actions) => {
     const data = removeEmptyValues(values);
 
@@ -33,7 +39,10 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
       data.receipt_book_id = values.receipt_book.value;
     }
 
-    data.cash_account_id = data.fund_account.value;
+    if (!onlyFundAccount) {
+      data.cash_account_id = data.fund_account.value;
+    }
+
     if (!values.manually_allocate) {
       delete data.manual_allocation
     }
@@ -84,13 +93,11 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
     }
   }
 
-  const { cash } = useCash();
-
   const selectOpts = subLoans.filter(loan => loan.id !== null);
 
   const initialValues = {
     send_sms_notification: false,
-    cash_account_id: '',
+    cash_account_id: onlyFundAccount ? onlyFundAccount.id : '',
     payment_type: 'Installment',
     payment_date: '',
     amount_paid: '',
@@ -116,16 +123,19 @@ const AddPayment = ({loanId, setLoan, currencyId, setOpen, subLoans, clientType,
                   <CustomInput label='Penalty Paid' name='manual_allocation.penalty' type='number' required/>
                 </>}
                 <CustomDatePicker label='Payment Date' name='payment_date' setFieldValue={setFieldValue} required/>
-                <CustomMultiSelect
-                  label='Fund Account'
-                  name='fund_account'
-                  isMulti={false}
-                  setFieldValue={setFieldValue}
-                  options={cash.accounts.filter(account => !account.suspended && account.currency_id == currencyId).map(account => (
-                    {label: `${account.label} - ${account.branch}`, value: account.value}
-                  ))}
-                  required
-                />
+                {!onlyFundAccount && (
+                  <CustomMultiSelect
+                    label='Fund Account'
+                    name='fund_account'
+                    isMulti={false}
+                    setFieldValue={setFieldValue}
+                    options={fundAccounts.map(account => ({
+                      label: `${account.label} - ${account.branch}`,
+                      value: account.value
+                    }))}
+                    required
+                  />
+                )}
                 {clientType === 'Groups (solidarity)' ?
                 <CustomSelect label='Sub Loan' name='sub_loan_id' required>
                   <option value=''>------</option>
