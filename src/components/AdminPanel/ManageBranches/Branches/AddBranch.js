@@ -15,7 +15,6 @@ import {
 } from '../../../../common';
 import { useNavigate } from 'react-router-dom';
 import { useBranches } from '../../../../contexts/BranchesContext';
-import { useCurrencies } from '../../../../contexts/CurrenciesContext';
 
 
 function AddBranch() {
@@ -31,7 +30,6 @@ function AddBranch() {
   };
   const navigate = useNavigate();
   const { branches } = useBranches();
-  const { currencies } = useCurrencies();
 
   const onSubmit = async (values, actions) => {
     try {
@@ -58,7 +56,7 @@ function AddBranch() {
 
   return (
     <>
-      <Fetcher urls={['/loansapi/loan_products_list/']}>
+      <Fetcher urls={['/loansapi/loan_products_list/', '/usersapi/currencieslist/']}>
         {({data}) => (
           <div className='sf-page'>
             <div style={{ marginBottom: 12 }}>
@@ -111,7 +109,7 @@ function AddBranch() {
                               label='Currencies'
                               setFieldValue={setFieldValue}
                               name='currencies'
-                              options={currencies.map(currency => ({
+                              options={data[1].map(currency => ({
                                 value: currency.id,
                                 label: currency.fullname
                               }))}

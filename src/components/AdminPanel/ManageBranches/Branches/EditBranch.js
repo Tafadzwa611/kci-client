@@ -13,19 +13,18 @@ import {
 } from '../../../../common';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useCurrencies } from '../../../../contexts/CurrenciesContext';
 
 function EditBranch() {
   const params = useParams();
 
   return (
-    <Fetcher urls={['/loansapi/loan_products_list/', `/usersapi/get_branch/${params.branchId}/`]}>
-      {({ data }) => <EditBranchForm loanProducts={data[0]} branch={data[1]} />}
+    <Fetcher urls={['/loansapi/loan_products_list/', `/usersapi/get_branch/${params.branchId}/`, '/usersapi/currencieslist/']}>
+      {({ data }) => <EditBranchForm loanProducts={data[0]} branch={data[1]} currencies={data[2]} />}
     </Fetcher>
   );
 }
 
-function EditBranchForm({ loanProducts, branch }) {
+function EditBranchForm({ loanProducts, branch, currencies }) {
   const initialValues = {
     name: branch.name,
     geographical_location: branch.geographical_location || '',
@@ -37,7 +36,6 @@ function EditBranchForm({ loanProducts, branch }) {
   };
 
   const navigate = useNavigate();
-  const { currencies } = useCurrencies();
 
   const onSubmit = async (values, actions) => {
     try {
