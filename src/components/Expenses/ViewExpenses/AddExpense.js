@@ -83,151 +83,147 @@ function AddExpense({ expensetypes, fundaccounts }) {
     <Formik initialValues={initialValues} validationSchema={addSchema} onSubmit={onSubmit}>
       {({ isSubmitting, errors, values, setFieldValue }) => (
         <Form autoComplete="off" className="sf-form">
-          <NonFieldErrors errors={errors}>
-            <div className="sf-page">
-              <div className="sf-shell">
-                <div className="sf-shell-head">
-                  <div className="sf-shell-title">Add Expense</div>
-                  <div className="sf-shell-subtitle">
-                    Record an expense, choose expense type.
-                  </div>
-                </div>
-
-                <div className="sf-shell-body">
-                  <section className="sf-section">
-                    <div className="sf-section-head">
-                      <div className="sf-section-title">Expense Information</div>
-                      <div className="sf-section-hint">Select an expense branch to filter eligible expense types.</div>
-                    </div>
-
-                    {/* ✅ Vertical stack */}
-                    <div className="sf-section-body" style={{ display: "grid", gap: 12 }}>
-                      <CustomMultiSelect
-                        label="Expense Branch"
-                        name="expense_branch"
-                        isMulti={false}
-                        options={branches.map((branch) => ({ value: branch.id, label: branch.name }))}
-                        required
-                        setFieldValue={(field_name, selectedOpts) => {
-                          setFieldValue("expense_type", "");
-                          setFieldValue("expense_type_id", "");
-                          setFieldValue(field_name, selectedOpts);
-                        }}
-                      />
-
-                      <CustomMultiSelect
-                        label="Expense Type"
-                        name="expense_type"
-                        isMulti={false}
-                        setFieldValue={(field_name, selectedOpts) => {
-                          setFieldValue(field_name, selectedOpts);
-                          setFieldValue("expense_type_id", selectedOpts?.value);
-                          const exp_type = expensetypes.find((et) => et.id == selectedOpts?.value);
-                          setCurrencyId(exp_type?.currency_id);
-                        }}
-                        options={expensetypes
-                          .filter((type) => type.branch_id === values.expense_branch?.value)
-                          .map((type) => ({
-                            label: `${type.currency_shortname} ${type.name} ${type.branch_name}`,
-                            value: type.id,
-                          }))}
-                        required
-                      />
-
-                      {settings.accounting_method === 1 && (
-                        <>
-                          <CustomMultiSelect
-                            label="Fund Branch"
-                            name="fund_branch"
-                            isMulti={false}
-                            options={branches.map((branch) => ({ value: branch.id, label: branch.name }))}
-                            required
-                            setFieldValue={(field_name, selectedOpts) => {
-                              setFieldValue(field_name, selectedOpts);
-                              setFieldValue("fund_account", "");
-                              setFieldValue("fund_account_id", "");
-                            }}
-                          />
-
-                          <CustomMultiSelect
-                            label="Fund Account"
-                            name="fund_account"
-                            isMulti={false}
-                            setFieldValue={(field_name, selectedOpts) => {
-                              setFieldValue(field_name, selectedOpts);
-                              setFieldValue("fund_account_id", selectedOpts.value);
-                            }}
-                            options={fundaccounts
-                              .filter(
-                                (fa) => fa.currency_id == currencyId && fa.branch_id == values.fund_branch?.value
-                              )
-                              .map((account) => ({
-                                label: `${account.currency} ${account.general_ledger_name} ${account.branch}`,
-                                value: account.id,
-                              }))}
-                            required
-                          />
-                        </>
-                      )}
-
-                      <CustomInput label="Expense Name" name="expense_name" type="text" required />
-                      <CustomInput label="Expense Amount" name="expense_amount" type="number" required />
-                      <CustomDatePicker
-                        label="Expense Date"
-                        name="expense_date"
-                        setFieldValue={setFieldValue}
-                        required
-                      />
-
-                      {settings.use_voucher_book ? (
-                        <>
-                          <CustomMultiSelect
-                            label="Receipt Book"
-                            name="receipt_book"
-                            isMulti={false}
-                            setFieldValue={(fieldName, selectedOpts) => {
-                              setFieldValue(fieldName, selectedOpts);
-                              const selectedRb = receiptBooksObj[selectedOpts.value];
-                              setSelectedRb(selectedRb);
-                              if (selectedRb.mode == 1) {
-                                setFieldValue("receipt_number", "");
-                              }
-                            }}
-                            options={receiptBooks
-                              .filter(
-                                (rb) =>
-                                  rb.is_active &&
-                                  rb.currency.id == currencyId &&
-                                  rb.allowed_apps.includes(3)
-                              )
-                              .map((rb) => ({
-                                label: `${rb.name} - ${rb.branch.name} - ${rb.branch.name}`,
-                                value: rb.id,
-                              }))}
-                            required
-                          />
-
-                          {selectedRb.mode === 2 && (
-                            <CustomInput label="Reference" name="reference" type="text" required />
-                          )}
-                        </>
-                      ) : (
-                        <CustomInput label="Reference" name="reference" type="text" />
-                      )}
-
-                      <CustomInput label="Description" name="description" type="text" />
-                    </div>
-                  </section>
-                </div>
-
-                <div className="sf-shell-footer">
-                  <SubmitButton isSubmitting={isSubmitting} />
+          <div className="sf-page">
+            <div className="sf-shell">
+              <div className="sf-shell-head">
+                <div className="sf-shell-title">Add Expense</div>
+                <div className="sf-shell-subtitle">
+                  Record an expense, choose expense type.
                 </div>
               </div>
-            </div>
-          </NonFieldErrors>
 
-          {/* keep where it was: still renders field-level/non-field errors if any */}
+              <div className="sf-shell-body">
+                <section className="sf-section">
+                  <div className="sf-section-head">
+                    <div className="sf-section-title">Expense Information</div>
+                    <div className="sf-section-hint">Select an expense branch to filter eligible expense types.</div>
+                  </div>
+
+                  {/* ✅ Vertical stack */}
+                  <div className="sf-section-body" style={{ display: "grid", gap: 12 }}>
+                    <CustomMultiSelect
+                      label="Expense Branch"
+                      name="expense_branch"
+                      isMulti={false}
+                      options={branches.map((branch) => ({ value: branch.id, label: branch.name }))}
+                      required
+                      setFieldValue={(field_name, selectedOpts) => {
+                        setFieldValue("expense_type", "");
+                        setFieldValue("expense_type_id", "");
+                        setFieldValue(field_name, selectedOpts);
+                      }}
+                    />
+
+                    <CustomMultiSelect
+                      label="Expense Type"
+                      name="expense_type"
+                      isMulti={false}
+                      setFieldValue={(field_name, selectedOpts) => {
+                        setFieldValue(field_name, selectedOpts);
+                        setFieldValue("expense_type_id", selectedOpts?.value);
+                        const exp_type = expensetypes.find((et) => et.id == selectedOpts?.value);
+                        setCurrencyId(exp_type?.currency_id);
+                      }}
+                      options={expensetypes
+                        .filter((type) => type.branch_id === values.expense_branch?.value)
+                        .map((type) => ({
+                          label: `${type.currency_shortname} ${type.name} ${type.branch_name}`,
+                          value: type.id,
+                        }))}
+                      required
+                    />
+
+                    {settings.accounting_method === 1 && (
+                      <>
+                        <CustomMultiSelect
+                          label="Fund Branch"
+                          name="fund_branch"
+                          isMulti={false}
+                          options={branches.map((branch) => ({ value: branch.id, label: branch.name }))}
+                          required
+                          setFieldValue={(field_name, selectedOpts) => {
+                            setFieldValue(field_name, selectedOpts);
+                            setFieldValue("fund_account", "");
+                            setFieldValue("fund_account_id", "");
+                          }}
+                        />
+
+                        <CustomMultiSelect
+                          label="Fund Account"
+                          name="fund_account"
+                          isMulti={false}
+                          setFieldValue={(field_name, selectedOpts) => {
+                            setFieldValue(field_name, selectedOpts);
+                            setFieldValue("fund_account_id", selectedOpts.value);
+                          }}
+                          options={fundaccounts
+                            .filter(
+                              (fa) => fa.currency_id == currencyId && fa.branch_id == values.fund_branch?.value
+                            )
+                            .map((account) => ({
+                              label: `${account.currency} ${account.general_ledger_name} ${account.branch}`,
+                              value: account.id,
+                            }))}
+                          required
+                        />
+                      </>
+                    )}
+
+                    <CustomInput label="Expense Name" name="expense_name" type="text" required />
+                    <CustomInput label="Expense Amount" name="expense_amount" type="number" required />
+                    <CustomDatePicker
+                      label="Expense Date"
+                      name="expense_date"
+                      setFieldValue={setFieldValue}
+                      required
+                    />
+
+                    {settings.use_voucher_book ? (
+                      <>
+                        <CustomMultiSelect
+                          label="Receipt Book"
+                          name="receipt_book"
+                          isMulti={false}
+                          setFieldValue={(fieldName, selectedOpts) => {
+                            setFieldValue(fieldName, selectedOpts);
+                            const selectedRb = receiptBooksObj[selectedOpts.value];
+                            setSelectedRb(selectedRb);
+                            if (selectedRb.mode == 1) {
+                              setFieldValue("receipt_number", "");
+                            }
+                          }}
+                          options={receiptBooks
+                            .filter(
+                              (rb) =>
+                                rb.is_active &&
+                                rb.currency.id == currencyId &&
+                                rb.allowed_apps.includes(3)
+                            )
+                            .map((rb) => ({
+                              label: `${rb.name} - ${rb.branch.name} - ${rb.branch.name}`,
+                              value: rb.id,
+                            }))}
+                          required
+                        />
+
+                        {selectedRb.mode === 2 && (
+                          <CustomInput label="Reference" name="reference" type="text" required />
+                        )}
+                      </>
+                    ) : (
+                      <CustomInput label="Reference" name="reference" type="text" />
+                    )}
+
+                    <CustomInput label="Description" name="description" type="text" />
+                  </div>
+                </section>
+              </div>
+
+              <div className="sf-shell-footer">
+                <SubmitButton isSubmitting={isSubmitting} />
+              </div>
+            </div>
+          </div>
           <NonFieldErrors errors={errors} />
         </Form>
       )}
