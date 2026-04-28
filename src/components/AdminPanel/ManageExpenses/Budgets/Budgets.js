@@ -12,6 +12,7 @@ import {
 import { Form, Formik } from 'formik';
 import { Link } from 'react-router-dom';
 
+
 function Budgets() {
   const [budgets, setBudgets] = React.useState([]);
 
@@ -49,9 +50,6 @@ function Budgets() {
                 <td>
                   <Link to={`/users/admin/manageexps/budget-details/${bd.id}`}>
                     View
-                  </Link><br/>
-                  <Link to={`/users/admin/manageexps/edit-budget/${bd.id}`}>
-                    Edit
                   </Link><br/>
                   <Link to={`/users/admin/manageexps/delete-budget/${bd.id}`}>
                     Delete

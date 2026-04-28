@@ -26,11 +26,6 @@ function BudgetDetails() {
           <div style={{display:'flex', justifyContent:'space-between'}}>
             <>
               <button className='btn btn-olive'>
-                <Link to={`/users/admin/manageexps/edit-budget/${budget.id}`}>
-                  Edit
-                </Link>
-              </button>
-              <button className='btn btn-olive'>
                 <Link to={`/users/admin/manageexps/delete-budget/${budget.id}`}>
                   Delete
                 </Link>
