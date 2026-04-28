@@ -18,28 +18,39 @@ function EditBranch() {
   const params = useParams();
 
   return (
-    <Fetcher urls={['/loansapi/loan_products_list/', `/usersapi/get_branch/${params.branchId}/`]}>
-      {({ data }) => <EditBranchForm loanProducts={data[0]} branch={data[1]} />}
+    <Fetcher urls={['/loansapi/loan_products_list/', `/usersapi/get_branch/${params.branchId}/`, '/usersapi/currencieslist/']}>
+      {({ data }) => <EditBranchForm loanProducts={data[0]} branch={data[1]} currencies={data[2]} />}
     </Fetcher>
   );
 }
 
-function EditBranchForm({ loanProducts, branch }) {
+function EditBranchForm({ loanProducts, branch, currencies }) {
   const initialValues = {
     name: branch.name,
     geographical_location: branch.geographical_location || '',
     branch_code: branch.branch_code,
     date_of_opening: branch.date_of_opening,
     is_rural: branch.is_rural,
-    loan_products: branch.products.map(lp => ({ value: lp.id, label: lp.name }))
+    loan_products: branch.products.map(lp => ({ value: lp.id, label: lp.name })),
+    currencies: branch.currencies.map(c => ({ value: c.id, label: c.fullname })),
   };
 
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
     try {
-      const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const data = { ...values, available_product_ids: values.loan_products.map(lp => lp.value) };
+      const CONFIG = {
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken'),
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      };
+      const data = {
+        ...values,
+        available_product_ids: values.loan_products.map(lp => lp.value),
+        available_currency_ids: values.currencies.map(c => c.value)
+      };
       await axios.put(`/usersapi/update_branch/${branch.id}/`, data, CONFIG);
       navigate({ pathname: `/users/admin/managebranches/branch/${branch.id}` });
     } catch (error) {
@@ -95,6 +106,16 @@ function EditBranchForm({ loanProducts, branch }) {
                         options={loanProducts.map(loanProduct => ({
                           value: loanProduct.id,
                           label: loanProduct.name
+                        }))}
+                      />
+                      <CustomMultiSelect
+                        label='Currencies'
+                        setFieldValue={setFieldValue}
+                        initVals={values.currencies}
+                        name='currencies'
+                        options={currencies.map(currency => ({
+                          value: currency.id,
+                          label: currency.fullname
                         }))}
                       />
                       <CustomCheckbox label='Is Rural' name='is_rural' />

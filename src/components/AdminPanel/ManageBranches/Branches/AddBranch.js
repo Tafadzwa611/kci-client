@@ -25,7 +25,8 @@ function AddBranch() {
     date_of_opening: '',
     coa_branch_id: '',
     is_rural: false,
-    loan_products: []
+    loan_products: [],
+    currencies: [],
   };
   const navigate = useNavigate();
   const { branches } = useBranches();
@@ -33,7 +34,11 @@ function AddBranch() {
   const onSubmit = async (values, actions) => {
     try {
       const CONFIG = {headers: {'X-CSRFToken': Cookies.get('csrftoken'), 'Accept': 'application/json', 'Content-Type': 'application/json'}};
-      const data = {...values, available_product_ids: values.loan_products.map(lp => lp.value)};
+      const data = {
+        ...values,
+        available_product_ids: values.loan_products.map(lp => lp.value),
+        available_currency_ids: values.currencies.map(c => c.value),
+      };
       const response = await axios.post('/usersapi/add_branch/', data, CONFIG);
       navigate({pathname: `/users/admin/managebranches/branch/${response.data.id}`});
       window.location.reload();
@@ -51,7 +56,7 @@ function AddBranch() {
 
   return (
     <>
-      <Fetcher urls={['/loansapi/loan_products_list/']}>
+      <Fetcher urls={['/loansapi/loan_products_list/', '/usersapi/currencieslist/']}>
         {({data}) => (
           <div className='sf-page'>
             <div style={{ marginBottom: 12 }}>
@@ -98,6 +103,15 @@ function AddBranch() {
                               options={data[0].map(loanProduct => ({
                                 value: loanProduct.id,
                                 label: loanProduct.name
+                              }))}
+                            />
+                            <CustomMultiSelect
+                              label='Currencies'
+                              setFieldValue={setFieldValue}
+                              name='currencies'
+                              options={data[1].map(currency => ({
+                                value: currency.id,
+                                label: currency.fullname
                               }))}
                             />
                             <CustomSelect label='Chart Of Accounts' name='coa_branch_id' required>

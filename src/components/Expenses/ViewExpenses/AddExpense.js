@@ -98,8 +98,6 @@ function AddExpense({ expensetypes, fundaccounts }) {
                     <div className="sf-section-title">Expense Information</div>
                     <div className="sf-section-hint">Select an expense branch to filter eligible expense types.</div>
                   </div>
-
-                  {/* ✅ Vertical stack */}
                   <div className="sf-section-body" style={{ display: "grid", gap: 12 }}>
                     <CustomMultiSelect
                       label="Expense Branch"

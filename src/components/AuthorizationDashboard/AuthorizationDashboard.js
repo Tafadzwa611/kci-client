@@ -171,6 +171,7 @@ function AuthorizationDashboard() {
                     <div className='authz-grid'>
                         <PaymentApprovals />
                         <TransferApprovals />
+                        <ExpenseApprovals />
                     </div>
                 </div>
 
@@ -254,6 +255,46 @@ function TransferApprovals() {
       <div className='authz-footer'>
         <Link className='authz-link' to='/transfers/viewtransfers/transferrequests'>
           Go to transfer requests
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function ExpenseApprovals() {
+  const [count, setCount] = React.useState(null);
+
+  React.useEffect(() => {
+    const fetch = async () => {
+      const response = await axios.get('/expensesapi/expense_requests_count/');
+      setCount(response.data);
+    };
+    fetch();
+  }, []);
+
+  if (!count) {
+    return (
+      <div className='authz-card authz-card-loading'>
+        <div className='mini-spinner'></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className='authz-card'>
+      <div className='authz-card-head'>
+        <h6 className='authz-card-title'>Expense Approvals</h6>
+        <span className='authz-chip'>Queue</span>
+      </div>
+
+      <div className='authz-count-wrap'>
+        <p className='authz-count'>{count.count}</p>
+        <p className='authz-count-note'>Pending requests</p>
+      </div>
+
+      <div className='authz-footer'>
+        <Link className='authz-link' to='/expenses/viewexpenses/expenserequests'>
+          Go to expense requests
         </Link>
       </div>
     </div>

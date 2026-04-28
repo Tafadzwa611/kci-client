@@ -65,13 +65,17 @@ function MiniExpenseDetails({expenseId, setExpenseId, setExpenseData}) {
           <div style={{width:"30%"}}>
             <ul>
                 <li>Branch: {expenseDetails.branch_name}</li>
-                {expenseDetails.status == 1 ? (
+                {expenseDetails.status === 'Approved' ? (
                   <li>
-                    Status: <span className="badge badge-success">Paid</span>
+                    Status: Approved
                   </li>
-                  ) : (
+                ) : expenseDetails.status === 'Rejected' ? (
                   <li>
-                    Status: <span className="badge badge-danger">Unpaid</span>
+                    Status: Rejected
+                  </li>
+                ) : (
+                  <li>
+                    Status: Pending
                   </li>
                 )}
                 <li>Expense Name: {expenseDetails.expense_name}</li>
