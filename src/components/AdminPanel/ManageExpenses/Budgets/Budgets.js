@@ -6,6 +6,7 @@ import {
 import { useBranches } from '../../../../contexts/BranchesContext';
 import { useCurrencies } from '../../../../contexts/CurrenciesContext';
 import {
+  CustomDatePickerFilter,
   CustomSelectFilter,
   SubmitButtonFilter
 } from '../../../../common';
@@ -86,13 +87,27 @@ function Filter({setBudgets}) {
   }
 
   return (
-    <Formik initialValues={{ branch_id: '', currency_id: '' }} onSubmit={onSubmit}>
-      {({isSubmitting}) => (
+    <Formik initialValues={{ branch_id: '', currency_id: '', min_date: '', max_date: '' }} onSubmit={onSubmit}>
+      {({ isSubmitting, setFieldValue }) => (
         <div className='search_background'>
           <div className='row-containers sf-shellwrap'>
             <Form>
               <div className='row row-payments row-loans sf-card'>
-                <div className='sf-row sf-row-2'>
+                <div className='sf-row sf-row-3'>
+                  <div className="row-payments-container sf-w-49">
+                    <CustomDatePickerFilter
+                      label="Min Date"
+                      name="min_date"
+                      setFieldValue={setFieldValue}
+                    />
+                  </div>
+                  <div className="row-payments-container sf-w-49">
+                    <CustomDatePickerFilter
+                      label="Max Date"
+                      name="max_date"
+                      setFieldValue={setFieldValue}
+                    />
+                  </div>
                   <div className='row-payments-container sf-w-49'>
                     <CustomSelectFilter label='Branch' name='branch_id' required>
                       <option value=''>------</option>
