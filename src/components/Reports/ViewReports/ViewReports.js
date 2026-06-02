@@ -26,6 +26,7 @@ import AllTxnsReport from "../AllTxnsReport/AllTxnsReport";
 import ReceiptNumbers from "../ReceiptNumbers/ReceiptNumbers";
 import VoucherNumbers from "../ReceiptNumbers/VoucherNumbers";
 import ExpensesReport from "../ExpensesReport/ExpensesReport";
+import Arrears from "../Arrears/Arrears";
 import { Routes, Route, Outlet, NavLink } from "react-router-dom";
 
 const ViewReports = () => {
@@ -63,6 +64,7 @@ const ViewReports = () => {
         <Route path="receipt-numbers" element={<ReceiptNumbers />} />
         <Route path="voucher-numbers" element={<VoucherNumbers />} />
         <Route path="expensesreport" element={<ExpensesReport />} />
+        <Route path="arrears" element={<Arrears />} />
       </Route>
     </Routes>
   );
@@ -98,6 +100,7 @@ function Layout() {
           <Tab to="/reports/viewreports/loanofficerreport">Loans Officer</Tab>
           <Tab to="/reports/viewreports/dailyreport">Daily Report</Tab>
           <Tab to="/reports/viewreports/portofolioatriskreport">Par Report</Tab>
+          <Tab to="/reports/viewreports/arrears">Arrears</Tab>
           <Tab to="/reports/viewreports/debtorslist">Debtors List</Tab>
           <Tab to="/reports/viewreports/debtorslistage">Aging Analysis</Tab>
           <Tab to="/reports/viewreports/loansgranted">Loans Granted</Tab>
