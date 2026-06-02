@@ -42,7 +42,7 @@ function CustomDatePickerFilter({ setFieldValue, label, ...props }) {
 function CustomInput(props) {
   return (
     <input
-      onKeyDown={(e) => e.preventDefault()}
+      // onKeyDown={(e) => e.preventDefault()}
       className={`custom-select-form row-form input-background ${props.touched && props.error ? 'input-error' : ''}`}
       onFocus={props.openCalendar}
       value={props.value}
