@@ -11,12 +11,19 @@ function Table({ report, setReport, params }) {
             <thead className='clients-report-table'>
               <tr className='journal-details fees__report_thead'>
                 <th>Branch</th>
-                <th>Client_Name</th>
+                <th>Client</th>
                 <th>Mobile#</th>
-                <th>Client_ID</th>
-                <th>Loan_Number</th>
-                <th>Disbursed_Date</th>
+                <th>LoanDate</th>
+                <th>Loan#</th>
                 <th>Maturity_Date</th>
+                <th>Principal</th>
+                <th>Claimable_Balance</th>
+                <th>Amount_Paid</th>
+                <th>Penalty</th>
+                <th>PenaltyInterest</th>
+                <th>Arrears</th>
+                <th>LoanBalance</th>
+                <th>LastTransDate</th>
               </tr>
             </thead>
             <tbody>
@@ -26,10 +33,17 @@ function Table({ report, setReport, params }) {
                     <td>{txn.branch_name}</td>
                     <td>{txn.client_name}</td>
                     <td>{txn.client_phone_number}</td>
-                    <td>{txn.client_id}</td>
-                    <td>{txn.loan_num}</td>
                     <td>{txn.disbursement_date}</td>
-                    <td>{txn.maturity}</td>
+                    <td>{txn.loan_num}</td>
+                    <td>{txn.maturity_date}</td>
+                    <td>{txn.principal}</td>
+                    <td>{txn.claimable}</td>
+                    <td>{txn.amount_paid}</td>
+                    <td>{txn.total_penalties}</td>
+                    <td>{txn.interest_penalty}</td>
+                    <td>{txn.maturity_balance}</td>
+                    <td>{txn.current_balance}</td>
+                    <td>{txn.last_transaction_date}</td>
                   </tr>
                 )
               })}
