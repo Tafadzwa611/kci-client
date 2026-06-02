@@ -21,11 +21,6 @@ function CashCountReport() {
 
   return (
     <div>
-      <button type='button' className='btn btn-success'>
-        <Link to='/accounting/viewaccounting/record_cash_count'>
-          Balance Cashbook
-        </Link>
-      </button>
       <div style={{ paddingTop: '2rem' }}></div>
       <Filter setReports={setReports} />
       <div style={{ paddingTop: '2rem' }}></div>

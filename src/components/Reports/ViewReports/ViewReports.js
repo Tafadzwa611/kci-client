@@ -19,6 +19,7 @@ import MaturityProfile from "../MaturityProfile/MaturityProfile";
 import PortfolioMgt from "../PortfolioMgt/PortfolioMgt";
 import AssetQuality from "../AssetQuality/AssetQuality";
 import DebtorsList from "../DebtorsList/DebtorsList";
+import DebtorsListAge from "../DebtorsListAge/DebtorsListAge";
 import LoansGranted from "../LoansGranted/LoansGranted";
 import CashReceipts from "../CashReceipts/CashReceipts";
 import AllTxnsReport from "../AllTxnsReport/AllTxnsReport";
@@ -55,6 +56,7 @@ const ViewReports = () => {
         <Route path="portfoliomgt" element={<PortfolioMgt />} />
         <Route path="assetquality" element={<AssetQuality />} />
         <Route path="debtorslist" element={<DebtorsList />} />
+        <Route path="debtorslistage" element={<DebtorsListAge />} />
         <Route path="loansgranted" element={<LoansGranted />} />
         <Route path="cashreceipts" element={<CashReceipts />} />
         <Route path="txns-report" element={<AllTxnsReport />} />
@@ -97,6 +99,7 @@ function Layout() {
           <Tab to="/reports/viewreports/dailyreport">Daily Report</Tab>
           <Tab to="/reports/viewreports/portofolioatriskreport">Par Report</Tab>
           <Tab to="/reports/viewreports/debtorslist">Debtors List</Tab>
+          <Tab to="/reports/viewreports/debtorslistage">Aging Analysis</Tab>
           <Tab to="/reports/viewreports/loansgranted">Loans Granted</Tab>
           <Tab to="/reports/viewreports/cashreceipts">Cash Receipts</Tab>
           <Tab to="/reports/viewreports/audittrail">Audit Trail</Tab>

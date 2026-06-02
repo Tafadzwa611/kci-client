@@ -210,38 +210,20 @@ function Table({ params, requests, setRequests }) {
                       <td style={{ verticalAlign: 'middle' }}>
                         {request.receipt_number}
                       </td>
-                      <td style={{ verticalAlign: 'middle' }}>
+                      <td style={{ verticalAlign: 'middle', display: 'flex', columnGap: '5px' }}>
                         {request.status === 'Pending' && (
                           <>
                             <button
                               id={request.id}
                               onClick={openApproveModal}
-                              style={{
-                                background: '#1bbf5f',
-                                color: '#fff',
-                                border: 'none',
-                                borderRadius: '.15rem',
-                                cursor: 'pointer',
-                                padding: '.2rem .25rem',
-                                fontSize: '0.75rem',
-                                marginLeft: '5px',
-                              }}
+                              className='badge badge-success'
                             >
                               Approve
                             </button>
                             <button
                               id={request.id}
                               onClick={openDeleteModal}
-                              style={{
-                                background: '#f5424b',
-                                color: '#fff',
-                                border: 'none',
-                                borderRadius: '.15rem',
-                                cursor: 'pointer',
-                                padding: '.2rem .25rem',
-                                marginLeft: '5px',
-                                fontSize: '0.75rem',
-                              }}
+                              className='badge badge-danger'
                             >
                               Reject
                             </button>
