@@ -10,10 +10,10 @@ function Table({ report, setReport, params }) {
           <table className='table' style={{width:'100%'}} id='loans-report'>
             <thead className='clients-report-table'>
               <tr className='journal-details fees__report_thead'>
+                <th>LoanDate</th>
                 <th>Branch</th>
                 <th>Client</th>
                 <th>Mobile#</th>
-                <th>LoanDate</th>
                 <th>Loan#</th>
                 <th>Maturity_Date</th>
                 <th>Principal</th>
@@ -23,17 +23,18 @@ function Table({ report, setReport, params }) {
                 <th>PenaltyInterest</th>
                 <th>Arrears</th>
                 <th>LoanBalance</th>
-                <th>LastTransDate</th>
+                <th>LastPaymentDate</th>
               </tr>
             </thead>
             <tbody>
-              {report.loans.map(txn => {
+              {report.loans.map((txn, idx) => {
+                const isSummaryRow = !txn.client_name;
                 return (
-                  <tr key={txn.id}>
+                  <tr key={idx} style={isSummaryRow ? { fontWeight: 'bold' } : {}}>
+                    <td>{txn.disbursement_date}</td>
                     <td>{txn.branch_name}</td>
                     <td>{txn.client_name}</td>
                     <td>{txn.client_phone_number}</td>
-                    <td>{txn.disbursement_date}</td>
                     <td>{txn.loan_num}</td>
                     <td>{txn.maturity_date}</td>
                     <td>{txn.principal}</td>
@@ -43,7 +44,7 @@ function Table({ report, setReport, params }) {
                     <td>{txn.interest_penalty}</td>
                     <td>{txn.maturity_balance}</td>
                     <td>{txn.current_balance}</td>
-                    <td>{txn.last_transaction_date}</td>
+                    <td>{isSummaryRow ? '' : txn.last_transaction_date || 'No payment'}</td>
                   </tr>
                 )
               })}
