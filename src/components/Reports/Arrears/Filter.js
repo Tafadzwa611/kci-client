@@ -17,6 +17,7 @@ const Filter = ({setReport, setParams}) => {
     currency_id: '',
     branch_ids: [],
     as_of_date: '',
+    report_type: 'detailed',
     page_num: 1,
     mode: 'html'
   };
@@ -29,6 +30,7 @@ const Filter = ({setReport, setParams}) => {
   const onSubmit = async (values, actions) => {
     try {
       const data = removeEmptyValues(values);
+      data.summarize = values.report_type === 'summary';
       const params = getParams(data);
       if (values.branch_ids.includes('*')) {
         params.delete('branch_ids');
@@ -79,6 +81,15 @@ const Filter = ({setReport, setParams}) => {
                             {currency.fullname}
                           </option>
                         ))}
+                      </CustomSelectFilter>
+                    </div>
+                  </div>
+
+                  <div className='sf-row sf-row-2 sf-mt-3'>
+                    <div className='row-payments-container sf-w-16'>
+                      <CustomSelectFilter label='Report Type' name='report_type' required>
+                        <option value='detailed'>Detailed</option>
+                        <option value='summary'>Summary</option>
                       </CustomSelectFilter>
                     </div>
                   </div>

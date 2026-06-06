@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-function Table({ report, setReport, params }) {
+function SummaryTable({ report, setReport, params }) {
   return (
     <div>
       <TableHeader report={report} params={params} setReport={setReport}/>
@@ -10,12 +10,7 @@ function Table({ report, setReport, params }) {
           <table className='table' style={{width:'100%'}} id='loans-report'>
             <thead className='clients-report-table'>
               <tr className='journal-details fees__report_thead'>
-                <th>LoanDate</th>
-                <th>Branch</th>
-                <th>Client</th>
-                <th>Mobile#</th>
-                <th>Loan#</th>
-                <th>Maturity_Date</th>
+                <th>Date</th>
                 <th>Principal</th>
                 <th>Claimable_Balance</th>
                 <th>Amount_Paid</th>
@@ -23,20 +18,13 @@ function Table({ report, setReport, params }) {
                 <th>PenaltyInterest</th>
                 <th>Arrears</th>
                 <th>LoanBalance</th>
-                <th>LastPaymentDate</th>
               </tr>
             </thead>
             <tbody>
-              {report.loans.map((txn, idx) => {
-                const isSummaryRow = !txn.client_name;
+              {report.months.map((txn, idx) => {
                 return (
-                  <tr key={idx} style={isSummaryRow ? { fontWeight: 'bold' } : {}}>
+                  <tr key={idx}>
                     <td>{txn.disbursement_date}</td>
-                    <td>{txn.branch_name}</td>
-                    <td>{txn.client_name}</td>
-                    <td>{txn.client_phone_number}</td>
-                    <td>{txn.loan_num}</td>
-                    <td>{txn.maturity_date}</td>
                     <td>{txn.principal}</td>
                     <td>{txn.claimable}</td>
                     <td>{txn.amount_paid}</td>
@@ -44,7 +32,6 @@ function Table({ report, setReport, params }) {
                     <td>{txn.interest_penalty}</td>
                     <td>{txn.maturity_balance}</td>
                     <td>{txn.current_balance}</td>
-                    <td>{isSummaryRow ? '' : txn.last_transaction_date || 'No payment'}</td>
                   </tr>
                 )
               })}
@@ -114,4 +101,4 @@ const Pager = ({prevPageNumber, nextPageNumber, setReport, params}) => {
   )
 }
 
-export default Table;
+export default SummaryTable;

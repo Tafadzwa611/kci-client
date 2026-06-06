@@ -1,6 +1,7 @@
-import React from "react";
-import Filter from "./Filter";
-import Table from "./Table";
+import React from 'react';
+import Filter from './Filter';
+import Table from './Table';
+import SummaryTable from './SummaryTable';
 
 function Arrears() {
   const [params, setParams] = React.useState(null);
@@ -10,7 +11,20 @@ function Arrears() {
     <div>
       <Filter setReport={setReport} setParams={setParams}/>
       {report && (
-        <Table report={report} setReport={setReport} params={params}/>
+        report.loans ? (
+          <Table
+            report={report}
+            setReport={setReport}
+            params={params}
+          />
+        )
+        : (
+          <SummaryTable
+            report={report}
+            setReport={setReport}
+            params={params}
+          />
+        )
       )}
     </div>
   )
