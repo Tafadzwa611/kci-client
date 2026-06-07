@@ -15,7 +15,6 @@ import { removeEmptyValues, getParams } from '../../../utils/utils';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import { Link } from 'react-router-dom';
 
 const MODAL_STATES = {
   approve: 'approve',
@@ -154,13 +153,13 @@ function Table({ params, requests, setRequests }) {
               <thead>
                 <tr className='journal-details header' style={{ position: 'sticky', top: '0' }}>
                   <th style={{ textAlign: 'start' }}>Date_Requested</th>
-                  <th style={{ textAlign: 'start' }}>Date_Approved</th>
-                  <th style={{ textAlign: 'start' }}>Date_Rejected</th>
+                  <th style={{ textAlign: 'start' }}>Date_Actioned</th>
                   <th style={{ textAlign: 'start' }}>Initiator</th>
-                  <th style={{ textAlign: 'start' }}>Approver</th>
-                  <th style={{ textAlign: 'start' }}>Decliner</th>
+                  <th style={{ textAlign: 'start' }}>Reviewer</th>
                   <th style={{ textAlign: 'start' }}>Status</th>
                   <th style={{ textAlign: 'start' }}>Funding_Account</th>
+                  <th style={{ textAlign: 'start' }}>Expense_Type</th>
+                  <th style={{ textAlign: 'start' }}>Expense_Name</th>
                   <th style={{ textAlign: 'start' }}>Expense_Amount</th>
                   <th style={{ textAlign: 'start' }}>Action</th>
                 </tr>
@@ -173,25 +172,25 @@ function Table({ params, requests, setRequests }) {
                         {request.expense.expense_date}
                       </td>
                       <td style={{ verticalAlign: 'middle' }}>
-                        {request.date_approved}
-                      </td>
-                      <td style={{ verticalAlign: 'middle' }}>
-                        {request.date_rejected}
+                        {request.date_approved || request.date_rejected}
                       </td>
                       <td style={{ verticalAlign: 'middle' }}>
                         {request.requested_by}
                       </td>
                       <td style={{ verticalAlign: 'middle' }}>
-                        {request.approved_by}
-                      </td>
-                      <td style={{ verticalAlign: 'middle' }}>
-                        {request.rejected_by}
+                        {request.approved_by || request.rejected_by}
                       </td>
                       <td style={{ verticalAlign: 'middle' }}>
                         {request.status}
                       </td>
                       <td style={{ verticalAlign: 'middle' }}>
                         {request.expense.fund_account_name}
+                      </td>
+                      <td style={{ verticalAlign: 'middle' }}>
+                        {request.expense.expense_type_name}
+                      </td>
+                      <td style={{ verticalAlign: 'middle' }}>
+                        {request.expense.expense_name}
                       </td>
                       <td style={{ verticalAlign: 'middle' }}>
                         {request.expense.expense_amount}

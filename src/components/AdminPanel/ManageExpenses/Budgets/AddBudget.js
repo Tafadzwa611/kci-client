@@ -148,7 +148,7 @@ function AddBudget() {
                       {values.currency_id && (
                         <Fetcher
                           urls={[
-                            `/acc-api/sub_accounts_api/?page_num=1&currency_id=${values.currency_id}&show_ib=0&account_type=EXPENSE`
+                            `/acc-api/sub_accounts_api/?page_num=1&currency_id=${values.currency_id}&show_ib=0&account_type=EXPENSE&account_type=ASSET`
                           ]}
                         >
                           {({ data }) => (
@@ -157,8 +157,8 @@ function AddBudget() {
                               name='expense_account'
                               isMulti={false}
                               setFieldValue={setFieldValue}
-                              options={data[0].accounts.map(account => ({
-                                label: `${account.general_ledger_name} - ${account.general_ledger_code}`,
+                              options={data[0].accounts.filter(acc => !acc.is_cash_account).map(account => ({
+                                label: `${account.currency__shortname} - ${account.general_ledger_name} - ${account.general_ledger_code} - ${account.account_type}`,
                                 value: account.id
                               }))}
                               required

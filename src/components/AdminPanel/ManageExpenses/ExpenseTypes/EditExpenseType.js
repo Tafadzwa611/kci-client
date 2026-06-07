@@ -49,7 +49,7 @@ function EditExpenseType() {
     async function fetchAccounts() {
       if (!et) return;
       try {
-        const response = await axios.get(`/acc-api/sub_accounts_api/?page_num=1&currency_id=${et.currency_id}&show_ib=0&account_type=EXPENSE`);
+        const response = await axios.get(`/acc-api/sub_accounts_api/?page_num=1&currency_id=${et.currency_id}&show_ib=0&account_type=EXPENSE&account_type=ASSET`);
         setExpenseAccs(response.data);
       } catch (error) {
         console.log(error);
@@ -160,8 +160,8 @@ function EditExpenseType() {
                         initVals={values.expense_account}
                         isMulti={false}
                         setFieldValue={setFieldValue}
-                        options={expenseAccs.accounts.map(account => (
-                          { label: `${account.general_ledger_name} - ${account.general_ledger_code}`, value: account.id }
+                        options={expenseAccs.accounts.filter(acc => !acc.is_cash_account).map(account => (
+                          {label: `${account.currency__shortname} - ${account.general_ledger_name} - ${account.general_ledger_code} - ${account.account_type}`, value: account.id}
                         ))}
                       />
 
