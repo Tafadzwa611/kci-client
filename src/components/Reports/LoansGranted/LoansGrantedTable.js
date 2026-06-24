@@ -28,8 +28,8 @@ function LoansGrantedTable({report, setReport, params}) {
                             {report.loans.map((loan, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td>{loan.disbursement_date}</td>
-                                        <td>{loan.branch}</td>
+                                        {loan.loan_number ? <td>{loan.disbursement_date}</td> : <td><b>{loan.disbursement_date}</b></td>}
+                                        {loan.loan_number ? <td>{loan.branch}</td> : <td><b>{loan.branch}</b></td>}
                                         <td>{loan.client_name}</td>
                                         <td>{loan.loan_product}</td>
                                         <td>{loan.loan_number}</td>
@@ -39,7 +39,11 @@ function LoansGrantedTable({report, setReport, params}) {
                                         {report.fee_names.map(fee_name => (
                                             loan.loan_number ? <td key={fee_name}>{loan[fee_name]}</td> : <td key={fee_name}><b>{loan[fee_name]}</b></td>
                                         ))}
-                                        <td>{loan.upfront_fee_amount}</td>
+                                        {loan.loan_number ? (
+                                            <td>{loan.upfront_fee_amount}</td>
+                                        ): (
+                                            <td><b>{loan.upfront_fee_amount}</b></td>
+                                        )}
                                         <td>{loan.upfront_fee_receipt_number}</td>
                                         {loan.loan_number ? <td>{loan.claimable_balance}</td> : <td><b>{loan.claimable_balance}</b></td>}
                                     </tr>
