@@ -31,9 +31,12 @@ function LoansGrantedSummaryTable({report}) {
                 <th>Principal</th>
                 <th>Interest</th>
                 {report.fee_names.map(fee_name => (
-                  <th key={fee_name}>{fee_name}</th>
+                  <th key={fee_name}>{fee_name.replace(/ /g, "_")}</th>
                 ))}
+                <th>Establishment_Fee_Paid</th>
                 <th>Claimable Balance</th>
+                <th>Loan_Balance</th>
+                <th>Loan_Balance_As_At</th>
               </tr>
             </thead>
             <tbody>
@@ -56,7 +59,16 @@ function LoansGrantedSummaryTable({report}) {
                       </td>
                     ))}
                     <td>
+                      <b>{month.upfront_fee_amount}</b>
+                    </td>
+                    <td>
                       <b>{month.claimable_balance}</b>
+                    </td>
+                    <td>
+                      <b>{month.loan_balance}</b>
+                    </td>
+                    <td>
+                      <b>{month.loan_balance_at}</b>
                     </td>
                   </tr>
                 )
