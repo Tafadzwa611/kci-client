@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Filter from './Filter';
 import DebtorsListTable from './DebtorsListTable';
+import Summary from './Summary';
 
 function DebtorsList() {
     const [params, setParams] = useState(null);
@@ -11,7 +12,11 @@ function DebtorsList() {
             <Filter setReport={setReport} setParams={setParams}/>
             {report && (
                 <div className='tab-content font-12' style={{marginTop: '3rem'}}>
-                    <DebtorsListTable report={report} setReport={setReport} params={params}/>
+                    {report ? (
+                        <DebtorsListTable report={report} setReport={setReport} params={params}/>
+                    ) : (
+                        <Summary report={report}/>
+                    )}
                 </div>
             )}
         </div>

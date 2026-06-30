@@ -130,8 +130,14 @@ const Filter = ({setReport, setParams}) => {
                                         </div>
                                     </div>
 
-                                    <div className='sf-row sf-mt-3'>
-                                        <div className='row-payments-container' style={{width:'100%'}}>
+                                    <div className='sf-row sf-row-3 sf-mt-3'>
+                                        <div className='row-payments-container sf-w-32'>
+                                            <CustomSelectFilter label='Level' name='level' required>
+                                                <option value='Detailed'>Detailed</option>
+                                                <option value='Summary'>Summary</option>
+                                            </CustomSelectFilter>
+                                        </div>
+                                        <div className='row-payments-container' style={{width:'70%'}}>
                                             <MultiSelectFilter
                                                 label='Branches'
                                                 name='branch_ids'
