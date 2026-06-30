@@ -13,7 +13,6 @@ function DebtorsListTable({report, setReport, params}) {
                                 <th>Branch</th>
                                 <th>Disbursed_Date</th>
                                 <th>Client_Name</th>
-                                <th>Client_ID</th>
                                 <th>Loan_Number</th>
                                 <th>Maturity_Date</th>
                                 <th>Principal</th>
@@ -21,25 +20,8 @@ function DebtorsListTable({report, setReport, params}) {
                                 <th>Balance_At</th>
                                 <th>Current_Balance</th>
                                 <th>Penalty</th>
-                                <th>Interest Penalty</th>
-                                <th>Sector</th>
-                                <th>Male</th>
-                                <th>Female</th>
-                                <th>Consumer Loans</th>
-                                <th>Commercial Loans</th>
-                                <th>Agriculture</th>
-                                <th>Construction</th>
-                                <th>CrossBoarder</th>
-                                <th>Distribution</th>
-                                <th>Education</th>
-                                <th>Health</th>
-                                <th>Housing</th>
-                                <th>Manufacturing</th>
-                                <th>Mining</th>
-                                <th>Retail</th>
-                                <th>Transport</th>
-                                <th>Vendors</th>
-                                <th>Other</th>
+                                <th>Interest_Penalty</th>
+                                <th>Last_Payment_Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,7 +31,6 @@ function DebtorsListTable({report, setReport, params}) {
                                         <td>{loan.branch_name}</td>
                                         <td>{loan.db_date}</td>
                                         <td>{loan.client_name}</td>
-                                        <td>{loan.client_id_num}</td>
                                         <td>{loan.loan_num}</td>
                                         <td>{loan.last_date}</td>
                                         <td>{loan.principal}</td>
@@ -58,24 +39,7 @@ function DebtorsListTable({report, setReport, params}) {
                                         <td>{loan.current_balance}</td>
                                         <td>{loan.total_penalties}</td>
                                         <td>{loan.interest_penalty}</td>
-                                        <td>{loan.reason_for_borrowing}</td>
-                                        <td>{loan.male}</td>
-                                        <td>{loan.female}</td>
-                                        <td>{loan.consumer}</td>
-                                        <td>{loan.commercial}</td>
-                                        <td>{loan.agriculture}</td>
-                                        <td>{loan.construction}</td>
-                                        <td>{loan.crossbordertraders}</td>
-                                        <td>{loan.distributionservices}</td>
-                                        <td>{loan.education}</td>
-                                        <td>{loan.health}</td>
-                                        <td>{loan.housing}</td>
-                                        <td>{loan.manufacturing}</td>
-                                        <td>{loan.mining}</td>
-                                        <td>{loan.retail}</td>
-                                        <td>{loan.transport}</td>
-                                        <td>{loan.vendors}</td>
-                                        <td>{loan.other}</td>
+                                        <td>{loan.last_transaction_date}</td>
                                     </tr>
                                 )
                             })}
