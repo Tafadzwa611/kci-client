@@ -21,6 +21,7 @@ const Filter = ({setReport, setParams}) => {
         client_str: '',
         reason: '',
         loan_status: '',
+        level: 'Detailed',
         mode: 'html'
     };
     const {currencies} = useCurrencies();
